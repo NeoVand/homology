@@ -3,7 +3,7 @@ import { SimplicialComplex, isClosedSurface, isOrientable } from '$lib/math/comp
 import * as ex from '$lib/math/examples';
 import { solids, counts, angleDefects, edgesOf, normalized } from './polyhedra';
 import { splitEdge, starFace, addDiagonal, meshCounts, isClosedOrientedSurface, bestDiagonal, type PolyMesh } from './mesh';
-import { pictureFrame, tunnelSlab } from './tunnels';
+import { pictureFrame, tunnelSlab, slab } from './tunnels';
 import { analyseGraph, fundamentalLoop, rng, shuffled, DSU, type Edge } from './graph';
 import {
 	triangles,
@@ -177,6 +177,73 @@ describe('χ of every surface we have met', () => {
 		expect(minimal(0)).toBe(7);
 	});
 });
+
+describe('claims made in the prose of §2.6', () => {
+	it('the twisted 3 × 3 grid (Klein bottle) has f-vector (9, 27, 18)', () => {
+		expect(ex.kleinGrid(3, 3).fVector).toEqual([9, 27, 18]);
+		const cyl = gridSurfaceCylinder();
+		expect(cyl.eulerCharacteristic()).toBe(0);
+	});
+	it('picture frame: outer corners fall 90° short, tunnel corners overshoot by 90°', () => {
+		const F = pictureFrame();
+		const d = angleDefects({ verts: F.pos, faces: F.faces }).map((x) => Math.round((x * 180) / Math.PI));
+		expect(d.slice(0, 4)).toEqual([90, 90, 90, 90]); // outer top
+		expect(d.slice(4, 8)).toEqual([-90, -90, -90, -90]); // inner top
+		expect(d.slice(8, 12)).toEqual([90, 90, 90, 90]);
+		expect(d.slice(12, 16)).toEqual([-90, -90, -90, -90]);
+	});
+	it('drilling a tunnel changes (V, E, F) by (0, +4, +2), so χ drops by 2', () => {
+		const c0 = meshCounts(slab(5, 3, []));
+		const c1 = meshCounts(slab(5, 3, [[1, 1]]));
+		const c2 = meshCounts(slab(5, 3, [
+			[1, 1],
+			[3, 1]
+		]));
+		expect([c1.V - c0.V, c1.E - c0.E, c1.F - c0.F]).toEqual([0, 4, 2]);
+		expect([c2.V - c1.V, c2.E - c1.E, c2.F - c1.F]).toEqual([0, 4, 2]);
+		expect([c0.chi, c1.chi, c2.chi]).toEqual([2, 0, -2]);
+	});
+	it('the crested cube: 16 − 24 + 11 = 3, and one more edge gives 2', () => {
+		expect(16 - 24 + 11).toBe(3);
+		expect(16 - 25 + 11).toBe(2);
+	});
+	it('K4 has 7 different loops but 3 independent ones', () => {
+		// enumerate edge subsets of K4 that form a single cycle
+		const E: Edge[] = [
+			[0, 1],
+			[0, 2],
+			[0, 3],
+			[1, 2],
+			[1, 3],
+			[2, 3]
+		];
+		let cycles = 0;
+		for (let m = 1; m < 1 << 6; m++) {
+			const es = E.filter((_, i) => m & (1 << i));
+			const deg = new Map<number, number>();
+			for (const [a, b] of es) {
+				deg.set(a, (deg.get(a) ?? 0) + 1);
+				deg.set(b, (deg.get(b) ?? 0) + 1);
+			}
+			if (![...deg.values()].every((d) => d === 2)) continue;
+			const g = analyseGraph([...deg.keys()], es);
+			if (g.pieces === 1) cycles++;
+		}
+		expect(cycles).toBe(7);
+		expect(analyseGraph([0, 1, 2, 3], E).loops).toBe(3);
+	});
+	it('mystery surfaces: consistency of the counts', () => {
+		expect(10 - 30 + 20).toBe(0);
+		expect(3 * 20).toBe(2 * 30);
+		expect(12 - 42 + 28).toBe(-2);
+		expect(3 * 28).toBe(2 * 42);
+		expect(3 * 20).not.toBe(2 * 31);
+	});
+});
+
+function gridSurfaceCylinder() {
+	return ex.gridSurface('cylinder', 3, 3).complex;
+}
 
 describe('graphs', () => {
 	it('V − E = pieces − loops', () => {

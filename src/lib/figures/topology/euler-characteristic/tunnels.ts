@@ -42,8 +42,13 @@ export function pictureFrame(outer = 3, inner = 1, height = 1): QuadSurface {
  */
 export function tunnelSlab(g: number): QuadSurface & { cells: [number, number][]; W: number; H: number } {
 	const W = Math.max(3, 2 * g + 1);
-	const H = 3;
-	const hole = (x: number, y: number) => y === 1 && x % 2 === 1 && (x - 1) / 2 < g;
+	return slab(W, 3, Array.from({ length: g }, (_, i) => [2 * i + 1, 1] as [number, number]));
+}
+
+/** A W × H slab of unit cubes with the given cells drilled out (holes must not touch). */
+export function slab(W: number, H: number, holes: [number, number][]): QuadSurface & { cells: [number, number][]; W: number; H: number } {
+	const holeSet = new Set(holes.map(([x, y]) => `${x},${y}`));
+	const hole = (x: number, y: number) => holeSet.has(`${x},${y}`);
 	const solid = (x: number, y: number, z: number) => x >= 0 && x < W && y >= 0 && y < H && z === 0 && !hole(x, y);
 	const vid = new Map<string, number>();
 	const pos: V3[] = [];
