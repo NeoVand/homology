@@ -142,7 +142,7 @@
 </p>
 
 <p>
-	Atiyah's devil offers algebra as a machine that answers any question, at the price of giving up geometry. In this chapter we take
+	Atiyah’s devil offers algebra as a machine that answers any question, at the price of giving up geometry. In this chapter we take
 	the machine but refuse the bargain. Every idea comes with a picture.
 </p>
 
@@ -170,7 +170,7 @@
 </p>
 
 <p>
-	The first picture is an <strong>arrow</strong>: a displacement, such as "three steps east and one step north". What matters is the
+	The first picture is an <strong>arrow</strong>: a displacement, such as “three steps east and one step north”. What matters is the
 	length and direction of the trip, not where it starts, but we will usually draw arrows starting from a fixed point called the
 	<dfn>origin</dfn>.
 </p>
@@ -178,8 +178,8 @@
 <p>
 	The second picture is a <strong>list of numbers</strong>. The trip above is recorded as \((3, 1)\): three units along the horizontal
 	axis, one unit up the vertical one. Lists of two numbers describe the plane, lists of three describe space, and nothing stops us
-	from using lists of \(n\) numbers for any whole number \(n\). The set of all such lists is written \(\R^n\), read "R-n" or "R to
-	the n". Here \(\R\) stands for the <em>real numbers</em>, all the points of the number line, fractions and \(\sqrt 2\) and \(\pi\)
+	from using lists of \(n\) numbers for any whole number \(n\). The set of all such lists is written \(\R^n\), read “R-n” or “R to
+	the n”. Here \(\R\) stands for the <em>real numbers</em>, all the points of the number line, fractions and \(\sqrt 2\) and \(\pi\)
 	included. We print vectors in bold, like \(\mathbf u\) and \(\mathbf v\), to tell them apart from ordinary numbers, and we write
 	\(\mathbf 0\) for the zero vector \((0, 0, \dots, 0)\), the trip that goes nowhere.
 </p>
@@ -228,7 +228,7 @@
 
 <Definition id="def-field" title="Field">
 	<p>
-		A <dfn>field</dfn> is a set of "numbers" with an addition and a multiplication that behave like ordinary arithmetic: both
+		A <dfn>field</dfn> is a set of “numbers” with an addition and a multiplication that behave like ordinary arithmetic: both
 		operations are commutative and associative, multiplication distributes over addition, there are numbers \(0\) and \(1\), every
 		number \(a\) has a negative \(-a\), and every number except \(0\) has a reciprocal \(1/a\).
 	</p>
@@ -271,9 +271,9 @@
 <p>
 	Now for a field you may not have met. In <Ref to="foundations/groups" /> you saw
 	<Term t="integers-mod-n">clock arithmetic</Term> with two hours,
-	\(\Z/2 = \set{0, 1}\) (read "Z mod 2"), in which \(1 + 1 = 0\). Think "odd plus odd is even". Multiplication is the obvious one: \(0 \cdot 0 =
+	\(\Z/2 = \set{0, 1}\) (read “Z mod 2”), in which \(1 + 1 = 0\). Think “odd plus odd is even”. Multiplication is the obvious one: \(0 \cdot 0 =
 	0 \cdot 1 = 0\) and \(1 \cdot 1 = 1\). This tiny number system is a field, because its only nonzero number is \(1\), whose
-	reciprocal is \(1\) itself. So it is a perfectly good choice of scalars. Many books write it \(\F_2\), read "F-two", the F standing
+	reciprocal is \(1\) itself. So it is a perfectly good choice of scalars. Many books write it \(\F_2\), read “F-two”, the F standing
 	for field; in this book we write \(\Z/2\).
 </p>
 
@@ -316,7 +316,7 @@
 
 <Warning>
 	<p>
-		Over \(\Z/2\) you cannot draw vectors as arrows, and words like "positive", "length" or "angle" mean nothing. That is fine: the
+		Over \(\Z/2\) you cannot draw vectors as arrows, and words like “positive”, “length” or “angle” mean nothing. That is fine: the
 		definition of a vector space never mentions arrows. Pictures are servants, not masters. We will use arrows in the plane to build
 		intuition, and then check that the reasoning used nothing but the rules.
 	</p>
@@ -338,11 +338,12 @@
 
 <p>
 	Two pieces of notation appear here. In this <Term t="set-builder-notation">set-builder notation</Term> the vertical bar is read
-	"such that": the span is the set of all sums such that the \(a_i\) are scalars. And \(\sum_i a_i\mathbf v_i\), with a capital sigma, is shorthand for the sum \(a_1\mathbf v_1 + \dots + a_k\mathbf v_k\):
-	"add up \(a_i\mathbf v_i\) over all values of \(i\)". The span of a single nonzero vector \(\mathbf v\) consists of its multiples \(c\,\mathbf v\): a line through the
-	origin. The span of two vectors pointing in different directions is the whole plane, because any point can be reached by going some
-	distance along one and then some distance along the other. But if the second vector lies on the line of the first, it adds nothing
-	new, and the span is still only a line.
+	“such that”: the span is the set of all sums such that the \(a_i\) are scalars. And \(\sum_i a_i\mathbf v_i\), with a capital
+	sigma, is shorthand for the sum \(a_1\mathbf v_1 + \dots + a_k\mathbf v_k\): “add up \(a_i\mathbf v_i\) over all values of \(i\)”.
+	The span of a single nonzero vector \(\mathbf v\) consists of its multiples \(c\,\mathbf v\): a line through the origin. The span of
+	two vectors pointing in different directions is the whole plane, because any point can be reached by going some distance along one
+	and then some distance along the other. But if the second vector lies on the line of the first, it adds nothing new, and the span
+	is still only a line.
 </p>
 
 <Figure size="wide" title="Three spans">
@@ -405,7 +406,7 @@
 	all zero, which independence forbids. The numbers \(a_1, \dots, a_n\) are the <dfn>coordinates</dfn> of the vector in that basis.
 	Second, every basis of a given space has the same number of vectors. This is a genuine theorem (it is often called the
 	<em>exchange lemma</em>), which we shall use without proof. It also shows that in a space of dimension \(n\), any \(n + 1\) vectors
-	are dependent. So "the dimension" is well defined: it counts the <em>degrees of freedom</em>, the number of independent numbers you
+	are dependent. So “the dimension” is well defined: it counts the <em>degrees of freedom</em>, the number of independent numbers you
 	need to pin down a vector.
 </p>
 
@@ -453,7 +454,7 @@
 </Definition>
 
 <p>
-	Here \(T\colon V \to W\) is read "T, from V to W": \(V\) is the <em>domain</em>, where the inputs live, and \(W\) is the
+	Here \(T\colon V \to W\) is read “T, from V to W”: \(V\) is the <em>domain</em>, where the inputs live, and \(W\) is the
 	<em>codomain</em>, where the outputs live, as in <Ref to="foundations/sets-and-functions" />. Taking \(c = 0\) shows that
 	\(T(\mathbf 0) = \mathbf 0\): a linear map always fixes the origin. Combining the two rules gives
 	\(T(a\mathbf u + b\mathbf v) = a\,T(\mathbf u) + b\,T(\mathbf v)\): linear maps turn linear combinations into linear combinations.
@@ -475,15 +476,15 @@
 		Drag where \(\mathbf e_1\) and \(\mathbf e_2\) land: the whole grid follows, and the matrix \(A\) records the two landing spots as
 		its columns. Try <em>Flatten</em>, or drag one arrow onto the line of the other. The plane collapses onto the
 		<span class="tx-gold">gold line</span> (the image), while the <span class="tx-teal">teal line</span> (the kernel) is crushed to the
-		origin. The determinant is the area of the violet parallelogram, the image of the unit square, and it is \(0\) exactly when the
-		plane is flattened.
+		origin. The determinant is the area of the violet parallelogram, the image of the unit square, counted negative when the map flips
+		the plane over (the parallelogram then turns rose); it is \(0\) exactly when the plane is flattened.
 	{/snippet}
 </Figure>
 
 <h3>Multiplying a matrix by a vector</h3>
 
 <p>
-	A matrix with \(m\) rows and \(n\) columns, an "\(m \times n\) matrix" (read "m by n"), describes a linear map \(\R^n \to \R^m\),
+	A matrix with \(m\) rows and \(n\) columns, an “\(m \times n\) matrix” (read “m by n”), describes a linear map \(\R^n \to \R^m\),
 	with \(n\) inputs and \(m\) outputs. Its columns are the images of \(\mathbf e_1, \dots, \mathbf e_n\), so they live in the codomain
 	\(\R^m\). The entry in row \(i\) and column \(j\) is written \(a_{ij}\). To apply the map to a vector \(\mathbf x\), take that
 	combination of the columns: if \(\mathbf a_1, \dots, \mathbf a_n\) are the columns, then
@@ -504,8 +505,8 @@
 	</div>
 	<p>
 		Check the first: the rotation sends \(\mathbf e_1 = (1,0)\) to its first column \((0,1)\), a quarter turn anticlockwise, and
-		\(\mathbf e_2 = (0,1)\) to its second column \((-1,0)\). Three of the four are presets in the figure above; make the projection by
-		dragging the tip of the blue arrow to the origin.
+		\(\mathbf e_2 = (0,1)\) to its second column \((-1,0)\). Three of the four are presets in the figure above; to make the projection,
+		press <em>Identity</em> and then drag the tip of the blue arrow to the origin.
 	</p>
 </Example>
 
@@ -513,7 +514,7 @@
 	One number summarizes how a map of the plane changes areas. The unit square, spanned by \(\mathbf e_1\) and \(\mathbf e_2\), goes to
 	the parallelogram spanned by the two columns. Its area, with a sign attached, is the <dfn>determinant</dfn>
 	\[ \det\begin{pmatrix} a & b \\ c & d \end{pmatrix} = ad - bc. \]
-	Every region's area is multiplied by \(\abs{\det A}\). The sign is negative when the map flips the plane over, like a mirror. And
+	Every region’s area is multiplied by \(\abs{\det A}\). The sign is negative when the map flips the plane over, like a mirror. And
 	\(\det A = 0\) exactly when the parallelogram is squashed flat, which happens exactly when the two columns lie on one line, that is,
 	when they are linearly dependent. (Determinants exist for square matrices of every size, where they measure volumes, but we will
 	need only the \(2 \times 2\) case.)
@@ -523,7 +524,7 @@
 	Everything works the same way over \(\Z/2\): a matrix is a table of 0s and 1s, and the arithmetic uses \(1 + 1 = 0\). Lights Out is
 	our example. Pressing the buttons of a plan \(\mathbf x\) changes the board by the sum of the effects of the individual buttons,
 	because each light ends up switched once for each pressed button that touches it, and only the parity of that count matters. So
-	"plan of presses \(\mapsto\) change of lights" (the arrow \(\mapsto\) is read "goes to") is a linear map
+	“plan of presses \(\mapsto\) change of lights” (the arrow \(\mapsto\) is read “goes to”) is a linear map
 	\((\Z/2)^{25} \to (\Z/2)^{25}\). Its matrix \(A\) is
 	\(25 \times 25\), and column \(j\) is the plus-shaped pattern of lights switched by button \(j\). The figure in the Lights Out section
 	below can show you this matrix.
@@ -541,8 +542,8 @@
 </p>
 
 <p>
-	Notice the order. \(AB\) means "first \(B\), then \(A\)", just like the <Term t="composition">composition</Term> \(g \circ f\) of
-	<Ref to="foundations/sets-and-functions" />, read "g after f". And order matters. With the rotation \(R\) and the shear \(S\) from the
+	Notice the order. \(AB\) means “first \(B\), then \(A\)”, just like the <Term t="composition">composition</Term> \(g \circ f\) of
+	<Ref to="foundations/sets-and-functions" />, read “g after f”. And order matters. With the rotation \(R\) and the shear \(S\) from the
 	zoo,
 	\[ RS = \begin{pmatrix} 0 & -1 \\ 1 & 1 \end{pmatrix} \neq \begin{pmatrix} 1 & -1 \\ 1 & 0 \end{pmatrix} = SR: \]
 	shearing and then rotating is not the same as rotating and then shearing. The matrix that does nothing, with 1s down the diagonal and
@@ -551,7 +552,7 @@
 
 <Remark title="Looking ahead">
 	<p>
-		In <Ref to="homology/chains" /> the slogan "the boundary of a boundary is zero" becomes a statement about multiplying matrices:
+		In <Ref to="homology/chains" /> the slogan “the boundary of a boundary is zero” becomes a statement about multiplying matrices:
 		\(\partial_{k-1}\,\partial_k = 0\), the zero matrix.
 	</p>
 </Remark>
@@ -594,7 +595,7 @@
 	</li>
 	<li>
 		<strong>Solutions of the homogeneous equation.</strong> The kernel is the set of solutions of \(A\mathbf x = \mathbf 0\), the
-		equation with nothing on the right-hand side; "homogeneous" means exactly that.
+		equation with nothing on the right-hand side; “homogeneous” means exactly that.
 	</li>
 	<li>
 		<strong>Quiet patterns.</strong> In Lights Out, the kernel is the set of plans of presses that change nothing at all. The
@@ -679,8 +680,8 @@
 <Warning>
 	<p>
 		Three classic slips. (1) Rank and nullity add up to the dimension of the <em>domain</em>, not of the codomain: for a \(3 \times
-		5\) matrix, \(5 = \rank + \operatorname{nullity}\). (2) The kernel is never empty; it always contains \(\mathbf 0\). A "trivial
-		kernel" means \(\ker A = \set{\mathbf 0}\). (3) The kernel lives in the domain and the image in the codomain, so in general the two
+		5\) matrix, \(5 = \rank + \operatorname{nullity}\). (2) The kernel is never empty; it always contains \(\mathbf 0\). A “trivial
+		kernel” means \(\ker A = \set{\mathbf 0}\). (3) The kernel lives in the domain and the image in the codomain, so in general the two
 		cannot even be compared.
 	</p>
 </Warning>
@@ -704,7 +705,7 @@
 
 <History>
 	<p>
-		The method is about two thousand years old. It appears in Chapter Eight, "Rectangular Arrays", of the Chinese classic <em>The Nine
+		The method is about two thousand years old. It appears in Chapter Eight, “Rectangular Arrays”, of the Chinese classic <em>The Nine
 		Chapters on the Mathematical Art</em>, parts of which go back to around 150 BCE, and it was commented on by Liu Hui in the third
 		century. Gauss devised a notation for systematic elimination in 1810, for least-squares problems, but the school method was named
 		after him only in the 1950s, through a confusion about its history.
@@ -739,7 +740,7 @@
 		In the current column, look for a nonzero entry in that row or below it. If there is none, the column gets no pivot: move on to the
 		next column.
 	</li>
-	<li>Otherwise, swap that entry's row up into place and divide the row by the entry, so that the pivot is 1.</li>
+	<li>Otherwise, swap that entry’s row up into place and divide the row by the entry, so that the pivot is 1.</li>
 	<li>
 		Subtract multiples of the pivot row from every other row to make the rest of the column 0. Then move on to the next row and the
 		next column.
@@ -748,7 +749,7 @@
 
 <p>
 	Let us run it on the system above. Column 1 already has a 1 in row 1, so we clear the rest of the column with
-	\(R_2 \leftarrow R_2 - 2R_1\) and \(R_3 \leftarrow R_3 - 3R_1\) (read: "replace row 2 by row 2 minus twice row 1", and so on):
+	\(R_2 \leftarrow R_2 - 2R_1\) and \(R_3 \leftarrow R_3 - 3R_1\) (read: “replace row 2 by row 2 minus twice row 1”, and so on):
 	\[ \begin{pmatrix} 1 & 2 & 1 & 3 \\ 2 & 4 & 0 & 2 \\ 3 & 6 & 1 & 5 \end{pmatrix} \to \begin{pmatrix} 1 & 2 & 1 & 3 \\ 0 & 0 & -2 & -4 \\ 0 & 0 & -2 & -4 \end{pmatrix}. \]
 	Column 2 has only zeros below row 1, so it gets no pivot. In column 3, the entry \(-2\) in row 2 becomes a pivot after
 	\(R_2 \leftarrow -\tfrac12 R_2\), and then \(R_1 \leftarrow R_1 - R_2\) and \(R_3 \leftarrow R_3 + 2R_2\) clear its column:
@@ -788,7 +789,7 @@
 <Warning>
 	<p>
 		Row operations keep the kernel, but they change the column space: the reduced matrix above has a zero last row, while the original
-		columns do not lie in the plane "third entry = 0". What survives is the <em>relationships</em> among the columns, since a relation
+		columns do not lie in the plane “third entry = 0”. What survives is the <em>relationships</em> among the columns, since a relation
 		among the columns is exactly a kernel vector. That is why the pivot columns of the reduced matrix tell you <em>which</em> columns to
 		take, but you must take them from the original matrix.
 	</p>
@@ -799,7 +800,7 @@
 <p>
 	Over \(\Z/2\) the procedure is even simpler. The only nonzero number is 1, so there is never anything to divide by, and adding a row
 	is the same as subtracting it. Row reduction becomes: find a 1, swap it into place, and add its row to every other row that has a 1
-	in that column. Here is the "triangle matrix", whose columns are the three edges of a triangle, each edge recorded by its two
+	in that column. Here is the “triangle matrix”, whose columns are the three edges of a triangle, each edge recorded by its two
 	corners:
 	\[ \begin{aligned} \begin{pmatrix} 1 & 1 & 0 \\ 1 & 0 & 1 \\ 0 & 1 & 1 \end{pmatrix} &\xrightarrow{R_2 \leftarrow R_2 + R_1} \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 1 & 1 \end{pmatrix} \\[4pt] &\xrightarrow{\substack{R_1 \leftarrow R_1 + R_2 \\ R_3 \leftarrow R_3 + R_2}} \begin{pmatrix} \cyc{1} & 0 & 1 \\ 0 & \cyc{1} & 1 \\ 0 & 0 & 0 \end{pmatrix}. \end{aligned} \]
 	Rank 2. The free variable \(x_3\) gives the kernel vector \((1,1,1)\): all three edges together, the loop around the triangle. The
@@ -819,7 +820,7 @@
 <h2 id="solving">Solving \(A\mathbf x = \mathbf b\)</h2>
 
 <p>
-	Kernels answer the question "which inputs give zero?". Most real questions ask instead: given a target \(\mathbf b\), which inputs
+	Kernels answer the question “which inputs give zero?”. Most real questions ask instead: given a target \(\mathbf b\), which inputs
 	give \(\mathbf b\)? In Lights Out, \(\mathbf b\) is the board in front of you, and you want a plan \(\mathbf x\) with
 	\(A\mathbf x = \mathbf b\). Pressing \(\mathbf x\) adds \(A\mathbf x\) to the board, and \(\mathbf b + \mathbf b = \mathbf 0\) over
 	\(\Z/2\), so the board goes dark exactly when \(A\mathbf x = \mathbf b\). Two questions: is there a solution, and if so, how many?
@@ -856,14 +857,14 @@
 <p>
 	In practice we find solutions by row reducing the <dfn>augmented matrix</dfn> \([\,A \mid \mathbf b\,]\): the matrix \(A\) with
 	\(\mathbf b\) attached as an extra column, doing every operation to both. If a row of the form \([\,0\ \cdots\ 0 \mid 1\,]\) appears,
-	it says "\(0 = 1\)", and there is no solution. Otherwise, set the free variables to 0 and read off a particular solution.
+	it says “\(0 = 1\)”, and there is no solution. Otherwise, set the free variables to 0 and read off a particular solution.
 </p>
 
 <Example title="A small system over ℤ/2">
 	<p>
 		Solve \(x + y = 1\), \(y + z = 0\), \(x + z = 1\) over \(\Z/2\). Adding the first equation to the third gives \(y + z = 0\), the
 		same as the second equation, so one equation is redundant and \(z\) is free. Taking \(z = 0\) gives \((x,y,z) = (1,0,0)\), and
-		taking \(z = 1\) gives \((0,1,1)\). The solution set is \((1,0,0) + \set{(0,0,0),\ (1,1,1)}\), a coset of the triangle's kernel,
+		taking \(z = 1\) gives \((0,1,1)\). The solution set is \((1,0,0) + \set{(0,0,0),\ (1,1,1)}\), a coset of the triangle’s kernel,
 		with \(2^1 = 2\) elements, as promised.
 	</p>
 </Example>
@@ -873,7 +874,7 @@
 <h2 id="quotient-spaces">Quotient spaces: blurring out a subspace</h2>
 
 <p>
-	In the last figure, all the points of one gold line are "the same" as far as \(A\) is concerned, since \(A\) sends them all to the
+	In the last figure, all the points of one gold line are “the same” as far as \(A\) is concerned, since \(A\) sends them all to the
 	same \(\mathbf b\). It is natural to treat each such line as a single object. You have done this kind of thing twice already: in
 	<Ref to="foundations/equivalence" /> you formed <Term t="quotient-set">quotient sets</Term> by declaring equivalent things equal, and in
 	<Ref to="foundations/abelian-groups" /> you formed <Term t="quotient-group">quotient groups</Term> \(G/H\) by collapsing a subgroup.
@@ -885,7 +886,7 @@
 		Let \(W\) be a subspace of \(V\). Call two vectors equivalent, \(\mathbf v \sim \mathbf v'\), when their difference
 		\(\mathbf v - \mathbf v'\) lies in \(W\). The <Term t="equivalence-class">equivalence class</Term> of \(\mathbf v\) is the coset
 		\(\mathbf v + W = \setb{\mathbf v + \mathbf w}{\mathbf w \in W}\), a parallel copy of \(W\) passing through \(\mathbf v\). The
-		<dfn>quotient space</dfn> \(V/W\), read "V mod W", is the set of these cosets, with
+		<dfn>quotient space</dfn> \(V/W\), read “V mod W”, is the set of these cosets, with
 		\[ \begin{gathered} (\mathbf u + W) + (\mathbf v + W) = (\mathbf u + \mathbf v) + W, \\ c\,(\mathbf v + W) = c\,\mathbf v + W. \end{gathered} \]
 	</p>
 </Definition>
@@ -921,7 +922,7 @@
 	squashes each of them to a single point of the floor. Different lines land on different points, and every point of the floor is hit.
 	So the cosets of the kernel correspond exactly to the points of the image:
 	\[ V/\ker A \;\cong\; \im A, \]
-	where \(\cong\) is read "is <Term t="isomorphism">isomorphic</Term> to": the two are the same vector space in different clothes.
+	where \(\cong\) is read “is <Term t="isomorphism">isomorphic</Term> to”: the two are the same vector space in different clothes.
 	This is the
 	<Term t="first-isomorphism-theorem">first isomorphism theorem</Term> of <Ref to="foundations/abelian-groups" />, for vector spaces. Take the dimensions of both sides and you get \(\dim V - \operatorname{nullity} A = \rank A\): rank–nullity again,
 	seen from a new angle.
@@ -942,7 +943,7 @@
 
 <Example title="A preview: one hole in a triangle">
 	<p>
-		Take a hollow triangle with corners \(a, b, c\) and edges \(ab, bc, ca\), and work over \(\Z/2\). Its "boundary map" sends each
+		Take a hollow triangle with corners \(a, b, c\) and edges \(ab, bc, ca\), and work over \(\Z/2\). Its “boundary map” sends each
 		edge to its two corners; its matrix is the triangle matrix we row reduced, of rank 2. Its kernel, the cycles, is
 		\(\set{0,\ ab + bc + ca}\): the loop around the triangle. There are no filled-in triangles, so there are no boundaries yet, and
 		\(\dim H_1 = 3 - 2 - 0 = 1\): one hole. Now fill the triangle in. The new face has boundary \(ab + bc + ca\), so the loop becomes a
@@ -966,14 +967,14 @@
 </ul>
 
 <p>
-	Row reducing \(A\) over \(\Z/2\) takes a long afternoon by hand and a millisecond by machine. (This book's code does it, and its tests
+	Row reducing \(A\) over \(\Z/2\) takes a long afternoon by hand and a millisecond by machine. (This book’s code does it, and its tests
 	check every number in this section.) The result is: <strong>rank 23, nullity 2.</strong> Everything else follows from the theorems
 	we have proved.
 </p>
 
 <ol>
 	<li>
-		<strong>Quiet patterns.</strong> The kernel has dimension 2, so it has \(2^2 = 4\) elements: "press nothing" and three non-trivial
+		<strong>Quiet patterns.</strong> The kernel has dimension 2, so it has \(2^2 = 4\) elements: “press nothing” and three non-trivial
 		<dfn>quiet patterns</dfn>, plans that leave every light exactly as it was. Show them in the figure below and press one: nothing
 		changes, because every light is switched an even number of times.
 	</li>
@@ -983,7 +984,7 @@
 	</li>
 	<li>
 		<strong>Number of solutions.</strong> The solutions of a solvable board form a coset of the kernel, so every solvable board has
-		exactly 4 solutions. The figure's solver uses the one with the fewest presses. The board with every light on, for instance, is
+		exactly 4 solutions. The figure’s solver uses the one with the fewest presses. The board with every light on, for instance, is
 		solvable, and its shortest solution takes 15 presses.
 	</li>
 </ol>
@@ -1017,8 +1018,8 @@
 <History>
 	<p>
 		<em>Lights Out</em> was released as an electronic toy by Tiger Electronics in 1995. Three years later, Marlow Anderson and Todd
-		Feil analysed it with linear algebra in <em>Mathematics Magazine</em>, in an article called "Turning Lights Out with Linear
-		Algebra". They proved that not every board is solvable and that every solvable \(5 \times 5\) board has exactly four solutions:
+		Feil analysed it with linear algebra in <em>Mathematics Magazine</em>, in an article called “Turning Lights Out with Linear
+		Algebra”. They proved that not every board is solvable and that every solvable \(5 \times 5\) board has exactly four solutions:
 		the two facts we have just read off from rank 23 and nullity 2.
 	</p>
 </History>
@@ -1028,15 +1029,15 @@
 <h2 id="duality">Duality: measurements and reversed arrows</h2>
 
 <p>
-	One question is still open. When a board is <em>not</em> solvable, how can we be sure? "A computer row reduced a big matrix" is
+	One question is still open. When a board is <em>not</em> solvable, how can we be sure? “A computer row reduced a big matrix” is
 	convincing, but it does not explain anything. We would like a <em>certificate</em>: a short reason that anyone can check by hand.
 </p>
 
 <h3>Certificates of impossibility</h3>
 
 <p>
-	Here is one. Look at the twelve cells in columns 1, 3 and 5 of the board, leaving out the middle row: the cells of "check 1" in the
-	Lights Out figure above. Every button's plus shape covers an <em>even</em> number of these cells, either 0 or 2; check a few. So every press changes
+	Here is one. Look at the twelve cells in columns 1, 3 and 5 of the board, leaving out the middle row: the cells of “check 1” in the
+	Lights Out figure above. Every button’s plus shape covers an <em>even</em> number of these cells, either 0 or 2; check a few. So every press changes
 	the number of lit lights among those twelve cells by an even amount, and the <em>parity</em> of that number, even or odd, never
 	changes however you press. The dark board has 0 lights on there, an even number. So a board with an odd number of lit lights among
 	those cells can never be switched off. Checking that takes ten seconds, however many plans of presses there are.
@@ -1055,7 +1056,7 @@
 	<p>
 		A <dfn>covector</dfn> on a vector space \(V\) over a field \(F\), also called a <dfn>linear functional</dfn> or a dual vector, is a
 		linear map \(\varphi\colon V \to F\): a linear measurement that turns each vector into a number. The covectors on \(V\) form a
-		vector space, the <dfn>dual space</dfn> \(V^*\) (read "V star"), with \((\varphi + \psi)(\mathbf v) = \varphi(\mathbf v) +
+		vector space, the <dfn>dual space</dfn> \(V^*\) (read “V star”), with \((\varphi + \psi)(\mathbf v) = \varphi(\mathbf v) +
 		\psi(\mathbf v)\) and \((c\,\varphi)(\mathbf v) = c\,\varphi(\mathbf v)\).
 	</p>
 </Definition>
@@ -1114,7 +1115,7 @@
 
 <p>
 	Linear maps act on measurements too, but backwards. Suppose \(A\colon V \to W\), and \(\varphi\) is a measurement on \(W\). Then
-	"first apply \(A\), then measure with \(\varphi\)" is a measurement on \(V\): the composite \(\varphi \circ A\). So \(A\) gives a map
+	“first apply \(A\), then measure with \(\varphi\)” is a measurement on \(V\): the composite \(\varphi \circ A\). So \(A\) gives a map
 	going the other way,
 	\[ A^{\mathsf T}\colon W^* \to V^*, \qquad \varphi \mapsto \varphi \circ A, \]
 	called the <dfn>transpose</dfn>, or dual map, of \(A\). The arrow reverses: \(A\) carries vectors forward from \(V\) to \(W\), and
@@ -1124,15 +1125,15 @@
 <p>
 	In matrices: if \(\varphi\) is the row \(\mathbf y\), then \(\varphi \circ A\) is the row \(\mathbf y A\). Written as a column, that is
 	\(A^{\mathsf T}\mathbf y\), where \(A^{\mathsf T}\) is the matrix \(A\) flipped across its diagonal: the entry in row \(i\) and column
-	\(j\) of \(A^{\mathsf T}\) is the entry in row \(j\) and column \(i\) of \(A\). So the transpose you may know as "swap rows and
-	columns" is exactly the act of pulling measurements back.
+	\(j\) of \(A^{\mathsf T}\) is the entry in row \(j\) and column \(i\) of \(A\). So the transpose you may know as “swap rows and
+	columns” is exactly the act of pulling measurements back.
 </p>
 
 <Figure size="wide" title="Pulling a measurement back" hint="Drag v and φ · change A">
 	<CovectorStack mode="pullback" />
 	{#snippet caption()}
 		\(A\) carries \(\mathbf v\) forward to \(A\mathbf v\); the transpose carries the measurement \(\varphi\) back to
-		\(A^{\mathsf T}\varphi = \varphi\circ A\). Its lines, on the left, are exactly the points that \(A\) sends onto \(\varphi\)'s
+		\(A^{\mathsf T}\varphi = \varphi\circ A\). Its lines, on the left, are exactly the points that \(A\) sends onto \(\varphi\)’s
 		lines on the right, so both sides always count the same crossings: \((A^{\mathsf T}\varphi)(\mathbf v) = \varphi(A\mathbf v)\).
 		With the rank-1 map, make \(\varphi\) vanish on the image, and the pulled-back measurement becomes zero.
 	{/snippet}
@@ -1162,7 +1163,7 @@
 		Let \(A\colon V \to W\) be a linear map between finite-dimensional spaces. Then \(A\mathbf x = \mathbf b\) has a solution if and
 		only if \(\varphi(\mathbf b) = 0\) for every measurement \(\varphi\) with \(A^{\mathsf T}\varphi = 0\). In symbols,
 		\[ \im A = (\ker A^{\mathsf T})^{\perp}, \]
-		where, for a set \(U\) of covectors, \(U^\perp\) (read "U perp"), the <dfn>annihilator</dfn> of \(U\), is the set of vectors that
+		where, for a set \(U\) of covectors, \(U^\perp\) (read “U perp”), the <dfn>annihilator</dfn> of \(U\), is the set of vectors that
 		every covector in \(U\) sends to 0.
 	</p>
 </Theorem>
@@ -1189,8 +1190,8 @@
 <p>
 	For Lights Out the theorem becomes beautifully concrete, thanks to a symmetry: button \(i\) switches light \(j\) exactly when button
 	\(j\) switches light \(i\), since both say that the two cells are equal or neighbours. So the matrix equals its own transpose,
-	\(A^{\mathsf T} = A\), and the measurements that are blind to every button are exactly the measurements "add up the lights in a
-	quiet pattern". Two quiet patterns span the kernel, so:
+	\(A^{\mathsf T} = A\), and the measurements that are blind to every button are exactly the measurements “add up the lights in a
+	quiet pattern”. Two quiet patterns span the kernel, so:
 </p>
 
 <KeyIdea>
@@ -1211,7 +1212,7 @@
 
 <Warning>
 	<p>
-		The symbol \(\perp\) suggests "perpendicular", but over \(\Z/2\) that picture misleads: a nonzero vector can measure itself as zero,
+		The symbol \(\perp\) suggests “perpendicular”, but over \(\Z/2\) that picture misleads: a nonzero vector can measure itself as zero,
 		for example \((1,1)\cdot(1,1) = 1 + 1 = 0\). That is why we stated the theorem in terms of measurements, which make sense over every
 		field, rather than angles.
 	</p>
@@ -1221,7 +1222,7 @@
 
 <p>
 	Here, in plain words, is why this section matters for the rest of the book. Homology will ask: which cycles are boundaries? That is a
-	question about the image of a boundary map \(\partial\), exactly like "which boards are solvable?". Cohomology asks the dual question,
+	question about the image of a boundary map \(\partial\), exactly like “which boards are solvable?”. Cohomology asks the dual question,
 	with all the arrows reversed. Its objects, called <em>cochains</em>, are measurements on chains, and its basic map, the coboundary, is
 	the transpose \(\delta = \partial^{\mathsf T}\). A measurement that gives 0 on every boundary but not on some cycle \(z\) is a
 	certificate that \(z\) is not a boundary, that \(z\) goes around a hole, in exactly the way that a parity check certifies that a
@@ -1249,7 +1250,7 @@
 	changes the story.
 </p>
 
-<p>The smallest example says it all: the \(1 \times 1\) matrix \((2)\), the map "multiply by 2".</p>
+<p>The smallest example says it all: the \(1 \times 1\) matrix \((2)\), the map “multiply by 2”.</p>
 <ul>
 	<li>Over \(\Q\) it is invertible, since its inverse multiplies by \(\tfrac12\): kernel 0, image everything.</li>
 	<li>Over \(\Z/2\) it is the zero map, because \(2 = 0\) there: kernel everything, image 0.</li>
@@ -1271,15 +1272,15 @@
 	Each of these can be undone by an operation of the same kind. Row operations change the basis of the codomain \(\Z^m\), and column
 	operations change the basis of the domain \(\Z^n\). Why allow columns now? Because we are no longer solving one particular equation.
 	We want the <em>structure</em> of the map, its kernel and its cokernel, and we are free to choose convenient bases at both ends. The
-	<dfn>cokernel</dfn> of \(A\colon \Z^n \to \Z^m\) is the quotient \(\Z^m/\im A\): the codomain with the image collapsed, "what is left
-	over".
+	<dfn>cokernel</dfn> of \(A\colon \Z^n \to \Z^m\) is the quotient \(\Z^m/\im A\): the codomain with the image collapsed, “what is left
+	over”.
 </p>
 
 <Theorem id="thm-smith" title="Smith normal form">
 	<p>
 		Every integer matrix \(A\) can be brought, by integer row and column operations, to a diagonal form
 		\[ \begin{gathered} \begin{pmatrix} d_1 & & & \\ & \ddots & & \\ & & d_r & \\ & & & 0 \end{pmatrix}, \\[4pt] d_1 \mid d_2 \mid \cdots \mid d_r, \end{gathered} \]
-		with positive integers \(d_i\), each dividing the next (\(d_1 \mid d_2\) is read "\(d_1\) divides \(d_2\)"), and zeros everywhere
+		with positive integers \(d_i\), each dividing the next (\(d_1 \mid d_2\) is read “\(d_1\) divides \(d_2\)”), and zeros everywhere
 		else. The numbers \(d_1, \dots, d_r\), called the <dfn>invariant factors</dfn>, depend only on \(A\), not on the operations chosen.
 		Consequently, for \(A\colon \Z^n \to \Z^m\),
 		\[ \begin{aligned} \Z^m/\im A &\cong \Z/d_1 \oplus \dots \oplus \Z/d_r \oplus \Z^{m-r}, \\ \ker A &\cong \Z^{n-r}. \end{aligned} \]
@@ -1289,10 +1290,9 @@
 <p>
 	This diagonal form is the <dfn>Smith normal form</dfn>, after Henry John Stephen Smith, who introduced it in 1861. We abbreviate a
 	diagonal matrix by listing its diagonal, as in \(\operatorname{diag}(d_1, \dots, d_r)\); the symbol \(\oplus\) is the
-	<Term t="direct-sum">direct sum</Term> of
-	<Ref to="foundations/abelian-groups" />, and \(\Z/1\) is the group with one element. Reading off the answer is easy once the matrix
-	is diagonal, because the map then does independent things to independent coordinates: it multiplies
-	the \(i\)-th coordinate by \(d_i\). A factor \(d_i = 1\) leaves nothing behind, since \(\Z/1 = 0\). A factor \(d_i > 1\) leaves the
+	<Term t="direct-sum">direct sum</Term> of <Ref to="foundations/abelian-groups" />, and \(\Z/1\) is the group with one element.
+	Reading off the answer is easy once the matrix is diagonal, because the map then does independent things to independent
+	coordinates: it multiplies the \(i\)-th coordinate by \(d_i\). A factor \(d_i = 1\) leaves nothing behind, since \(\Z/1 = 0\). A factor \(d_i > 1\) leaves the
 	torsion \(\Z/d_i\). And each of the \(m - r\) rows without a diagonal entry leaves a whole free copy of \(\Z\).
 </p>
 
@@ -1310,8 +1310,8 @@
 		integer operations finish it:
 		\[ \begin{aligned} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} &\xrightarrow{R_2 \leftarrow R_2 - R_1} \begin{pmatrix} 1 & 1 \\ 0 & -2 \end{pmatrix} \\[4pt] &\xrightarrow{C_2 \leftarrow C_2 - C_1} \begin{pmatrix} 1 & 0 \\ 0 & -2 \end{pmatrix} \\[4pt] &\xrightarrow{R_2 \leftarrow -R_2} \begin{pmatrix} 1 & 0 \\ 0 & 2 \end{pmatrix}. \end{aligned} \]
 		So \(\Z^2/\im A \cong \Z/1 \oplus \Z/2 \cong \Z/2\). Indeed, \(x + y\) and \(x - y\) always have the same parity, since their
-		difference \(2y\) is even. The reachable pairs \((a, b)\) are exactly those with \(a + b\) even, and the leftover \(\Z/2\) is "the
-		parity of \(a + b\)". Over \(\Q\) the same matrix is invertible (its determinant is \(-2 \neq 0\)) and every pair is reachable:
+		difference \(2y\) is even. The reachable pairs \((a, b)\) are exactly those with \(a + b\) even, and the leftover \(\Z/2\) is “the
+		parity of \(a + b\)”. Over \(\Q\) the same matrix is invertible (its determinant is \(-2 \neq 0\)) and every pair is reachable:
 		the obstruction is invisible to fractions.
 	</p>
 </Example>
@@ -1328,8 +1328,8 @@
 
 <p>
 	This is the algorithm behind the <Term t="classification-of-abelian-groups">classification theorem</Term> of
-	<Ref to="foundations/abelian-groups" />: every finitely generated abelian
-	group is \(\Z^r \oplus \Z/d_1 \oplus \dots \oplus \Z/d_k\) with \(d_1 \mid d_2 \mid \cdots\). Describe the group by generators and
+	<Ref to="foundations/abelian-groups" />: every finitely generated abelian group is
+	\(\Z^r \oplus \Z/d_1 \oplus \dots \oplus \Z/d_k\) with \(d_1 \mid d_2 \mid \cdots\). Describe the group by generators and
 	relations, write the relations as the columns of a matrix, and the Smith normal form reads off the decomposition. For instance, the
 	group \(\Z^2/\langle (2,4), (6,8) \rangle\), integer pairs modulo the subgroup generated by \((2,4)\) and \((6,8)\), comes from the
 	matrix with those two columns. Its Smith form is \(\operatorname{diag}(2, 4)\), so the group is \(\Z/2 \oplus \Z/4\), with
@@ -1339,8 +1339,8 @@
 <p>
 	It is also how homology finds torsion. In <Ref to="homology/computing" /> you will meet the Klein bottle built from one vertex, two
 	edges \(a, b\) and one face whose boundary is \(2a + 0b\). Its boundary matrix is the single column \((2, 0)\), already in Smith form
-	with \(d_1 = 2\), so its first homology is \(\Z^2/\im \partial_2 \cong \Z \oplus \Z/2\): one ordinary loop, and one loop that
-	becomes a boundary when it is traversed twice. The real projective plane gives the \(1 \times 1\) matrix \((2)\) and the torsion
+	with \(d_1 = 2\). With only one vertex, every combination of edges is a cycle, so the first homology, cycles modulo boundaries, is
+	\(\Z^2/\im \partial_2 \cong \Z \oplus \Z/2\): one ordinary loop, and one loop that becomes a boundary when it is traversed twice. The real projective plane gives the \(1 \times 1\) matrix \((2)\) and the torsion
 	\(\Z/2\).
 </p>
 
@@ -1355,7 +1355,7 @@
 
 <Warning>
 	<p>
-		Row reduction over \(\Q\) computes ranks correctly, but it erases torsion. Never conclude "there is no torsion" from a computation
+		Row reduction over \(\Q\) computes ranks correctly, but it erases torsion. Never conclude “there is no torsion” from a computation
 		with fractions.
 	</p>
 </Warning>
@@ -1364,8 +1364,8 @@
 	<p>
 		Measurements with values in \(\Z\) cannot see torsion: a homomorphism \(\varphi\colon \Z/2 \to \Z\) must send the class of 1 to an
 		integer \(g\) with \(2g = \varphi(1 + 1) = \varphi(0) = 0\), so \(g = 0\). Yet torsion is not lost under duality; it moves. Take
-		the map "multiply by 2" from the 2-dimensional piece of the real projective plane to its 1-dimensional piece. Its cokernel, the
-		torsion \(\Z/2\), sits in degree 1. The transpose is again "multiply by 2", but it points the other way, from degree 1 to degree 2,
+		the map “multiply by 2” from the 2-dimensional piece of the real projective plane to its 1-dimensional piece. Its cokernel, the
+		torsion \(\Z/2\), sits in degree 1. The transpose is again “multiply by 2”, but it points the other way, from degree 1 to degree 2,
 		so the same \(\Z/2\) reappears as a cokernel in degree 2. This shift of torsion up by one degree is the Universal Coefficient
 		Theorem of <Ref to="cohomology/cohomology-groups" />, in miniature.
 	</p>
@@ -1440,7 +1440,7 @@
 	{#snippet solution()}
 		<p>
 			(a) Adding the three equations gives \(2x + 2y + 2z = 3\), that is, \(0 = 1\) over \(\Z/2\). The certificate is the measurement
-			"add all three equations", the covector \((1,1,1)\) on the right-hand sides: each column of the system's matrix has two 1s, so this
+			“add all three equations”, the covector \((1,1,1)\) on the right-hand sides: each column of the system’s matrix has two 1s, so this
 			measurement gives 0 on every column, but it gives \(1 + 1 + 1 = 1\) on the target \((1,1,1)\). (In the language of the triangle,
 			each edge touches two corners, so a set of edges always touches an even total number of corners.)
 		</p>
@@ -1501,7 +1501,7 @@
 	</p>
 	{#snippet solution()}
 		<p>
-			(a) Row reduction (it is the preset "triangle, signed" in the stepper) gives rank 2 and a kernel spanned by \((1, -1, 1)\), that
+			(a) Row reduction (it is the preset “triangle, signed” in the stepper) gives rank 2 and a kernel spanned by \((1, -1, 1)\), that
 			is, \([0,1] - [0,2] + [1,2]\). This is the walk \(0 \to 1 \to 2 \to 0\) around the triangle, with the edge \([0,2]\) traversed
 			backwards: a loop.
 		</p>
@@ -1560,7 +1560,7 @@
 		</li>
 		<li>
 			A <strong>linear map</strong> keeps the grid a grid. It is determined by the images of a basis, which are the columns of its
-			<strong>matrix</strong>; the matrix product \(AB\) is the composition "A after B".
+			<strong>matrix</strong>; the matrix product \(AB\) is the composition “A after B”.
 		</li>
 		<li>
 			The <strong>kernel</strong> is what gets crushed (the solutions of \(A\mathbf x = \mathbf 0\), the quiet patterns); the
