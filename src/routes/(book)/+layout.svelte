@@ -14,6 +14,19 @@
 	const chapter = $derived(chapterById.get(id));
 
 	let article: HTMLElement | undefined = $state();
+	let sidebarInner: HTMLElement | undefined = $state();
+
+	// keep the current chapter visible in the (independently scrolling) sidebar
+	$effect(() => {
+		void id;
+		if (!sidebarInner) return;
+		tick().then(() => {
+			const el = sidebarInner?.querySelector<HTMLElement>('a[aria-current="page"]');
+			if (!el || !sidebarInner) return;
+			const top = el.offsetTop - sidebarInner.clientHeight / 3;
+			sidebarInner.scrollTo({ top: Math.max(0, top) });
+		});
+	});
 
 	// Collect h2 sections for the sidebar and keep the active one in sync.
 	$effect(() => {
@@ -65,7 +78,7 @@
 
 <div class="book has-sidebar">
 	<aside class="sidebar" aria-label="Chapters">
-		<div class="sidebar-inner">
+		<div class="sidebar-inner" bind:this={sidebarInner}>
 			<TocList current={id} />
 		</div>
 	</aside>

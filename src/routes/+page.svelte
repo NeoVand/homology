@@ -240,6 +240,8 @@
 <footer class="site-foot ui">
 	<span>Homology &amp; Cohomology — an illustrated journey</span>
 	<span class="sep">·</span>
+	<a href={href('/cheatsheet/')}>Cheat sheet</a>
+	<span class="sep">·</span>
 	<a href={href('/sources/')}>Sources &amp; further reading</a>
 	<span class="sep">·</span>
 	<a href="https://github.com/NeoVand/homology" target="_blank" rel="noopener noreferrer">Source code</a>
