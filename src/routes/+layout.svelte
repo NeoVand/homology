@@ -8,6 +8,16 @@
 	let { children } = $props();
 </script>
 
+<svelte:head>
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="Homology & Cohomology — an illustrated journey" />
+	<meta property="og:image" content="https://neovand.github.io/homology/og.png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:image" content="https://neovand.github.io/homology/og.png" />
+</svelte:head>
+
 <a class="skip ui" href="#main">Skip to content</a>
 <Starfield />
 <TopBar />
