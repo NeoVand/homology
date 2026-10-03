@@ -200,7 +200,7 @@
 	</ul>
 </Example>
 
-<h2 id="subsets">Subsets</h2>
+<h3 id="subsets">Subsets</h3>
 
 <p>
 	The most basic relationship between two sets is that one is contained in the other.
@@ -632,7 +632,7 @@
 	</p>
 </Intuition>
 
-<h2 id="composition">Composition: g after f</h2>
+<h2 id="composition">Composition and inverses</h2>
 
 <p>
 	If \(f\) takes you from \(X\) to \(Y\), and \(g\) takes you from \(Y\) onward to \(Z\), you can do one after the other.
@@ -684,7 +684,7 @@
 	</li>
 </ul>
 
-<h2 id="inverses">Undoing a function: inverses</h2>
+<h3 id="inverses">Undoing a function: inverses</h3>
 
 <p>
 	Some functions can be undone. Doubling, \(x\mapsto 2x\) on \(\R\), is undone by halving. Squaring on \(\R\) cannot be undone:
