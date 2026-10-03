@@ -260,6 +260,9 @@
 				const r = container.getBoundingClientRect();
 				width = Math.max(1, r.width);
 				heightPx = Math.max(1, r.height);
+				// big canvases at full retina resolution are costly for the shimmer shaders
+				const dprCap = width * heightPx > 600_000 ? 1.5 : 2;
+				renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, dprCap));
 				renderer.setSize(width, heightPx, false);
 				canvas.style.width = '100%';
 				canvas.style.height = '100%';
