@@ -108,8 +108,8 @@ describe('torus grid (translation-invariant ordering)', () => {
 		// loop a: the bottom row of horizontal edges, left to right; loop b: the left column, upwards
 		const loopA = D.edges.map((_, e) => (M.edgeSegs[e].some((s) => s.a[1] === 0 && s.b[1] === 0 && s.b[0] > s.a[0]) ? 1 : 0));
 		const loopB = D.edges.map((_, e) => (M.edgeSegs[e].some((s) => s.a[0] === 0 && s.b[0] === 0 && s.b[1] > s.a[1]) ? 1 : 0));
-		expect(loopA.reduce((x, y) => x + y)).toBe(n);
-		expect(loopB.reduce((x, y) => x + y)).toBe(n);
+		expect(loopA.reduce((x: number, y: number) => x + y, 0)).toBe(n);
+		expect(loopB.reduce((x: number, y: number) => x + y, 0)).toBe(n);
 		expect([evaluate(a, loopA), evaluate(a, loopB), evaluate(b, loopA), evaluate(b, loopB)]).toEqual([1, 0, 0, 1]);
 	});
 });

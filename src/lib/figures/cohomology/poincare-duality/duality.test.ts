@@ -46,7 +46,7 @@ describe('cap product with the fundamental class (torus grid)', () => {
 				]
 			]);
 			const loop = vertical((i0 + 1) / n);
-			expect(loop.reduce((s, x) => s + x, 0)).toBe(n);
+			expect(loop.reduce((s: number, x: number) => s + x, 0)).toBe(n);
 			expect(cap21(D, T, a)).toEqual(loop);
 		}
 		for (let j0 = 0; j0 < n; j0++) {
