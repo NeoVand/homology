@@ -256,13 +256,5 @@ export const entries: GlossaryEntry[] = [
 		chapter,
 		anchor: 'thm-smith',
 		see: ['invariant-factors', 'cokernel']
-	},
-	{
-		key: 'invariant-factors',
-		term: 'Invariant factors',
-		def: 'The positive diagonal entries \\(d_1 \\mid d_2 \\mid \\cdots \\mid d_r\\) of the Smith normal form of an integer matrix. They depend only on the matrix; those bigger than 1 give torsion.',
-		chapter,
-		anchor: 'thm-smith',
-		see: ['smith-normal-form']
 	}
 ];

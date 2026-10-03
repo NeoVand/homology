@@ -24,7 +24,9 @@
 	// the measurement φ(x, y) = a·x + b·y, controlled through the point h where
 	// the line φ = 1 is closest to the origin: φ = h / |h|²
 	let h = $state<V2>([0.8, 0.4]);
-	let v = $state<V2>([2.5, 1.5]);
+	// (in pull-back mode v starts small, so that A v stays on the canvas for every map)
+	// svelte-ignore state_referenced_locally
+	let v = $state<V2>(mode === 'pullback' ? [1.5, 1] : [2.5, 1.5]);
 
 	const phi = $derived.by<V2>(() => {
 		const L2 = h[0] * h[0] + h[1] * h[1];
@@ -268,6 +270,10 @@
 	}
 	.mid .v {
 		display: none;
+	}
+	/* long arrows (A v for a stretching map) must not escape their panel */
+	.pane :global(svg) {
+		overflow: hidden;
 	}
 	.pane {
 		display: flex;

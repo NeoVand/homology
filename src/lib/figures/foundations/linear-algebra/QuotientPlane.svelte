@@ -44,8 +44,10 @@
 		// move p along its own coset: the coset (the violet line) does not change
 		cancelAnimationFrame(raf);
 		const from: V2 = [...p];
-		const dir = from[0] > 0 ? -1 : 1;
-		const to = lim(add(from, mul(dir * 1.5, W)));
+		// slide by a multiple of (2, 1) that keeps p inside the canvas, so it stays on its line
+		const inside = (v: V2) => lim(v)[0] === v[0] && lim(v)[1] === v[1];
+		const steps = [1.5, -1.5, 1, -1, 0.5, -0.5].map((k) => add(from, mul(k, W)));
+		const to = steps.find(inside) ?? from;
 		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		const dur = reduced ? 0 : 1100;
 		const t0 = performance.now();

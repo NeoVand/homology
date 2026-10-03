@@ -195,8 +195,17 @@
 		};
 	}
 
-	$effect(() => api?.setT(t));
-	$effect(() => api?.setFibres(showFibres));
+	// Read the state *before* the optional call: if `api` is still null (the scene is
+	// created lazily), `api?.setT(t)` would short-circuit without reading `t`, and the
+	// effect would never run again.
+	$effect(() => {
+		const v = t;
+		api?.setT(v);
+	});
+	$effect(() => {
+		const on = showFibres;
+		api?.setFibres(on);
+	});
 
 	function play() {
 		cancelAnimationFrame(raf);

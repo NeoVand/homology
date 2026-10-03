@@ -88,6 +88,15 @@
 		const p = mul(r, d);
 		return [clamp(p[0], view.xmin + 0.9, view.xmax - 0.9), clamp(p[1], view.ymin + 0.5, view.ymax - 0.5)];
 	};
+	/** of the two ends of a line through 0, the one farther from the given points */
+	const freeEnd = (d: V2, avoid: V2[]): V2 => {
+		const a = labelAt(d, 4.4);
+		const b = labelAt(d, -4.4);
+		const gap = (p: V2) => Math.min(...avoid.map((q) => Math.hypot(p[0] - q[0], p[1] - q[1])));
+		return gap(a) >= gap(b) ? a : b;
+	};
+	const imgTag = $derived(rank === 1 ? freeEnd(idir, [m1, m2]) : ([0, 0] as V2));
+	const kerTag = $derived(rank === 1 ? freeEnd(kdir, [m1, m2, imgTag]) : ([0, 0] as V2));
 
 	function setCol(which: 1 | 2, w: V2) {
 		cancelAnimationFrame(raf);
@@ -218,8 +227,7 @@
 						y2={view.Y(imageLine[1][1])}
 					/>
 				</g>
-				{@const lp = labelAt(idir, 4.4)}
-				<text class="tag gold" x={view.X(lp[0])} y={view.Y(lp[1]) - 10} text-anchor="middle">image</text>
+				<text class="tag gold" x={view.X(imgTag[0])} y={view.Y(imgTag[1]) - 10} text-anchor="middle">image</text>
 			{/if}
 
 			{#if rank === 1 && ghostKernel && kernelNow}
@@ -247,8 +255,7 @@
 				{#each kernelDots as d, i (i)}
 					<circle class="ker-dot" cx={view.X(d[0])} cy={view.Y(d[1])} r="3.6" />
 				{/each}
-				{@const kp = labelAt(kdir, -4.4)}
-				<text class="tag teal" x={view.X(kp[0])} y={view.Y(kp[1]) + 18} text-anchor="middle">kernel</text>
+				<text class="tag teal" x={view.X(kerTag[0])} y={view.Y(kerTag[1]) + 18} text-anchor="middle">kernel</text>
 			{/if}
 
 			<!-- the origin: where the kernel goes -->

@@ -104,6 +104,7 @@
 	];
 </script>
 
+<div class="la">
 <Epigraph author="Michael Atiyah" source="Mathematics in the 20th century (2002)"
 	>Algebra is the offer made by the devil to the mathematician. The devil says: ‘I will give you this powerful machine, it will answer
 	any question you like. All you need to do is give me your soul: give up geometry and you will have this marvellous machine.’</Epigraph
@@ -268,7 +269,8 @@
 <h3>Vectors that are switches: the field \(\Z/2\)</h3>
 
 <p>
-	Now for a field you may not have met. In <Ref to="foundations/groups" /> you saw clock arithmetic with two hours,
+	Now for a field you may not have met. In <Ref to="foundations/groups" /> you saw
+	<Term t="integers-mod-n">clock arithmetic</Term> with two hours,
 	\(\Z/2 = \set{0, 1}\) (read "Z mod 2"), in which \(1 + 1 = 0\). Think "odd plus odd is even". Multiplication is the obvious one: \(0 \cdot 0 =
 	0 \cdot 1 = 0\) and \(1 \cdot 1 = 1\). This tiny number system is a field, because its only nonzero number is \(1\), whose
 	reciprocal is \(1\) itself. So it is a perfectly good choice of scalars. Many books write it \(\F_2\), read "F-two", the F standing
@@ -328,14 +330,16 @@
 
 <Definition id="def-span" title="Span">
 	<p>
-		The <dfn>span</dfn> of vectors \(\mathbf v_1, \dots, \mathbf v_k\) is the set of all their linear combinations,
-		\[ \operatorname{span}\set{\mathbf v_1,\dots,\mathbf v_k} = \setb{a_1\mathbf v_1 + \dots + a_k\mathbf v_k}{a_1,\dots,a_k \text{ scalars}}. \]
+		The <dfn>span</dfn> of vectors \(\mathbf v_1, \dots, \mathbf v_k\) is the set of all their linear combinations
+		\(a_1\mathbf v_1 + \dots + a_k\mathbf v_k\), where the scalars \(a_1, \dots, a_k\) may be anything:
+		\[ \begin{aligned} \operatorname{span}&\set{\mathbf v_1,\dots,\mathbf v_k} \\ &= \setb{\textstyle\sum_i a_i\mathbf v_i}{a_i \text{ scalars}}. \end{aligned} \]
 	</p>
 </Definition>
 
 <p>
-	The vertical bar is read "such that": the span is the set of all sums \(a_1\mathbf v_1 + \dots + a_k\mathbf v_k\) such that the
-	\(a_i\) are scalars. The span of a single nonzero vector \(\mathbf v\) consists of its multiples \(c\,\mathbf v\): a line through the
+	Two pieces of notation appear here. In this <Term t="set-builder-notation">set-builder notation</Term> the vertical bar is read
+	"such that": the span is the set of all sums such that the \(a_i\) are scalars. And \(\sum_i a_i\mathbf v_i\), with a capital sigma, is shorthand for the sum \(a_1\mathbf v_1 + \dots + a_k\mathbf v_k\):
+	"add up \(a_i\mathbf v_i\) over all values of \(i\)". The span of a single nonzero vector \(\mathbf v\) consists of its multiples \(c\,\mathbf v\): a line through the
 	origin. The span of two vectors pointing in different directions is the whole plane, because any point can be reached by going some
 	distance along one and then some distance along the other. But if the second vector lies on the line of the first, it adds nothing
 	new, and the span is still only a line.
@@ -442,7 +446,7 @@
 <Definition id="def-linear-map" title="Linear map">
 	<p>
 		A function \(T\colon V \to W\) between vector spaces over the same field is <dfn>linear</dfn> if
-		\[ T(\mathbf u + \mathbf v) = T(\mathbf u) + T(\mathbf v) \quad\text{and}\quad T(c\,\mathbf v) = c\,T(\mathbf v) \]
+		\[ \begin{gathered} T(\mathbf u + \mathbf v) = T(\mathbf u) + T(\mathbf v), \\ T(c\,\mathbf v) = c\,T(\mathbf v) \end{gathered} \]
 		for all vectors \(\mathbf u, \mathbf v\) and all scalars \(c\). In words: adding and then transforming gives the same result as
 		transforming and then adding, and the same goes for scaling.
 	</p>
@@ -482,18 +486,23 @@
 	A matrix with \(m\) rows and \(n\) columns, an "\(m \times n\) matrix" (read "m by n"), describes a linear map \(\R^n \to \R^m\),
 	with \(n\) inputs and \(m\) outputs. Its columns are the images of \(\mathbf e_1, \dots, \mathbf e_n\), so they live in the codomain
 	\(\R^m\). The entry in row \(i\) and column \(j\) is written \(a_{ij}\). To apply the map to a vector \(\mathbf x\), take that
-	combination of the columns:
-	\[ A\mathbf x = x_1\,(\text{column } 1) + x_2\,(\text{column } 2) + \dots + x_n\,(\text{column } n). \]
+	combination of the columns: if \(\mathbf a_1, \dots, \mathbf a_n\) are the columns, then
+	\[ A\mathbf x = x_1\,\mathbf a_1 + x_2\,\mathbf a_2 + \dots + x_n\,\mathbf a_n. \]
 	For example,
-	\[ \begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}\begin{pmatrix} 3 \\ -1 \end{pmatrix} = 3\begin{pmatrix} 1 \\ 2 \end{pmatrix} - 1\begin{pmatrix} 2 \\ 4 \end{pmatrix} = \begin{pmatrix} 1 \\ 2 \end{pmatrix}. \]
+	\[ \begin{aligned} \begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}\begin{pmatrix} 3 \\ -1 \end{pmatrix} &= 3\begin{pmatrix} 1 \\ 2 \end{pmatrix} - 1\begin{pmatrix} 2 \\ 4 \end{pmatrix} \\ &= \begin{pmatrix} 1 \\ 2 \end{pmatrix}. \end{aligned} \]
 	The same answer comes out row by row: entry \(i\) of \(A\mathbf x\) is \(a_{i1}x_1 + \dots + a_{in}x_n\), the
 	<em>dot product</em> of row \(i\) with \(\mathbf x\). Here \(1\cdot 3 + 2\cdot(-1) = 1\) and \(2 \cdot 3 + 4\cdot(-1) = 2\). Both
 	ways of computing are worth knowing, but the column way is the one that explains things.
 </p>
 
 <Example title="A small zoo of maps of the plane">
+	<div class="zoo">
+		<div>\[ \underbrace{\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}}_{\text{rotate by }90^\circ} \]</div>
+		<div>\[ \underbrace{\begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}}_{\text{shear}} \]</div>
+		<div>\[ \underbrace{\begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}}_{\text{project onto the }x\text{-axis}} \]</div>
+		<div>\[ \underbrace{\begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}}_{\text{flatten onto a line}} \]</div>
+	</div>
 	<p>
-		\[ \underbrace{\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}}_{\text{rotate by }90^\circ}\qquad \underbrace{\begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}}_{\text{shear}}\qquad \underbrace{\begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}}_{\text{project onto the }x\text{-axis}}\qquad \underbrace{\begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}}_{\text{flatten onto a line}} \]
 		Check the first: the rotation sends \(\mathbf e_1 = (1,0)\) to its first column \((0,1)\), a quarter turn anticlockwise, and
 		\(\mathbf e_2 = (0,1)\) to its second column \((-1,0)\). Three of the four are presets in the figure above; make the projection by
 		dragging the tip of the blue arrow to the origin.
@@ -532,7 +541,7 @@
 </p>
 
 <p>
-	Notice the order. \(AB\) means "first \(B\), then \(A\)", just like the composition \(g \circ f\) of
+	Notice the order. \(AB\) means "first \(B\), then \(A\)", just like the <Term t="composition">composition</Term> \(g \circ f\) of
 	<Ref to="foundations/sets-and-functions" />, read "g after f". And order matters. With the rotation \(R\) and the shear \(S\) from the
 	zoo,
 	\[ RS = \begin{pmatrix} 0 & -1 \\ 1 & 1 \end{pmatrix} \neq \begin{pmatrix} 1 & -1 \\ 1 & 0 \end{pmatrix} = SR: \]
@@ -659,9 +668,8 @@
 		show that \(A\mathbf v_1, \dots, A\mathbf v_r\) is a basis of the image, so that \(\rank A = r\).
 	</p>
 	<p>
-		<em>They span the image.</em> Any input can be written \(\mathbf x = \sum_i a_i \mathbf k_i + \sum_j b_j \mathbf v_j\) (the sign
-		\(\sum\), a capital sigma, means "add up over all values of the index"), and \(A\) kills every \(\mathbf k_i\), so
-		\(A\mathbf x = \sum_j b_j\, A\mathbf v_j\). <em>They are independent.</em> If
+		<em>They span the image.</em> Any input can be written \(\mathbf x = \sum_i a_i \mathbf k_i + \sum_j b_j \mathbf v_j\), and \(A\)
+		kills every \(\mathbf k_i\), so \(A\mathbf x = \sum_j b_j\, A\mathbf v_j\). <em>They are independent.</em> If
 		\(\sum_j b_j\, A\mathbf v_j = \mathbf 0\), then \(A\big(\sum_j b_j \mathbf v_j\big) = \mathbf 0\), so \(\sum_j b_j\mathbf v_j\) lies
 		in the kernel and is a combination of the \(\mathbf k_i\). Because the whole list is a basis, that is possible only if every
 		\(b_j = 0\).
@@ -741,10 +749,10 @@
 <p>
 	Let us run it on the system above. Column 1 already has a 1 in row 1, so we clear the rest of the column with
 	\(R_2 \leftarrow R_2 - 2R_1\) and \(R_3 \leftarrow R_3 - 3R_1\) (read: "replace row 2 by row 2 minus twice row 1", and so on):
-	\[ \begin{pmatrix} 1 & 2 & 1 & 3 \\ 2 & 4 & 0 & 2 \\ 3 & 6 & 1 & 5 \end{pmatrix} \longrightarrow \begin{pmatrix} 1 & 2 & 1 & 3 \\ 0 & 0 & -2 & -4 \\ 0 & 0 & -2 & -4 \end{pmatrix}. \]
+	\[ \begin{pmatrix} 1 & 2 & 1 & 3 \\ 2 & 4 & 0 & 2 \\ 3 & 6 & 1 & 5 \end{pmatrix} \to \begin{pmatrix} 1 & 2 & 1 & 3 \\ 0 & 0 & -2 & -4 \\ 0 & 0 & -2 & -4 \end{pmatrix}. \]
 	Column 2 has only zeros below row 1, so it gets no pivot. In column 3, the entry \(-2\) in row 2 becomes a pivot after
 	\(R_2 \leftarrow -\tfrac12 R_2\), and then \(R_1 \leftarrow R_1 - R_2\) and \(R_3 \leftarrow R_3 + 2R_2\) clear its column:
-	\[ \longrightarrow \begin{pmatrix} 1 & 2 & 1 & 3 \\ 0 & 0 & 1 & 2 \\ 0 & 0 & -2 & -4 \end{pmatrix} \longrightarrow \begin{pmatrix} \cyc{1} & 2 & 0 & 1 \\ 0 & 0 & \cyc{1} & 2 \\ 0 & 0 & 0 & 0 \end{pmatrix}. \]
+	\[ \to \begin{pmatrix} 1 & 2 & 1 & 3 \\ 0 & 0 & 1 & 2 \\ 0 & 0 & -2 & -4 \end{pmatrix} \to \begin{pmatrix} \cyc{1} & 2 & 0 & 1 \\ 0 & 0 & \cyc{1} & 2 \\ 0 & 0 & 0 & 0 \end{pmatrix}. \]
 	Column 4 has only a zero in the one remaining row, so it gets no pivot. Done: two pivots, in columns 1 and 3. You can replay every
 	step in the figure.
 </p>
@@ -765,7 +773,7 @@
 		<strong>Kernel.</strong> The columns without pivots belong to <dfn>free variables</dfn>, here \(x_2\) and \(x_4\), which may take
 		any values. The pivot rows then determine the rest: \(x_1 = -2x_2 - x_4\) and \(x_3 = -2x_4\). Setting one free variable to 1 and
 		the others to 0 gives one kernel vector for each free variable,
-		\[ x_2 = 1:\ \ (-2,\,1,\,0,\,0), \qquad x_4 = 1:\ \ (-1,\,0,\,-2,\,1), \]
+		\[ \begin{aligned} x_2 = 1,\ x_4 = 0 &:\quad (-2,\,1,\,0,\,0), \\ x_2 = 0,\ x_4 = 1 &:\quad (-1,\,0,\,-2,\,1), \end{aligned} \]
 		and these form a basis of the kernel. The nullity is the number of free variables, 2.
 	</li>
 	<li>
@@ -793,7 +801,7 @@
 	is the same as subtracting it. Row reduction becomes: find a 1, swap it into place, and add its row to every other row that has a 1
 	in that column. Here is the "triangle matrix", whose columns are the three edges of a triangle, each edge recorded by its two
 	corners:
-	\[ \begin{pmatrix} 1 & 1 & 0 \\ 1 & 0 & 1 \\ 0 & 1 & 1 \end{pmatrix} \xrightarrow{R_2 \leftarrow R_2 + R_1} \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 1 & 1 \end{pmatrix} \xrightarrow{\substack{R_1 \leftarrow R_1 + R_2 \\ R_3 \leftarrow R_3 + R_2}} \begin{pmatrix} \cyc{1} & 0 & 1 \\ 0 & \cyc{1} & 1 \\ 0 & 0 & 0 \end{pmatrix}. \]
+	\[ \begin{aligned} \begin{pmatrix} 1 & 1 & 0 \\ 1 & 0 & 1 \\ 0 & 1 & 1 \end{pmatrix} &\xrightarrow{R_2 \leftarrow R_2 + R_1} \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 1 & 1 \end{pmatrix} \\[4pt] &\xrightarrow{\substack{R_1 \leftarrow R_1 + R_2 \\ R_3 \leftarrow R_3 + R_2}} \begin{pmatrix} \cyc{1} & 0 & 1 \\ 0 & \cyc{1} & 1 \\ 0 & 0 & 0 \end{pmatrix}. \end{aligned} \]
 	Rank 2. The free variable \(x_3\) gives the kernel vector \((1,1,1)\): all three edges together, the loop around the triangle. The
 	kernel is \(\set{(0,0,0),\ (1,1,1)}\).
 </p>
@@ -867,7 +875,7 @@
 <p>
 	In the last figure, all the points of one gold line are "the same" as far as \(A\) is concerned, since \(A\) sends them all to the
 	same \(\mathbf b\). It is natural to treat each such line as a single object. You have done this kind of thing twice already: in
-	<Ref to="foundations/equivalence" /> you formed quotient sets by declaring equivalent things equal, and in
+	<Ref to="foundations/equivalence" /> you formed <Term t="quotient-set">quotient sets</Term> by declaring equivalent things equal, and in
 	<Ref to="foundations/abelian-groups" /> you formed <Term t="quotient-group">quotient groups</Term> \(G/H\) by collapsing a subgroup.
 	Vector spaces have quotients too, and they are where homology lives.
 </p>
@@ -875,10 +883,10 @@
 <Definition id="def-quotient-space" title="Quotient space">
 	<p>
 		Let \(W\) be a subspace of \(V\). Call two vectors equivalent, \(\mathbf v \sim \mathbf v'\), when their difference
-		\(\mathbf v - \mathbf v'\) lies in \(W\). The equivalence class of \(\mathbf v\) is the coset
+		\(\mathbf v - \mathbf v'\) lies in \(W\). The <Term t="equivalence-class">equivalence class</Term> of \(\mathbf v\) is the coset
 		\(\mathbf v + W = \setb{\mathbf v + \mathbf w}{\mathbf w \in W}\), a parallel copy of \(W\) passing through \(\mathbf v\). The
 		<dfn>quotient space</dfn> \(V/W\), read "V mod W", is the set of these cosets, with
-		\[ (\mathbf u + W) + (\mathbf v + W) = (\mathbf u + \mathbf v) + W, \qquad c\,(\mathbf v + W) = c\,\mathbf v + W. \]
+		\[ \begin{gathered} (\mathbf u + W) + (\mathbf v + W) = (\mathbf u + \mathbf v) + W, \\ c\,(\mathbf v + W) = c\,\mathbf v + W. \end{gathered} \]
 	</p>
 </Definition>
 
@@ -913,7 +921,8 @@
 	squashes each of them to a single point of the floor. Different lines land on different points, and every point of the floor is hit.
 	So the cosets of the kernel correspond exactly to the points of the image:
 	\[ V/\ker A \;\cong\; \im A, \]
-	where \(\cong\) is read "is isomorphic to": the two are the same vector space in different clothes. This is the
+	where \(\cong\) is read "is <Term t="isomorphism">isomorphic</Term> to": the two are the same vector space in different clothes.
+	This is the
 	<Term t="first-isomorphism-theorem">first isomorphism theorem</Term> of <Ref to="foundations/abelian-groups" />, for vector spaces. Take the dimensions of both sides and you get \(\dim V - \operatorname{nullity} A = \rank A\): rank–nullity again,
 	seen from a new angle.
 </p>
@@ -924,10 +933,10 @@
 		\(H_k = Z_k/B_k\): the <span class="tx-gold">cycles</span> \(Z_k = \ker \partial_k\) modulo the
 		<span class="tx-teal">boundaries</span> \(B_k = \im \partial_{k+1}\). Over a field, this chapter has already computed its
 		dimension:
-		\[ \dim H_k = \underbrace{\dim \ker\partial_k}_{n_k - \rank \partial_k} - \underbrace{\dim \im \partial_{k+1}}_{\rank \partial_{k+1}} = n_k - \rank\partial_k - \rank\partial_{k+1}, \]
-		where \(n_k\), the number of \(k\)-dimensional pieces, is the dimension of the domain of \(\partial_k\). The first brace is
-		rank–nullity, the second is the definition of rank, and the subtraction is the dimension of a quotient. That is the formula from
-		the start of the chapter.
+		\[ \begin{aligned} \dim H_k &= \dim \ker\partial_k - \dim \im \partial_{k+1} \\ &= n_k - \rank \partial_k - \rank \partial_{k+1}. \end{aligned} \]
+		The first line is the dimension of a quotient. In the second, \(n_k\), the number of \(k\)-dimensional pieces, is the dimension of
+		the domain of \(\partial_k\), so rank–nullity turns \(\dim\ker\partial_k\) into \(n_k - \rank\partial_k\); and
+		\(\dim\im\partial_{k+1}\) is \(\rank\partial_{k+1}\) by definition. That is the formula from the start of the chapter.
 	</p>
 </KeyIdea>
 
@@ -1061,16 +1070,18 @@
 
 <p>
 	How should we picture a covector? Not as an arrow. Draw instead the places where it takes the values \(\dots, -1, 0, 1, 2, \dots\).
-	For \(\varphi(x,y) = ax + by\) these are evenly spaced parallel lines: a <em>stack</em>. The value \(\varphi(\mathbf v)\) is the
-	number of lines that the arrow \(\mathbf v\) crosses, counted with a sign. The covector is a ruler, and the lines are its marks.
+	For \(\varphi(x,y) = ax + by\) these are evenly spaced parallel lines: a <em>stack</em>. The value \(\varphi(\mathbf v)\) is the level
+	that the tip of \(\mathbf v\) reaches, starting from line 0 at its tail: it counts the lines the arrow crosses (with a sign, negative
+	if it goes down the numbering), plus a fraction for the last partial step. The covector is a ruler, and the lines are its marks.
 </p>
 
 <Figure size="wide" title="A covector is a stack of lines" hint="Drag v and the blue handle">
 	<CovectorStack mode="measure" />
 	{#snippet caption()}
-		The covector \(\varphi\) drawn as its level lines \(\varphi = 0, \pm1, \pm2, \dots\). Its value on \(\mathbf v\) is the number of
-		lines crossed (the gold dots), with a sign. A <em>bigger</em> covector has <em>denser</em> lines: doubling \(\varphi\) doubles every
-		measurement by packing the lines twice as tightly. Turn \(\mathbf v\) to run along the lines, and \(\varphi(\mathbf v) = 0\).
+		The covector \(\varphi\) drawn as its level lines \(\varphi = 0, \pm1, \pm2, \dots\). Its value on \(\mathbf v\) is the level the
+		tip of \(\mathbf v\) reaches: the gold dots mark the whole lines it crosses on the way. A <em>bigger</em> covector has
+		<em>denser</em> lines: doubling \(\varphi\) doubles every measurement by packing the lines twice as tightly. Turn \(\mathbf v\) to
+		run along the lines, and \(\varphi(\mathbf v) = 0\).
 	{/snippet}
 </Figure>
 
@@ -1232,7 +1243,8 @@
 
 <p>
 	Everything so far relied on a field: we divided freely, for instance to turn pivots into 1s. But homology is most informative with
-	integer coefficients. Chains will be formal sums with whole-number coefficients, elements of the free abelian groups of
+	integer coefficients. Chains will be <Term t="formal-sum">formal sums</Term> with whole-number coefficients, elements of the free
+	abelian groups of
 	<Ref to="foundations/abelian-groups" />, and boundary matrices will have integer entries. In \(\Z\) we may not divide, and that
 	changes the story.
 </p>
@@ -1243,7 +1255,7 @@
 	<li>Over \(\Z/2\) it is the zero map, because \(2 = 0\) there: kernel everything, image 0.</li>
 	<li>
 		Over \(\Z\) it is neither. The map \(x \mapsto 2x\) is injective, but its image is the even numbers \(2\Z\), and the leftover
-		\(\Z/2\Z = \Z/2\) is not zero. That leftover is a <Term t="torsion">torsion</Term> group: it has a nonzero element, the class of
+		\(\Z/2\Z = \Z/2\) is not zero. That leftover is a <Term t="torsion-element">torsion</Term> group: it has a nonzero element, the class of
 		1, which becomes zero when doubled.
 	</li>
 </ul>
@@ -1266,17 +1278,18 @@
 <Theorem id="thm-smith" title="Smith normal form">
 	<p>
 		Every integer matrix \(A\) can be brought, by integer row and column operations, to a diagonal form
-		\[ \begin{pmatrix} d_1 & & & \\ & \ddots & & \\ & & d_r & \\ & & & 0 \end{pmatrix}, \qquad d_1 \mid d_2 \mid \cdots \mid d_r, \]
+		\[ \begin{gathered} \begin{pmatrix} d_1 & & & \\ & \ddots & & \\ & & d_r & \\ & & & 0 \end{pmatrix}, \\[4pt] d_1 \mid d_2 \mid \cdots \mid d_r, \end{gathered} \]
 		with positive integers \(d_i\), each dividing the next (\(d_1 \mid d_2\) is read "\(d_1\) divides \(d_2\)"), and zeros everywhere
 		else. The numbers \(d_1, \dots, d_r\), called the <dfn>invariant factors</dfn>, depend only on \(A\), not on the operations chosen.
 		Consequently, for \(A\colon \Z^n \to \Z^m\),
-		\[ \Z^m/\im A \;\cong\; \Z/d_1 \oplus \cdots \oplus \Z/d_r \oplus \Z^{m-r}, \qquad \ker A \;\cong\; \Z^{n-r}. \]
+		\[ \begin{aligned} \Z^m/\im A &\cong \Z/d_1 \oplus \dots \oplus \Z/d_r \oplus \Z^{m-r}, \\ \ker A &\cong \Z^{n-r}. \end{aligned} \]
 	</p>
 </Theorem>
 
 <p>
 	This diagonal form is the <dfn>Smith normal form</dfn>, after Henry John Stephen Smith, who introduced it in 1861. We abbreviate a
-	diagonal matrix by listing its diagonal, as in \(\operatorname{diag}(d_1, \dots, d_r)\); the symbol \(\oplus\) is the direct sum of
+	diagonal matrix by listing its diagonal, as in \(\operatorname{diag}(d_1, \dots, d_r)\); the symbol \(\oplus\) is the
+	<Term t="direct-sum">direct sum</Term> of
 	<Ref to="foundations/abelian-groups" />, and \(\Z/1\) is the group with one element. Reading off the answer is easy once the matrix
 	is diagonal, because the map then does independent things to independent coordinates: it multiplies
 	the \(i\)-th coordinate by \(d_i\). A factor \(d_i = 1\) leaves nothing behind, since \(\Z/1 = 0\). A factor \(d_i > 1\) leaves the
@@ -1295,7 +1308,7 @@
 	<p>
 		The map \((x, y) \mapsto (x + y,\ x - y)\) on \(\Z^2\) has the matrix \(\begin{pmatrix} 1 & 1 \\ 1 & -1\end{pmatrix}\). Three
 		integer operations finish it:
-		\[ \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} \xrightarrow{R_2 \leftarrow R_2 - R_1} \begin{pmatrix} 1 & 1 \\ 0 & -2 \end{pmatrix} \xrightarrow{C_2 \leftarrow C_2 - C_1} \begin{pmatrix} 1 & 0 \\ 0 & -2 \end{pmatrix} \xrightarrow{R_2 \leftarrow -R_2} \begin{pmatrix} 1 & 0 \\ 0 & 2 \end{pmatrix}. \]
+		\[ \begin{aligned} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} &\xrightarrow{R_2 \leftarrow R_2 - R_1} \begin{pmatrix} 1 & 1 \\ 0 & -2 \end{pmatrix} \\[4pt] &\xrightarrow{C_2 \leftarrow C_2 - C_1} \begin{pmatrix} 1 & 0 \\ 0 & -2 \end{pmatrix} \\[4pt] &\xrightarrow{R_2 \leftarrow -R_2} \begin{pmatrix} 1 & 0 \\ 0 & 2 \end{pmatrix}. \end{aligned} \]
 		So \(\Z^2/\im A \cong \Z/1 \oplus \Z/2 \cong \Z/2\). Indeed, \(x + y\) and \(x - y\) always have the same parity, since their
 		difference \(2y\) is even. The reachable pairs \((a, b)\) are exactly those with \(a + b\) even, and the leftover \(\Z/2\) is "the
 		parity of \(a + b\)". Over \(\Q\) the same matrix is invertible (its determinant is \(-2 \neq 0\)) and every pair is reachable:
@@ -1314,7 +1327,8 @@
 </Figure>
 
 <p>
-	This is the algorithm behind the classification theorem of <Ref to="foundations/abelian-groups" />: every finitely generated abelian
+	This is the algorithm behind the <Term t="classification-of-abelian-groups">classification theorem</Term> of
+	<Ref to="foundations/abelian-groups" />: every finitely generated abelian
 	group is \(\Z^r \oplus \Z/d_1 \oplus \dots \oplus \Z/d_k\) with \(d_1 \mid d_2 \mid \cdots\). Describe the group by generators and
 	relations, write the relations as the columns of a matrix, and the Smith normal form reads off the decomposition. For instance, the
 	group \(\Z^2/\langle (2,4), (6,8) \rangle\), integer pairs modulo the subgroup generated by \((2,4)\) and \((6,8)\), comes from the
@@ -1478,8 +1492,9 @@
 <Exercise level={3} title="Gradients on a triangle">
 	<p>
 		A hollow triangle has vertices \(0, 1, 2\) and edges \([0,1]\), \([0,2]\), \([1,2]\), each pointing from the smaller label to the
-		larger. Its signed boundary matrix sends an edge \([i,j]\) to \(v_j - v_i\):
-		\[ D = \begin{pmatrix} -1 & -1 & 0 \\ 1 & 0 & -1 \\ 0 & 1 & 1 \end{pmatrix} \quad \text{(rows } v_0, v_1, v_2\text{; columns } [0,1], [0,2], [1,2]\text{)}. \]
+		larger. Its signed boundary matrix sends an edge \([i,j]\) to \(v_j - v_i\). With rows \(v_0, v_1, v_2\) and columns \([0,1]\),
+		\([0,2]\), \([1,2]\), it is
+		\[ D = \begin{pmatrix} -1 & -1 & 0 \\ 1 & 0 & -1 \\ 0 & 1 & 1 \end{pmatrix}. \]
 		(a) Find the rank and kernel of \(D\) over \(\Q\), and interpret the kernel. (b) For numbers \(f = (f_0, f_1, f_2)\) placed on
 		the vertices, compute \(D^{\mathsf T} f\) and interpret it. (c) Find \(\ker D^{\mathsf T}\). (d) Use the duality theorem to decide
 		which labellings \(g = (g_{01}, g_{02}, g_{12})\) of the edges have the form \(D^{\mathsf T} f\).
@@ -1582,3 +1597,24 @@
 <h2 id="further-reading">Further reading</h2>
 
 <FurtherReading items={reading} />
+</div>
+
+<style>
+	/* the four little maps of the "zoo" example wrap onto two rows on narrow screens */
+	.zoo {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0 2rem;
+		margin: 0.1rem 0 0.3rem;
+	}
+	.zoo :global(.math-block) {
+		margin: 0.3em 0;
+	}
+	/* on phones, display formulas are set a little smaller so that they fit the column */
+	@media (max-width: 560px) {
+		.la :global(.math-block .katex-display > .katex) {
+			font-size: 1em;
+		}
+	}
+</style>

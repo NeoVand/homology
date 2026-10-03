@@ -430,6 +430,11 @@
 		color: var(--gold);
 		margin-bottom: 0.45rem;
 	}
+	.h :global(.katex) {
+		text-transform: none;
+		letter-spacing: normal;
+		font-size: 1.25em;
+	}
 	.checks {
 		display: flex;
 		flex-direction: column;
