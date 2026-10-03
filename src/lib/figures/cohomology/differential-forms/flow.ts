@@ -7,6 +7,7 @@
 import * as THREE from 'three';
 import { FIELD_GLSL, type FieldPreset } from './fields';
 import type { Vec2 } from './calc';
+import { shaderColor } from '$lib/three/materials';
 
 export const OVERLAY = { flow: 0, curl: 1, div: 2, potential: 3 } as const;
 
@@ -215,7 +216,7 @@ export class FlowParticles {
 			uClip: { value: new THREE.Vector2(1, 1) },
 			uCenter: { value: new THREE.Vector2(0, 0) },
 			uSize: { value: this.o.size },
-			uColor: { value: new THREE.Color(this.o.color) }
+			uColor: { value: shaderColor(this.o.color) }
 		});
 		const blend = { transparent: true, depthTest: false, depthWrite: false, blending: THREE.AdditiveBlending };
 		const headMat = new THREE.ShaderMaterial({ vertexShader: pVert, fragmentShader: pFrag, uniforms: uniforms(), ...blend });
@@ -246,7 +247,7 @@ export class FlowParticles {
 	}
 
 	setColor(c: number) {
-		for (const m of this.materials) m.uniforms.uColor.value.setHex(c);
+		for (const m of this.materials) m.uniforms.uColor.value.copy(shaderColor(c));
 	}
 
 	private spawn(i: number, box: [number, number, number, number], F: (x: number, y: number) => Vec2) {

@@ -70,8 +70,18 @@
 	let api: { sync(): void } | null = null;
 
 	function setup(ctx: SceneContext) {
-		const { scene, renderer, reducedMotion, invalidate } = ctx;
-		renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+		const { scene, renderer, reducedMotion, invalidate, canvas } = ctx;
+		// The LIC texture is noise anyway: cap the resolution to keep the shader cheap.
+		// (Scene3D resets the pixel ratio when it resizes, so re-apply the cap when needed.)
+		const DPR_CAP = 1.5;
+		const capDpr = () => {
+			const want = Math.min(window.devicePixelRatio || 1, DPR_CAP);
+			if (Math.abs(renderer.getPixelRatio() - want) > 1e-3) {
+				renderer.setPixelRatio(want);
+				renderer.setSize(Math.max(1, canvas.clientWidth), Math.max(1, canvas.clientHeight), false);
+			}
+		};
+		capDpr();
 		const mat = licMaterial(preset, overlay, extent);
 		const quad = licQuad(mat);
 		scene.add(quad);
@@ -100,6 +110,7 @@
 
 		api = {
 			sync() {
+				capDpr();
 				mat.uniforms.uField.value = preset.id;
 				mat.uniforms.uOverlay.value = overlay;
 				mat.uniforms.uBright.value = brightness;
@@ -118,6 +129,7 @@
 		if (reducedMotion) return { dispose };
 		return {
 			update(t: number, dt: number) {
+				capDpr();
 				mat.uniforms.uT.value = t;
 				parts?.step(Math.min(dt, 1 / 30), box, shown.F);
 			},
