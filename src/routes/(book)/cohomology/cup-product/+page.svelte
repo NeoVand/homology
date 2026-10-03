@@ -820,7 +820,7 @@
 <h3 id="rp2">The projective plane</h3>
 
 <p>
-	The real <Term t="projective-plane">projective plane</Term> \(\RP^2\) is a square whose opposite sides
+	The real <Term t="real-projective-plane">projective plane</Term> \(\RP^2\) is a square whose opposite sides
 	are glued with a twist each way: the point \((x,0)\) on the bottom is glued to \((1-x,1)\) on the top, and
 	\((0,y)\) on the left to \((1,1-y)\) on the right. In <Ref to="cohomology/cohomology-groups" /> we found
 	\(H^k(\RP^2;\Z/2)\cong\Z/2\) for \(k=0,1,2\). Call the nonzero degree-1 class \(x\). What is

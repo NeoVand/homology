@@ -2,7 +2,7 @@
 // fence's co-orientation (the direction in which crossing it counts +1), and
 // rose patches where two bands cross.
 import * as THREE from 'three';
-import { color, type PaletteName } from '$lib/three/materials';
+import { color, shaderColor, type PaletteName } from '$lib/three/materials';
 import { surfaceNormal, torus, type SurfaceFn } from '$lib/three/surfaces';
 
 export type UV = [number, number];
@@ -66,7 +66,7 @@ export function bandMaterial(c: PaletteName | number | string, o: { opacity?: nu
 		vertexShader: bandVertex,
 		fragmentShader: bandFragment,
 		uniforms: {
-			uColor: { value: color(c) },
+			uColor: { value: shaderColor(c) },
 			uTime: { value: 0 },
 			uOpacity: { value: o.opacity ?? 1 },
 			uAlong: { value: o.along ?? 10 },
