@@ -98,7 +98,10 @@
 		return { dispose: () => (api = null) };
 	}
 
-	$effect(() => api?.set(pull));
+	$effect(() => {
+		const v = pull; // read first, so the effect tracks it even before the scene exists
+		api?.set(v);
+	});
 </script>
 
 <Scene3D

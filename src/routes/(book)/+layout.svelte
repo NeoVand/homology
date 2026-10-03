@@ -28,40 +28,45 @@
 		});
 	});
 
-	// Collect h2 sections for the sidebar and keep the active one in sync.
+	// Collect h2 sections for the sidebar and keep the active one in sync:
+	// the active section is the last heading above ~35% of the viewport.
 	$effect(() => {
 		const currentId = id; // re-run on navigation
 		if (!article) return;
-		let observer: IntersectionObserver | undefined;
 		let cancelled = false;
+		let heads: HTMLHeadingElement[] = [];
+		let raf = 0;
+		const update = () => {
+			raf = 0;
+			const line = window.innerHeight * 0.35;
+			let active = heads[0]?.id ?? null;
+			for (const h of heads) {
+				if (h.getBoundingClientRect().top <= line) active = h.id;
+				else break;
+			}
+			ui.activeSection = active;
+		};
+		const onScroll = () => {
+			if (!raf) raf = requestAnimationFrame(update);
+		};
 		tick().then(() => {
 			if (cancelled || !article) return;
 			markVisited(currentId);
-			const heads = Array.from(article.querySelectorAll<HTMLHeadingElement>('h2[id]'));
+			heads = Array.from(article.querySelectorAll<HTMLHeadingElement>('h2[id]'));
 			ui.sections = heads.map((h) => {
 				const clone = h.cloneNode(true) as HTMLElement;
 				clone.querySelectorAll('.katex-mathml, .sec-num, .anchor').forEach((n) => n.remove());
 				return { id: h.id, html: clone.innerHTML };
 			});
-			ui.activeSection = heads[0]?.id ?? null;
-			const visible = new Map<string, boolean>();
-			observer = new IntersectionObserver(
-				(entries) => {
-					for (const e of entries) visible.set(e.target.id, e.isIntersecting || e.boundingClientRect.top < 0);
-					// active = last heading above the fold
-					let active = heads[0]?.id ?? null;
-					for (const h of heads) {
-						if (h.getBoundingClientRect().top < window.innerHeight * 0.35) active = h.id;
-					}
-					ui.activeSection = active;
-				},
-				{ rootMargin: '0px 0px -60% 0px', threshold: [0, 1] }
-			);
-			heads.forEach((h) => observer!.observe(h));
+			update();
+			window.addEventListener('scroll', onScroll, { passive: true });
+			window.addEventListener('resize', onScroll, { passive: true });
 		});
 		return () => {
 			cancelled = true;
-			observer?.disconnect();
+			cancelAnimationFrame(raf);
+			window.removeEventListener('scroll', onScroll);
+			window.removeEventListener('resize', onScroll);
 			ui.sections = [];
 		};
 	});

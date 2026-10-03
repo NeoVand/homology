@@ -120,7 +120,10 @@
 		};
 	}
 
-	$effect(() => api?.show(kind));
+	$effect(() => {
+		const v = kind; // read first, so the effect tracks it even before the scene exists
+		api?.show(v);
+	});
 </script>
 
 <div class="wrap">

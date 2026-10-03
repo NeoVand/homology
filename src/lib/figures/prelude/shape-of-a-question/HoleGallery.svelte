@@ -4,7 +4,7 @@
 	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import { glassMesh, glowPoint, glowTube, setGlowColor, dotTexture } from '$lib/three/materials';
+	import { glassMesh, glowPoint, glowTube, setGlowColor, dotTexture, shaderColor } from '$lib/three/materials';
 	import { sphere, torus, surfaceGeometry, SurfaceCurve, loopPath } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
 
@@ -85,7 +85,7 @@
 			cavity.material.opacity = k === 2 ? 0.28 : 0;
 			for (const m2 of [...(sph.userData.materials ?? []), ...(tor.userData.materials ?? [])]) {
 				m2.uniforms.uTintMix.value = k === 0 ? 0.35 : 0;
-				m2.uniforms.uTint.value.set(0xf2d08f);
+				m2.uniforms.uTint.value.copy(shaderColor('gold'));
 			}
 			nameLabels.forEach((l) => l.el.classList.toggle('gold', k === 0));
 			invalidate();
@@ -101,7 +101,10 @@
 		};
 	}
 
-	$effect(() => api?.set(mode));
+	$effect(() => {
+		const v = mode; // read first, so the effect tracks it even before the scene exists
+		api?.set(v);
+	});
 
 	const captions: Record<Mode, string> = {
 		b0: 'Each shape is a single connected piece, so each has exactly one “0-dimensional hole”: b₀ = 1.',
