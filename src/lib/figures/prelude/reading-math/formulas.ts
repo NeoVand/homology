@@ -42,7 +42,7 @@ export const formulas: Formula[] = [
 			{
 				tex: '(X)',
 				say: 'of X',
-				mean: 'The **space** being studied: a circle, a sphere, a doughnut, a cloud of data points. The parentheses say “applied to \\(X\\)”.'
+				mean: 'The **space** being studied: a circle, a sphere, a doughnut, a cloud of data points. The parentheses say “applied to \\(X\\)”. Together, \\(H_n(X)\\) is usually read “the \\(n\\)-th homology of \\(X\\)”.'
 			},
 			{
 				tex: '=',

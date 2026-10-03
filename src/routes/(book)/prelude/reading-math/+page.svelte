@@ -296,7 +296,7 @@
 
 <KeyIdea>
 	<p>
-		<strong>The contrapositive is how invariants work.</strong> Much of this book proves theorems of the shape “if two spaces are the
+		<strong>The contrapositive is how <Term t="invariant">invariants</Term> work.</strong> Much of this book proves theorems of the shape “if two spaces are the
 		same shape, then they have the same number of holes (of each dimension).” Its contrapositive is the useful part: “if two spaces
 		have different numbers of holes, then they are not the same shape.” That is how we will prove, beyond doubt, that a sphere is not
 		a doughnut. But beware the converse, “same holes ⇒ same shape,” which is false: a single point and a solid disk have no holes of
@@ -726,8 +726,10 @@
 <h2 id="destination">A first look at the destination</h2>
 
 <p>
-	Here, finally, is the formula at the centre of this book: the definition of <Term t="homology">homology</Term>. You are not
-	expected to understand it yet — only to <em>read</em> it. Step through it symbol by symbol, or hover over any piece.
+	Here, finally, is the formula at the centre of this book: the definition of <Term t="homology">homology</Term>. In <Ref
+		to="prelude/shape-of-a-question"
+	/> you saw what its pieces mean. Now read it the way a mathematician does: symbol by symbol, aloud. You are not expected to
+	understand it yet — only to <em>read</em> it. Step through it, or hover over any symbol.
 </p>
 
 <Figure size="wide" title="The formula decoder" hint="Hover or tap a symbol · step through · try other formulas" num="0.2.10">
