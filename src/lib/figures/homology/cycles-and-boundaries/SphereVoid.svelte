@@ -7,7 +7,7 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Slider from '$lib/components/ui/Slider.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
-	import { glassMesh, glowTube, faceMaterial, color } from '$lib/three/materials';
+	import { glassMesh, glowTube, faceMaterial, shaderColor } from '$lib/three/materials';
 	import { sphere, surfaceGeometry, SurfaceCurve } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
 	import { ease, fitOnNarrow } from './three-extras';
@@ -48,7 +48,7 @@
 
 		// the void: a soft rose glow inside
 		const voidMat = new THREE.ShaderMaterial({
-			uniforms: { uColor: { value: color('rose') }, uI: { value: 0 } },
+			uniforms: { uColor: { value: shaderColor('rose') }, uI: { value: 0 } },
 			vertexShader: /* glsl */ `
 				varying vec3 vN; varying vec3 vW;
 				void main() {
@@ -94,13 +94,13 @@
 			const v = d / 180;
 			for (const m of mats) {
 				m.uniforms.uHighlight.value = on ? 0.72 : 0;
-				m.uniforms.uHighlightColor.value = color('teal');
+				m.uniforms.uHighlightColor.value = shaderColor('teal');
 				m.uniforms.uHighlightRect.value.set(0, 1, otherCap ? v : 0, otherCap ? 1 : v);
 			}
 		};
 		const setTint = (c: string | null, mix: number) => {
 			for (const m of mats) {
-				if (c) m.uniforms.uTint.value = color(c);
+				if (c) m.uniforms.uTint.value = shaderColor(c);
 				m.uniforms.uTintMix.value = mix;
 			}
 		};
@@ -165,7 +165,13 @@
 		return { dispose: () => (api = null) };
 	}
 
-	$effect(() => api?.set(mode, deg, other, auto));
+	$effect(() => {
+		const m = mode,
+			d = deg,
+			o = other,
+			a = auto;
+		api?.set(m, d, o, a);
+	});
 </script>
 
 <div class="wrap">

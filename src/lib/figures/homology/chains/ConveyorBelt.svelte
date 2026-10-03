@@ -98,13 +98,12 @@
 			<ellipse cx={e.cx} cy={e.cy} rx={e.rx} ry={e.ry} fill="url(#cb-blob)" class="blob" />
 			<SvgTeX x={lab[0]} y={lab[1]} tex={String.raw`\chn{C_${c.k}}`} size={20} />
 			<SvgTeX
-				x={dl[0] + (vert ? -14 : 0)}
-				y={dl[1]}
+				x={vert ? lab[0] : dl[0]}
+				y={vert ? lab[1] + 26 : dl[1]}
 				tex={String.raw`\dim = ${c.dim}`}
-				size={14}
+				size={vert ? 12 : 14}
 				color="var(--ink-faint)"
 				w={vert ? 70 : 120}
-				anchor={vert ? 'start' : 'middle'}
 			/>
 		{/each}
 
@@ -155,7 +154,7 @@
 		{/if}
 		{#if show(3)}
 			{@const z = ell(C[2].x, Y, RX - 6, RY - 6)}
-			{@const zl = M(C[2].x + 2, Y + 76)}
+			{@const zl = vert ? ([z.cx + 72, z.cy + 34] as [number, number]) : M(C[2].x + 2, Y + 76)}
 			{@const b = ell(C[2].x, Y - 4, 54, 62)}
 			{@const bl = M(C[2].x - 22, Y - 36)}
 			<ellipse cx={z.cx} cy={z.cy} rx={z.rx} ry={z.ry} class="zset thin" />

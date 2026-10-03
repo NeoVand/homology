@@ -3,7 +3,7 @@
 // and a torus cut open along a (p, q) loop.
 import * as THREE from 'three';
 import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.js';
-import { color, type PaletteName } from '$lib/three/materials';
+import { shaderColor, type PaletteName } from '$lib/three/materials';
 import type { SurfaceFn } from '$lib/three/surfaces';
 
 /**
@@ -15,7 +15,7 @@ import type { SurfaceFn } from '$lib/three/surfaces';
 export function bandMaterial(c: PaletteName | number | string = 'teal', opacity = 0.5) {
 	return new THREE.ShaderMaterial({
 		uniforms: {
-			uColor: { value: color(c) },
+			uColor: { value: shaderColor(c) },
 			uOpacity: { value: opacity },
 			uA: { value: 0.1 },
 			uB: { value: 0.5 },

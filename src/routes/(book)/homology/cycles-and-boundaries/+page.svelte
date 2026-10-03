@@ -57,9 +57,10 @@
 <h2 id="what-is-a-hole">What is a hole, really?</h2>
 
 <p>
-	In 2021 the mathematician David Richeson opened an article in <em>Quanta Magazine</em> with three famous argument-starters: is Pluto a planet, is a hot
-	dog a sandwich, and how many holes does a drinking straw have? The first two, he noted, have people arguing yes or no. The straw question is worse: it
-	produces confident answers of two, one, and even zero.
+	Back in <Ref to="prelude/shape-of-a-question" /> we asked a question that sounds childish and is not: how many holes does a drinking straw have? In 2021
+	the mathematician David Richeson opened an article in <em>Quanta Magazine</em> with it, alongside two other famous argument-starters: is Pluto a planet,
+	and is a hot dog a sandwich? The first two, he noted, have people arguing yes or no. The straw question is worse: it produces confident answers of two,
+	one, and even zero. Now we are ready to settle it.
 </p>
 
 <p>Each answer has a reasonable story behind it.</p>

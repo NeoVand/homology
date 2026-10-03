@@ -112,7 +112,13 @@
 		return { dispose: () => (api = null) };
 	}
 
-	$effect(() => api?.set(vB, wiggle, showBand, auto));
+	$effect(() => {
+		const v = vB,
+			w = wiggle,
+			b = showBand,
+			a = auto;
+		api?.set(v, w, b, a);
+	});
 </script>
 
 <div class="wrap">

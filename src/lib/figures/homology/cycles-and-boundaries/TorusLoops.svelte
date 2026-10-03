@@ -175,7 +175,12 @@
 		return { dispose: () => (api = null) };
 	}
 
-	$effect(() => api?.show(kind, pq[0], pq[1], cut));
+	$effect(() => {
+		const k = kind,
+			[p0, q0] = pq,
+			c = cut;
+		api?.show(k, p0, q0, c);
+	});
 </script>
 
 <div class="wrap">

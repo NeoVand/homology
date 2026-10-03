@@ -46,7 +46,7 @@
 	</div>
 	<div class="op"><span class="arr" aria-hidden="true">⟶</span><TeX tex={String.raw`\partial`} /></div>
 	<div class="stage">
-		<Svg viewBox="0 30 220 200" maxHeight={230} label="The three edges of the triangle pulled apart, each with an arrow: plus [1,2], minus [0,2], plus [0,1].">
+		<Svg viewBox="0 30 220 215" maxHeight={240} label="The three edges of the triangle pulled apart, each with an arrow: plus [1,2], minus [0,2], plus [0,1].">
 			{#each [e12, e20, e01] as s, k (k)}
 				<path d={path(s)} class="edge" marker-mid="url(#arrowmid-teal)" />
 				{#each s as [x, y], j (j)}
@@ -56,7 +56,7 @@
 			<SvgTeX x={mid(e12)[0] + 30} y={mid(e12)[1] - 14} tex={String.raw`+[1,2]`} size={15} color="var(--teal)" w={80} />
 			<SvgTeX x={mid(e20)[0] - 30} y={mid(e20)[1] - 14} tex={String.raw`-[0,2]`} size={15} color="var(--teal)" w={80} />
 			<SvgTeX x={mid(e01)[0]} y={e01[0][1] + 19} tex={String.raw`+[0,1]`} size={15} color="var(--teal)" w={80} />
-			<SvgTeX x={110} y={218} tex={String.raw`\bdy{\partial\sigma}`} size={17} w={120} />
+			<SvgTeX x={110} y={232} tex={String.raw`\bdy{\partial\sigma}`} size={17} w={120} />
 		</Svg>
 	</div>
 	<div class="op"><span class="arr" aria-hidden="true">⟶</span><TeX tex={String.raw`\partial`} /></div>

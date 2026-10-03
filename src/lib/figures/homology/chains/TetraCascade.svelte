@@ -9,7 +9,7 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import StepControls from '$lib/components/ui/StepControls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import { glowCore, glowHalo, glowPoint, color, type PaletteName } from '$lib/three/materials';
+	import { glowCore, glowHalo, glowPoint, color, shaderColor, type PaletteName } from '$lib/three/materials';
 	import { solids } from '$lib/three/complex3d';
 	import { tex } from '$lib/katex/render';
 	import { tetraCascade } from './chains';
@@ -135,7 +135,8 @@
 			for (const l of vLabels) l.show(curStep === 0);
 		};
 		const tmpC = new THREE.Color();
-		const baseGold = color('gold');
+		const baseGold = shaderColor('gold');
+		const pairShader = pairColors.map((c) => shaderColor(c));
 
 		onFrame((_, dt) => {
 			const k = reducedMotion ? 1 : Math.min(1, dt * 3.2);
@@ -155,7 +156,7 @@
 			const now = performance.now();
 			copies.forEach((cp) => {
 				const pairIdx = edgeList.indexOf(cp.edge);
-				tmpC.copy(baseGold).lerp(color(pairColors[pairIdx]), cur.pair);
+				tmpC.copy(baseGold).lerp(pairShader[pairIdx], cur.pair);
 				let a = cur.copy;
 				if (curStep === 4) {
 					// pairs vanish one after another
@@ -186,7 +187,11 @@
 		return { dispose: () => (api = null) };
 	}
 
-	$effect(() => api?.set(step, mode));
+	$effect(() => {
+		const s = step,
+			m = mode;
+		api?.set(s, m);
+	});
 </script>
 
 <div class="wrap">
