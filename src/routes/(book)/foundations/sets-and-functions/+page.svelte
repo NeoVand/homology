@@ -154,6 +154,14 @@
 	<em>not</em> empty — it is an empty box inside a box, a set with one element.
 </p>
 
+<Question title="Check yourself: counting boxes">
+	<p>
+		How many elements does each set have: \(\varnothing\), \(\set{\varnothing}\), \(\set{\varnothing,\set\varnothing}\),
+		\(\set{1,\set1,\set{1,\set1}}\)? Count only the outermost layer: each element is one item in the box, however much is packed
+		inside it. (Answers: \(0\), \(1\), \(2\) and \(3\).)
+	</p>
+</Question>
+
 <h3>The number systems</h3>
 
 <Notation title="The number systems">
@@ -343,6 +351,13 @@
 </p>
 \[ \abs{A\times B} = \abs{A}\cdot\abs{B}, \]
 <p>where \(\abs{X}\) (read “the size of \(X\)”) denotes the number of elements of a finite set.</p>
+
+<Question title="Check yourself: a product with nothing">
+	<p>
+		What is \(A\times\varnothing\)? To make a pair you need a second entry from \(\varnothing\), and there is none — so no pairs can
+		be made, and \(A\times\varnothing = \varnothing\). The formula agrees: \(\abs A\cdot 0 = 0\).
+	</p>
+</Question>
 
 <Figure size="wide" title="A × B is a grid" hint="Tap a dot · change the sizes · swap the order" num="1.1.2">
 	<ProductGrid />
@@ -535,6 +550,14 @@
 	</p>
 </Example>
 
+<Question title="Check yourself: birthdays">
+	<p>
+		Is the birthday function, from all people alive today to the 366 possible days of the year, injective? Surjective? Think,
+		then read on. It is certainly not injective: millions of people share each birthday. It is surjective: every day of the year,
+		even 29 February, is somebody’s birthday.
+	</p>
+</Question>
+
 <h3>The pigeonhole principle</h3>
 
 <p>
@@ -622,6 +645,15 @@
 	that they came from disjoint sets.
 </p>
 
+<Question title="Check yourself: there and back again">
+	<p>
+		If you push a set forward and then pull it back, do you get the same set — is \(f^{-1}(f(A)) = A\)? Try \(f(x) = x^2\) and \(A =
+		\set{1}\): \(f(A) = \set1\), and \(f^{-1}(\set1) = \set{-1,1}\), which is bigger than \(A\). In general you always get
+		\(A\subseteq f^{-1}(f(A))\), with equality for every \(A\) exactly when \(f\) is injective: pulling back also collects everyone
+		who collided with a member of \(A\).
+	</p>
+</Question>
+
 <Intuition title="Why topology prefers preimages">
 	<p>
 		This asymmetry is not a curiosity. In <Ref to="topology/spaces" /> we will define a function between shapes to be
@@ -683,6 +715,14 @@
 		nothing.
 	</li>
 </ul>
+
+<Question title="Check yourself: who is to blame?">
+	<p>
+		Suppose \(g\circ f\) is injective. Must \(f\) be injective? Yes: if \(f(x) = f(x')\), then applying \(g\) gives \(g(f(x)) =
+		g(f(x'))\), and injectivity of \(g\circ f\) forces \(x = x'\). Must \(g\) be injective? No — \(g\) may collide on points that
+		\(f\) never reaches. (Take \(X\) to be a single point, so that \(g\circ f\) is automatically injective, whatever \(g\) does.)
+	</p>
+</Question>
 
 <h3 id="inverses">Undoing a function: inverses</h3>
 

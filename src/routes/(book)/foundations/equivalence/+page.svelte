@@ -453,6 +453,14 @@
 	</p>
 </Example>
 
+<Question title="Check yourself: how many classes?">
+	<p>
+		How many classes does congruence modulo \(1\) have? Modulo \(2\)? And equality on \(\Z\)? Every difference is a multiple of
+		\(1\), so modulo \(1\) all integers are equivalent: <em>one</em> class, the whole of \(\Z\). Modulo \(2\) there are two classes,
+		the evens and the odds. Equality has infinitely many classes, each containing a single integer.
+	</p>
+</Question>
+
 <p>
 	Two facts make classes behave beautifully. The first says that “same class” and “equivalent” are the same thing; the second
 	says that classes never partly overlap.
@@ -583,6 +591,14 @@
 		differences we declared unimportant, and nothing else.
 	</li>
 </ul>
+
+<Question title="Check yourself: when does q forget nothing?">
+	<p>
+		When is the projection \(q\) <Term t="injective">injective</Term>? Exactly when \(q(x) = q(y)\) forces \(x = y\), that is, when
+		\(x\sim y\) only for \(x = y\): when the relation is equality, and every class has a single member. Then \(X/{\sim}\) is just
+		\(X\) with each element \(x\) renamed \([x]\). Every interesting quotient forgets something.
+	</p>
+</Question>
 
 <p>
 	Look back at the partition painter and press <em>Collapse</em>. Each pile shrinks to a single point; the arrows that remain are

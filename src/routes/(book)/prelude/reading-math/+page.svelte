@@ -10,6 +10,7 @@
 	import KeyIdea from '$lib/components/prose/KeyIdea.svelte';
 	import Warning from '$lib/components/prose/Warning.svelte';
 	import Remark from '$lib/components/prose/Remark.svelte';
+	import Question from '$lib/components/prose/Question.svelte';
 	import Recap from '$lib/components/prose/Recap.svelte';
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Figure from '$lib/components/prose/Figure.svelte';
@@ -268,6 +269,15 @@
 	</p>
 </Example>
 
+<Question title="Check yourself: which says the same thing?">
+	<p>
+		Take the statement “every square is a rectangle” — that is, “if a shape is a square, then it is a rectangle.” Which of these
+		says the same thing? (a) Every rectangle is a square. (b) Anything that is not a rectangle is not a square. (c) Anything that is
+		not a square is not a rectangle. Only (b), the contrapositive. Statement (a) is the converse, and (c) is the contrapositive of the
+		converse; both are false (think of a long thin rectangle).
+	</p>
+</Question>
+
 <p>
 	An implication and its contrapositive are always both true or both false: “every \(P\) is a \(Q\)” and “anything that is not a
 	\(Q\) is not a \(P\)” are the same promise, seen from opposite ends. The converse is a different promise altogether, and it can
@@ -342,6 +352,15 @@
 	<li>To <strong>prove</strong> “there exists \(x\), …”: exhibit one \(x\) that works.</li>
 	<li>To <strong>disprove</strong> “there exists \(x\), …”: show that every \(x\) fails — which is a “for all” statement.</li>
 </ul>
+
+<Question title="Check yourself: quantifiers over nothing">
+	<p>
+		Is “for every \(x\) in the empty set, \(x\neq x\)” true? It is the promise “if \(x\) is in the empty set, then \(x\neq x\),”
+		and nothing is ever in the empty set, so the promise is never broken: true, vacuously. And “there exists \(x\) in the empty set
+		with \(x=x\)” is false, because there is nothing to exhibit. Over the empty set every “for all” statement is true and every
+		“there exists” statement is false.
+	</p>
+</Question>
 
 <h3>Order matters</h3>
 
