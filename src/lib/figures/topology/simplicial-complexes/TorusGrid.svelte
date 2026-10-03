@@ -44,7 +44,10 @@
 	type Api = { show(n: number, hover: number | null, prob: { kind: 'edge' | 'triangle'; ids: number[] } | null): void };
 	let api = $state.raw<Api | null>(null);
 	$effect(() => {
-		api?.show(n, hoverLabel, current);
+		const nn = n;
+		const h = hoverLabel;
+		const c = current;
+		api?.show(nn, h, c);
 	});
 
 	function setup(ctx: SceneContext) {

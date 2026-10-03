@@ -64,7 +64,8 @@
 	type Api = { show(k: Key, mode: string, lit: number): void };
 	let api = $state.raw<Api | null>(null);
 	$effect(() => {
-		api?.show(which, count, lit);
+		const args = [which, count, lit] as const;
+		api?.show(...args);
 	});
 
 	function setup(ctx: SceneContext) {

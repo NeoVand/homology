@@ -76,7 +76,9 @@
 	type Api = { show(m: PolyMesh, tool: Move): void };
 	let api = $state.raw<Api | null>(null);
 	$effect(() => {
-		api?.show(mesh, tool);
+		const m = mesh;
+		const t = tool;
+		api?.show(m, t);
 	});
 
 	function setup(ctx: SceneContext) {

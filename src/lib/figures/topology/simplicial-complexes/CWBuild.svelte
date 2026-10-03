@@ -30,7 +30,9 @@
 	type Api = { show(shape: 'torus' | 'sphere', step: number): void };
 	let api = $state.raw<Api | null>(null);
 	$effect(() => {
-		api?.show(shape, step);
+		const sh = shape;
+		const st = step;
+		api?.show(sh, st);
 	});
 
 	function setup(ctx: SceneContext) {

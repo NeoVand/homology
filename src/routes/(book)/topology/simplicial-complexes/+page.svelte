@@ -88,10 +88,9 @@
 	];
 </script>
 
-<Epigraph author="Henri Poincaré" source="Analysis Situs (1895), translated by John Stillwell"
-	>… geometry is the art of reasoning well from badly drawn figures; however, these figures, if they are not to deceive us, must
-	satisfy certain conditions; the proportions may be grossly altered, but the relative positions of the different parts must not be
-	upset.</Epigraph
+<Epigraph author="Hermann Weyl" source="“Invariants”, Duke Mathematical Journal (1939)"
+	>In these days the angel of topology and the devil of abstract algebra fight for the soul of each individual mathematical
+	domain.</Epigraph
 >
 
 <p class="lead">
@@ -126,8 +125,8 @@
 	angles or curvature: a shape may be stretched and bent as much as you like, so long as nothing is torn and nothing new is glued (a
 	<Term t="homeomorphism">homeomorphism</Term>, in the language of <Ref to="topology/spaces" />). So when we chop a shape into
 	triangles, the exact sizes and angles of the triangles cannot matter. What survives every stretch is only <em>which pieces touch
-	which</em>. That is precisely what the epigraph says: a drawing may distort the proportions as much as it likes, as long as the
-	relative positions of the parts are right.
+	which</em>. Poincaré said it in the sentence that opens <Ref to="prelude/shape-of-a-question" />: a drawing may distort the
+	proportions as much as it likes, as long as the relative positions of the parts are right.
 </p>
 
 <p>
@@ -448,6 +447,12 @@
 		<Ref to="homology/computing" /> you will type such lists into a homology calculator.
 	</p>
 </KeyIdea>
+
+<p>
+	This is the moment when, in Hermann Weyl’s image at the top of the chapter, the devil of algebra gets its foot in the door of
+	topology. A list can be counted, sorted, fed to a computer and turned into matrices — and that is exactly what Part III will do.
+	The angel need not worry: we will keep checking that every count means something you can see.
+</p>
 
 <p>
 	Going back from a list to a shape in space is called <dfn>geometric realisation</dfn>: choose a point for each vertex, and draw the

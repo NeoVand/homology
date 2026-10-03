@@ -21,7 +21,9 @@
 	type Api = { show(key: string, pos: [number, number, number][], faces: number[][]): void };
 	let api = $state.raw<Api | null>(null);
 	$effect(() => {
-		api?.show(`${mode}-${g}`, shape.pos, shape.faces);
+		const key = `${mode}-${g}`;
+		const s = shape;
+		api?.show(key, s.pos, s.faces);
 	});
 
 	function setup(ctx: SceneContext) {

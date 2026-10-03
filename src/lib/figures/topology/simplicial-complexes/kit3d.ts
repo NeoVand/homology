@@ -1,6 +1,6 @@
 // Small 3D helpers shared by the figures of §2.5 and §2.6.
 import * as THREE from 'three';
-import { color, glowPoint, glowTube, type PaletteName } from '$lib/three/materials';
+import { color, shaderColor, glowPoint, glowTube, type PaletteName } from '$lib/three/materials';
 import { surfaceNormal, type SurfaceFn } from '$lib/three/surfaces';
 
 export type C = PaletteName | number | string;
@@ -108,13 +108,15 @@ export function edgeTube(a: THREE.Vector3, b: THREE.Vector3, o: { color?: C; rad
 
 /** Recolour a glowPoint group (bead + halo sprite). */
 export function setPointColor(g: THREE.Object3D, c: C, intensity?: number) {
+	// built-in materials (the halo sprite) take color(); custom shaders take shaderColor()
 	const col = color(c);
+	const scol = shaderColor(c);
 	g.traverse((o) => {
 		const m = (o as THREE.Mesh).material as THREE.ShaderMaterial | THREE.SpriteMaterial | undefined;
 		if (!m) return;
 		if ((m as THREE.SpriteMaterial).isSpriteMaterial) (m as THREE.SpriteMaterial).color.copy(col);
 		else if ((m as THREE.ShaderMaterial).uniforms?.uColor) {
-			(m as THREE.ShaderMaterial).uniforms.uColor.value.copy(col);
+			(m as THREE.ShaderMaterial).uniforms.uColor.value.copy(scol);
 			if (intensity !== undefined && (m as THREE.ShaderMaterial).uniforms.uIntensity)
 				(m as THREE.ShaderMaterial).uniforms.uIntensity.value = intensity;
 		}

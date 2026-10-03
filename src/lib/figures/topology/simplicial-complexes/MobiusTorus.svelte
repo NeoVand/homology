@@ -80,7 +80,9 @@
 	type Api = { show(mode: 'torus' | 'csaszar', picked: number | null): void };
 	let api = $state.raw<Api | null>(null);
 	$effect(() => {
-		api?.show(mode, picked);
+		const m = mode;
+		const p = picked;
+		api?.show(m, p);
 	});
 
 	function setup(ctx: SceneContext) {

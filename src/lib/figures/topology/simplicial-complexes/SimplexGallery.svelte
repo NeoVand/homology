@@ -63,7 +63,10 @@
 	});
 
 	$effect(() => {
-		api?.show(n, k, lit);
+		const nn = n;
+		const kk = k;
+		const l = lit;
+		api?.show(nn, kk, l);
 	});
 
 	function setup(ctx: SceneContext) {
