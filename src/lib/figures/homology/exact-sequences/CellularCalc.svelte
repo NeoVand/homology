@@ -380,12 +380,6 @@
 		min-width: 0;
 		max-width: 100%;
 	}
-	.mat :global(th) {
-		text-transform: none;
-		letter-spacing: 0;
-		border-bottom: 0;
-		font-family: inherit;
-	}
 	.mat :global(th .katex) {
 		font-size: 1.2em;
 	}

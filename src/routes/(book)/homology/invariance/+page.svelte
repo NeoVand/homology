@@ -33,8 +33,8 @@
 	import JordanProbe from '$lib/figures/homology/invariance/JordanProbe.svelte';
 </script>
 
-<Epigraph author="Henri Poincaré" source="Analysis Situs (1895), trans. J. Stillwell"
-	>…geometry is the art of reasoning well from badly drawn figures; however, these figures, if they are not to deceive us, must satisfy certain conditions; the proportions may be grossly altered, but the relative positions of the different parts must not be upset.</Epigraph
+<Epigraph author="Allen Hatcher" source="Algebraic Topology (2002), Chapter 2"
+	>An interesting feature of homology that begins to emerge after one has worked with it for a while is that it is the basic properties of homology that are used most often, and not the actual definition itself.</Epigraph
 >
 
 <p class="lead">

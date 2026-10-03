@@ -407,13 +407,6 @@
 		display: flex;
 		justify-content: center;
 	}
-	/* the book's table styles (uppercase headers) would mangle TeX labels */
-	.mx :global(th) {
-		text-transform: none;
-		letter-spacing: 0;
-		border-bottom: 0;
-		font-family: inherit;
-	}
 	.mx :global(th .katex) {
 		font-size: 1.12em;
 	}
