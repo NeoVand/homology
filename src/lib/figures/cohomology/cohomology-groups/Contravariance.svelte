@@ -97,7 +97,7 @@
 	const phiAt = $derived(at(R, fenceAngle, R.r + 42));
 	const P = $derived(at(L, 2 * Math.PI * s));
 	const Q = $derived(at(R, imgAngle));
-	const preTicks = $derived(pre.map((a) => ({ t: tick(L, a), lab: at(L, a, L.r + 30) })));
+	const preTicks = $derived(pre.map((a) => ({ t: tick(L, a), lab: at(L, a, L.r + 28) })));
 </script>
 
 <div class="cv" bind:this={host}>
@@ -109,12 +109,12 @@
 		<SvgTeX x={R.x} y={R.y + R.r + 30} tex="Y = S^1" size={16} color="var(--ink-dim)" w={100} h={26} />
 
 		<!-- forward arrow (chains) and backward arrow (measurements) -->
-		<path d="M 262 128 C 300 98, 340 98, 378 128" class="arr gold" marker-end="url(#arrow-gold)" />
-		<SvgTeX x={320} y={84} tex={`f(z) = z^{${k}}`} size={16} color="var(--gold-bright)" w={140} h={28} />
-		<path d="M 378 222 C 340 252, 300 252, 262 222" class="arr teal" marker-end="url(#arrow-teal)" />
-		<SvgTeX x={320} y={268} tex={'f^{*}'} size={17} color="var(--teal)" w={60} h={28} />
-		<text x="320" y="118" class="t-ui mini">CHAINS PUSH FORWARD</text>
-		<text x="320" y="244" class="t-ui mini">MEASUREMENTS PULL BACK</text>
+		<path d="M 266 140 C 302 112, 338 112, 374 140" class="arr gold" marker-end="url(#arrow-gold)" />
+		<SvgTeX x={320} y={72} tex={`f(z) = z^{${k}}`} size={16} color="var(--gold-bright)" w={140} h={28} />
+		<text x="320" y="100" class="t-ui mini">CHAINS PUSH FORWARD</text>
+		<path d="M 374 212 C 338 240, 302 240, 266 212" class="arr teal" marker-end="url(#arrow-teal)" />
+		<text x="320" y="258" class="t-ui mini">MEASUREMENTS PULL BACK</text>
+		<SvgTeX x={320} y={280} tex={'f^{*}'} size={17} color="var(--teal)" w={60} h={28} />
 
 		<!-- pulled-back fences on the left -->
 		{#each preTicks as { t, lab }, j (j)}

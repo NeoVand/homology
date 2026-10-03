@@ -93,26 +93,31 @@
 		border-collapse: collapse;
 		margin: 0;
 	}
-	th,
-	td {
+	/* doubled classes beat the page-wide .prose table styles (uppercase UI headers) */
+	.ct.ct th,
+	.ct.ct td {
 		padding: 0.55em 0.7em;
 		border-bottom: 1px solid var(--line-faint);
 		text-align: center;
+		text-transform: none;
+		letter-spacing: normal;
 	}
-	.deg {
+	.ct.ct .deg {
 		font-family: var(--font-ui);
-		font-size: 0.72rem;
-		letter-spacing: 0.1em;
+		font-size: 0.74rem;
+		letter-spacing: 0.08em;
 		color: var(--gold);
 		font-weight: 600;
 	}
-	.rh {
+	.ct.ct .rh {
+		font-family: var(--font-body);
+		font-size: 1rem;
 		text-align: left;
 		white-space: nowrap;
 		color: var(--ink-dim);
 		font-weight: 400;
 	}
-	tr.hom .rh {
+	.ct.ct tr.hom .rh {
 		color: var(--violet);
 	}
 	td {
