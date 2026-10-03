@@ -2,7 +2,7 @@
 // translucent faces — each individually recolourable (for chains, cycles, cochains).
 import * as THREE from 'three';
 import type { SimplicialComplex } from '$lib/math/complex';
-import { color, faceMaterial, glowPoint, glowTube, setGlowColor, type PaletteName } from './materials';
+import { color, shaderColor, faceMaterial, glowPoint, glowTube, setGlowColor, type PaletteName } from './materials';
 
 export interface Complex3D {
 	group: THREE.Group;
@@ -101,7 +101,7 @@ export function buildComplex3D(K: SimplicialComplex, pos: THREE.Vector3[] | Reco
 				const mat = (m as THREE.Mesh).material as THREE.ShaderMaterial | THREE.SpriteMaterial | undefined;
 				if (!mat) return;
 				if ((mat as THREE.SpriteMaterial).isSpriteMaterial) (mat as THREE.SpriteMaterial).color = color(c ?? baseVert);
-				else if ((mat as THREE.ShaderMaterial).uniforms?.uColor) (mat as THREE.ShaderMaterial).uniforms.uColor.value = color(c ?? 'ivory');
+				else if ((mat as THREE.ShaderMaterial).uniforms?.uColor) (mat as THREE.ShaderMaterial).uniforms.uColor.value = shaderColor(c ?? 'ivory');
 			});
 		},
 		setFace(i, c, opacity) {
