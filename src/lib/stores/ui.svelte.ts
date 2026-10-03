@@ -7,6 +7,7 @@ export interface SectionLink {
 
 export const ui = $state<{
 	navOpen: boolean;
+	searchOpen: boolean;
 	/** scroll progress through the page, 0–1 */
 	progress: number;
 	/** h2 sections of the current chapter, collected from the DOM */
@@ -14,6 +15,7 @@ export const ui = $state<{
 	activeSection: string | null;
 }>({
 	navOpen: false,
+	searchOpen: false,
 	progress: 0,
 	sections: [],
 	activeSection: null
