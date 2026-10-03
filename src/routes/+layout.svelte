@@ -3,6 +3,7 @@
 	import Starfield from '$lib/components/layout/Starfield.svelte';
 	import TopBar from '$lib/components/layout/TopBar.svelte';
 	import NavDrawer from '$lib/components/layout/NavDrawer.svelte';
+	import SearchDialog from '$lib/components/layout/SearchDialog.svelte';
 
 	let { children } = $props();
 </script>
@@ -11,6 +12,7 @@
 <Starfield />
 <TopBar />
 <NavDrawer />
+<SearchDialog />
 
 <div id="main" class="page">
 	{@render children()}
