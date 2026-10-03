@@ -266,7 +266,7 @@
 \[ I(d\omega)(\sigma) = \int_\sigma d\omega = \int_{\partial\sigma}\omega = I(\omega)(\partial\sigma) = \big(\delta I(\omega)\big)(\sigma), \]
 <p>that is, \(I\circ d = \delta\circ I\). So integration sends closed forms to cocycles (if \(d\omega = 0\) then \(\delta I(\omega) = I(d\omega) = 0\)) and exact forms to coboundaries (\(I(d\eta) = \delta I(\eta)\)), and therefore gives a linear map \(H^k_{\dR}(M)\to H^k(M;\R)\).</p>
 
-<Figure title="Integrating a form over the edges of a triangulation" hint="Pick a form · click a triangle or a loop" num="4.4.6">
+<Figure title="The de Rham map" hint="Pick a form · click a triangle or a loop" num="4.4.6">
 	<DeRhamMap />
 	{#snippet caption()}A triangulated annulus around the missing origin — the same shape as the annulus of <Ref to="cohomology/cochains" />. Each edge is labelled with the integral of the chosen form along it. For \(d\theta\) the numbers are fractions of a turn; every triangle adds up to \(0\) (a cocycle) and each loop around the hole to exactly one turn (not a coboundary). Notice how evenly the turn is spread: \(\tfrac13, -\tfrac16, \tfrac16\) on every edge of its kind.{/snippet}
 </Figure>
