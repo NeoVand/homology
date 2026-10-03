@@ -59,7 +59,7 @@
 					overlay = new THREE.Group();
 					e.forEach((c, i) => {
 						const pts = cx.edgePoints(i);
-						if (pts) overlay!.add(tubeAlong(pts, { color: c === 'gold' ? 0xe0b25c : c, radius: 0.024, halo: true, intensity: 1, haloIntensity: 0.6 }));
+						if (pts) overlay!.add(tubeAlong(pts, { color: c, radius: 0.024, halo: true, intensity: 1, haloIntensity: 0.6 }));
 					});
 					scene.add(overlay);
 				}

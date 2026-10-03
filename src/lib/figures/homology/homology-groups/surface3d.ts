@@ -3,7 +3,7 @@
 // onto a doughnut, the hexagon of ℝP² onto Boy's surface, and so on.
 import * as THREE from 'three';
 import type { FlatLayout, Pt } from './flat';
-import { glowCore, glowHalo, glowPoint, faceMaterial, setGlowColor, color, glassMesh, type PaletteName } from '$lib/three/materials';
+import { glowCore, glowHalo, glowPoint, faceMaterial, setGlowColor, color, shaderColor, glassMesh, type PaletteName } from '$lib/three/materials';
 import { torus, kleinBottle, boy, mobius, surfaceNormal, type SurfaceFn } from '$lib/three/surfaces';
 
 type Col = PaletteName | number | string;
@@ -289,7 +289,7 @@ export function buildFlat3D(
 				const mat = (x as THREE.Mesh).material as THREE.ShaderMaterial | THREE.SpriteMaterial | undefined;
 				if (!mat) return;
 				if ((mat as THREE.SpriteMaterial).isSpriteMaterial) (mat as THREE.SpriteMaterial).color = color(c ?? 'gold');
-				else if ((mat as THREE.ShaderMaterial).uniforms?.uColor) (mat as THREE.ShaderMaterial).uniforms.uColor.value = color(c ?? 'ivory');
+				else if ((mat as THREE.ShaderMaterial).uniforms?.uColor) (mat as THREE.ShaderMaterial).uniforms.uColor.value = shaderColor(c ?? 'ivory');
 			});
 		},
 		setOrientation(eps, c = 'violet') {
@@ -345,6 +345,5 @@ export function mappedLoop(m: SurfaceMap, pts: Pt[], o: { color?: Col; radius?: 
 		all.push(...seg);
 	}
 	const c = o.color ?? 'gold';
-	// a deeper gold reads as gold against the iridescent glass (bright gold washes out to white)
-	return tubeAlong(all, { color: c === 'gold' ? 0xe0b25c : c, radius: o.radius ?? 0.026, halo: true, intensity: 0.95, haloIntensity: 0.55 });
+	return tubeAlong(all, { color: c, radius: o.radius ?? 0.026, halo: true, intensity: 1, haloIntensity: 0.6 });
 }
