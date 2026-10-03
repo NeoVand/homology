@@ -10,3 +10,6 @@ vite.config.ts.timestamp-*
 .DS_Store
 /test-results
 /screenshots
+
+# agent worktrees (local only)
+/.claude/
