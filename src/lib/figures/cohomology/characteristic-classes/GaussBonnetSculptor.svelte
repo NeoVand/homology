@@ -239,6 +239,8 @@
 			}
 		};
 		wobbleApi = setWobble;
+		// the toggle may have been switched before the scene existed
+		setWobble(wobble);
 
 		return {
 			dispose() {
@@ -253,7 +255,9 @@
 	}
 
 	$effect(() => {
-		wobbleApi?.(wobble);
+		// read the state before the optional call, so the effect tracks it even while the scene does not exist yet
+		const on = wobble;
+		wobbleApi?.(on);
 	});
 	$effect(() => {
 		void mode;
