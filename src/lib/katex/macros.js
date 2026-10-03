@@ -49,7 +49,10 @@ export const macros = {
 	'\\hlg': '\\htmlClass{tx-green}{#1}'
 };
 
-/** KaTeX options shared by build-time and runtime rendering. */
+/**
+ * KaTeX options shared by build-time and runtime rendering.
+ * @type {import('katex').KatexOptions}
+ */
 export const katexOptions = {
 	macros,
 	trust: true,

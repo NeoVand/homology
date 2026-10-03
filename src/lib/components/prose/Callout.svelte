@@ -14,6 +14,7 @@
 		| 'recap'
 		| 'question'
 		| 'notation'
+		| 'ahead'
 		| 'proof';
 
 	export const calloutMeta: Record<CalloutKind, { label: string; color: string; icon: string }> = {
@@ -31,6 +32,7 @@
 		recap: { label: 'Recap', color: 'var(--gold)', icon: 'recap' },
 		question: { label: 'Pause and ponder', color: 'var(--rose)', icon: 'q' },
 		notation: { label: 'Notation', color: 'var(--blue)', icon: 'not' },
+		ahead: { label: 'Where this is going', color: 'var(--teal)', icon: 'ahead' },
 		proof: { label: 'Proof', color: 'var(--ink-dim)', icon: 'proof' }
 	};
 </script>
@@ -92,6 +94,8 @@
 				<svg viewBox="0 0 20 20"
 					><circle cx="10" cy="10" r="7.5" /><path d="M7.8 8a2.3 2.3 0 1 1 3.2 2.1c-.6.3-1 .8-1 1.5v.6M10 14.6v.2" /></svg
 				>
+			{:else if meta.icon === 'ahead'}
+				<svg viewBox="0 0 20 20"><path d="M3 10h12M11 5.5L15.5 10 11 14.5" /></svg>
 			{:else if meta.icon === 'not'}
 				<svg viewBox="0 0 20 20"><path d="M4 15l4-10 4 10M5.6 11h4.8M13 9h4M13 13h4" /></svg>
 			{:else}

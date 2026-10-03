@@ -1,6 +1,5 @@
 import type { GlossaryEntry } from './types';
 
-// Glossary entries introduced in Part: homology.
 export const entries: GlossaryEntry[] = [
 	{
 		key: 'homology',
