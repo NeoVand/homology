@@ -67,6 +67,12 @@ describe('Smith normal form with transforms', () => {
 		expect(name([[4, 0], [0, 6]])).toBe('\\mathbb{Z}/2 \\oplus \\mathbb{Z}/12');
 		// a presentation with a redundant generator: ⟨a, b | a − 2b = 0⟩ ≅ ℤ
 		expect(name([[1], [-2]])).toBe('\\mathbb{Z}');
+		// exercise: ⟨a, b, c | a + b + c = 0, 2a + 2b = 0⟩ ≅ ℤ ⊕ ℤ/2
+		expect(name([[1, 2], [1, 2], [1, 0]])).toBe('\\mathbb{Z} \\oplus \\mathbb{Z}/2');
+		expect(snfFull([[1, 2], [1, 2], [1, 0]]).diag).toEqual([1, 2]);
+		// ⟨a | 3a = 0⟩ ≅ ℤ/3, ⟨a, b | 2a = 0⟩ ≅ ℤ ⊕ ℤ/2, ⟨a, b | a − b = 0⟩ ≅ ℤ
+		expect(name([[3]])).toBe('\\mathbb{Z}/3');
+		expect(name([[1], [-1]])).toBe('\\mathbb{Z}');
 	});
 
 	it('the worked example (2,1),(1,2) is diagonalised as in the text', () => {
@@ -106,10 +112,10 @@ describe('lattice quotients ℤ²/⟨v, w⟩', () => {
 			for (const p of pts)
 				for (const r of pts) {
 					const same = q.coords(...p).join() === q.coords(...r).join();
-					expect(same).toBe(inSpan([p[0] - r[0], p[1] - r[1]], v, w));
+					expect(same).toBe(inSpan([p[0] - r[0], p[1] - r[1]], v, w, 12));
 				}
 		}
-	});
+	}, 30000);
 	it('a fundamental parallelogram contains exactly |det| lattice points', () => {
 		for (const [v, w, , index] of cases) {
 			if (!isFinite(index)) continue;

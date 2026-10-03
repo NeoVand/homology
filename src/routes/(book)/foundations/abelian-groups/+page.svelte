@@ -412,7 +412,8 @@
 	and about \(A/3\) tiles, so each tile must hold \(3\) points: three cosets. And a group with three elements must be
 	\(\Z/3\) (by Lagrange, each nonzero element has order dividing <span class="nw">\(3\),</span> so it generates everything). So
 	\[ \Z^2 / \langle (2,1), (1,2) \rangle \;\cong\; \Z/3 . \]
-	Other choices give other answers: <span class="nw">\(v = (2, 0)\),</span> \(w = (0, 2)\) gives four cosets, forming <span class="nw">\(\Z/2 \oplus \Z/2\);</span>
+	Other choices give other answers: <span class="nw">\(v = (2, 0)\),</span> \(w = (0, 2)\) gives four cosets, forming the group we will call <span class="nw">\(\Z/2 \oplus \Z/2\)</span> in the section on
+	direct sums;
 	<span class="nw">\(v = (2, 0)\),</span> \(w = (0, 3)\) gives six, forming <span class="nw">\(\Z/6\).</span> When the determinant is zero the quotient is infinite. How
 	to name the quotient in general is the subject of the sections on direct sums and on generators and relations; the
 	figure already uses the method.

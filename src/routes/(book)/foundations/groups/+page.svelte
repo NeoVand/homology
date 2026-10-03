@@ -257,7 +257,7 @@
 
 <p>
 	The symbol \(\Z\) (a blackboard-bold Z, from the German <em>Zahlen</em>, “numbers”) stands for the
-	<dfn>integers</dfn>, the whole numbers \(\dots, -2, -1, 0, 1, 2, \dots\) together with their negatives. The notation
+	<dfn>integers</dfn>: the whole numbers \(0, 1, 2, \dots\) together with their negatives <span class="nw">\(-1, -2, \dots\).</span> The notation
 	\(\Z/n\) is a reminder of where clock arithmetic comes from: the integers, with every multiple of \(n\) declared to be
 	equal to <span class="nw">\(0\).</span> You met this idea in <Ref to="foundations/equivalence" />, where
 	\(\Z/n\) appeared as a set of <Term t="equivalence-class">equivalence classes</Term> — the hours “1 o’clock”, “13
@@ -529,7 +529,7 @@
 	</li>
 	<li>
 		<strong>The <dfn>trivial group</dfn></strong> <span class="nw">\(\{0\}\),</span> with a single element and the only possible rule
-		<span class="nw">\(0 + 0 = 0\).</span> It is the group equivalent of an empty room, and it will be the answer to many homology questions
+		<span class="nw">\(0 + 0 = 0\).</span> It is the smallest group there is, and it will be the answer to many homology questions
 		(“no holes here”), so it is usually written simply <span class="nw">\(0\).</span>
 	</li>
 </ul>

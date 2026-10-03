@@ -6,53 +6,15 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import { residueColor } from './zn';
+	import { fourGroups, renamings, compare, type FourGroup } from './renaming';
 
-	type Kind = 'square' | 'rect';
+	type Kind = FourGroup;
 	let kind = $state<Kind>('square');
 	let ri = $state(0);
 
-	const groups: Record<Kind, { names: string[]; words: string[]; table: number[][] }> = {
-		square: {
-			names: ['e', '\\rho', '\\rho^2', '\\rho^3'],
-			words: ['do nothing', 'quarter turn', 'half turn', 'three-quarter turn'],
-			table: [0, 1, 2, 3].map((i) => [0, 1, 2, 3].map((j) => (i + j) % 4))
-		},
-		rect: {
-			names: ['e', 'h', 'v', 't'],
-			words: ['do nothing', 'flip top↔bottom', 'flip left↔right', 'half turn'],
-			// e, h, v, t: each squares to e; any two different non-identity ones give the third
-			table: [
-				[0, 1, 2, 3],
-				[1, 0, 3, 2],
-				[2, 3, 0, 1],
-				[3, 2, 1, 0]
-			]
-		}
-	};
-
-	// the six bijections with e ↦ 0: the numbers given to elements 1, 2, 3
-	const renamings = [
-		[1, 2, 3],
-		[3, 2, 1],
-		[2, 1, 3],
-		[1, 3, 2],
-		[2, 3, 1],
-		[3, 1, 2]
-	];
-
-	const G = $derived(groups[kind]);
+	const G = $derived(fourGroups[kind]);
 	const name = $derived([0, ...renamings[ri]]);
-	// position of number q among the elements (inverse renaming)
-	const elOf = $derived(Object.fromEntries(name.map((q, el) => [q, el])) as Record<number, number>);
-	const cells = $derived(
-		[0, 1, 2, 3].map((p) =>
-			[0, 1, 2, 3].map((q) => {
-				const renamed = name[G.table[elOf[p]][elOf[q]]];
-				const want = (p + q) % 4;
-				return { renamed, want, ok: renamed === want };
-			})
-		)
-	);
+	const cells = $derived(compare(kind, ri));
 	const matches = $derived(cells.flat().filter((c) => c.ok).length);
 	const iso = $derived(matches === 16);
 </script>
