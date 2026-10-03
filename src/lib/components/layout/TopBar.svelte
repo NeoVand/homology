@@ -61,6 +61,18 @@
 	{/if}
 
 	<nav class="links" aria-label="Site">
+		<button class="search" onclick={() => (ui.searchOpen = true)} aria-label="Search the book (/ or Ctrl K)">
+			<svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"
+				><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6" /><path
+					d="M13 13l4 4"
+					stroke="currentColor"
+					stroke-width="1.6"
+					stroke-linecap="round"
+				/></svg
+			>
+			<span class="hide-md">Search</span>
+			<kbd class="hide-md">/</kbd>
+		</button>
 		<a href={href('/map/')} class:active={page.url.pathname.endsWith('/map/')}>Map</a>
 		<a href={href('/glossary/')} class:active={page.url.pathname.endsWith('/glossary/')}>Glossary</a>
 		<a class="hide-sm" href={href('/notation/')} class:active={page.url.pathname.endsWith('/notation/')}>Notation</a>
@@ -166,6 +178,37 @@
 	.links a.active {
 		color: var(--gold-pale);
 		background: rgba(216, 178, 110, 0.08);
+	}
+	.search {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		font-size: 0.8rem;
+		color: var(--ink-dim);
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid var(--line-faint);
+		border-radius: 9px;
+		padding: 0.35rem 0.6rem;
+		margin-right: 0.4rem;
+		cursor: pointer;
+		transition: all 0.2s var(--ease);
+	}
+	.search:hover {
+		color: var(--gold-pale);
+		border-color: var(--line);
+	}
+	.search kbd {
+		font-family: var(--font-ui);
+		font-size: 0.66rem;
+		padding: 0 0.35rem;
+		border-radius: 4px;
+		border: 1px solid var(--line);
+		color: var(--ink-faint);
+	}
+	@media (max-width: 1060px) {
+		.hide-md {
+			display: none;
+		}
 	}
 	.bar {
 		position: absolute;
