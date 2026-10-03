@@ -298,7 +298,14 @@ palette, label with `SvgTeX`, and make everything work at 360px wide.
 		};
 		return { dispose: () => (api = null) };
 	}
-	$effect(() => api?.setP(p));
+	// Read the reactive value FIRST. The scene is created lazily (when scrolled into
+	// view), so on the effect's first run `api` is null; writing `api?.setP(p)` would
+	// short-circuit before `p` is read, the effect would track nothing, and the slider
+	// would silently do nothing.
+	$effect(() => {
+		const v = p;
+		api?.setP(v);
+	});
 </script>
 
 <Figure size="wide" hint="Drag to rotate">
@@ -331,6 +338,11 @@ palette, label with `SvgTeX`, and make everything work at 360px wide.
 - Complexes (`$lib/three/complex3d`): `buildComplex3D(K, positions, opts)` →
   `{group, setEdge(i,c), setVertex(i,c), setFace(i,c), reset(), pickables}`;
   `solids.tetrahedron()`, `solids.octahedron()`.
+- **Reactivity pitfall:** in `$effect`, read every reactive value before any
+  `api?.…` call (see the example above), or make `api` itself `$state`.
+- **Colours in custom shaders:** pass `shaderColor(name)` (not `color(name)`) to
+  ShaderMaterial uniforms; `color()` is for three.js built-in materials. The
+  helpers in `materials.ts` already do this.
 - Keep it light: ≤ 6 Scene3D per chapter; reuse geometry; no per-frame
   allocation in `update`; respect `ctx.reducedMotion` for auto-play.
 
