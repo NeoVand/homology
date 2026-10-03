@@ -106,24 +106,34 @@
 		margin: 0;
 		width: auto;
 	}
-	th {
+	/* (doubled class = higher specificity than the page-wide .prose table styles) */
+	.mv.mv th {
+		font-family: var(--font-body);
+		font-size: 0.86rem;
 		font-weight: 400;
+		letter-spacing: normal;
+		text-transform: none;
+		text-align: center;
 		padding: 0.25rem 0.45rem;
 		color: var(--ink-faint);
 		border: 0;
+		background: none;
 		transition: color 0.15s;
 		white-space: nowrap;
 	}
 	th :global(.katex) {
 		font-size: 0.95em;
 	}
-	th.hl {
+	.mv.mv th.hl {
 		color: var(--gold-bright);
 	}
-	.rh {
+	.mv.mv .rh {
 		text-align: right;
 	}
-	td {
+	.mv.mv tr:hover {
+		background: none;
+	}
+	.mv.mv td {
 		min-width: 2.1rem;
 		text-align: center;
 		padding: 0.32rem 0.4rem;
