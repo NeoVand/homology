@@ -4,7 +4,7 @@ import * as THREE from 'three';
 
 /** The semantic palette, mirrored from app.css. */
 export const palette = {
-	gold: 0xf2d08f,
+	gold: 0xf3c46c, // a touch richer than the CSS gold so 3D cycles stand out on iridescent glass
 	goldDeep: 0xd8b26e,
 	goldPale: 0xfff1d0,
 	teal: 0x5fd6cf,
@@ -20,9 +20,23 @@ export const palette = {
 
 export type PaletteName = keyof typeof palette;
 
+/**
+ * A colour for three.js's built-in materials (MeshBasicMaterial, SpriteMaterial,
+ * PointsMaterial…). three.js stores colours in linear space and converts them back
+ * to sRGB when it draws, so these come out exactly as the CSS palette.
+ */
 export function color(c: PaletteName | number | string): THREE.Color {
 	if (typeof c === 'string' && c in palette) return new THREE.Color(palette[c as PaletteName]);
 	return new THREE.Color(c as THREE.ColorRepresentation);
+}
+
+/**
+ * A colour for the book's custom ShaderMaterials (iridescent surfaces, glow tubes).
+ * Those shaders write display (sRGB) values directly, so uniforms must hold sRGB
+ * numbers — otherwise every palette colour renders darker and more saturated.
+ */
+export function shaderColor(c: PaletteName | number | string): THREE.Color {
+	return color(c).convertLinearToSRGB();
 }
 
 // ── iridescent surface ─────────────────────────────────────────────────────
@@ -150,14 +164,14 @@ export function iridescent(o: IridescentOptions = {}): THREE.ShaderMaterial {
 			uOpacity: { value: o.opacity ?? 0.92 },
 			uGrid: { value: new THREE.Vector2(...(o.grid ?? [32, 16])) },
 			uGridStrength: { value: o.gridStrength ?? 0.28 },
-			uGridColor: { value: color(o.gridColor ?? 0xbfe4ff) },
+			uGridColor: { value: shaderColor(o.gridColor ?? 0xbfe4ff) },
 			uFilm: { value: o.film ?? 1.1 },
 			uHue: { value: o.hue ?? 0.0 },
-			uTint: { value: color(o.tint ?? 'violet') },
+			uTint: { value: shaderColor(o.tint ?? 'violet') },
 			uTintMix: { value: o.tintMix ?? 0 },
 			uRim: { value: o.rim ?? 0.6 },
 			uBrightness: { value: o.brightness ?? 1 },
-			uHighlightColor: { value: color('gold') },
+			uHighlightColor: { value: shaderColor('gold') },
 			uHighlightRect: { value: new THREE.Vector4(0, 0, 0, 0) },
 			uHighlight: { value: 0 }
 		},
@@ -220,7 +234,10 @@ const glowCoreFragment = /* glsl */ `
 		vec3 V = normalize(cameraPosition - vWorldPos);
 		float ndv = abs(dot(N, V));
 		float core = pow(ndv, 1.6);
-		vec3 col = uColor * (0.55 + 0.9 * core) * uIntensity + vec3(1.0, 0.98, 0.92) * pow(ndv, 10.0) * 0.55 * uIntensity;
+		// peak ≈ 1.05 × the palette colour, so bright tubes keep their hue instead of
+		// bleaching to white; a faint sheen along the centre line suggests a glossy tube
+		vec3 col = uColor * (0.6 + 0.45 * core) * uIntensity;
+		col += mix(uColor, vec3(1.0), 0.35) * pow(ndv, 12.0) * 0.12 * uIntensity;
 		gl_FragColor = vec4(col, uOpacity);
 	}
 `;
@@ -244,7 +261,7 @@ export function glowCore(c: PaletteName | number | string = 'gold', intensity = 
 		vertexShader: glowVertex,
 		fragmentShader: glowCoreFragment,
 		uniforms: {
-			uColor: { value: color(c) },
+			uColor: { value: shaderColor(c) },
 			uIntensity: { value: intensity },
 			uOpacity: { value: opacity }
 		},
@@ -256,7 +273,7 @@ export function glowHalo(c: PaletteName | number | string = 'gold', intensity = 
 	return new THREE.ShaderMaterial({
 		vertexShader: glowVertex,
 		fragmentShader: haloFragment,
-		uniforms: { uColor: { value: color(c) }, uIntensity: { value: intensity } },
+		uniforms: { uColor: { value: shaderColor(c) }, uIntensity: { value: intensity } },
 		transparent: true,
 		depthWrite: false,
 		blending: THREE.AdditiveBlending
@@ -300,7 +317,7 @@ export function glowTube(
 
 /** Recolour a glow tube/point group in place. */
 export function setGlowColor(root: THREE.Object3D, c: PaletteName | number | string, intensity?: number) {
-	const col = color(c);
+	const col = shaderColor(c);
 	root.traverse((o) => {
 		const m = (o as THREE.Mesh).material as THREE.ShaderMaterial | undefined;
 		if (m?.uniforms?.uColor) {
