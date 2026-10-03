@@ -9,6 +9,7 @@
 	import { disposeTree } from '$lib/three/materials';
 	import { solids, counts, angleDefects, normalized, type Polyhedron } from './polyhedra';
 	import { buildPolyView, type PolyView } from './poly3d';
+	import { fitCamera } from '../simplicial-complexes/kit3d';
 
 	type Key = keyof typeof solids;
 	let which = $state<Key>('cube');
@@ -68,6 +69,7 @@
 
 	function setup(ctx: SceneContext) {
 		const { scene, invalidate } = ctx;
+		const offFit = fitCamera(ctx, 1.65);
 		let view: PolyView | null = null;
 		let built: Key | null = null;
 		const holder = new THREE.Group();
@@ -99,6 +101,7 @@
 		api.show(which, count, lit);
 		return {
 			dispose() {
+				offFit();
 				api = null;
 			}
 		};

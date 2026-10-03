@@ -45,31 +45,46 @@
 		{ chi: -4, orientable: false, name: 'six cross-caps', tex: 'N_6', n: 6, word: 'a_1a_1\\cdots a_6a_6', cells: '1 - 6 + 1 = -4' }
 	];
 	const chis = [2, 1, 0, -1, -2, -3, -4];
-	const X = (chi: number) => 128 + (2 - chi) * 74;
-	const rowY = (o: boolean) => (o ? 112 : 228);
+	let cw = $state(640);
+	/** on narrow screens the chart is transposed: χ runs down the page */
+	const vert = $derived(cw < 560);
+	const PX = (chi: number, o: boolean) => (vert ? (o ? 150 : 250) : 128 + (2 - chi) * 74);
+	const PY = (chi: number, o: boolean) => (vert ? 110 + (2 - chi) * 92 : o ? 112 : 228);
+	const vb = $derived(vert ? '0 0 320 720' : '0 0 640 300');
 	let picked = $state<Cell>(cells[1]);
 </script>
 
-<div class="wrap">
-	<Svg viewBox="0 0 640 300" maxHeight={330} label="A chart of closed surfaces: columns give the Euler characteristic, rows say whether the surface is orientable">
-		<text x="22" y="46" class="hdr">χ =</text>
-		{#each chis as chi (chi)}
-			<text x={X(chi)} y="46" text-anchor="middle" class="chi">{chi}</text>
-			<line x1={X(chi)} y1="60" x2={X(chi)} y2="282" class="col" />
-		{/each}
-		<text x="22" y={rowY(true) + 4} class="row">orientable</text>
-		<text x="22" y={rowY(false) + 4} class="row">non-</text>
-		<text x="22" y={rowY(false) + 19} class="row">orientable</text>
+<div class="wrap" bind:clientWidth={cw}>
+	<Svg viewBox={vb} maxHeight={vert ? 760 : 330} label="A chart of closed surfaces by Euler characteristic and orientability">
+		{#if vert}
+			<text x="20" y="40" class="hdr">χ</text>
+			<text x={PX(0, true)} y="40" text-anchor="middle" class="row">orientable</text>
+			<text x={PX(0, false)} y="34" text-anchor="middle" class="row">non-</text>
+			<text x={PX(0, false)} y="49" text-anchor="middle" class="row">orientable</text>
+			{#each chis as chi (chi)}
+				<text x="34" y={PY(chi, true) + 5} text-anchor="middle" class="chi">{chi}</text>
+				<line x1="60" y1={PY(chi, true)} x2="305" y2={PY(chi, true)} class="col" />
+			{/each}
+		{:else}
+			<text x="22" y="46" class="hdr">χ =</text>
+			{#each chis as chi (chi)}
+				<text x={PX(chi, true)} y="46" text-anchor="middle" class="chi">{chi}</text>
+				<line x1={PX(chi, true)} y1="60" x2={PX(chi, true)} y2="282" class="col" />
+			{/each}
+			<text x="22" y={PY(0, true) + 4} class="row">orientable</text>
+			<text x="22" y={PY(0, false) + 4} class="row">non-</text>
+			<text x="22" y={PY(0, false) + 19} class="row">orientable</text>
+		{/if}
 		{#each chis as chi (chi)}
 			{#each [true, false] as o (o)}
 				{#if !cells.some((c) => c.chi === chi && c.orientable === o)}
-					<text x={X(chi)} y={rowY(o) + 5} text-anchor="middle" class="none">—</text>
+					<text x={PX(chi, o)} y={PY(chi, o) + 5} text-anchor="middle" class="none">—</text>
 				{/if}
 			{/each}
 		{/each}
 		{#each cells as cell (cell.tex)}
-			{@const x = X(cell.chi)}
-			{@const y = rowY(cell.orientable)}
+			{@const x = PX(cell.chi, cell.orientable)}
+			{@const y = PY(cell.chi, cell.orientable)}
 			{@const on = picked === cell}
 			<!-- svelte-ignore a11y_click_events_have_key_events -->
 			<g

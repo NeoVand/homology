@@ -38,6 +38,8 @@
 	const dimColour = ['var(--gold-bright)', 'var(--teal)', 'var(--violet)'];
 
 	let step = $state(0);
+	let cw = $state(640);
+	const dk = $derived(cw < 560 ? 1.5 : 1);
 	let hover = $state<number | null>(null);
 	let reduced = $state(false);
 	onMount(() => (reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches));
@@ -60,7 +62,7 @@
 	const flagName = (s: number[]) => (s.length === 1 ? 'a vertex' : s.length === 2 ? 'an edge' : 'a triangle');
 </script>
 
-<div class="wrap">
+<div class="wrap" bind:clientWidth={cw}>
 	<Svg viewBox="60 60 540 310" maxHeight={380} label="A triangle with an edge attached, and its barycentric subdivisions">
 		{#key step}
 			<g>
@@ -93,7 +95,7 @@
 				{/if}
 				{#each st.K.simplices[0] as [v], i (v)}
 					{@const [x, y] = P(v)}
-					<circle cx={x} cy={y} r={step === 2 ? 3.6 : 6} fill={dimColour[st.dimOf[v]]} class="v" in:scale={{ duration: dur, delay: dur ? 120 + (i % 10) * 20 : 0 }} />
+					<circle cx={x} cy={y} r={(step === 2 ? 3.6 : 6) * dk} fill={dimColour[st.dimOf[v]]} class="v" in:scale={{ duration: dur, delay: dur ? 120 + (i % 10) * 20 : 0 }} />
 				{/each}
 			</g>
 		{/key}

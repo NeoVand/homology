@@ -90,6 +90,10 @@
 	let svgEl = $state<SVGSVGElement>();
 	let dragId = $state<number | null>(null);
 	let hoverKey = $state<string | null>(null);
+	let cw = $state(640);
+	/** SVG units per CSS pixel: larger on phones, where the board is drawn smaller */
+	const u = $derived(W / Math.max(cw, 1));
+	const vs = $derived(Math.max(1, 0.78 * u));
 
 	const key = (s: number[]) => [...s].sort((a, b) => a - b).join(',');
 	const P = (id: number): Pt => {
@@ -169,7 +173,7 @@
 
 	function hit(p: Pt): { kind: 'vertex' | 'edge' | 'triangle'; s: number[] } | null {
 		let best: Vtx | null = null;
-		let bd = 18;
+		let bd = Math.max(18, 16 * u);
 		for (const v of verts) {
 			const d = Math.hypot(v.x - p[0], v.y - p[1]);
 			if (d < bd) {
@@ -179,7 +183,7 @@
 		}
 		if (best) return { kind: 'vertex', s: [best.id] };
 		let be: number[] | null = null;
-		let ed = 10;
+		let ed = Math.max(10, 10 * u);
 		for (const e of edges) {
 			const { d } = segDist(p, P(e[0]), P(e[1]));
 			if (d < ed) {
@@ -278,7 +282,7 @@
 </script>
 
 <div class="builder">
-	<div class="canvas" class:moving={tool === 'move'}>
+	<div class="canvas" class:moving={tool === 'move'} bind:clientWidth={cw}>
 		<Svg
 			viewBox="0 0 {W} {H}"
 			maxHeight={420}
@@ -324,14 +328,14 @@
 			{/each}
 			{#each verts as v (v.id)}
 				<g class="vtx" class:pending={pending.includes(v.id)} class:bad={badKeys.has(String(v.id))} class:hov={hoverKey === String(v.id)}>
-					<circle cx={v.x} cy={v.y} r="20" class="vhit" />
-					<circle cx={v.x} cy={v.y} r={pending.includes(v.id) ? 9 : 7} class="vdot" />
-					<text x={v.x + 12} y={v.y - 10} class="vlbl">{v.id}</text>
+					<circle cx={v.x} cy={v.y} r={Math.max(20, 16 * u)} class="vhit" />
+					<circle cx={v.x} cy={v.y} r={(pending.includes(v.id) ? 9 : 7) * vs} class="vdot" />
+					<text x={v.x + 12 * vs} y={v.y - 10 * vs} class="vlbl" style="font-size:{12 * vs}px">{v.id}</text>
 				</g>
 			{/each}
 		</Svg>
 	</div>
-	<div class="panel ui" aria-live="polite">
+	<div class="side ui" aria-live="polite">
 		<div class="fv">
 			<div><span class="k">vertices</span><span class="n">{verts.length}</span></div>
 			<div><span class="k">edges</span><span class="n">{nE}</span></div>
@@ -453,14 +457,13 @@
 	}
 	.vlbl {
 		font-family: var(--font-ui);
-		font-size: 12px !important;
 		fill: var(--ink-faint) !important;
 		pointer-events: none;
 	}
 	.moving .vtx {
 		cursor: grab;
 	}
-	.panel {
+	.side {
 		padding: 1rem 1.1rem 0.8rem 0.6rem;
 		display: flex;
 		flex-direction: column;
@@ -555,7 +558,7 @@
 		.builder {
 			grid-template-columns: minmax(0, 1fr);
 		}
-		.panel {
+		.side {
 			padding: 0.2rem 1rem 0.8rem;
 		}
 	}

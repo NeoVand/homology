@@ -251,6 +251,15 @@
 	{/snippet}
 </Figure>
 
+<Question title="Run the proof yourself on a tetrahedron">
+	<p>
+		Remove one triangular face of a tetrahedron and flatten the rest: you get a triangle with one extra point inside, joined to its three
+		corners. Check that \(V - E + F = 4 - 6 + 3 = 1\). Every face is already a triangle, so step 2 does nothing. Now remove a triangle
+		with one outer edge (\(4 - 5 + 2 = 1\)), then one with two outer edges (\(3 - 3 + 1 = 1\)). One triangle is left, and putting the
+		missing face back gives \(1 + 1 = 2\).
+	</p>
+</Question>
+
 <Warning title="The order of removals matters">
 	<p>
 		Step 3 hides a subtlety that Cauchy did not address, and that Lakatos made famous. If you remove a triangle that touches the
@@ -411,6 +420,15 @@
 	does not change \(\chi\).)
 </p>
 
+<p>
+	Lhuilier had another "monster", as Lakatos would later call such examples: a cube with a cube-shaped cavity hidden inside it, like a
+	hollow box with thick walls. Its surface is made of two separate pieces — the outside of the box and the inside of the cavity —
+	each a cube’s surface. Counting everything gives \(V = 8 + 8 = 16\), \(E = 12 + 12 = 24\), \(F = 6 + 6 = 12\), and
+	\[ V - E + F = 16 - 24 + 12 = 4 = 2 + 2. \]
+	This one is easy to explain: the count simply adds up over separate pieces, and each piece is a sphere in disguise. The Euler
+	characteristic of several separate pieces is the sum of their Euler characteristics.
+</p>
+
 <Warning title="Faces must be disks">
 	<p>
 		Lhuilier found another kind of exception: put a small cube on top of a big one. The big cube’s top face is now a square with a square
@@ -431,20 +449,45 @@
 <div class="table-wrap">
 	<table>
 		<thead>
-			<tr><th>Surface</th><th>Decomposition</th><th>Count</th><th>χ</th></tr>
+			<tr><th>Surface</th><th>Decomposition</th><th>Count</th><th style="text-transform:none">χ</th></tr>
 		</thead>
 		<tbody>
-			<tr><td>Sphere</td><td>hollow tetrahedron; octahedron; point + disk</td><td>4 − 6 + 4; 6 − 12 + 8; 1 − 0 + 1</td><td>2</td></tr>
-			<tr><td>Torus</td><td>3 × 3 grid; 7-vertex; point, 2 loops, disk</td><td>9 − 27 + 18; 7 − 21 + 14; 1 − 2 + 1</td><td>0</td></tr>
-			<tr><td>Projective plane</td><td>6-vertex; point, 1 loop, disk</td><td>6 − 15 + 10; 1 − 1 + 1</td><td>1</td></tr>
-			<tr><td>Klein bottle</td><td>twisted 3 × 3 grid; point, 2 loops, disk</td><td>9 − 27 + 18; 1 − 2 + 1</td><td>0</td></tr>
-			<tr><td>Genus-2 surface</td><td>two 7-vertex tori glued; point, 4 loops, disk</td><td>11 − 39 + 26; 1 − 4 + 1</td><td>−2</td></tr>
+			<tr>
+				<td>Sphere</td>
+				<td>hollow tetrahedron<br />hollow octahedron<br />point + disk</td>
+				<td class="nowrap">4 − 6 + 4<br />6 − 12 + 8<br />1 − 0 + 1</td>
+				<td>2</td>
+			</tr>
+			<tr>
+				<td>Torus</td>
+				<td>3 × 3 grid<br />7-vertex torus<br />point, 2 loops, disk</td>
+				<td class="nowrap">9 − 27 + 18<br />7 − 21 + 14<br />1 − 2 + 1</td>
+				<td>0</td>
+			</tr>
+			<tr>
+				<td>Projective plane</td>
+				<td>6-vertex<br />point, 1 loop, disk</td>
+				<td class="nowrap">6 − 15 + 10<br />1 − 1 + 1</td>
+				<td>1</td>
+			</tr>
+			<tr>
+				<td>Klein bottle</td>
+				<td>twisted 3 × 3 grid<br />point, 2 loops, disk</td>
+				<td class="nowrap">9 − 27 + 18<br />1 − 2 + 1</td>
+				<td>0</td>
+			</tr>
+			<tr>
+				<td>Genus-2 surface</td>
+				<td>two 7-vertex tori, glued<br />point, 4 loops, disk</td>
+				<td class="nowrap">11 − 39 + 26<br />1 − 4 + 1</td>
+				<td>−2</td>
+			</tr>
 		</tbody>
 	</table>
 </div>
 
 <p>
-	The cell decompositions in the last column of the counts come straight from the gluing words of <Ref to="topology/gluing" />: a
+	The cell decompositions (the last line of each row) come straight from the gluing words of <Ref to="topology/gluing" />: a
 	polygon whose sides are glued in pairs so that all its corners become a single point gives one 0-cell, one 1-cell for each letter,
 	and one 2-cell. The surface of genus \(g\) — a sphere with \(g\) handles, glued from a \(4g\)-gon with the word \(a_1 b_1
 	a_1^{-1} b_1^{-1} \cdots a_g b_g a_g^{-1} b_g^{-1}\) — has \(2g\) letters, so
@@ -464,6 +507,51 @@
 	\[ \chi(A \mathbin{\#} B) = \chi(A) + \chi(B) - 2. \]
 	Adding a handle — a connected sum with a torus — lowers \(\chi\) by \(2\); adding a projective plane lowers it by \(1\).
 </p>
+
+<h3 id="cut-and-paste">Counting by cutting and pasting</h3>
+
+<p>
+	The connected-sum argument is an instance of a rule worth knowing by itself. Suppose a complex \(X\) is the union of two
+	subcomplexes \(A\) and \(B\), which overlap in the subcomplex \(A \cap B\). Count the cells of \(X\) by counting those of \(A\) and
+	those of \(B\): the cells in the overlap get counted twice, so we subtract them once. Since this works for vertices, edges and faces
+	separately, it works for the alternating sum:
+	\[ \chi(A \cup B) \;=\; \chi(A) + \chi(B) - \chi(A \cap B). \]
+	This is the same <em>inclusion–exclusion</em> you would use to count the people in two overlapping clubs. Combined with two facts we
+	already know — a disk has \(\chi = 1\), and a circle, a cylinder and a Möbius band all have \(\chi = 0\) — it computes Euler
+	characteristics by cutting shapes into simple pieces.
+</p>
+
+<ul>
+	<li>
+		<strong>Sphere</strong> = northern hemisphere ∪ southern hemisphere, two disks meeting along the equator, a circle: \(\chi = 1 + 1
+		- 0 = 2\).
+	</li>
+	<li>
+		<strong>Torus</strong> = two cylinders (slice the doughnut like a bagel into an upper and a lower half; each half is a cylinder),
+		meeting along two circles, the inner and the outer rim: \(\chi = 0 + 0 - (0 + 0) = 0\).
+	</li>
+	<li>
+		<strong>Projective plane</strong> = a Möbius band with a disk sewn onto its single boundary circle: \(\chi = 0 + 1 - 0 = 1\).
+	</li>
+	<li>
+		<strong>Klein bottle</strong> = two Möbius bands sewn together along their boundary circles: \(\chi = 0 + 0 - 0 = 0\).
+	</li>
+</ul>
+
+<p>
+	Each answer agrees with the table. In <Ref to="homology/exact-sequences" /> this cut-and-paste reasoning grows into the
+	<em>Mayer–Vietoris sequence</em>, which does the same thing for the holes themselves rather than only for their alternating count.
+</p>
+
+<Remark title="Products multiply">
+	<p>
+		There is a matching rule for products. The torus is a circle times a circle — a point of the torus is a pair (angle around the
+		hole, angle around the tube), as in <Ref to="topology/gluing" />. If \(X\) and \(Y\) are cell complexes, the product of an
+		\(i\)-cell of \(X\) and a \(j\)-cell of \(Y\) is an \((i+j)\)-cell of \(X \times Y\), and expanding the alternating sums shows
+		\(\chi(X \times Y) = \chi(X)\,\chi(Y)\). So \(\chi(T^2) = \chi(S^1)\,\chi(S^1) = 0 \cdot 0 = 0\), and a cylinder, a circle times an
+		interval, has \(0 \cdot 1 = 0\).
+	</p>
+</Remark>
 
 <Example title="Surfaces with boundary">
 	<p>
@@ -529,6 +617,14 @@
 	\[ V - E \;=\; (\text{number of pieces}) - (\text{number of independent loops}). \]
 	A <Term t="tree">tree</Term> has one piece and no loops, so \(V - E = 1\); a triangle has one piece and one loop, so \(3 - 3 = 0\).
 </p>
+
+<Example title="The figure eight">
+	<p>
+		Two hollow triangles sharing one corner make a figure eight: \(5\) vertices and \(6\) edges, so \(\chi = 5 - 6 = -1\). It is one
+		piece with two independent loops, and indeed \(1 - 2 = -1\). Draw it differently — two squares sharing a corner, \(7 - 8 = -1\), or a
+		single vertex with two loops attached as a CW complex, \(1 - 2 = -1\) — and the answer does not change, just as for surfaces.
+	</p>
+</Example>
 
 <Figure size="wide" num="2.6.7" title="Pieces and loops" hint="Tap to add vertices and edges · switch modes · hover a gold edge">
 	<GraphChi />
@@ -763,3 +859,9 @@
 <h2 id="further-reading">Further reading</h2>
 
 <FurtherReading items={reading} />
+
+<style>
+	.nowrap {
+		white-space: nowrap;
+	}
+</style>

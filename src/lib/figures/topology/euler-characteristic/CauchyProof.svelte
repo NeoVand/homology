@@ -14,6 +14,8 @@
 	const order = removalOrder();
 	const nSteps = 3 + order.length + 1;
 	let step = $state(0);
+	let cw = $state(640);
+	const k = $derived(cw < 560 ? 1.6 : 1);
 	let reduced = $state(false);
 	onMount(() => (reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches));
 
@@ -101,10 +103,10 @@
 	const poly = (ids: number[]) => ids.map((v) => pos[v].join(',')).join(' ');
 </script>
 
-<div class="wrap">
+<div class="wrap" bind:clientWidth={cw}>
 	<Svg viewBox="40 10 520 400" maxHeight={420} label="Cauchy's proof of Euler's formula carried out on a cube">
 		{#if step >= 1}
-			<text x="62" y="40" class="outside" transition:fade>outside = the missing face</text>
+			<text x="62" y="40" class="outside" style="font-size:{12 * k}px !important" transition:fade>outside = the missing face</text>
 		{/if}
 		{#each view.faces as f, i (f.join(','))}
 			<polygon
@@ -116,7 +118,7 @@
 			{#if step === 0 && i === view.faces.length - 1}
 				{@const cx = f.reduce((s, v) => s + pos[v][0], 0) / 4}
 				{@const cy = f.reduce((s, v) => s + pos[v][1], 0) / 4}
-				<text x={cx} y={cy + 5} text-anchor="middle" class="tag">remove me</text>
+				<text x={cx} y={cy + 5} text-anchor="middle" class="tag" style="font-size:{13 * k}px !important">remove me</text>
 			{/if}
 		{/each}
 		{#each view.tris as i (i)}
@@ -143,7 +145,7 @@
 			/>
 		{/each}
 		{#each view.verts as v (v)}
-			<circle cx={pos[v][0]} cy={pos[v][1]} r="6" class="v" out:fade={{ duration: reduced ? 0 : 500 }} />
+			<circle cx={pos[v][0]} cy={pos[v][1]} r={6 * Math.sqrt(k)} class="v" out:fade={{ duration: reduced ? 0 : 500 }} />
 		{/each}
 	</Svg>
 	<div class="readout ui" aria-live="polite">

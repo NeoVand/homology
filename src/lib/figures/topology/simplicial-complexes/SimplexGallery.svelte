@@ -11,7 +11,7 @@
 	import { tex } from '$lib/katex/render';
 	import PascalTriangle from './PascalTriangle.svelte';
 	import { binom, simplexComplex, simplexPositions } from './data';
-	import { edgeTube, vertexBead, setPointColor, polygonGeometry } from './kit3d';
+	import { edgeTube, vertexBead, setPointColor, polygonGeometry, fitCamera } from './kit3d';
 
 	let n = $state(3);
 	let k = $state(1);
@@ -68,6 +68,7 @@
 
 	function setup(ctx: SceneContext) {
 		const { scene, invalidate, label } = ctx;
+		const offFit = fitCamera(ctx, 1.8);
 		let root: THREE.Group | null = null;
 		let builtN = -1;
 		let verts: THREE.Group[] = [];
@@ -88,7 +89,9 @@
 			faceLabel = null;
 			root = new THREE.Group();
 			K = simplexComplex(nn);
-			P = simplexPositions(nn).map((p) => new THREE.Vector3(...p));
+			// tilt the shape so no face is seen exactly edge-on
+			const tilt = new THREE.Euler(0.38, 0.62, 0.08);
+			P = simplexPositions(nn).map((p) => new THREE.Vector3(...p).applyEuler(tilt));
 			const c = P.reduce((a, p) => a.add(p), new THREE.Vector3()).multiplyScalar(1 / P.length);
 			// faces: faint glass plus a highlight overlay each
 			overlays = [];
@@ -195,6 +198,7 @@
 		api.show(n, k, lit);
 		return {
 			dispose() {
+				offFit();
 				api = null;
 			}
 		};

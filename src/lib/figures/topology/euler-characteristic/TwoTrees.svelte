@@ -17,6 +17,8 @@
 	const ring = 52; // distance of the "outside" ring from the outer square
 
 	let seed = $state(3);
+	let cw = $state(600);
+	const k = $derived(cw < 560 ? 1.6 : 1);
 	let hover = $state<number | null>(null);
 	const g = $derived(analyseGraph([0, 1, 2, 3, 4, 5, 6, 7], cubeEdges, shuffled(cubeEdges.length, rng(seed))));
 	const loop = $derived(hover !== null && !g.inTree[hover] ? new Set(fundamentalLoop(cubeEdges, g.inTree, hover)) : new Set<number>());
@@ -61,10 +63,10 @@
 	const treeCount = $derived(g.inTree.filter(Boolean).length);
 </script>
 
-<div class="wrap">
+<div class="wrap" bind:clientWidth={cw}>
 	<Svg viewBox="40 10 520 420" maxHeight={430} label="The flattened cube with a spanning tree of its vertices and the dual tree of its faces">
 		<rect x={ringRect.x} y={ringRect.y} width={ringRect.w} height={ringRect.h} rx="26" class="ring" />
-		<text x={ringRect.x + 14} y={ringRect.y - 8} class="ringlbl">the outside face</text>
+		<text x={ringRect.x + 14} y={ringRect.y - 8} class="ringlbl" style="font-size:{12 * k}px !important">the outside face</text>
 		<!-- dual edges first, underneath -->
 		{#each cubeEdges as _, i (i)}
 			{#if !g.inTree[i]}
@@ -98,7 +100,7 @@
 			{#if n}<rect x={n[0] - 6} y={n[1] - 6} width="12" height="12" rx="2" transform="rotate(45 {n[0]} {n[1]})" class="fnode" />{/if}
 		{/each}
 		{#each pos as p, i (i)}
-			<circle cx={p[0]} cy={p[1]} r="7" class="v" />
+			<circle cx={p[0]} cy={p[1]} r={7 * Math.sqrt(k)} class="v" />
 		{/each}
 	</Svg>
 	<div class="readout ui" aria-live="polite">

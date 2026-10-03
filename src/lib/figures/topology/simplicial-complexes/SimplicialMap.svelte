@@ -13,6 +13,8 @@
 
 	type P = [number, number];
 	let ex = $state<'wrap' | 'collapse'>('wrap');
+	let cw = $state(640);
+	const k = $derived(cw < 560 ? 1.6 : 1);
 	let t = $state(0);
 	let reduced = false;
 	let raf = 0;
@@ -65,13 +67,13 @@
 	const colNow = $derived(sq.map((p, i) => lerp(p, sqImg[i], s)));
 </script>
 
-<div class="wrap">
+<div class="wrap" bind:clientWidth={cw}>
 	<Svg viewBox="0 0 640 400" maxHeight={400} label="A simplicial map shown as a morph: the source is carried vertex by vertex onto its image">
 		{#if ex === 'wrap'}
 			<!-- the target: a hollow triangle -->
 			<polygon points={tri.map((p) => p.join(',')).join(' ')} class="target" />
 			{#each tri as p, i (i)}
-				<SvgTeX x={p[0] + (C[0] - p[0]) * 0.36} y={p[1] + (C[1] - p[1]) * 0.36} tex={`w_${i}`} color={colours[i]} size={18} w={40} h={28} />
+				<SvgTeX x={p[0] + (C[0] - p[0]) * 0.36} y={p[1] + (C[1] - p[1]) * 0.36} tex={`w_${i}`} color={colours[i]} size={18 * k} w={40 * k} h={28 * k} />
 			{/each}
 			<!-- the hexagon, travelling -->
 			{#each hexNow as p, i (i)}
@@ -79,21 +81,21 @@
 				<line x1={p[0]} y1={p[1]} x2={q[0]} y2={q[1]} class="src" class:lap2={i >= 3} />
 			{/each}
 			{#each hexNow as p, i (i)}
-				<circle cx={p[0]} cy={p[1]} r="8" fill={colours[i % 3]} class="dot" />
-				<SvgTeX x={p[0] + (hex[i][0] - C[0]) * 0.16} y={p[1] + (hex[i][1] - C[1]) * 0.16} tex={`${i}`} color="var(--ink-bright)" size={14} w={24} h={22} />
+				<circle cx={p[0]} cy={p[1]} r={8 * Math.sqrt(k)} fill={colours[i % 3]} class="dot" />
+				<SvgTeX x={p[0] + (hex[i][0] - C[0]) * 0.16} y={p[1] + (hex[i][1] - C[1]) * 0.16} tex={`${i}`} color="var(--ink-bright)" size={14 * k} w={24 * k} h={22 * k} />
 			{/each}
 		{:else}
 			<line x1={sq[0][0]} y1={sq[0][1]} x2={sq[1][0]} y2={sq[1][1]} class="target thick" />
-			<SvgTeX x={sq[0][0] - 8} y={sq[0][1] + 30} tex="w_0" color={colours[0]} size={18} w={40} h={28} />
-			<SvgTeX x={sq[1][0] + 8} y={sq[1][1] + 30} tex="w_1" color={colours[1]} size={18} w={40} h={28} />
+			<SvgTeX x={sq[0][0] - 8} y={sq[0][1] + 30} tex="w_0" color={colours[0]} size={18 * k} w={40 * k} h={28 * k} />
+			<SvgTeX x={sq[1][0] + 8} y={sq[1][1] + 30} tex="w_1" color={colours[1]} size={18 * k} w={40 * k} h={28 * k} />
 			<polygon points={colNow.map((p) => p.join(',')).join(' ')} class="srcfill" />
 			{#each colNow as p, i (i)}
 				{@const q = colNow[(i + 1) % 3]}
 				<line x1={p[0]} y1={p[1]} x2={q[0]} y2={q[1]} class="src" />
 			{/each}
 			{#each colNow as p, i (i)}
-				<circle cx={p[0]} cy={p[1]} r="8" fill={colours[i === 0 ? 0 : 1]} class="dot" />
-				<SvgTeX x={p[0] + (i === 2 ? 18 : i === 0 ? -16 : 16)} y={p[1] - 18} tex={`${i}`} color="var(--ink-bright)" size={14} w={24} h={22} />
+				<circle cx={p[0]} cy={p[1]} r={8 * Math.sqrt(k)} fill={colours[i === 0 ? 0 : 1]} class="dot" />
+				<SvgTeX x={p[0] + (i === 2 ? 18 : i === 0 ? -16 : 16)} y={p[1] - 18} tex={`${i}`} color="var(--ink-bright)" size={14 * k} w={24 * k} h={22 * k} />
 			{/each}
 		{/if}
 	</Svg>

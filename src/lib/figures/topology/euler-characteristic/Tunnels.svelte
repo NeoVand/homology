@@ -10,6 +10,7 @@
 	import { pictureFrame, tunnelSlab } from './tunnels';
 	import { meshCounts } from './mesh';
 	import { buildPolyView, fitPositions } from './poly3d';
+	import { fitCamera } from '../simplicial-complexes/kit3d';
 
 	let mode = $state<'frame' | 'slab'>('frame');
 	let g = $state(2);
@@ -25,6 +26,7 @@
 
 	function setup(ctx: SceneContext) {
 		const { scene, invalidate } = ctx;
+		const offFit = fitCamera(ctx, 2.2);
 		const holder = new THREE.Group();
 		holder.rotation.set(0.62, 0.35, 0);
 		scene.add(holder);
@@ -48,6 +50,7 @@
 		api.show(`${mode}-${g}`, shape.pos, shape.faces);
 		return {
 			dispose() {
+				offFit();
 				api = null;
 			}
 		};

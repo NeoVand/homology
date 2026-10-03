@@ -166,6 +166,45 @@ export function pickCylinder(a: THREE.Vector3, b: THREE.Vector3, radius = 0.09) 
 	return m;
 }
 
+/**
+ * Keep a sphere of the given radius (around the orbit target) in view on narrow
+ * canvases: the camera only ever moves further away than its starting distance,
+ * so wide (desktop) framing is unchanged. Returns an unsubscribe.
+ */
+export function fitCamera(
+	ctx: {
+		camera: THREE.PerspectiveCamera;
+		container: HTMLElement;
+		controls: { target: THREE.Vector3; update(): unknown } | null;
+		invalidate(): void;
+	},
+	radius: number
+) {
+	const { camera, container, controls, invalidate } = ctx;
+	const target = controls?.target ?? new THREE.Vector3();
+	const d0 = camera.position.distanceTo(target);
+	const dir = new THREE.Vector3();
+	const apply = () => {
+		const w = container.clientWidth;
+		const h = container.clientHeight;
+		if (!w || !h) return;
+		const vf = (camera.fov * Math.PI) / 180;
+		const hf = 2 * Math.atan(Math.tan(vf / 2) * (w / h));
+		const need = radius / Math.sin(Math.min(vf, hf) / 2);
+		const d = Math.max(d0, need);
+		dir.copy(camera.position).sub(target);
+		if (Math.abs(dir.length() - d) < 1e-3) return;
+		dir.setLength(d);
+		camera.position.copy(target).add(dir);
+		controls?.update();
+		invalidate();
+	};
+	const ro = new ResizeObserver(apply);
+	ro.observe(container);
+	apply();
+	return () => ro.disconnect();
+}
+
 /** Detect clicks (not drags) on a canvas; returns an unsubscribe. */
 export function onCanvasClick(canvas: HTMLCanvasElement, cb: (e: PointerEvent) => void) {
 	let x = 0;

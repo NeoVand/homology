@@ -13,11 +13,13 @@
 	import { torus, surfaceGeometry, SurfaceCurve, surfaceNormal } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
 	import { gridPieces, gridDefects, gridLabel, binom } from './data';
-	import { vertexBead, setPointColor, surfaceTriangle } from './kit3d';
+	import { vertexBead, setPointColor, surfaceTriangle, fitCamera } from './kit3d';
 
 	let n = $state(3);
 	let hoverLabel = $state<number | null>(null);
 	let problem = $state(0);
+	let cw = $state(420);
+	const k = $derived(cw < 400 ? 1.28 : 1);
 
 	const pieces = $derived(gridPieces(n));
 	const defects = $derived(gridDefects(n));
@@ -47,8 +49,9 @@
 
 	function setup(ctx: SceneContext) {
 		const { scene, invalidate, label } = ctx;
+		const offFit = fitCamera(ctx, 2.3);
 		const fn = torus(1.55, 0.68);
-		const base = glassMesh(surfaceGeometry(fn, 140, 56), { opacity: 0.5, grid: [0, 0], film: 1.0, rim: 0.5 });
+		const base = glassMesh(surfaceGeometry(fn, 140, 56), { opacity: 0.42, grid: [0, 0], film: 1.0, rim: 0.5, hue: 0.55 });
 		scene.add(base);
 		let root: THREE.Group | null = null;
 		let builtN = -1;
@@ -74,7 +77,7 @@
 			edgeObjs = P.edges.map((e) => {
 				const [a, b] = e.corners.map(([i, j]) => uv(i, j));
 				const curve = new SurfaceCurve(fn, (t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t], 0.012);
-				const g = glowTube(curve, { color: 0xcfc6ae, radius: 0.017, segments: 48, radialSegments: 8, halo: true, haloScale: 2.6, intensity: 0.8 });
+				const g = glowTube(curve, { color: 0xf3ead2, radius: 0.02, segments: 48, radialSegments: 8, halo: true, haloScale: 2.6, intensity: 1.0 });
 				root!.add(g);
 				return g;
 			});
@@ -99,7 +102,7 @@
 					vertObjs.set(gridLabel(i, j, nn), g);
 					const nrm = surfaceNormal(fn, u, v, new THREE.Vector3());
 					const q = p.clone().addScaledVector(nrm, 0.2);
-					labels.push(label(q, tex(String(gridLabel(i, j, nn))), { className: 'small', normal: nrm }));
+					labels.push(label(q, tex(String(gridLabel(i, j, nn))), { className: 'gold', normal: nrm }));
 				}
 			scene.add(root);
 		}
@@ -107,7 +110,7 @@
 		api = {
 			show(nn, hover, prob) {
 				if (nn !== builtN) build(nn);
-				edgeObjs.forEach((e) => setGlowColor(e, 0xcfc6ae, 0.8));
+				edgeObjs.forEach((e) => setGlowColor(e, 0xf3ead2, 1.0));
 				triObjs.forEach((t) => ((t.material as THREE.MeshBasicMaterial).opacity = 0));
 				vertObjs.forEach((g) => {
 					setPointColor(g, 'gold', 1);
@@ -149,6 +152,7 @@
 		api.show(n, hoverLabel, current);
 		return {
 			dispose() {
+				offFit();
 				api = null;
 			}
 		};
@@ -165,7 +169,7 @@
 </script>
 
 <div class="two">
-	<div class="flat">
+	<div class="flat" bind:clientWidth={cw}>
 		<Svg viewBox="0 0 420 390" maxHeight={400} label="The square with opposite sides glued, cut into a grid of triangles, with vertex labels">
 			<GluingSquare preset="torus" x={X0} y={Y0} size={S} />
 			{#each pieces.triangles as t, i (i)}
@@ -203,9 +207,9 @@
 						onpointerleave={() => (hoverLabel = null)}
 						onclick={() => (hoverLabel = hoverLabel === L ? null : L)}
 					>
-						<circle cx={x} cy={y} r="16" class="vhit" />
-						<circle cx={x} cy={y} r="11" class="vdisc" />
-						<text {x} y={y + 4.5} text-anchor="middle" class="vnum">{L}</text>
+						<circle cx={x} cy={y} r={16 * k} class="vhit" />
+						<circle cx={x} cy={y} r={11 * k} class="vdisc" />
+						<text {x} y={y + 4.5 * k} text-anchor="middle" class="vnum" style="font-size:{12 * k}px !important">{L}</text>
 					</g>
 				{/each}
 			{/each}

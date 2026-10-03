@@ -21,6 +21,9 @@
 	let showAreas = $state(true);
 	let svgEl = $state<SVGSVGElement>();
 	let dragging = $state(false);
+	let cw = $state(640);
+	/** labels grow on narrow screens, where the drawing is scaled down */
+	const k = $derived(cw < 560 ? 1.55 : 1);
 
 	const area2 = (a: P, b: P, c: P) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
 	const A = area2(V[0], V[1], V[2]);
@@ -111,7 +114,7 @@
 	const sub = (i: number): P[] => V.map((v, j) => (j === i ? p : v));
 </script>
 
-<div class="wrap">
+<div class="wrap" bind:clientWidth={cw}>
 	<Svg viewBox="0 0 640 420" maxHeight={430} bind:svg={svgEl} label="A triangle with a draggable point and its three barycentric coordinates">
 		<!-- the three sub-triangles: each has area proportional to the weight of the opposite corner -->
 		{#if showAreas && where.kind !== 'outside'}
@@ -134,23 +137,25 @@
 			<circle cx={v[0]} cy={v[1]} r={8 + 30 * Math.sqrt(w)} fill={hex[i]} fill-opacity="0.16" stroke={hex[i]} stroke-opacity="0.55" stroke-width="1.2" class="mass" />
 			<circle cx={v[0]} cy={v[1]} r="7" fill={hex[i]} class:hot={where.kind === 'vertex' && where.face?.[0] === i} />
 			<SvgTeX
-				x={v[0] + (i === 2 ? 0 : i === 0 ? -6 : 6)}
-				y={v[1] + (i === 2 ? -40 : 40)}
+				x={v[0] + (i === 2 ? 0 : i === 0 ? -6 : 6) * k}
+				y={v[1] + (i === 2 ? -40 : 40) * (k > 1 ? 1.1 : 1)}
 				tex={`v_${i}`}
 				color={col[i]}
-				size={19}
-				w={60}
-				h={30}
+				size={19 * k}
+				w={60 * k}
+				h={30 * k}
 			/>
-			<SvgTeX
-				x={v[0] + (i === 2 ? 92 : i === 0 ? -6 : 6)}
-				y={v[1] + (i === 2 ? -40 : 64)}
-				tex={`t_${i} = ${fmt(t[i])}`}
-				color={t[i] < -0.005 ? 'var(--rose)' : col[i]}
-				size={16}
-				w={130}
-				h={28}
-			/>
+			{#if k === 1}
+				<SvgTeX
+					x={v[0] + (i === 2 ? 92 : i === 0 ? -6 : 6)}
+					y={v[1] + (i === 2 ? -40 : 64)}
+					tex={`t_${i} = ${fmt(t[i])}`}
+					color={t[i] < -0.005 ? 'var(--rose)' : col[i]}
+					size={16}
+					w={130}
+					h={28}
+				/>
+			{/if}
 		{/each}
 		<!-- the point -->
 		<g
@@ -169,11 +174,11 @@
 			onpointercancel={up}
 			onkeydown={key}
 		>
-			<circle cx={p[0]} cy={p[1]} r="24" class="hit" />
-			<circle cx={p[0]} cy={p[1]} r="14" class="ring" />
-			<circle cx={p[0]} cy={p[1]} r="7.5" class="dot" />
+			<circle cx={p[0]} cy={p[1]} r={24 * k} class="hit" />
+			<circle cx={p[0]} cy={p[1]} r={14 * k} class="ring" />
+			<circle cx={p[0]} cy={p[1]} r={7.5 * k} class="dot" />
 		</g>
-		<SvgTeX x={p[0] + 26} y={p[1] - 22} tex="p" color="var(--ink-bright)" size={19} w={30} h={30} anchor="start" />
+		<SvgTeX x={p[0] + 26} y={p[1] - 22} tex="p" color="var(--ink-bright)" size={19 * k} w={30 * k} h={30 * k} anchor="start" />
 	</Svg>
 	<div class="readout ui" aria-live="polite">
 		<div class="eq">

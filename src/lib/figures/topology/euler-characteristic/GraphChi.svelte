@@ -99,6 +99,9 @@
 	let nextId = $state(5);
 	let lastMsg = $state('');
 	let svgEl = $state<SVGSVGElement>();
+	let cw = $state(600);
+	const u = $derived(W / Math.max(cw, 1));
+	const vs = $derived(Math.max(1, 0.78 * u));
 
 	const A = $derived(analyseGraph(verts.map((v) => v.id), edges));
 	const loopSet = $derived(
@@ -127,7 +130,7 @@
 	}
 	function hitVertex(p: Pt): number | null {
 		let best: number | null = null;
-		let bd = 18;
+		let bd = Math.max(18, 16 * u);
 		for (const v of verts) {
 			const d = Math.hypot(v.x - p[0], v.y - p[1]);
 			if (d < bd) {
@@ -139,7 +142,7 @@
 	}
 	function hitEdge(p: Pt): number | null {
 		let best: number | null = null;
-		let bd = 10;
+		let bd = Math.max(10, 10 * u);
 		edges.forEach((e, i) => {
 			const { d } = segDist(p, P(e[0]), P(e[1]));
 			if (d < bd) {
@@ -227,7 +230,7 @@
 </script>
 
 <div class="wrap">
-	<div class="canvas">
+	<div class="canvas" bind:clientWidth={cw}>
 		<Svg
 			viewBox="0 0 {W} {H}"
 			maxHeight={380}
@@ -255,11 +258,11 @@
 				/>
 			{/each}
 			{#each verts as v (v.id)}
-				<circle cx={v.x} cy={v.y} r="20" class="vhit" />
+				<circle cx={v.x} cy={v.y} r={Math.max(20, 16 * u)} class="vhit" />
 				<circle
 					cx={v.x}
 					cy={v.y}
-					r={sel === v.id ? 10 : 8}
+					r={(sel === v.id ? 10 : 8) * vs}
 					class="v"
 					class:sel={sel === v.id}
 					style="fill:{pieceCols[(A.pieceOf.get(v.id) ?? 0) % pieceCols.length]}"

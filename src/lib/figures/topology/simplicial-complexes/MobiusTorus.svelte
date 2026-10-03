@@ -12,11 +12,13 @@
 	import { torus, surfaceGeometry, SurfaceCurve, surfaceNormal } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
 	import { latticeLabel, latticePoint, latticeUV, torus7Triangles, csaszarByLabel } from './data';
-	import { seven, sevenCss, vertexBead, setPointColor, polygonGeometry, edgeTube } from './kit3d';
+	import { seven, sevenCss, vertexBead, setPointColor, polygonGeometry, edgeTube, fitCamera } from './kit3d';
 
 	let picked = $state<number | null>(0);
 	let seen = $state<Set<string>>(new Set([1, 2, 3, 4, 5, 6].map((m) => `0,${m}`)));
 	let mode = $state<'torus' | 'csaszar'>('torus');
+	let cw = $state(440);
+	const k = $derived(cw < 400 ? 1.22 : 1);
 
 	// ── the lattice patch ────────────────────────────────────────────────────
 	const R = 3;
@@ -83,6 +85,7 @@
 
 	function setup(ctx: SceneContext) {
 		const { scene, invalidate, label } = ctx;
+		const offFit = fitCamera(ctx, 2.3);
 		const tris = torus7Triangles();
 		const edges: [number, number][] = [];
 		for (let i = 0; i < 7; i++) for (let j = i + 1; j < 7; j++) edges.push([i, j]);
@@ -110,14 +113,14 @@
 
 		function buildTorus() {
 			const g = new THREE.Group();
-			g.add(glassMesh(surfaceGeometry(fn, 140, 60), { opacity: 0.42, grid: [0, 0], film: 1.1, rim: 0.5 }));
+			g.add(glassMesh(surfaceGeometry(fn, 140, 60), { opacity: 0.36, grid: [0, 0], film: 1.0, rim: 0.5, hue: 0.55 }));
 			const p = new THREE.Vector3();
 			vObjs = [];
 			for (let L = 0; L < 7; L++) {
 				const [a, b] = rep(L);
 				const [u, v] = latticeUV(a, b);
 				fn(((u % 1) + 1) % 1, ((v % 1) + 1) % 1, p);
-				const bead = vertexBead(p, seven[L], 0.07);
+				const bead = vertexBead(p, seven[L], 0.085);
 				g.add(bead);
 				vObjs.push(bead);
 				const nrm = surfaceNormal(fn, ((u % 1) + 1) % 1, ((v % 1) + 1) % 1, new THREE.Vector3());
@@ -202,6 +205,7 @@
 		api.show(mode, picked);
 		return {
 			dispose() {
+				offFit();
 				api = null;
 			}
 		};
@@ -209,7 +213,7 @@
 </script>
 
 <div class="two">
-	<div class="flat">
+	<div class="flat" bind:clientWidth={cw}>
 		<Svg viewBox="40 30 440 340" maxHeight={380} label="The triangulated plane with each vertex labelled by a number from 0 to 6; the labels repeat periodically">
 			{#each homeTris as t, i (i)}
 				<polygon points={t.map((p) => `${X(p)},${Y(p)}`).join(' ')} class="home" />
@@ -237,9 +241,9 @@
 					aria-label="vertex {p.L}"
 					onclick={() => pick(p.L)}
 				>
-					<circle cx={X(p)} cy={Y(p)} r="17" class="hit" />
-					<circle cx={X(p)} cy={Y(p)} r={picked === p.L ? 13 : 11} fill={sevenCss[p.L]} class="disc" />
-					<text x={X(p)} y={Y(p) + 4.5} text-anchor="middle" class="num">{p.L}</text>
+					<circle cx={X(p)} cy={Y(p)} r={17 * k} class="hit" />
+					<circle cx={X(p)} cy={Y(p)} r={(picked === p.L ? 13 : 11) * k} fill={sevenCss[p.L]} class="disc" />
+					<text x={X(p)} y={Y(p) + 4.5 * k} text-anchor="middle" class="num" style="font-size:{12 * k}px !important">{p.L}</text>
 				</g>
 			{/each}
 		</Svg>

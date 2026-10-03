@@ -10,7 +10,7 @@
 	import { glassMesh, glowTube, pointCloud, disposeTree, glowPoint } from '$lib/three/materials';
 	import { torus, sphere, surfaceGeometry, SurfaceCurve, surfaceNormal, type SurfaceFn } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
-	import { ease } from './kit3d';
+	import { ease, fitCamera } from './kit3d';
 
 	let shape = $state<'torus' | 'sphere'>('torus');
 	let step = $state(0);
@@ -35,6 +35,7 @@
 
 	function setup(ctx: SceneContext) {
 		const { scene, invalidate, label, reducedMotion } = ctx;
+		const offFit = fitCamera(ctx, 2.2);
 		let root: THREE.Group | null = null;
 		let built: string | null = null;
 		let labels: LabelHandle[] = [];
@@ -284,6 +285,7 @@
 				void t;
 			},
 			dispose() {
+				offFit();
 				api = null;
 			}
 		};

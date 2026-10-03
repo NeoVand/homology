@@ -11,7 +11,7 @@
 	import { solids, normalized } from './polyhedra';
 	import { splitEdge, starFace, addDiagonal, meshCounts, meshEdges, type PolyMesh, type Move } from './mesh';
 	import { buildPolyView, type PolyView } from './poly3d';
-	import { onCanvasClick } from '../simplicial-complexes/kit3d';
+	import { onCanvasClick, fitCamera } from '../simplicial-complexes/kit3d';
 	import { rng } from './graph';
 
 	const start = (): PolyMesh => {
@@ -81,6 +81,7 @@
 
 	function setup(ctx: SceneContext) {
 		const { scene, invalidate, pick, canvas } = ctx;
+		const offFit = fitCamera(ctx, 1.7);
 		const holder = new THREE.Group();
 		holder.rotation.set(0.42, 0.62, 0);
 		scene.add(holder);
@@ -142,6 +143,7 @@
 		api.show(mesh, tool);
 		return {
 			dispose() {
+				offFit();
 				offClick();
 				canvas.removeEventListener('pointermove', onMove);
 				api = null;

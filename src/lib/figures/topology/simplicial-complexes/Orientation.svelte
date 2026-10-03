@@ -13,13 +13,13 @@
 
 	type P = [number, number];
 	const EV: P[] = [
-		[60, 190],
-		[230, 120]
+		[40, 175],
+		[215, 100]
 	];
 	const TV: P[] = [
-		[330, 235],
-		[560, 235],
-		[445, 50]
+		[45, 215],
+		[275, 215],
+		[160, 32]
 	];
 	const cen: P = [(TV[0][0] + TV[1][0] + TV[2][0]) / 3, (TV[0][1] + TV[1][1] + TV[2][1]) / 3];
 
@@ -53,7 +53,8 @@
 </script>
 
 <div class="wrap">
-	<Svg viewBox="0 0 640 300" maxHeight={330} label="An oriented edge and an oriented triangle; the arrows follow the order of the vertices">
+	<div class="panels">
+	<Svg viewBox="0 30 260 240" maxHeight={300} label="An oriented edge; the arrow follows the order of its vertices">
 		<!-- the edge -->
 		<line x1={EV[0][0]} y1={EV[0][1]} x2={EV[1][0]} y2={EV[1][1]} class="e" />
 		<path d={chevron(EV[edge[0]], EV[edge[1]], 11)} class="chev gold" />
@@ -61,8 +62,9 @@
 			<circle cx={v[0]} cy={v[1]} r="7" class="v" />
 			<SvgTeX x={v[0] + (i === 0 ? -6 : 8)} y={v[1] + (i === 0 ? 26 : -24)} tex={`v_${i}`} size={18} w={40} h={28} />
 		{/each}
-		<SvgTeX x={145} y={262} tex={list(edge)} size={17} color="var(--gold-bright)" w={160} h={30} />
-
+		<SvgTeX x={128} y={245} tex={list(edge)} size={18} color="var(--gold-bright)" w={160} h={30} />
+	</Svg>
+	<Svg viewBox="0 0 320 270" maxHeight={300} label="An oriented triangle; the arrows follow the order of its vertices">
 		<!-- the triangle -->
 		<polygon points={TV.map((p) => p.join(',')).join(' ')} class="t" class:cw={!evenTri} />
 		{#each [0, 1, 2] as k (k)}
@@ -76,8 +78,9 @@
 			<circle cx={v[0]} cy={v[1]} r="7" class="v" />
 			<SvgTeX x={v[0] + (i === 0 ? -18 : i === 1 ? 18 : 0)} y={v[1] + (i === 2 ? -22 : 20)} tex={`v_${i}`} size={18} w={40} h={28} />
 		{/each}
-		<SvgTeX x={445} y={278} tex={list(tri)} size={17} color={evenTri ? 'var(--gold-bright)' : 'var(--violet)'} w={200} h={30} />
+		<SvgTeX x={160} y={254} tex={list(tri)} size={18} color={evenTri ? 'var(--gold-bright)' : 'var(--violet)'} w={200} h={30} />
 	</Svg>
+	</div>
 	<div class="readout ui" aria-live="polite">
 		<div>
 			{#if edge[0] === 0}
@@ -110,6 +113,17 @@
 <style>
 	.wrap {
 		padding: 0.8rem 0.8rem 0;
+	}
+	.panels {
+		display: grid;
+		grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+		align-items: center;
+		gap: 0.5rem;
+	}
+	@media (max-width: 560px) {
+		.panels {
+			grid-template-columns: minmax(0, 1fr);
+		}
 	}
 	.e {
 		stroke: rgba(235, 229, 213, 0.7);
