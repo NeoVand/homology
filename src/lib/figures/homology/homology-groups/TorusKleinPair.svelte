@@ -44,7 +44,6 @@
 			};
 			const lA = label(which === 0 ? at(1, 0.2).multiplyScalar(1.08) : at(1, -0.28), tex('a'), { className: 'gold' });
 			const lB = label(which === 0 ? at(3, 0.3) : at(6, 0.0).add({ x: 0.28, y: 0, z: 0 } as THREE.Vector3), tex('b'), { className: 'rose' });
-			const l2a = label(which === 0 ? at(1) : at(2, -0.5), tex('\\partial(\\textstyle\\sum t) = 2a'), { className: 'rose small' });
 			const eps = counterclockwise(ex.L);
 			apis[which] = {
 				set(l) {
@@ -53,7 +52,8 @@
 					cx.setOrientation(l === 'Z' ? eps : null, 'violet');
 					seam.visible = which === 1 && l === 'Z';
 					loopA.visible = !(which === 1 && l === 'Z');
-					l2a.show(which === 1 && l === 'Z');
+					lA.set(tex(which === 1 && l === 'Z' ? '2a = \\partial(\\textstyle\\sum \\pm t)' : 'a'));
+					lA.el.className = 'lbl3d ' + (which === 1 && l === 'Z' ? 'rose' : 'gold');
 					lA.show(true);
 					lB.show(true);
 				}

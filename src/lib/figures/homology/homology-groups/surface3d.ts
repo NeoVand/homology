@@ -169,6 +169,8 @@ export interface Flat3D {
 	edgeMidpoint(e: number): THREE.Vector3;
 	triCentroid(t: number): THREE.Vector3;
 	triNormal(t: number): THREE.Vector3;
+	/** the sampled curve of edge e on the surface (first drawn copy) */
+	edgePoints(e: number): THREE.Vector3[];
 }
 
 /**
@@ -205,9 +207,11 @@ export function buildFlat3D(
 	// edges (first drawn copy)
 	const edges: THREE.Group[] = new Array(L.K.count(1));
 	const edgeMid: THREE.Vector3[] = new Array(L.K.count(1));
+	const edgePts: THREE.Vector3[][] = new Array(L.K.count(1));
 	for (const d of L.edges) {
 		if (edges[d.e]) continue;
 		const pts = mappedSegment(m, L.verts[d.a].q, L.verts[d.b].q, 16, lift);
+		edgePts[d.e] = pts;
 		const g = tubeAlong(pts, { color: baseEdge, radius: er, halo: false, intensity: 0.75 });
 		edges[d.e] = g;
 		edgeMid[d.e] = pts[Math.floor(pts.length / 2)].clone();
@@ -322,7 +326,8 @@ export function buildFlat3D(
 			const { A, B, C } = triGeo[t];
 			const [u, v] = m.uv([(A[0] + B[0] + C[0]) / 3, (A[1] + B[1] + C[1]) / 3]);
 			return surfaceNormal(m.fn, u, v, new THREE.Vector3());
-		}
+		},
+		edgePoints: (e) => edgePts[e]
 	};
 	return api;
 }

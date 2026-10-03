@@ -310,6 +310,23 @@
 	.tri.clickable {
 		cursor: pointer;
 	}
+	/* SVG shapes: show keyboard focus on the shape, never as a bounding-box ring */
+	.tri:focus,
+	.hit:focus,
+	.vdot:focus {
+		outline: none;
+	}
+	.tri:focus-visible {
+		stroke: var(--gold-bright);
+		stroke-width: 2.5;
+	}
+	.hit:focus-visible {
+		stroke: rgba(244, 215, 156, 0.35);
+	}
+	.vdot:focus-visible {
+		stroke: var(--gold-bright);
+		stroke-width: 3;
+	}
 	.tri.clickable:hover,
 	.tri.hot {
 		fill: rgba(164, 147, 255, 0.2);
