@@ -1104,7 +1104,7 @@
 
 <p>
 	Similarly, \(\Z/6\) and \(D_3\) both have six elements, but \(\Z/6\) is abelian and \(D_3\) is not, so they cannot be
-	isomorphic. This is the strategy of <em>invariants</em>, the same one topology uses to prove that two shapes are
+	isomorphic. This is the strategy of <Term t="invariant">invariants</Term>, the same one topology uses to prove that two shapes are
 	different (<Ref to="prelude/shape-of-a-question" />): find a property that isomorphic groups must share, and show
 	that it differs.
 </p>

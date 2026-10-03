@@ -405,7 +405,7 @@
 	With \(v = (2, 1)\) and \(w = (1, 2)\) there are three colours. The shaded tile, the parallelogram with corners <span class="nw">\(0,
 	v, v + w, w\),</span> has area
 	\[ \det\begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix} = 2 \cdot 2 - 1 \cdot 1 = 3 . \]
-	(For a \(2 \times 2\) matrix, the <em>determinant</em> \(\det\begin{pmatrix} p & q \\ r & s \end{pmatrix} = ps - qr\)
+	(For a \(2 \times 2\) matrix, the <Term t="determinant">determinant</Term> \(\det\begin{pmatrix} p & q \\ r & s \end{pmatrix} = ps - qr\)
 	is the signed area of the parallelogram spanned by its columns; <Ref to="foundations/linear-algebra" /> explains why.)
 	Why should the number of cosets equal the area? The translates of the tile cover the plane without overlapping, and
 	each tile contains exactly one point of each coset. A large region of area \(A\) contains about \(A\) lattice points
@@ -799,8 +799,8 @@
 
 <p>
 	Using these operations, every integer matrix can be brought to a diagonal form in which each diagonal entry divides the
-	next, called its <dfn>Smith normal form</dfn> (after Henry John Stephen Smith, who studied it in 1861; the general
-	algorithm is in <Ref to="foundations/linear-algebra" />). For our matrix: swap the two columns; subtract twice the
+	next, called its <Term t="smith-normal-form">Smith normal form</Term> (after Henry John Stephen Smith, who studied it
+	in 1861; the general algorithm is in <Ref to="foundations/linear-algebra" />). For our matrix: swap the two columns; subtract twice the
 	first row from the second; subtract twice the first column from the second; multiply the second row by <span class="nw">\(-1\):</span>
 	\[
 		\begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix} \to
