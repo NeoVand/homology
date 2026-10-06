@@ -45,9 +45,12 @@
 		}
 		return (out || '0') + ' = 0';
 	}
-	const presTeX = $derived(
-		`\\left\\langle ${gens.slice(0, m).join(', ')} \\;\\middle|\\; ${Array.from({ length: k }, (_, j) => relTeX(j)).join(',\\ ')} \\right\\rangle`
-	);
+	const presTeX = $derived.by(() => {
+		const rels = Array.from({ length: k }, (_, j) => relTeX(j));
+		const stacked = k >= 3 || (m >= 3 && k >= 2);
+		const body = stacked ? `\\begin{gathered} ${rels.join(' \\\\ ')} \\end{gathered}` : rels.join(',\\ ');
+		return `\\left\\langle ${gens.slice(0, m).join(', ')} \\;\\middle|\\; ${body} \\right\\rangle`;
+	});
 
 	const presets: { label: string; A: Matrix }[] = [
 		{ label: 'the lattice example', A: [[2, 1], [1, 2]] },

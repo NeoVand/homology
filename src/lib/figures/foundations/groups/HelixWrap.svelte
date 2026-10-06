@@ -28,7 +28,7 @@
 		let labels: LabelHandle[] = [];
 
 		const R = 1.45;
-		const H = 4.4; // height of the coiled part
+		const H = 4.1; // height of the coiled part
 		const yTop = 2.5;
 
 		function build(n: number, a: number) {
@@ -50,7 +50,7 @@
 			group.add(glowTube(helix, { color: 'blue', radius: 0.011, segments: 90 * turnsEachSide * 2, intensity: 0.6, haloScale: 2.6 }));
 
 			// the dial ℤ/n below
-			const yDial = yMid - H / 2 - 1.05;
+			const yDial = yMid - H / 2 - 1.5;
 			const dial = (r: number, rad = R) =>
 				new THREE.Vector3(rad * Math.sin((2 * Math.PI * r) / n), yDial, rad * Math.cos((2 * Math.PI * r) / n));
 			const ring = new FnCurve((u, target) => target.copy(dial(u * n)));
