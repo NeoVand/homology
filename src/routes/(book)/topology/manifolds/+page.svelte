@@ -91,9 +91,9 @@
 >
 
 <p class="lead">
-	For most of history people believed that the Earth was flat, and you can see why. Wherever you stand, the ground around you looks like
-	a piece of a plane; only by travelling very far, or by watching the round shadow the Earth casts on the Moon, do you discover that the
-	whole thing curves round and closes up into a ball. This chapter is about spaces with exactly that property: every small piece looks
+	Stand in a field and the Earth looks flat: as far as you can tell, the ground around you is a piece of a plane. Many early cultures
+	pictured the world that way, and it took careful reasoning to see past it — Aristotle noticed that the shadow the Earth casts on the
+	Moon during an eclipse is always round — before people understood that the whole thing curves round and closes up into a ball. This chapter is about spaces with exactly that property: every small piece looks
 	like flat space, while the whole may be curved, twisted or closed up in surprising ways. They are called <em>manifolds</em>. Spheres,
 	tori, Klein bottles, the space we live in and the spacetime of relativity are all manifolds, and they are the natural home of homology
 	and cohomology.
