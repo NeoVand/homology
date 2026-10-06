@@ -2,14 +2,18 @@
 // compiles, keys are unique, cross-references and anchors resolve, and every
 // <Term t="…"> used in the two chapters exists in the assembled glossary.
 import { describe, expect, it } from 'vitest';
-import { readFileSync } from 'node:fs';
 import katex from 'katex';
 import { katexOptions } from '$lib/katex/macros.js';
 import { glossaryByKey } from '$lib/content/glossary';
 import { entries as cycles } from '$lib/content/glossary/homology--cycles-and-boundaries';
 import { entries as chains } from '$lib/content/glossary/homology--chains';
 
-const page = (id: string) => readFileSync(`src/routes/(book)/${id}/+page.svelte`, 'utf8');
+const sources = import.meta.glob('/src/routes/\\(book\\)/homology/*/+page.svelte', {
+	query: '?raw',
+	import: 'default',
+	eager: true
+}) as Record<string, string>;
+const page = (id: string) => sources[`/src/routes/(book)/${id}/+page.svelte`] ?? '';
 const chapters = [
 	{ id: 'homology/cycles-and-boundaries', list: cycles },
 	{ id: 'homology/chains', list: chains }
