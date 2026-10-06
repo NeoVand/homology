@@ -1,6 +1,6 @@
 <script lang="ts">
 	// [0,1] with 0 ~ 1 becomes a circle. Which sets around the glued point are open?
-	// Look back before the glue: U is open exactly when π⁻¹(U) is open in [0,1].
+	// Look back before the glue: U is open exactly when q⁻¹(U) is open in [0,1].
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import Slider from '$lib/components/ui/Slider.svelte';

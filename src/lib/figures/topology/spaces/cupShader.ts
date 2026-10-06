@@ -177,14 +177,14 @@ export const cupFragment = /* glsl */ `
 			t += h.x * 0.85;
 			if (t > tEnd) break;
 		}
-		vec3 gold = vec3(1.0, 0.85, 0.52);
+		vec3 gold = vec3(0.953, 0.769, 0.424); // palette gold #f3c46c, as the glow tubes use
 		if (hit) {
 			vec3 p = ro + rd * t;
 			vec3 V = -rd;
 			if (h.y > 1.5) {
 				vec3 Nl = loopNormal(p);
 				float c1 = abs(dot(Nl, V));
-				vec3 lc = gold * (0.55 + 0.75 * pow(c1, 1.4)) + vec3(1.0, 0.97, 0.9) * pow(c1, 12.0) * 0.5;
+				vec3 lc = gold * (0.62 + 0.5 * pow(c1, 1.4)) + mix(gold, vec3(1.0), 0.4) * pow(c1, 12.0) * 0.18;
 				gl_FragColor = vec4(lc, 1.0);
 				return;
 			}

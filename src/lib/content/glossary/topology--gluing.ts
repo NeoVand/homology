@@ -6,10 +6,10 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'quotient-topology',
 		term: 'Quotient topology',
-		def: 'The topology on a glued set \\(X/{\\sim}\\) in which \\(U\\) is open exactly when its preimage \\(\\pi^{-1}(U)\\) is open in \\(X\\): look back before the glue.',
+		def: 'The topology on a glued set \\(X/{\\sim}\\) in which \\(U\\) is open exactly when its preimage \\(q^{-1}(U)\\) is open in \\(X\\): look back before the glue.',
 		chapter,
 		anchor: 'def-quotient',
-		see: ['quotient-space', 'quotient-set', 'projection-map']
+		see: ['quotient-space', 'quotient-set', 'quotient-projection']
 	},
 	{
 		key: 'quotient-space',

@@ -41,15 +41,23 @@ export const entries: GlossaryEntry[] = [
 		def: 'In a metric space: a set in which every point has some wiggle room — a ball around it inside the set. In a topological space: any member of the chosen collection of open sets.',
 		chapter,
 		anchor: 'def-open',
-		see: ['closed-set', 'topology']
+		see: ['closed-set', 'topology-on-a-set']
 	},
 	{
 		key: 'closed-set',
 		term: 'Closed set',
-		def: 'A set whose complement is open; intuitively, a set that contains its whole boundary. A set can be open, closed, both or neither.',
+		def: 'A set whose complement is open; equivalently, in a metric space, a set that contains all of its limit points. A set can be open, closed, both or neither.',
 		chapter,
 		anchor: 'def-closed',
-		see: ['open-set', 'clopen']
+		see: ['open-set', 'clopen', 'limit-point']
+	},
+	{
+		key: 'limit-point',
+		term: 'Limit point',
+		def: 'A point \\(x\\) is a limit point of a set \\(A\\) if every ball around \\(x\\), however small, contains a point of \\(A\\) other than \\(x\\). A set is closed exactly when it contains all of its limit points.',
+		chapter,
+		anchor: 'def-closed',
+		see: ['closed-set']
 	},
 	{
 		key: 'clopen',
@@ -60,7 +68,7 @@ export const entries: GlossaryEntry[] = [
 		see: ['closed-set', 'connected']
 	},
 	{
-		key: 'topology',
+		key: 'topology-on-a-set',
 		term: 'Topology (on a set)',
 		def: 'A collection of subsets of \\(X\\), called open sets, that contains \\(\\varnothing\\) and \\(X\\) and is closed under arbitrary unions and finite intersections. (The subject is also called topology.)',
 		chapter,
@@ -73,14 +81,14 @@ export const entries: GlossaryEntry[] = [
 		def: 'A set together with a topology: points plus a precise notion of nearness, with no distances, angles or sizes.',
 		chapter,
 		anchor: 'def-topology',
-		see: ['topology']
+		see: ['topology-on-a-set', 'topology']
 	},
 	{
 		key: 'neighbourhood',
 		term: 'Neighbourhood',
 		def: 'An open set containing a given point — a region that gives the point some room.',
 		chapter,
-		anchor: 'def-topology',
+		anchor: 'neighbourhoods',
 		see: ['open-set']
 	},
 	{
@@ -105,7 +113,7 @@ export const entries: GlossaryEntry[] = [
 		def: 'The topology on a subset \\(A \\subseteq X\\) whose open sets are the intersections \\(U \\cap A\\) with open sets \\(U\\) of \\(X\\). It is how the circle and the sphere get their open sets.',
 		chapter,
 		anchor: 'def-subspace',
-		see: ['topology']
+		see: ['topology-on-a-set']
 	},
 	{
 		key: 'product-topology',
@@ -141,11 +149,11 @@ export const entries: GlossaryEntry[] = [
 	},
 	{
 		key: 'topological-invariant',
-		term: 'Topological invariant',
-		def: 'A property or quantity that homeomorphic spaces always share, such as connectedness, compactness or the number of cut points. Different invariants prove spaces are not homeomorphic.',
+		term: 'Topological property',
+		def: 'A property or number that homeomorphic spaces always share — also called a topological invariant. Connectedness, compactness and the number of cut points are examples; if two spaces differ in one of them, they are not homeomorphic.',
 		chapter,
-		anchor: 'def-connected',
-		see: ['homeomorphism']
+		anchor: 'invariants',
+		see: ['invariant', 'homeomorphism']
 	},
 	{
 		key: 'connected',
@@ -169,7 +177,15 @@ export const entries: GlossaryEntry[] = [
 		def: 'Any two points can be joined by a path. Path-connected spaces are connected; for all the spaces in this book the two notions agree.',
 		chapter,
 		anchor: 'def-connected',
-		see: ['connected', 'path']
+		see: ['connected', 'path', 'path-component']
+	},
+	{
+		key: 'path-component',
+		term: 'Path component',
+		def: 'A maximal path-connected piece of a space: two points lie in the same path component when some path joins them. Their number is a topological invariant, and \\(H_0\\) counts them.',
+		chapter,
+		anchor: 'path-components',
+		see: ['path-connected', 'path']
 	},
 	{
 		key: 'open-cover',

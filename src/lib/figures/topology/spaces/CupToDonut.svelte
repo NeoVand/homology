@@ -30,8 +30,18 @@
 
 	function setup(ctx: SceneContext) {
 		const { THREE, scene, camera, renderer, invalidate } = ctx;
-		// ray marching is per pixel: cap the resolution a little on very dense screens
-		renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+		// Ray marching costs per pixel, so cap the resolution on dense screens. Scene3D
+		// resets the pixel ratio whenever the canvas resizes; this observer is created
+		// after Scene3D's, so it runs after it and re-applies the cap.
+		const capRatio = () => {
+			if (renderer.getPixelRatio() > 1.5) {
+				renderer.setPixelRatio(1.5);
+				invalidate();
+			}
+		};
+		capRatio();
+		const ro = new ResizeObserver(capRatio);
+		ro.observe(renderer.domElement);
 		const uniforms = {
 			uT: { value: 0 },
 			uTime: { value: 0 },
@@ -70,6 +80,7 @@
 		api.set(t, showLoop);
 		return {
 			dispose() {
+				ro.disconnect();
 				api = null;
 			}
 		};
