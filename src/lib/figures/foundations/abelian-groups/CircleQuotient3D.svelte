@@ -5,6 +5,7 @@
 	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
 	import { glowTube, glowPoint, disposeTree } from '$lib/three/materials';
 	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import type * as THREE_NS from 'three';
@@ -13,7 +14,6 @@
 
 	let wrap = $state(0);
 	let t0 = $state(0.3);
-	let playing = $state(false);
 	let api: { set(w: number, t0: number): void } | null = null;
 
 	const T = 2.5; // show t ∈ [−T, T]
@@ -93,26 +93,6 @@
 		api?.set(w, s);
 	});
 
-	let raf = 0;
-	function play() {
-		if (playing) {
-			cancelAnimationFrame(raf);
-			playing = false;
-			return;
-		}
-		playing = true;
-		const start = performance.now();
-		const from = wrap >= 0.999 ? 0 : wrap;
-		const dur = 3200 * (1 - from);
-		const tick = (now: number) => {
-			const f = Math.min(1, (now - start) / Math.max(1, dur));
-			wrap = from + (1 - from) * f;
-			if (f < 1) raf = requestAnimationFrame(tick);
-			else playing = false;
-		};
-		raf = requestAnimationFrame(tick);
-	}
-
 	const listTeX = $derived(
 		`${t0.toFixed(2)} + \\mathbb{Z} = \\{\\dots, ${(t0 - 2).toFixed(2)}, ${(t0 - 1).toFixed(2)}, ${t0.toFixed(2)}, ${(t0 + 1).toFixed(2)}, ${(t0 + 2).toFixed(2)}, \\dots\\}`
 	);
@@ -132,17 +112,14 @@
 			Every gold bead now sits at the same point: the whole coset has become <em>one</em> point of the circle
 			<TeX tex={'\\mathbb{R}/\\mathbb{Z}'} />.
 		{:else if wrap < 0.03}
-			The real line, with the integers in teal and one coset in gold. Press play, or drag “wrap”.
+			The real line, with the integers in teal and one coset in gold. Press play, or scrub.
 		{:else}
 			Coiling: one unit of length becomes one full turn…
 		{/if}
 	</div>
 </div>
 <Controls>
-	<button class="play ui" onclick={play} aria-label={playing ? 'Pause' : 'Play the wrapping'}>
-		{playing ? 'Pause' : wrap > 0.999 ? 'Replay' : 'Play'}
-	</button>
-	<Slider bind:value={wrap} min={0} max={1} step={0.01} label="wrap" format={(v) => `${Math.round(v * 100)}%`} />
+	<Timeline bind:value={wrap} from="line" to="circle" duration={3.2} label="Wrapping the line around the circle" />
 	<Slider bind:value={t0} min={0} max={0.99} step={0.01} label="the coset t₀ + ℤ" format={(v) => v.toFixed(2)} />
 </Controls>
 
@@ -162,17 +139,5 @@
 	.dim {
 		color: var(--ink-dim);
 		min-height: 2.6em;
-	}
-	.play {
-		min-width: 4.6rem;
-		height: 2.2rem;
-		border-radius: 999px;
-		border: 0;
-		background: linear-gradient(180deg, #f6dca0, #d2a95f);
-		color: #1a1206;
-		font-weight: 650;
-		font-size: 0.78rem;
-		cursor: pointer;
-		box-shadow: 0 4px 16px -4px rgba(216, 178, 110, 0.6);
 	}
 </style>

@@ -2,7 +2,7 @@
 	// Čech and Vietoris–Rips complexes of the same points at the same radius,
 	// side by side, with their Betti numbers computed exactly.
 	import CloudSvg from './CloudSvg.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { cechFiltration, ripsFiltration, reduce, barsOf, bettiAt, complexAt, dist, type Pt, type FSimplex } from './ph';
@@ -154,7 +154,7 @@
 	</div>
 	<p class="verdict ui">{verdict}</p>
 	<div class="controls ui">
-		<Slider bind:value={r} min={0} max={1.4} step={0.005} label="Radius r" format={(v) => v.toFixed(3)} />
+		<Timeline bind:value={r} min={0} max={1.4} duration={7} label="Growing the radius" readout={(v) => `r = ${v.toFixed(2)}`} />
 	</div>
 </div>
 

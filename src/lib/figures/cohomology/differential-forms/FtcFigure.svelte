@@ -5,7 +5,7 @@
 	// are those same rises. Drag a and b; change the number of pieces.
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { clamp, fmtTeX } from './calc';
@@ -160,7 +160,17 @@
 		{/each}
 	</Svg>
 	<Controls>
-		<Slider bind:value={n} min={1} max={40} step={1} label="Number of pieces" />
+		<Segmented
+			bind:value={n}
+			label="Number of pieces"
+			options={[
+				{ value: 2, label: '2 pieces' },
+				{ value: 4, label: '4' },
+				{ value: 8, label: '8' },
+				{ value: 16, label: '16' },
+				{ value: 32, label: '32' }
+			]}
+		/>
 	</Controls>
 	<div class="readout">
 		<div><span class="cap ui violet">Sum of predicted rises (signed area)</span><TeX tex={String.raw`\textstyle\sum_{i} F'(x_i)\,\Delta x = ${fmtTeX(sum, 3)}`} /></div>

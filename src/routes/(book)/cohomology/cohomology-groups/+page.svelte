@@ -386,7 +386,7 @@
 	the surface into regions at different heights.
 </p>
 
-<Figure num="4.2.4" title="Fences on a torus" hint="Drag to rotate · choose a fence and a loop · wiggle the fence">
+<Figure num="4.2.4" title="Fences on a torus" hint="Drag to rotate · choose a fence and a loop · play the wiggle">
 	<TorusFences />
 	{#snippet caption()}
 		A 1-cocycle drawn as a fence standing on the torus. Its value on the golden loop is the number of crossings, counted with sign. The fence

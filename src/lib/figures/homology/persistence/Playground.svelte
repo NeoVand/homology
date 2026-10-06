@@ -4,10 +4,11 @@
 	// filtration, all linked. Persistence is recomputed only when the points change.
 	import Barcode, { type BarDatum } from './Barcode.svelte';
 	import Diagram from './Diagram.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import { ClearIcon, ShuffleIcon } from '$lib/icons';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { RipsPH, presetCloud, type Preset, type Pt, type RipsBar } from './ph';
 	import { makeView, prepare, drawBalls, drawComplex, drawPoints, drawGlowEdges, drawTriangle, ripsAt, pick, ink, type Box } from './draw';
@@ -168,8 +169,8 @@
 	<div class="bar-top ui">
 		<Segmented value={preset} options={presets} label="Data set" onchange={(p) => loadPreset(p, seed)} />
 		<span class="spacer"></span>
-		<Button variant="subtle" onclick={resample} title="Draw a new random sample of the same shape">↻ New sample</Button>
-		<Button variant="subtle" onclick={clearAll} title="Remove all points and draw your own">Clear</Button>
+		<Button variant="subtle" icon={ShuffleIcon} onclick={resample} title="Draw a new random sample of the same shape">New sample</Button>
+		<Button variant="subtle" icon={ClearIcon} onclick={clearAll} title="Remove all points and draw your own">Clear</Button>
 	</div>
 
 	<div class="stage" bind:clientWidth={cw}>
@@ -247,7 +248,7 @@
 
 	<div class="controls ui">
 		<div class="slider">
-			<Slider bind:value={r} min={0} max={xmax} step={0.005} label="Radius r of the balls" format={(v) => v.toFixed(2)} />
+			<Timeline bind:value={r} min={0} max={xmax} duration={7} label="Growing the balls" readout={(v) => `r = ${v.toFixed(2)}`} />
 		</div>
 		<div class="toggles">
 			<Toggle bind:checked={showBalls} label="Balls" />

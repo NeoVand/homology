@@ -7,6 +7,8 @@
 	import Diagram from './Diagram.svelte';
 	import Slider from '$lib/components/ui/Slider.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import Mark from '$lib/components/ui/Mark.svelte';
+	import { ShuffleIcon } from '$lib/icons';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import type { BarDatum } from './Barcode.svelte';
@@ -75,11 +77,11 @@
 		<span class="chip"><TeX tex={`\\delta = ${delta.toFixed(2)}`} /></span>
 		<span class="chip gold"
 			><TeX tex={`d_B(H_1) = ${m1.distance.toFixed(3)} ${m1.distance <= delta + 1e-9 ? '\\le' : '>'} \\delta`} />
-			<span class="ok">{m1.distance <= delta + 1e-9 ? '✓' : '✗'}</span></span
+			<span class="ok"><Mark ok={m1.distance <= delta + 1e-9} /></span></span
 		>
 		<span class="chip teal"
 			><TeX tex={`d_B(H_0) = ${m0.distance.toFixed(3)} ${m0.distance <= delta + 1e-9 ? '\\le' : '>'} \\delta`} />
-			<span class="ok">{m0.distance <= delta + 1e-9 ? '✓' : '✗'}</span></span
+			<span class="ok"><Mark ok={m0.distance <= delta + 1e-9} /></span></span
 		>
 	</div>
 	<p class="note ui">
@@ -91,7 +93,7 @@
 		<div class="sl">
 			<Slider bind:value={delta} min={0} max={0.3} step={0.005} label="Noise: every point moves by at most δ" format={(v) => v.toFixed(2)} />
 		</div>
-		<Button variant="ghost" onclick={() => seed++}>↻ New noise</Button>
+		<Button variant="ghost" icon={ShuffleIcon} onclick={() => seed++}>New noise</Button>
 		<Toggle bind:checked={showBoxes} label="Boxes and band" />
 	</div>
 </div>

@@ -888,7 +888,7 @@
 	{#snippet solution()}
 		<p>
 			Around \(P \to Q \to R \to S \to P\): \(\psi(PQ) + \psi(QR) - \psi(SR) - \psi(PS) = 4 - 1 - 2 - 1 = 0\), so by the gradient test it
-			is a gradient. Integrating from \(P\): \(f(P) = 0\), \(f(Q) = 4\), \(f(R) = 3\), \(f(S) = 1\); check \(f(R) - f(S) = 2\) ✓. With
+			is a gradient. Integrating from \(P\): \(f(P) = 0\), \(f(Q) = 4\), \(f(R) = 3\), \(f(S) = 1\), and as a check \(f(R) - f(S) = 2 = \psi(SR)\). With
 			\(\psi(SR) = 3\) the loop sum becomes \(4 - 1 - 3 - 1 = -1 \neq 0\), so no potential exists: that loop sum is the certificate.
 		</p>
 	{/snippet}

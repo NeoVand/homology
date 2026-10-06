@@ -5,7 +5,7 @@
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import { glassMesh, glowTube, faceMaterial, shaderColor } from '$lib/three/materials';
 	import { sphere, surfaceGeometry, SurfaceCurve } from '$lib/three/surfaces';
@@ -17,7 +17,8 @@
 	let mode = $state<Mode>('loop');
 	let deg = $state(60);
 	let other = $state(false);
-	let auto = $state(true);
+	// the loop is moved by the timeline below; the figure's own sweep stays off
+	const auto = false;
 
 	interface Api {
 		set(mode: Mode, deg: number, other: boolean, auto: boolean): void;
@@ -215,9 +216,8 @@
 			]}
 		/>
 		{#if mode === 'loop'}
-			<Slider bind:value={deg} min={10} max={170} step={1} label="Latitude of the loop" format={(v) => `${v}°`} oninput={() => (auto = false)} />
+			<Timeline bind:value={deg} min={10} max={170} loop duration={4} from="north" to="south" label="Sweeping the loop down the sphere" />
 			<Toggle bind:checked={other} label="Other cap" />
-			<Toggle bind:checked={auto} label="Sweep" />
 		{/if}
 	</Controls>
 </div>

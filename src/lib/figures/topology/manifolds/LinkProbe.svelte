@@ -389,7 +389,7 @@
 		label="A shape with a small glass sphere around one of its points; where the sphere meets the shape is drawn in teal"
 	/>
 	<div class="verdict ui {verdict.kind}" aria-live="polite">
-		<span class="badge">{verdict.kind === 'ok' ? '✓ looks flat' : verdict.kind === 'bad' ? '✗ not locally flat' : verdict.kind === 'edge' ? '◐ boundary point' : '… zoom in'}</span>
+		<span class="badge">{verdict.kind === 'ok' ? 'looks flat' : verdict.kind === 'bad' ? 'not locally flat' : verdict.kind === 'edge' ? 'boundary point' : 'zoom in'}</span>
 		<strong>{verdict.title}.</strong>
 		<span>{@html verdict.text}</span>
 	</div>

@@ -126,7 +126,7 @@
 			tris={A.tris}
 			vertexRadius={11}
 			triFill={(t) => (Math.abs(curls[t]) < 1e-9 ? 'rgba(132,217,162,0.1)' : 'rgba(242,141,182,0.2)')}
-			triLabel={(t) => (Math.abs(curls[t]) < 1e-9 ? '✓' : fracText(curls[t]))}
+			triLabel={(t) => (Math.abs(curls[t]) < 1e-9 ? '0' : fracText(curls[t]))}
 			triLabelColor={(t) => (Math.abs(curls[t]) < 1e-9 ? 'var(--green)' : 'var(--rose)')}
 			edgeColor={edgeColor}
 			edgeWidth={(e) => (loopEdges.has(e) ? 3.6 : 2.4)}

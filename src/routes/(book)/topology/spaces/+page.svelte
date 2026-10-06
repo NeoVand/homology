@@ -524,7 +524,7 @@
 	\(\varepsilon\) you were given. Play the game below.
 </p>
 
-<Figure num="2.1.5" title="The ε–δ game" hint="Drag the teal ε, then the violet δ · slide a along the axis · press “smaller ε!”">
+<Figure num="2.1.5" title="The ε–δ game" hint="Drag the teal ε, then the violet δ · drag a along the axis · press “smaller ε!”">
 	<EpsilonDelta />
 	{#snippet caption()}
 		Teal: the band of outputs within \(\varepsilon\) of \(f(a)\). Violet: the window of inputs within \(\delta\) of \(a\). You win

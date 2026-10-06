@@ -753,7 +753,7 @@
 	> check. (You met the word as a proof shape in <Ref to="prelude/reading-math" />.)
 </p>
 
-<Figure title="Ask every representative" hint="Pick a rule · slide n · look for rose clashes" num="1.2.4">
+<Figure title="Ask every representative" hint="Pick a rule · change n · look for rose clashes" num="1.2.4">
 	<WellDefinedTester />
 	{#snippet caption()}
 		A rule on \(\Z/n\) given by a formula in a representative \(x\). For each class we ask four representatives,

@@ -19,7 +19,8 @@
 		label,
 		/** play forwards then backwards forever, instead of stopping at the end */
 		loop = false,
-		playing = $bindable(false)
+		playing = $bindable(false),
+		readout
 	}: {
 		value?: number;
 		min?: number;
@@ -30,6 +31,8 @@
 		label: string;
 		loop?: boolean;
 		playing?: boolean;
+		/** show the current value after the bar, e.g. (v) => `r = ${v.toFixed(2)}` */
+		readout?: (v: number) => string;
 	} = $props();
 
 	let raf = 0;
@@ -96,10 +99,11 @@
 		bind:value
 		oninput={() => playing && stop()}
 		aria-label="{label}: scrub"
-		aria-valuetext={from && to ? `${Math.round(pct)}% of the way from ${from} to ${to}` : `${Math.round(pct)}%`}
+		aria-valuetext={readout ? readout(value) : from && to ? `${Math.round(pct)}% of the way from ${from} to ${to}` : `${Math.round(pct)}%`}
 		style="--p:{pct}%"
 	/>
 	{#if to}<span class="end">{to}</span>{/if}
+	{#if readout}<output class="val nums">{readout(value)}</output>{/if}
 </div>
 
 <style>
@@ -127,6 +131,14 @@
 	}
 	.play:hover {
 		background: rgba(216, 178, 110, 0.2);
+	}
+	.val {
+		flex: none;
+		min-width: 4.2em;
+		font-size: 0.8rem;
+		color: var(--gold-bright);
+		text-align: right;
+		white-space: nowrap;
 	}
 	.end {
 		flex: none;

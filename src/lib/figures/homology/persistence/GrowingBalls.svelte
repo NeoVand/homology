@@ -2,7 +2,7 @@
 	// Grow a disc around every point and count the pieces and holes of the union.
 	// (Holes are counted exactly, through the Čech complex and the nerve theorem.)
 	import CloudSvg from './CloudSvg.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import { cechFiltration, reduce, barsOf, bettiAt, ringWithStraggler, type Pt } from './ph';
@@ -93,7 +93,7 @@
 		<circle cx={X(r)} cy={2 * rowH + 10} r="4" class="knob" />
 	</svg>
 	<div class="controls ui">
-		<Slider bind:value={r} min={0} max={RMAX} step={0.005} label="Radius r of every disc" format={(v) => v.toFixed(2)} />
+		<Timeline bind:value={r} min={0} max={RMAX} duration={7} label="Growing every disc" readout={(v) => `r = ${v.toFixed(2)}`} />
 	</div>
 </div>
 

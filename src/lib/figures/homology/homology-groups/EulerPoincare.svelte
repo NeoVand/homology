@@ -82,7 +82,7 @@
 	};
 	const name = (dim: number, index: number) => `[${ex.K.simplices[dim][index].join(',')}]`;
 	const what = $derived.by(() => {
-		if (!last) return 'Start: nothing has been built yet. Press play, or drag the slider.';
+		if (!last) return 'Start: nothing has been built yet. Press play, or scrub.';
 		const nm = name(last.dim, last.index);
 		if (last.dim === 0) return `Vertex ${nm} appears: a new piece. b₀ goes up by one.`;
 		if (last.positive)
@@ -171,7 +171,7 @@
 			</div>
 		{/each}
 		<div class="legend">
-			<span><i class="cell added pos"></i> creates a class that is still alive (counted in <TeX tex="b_k" />)</span>
+			<span><i class="cell added pos"></i> creates a class that is still alive, counted in <TeX tex="b_k" /></span>
 			<span><i class="cell added pos killed"></i> created a class, later killed</span>
 			<span><i class="cell added neg"></i> kills a class one dimension down</span>
 		</div>

@@ -3,7 +3,7 @@
 	// flooded part {x : f(x) ≤ t} falls into lakes. Each lake is born at a valley
 	// floor; when two lakes meet over a pass, the younger one (higher floor) dies.
 	import Barcode, { type BarDatum } from './Barcode.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { sublevelBars } from './ph';
@@ -150,7 +150,7 @@
 		<Barcode {bars} xmax={1} now={t} height={130} dims={[0]} axis="t" label="Barcode of the lakes" onscrub={(v) => (t = Math.max(0.05, v))} />
 	</div>
 	<div class="controls ui">
-		<Slider bind:value={t} min={0.05} max={1} step={0.005} label="Water level t" format={(v) => v.toFixed(2)} />
+		<Timeline bind:value={t} min={0.05} max={1} duration={7} from="dry" to="flooded" label="Raising the water level" readout={(v) => `t = ${v.toFixed(2)}`} />
 	</div>
 </div>
 

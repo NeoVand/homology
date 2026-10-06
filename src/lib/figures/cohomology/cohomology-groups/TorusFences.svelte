@@ -6,7 +6,7 @@
 	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import type * as THREE_NS from 'three';
 	import { glassMesh, glowTube, glowPoint, disposeTree, color } from '$lib/three/materials';
@@ -197,7 +197,7 @@
 	</div>
 	{#if fence !== 'small'}
 		<div class="row">
-			<Slider bind:value={wiggle} min={0} max={1} step={0.01} label="Wiggle the fence (add a coboundary)" format={(v) => `${Math.round(v * 100)}%`} />
+			<Timeline bind:value={wiggle} from="straight" to="wiggled" duration={3} label="Wiggling the fence (adding a coboundary)" />
 		</div>
 	{/if}
 </Controls>

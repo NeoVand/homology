@@ -2,7 +2,7 @@
 	// A cloud of points sampled from a doughnut in space. With enough points your
 	// eye fills in the surface; the toggle reveals it.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import { glassMesh, pointCloud } from '$lib/three/materials';
 	import { torus, surfaceGeometry } from '$lib/three/surfaces';
@@ -33,7 +33,7 @@
 		return out;
 	}
 
-	let count = $state(400);
+	let count = $state(800);
 	// on narrow screens the figure is tall and thin: step the camera back so the torus fits
 	let narrow = $state(false);
 	$effect(() => {
@@ -104,9 +104,16 @@
 	label="A cloud of points sampled from the surface of a doughnut (torus), slowly rotating"
 />
 <div class="controls ui">
-	<div class="sl">
-		<Slider bind:value={count} min={40} max={MAXN} step={20} label="Number of points" format={(v) => String(v)} />
-	</div>
+	<Segmented
+		bind:value={count}
+		label="Number of points"
+		options={[
+			{ value: 50, label: '50 points' },
+			{ value: 200, label: '200' },
+			{ value: 800, label: '800' },
+			{ value: MAXN, label: String(MAXN) }
+		]}
+	/>
 	<Toggle bind:checked={showSurface} label="Reveal the surface" />
 </div>
 
@@ -119,9 +126,5 @@
 		padding: 0.8rem 1.2rem 1rem;
 		border-top: 1px solid var(--line-faint);
 		background: rgba(5, 8, 16, 0.45);
-	}
-	.sl {
-		flex: 1 1 14rem;
-		display: flex;
 	}
 </style>

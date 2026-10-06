@@ -431,7 +431,7 @@
 
 <ul>
 	<li>
-		<strong>Figures are meant to be touched.</strong> Most of them respond to dragging, clicking, sliders or buttons; the
+		<strong>Figures are meant to be touched.</strong> Most of them respond to dragging and tapping, and some play like short films; the
 		small hint above each figure says how. On a phone, tap “Tap to rotate” before dragging a 3D figure, so that the page
 		can still scroll.
 	</li>

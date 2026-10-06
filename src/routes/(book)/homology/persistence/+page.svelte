@@ -96,10 +96,10 @@
 	tunnel running round inside it. Nobody drew the surface. Your visual system invented it.
 </p>
 
-<Figure id="fig-torus" num="3.7.1" title="Dots in space" hint="Drag to rotate · slide the number of points">
+<Figure id="fig-torus" num="3.7.1" title="Dots in space" hint="Drag to rotate · choose the number of points">
 	<TorusCloud />
 	{#snippet caption()}
-		Points sampled at random from the surface of a torus in \(\R^3\), with a little noise. With 40 points you see a scatter; with a few
+		Points sampled at random from the surface of a torus in \(\R^3\), with a little noise. With 50 points you see a scatter; with a few
 		hundred you see a doughnut. The surface itself never appears in the data — switch it on to check your eye.
 	{/snippet}
 </Figure>
@@ -159,7 +159,7 @@
 	Keep this “\(2r\)” in mind; it will come back many times.
 </p>
 
-<Figure id="fig-balls" num="3.7.2" title="Grow the balls" hint="Drag the slider or the strip below the picture">
+<Figure id="fig-balls" num="3.7.2" title="Grow the balls" hint="Press play, or drag across the strip below the picture">
 	<GrowingBalls />
 	{#snippet caption()}
 		Eighteen points with a disc of radius \(r\) around each. The strip underneath records, for every \(r\), the number of pieces \(b_0\)
@@ -327,7 +327,7 @@
 	</p>
 </Notation>
 
-<Figure id="fig-cech-rips" num="3.7.3" title="Čech versus Rips" hint="Drag the points · slide r · try the other configurations">
+<Figure id="fig-cech-rips" num="3.7.3" title="Čech versus Rips" hint="Drag the points · play or scrub r · try the other configurations">
 	<CechVsRips />
 	{#snippet caption()}
 		The same points at the same radius, completed in two ways. Three points at mutual distance 2: for \(1 \le r \lt 2/\sqrt3 \approx
@@ -501,7 +501,7 @@
 	lakes. As \(t\) increases these sets grow, so they form a filtration, and their \(H_0\) — the lakes — has a barcode.
 </p>
 
-<Figure id="fig-elder" num="3.7.5" title="The elder rule" hint="Drag the water level up and down in the picture, or use the slider">
+<Figure id="fig-elder" num="3.7.5" title="The elder rule" hint="Drag the water level in the picture, or press play">
 	<WaterLevel />
 	{#snippet caption()}
 		Lakes in a landscape. A lake is born when the water reaches a valley floor and dies when it spills over a pass into a lake with a
@@ -781,7 +781,7 @@
 	most \(\delta\) moves every feature by at most \(\delta\).
 </p>
 
-<Figure id="fig-stability" num="3.7.8" title="Stability" hint="Slide the noise · press New noise for a different jiggle">
+<Figure id="fig-stability" num="3.7.8" title="Stability" hint="Set the noise δ · press New noise for a different jiggle">
 	<StabilityDemo />
 	{#snippet caption()}
 		Every point is pushed a random distance of at most \(\delta\) (rose segments). Hollow markers show the original diagram, solid ones

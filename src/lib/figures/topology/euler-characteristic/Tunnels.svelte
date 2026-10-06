@@ -89,7 +89,7 @@
 			{#if mode === 'frame'}
 				Not 2! Each face is a flat polygon and every edge joins two faces — but there is a tunnel through the solid.
 			{:else}
-				Each tunnel lowers V − E + F by 2. Drag the slider.
+				Each tunnel lowers V − E + F by 2. Add one with +.
 			{/if}
 		</p>
 	</div>

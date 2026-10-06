@@ -283,6 +283,7 @@
 
 		<div class="dims" aria-label="rank {rank}, nullity {2 - rank}">
 			<div class="dimrow">
+				<span class="dimlbl">the two input directions:</span>
 				{#each [0, 1] as i (i)}
 					<span class="cell" class:img={i < rank} class:ker={i >= rank}>{i < rank ? 'survives' : 'crushed'}</span>
 				{/each}
@@ -458,31 +459,27 @@
 	}
 	.dimrow {
 		display: flex;
-		gap: 4px;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+	}
+	.dimlbl {
+		font-size: 0.78rem;
+		color: var(--ink-faint);
 	}
 	.cell {
-		display: grid;
-		place-items: center;
-		width: 4.6rem;
-		height: 2rem;
-		border-radius: 6px;
-		font-size: 0.68rem;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		font-weight: 650;
-		transition: all 0.35s var(--ease);
+		padding: 0.1rem 0.6rem;
+		border-radius: 999px;
+		font-size: 0.74rem;
+		font-weight: 600;
 	}
 	.cell.img {
-		background: rgba(242, 208, 143, 0.16);
-		border: 1px solid rgba(242, 208, 143, 0.6);
+		border: 1px solid rgba(242, 208, 143, 0.55);
 		color: var(--gold-bright);
-		box-shadow: 0 0 14px -4px rgba(242, 208, 143, 0.6);
 	}
 	.cell.ker {
-		background: rgba(95, 214, 207, 0.12);
 		border: 1px solid rgba(95, 214, 207, 0.55);
 		color: var(--teal);
-		box-shadow: 0 0 14px -4px rgba(95, 214, 207, 0.6);
 	}
 	.dimtext {
 		color: var(--ink);

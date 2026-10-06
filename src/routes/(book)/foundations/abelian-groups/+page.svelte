@@ -360,7 +360,7 @@
 	the two ends of the interval are glued together, and the result is a <em>circle</em>.
 </p>
 
-<Figure num="1.4.2" title="ℝ/ℤ is a circle" hint="Press play or drag “wrap” · move the coset · drag to rotate">
+<Figure num="1.4.2" title="ℝ/ℤ is a circle" hint="Press play or scrub · move the coset · drag to rotate">
 	<CircleQuotient3D />
 	{#snippet caption()}
 		The real line, with the integers marked in teal and one coset \(t_0 + \Z\) in gold, coils into a spring whose every
