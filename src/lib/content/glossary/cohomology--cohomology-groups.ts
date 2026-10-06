@@ -153,7 +153,7 @@ export const entries: GlossaryEntry[] = [
 		def: 'The fact that torsion in homology degree \\(k\\) appears in integer cohomology in degree \\(k+1\\). For the projective plane, \\(H_1 = \\Z/2\\) but \\(H^1(\\RP^2;\\Z) = 0\\) and \\(H^2(\\RP^2;\\Z) = \\Z/2\\). The same entry of a boundary matrix is responsible for both.',
 		chapter,
 		anchor: 'torsion-moves-up',
-		see: ['universal-coefficient-theorem', 'torsion']
+		see: ['universal-coefficient-theorem', 'torsion-subgroup']
 	},
 	{
 		key: 'mod-2-cohomology',

@@ -533,7 +533,7 @@
 <p>
 	Now the promised surprise. In <Ref to="homology/computing" /> you met the real projective plane \(\RP^2\), a square whose opposite sides are
 	glued with a twist, and found \(H_0 = \Z\), \(H_1 = \Z/2\) and \(H_2 = 0\): there is a loop that is not a boundary while twice it is —
-	<Term t="torsion">torsion</Term>. What does cohomology make of it?
+	<Term t="torsion-subgroup">torsion</Term>. What does cohomology make of it?
 </p>
 
 <Figure size="wide" num="4.16" title="The torsion shift" hint="Use ‹ › to step through the computation">

@@ -724,7 +724,7 @@
 <h3>Why curvature is a cohomology class</h3>
 
 <p>
-	Here is the point of view that generalises. The expression \(K\,dA\) is a <Term t="differential-form">\(2\)-form</Term> on
+	Here is the point of view that generalises. The expression \(K\,dA\) is a <Term t="k-form">\(2\)-form</Term> on
 	\(M\) (<Ref to="cohomology/differential-forms" />). On a surface every \(2\)-form is closed, so it has a de Rham
 	cohomology class in \(H^2_{\dR}(M)\) (<Ref to="cohomology/de-rham" />). Changing the shape (the way lengths are measured)
 	changes \(K\,dA\) only by an exact form \(d\eta\), and by Stokes' theorem an exact form integrates to zero over a closed
