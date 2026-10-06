@@ -57,6 +57,7 @@ export const katexOptions = {
 	macros,
 	trust: true,
 	strict: 'ignore',
-	output: 'htmlAndMathml',
+	// HTML only: MathML doubled the size of every chapter's JavaScript
+	output: 'html',
 	throwOnError: true
 };
