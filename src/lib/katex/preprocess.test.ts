@@ -21,10 +21,9 @@ describe('the KaTeX preprocessor', () => {
 		expect(code).toContain('}).</span>');
 	});
 
-	it('leaves math without trailing punctuation, and long formulas, unwrapped', () => {
+	it('leaves math without trailing punctuation unwrapped', () => {
 		expect(run('<p>\\(x\\) is</p>')).not.toContain('math-nw');
-		const long = '\\(' + 'a + '.repeat(20) + 'b\\).';
-		expect(run(`<p>${long}</p>`)).not.toContain('math-nw');
+		expect(run('<p>\\(x\\) — and</p>')).not.toContain('math-nw');
 	});
 
 	it('refuses math inside attributes and unclosed delimiters', () => {

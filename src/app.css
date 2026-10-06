@@ -375,9 +375,14 @@ code {
 	text-rendering: auto;
 }
 
-/* inline math plus the punctuation that follows it never splits across lines */
+/* the punctuation after inline math never starts a new line: breaking between
+   the formula and its full stop is governed by this wrapper, while breaks
+   inside the formula (after = or +) are still allowed */
 .math-nw {
 	white-space: nowrap;
+}
+.math-nw > .katex {
+	white-space: normal;
 }
 
 .math-block {

@@ -171,10 +171,10 @@ function transform(src, filename) {
 				throw new Error(`[katex] ${filename}:${lineOf(src, i)} — ${msg}\n    in: ${tex}`);
 			}
 			// Keep punctuation that directly follows inline math on the same line as
-			// the math, so a line never starts with a stray full stop or comma. Long
-			// formulas are left alone: they must stay free to break internally.
+			// the math, so a line never starts with a stray full stop or comma (the
+			// .math-nw style still lets the formula itself break after = or +).
 			let k = end + 2;
-			if (isInline && tex.length <= 60) while (k < n && TRAILING_PUNCT.test(src[k])) k++;
+			if (isInline) while (k < n && TRAILING_PUNCT.test(src[k])) k++;
 			if (k > end + 2) {
 				out += `<span class="math-nw">{@html ${JSON.stringify(html)}}${src.slice(end + 2, k)}</span>`;
 				i = k;

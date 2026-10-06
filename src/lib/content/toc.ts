@@ -42,7 +42,7 @@ export const parts: Part[] = [
 				blurb:
 					'What does it mean for two shapes to be “the same”? Why would anyone count holes? A tour of the ideas this book will build, from Euler’s polyhedra to modern data science.',
 				prereqs: [],
-				minutes: 18
+				minutes: 35
 			},
 			{
 				id: 'prelude/reading-math',
@@ -52,7 +52,7 @@ export const parts: Part[] = [
 				blurb:
 					'A gentle guide to mathematical notation and logic: sets of symbols, Greek letters, quantifiers, “if and only if”, and how definitions, theorems and proofs fit together.',
 				prereqs: [],
-				minutes: 25
+				minutes: 45
 			}
 		]
 	},
@@ -71,7 +71,7 @@ export const parts: Part[] = [
 				blurb:
 					'Sets, subsets, products, and functions — injective, surjective, bijective — plus composition, images and preimages. The vocabulary everything else is written in.',
 				prereqs: ['prelude/reading-math'],
-				minutes: 35
+				minutes: 45
 			},
 			{
 				id: 'foundations/equivalence',
@@ -81,7 +81,7 @@ export const parts: Part[] = [
 				blurb:
 					'Equivalence relations, partitions, and quotient sets: the single idea behind clock arithmetic, gluing shapes together, and homology itself.',
 				prereqs: ['foundations/sets-and-functions'],
-				minutes: 30
+				minutes: 45
 			},
 			{
 				id: 'foundations/groups',
@@ -91,7 +91,7 @@ export const parts: Part[] = [
 				blurb:
 					'What a group is and why mathematicians care: integers, clocks and symmetries; subgroups, homomorphisms, kernels and images.',
 				prereqs: ['foundations/equivalence'],
-				minutes: 40
+				minutes: 55
 			},
 			{
 				id: 'foundations/abelian-groups',
@@ -101,7 +101,7 @@ export const parts: Part[] = [
 				blurb:
 					'Cosets and quotient groups, the first isomorphism theorem, direct sums, free abelian groups of formal sums, and the classification theorem: ℤʳ ⊕ torsion.',
 				prereqs: ['foundations/groups'],
-				minutes: 40
+				minutes: 55
 			},
 			{
 				id: 'foundations/linear-algebra',
@@ -111,7 +111,7 @@ export const parts: Part[] = [
 				blurb:
 					'Vector spaces over ℝ and over ℤ/2, linear maps as matrices, kernel and image, rank–nullity, quotient spaces, dual spaces and transposes, and the Smith normal form.',
 				prereqs: ['foundations/abelian-groups'],
-				minutes: 45
+				minutes: 80
 			}
 		]
 	},
@@ -130,7 +130,7 @@ export const parts: Part[] = [
 				blurb:
 					'From distance to open sets to topological spaces; continuity as “no tearing”; homeomorphism, and why a coffee cup is a doughnut.',
 				prereqs: ['foundations/sets-and-functions'],
-				minutes: 40
+				minutes: 55
 			},
 			{
 				id: 'topology/gluing',
@@ -140,7 +140,7 @@ export const parts: Part[] = [
 				blurb:
 					'Quotient spaces in action: fold and glue a square into a cylinder, Möbius band, torus, sphere, Klein bottle and real projective plane.',
 				prereqs: ['topology/spaces', 'foundations/equivalence'],
-				minutes: 35
+				minutes: 45
 			},
 			{
 				id: 'topology/homotopy',
@@ -150,7 +150,7 @@ export const parts: Part[] = [
 				blurb:
 					'Homotopies of maps, homotopy equivalence, deformation retractions, contractible spaces, and a first look at loops and the fundamental group.',
 				prereqs: ['topology/spaces'],
-				minutes: 35
+				minutes: 50
 			},
 			{
 				id: 'topology/manifolds',
@@ -160,7 +160,7 @@ export const parts: Part[] = [
 				blurb:
 					'Charts and atlases, smooth manifolds and tangent spaces, orientability and the Möbius band, and the classification of surfaces.',
 				prereqs: ['topology/gluing'],
-				minutes: 40
+				minutes: 60
 			},
 			{
 				id: 'topology/simplicial-complexes',
@@ -170,7 +170,7 @@ export const parts: Part[] = [
 				blurb:
 					'Simplices, simplicial complexes, triangulations, orientations, abstract complexes, and CW complexes — the combinatorial raw material of homology.',
 				prereqs: ['topology/gluing'],
-				minutes: 35
+				minutes: 60
 			},
 			{
 				id: 'topology/euler-characteristic',
@@ -180,7 +180,7 @@ export const parts: Part[] = [
 				blurb:
 					'Euler’s polyhedron formula, why V − E + F never changes under subdivision, χ = 2 − 2g, and the hint that a deeper theory is hiding underneath.',
 				prereqs: ['topology/simplicial-complexes'],
-				minutes: 30
+				minutes: 40
 			}
 		]
 	},
@@ -199,7 +199,7 @@ export const parts: Part[] = [
 				blurb:
 					'The central intuition of homology, without any algebra yet: loops, the regions they enclose, and the loops that enclose nothing at all.',
 				prereqs: ['topology/euler-characteristic'],
-				minutes: 30
+				minutes: 50
 			},
 			{
 				id: 'homology/chains',
@@ -209,7 +209,7 @@ export const parts: Part[] = [
 				blurb:
 					'Chains with ℤ/2 and ℤ coefficients, orientations, the boundary operator ∂, the fundamental fact ∂∘∂ = 0, and chain complexes.',
 				prereqs: ['homology/cycles-and-boundaries', 'foundations/abelian-groups'],
-				minutes: 40
+				minutes: 45
 			},
 			{
 				id: 'homology/homology-groups',
@@ -219,7 +219,7 @@ export const parts: Part[] = [
 				blurb:
 					'The definition Hₙ = ker ∂ₙ / im ∂ₙ₊₁, Betti numbers, and complete computations for the point, circle, disk, sphere and torus.',
 				prereqs: ['homology/chains'],
-				minutes: 45
+				minutes: 50
 			},
 			{
 				id: 'homology/computing',
@@ -229,7 +229,7 @@ export const parts: Part[] = [
 				blurb:
 					'Homology as linear algebra: boundary matrices, rank computations, torsion from the Smith normal form, the Klein bottle and projective plane — and a live homology calculator.',
 				prereqs: ['homology/homology-groups', 'foundations/linear-algebra'],
-				minutes: 40
+				minutes: 50
 			},
 			{
 				id: 'homology/invariance',
@@ -239,7 +239,7 @@ export const parts: Part[] = [
 				blurb:
 					'Continuous maps induce maps on homology; homotopy invariance; singular homology; and the payoff: Brouwer’s fixed point theorem, degree, and the hairy ball theorem.',
 				prereqs: ['homology/homology-groups', 'topology/homotopy'],
-				minutes: 45
+				minutes: 60
 			},
 			{
 				id: 'homology/exact-sequences',
@@ -259,7 +259,7 @@ export const parts: Part[] = [
 				blurb:
 					'From point clouds to simplicial complexes, filtrations, barcodes and persistence diagrams: how homology finds robust structure in noisy data.',
 				prereqs: ['homology/computing'],
-				minutes: 35
+				minutes: 65
 			}
 		]
 	},
@@ -278,7 +278,7 @@ export const parts: Part[] = [
 				blurb:
 					'Instead of adding up pieces of a shape, assign numbers to them. Potentials and their differences, Kirchhoff’s laws, and the puzzle of locally consistent but globally impossible data.',
 				prereqs: ['homology/homology-groups'],
-				minutes: 40
+				minutes: 55
 			},
 			{
 				id: 'cohomology/cohomology-groups',
@@ -308,7 +308,7 @@ export const parts: Part[] = [
 				blurb:
 					'The vortex field around a puncture, closed versus exact forms, the Poincaré lemma, de Rham’s theorem, and integration as the pairing of homology with cohomology.',
 				prereqs: ['cohomology/differential-forms', 'cohomology/cohomology-groups'],
-				minutes: 45
+				minutes: 40
 			},
 			{
 				id: 'cohomology/cup-product',
@@ -318,7 +318,7 @@ export const parts: Part[] = [
 				blurb:
 					'Multiplying cohomology classes: wedge products of forms, the simplicial cup product, and two spaces with identical homology that cohomology tells apart.',
 				prereqs: ['cohomology/de-rham'],
-				minutes: 40
+				minutes: 50
 			},
 			{
 				id: 'cohomology/poincare-duality',
@@ -328,7 +328,7 @@ export const parts: Part[] = [
 				blurb:
 					'Dual cell decompositions, Hᵏ ≅ Hₙ₋ₖ for closed oriented manifolds, intersection numbers, and why cup products count intersections.',
 				prereqs: ['cohomology/cup-product'],
-				minutes: 35
+				minutes: 40
 			},
 			{
 				id: 'cohomology/sheaves',
@@ -338,7 +338,7 @@ export const parts: Part[] = [
 				blurb:
 					'Open covers and nerves, Čech cochains, sheaves and the gluing axiom, and cohomology as the precise measure of why local solutions fail to glue.',
 				prereqs: ['cohomology/cohomology-groups'],
-				minutes: 45
+				minutes: 60
 			},
 			{
 				id: 'cohomology/characteristic-classes',
@@ -348,7 +348,7 @@ export const parts: Part[] = [
 				blurb:
 					'Vector bundles and their twisting, the hairy ball theorem, Gauss–Bonnet, Euler and Chern classes, magnetic monopoles and topological matter.',
 				prereqs: ['cohomology/de-rham', 'cohomology/poincare-duality'],
-				minutes: 45
+				minutes: 50
 			}
 		]
 	},
@@ -367,7 +367,7 @@ export const parts: Part[] = [
 				blurb:
 					'Objects and arrows, functors and natural transformations, commutative diagrams and universal properties — the language that makes “homology is a functor” precise.',
 				prereqs: ['homology/invariance'],
-				minutes: 45
+				minutes: 55
 			},
 			{
 				id: 'big-picture/homological-algebra',
@@ -377,7 +377,7 @@ export const parts: Part[] = [
 				blurb:
 					'Chain complexes in the abstract, derived functors, Ext and Tor, a first glimpse of spectral sequences, and the Eilenberg–Steenrod axioms that characterize homology.',
 				prereqs: ['big-picture/categories', 'cohomology/cohomology-groups'],
-				minutes: 40
+				minutes: 45
 			},
 			{
 				id: 'big-picture/horizons',
@@ -387,7 +387,7 @@ export const parts: Part[] = [
 				blurb:
 					'Hodge theory, generalized cohomology theories, homotopy groups, applications from sensor networks to physics, and a guide to further study.',
 				prereqs: ['big-picture/homological-algebra'],
-				minutes: 30
+				minutes: 35
 			}
 		]
 	}

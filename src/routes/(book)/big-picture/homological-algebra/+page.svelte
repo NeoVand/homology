@@ -183,7 +183,7 @@
 	</p>
 </Definition>
 
-<Figure num="1" title="A chain homotopy">
+<Figure num="5.2.1" title="A chain homotopy">
 	<ChainHomotopyLadder />
 	{#snippet caption()}
 		Two chain maps \(f, g\) (vertical) between the rows \(C\) and \(D\), and the diagonal maps \(s\) that raise degree by one. For
@@ -229,7 +229,7 @@
 	where every group is \(\Z\) or \(\Z/m\) and you can check every step with arithmetic.
 </p>
 
-<Figure size="full" num="2" title="Chasing the snake" hint="Step through with ‹ › · change m, n and the starting element">
+<Figure size="full" num="5.2.2" title="Chasing the snake" hint="Step through with ‹ › · change m, n and the starting element">
 	<SnakeLemma />
 	{#snippet caption()}
 		The rows are the short exact sequence \(0\to\Z\xrightarrow{\times m}\Z\to\Z/m\to 0\) twice, and every vertical map multiplies by
@@ -286,7 +286,7 @@
 <p>
 	The connecting map \(\partial\) is a snake. Take a class \([c]\in H_n(C)\), lift the cycle \(c\) to \(b\in B_n\), take its boundary
 	\(\partial b\in B_{n-1}\); it maps to \(\partial c = 0\) in \(C_{n-1}\), so it comes from a unique \(a\in A_{n-1}\), which turns out to
-	be a cycle. Then \(\partial[c] = [a]\). Up, across, down, across: the same zig-zag as in Figure 2. (In fact the theorem follows by
+	be a cycle. Then \(\partial[c] = [a]\). Up, across, down, across: the same zig-zag as in Figure 5.2.2. (In fact the theorem follows by
 	applying the snake lemma to the diagram whose rows are \(A_n/\im\partial\to B_n/\im\partial\to C_n/\im\partial\to 0\) and \(0\to
 	\ker\partial_{n-1}^A\to\ker\partial_{n-1}^B\to\ker\partial_{n-1}^C\), with the vertical maps induced by \(\partial\): their kernels
 	are \(H_n\) and their cokernels are \(H_{n-1}\).)
@@ -499,7 +499,7 @@
 	</li>
 </ul>
 
-<Figure size="full" num="3" title="A calculator for ⊗, Tor, Hom and Ext" hint="Build A and G from ℤ and ℤ/n pieces · or try a preset">
+<Figure size="full" num="5.2.3" title="A calculator for ⊗, Tor, Hom and Ext" hint="Build A and G from ℤ and ℤ/n pieces · or try a preset">
 	<TorExtCalculator />
 	{#snippet caption()}
 		Each operation splits over the cyclic pieces of \(A\) and \(G\), and the cards show every piece. Below, the free resolution of \(A\):
@@ -588,7 +588,7 @@
 	</p>
 </Example>
 
-<Figure size="full" num="4" title="Universal coefficients" hint="Choose a space and a coefficient group">
+<Figure size="full" num="5.2.4" title="Universal coefficients" hint="Choose a space and a coefficient group">
 	<UCTExplorer />
 	{#snippet caption()}
 		Pick a space and coefficients. The table computes \(H_n(X;G)\) and \(H^n(X;G)\) from integral homology by the universal coefficient
@@ -652,7 +652,7 @@
 	\Z/2\) in \(H_3\). The figure lets you try products.
 </p>
 
-<Figure size="wide" num="5" title="Homology of a product" hint="Choose the two factors">
+<Figure size="wide" num="5.2.5" title="Homology of a product" hint="Choose the two factors">
 	<KunnethGrid />
 	{#snippet caption()}
 		Cell \((i, j)\) holds \(H_i(X)\otimes H_j(Y)\); the cells along an anti-diagonal \(i+j = n\) (one colour) add up to \(H_n(X\times
@@ -699,7 +699,7 @@
 	</li>
 </ul>
 
-<Figure size="full" num="6" title="Turning the pages" hint="Choose a page · switch examples and coefficients">
+<Figure size="full" num="5.2.6" title="Turning the pages" hint="Choose a page · switch examples and coefficients">
 	<SpectralPages />
 	{#snippet caption()}
 		Each dot is a generator, placed at (stage, degree − stage). <em>Two disks on a segment:</em> on \(E^1\) two \(d^1\) arrows cancel
@@ -716,7 +716,7 @@
 		row \(q = 0\), and \(E^1_{p,0} = H_p(X^p, X^{p-1})\) is the free group on the \(p\)-cells: \(E^1\) is the cellular chain complex,
 		and \(d^1\) is the <Term t="cellular-chain-complex">cellular boundary</Term> of <Ref to="homology/exact-sequences" />. Then \(E^2\) is cellular homology. Every later
 		differential would leave the bottom row, so it is zero: the sequence stops at \(E^2\), and the convergence statement is the theorem
-		that cellular homology equals homology. The “Torus” and “\(\RP^2\)” examples in Figure 6 are exactly this.
+		that cellular homology equals homology. The “Torus” and “\(\RP^2\)” examples in Figure 5.2.6 are exactly this.
 	</p>
 </Example>
 
@@ -798,7 +798,7 @@
 	the claim that nothing else is needed. The figure computes the homology of every sphere using only the five axioms.
 </p>
 
-<Figure size="full" num="7" title="Spheres from the axioms" hint="Step through · the axioms used in each step light up">
+<Figure size="full" num="5.2.7" title="Spheres from the axioms" hint="Step through · the axioms used in each step light up">
 	<AxiomsProof />
 	{#snippet caption()}
 		The computation that drives the uniqueness theorem. A disk has the homology of a point; the long exact sequence of the pair
@@ -917,7 +917,7 @@
 <Exercise level={2} head={exUctHead}>
 	<p>
 		Use the universal coefficient theorems to compute \(H_n(\RP^2;\Z/2)\), \(H^n(\RP^2;\Z/2)\) and \(H_n(\RP^2;\Z/3)\) for \(n = 0,1,2\).
-		Check them in Figure 4.
+		Check them in Figure 5.2.4.
 	</p>
 	{#snippet solution()}
 		<p>

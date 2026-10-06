@@ -156,7 +156,7 @@
 \[ \ip{\varphi}{c} \;=\; \varphi(c) \;\in\; G. \]
 <p>Think of it as integrating the measurement \(\varphi\) over the place \(c\). Try it.</p>
 
-<Figure size="wide" num="4.11" title="Measuring a chain" hint="Tap an edge, then ±1 to change its coefficient · try the presets">
+<Figure size="wide" num="4.2.1" title="Measuring a chain" hint="Tap an edge, then ±1 to change its coefficient · try the presets">
 	<PairingPlayground />
 	{#snippet caption()}
 		A cochain \(\varphi\) is a number on each edge (gold); a chain \(c\) is a combination of edges (violet, with its coefficients). The
@@ -220,7 +220,7 @@
 	reason for the name.
 </p>
 
-<Figure size="wide" num="4.12" title="One matrix, read two ways" hint="Hover a matrix entry · tap a vertex or edge">
+<Figure size="wide" num="4.2.2" title="One matrix, read two ways" hint="Hover a matrix entry · tap a vertex or edge">
 	<MatrixDuality />
 	{#snippet caption()}
 		The boundary matrix \(\partial\) and the coboundary matrix \(\delta = \partial^{\mathsf T}\) of two triangles sharing an edge. Hover an
@@ -329,7 +329,7 @@
 	(co)boundary matrices work exactly the same way, and the answers agree with those of genuine triangulations.
 </p>
 
-<Figure size="wide" num="4.13" title="Computing H* step by step" hint="Use ‹ › to step · switch between circle and torus">
+<Figure size="wide" num="4.2.3" title="Computing H* step by step" hint="Use ‹ › to step · switch between circle and torus">
 	<CohomologySteps />
 	{#snippet caption()}
 		Cohomology in four moves: write down the cochains, write down \(\delta\) as a transposed boundary matrix, find the cocycles (the kernel)
@@ -386,7 +386,7 @@
 	the surface into regions at different heights.
 </p>
 
-<Figure size="wide" num="4.14" title="Fences on a torus" hint="Drag to rotate · choose a fence and a loop · wiggle the fence">
+<Figure size="wide" num="4.2.4" title="Fences on a torus" hint="Drag to rotate · choose a fence and a loop · wiggle the fence">
 	<TorusFences />
 	{#snippet caption()}
 		A 1-cocycle drawn as a fence standing on the torus. Its value on the golden loop is the number of crossings, counted with sign. The fence
@@ -497,7 +497,7 @@
 	</p>
 </Example>
 
-<Figure size="wide" num="4.15" title="Forward and back" hint="Choose k · drag the rose fence around the right-hand circle">
+<Figure size="wide" num="4.2.5" title="Forward and back" hint="Choose k · drag the rose fence around the right-hand circle">
 	<Contravariance />
 	{#snippet caption()}
 		The map \(z \mapsto z^k\). The point on the left goes around once while its image on the right goes around \(k\) times: chains are
@@ -536,7 +536,7 @@
 	<Term t="torsion-subgroup">torsion</Term>. What does cohomology make of it?
 </p>
 
-<Figure size="wide" num="4.16" title="The torsion shift" hint="Use ‹ › to step through the computation">
+<Figure size="wide" num="4.2.6" title="The torsion shift" hint="Use ‹ › to step through the computation">
 	<TorsionShift />
 	{#snippet caption()}
 		The projective plane as a Δ-complex: two vertices \(v, w\), edges \(a, b, c\), triangles \(T_1, T_2\). Homology has its \(\Z/2\) in degree
@@ -647,7 +647,7 @@
 	dimension, as we found by counting ranks.
 </p>
 
-<Figure size="wide" num="4.17" title="Three kinds of measurement" hint="Choose a space">
+<Figure size="wide" num="4.2.7" title="Three kinds of measurement" hint="Choose a space">
 	<CoefficientTable />
 	{#snippet caption()}
 		Homology with integer coefficients, and cohomology with integer, mod-2 and real coefficients, computed live from a triangulation of each

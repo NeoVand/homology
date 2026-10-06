@@ -91,12 +91,12 @@
 </ul>
 
 <p>
-	Now look at <a href="#fig-torus">Figure 1</a>. It shows a few hundred points in space, slowly turning. Raise the number of points and,
+	Now look at <a href="#fig-torus">Figure 3.7.1</a>. It shows a few hundred points in space, slowly turning. Raise the number of points and,
 	somewhere along the way, you stop seeing dots and start seeing a <em>doughnut</em> — a torus, with a hole through the middle and a
 	tunnel running round inside it. Nobody drew the surface. Your visual system invented it.
 </p>
 
-<Figure size="wide" id="fig-torus" num="1" title="Dots in space" hint="Drag to rotate · slide the number of points">
+<Figure size="wide" id="fig-torus" num="3.7.1" title="Dots in space" hint="Drag to rotate · slide the number of points">
 	<TorusCloud />
 	{#snippet caption()}
 		Points sampled at random from the surface of a torus in \(\R^3\), with a little noise. With 40 points you see a scatter; with a few
@@ -137,7 +137,7 @@
 
 <Question>
 	<p>
-		Before reading on: the computer sees only a list of coordinates. How would <em>you</em> convince it that the points of Figure 1 lie on a
+		Before reading on: the computer sees only a list of coordinates. How would <em>you</em> convince it that the points of Figure 3.7.1 lie on a
 		doughnut — or, more modestly, that 26 points in the plane lie on a circle?
 	</p>
 </Question>
@@ -159,7 +159,7 @@
 	Keep this “\(2r\)” in mind; it will come back many times.
 </p>
 
-<Figure id="fig-balls" num="2" title="Grow the balls" hint="Drag the slider or the strip below the picture">
+<Figure id="fig-balls" num="3.7.2" title="Grow the balls" hint="Drag the slider or the strip below the picture">
 	<GrowingBalls />
 	{#snippet caption()}
 		Eighteen points with a disc of radius \(r\) around each. The strip underneath records, for every \(r\), the number of pieces \(b_0\)
@@ -167,7 +167,7 @@
 	{/snippet}
 </Figure>
 
-<p>Drag the radius in <a href="#fig-balls">Figure 2</a> from left to right and watch three regimes go by.</p>
+<p>Drag the radius in <a href="#fig-balls">Figure 3.7.2</a> from left to right and watch three regimes go by.</p>
 <ul>
 	<li>
 		<strong>Dust.</strong> For tiny \(r\) every disc is alone: eighteen pieces, no holes, \(b_0 = 18\) and \(b_1 = 0\). This is just the
@@ -210,7 +210,7 @@
 </KeyIdea>
 
 <p>
-	The strip under Figure 2 is a first step: it records the Betti numbers at every scale. But Ghrist’s warning applies to it too. Suppose
+	The strip under Figure 3.7.2 is a first step: it records the Betti numbers at every scale. But Ghrist’s warning applies to it too. Suppose
 	the strip showed \(b_1 = 1\) from \(r = 0.2\) to \(r = 0.9\). That could be one hole that lives the whole time — or one hole on
 	\([0.2, 0.5)\) handing over to a different hole on \([0.5, 0.9)\). (An interval written \([a, b)\) contains its left end \(a\) but
 	not its right end \(b\); we will use such <em>half-open</em> intervals throughout.) The counts cannot tell these apart. We must keep track of
@@ -327,7 +327,7 @@
 	</p>
 </Notation>
 
-<Figure id="fig-cech-rips" num="3" title="Čech versus Rips" hint="Drag the points · slide r · try the other configurations">
+<Figure id="fig-cech-rips" num="3.7.3" title="Čech versus Rips" hint="Drag the points · slide r · try the other configurations">
 	<CechVsRips />
 	{#snippet caption()}
 		The same points at the same radius, completed in two ways. Three points at mutual distance 2: for \(1 \le r \lt 2/\sqrt3 \approx
@@ -376,7 +376,7 @@
 
 <Question>
 	<p>
-		In Figure 3, choose <em>Hexagon</em> and set \(r = 0.93\). Six points in a flat plane — and the Rips complex reports \(b_2 = 1\): a
+		In Figure 3.7.3, choose <em>Hexagon</em> and set \(r = 0.93\). Six points in a flat plane — and the Rips complex reports \(b_2 = 1\): a
 		hollow, two-dimensional void, like the inside of a ball. How can a flat picture enclose a void? Keep the question; we answer it in
 		<a href="#caveats">the last section</a>.
 	</p>
@@ -451,7 +451,7 @@
 	<Ref to="homology/homology-groups" /> over \(\Z/2\).
 </p>
 
-<Figure id="fig-flipbook" num="4" title="A filtration, one simplex at a time" hint="Press play, or step with the arrows">
+<Figure id="fig-flipbook" num="3.7.4" title="A filtration, one simplex at a time" hint="Press play, or step with the arrows">
 	<FlipBook />
 	{#snippet caption()}
 		The Vietoris–Rips filtration of five points, one simplex per step. Teal steps destroy a class (two pieces merge, or a loop is
@@ -461,7 +461,7 @@
 </Figure>
 
 <p>
-	Step through <a href="#fig-flipbook">Figure 4</a>. First the five points appear: five pieces, five bars. Then the edges arrive in order
+	Step through <a href="#fig-flipbook">Figure 3.7.4</a>. First the five points appear: five pieces, five bars. Then the edges arrive in order
 	of length. The first four join pieces together; then the edge \(04\) closes a loop around the middle, and a gold bar starts. Next the
 	diagonal \(02\) closes a small loop, but the triangle \(012\) arrives in the very same instant and fills it — a class born and killed at
 	once, a bar of length zero that we simply do not draw. The same happens with \(03\) and \(023\). Finally the triangle \(034\) fills the
@@ -501,7 +501,7 @@
 	lakes. As \(t\) increases these sets grow, so they form a filtration, and their \(H_0\) — the lakes — has a barcode.
 </p>
 
-<Figure id="fig-elder" num="5" title="The elder rule" hint="Drag the water level up and down in the picture, or use the slider">
+<Figure id="fig-elder" num="3.7.5" title="The elder rule" hint="Drag the water level up and down in the picture, or use the slider">
 	<WaterLevel />
 	{#snippet caption()}
 		Lakes in a landscape. A lake is born when the water reaches a valley floor and dies when it spills over a pass into a lake with a
@@ -511,7 +511,7 @@
 </Figure>
 
 <p>
-	Raise the water in <a href="#fig-elder">Figure 5</a>. Valley \(B\) is the deepest, so its lake is born first; then \(D\), \(A\) and
+	Raise the water in <a href="#fig-elder">Figure 3.7.5</a>. Valley \(B\) is the deepest, so its lake is born first; then \(D\), \(A\) and
 	\(C\) follow, each born when the water reaches its floor. At the pass between \(B\) and \(C\) the two lakes merge. Lake \(C\) is the
 	younger — its floor is higher, so it was born later — and by the elder rule its bar ends there; the merged lake carries on as \(B\).
 	The rule is not arbitrary. It is exactly what makes the bars count correctly: for any two levels \(t \le u\), the number of bars that
@@ -588,7 +588,7 @@
 </ul>
 
 <p>
-	Now you can play. <a href="#fig-playground">Figure 6</a> computes the full Vietoris–Rips barcode of a point cloud — every triangle is
+	Now you can play. <a href="#fig-playground">Figure 3.7.6</a> computes the full Vietoris–Rips barcode of a point cloud — every triangle is
 	allowed to appear eventually, so every loop eventually dies — and links three views of it: the cloud with its balls and complex at the
 	current radius, the barcode, and the diagram.
 </p>
@@ -596,7 +596,7 @@
 <Figure
 	size="wide"
 	id="fig-playground"
-	num="6"
+ num="3.7.6"
 	title="The persistence playground"
 	hint="Drag points · switch to Add or Erase to edit · drag across the barcode · hover or tap a bar"
 >
@@ -681,12 +681,12 @@
 
 <p>
 	That is the whole algorithm: Gaussian elimination over \(\Z/2\) (<Ref to="foundations/linear-algebra" />), with one restriction — you
-	may only add a column to a column on its <em>right</em>, that is, an older simplex to a younger one. <a href="#fig-reduction">Figure 7</a>
+	may only add a column to a column on its <em>right</em>, that is, an older simplex to a younger one. <a href="#fig-reduction">Figure 3.7.7</a>
 	runs it on the smallest interesting filtration: three vertices at time \(0\), the edges \(01\), \(12\), \(02\) at times \(1\), \(2\),
 	\(3\), and the triangle \(012\) at time \(4\).
 </p>
 
-<Figure size="wide" id="fig-reduction" num="7" title="The reduction algorithm, step by step" hint="Press play, or step with the arrows">
+<Figure size="wide" id="fig-reduction" num="3.7.7" title="The reduction algorithm, step by step" hint="Press play, or step with the arrows">
 	<ReductionStepper />
 	{#snippet caption()}
 		The filtration boundary matrix of a triangle being built. Shaded cells mark each column’s low; rose cells have just changed. Column
@@ -736,7 +736,7 @@
 	reducing the <em>coboundary</em> matrix instead, never storing the matrix at all but generating its columns on the fly, and spotting
 	pairs that need no work. Ulrich Bauer’s program <strong>Ripser</strong> combines them; in the 2017 benchmark of Otter and colleagues,
 	“ripser is the best-performing library currently available for the computation of PH with the Vietoris–Rips complex”, followed by
-	<strong>GUDHI</strong> and DIPHA. Figure 6 uses the same strategy as Ripser on a small scale: it reduces the coboundary matrix (columns
+	<strong>GUDHI</strong> and DIPHA. Figure 3.7.6 uses the same strategy as Ripser on a small scale: it reduces the coboundary matrix (columns
 	are edges, rows are triangles) with clearing, and finds the whole barcode of 64 points — about forty thousand triangles — in a fraction
 	of a second, in your browser.
 </p>
@@ -782,7 +782,7 @@
 	most \(\delta\) moves every feature by at most \(\delta\).
 </p>
 
-<Figure size="wide" id="fig-stability" num="8" title="Stability" hint="Slide the noise · press New noise for a different jiggle">
+<Figure size="wide" id="fig-stability" num="3.7.8" title="Stability" hint="Slide the noise · press New noise for a different jiggle">
 	<StabilityDemo />
 	{#snippet caption()}
 		Every point is pushed a random distance of at most \(\delta\) (rose segments). Hollow markers show the original diagram, solid ones
@@ -820,10 +820,10 @@
 
 <p>
 	Since the early 2000s persistent homology has become a standard tool of <em>topological data analysis</em>. A few examples show the
-	range; <a href="#fig-gallery">Figure 9</a> sketches six of them.
+	range; <a href="#fig-gallery">Figure 3.7.9</a> sketches six of them.
 </p>
 
-<Figure size="wide" id="fig-gallery" num="9" title="A gallery of applications" hint="Schematic pictures, not data">
+<Figure size="wide" id="fig-gallery" num="3.7.9" title="A gallery of applications" hint="Schematic pictures, not data">
 	<AppGallery />
 	{#snippet caption()}
 		Six fields where persistence has found structure. The pictures are schematic sketches of the idea, not the data of the cited studies.
@@ -891,7 +891,7 @@
 <h3>Rips can invent shapes</h3>
 
 <p>
-	Here is the answer to the hexagon puzzle of Figure 3. Put six points evenly around a circle of radius \(1\). Neighbours are at distance
+	Here is the answer to the hexagon puzzle of Figure 3.7.3. Put six points evenly around a circle of radius \(1\). Neighbours are at distance
 	\(1\), points two apart at distance \(\sqrt 3 \approx 1.73\), and opposite points at distance \(2\). For
 	\(\sqrt3/2 \le r \lt 1\), the Rips complex contains every edge except the three long diagonals. Now notice: the three opposite pairs
 	\(\set{0,3}\), \(\set{1,4}\), \(\set{2,5}\) are not joined, and every other pair is. That is exactly the pattern of an octahedron, whose
@@ -899,7 +899,7 @@
 	stops, since no four points are joined to one another. The result is a hollow octahedron — a 2-sphere — with \(b_2 = 1\).
 </p>
 
-<Figure id="fig-hexagon" num="10" title="A void that is not there">
+<Figure id="fig-hexagon" num="3.7.10" title="A void that is not there">
 	<HexagonSphere />
 	{#snippet caption()}
 		Six evenly spaced points at radius \(r = 0.9\). Drawn in the plane, the Rips complex looks like a filled hexagon; as an abstract
@@ -1100,7 +1100,7 @@
 			Every pair is joined except the three opposite pairs: \(15 - 3 = 12\) edges. A triangle needs three pairwise-joined points, so it
 			uses one point from each opposite pair: \(2 \times 2 \times 2 = 8\) triangles. Four points would contain an opposite pair, so there
 			are no tetrahedra. Then \(\chi = 6 - 12 + 8 = 2\), the Euler characteristic of a sphere, and indeed
-			\(b_0 - b_1 + b_2 = 1 - 0 + 1 = 2\): the complex is the octahedron of Figure 10, one piece enclosing one hollow. For Čech, a set of points enters when its smallest enclosing
+			\(b_0 - b_1 + b_2 = 1 - 0 + 1 = 2\): the complex is the octahedron of Figure 3.7.10, one piece enclosing one hollow. For Čech, a set of points enters when its smallest enclosing
 			disc has radius at most \(r\). The disc around the centre of the circle needs radius \(1\), so for \(r \lt 1\) the centre is
 			uncovered and the union of discs has a hole: \(b_1 = 1\), \(b_2 = 0\). The “three consecutive points” triangles do enter at
 			\(\sqrt3/2\) (half their longest side), but the triangles \(024\) and \(135\), whose enclosing disc is the whole unit disc, do not.

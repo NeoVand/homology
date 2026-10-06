@@ -55,7 +55,7 @@
 
 <p>Look back at what we did in <Ref to="homology/homology-groups" />. For each space we listed its simplices, wrote down the boundary matrices, found their kernels and images, and took quotients. Nothing in that procedure depends on pictures or cleverness. It is a machine with four stages.</p>
 
-<Figure size="wide" num="1" title="The homology machine">
+<Figure size="wide" num="3.4.1" title="The homology machine">
 	<Pipeline />
 	{#snippet caption()}From a complex to its homology. List the simplices; write each boundary map as a matrix of \(0\)s and \(\pm1\)s; simplify each matrix by row and column operations; read off the groups. Over a field the last two stages only need ranks. Over \(\Z\) the simplified matrix can contain entries bigger than \(1\), such as the rose \(2\) here, and they become torsion.{/snippet}
 </Figure>
@@ -72,9 +72,9 @@
 
 <p>So over a field, computing homology means computing ranks, and the standard way to compute a rank is <Term t="row-reduction">row reduction</Term>. Choose a non-zero entry in the first column, the <em>pivot</em>; swap its row to the top; subtract multiples of that row from the rows below so that the rest of the column becomes zero. Then move one row down and one column right, and repeat. When you run out of pivots the matrix is in echelon form, and the rank is the number of pivots.</p>
 
-<p>Over \(\Z/2\) this is especially pleasant. Every non-zero entry is \(1\), since \(-1 = 1\) in \(\Z/2\). "Subtracting a multiple of a row" is just adding the pivot row, entry by entry, with \(1 + 1 = 0\). Figure 2 runs the procedure on the second boundary matrix of the six-vertex projective plane, a \(15 \times 10\) matrix, one pivot per step. Run it twice, once over \(\Z/2\) and once over \(\Q\).</p>
+<p>Over \(\Z/2\) this is especially pleasant. Every non-zero entry is \(1\), since \(-1 = 1\) in \(\Z/2\). "Subtracting a multiple of a row" is just adding the pivot row, entry by entry, with \(1 + 1 = 0\). Figure 3.4.2 runs the procedure on the second boundary matrix of the six-vertex projective plane, a \(15 \times 10\) matrix, one pivot per step. Run it twice, once over \(\Z/2\) and once over \(\Q\).</p>
 
-<Figure size="wide" num="2" title="Rank by row reduction" hint="Step through · switch number system">
+<Figure size="wide" num="3.4.2" title="Rank by row reduction" hint="Step through · switch number system">
 	<MatrixLab matrix="rp2" mode="Z2" modes={['Z2', 'Q']} matrices={['sphere', 'rp2', 'klein']} />
 	{#snippet caption()}Row-reducing \(\partial_2\). Each step chooses a pivot (gold) and clears the entries below it; changed rows are tinted blue; finished pivots stay gold. For the sphere the rank is \(3\) either way. For \(\RP^2\) and the Klein bottle the last pivot is a \(2\) (rose): over \(\Q\) it is a perfectly good pivot, but over \(\Z/2\) it is zero, so the rank drops by one.{/snippet}
 </Figure>
@@ -86,14 +86,14 @@
 <p>So which is right: does \(\RP^2\) have a non-bounding loop or not? Both answers are correct. They answer different questions, because "bounding" depends on what coefficients the filling chain may have. To see the whole truth at once we must work over the integers, and over the integers we may not divide at all.</p>
 
 <Question>
-	<p>For the hollow tetrahedron, \(\partial_2\) has rank \(3\) over both fields (try it in Figure 2). What does that tell you about its Betti numbers over \(\Z/2\) and over \(\Q\)? (They agree: \(1, 0, 1\). Disagreement between fields can only come from entries such as the \(2\) above.)</p>
+	<p>For the hollow tetrahedron, \(\partial_2\) has rank \(3\) over both fields (try it in Figure 3.4.2). What does that tell you about its Betti numbers over \(\Z/2\) and over \(\Q\)? (They agree: \(1, 0, 1\). Disagreement between fields can only come from entries such as the \(2\) above.)</p>
 </Question>
 
 <h2 id="integers">When you cannot divide</h2>
 
-<p>Here is the simplest possible example of the trouble. Consider the map "multiply by 2" from the integers to themselves, \(x \mapsto 2x\). As a matrix it is the \(1\times1\) matrix \((2)\). Figure 3 looks at it through three lenses.</p>
+<p>Here is the simplest possible example of the trouble. Consider the map "multiply by 2" from the integers to themselves, \(x \mapsto 2x\). As a matrix it is the \(1\times1\) matrix \((2)\). Figure 3.4.3 looks at it through three lenses.</p>
 
-<Figure size="wide" num="3" title="One map, three number systems" hint="Switch the number system">
+<Figure size="wide" num="3.4.3" title="One map, three number systems" hint="Switch the number system">
 	<TimesTwo />
 	{#snippet caption()}The map \(x \mapsto 2x\). Over \(\Q\) it is invertible, so it has rank \(1\) and leaves nothing behind. Over \(\Z/2\) it is the zero map, rank \(0\). Over \(\Z\) it is one-to-one, but it reaches only the even numbers (teal); the odd numbers (rose) are missed, and "even versus odd" is the two-element group \(\Z/2\Z \cong \Z/2\).{/snippet}
 </Figure>
@@ -121,7 +121,7 @@
 	<li>add an integer multiple of one row to another row, or of one column to another column.</li>
 </ul>
 
-<p>Each move is undone by a move of the same kind, so none of them loses information. Row operations on \(\partial_{k+1}\) amount to choosing a new basis of \(C_k\), and column operations to choosing a new basis of \(C_{k+1}\). The groups and the map stay the same; only our description of them changes. What we may <em>not</em> do is divide a row by \(2\), because the inverse, multiplying by \(2\), is not an allowed move. That is precisely what protects the information Figure 2 destroyed.</p>
+<p>Each move is undone by a move of the same kind, so none of them loses information. Row operations on \(\partial_{k+1}\) amount to choosing a new basis of \(C_k\), and column operations to choosing a new basis of \(C_{k+1}\). The groups and the map stay the same; only our description of them changes. What we may <em>not</em> do is divide a row by \(2\), because the inverse, multiplying by \(2\), is not an allowed move. That is precisely what protects the information Figure 3.4.2 destroyed.</p>
 
 <Theorem id="thm-snf" label="Theorem (Smith normal form)">
 	<p>Every integer matrix \(A\) can be brought, by integer row and column operations, to a diagonal matrix</p>
@@ -144,9 +144,9 @@
 	<p>Finally \(\Z/1 = 0\), so only the factors \(d_i > 1\) survive.</p>
 </Proof>
 
-<p>Two loose ends from the last chapter are now tied. The free rank of \(H_k(K)\) is \(n_k - r_k - r_{k+1}\) with ranks over \(\Q\), as promised there. And for the sphere and the torus, all invariant factors of every boundary matrix are \(1\) (check it in Figure 4 or in the calculator below), so their homology has no torsion. In particular \(B_1 = Z_1\) on the sphere: every loop on a sphere really does bound.</p>
+<p>Two loose ends from the last chapter are now tied. The free rank of \(H_k(K)\) is \(n_k - r_k - r_{k+1}\) with ranks over \(\Q\), as promised there. And for the sphere and the torus, all invariant factors of every boundary matrix are \(1\) (check it in Figure 3.4.4 or in the calculator below), so their homology has no torsion. In particular \(B_1 = Z_1\) on the sphere: every loop on a sphere really does bound.</p>
 
-<Figure size="wide" num="4" title="The Smith normal form, step by step" hint="Step through the pivots">
+<Figure size="wide" num="3.4.4" title="The Smith normal form, step by step" hint="Step through the pivots">
 	<MatrixLab matrix="rp2" mode="Z" modes={['Z']} matrices={['rp2', 'klein', 'torus']} />
 	{#snippet caption()}Integer row and column operations on \(\partial_2\), one pivot per step; the side panel lists the operations used. For \(\RP^2\) the result has nine \(1\)s and one \(2\); for the Klein bottle, seventeen \(1\)s and one \(2\); for the torus, seventeen \(1\)s and nothing else. The rose \(2\) is torsion: no integer operation can turn it into a \(1\).{/snippet}
 </Figure>
@@ -176,7 +176,7 @@
 
 \[ \partial\Big(\sum_{18 \text{ triangles}} \pm\, t\Big) = 2a, \qquad a = [0,1] + [1,2] - [0,2]. \]
 
-<Figure size="wide" num="5" title="Orienting both grids" hint="Compare the seams">
+<Figure size="wide" num="3.4.5" title="Orienting both grids" hint="Compare the seams">
 	<div class="pair2">
 		<div>
 			<Svg viewBox={torus.L.viewBox} maxHeight={260} label="The torus grid with every triangle oriented counterclockwise: no edge survives">
@@ -202,24 +202,24 @@
 	<p>Mod 2, the seam \(a\) of the Klein bottle looked exactly like the bottom row \(a\) of the torus: a loop that does not bound. Over \(\Z\) the difference appears. On the torus no multiple of \(a\) bounds; on the Klein bottle \(2a\) is the boundary of the whole surface. A class that is not zero, but whose double is.</p>
 </KeyIdea>
 
-<p>The same computation explains \(H_2(K) = 0\). A 2-cycle would be a combination of triangles in which every edge cancels; we will see in a moment that this forces all the triangles to be oriented coherently, and on the Klein bottle that is impossible. Figure 6 replays the cliffhanger with the new lens available.</p>
+<p>The same computation explains \(H_2(K) = 0\). A 2-cycle would be a combination of triangles in which every edge cancels; we will see in a moment that this forces all the triangles to be oriented coherently, and on the Klein bottle that is impossible. Figure 3.4.6 replays the cliffhanger with the new lens available.</p>
 
-<Figure size="wide" num="6" title="The tie, broken" hint="Drag to rotate · switch coefficients">
+<Figure size="wide" num="3.4.6" title="The tie, broken" hint="Drag to rotate · switch coefficients">
 	<TorusKleinPair lens="Z" toggle />
 	{#snippet caption()}The torus and the Klein bottle again. Through the \(\Z/2\) lens their homology is identical. Through the \(\Z\) lens the Klein bottle's seam (rose) is doubled: \(\partial(\sum \pm t) = 2a\), so \(H_1(K) \cong \Z \oplus \Z/2\) and \(H_2(K) = 0\), while the torus keeps \(\Z^2\) and \(\Z\).{/snippet}
 </Figure>
 
 <h2 id="projective-plane">The projective plane</h2>
 
-<p>The six-vertex real projective plane \(\RP^2\) of <Ref to="topology/simplicial-complexes" /> has \(6\) vertices, \(15\) edges and \(10\) triangles; every pair of vertices is joined by an edge. Its Smith normal forms (Figure 4) are five \(1\)s for \(\partial_1\), and nine \(1\)s and one \(2\) for \(\partial_2\). So</p>
+<p>The six-vertex real projective plane \(\RP^2\) of <Ref to="topology/simplicial-complexes" /> has \(6\) vertices, \(15\) edges and \(10\) triangles; every pair of vertices is joined by an edge. Its Smith normal forms (Figure 3.4.4) are five \(1\)s for \(\partial_1\), and nine \(1\)s and one \(2\) for \(\partial_2\). So</p>
 
 \[ H_0(\RP^2) \cong \Z, \qquad H_1(\RP^2) \cong \Z^{15 - 5 - 10} \oplus \Z/2 = \Z/2, \qquad H_2(\RP^2) \cong \Z^{10 - 10} = 0. \]
 
-<p>The whole first homology of the projective plane is a single element of order two. There is a loop \(c\) that bounds nothing, and twice that loop bounds. Figure 7 finds them.</p>
+<p>The whole first homology of the projective plane is a single element of order two. There is a loop \(c\) that bounds nothing, and twice that loop bounds. Figure 3.4.7 finds them.</p>
 
 <p>Recall from <Ref to="topology/gluing" /> that \(\RP^2\) is a disk whose opposite boundary points are glued. Our triangulation can be drawn exactly that way: a hexagon whose rim reads \(4, 5, 6, 4, 5, 6\), with opposite rim points identified, and three vertices \(1, 2, 3\) inside. Inside a flat hexagon nothing stops us orienting every triangle counterclockwise. Then all interior edges cancel, and the boundary of the sum is the rim of the hexagon. Going once around the rim we read \(4 \to 5 \to 6 \to 4\), and then, past the gluing, \(4 \to 5 \to 6 \to 4\) again.</p>
 
-<Figure size="wide" num="7" title="Twice c bounds" hint="Step through · in the last step click triangles">
+<Figure size="wide" num="3.4.7" title="Twice c bounds" hint="Step through · in the last step click triangles">
 	<ProjectivePlaneDisk />
 	{#snippet caption()}The six-vertex projective plane as a hexagon with opposite rim points glued. All ten triangles oriented counterclockwise have boundary \(2c\), where \(c = 4\to5\to6\to4\) is half the rim. In the last step, try to find a set of triangles whose mod-2 boundary is \(c\) alone.{/snippet}
 </Figure>
@@ -230,7 +230,7 @@
 
 <p>And \(c\) is not a boundary. Over \(\Z/2\) a 2-chain is just a set of triangles, and there are only \(2^{10} = 1024\) of them; a computer (or a patient reader) checks that no set has boundary \(c\). An integer chain \(x\) with \(\partial x = c\) would give such a set by reducing mod 2, so none exists. Hence \([c]\) generates \(H_1(\RP^2) \cong \Z/2\). In fact all ten triangles of edges that are <em>not</em> faces, such as \(1 \to 2 \to 4 \to 1\), are cycles in this same class; they are the "projective lines" of the projective plane.</p>
 
-<Figure size="wide" num="8" title="The loop c on Boy's surface" hint="Drag to rotate">
+<Figure size="wide" num="3.4.8" title="The loop c on Boy's surface" hint="Drag to rotate">
 	<BoySurface3D />
 	{#snippet caption()}Boy's surface, a model of \(\RP^2\) in space that is allowed to pass through itself, carrying the same ten triangles. The gold loop is \(c\). On the hexagon it was half of the rim; here the two halves of the rim land on the same curve, so the rim of the disk runs around \(c\) twice. That is \(\partial(\sum \pm t) = 2c\), made visible.{/snippet}
 </Figure>
@@ -256,9 +256,9 @@
 
 \[ \partial\Big(\sum_t \varepsilon_t\, t\Big) = 2c \]
 
-<p>for an integer 1-chain \(c\) made of the clashing edges, the <dfn>clash cycle</dfn>. (It is a cycle: \(2\,\partial c = \partial\partial(\cdots) = 0\), so \(\partial c = 0\).) Reversing one triangle \(t\) changes the sum by \(\mp 2t\), so it changes \(c\) by \(\mp\partial t\), a boundary. However you re-orient the triangles, the class \([c] \in H_1(S)\) never changes. On an orientable surface some choice has no clashes, so \([c] = 0\). On a non-orientable surface \([c] \ne 0\): if \(c = \partial x\), then \(\sum \varepsilon_t t - 2x\) would be a 2-cycle with odd coefficients, contradicting the theorem. And \(2[c] = [\partial(\cdots)] = 0\). So every non-orientable closed surface has an element of order two in its first homology, and the clash cycle points right at it. Figure 9 lets you hunt for it by hand.</p>
+<p>for an integer 1-chain \(c\) made of the clashing edges, the <dfn>clash cycle</dfn>. (It is a cycle: \(2\,\partial c = \partial\partial(\cdots) = 0\), so \(\partial c = 0\).) Reversing one triangle \(t\) changes the sum by \(\mp 2t\), so it changes \(c\) by \(\mp\partial t\), a boundary. However you re-orient the triangles, the class \([c] \in H_1(S)\) never changes. On an orientable surface some choice has no clashes, so \([c] = 0\). On a non-orientable surface \([c] \ne 0\): if \(c = \partial x\), then \(\sum \varepsilon_t t - 2x\) would be a 2-cycle with odd coefficients, contradicting the theorem. And \(2[c] = [\partial(\cdots)] = 0\). So every non-orientable closed surface has an element of order two in its first homology, and the clash cycle points right at it. Figure 3.4.9 lets you hunt for it by hand.</p>
 
-<Figure size="wide" num="9" title="The orientation painter" hint="Click triangles to flip them">
+<Figure size="wide" num="3.4.9" title="The orientation painter" hint="Click triangles to flip them">
 	<OrientationPainter />
 	{#snippet caption()}Each triangle carries an orientation arrow; click to reverse it. Rose edges are clashes, where both neighbouring triangles run the same way, and together they form the clash cycle \(c\) with \(\partial(\sum \pm t) = 2c\). On the torus you can remove every clash. On the Klein bottle you can push the clashes around and shrink them to three edges, but never remove them: \([c] = [a]\) is the element of order two.{/snippet}
 </Figure>
@@ -284,9 +284,9 @@
 
 \[ \dim H_k(K;\Z/2) \;=\; b_k + t_k + t_{k-1}. \]
 
-<p>Check it on \(\RP^2\), whose integer homology is \(\Z, \Z/2, 0\): mod 2 we get \(1\), \(0 + 1 + 0 = 1\) and \(0 + 0 + 1 = 1\), exactly the \(1, 1, 1\) of Figure 2. For the Klein bottle, \(\Z, \Z \oplus \Z/2, 0\) gives \(1\), \(1 + 1 = 2\), \(0 + 0 + 1 = 1\): the \(1, 2, 1\) that made the Klein bottle look like a torus. The extra mod-2 classes were the torsion all along, counted twice. The same rule holds with any prime \(p\) in place of \(2\), counting the torsion summands whose order \(p\) divides.</p>
+<p>Check it on \(\RP^2\), whose integer homology is \(\Z, \Z/2, 0\): mod 2 we get \(1\), \(0 + 1 + 0 = 1\) and \(0 + 0 + 1 = 1\), exactly the \(1, 1, 1\) of Figure 3.4.2. For the Klein bottle, \(\Z, \Z \oplus \Z/2, 0\) gives \(1\), \(1 + 1 = 2\), \(0 + 0 + 1 = 1\): the \(1, 2, 1\) that made the Klein bottle look like a torus. The extra mod-2 classes were the torsion all along, counted twice. The same rule holds with any prime \(p\) in place of \(2\), counting the torsion summands whose order \(p\) divides.</p>
 
-<Figure size="wide" num="10" title="Four lenses on one space" hint="Choose a space">
+<Figure size="wide" num="3.4.10" title="Four lenses on one space" hint="Choose a space">
 	<CoefficientLenses />
 	{#snippet caption()}Integer homology and the Betti numbers over \(\Q\), \(\Z/2\) and \(\Z/3\). Rose numbers differ from the \(\Q\) column, and the small grey sums split them into the free part plus torsion seen in this degree plus torsion from one degree below. The triple-wrapped disk (a disk whose rim wraps three times around a triangle) has \(H_1 \cong \Z/3\): invisible mod 2, seen twice mod 3.{/snippet}
 </Figure>
@@ -301,7 +301,7 @@
 
 <p>Here is the whole machine in one place. Choose a space from the gallery, or build your own by typing its simplices. The calculator lists the simplices, forms the boundary matrices, computes their ranks over \(\Q\) and \(\Z/2\) and their invariant factors over \(\Z\), and reads off the homology with four kinds of coefficients. It also finds a basis of mod-2 cycles that bound nothing and draws them on the picture, flat or (for the surfaces) in 3D.</p>
 
-<Figure size="full" num="11" title="Homology calculator" hint="Choose a space · or build your own">
+<Figure size="full" num="3.4.11" title="Homology calculator" hint="Choose a space · or build your own">
 	<HomologyCalculator />
 	{#snippet caption()}Everything this chapter computes, for any complex. The table shows \(H_k\) over \(\Z\) (torsion tinted rose) and the Betti numbers over \(\Q\), \(\Z/2\) and \(\Z/3\). Click a generator to highlight it; open "Boundary matrices" to see the matrices themselves.{/snippet}
 </Figure>

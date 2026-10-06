@@ -103,9 +103,9 @@
 	<p>Let \(b \in B_k\). By definition there is a \((k+1)\)-chain \(c\) with \(b = \partial_{k+1} c\). Then \(\partial_k b = \partial_k \partial_{k+1} c = 0\), because the boundary of a boundary is zero. So \(b\) has zero boundary: \(b \in Z_k\).</p>
 </Proof>
 
-<p>In words: a boundary has no boundary. The loop of edges around a filled triangle closes up precisely because it is the rim of something. The converse is false, and the hollow triangle shows it: its loop \(z\) is a cycle but not a boundary. The gap between "cycle" and "boundary" is exactly what homology measures. Figure 1 draws the whole situation at once.</p>
+<p>In words: a boundary has no boundary. The loop of edges around a filled triangle closes up precisely because it is the rim of something. The converse is false, and the hollow triangle shows it: its loop \(z\) is a cycle but not a boundary. The gap between "cycle" and "boundary" is exactly what homology measures. Figure 3.3.1 draws the whole situation at once.</p>
 
-<Figure size="wide" num="1" title="The anatomy of a chain complex">
+<Figure size="wide" num="3.3.1" title="The anatomy of a chain complex">
 	<ChainComplexDiagram />
 	{#snippet caption()}Each chain group \(C_k\) (violet) contains the cycles \(Z_k\) (gold, dashed), which in turn contain the boundaries \(B_k\) (teal). The map \(\partial_{k+1}\) sends all of \(C_{k+1}\) into \(B_k\) (the teal funnel) and crushes the cycles \(Z_{k+1}\) to \(0\) (the gold arrows). The rose ring between \(Z_k\) and \(B_k\), cycles that are not boundaries, is what homology measures.{/snippet}
 </Figure>
@@ -137,9 +137,9 @@
 
 <p>The group operation is inherited from chains: \([z] + [z'] = [z + z']\). This is <em>well defined</em> (<Ref to="prelude/reading-math" />): if we replace \(z\) by a homologous cycle \(z + \partial c\) and \(z'\) by \(z' + \partial c'\), the sum changes by \(\partial(c + c')\), another boundary, so its class does not change. That is precisely the reason \(B_k\) had to be a subgroup, and the reason the general construction of quotient groups in <Ref to="foundations/abelian-groups" /> works. The zero element is the class \([0] = B_k\) of all boundaries, and the negative of \([z]\) is \([-z]\), the same cycle run backwards.</p>
 
-<p>Figure 2 lets you feel the definition with your hands. The gold cycle runs around a triangulated annulus. Clicking a triangle \(t\) <em>pushes</em> the cycle across it: the figure adds \(+\partial t\) or \(-\partial t\), whichever cancels the edges the cycle shares with \(t\). The edges you crossed disappear and the triangle's other edges take their place. The cycle changes shape, but its class does not.</p>
+<p>Figure 3.3.2 lets you feel the definition with your hands. The gold cycle runs around a triangulated annulus. Clicking a triangle \(t\) <em>pushes</em> the cycle across it: the figure adds \(+\partial t\) or \(-\partial t\), whichever cancels the edges the cycle shares with \(t\). The edges you crossed disappear and the triangle's other edges take their place. The cycle changes shape, but its class does not.</p>
 
-<Figure size="wide" num="2" title="Cycles modulo boundaries" hint="Click triangles · try other starts">
+<Figure size="wide" num="3.3.2" title="Cycles modulo boundaries" hint="Click triangles · try other starts">
 	<HomologousCycles />
 	{#snippet caption()}Pushing a cycle \(z\) across triangles. After any number of pushes the new cycle is \(z' = z + \partial c\), where the violet 2-chain \(c\) records every triangle you crossed (darker means crossed more often, or in both directions). Since \(z' - z = \partial c\) is a boundary, \([z'] = [z]\): the badge never changes. Start from "Inner − outer" to meet two loops that together bound.{/snippet}
 </Figure>
@@ -207,7 +207,7 @@
 
 <p>Here are seven test spaces, from a single point to a torus. For each one we write down the chain groups and the boundary matrices, find the cycles and the boundaries, and take the quotient. Read the first three slowly; after that the pattern repeats.</p>
 
-<Figure size="wide" num="3" title="Seven test complexes">
+<Figure size="wide" num="3.3.3" title="Seven test complexes">
 	<Gallery />
 	{#snippet caption()}The complexes computed in this section, with their homology. Labels on the torus repeat because the square's opposite sides are glued: the four corners are all vertex \(0\). The hollow tetrahedron is drawn as its net; fold the three flaps up and their tips meet at vertex \(3\).{/snippet}
 </Figure>
@@ -266,9 +266,9 @@
 
 <p>Filling the triangle killed the hole: the loop \(z\) is now the rim of something. In dimension 2, \(\partial_2(n[0,1,2]) = nz\), which is zero only for \(n = 0\); so \(Z_2 = 0\) and \(H_2 = 0\). Dimension 0 is unchanged, because \(\partial_1\) did not change. <strong>Result:</strong> \(H_0 \cong \Z\), \(H_1 = 0\), \(H_2 = 0\), the same as a point. That is no coincidence. A disk can be shrunk continuously to a point (<Ref to="topology/homotopy" />), and in <Ref to="homology/invariance" /> we will prove that homology cannot tell such spaces apart.</p>
 
-<p>Before the bigger examples, step through the computations in Figure 4. Hovering over a column of a boundary matrix lights up its simplex in the picture; hovering over an entry lights up the face it records.</p>
+<p>Before the bigger examples, step through the computations in Figure 3.3.4. Hovering over a column of a boundary matrix lights up its simplex in the picture; hovering over an entry lights up the face it records.</p>
 
-<Figure size="wide" num="4" title="Computing homology, step by step" hint="Step through · hover the matrix">
+<Figure size="wide" num="3.3.4" title="Computing homology, step by step" hint="Step through · hover the matrix">
 	<ComputationPlayer />
 	{#snippet caption()}The computation of \(H_*\) for the circle, the disk, the sphere and the torus, one idea per step. The matrices are the boundary matrices \(\partial_k\), with rows indexed by \((k-1)\)-simplices and columns by \(k\)-simplices; each column lists the boundary of one simplex.{/snippet}
 </Figure>
@@ -287,7 +287,7 @@
 
 \[ S = [0,1,2] - [0,1,3] + [0,2,3] - [1,2,3] \quad\text{satisfies}\quad \partial S = 0. \]
 
-<p>Check one edge to see why: \([0,1]\) appears in \(\partial[0,1,2]\) with coefficient \(+1\) and in \(\partial[0,1,3]\) with coefficient \(+1\), and \(S\) takes these two triangles with opposite signs, so \([0,1]\) cancels. Geometrically, \(S\) is the whole shell with every face oriented consistently (all counterclockwise in the net of Figure 3), so every edge is crossed once in each direction. Since there are no 3-simplices, \(B_2 = 0\) and</p>
+<p>Check one edge to see why: \([0,1]\) appears in \(\partial[0,1,2]\) with coefficient \(+1\) and in \(\partial[0,1,3]\) with coefficient \(+1\), and \(S\) takes these two triangles with opposite signs, so \([0,1]\) cancels. Geometrically, \(S\) is the whole shell with every face oriented consistently (all counterclockwise in the net of Figure 3.3.3), so every edge is crossed once in each direction. Since there are no 3-simplices, \(B_2 = 0\) and</p>
 
 \[ H_2 = Z_2 = \Z S \cong \Z. \]
 
@@ -313,7 +313,7 @@
 
 <h3>The torus</h3>
 
-<p>Finally the 3×3 torus of <Ref to="topology/simplicial-complexes" />: a square divided into nine small squares, each cut into two triangles, with opposite sides glued. The vertex at grid position \((i, j)\) has label \(i + 3j\) (\(i\) counts columns, \(j\) counts rows from the bottom), and labels repeat around the rim because those points are glued. There are \(9\) vertices, \(27\) edges and \(18\) triangles. The boundary matrices are \(9 \times 27\) and \(27 \times 18\), too big to row-reduce comfortably by hand, but a computer (or the player in Figure 4) finds</p>
+<p>Finally the 3×3 torus of <Ref to="topology/simplicial-complexes" />: a square divided into nine small squares, each cut into two triangles, with opposite sides glued. The vertex at grid position \((i, j)\) has label \(i + 3j\) (\(i\) counts columns, \(j\) counts rows from the bottom), and labels repeat around the rim because those points are glued. There are \(9\) vertices, \(27\) edges and \(18\) triangles. The boundary matrices are \(9 \times 27\) and \(27 \times 18\), too big to row-reduce comfortably by hand, but a computer (or the player in Figure 3.3.4) finds</p>
 
 \[ \rank\partial_1 = 8, \qquad \rank\partial_2 = 17, \]
 
@@ -335,12 +335,12 @@
 
 \[ H_0(T^2) \cong \Z, \qquad H_1(T^2) \cong \Z^2, \qquad H_2(T^2) \cong \Z. \]
 
-<Figure size="wide" num="5" title="The torus and its generators" hint="Drag to rotate · pick a view">
+<Figure size="wide" num="3.3.5" title="The torus and its generators" hint="Drag to rotate · pick a view">
 	<TorusGenerators3D />
 	{#snippet caption()}The 3×3 torus wrapped onto a doughnut. The gold loop \(a\) runs once around the hole and the rose loop \(b\) once around the tube; their classes generate \(H_1 \cong \Z^2\). "Slide \(a\) to \(a'\)" shows the middle row \(a'\) and the strip of six triangles between the two rows: \(a - a' = \partial(\text{strip})\), so \([a'] = [a]\). "The 2-cycle" orients all 18 triangles coherently; their sum \(T\) has no boundary and generates \(H_2 \cong \Z\).{/snippet}
 </Figure>
 
-<p>Look at the seven results side by side (they are under the pictures in Figure 3). A point and a disk: \(\Z, 0, 0\). Two points: \(\Z^2\). A circle: \(\Z, \Z\). A figure eight: \(\Z, \Z^2\). A sphere: \(\Z, 0, \Z\). A torus: \(\Z, \Z^2, \Z\). In every case the numbers match what the eye sees: pieces, loops, cavities. The difference is that now they are theorems, computed by a procedure that works for any complex whatsoever.</p>
+<p>Look at the seven results side by side (they are under the pictures in Figure 3.3.3). A point and a disk: \(\Z, 0, 0\). Two points: \(\Z^2\). A circle: \(\Z, \Z\). A figure eight: \(\Z, \Z^2\). A sphere: \(\Z, 0, \Z\). A torus: \(\Z, \Z^2, \Z\). In every case the numbers match what the eye sees: pieces, loops, cavities. The difference is that now they are theorems, computed by a procedure that works for any complex whatsoever.</p>
 
 <h2 id="h0-counts-pieces">\(H_0\) counts the pieces</h2>
 
@@ -358,7 +358,7 @@
 	<p><em>Step 2: different pieces are independent.</em> For each component \(K_i\) let \(\varepsilon_i\) be "the sum of the coefficients on \(K_i\)": \(\varepsilon_i\big(\sum_v a_v [v]\big) = \sum_{v \in K_i} a_v\). Each edge lies inside a single component, and \(\partial[u,v] = [v] - [u]\) has coefficient sum \(0\) there, so every \(\varepsilon_i\) vanishes on \(B_0\). Hence \(\varepsilon = (\varepsilon_1, \dots, \varepsilon_c)\) gives a well-defined homomorphism \(H_0(K) \to \Z^c\). It sends \([p_i]\) to the \(i\)-th basis vector, so it is onto. And it is one-to-one: by Step 1 every class is \(\sum n_i [p_i]\), whose image is \((n_1, \dots, n_c)\), which is zero only if every \(n_i = 0\).</p>
 </Proof>
 
-<Figure size="wide" num="6" title="H₀ counts pieces" hint="Click edges · click two vertices">
+<Figure size="wide" num="3.3.6" title="H₀ counts pieces" hint="Click edges · click two vertices">
 	<ComponentCounter />
 	{#snippet caption()}Each piece of the graph gets its own colour, and \(H_0 \cong \Z^c\). The rank formula agrees: \(b_0 = n_0 - \rank\partial_1\). Click two vertices in the same piece and the figure shows an edge path between them, a 1-chain whose boundary is their difference; in different pieces no such chain exists.{/snippet}
 </Figure>
@@ -424,9 +424,9 @@
 	<p>In the last sum each \(r_j\) appears exactly twice: once as \(r_k\) with \(k = j\), with sign \((-1)^j\), and once as \(r_{k+1}\) with \(k = j - 1\), with sign \((-1)^{j-1}\). The two cancel. The end terms vanish too, since \(r_0 = 0\) and \(r_{N+1} = 0\) beyond the top dimension \(N\). So the last sum is \(0\).</p>
 </Proof>
 
-<p>The proof is pure bookkeeping, and Figure 7 turns the bookkeeping into a picture. Build a complex one simplex at a time, always adding faces before the simplices they bound. Each new \(k\)-simplex does exactly one of two things. Either its boundary was already a boundary, and then it creates a new \(k\)-cycle (\(b_k\) goes up by one), or its boundary was a cycle that did not yet bound, and then it fills that cycle in (\(b_{k-1}\) goes down by one). In both cases \(\chi\) changes by \((-1)^k\), and so does \(b_0 - b_1 + b_2 - \cdots\). The two alternating sums start equal (both \(0\) for the empty complex) and change in lockstep, so they are always equal.</p>
+<p>The proof is pure bookkeeping, and Figure 3.3.7 turns the bookkeeping into a picture. Build a complex one simplex at a time, always adding faces before the simplices they bound. Each new \(k\)-simplex does exactly one of two things. Either its boundary was already a boundary, and then it creates a new \(k\)-cycle (\(b_k\) goes up by one), or its boundary was a cycle that did not yet bound, and then it fills that cycle in (\(b_{k-1}\) goes down by one). In both cases \(\chi\) changes by \((-1)^k\), and so does \(b_0 - b_1 + b_2 - \cdots\). The two alternating sums start equal (both \(0\) for the empty complex) and change in lockstep, so they are always equal.</p>
 
-<Figure size="wide" num="7" title="Euler–Poincaré as a ledger" hint="Play or drag · hover the squares">
+<Figure size="wide" num="3.3.7" title="Euler–Poincaré as a ledger" hint="Play or drag · hover the squares">
 	<EulerPoincare />
 	{#snippet caption()}Building a complex one simplex at a time. Each square in row \(C_k\) is one \(k\)-simplex. A gold square created a new class; a teal square killed a class one dimension lower. A creator that was later killed is drawn hollow, and hovering over it shows the teal simplex that killed it. Each such pair cancels in the alternating sum, and the solid gold squares that remain are exactly the Betti numbers.{/snippet}
 </Figure>
@@ -449,7 +449,7 @@
 
 <p>Take the 3×3 grid again, but this time glue the top of the square to the bottom <em>with a flip</em>: the top row reads \(0, 2, 1, 0\) instead of \(0, 1, 2, 0\). The left and right sides are still glued straight. The result is the <Term t="klein-bottle">Klein bottle</Term> \(K\) of <Ref to="topology/gluing" />, the surface that cannot be built in ordinary space without passing through itself.</p>
 
-<Figure num="8" title="The Klein bottle grid">
+<Figure num="3.3.8" title="The Klein bottle grid">
 	<div class="kgrid">
 		<div>
 			<Svg viewBox={torus.L.viewBox} maxHeight={250} label="The 3 by 3 torus grid">
@@ -473,7 +473,7 @@
 
 <p>exactly the torus's \(1, 2, 1\). The bottom row \(a\) and the left column \(b\) generate \(H_1(K;\Z/2) \cong (\Z/2)^2\), and the set of all 18 triangles is a mod-2 2-cycle, because every edge is a face of exactly two of them, an even number. Even the Euler characteristics agree: \(\chi = 0\) for both.</p>
 
-<Figure size="wide" num="9" title="Same numbers, different surfaces" hint="Drag to rotate">
+<Figure size="wide" num="3.3.9" title="Same numbers, different surfaces" hint="Drag to rotate">
 	<TorusKleinPair lens="Z2" />
 	{#snippet caption()}The torus and the Klein bottle, each built from the 3×3 grid. Through the \(\Z/2\) lens they look identical: one piece, two independent loops \(a\) and \(b\), and the sum of all triangles (violet) as a 2-cycle. Yet one surface is orientable and the other is not.{/snippet}
 </Figure>
@@ -504,7 +504,7 @@
 <Exercise level={2} title="Homologous or not?">
 	<p>On the 3×3 torus, let \(a\) be the bottom row and \(b\) the left column, as in the text. (a) Is the middle row \(a' = [3,4] + [4,5] - [3,5]\) homologous to \(a\)? (b) Is \(a + b\) homologous to \(a - b\)? (c) Is the loop \(0 \to 1 \to 4 \to 0\) homologous to zero?</p>
 	{#snippet solution()}
-		<p>(a) Yes. The six triangles of the bottom strip, each oriented counterclockwise in the picture, form a 2-chain whose boundary is \(a - a'\): the vertical and diagonal edges inside the strip cancel in pairs, the strip's two short sides are glued and cancel, and what is left is the bottom row run rightward and the middle row run leftward. (Figure 5 shows this strip.) (b) No. Their difference is \(2b\), and the seam-crossing count \(\psi\) gives \(\psi(2b) = 2\), while \(\psi\) of every boundary is \(0\). (c) Yes: it is \(\partial[0,1,4]\), the boundary of a single triangle. As a chain it is \([0,1] + [1,4] - [0,4]\), exactly \(\partial[0,1,4]\).</p>
+		<p>(a) Yes. The six triangles of the bottom strip, each oriented counterclockwise in the picture, form a 2-chain whose boundary is \(a - a'\): the vertical and diagonal edges inside the strip cancel in pairs, the strip's two short sides are glued and cancel, and what is left is the bottom row run rightward and the middle row run leftward. (Figure 3.3.5 shows this strip.) (b) No. Their difference is \(2b\), and the seam-crossing count \(\psi\) gives \(\psi(2b) = 2\), while \(\psi\) of every boundary is \(0\). (c) Yes: it is \(\partial[0,1,4]\), the boundary of a single triangle. As a chain it is \([0,1] + [1,4] - [0,4]\), exactly \(\partial[0,1,4]\).</p>
 	{/snippet}
 </Exercise>
 
@@ -588,7 +588,7 @@
 			title: 'Computational Topology: An Introduction',
 			author: 'Herbert Edelsbrunner and John Harer',
 			url: 'https://doi.org/10.1090/mbk/069',
-			note: 'Homology from the algorithmic side (chapters IV–V), leading into persistence; includes the incremental "creator or destroyer" view of Figure 7.',
+			note: 'Homology from the algorithmic side (chapters IV–V), leading into persistence; includes the incremental "creator or destroyer" view of Figure 3.3.7.',
 			kind: 'book'
 		},
 		{

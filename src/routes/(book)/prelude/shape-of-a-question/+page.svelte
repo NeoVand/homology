@@ -101,7 +101,7 @@
 	infinitely many. This is the central difficulty of topology, and it is where our story really begins.
 </p>
 
-<Figure size="wide" title="Stretch, don't tear" hint="Drag the slider · drag to rotate" num="0.1">
+<Figure size="wide" title="Stretch, don't tear" hint="Drag the slider · drag to rotate" num="0.1.1">
 	<StretchFigure />
 	{#snippet caption()}
 		A sphere and a torus being kneaded like clay. Their geometry — lengths, angles, curvature — changes completely.
@@ -161,7 +161,7 @@
 	<li>and so on, in higher dimensions that we cannot picture but can compute.</li>
 </ul>
 
-<Figure size="wide" title="A first gallery of holes" hint="Choose which holes to light up" num="0.2">
+<Figure size="wide" title="A first gallery of holes" hint="Choose which holes to light up" num="0.1.2">
 	<HoleGallery />
 	{#snippet caption()}
 		The Betti numbers of four basic shapes. The torus has \(b_1 = 2\): one loop around the central hole and one around
@@ -197,7 +197,7 @@
 	matter how many faces it has, how irregular they are, or how it is drawn.
 </p>
 
-<Figure size="wide" title="Counting corners, edges and faces" hint="Choose a solid · drag to rotate" num="0.3">
+<Figure size="wide" title="Counting corners, edges and faces" hint="Choose a solid · drag to rotate" num="0.1.3">
 	<EulerSolids />
 	{#snippet caption()}
 		For every solid shaped like a ball, \(V - E + F = 2\). The picture frame has a tunnel through it, and the count
@@ -248,7 +248,7 @@
 	the hole it surrounds.
 </p>
 
-<Figure size="wide" title="Rubber bands" hint="Press “Pull tight” or drag the slider · drag to rotate" num="0.4">
+<Figure size="wide" title="Rubber bands" hint="Press “Pull tight” or drag the slider · drag to rotate" num="0.1.4">
 	<RubberBands />
 	{#snippet caption()}
 		On the sphere, the band shrinks to a point, sweeping across the shaded cap — the region it <em>bounds</em>. On
@@ -299,7 +299,7 @@
 
 <p>Read aloud: “the \(n\)-th homology of \(X\) is the kernel of \(\partial_n\) modulo the image of \(\partial_{n+1}\).” Here is what each piece means.</p>
 
-<Figure title="The destination, decoded" hint="Hover or tap each piece of the formula" num="0.5">
+<Figure title="The destination, decoded" hint="Hover or tap each piece of the formula" num="0.1.5">
 	<FormulaDecoder />
 	{#snippet caption()}
 		Homology in one line: take all the cycles, and treat the ones that are boundaries as zero. What is left are the
@@ -333,7 +333,7 @@
 	can be no.
 </p>
 
-<Figure size="wide" title="An impossible staircase" hint="Walk around the loop · then make the staircase possible" num="0.6">
+<Figure size="wide" title="An impossible staircase" hint="Walk around the loop · then make the staircase possible" num="0.1.6">
 	<StaircaseWalk />
 	{#snippet caption()}
 		Every step says “up by one”, and each step on its own is perfectly reasonable. But after twelve steps up you are
@@ -373,7 +373,7 @@
 	it has found a remarkable second life in science and technology in the twenty-first.
 </p>
 
-<Figure size="wide" title="Where homology turns up" num="0.7">
+<Figure size="wide" title="Where homology turns up" num="0.1.7">
 	<Applications />
 	{#snippet caption()}
 		A few of the places where homology and cohomology do real work. Each is discussed in the chapter shown.
@@ -448,7 +448,7 @@
 	<li><strong>Colours have meanings too,</strong> in every picture and many formulas:</li>
 </ul>
 
-<Figure title="The colours of this book" num="0.8">
+<Figure title="The colours of this book" num="0.1.8">
 	<ColorLegend />
 	{#snippet caption()}
 		The same colour always plays the same role, from the first chapter to the last.

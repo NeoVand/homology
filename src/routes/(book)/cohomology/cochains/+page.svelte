@@ -145,7 +145,7 @@
 	numbers on the trails next to it change.
 </p>
 
-<Figure size="wide" num="4.1" title="Heights make climbs" hint="Drag a junction up or down · tap a trail to flip its arrow">
+<Figure size="wide" num="4.1.1" title="Heights make climbs" hint="Drag a junction up or down · tap a trail to flip its arrow">
 	<PotentialPainter />
 	{#snippet caption()}
 		Heights on the junctions (gold) produce climbs on the trails (teal): each trail carries the height at its arrow's head minus the
@@ -174,7 +174,7 @@
 	The arrow on each edge matters. Walk the trail from the Spring to the Ridge and you climb \(320\) metres; walk it the other way and you
 	“climb” \(-320\) metres. A number on an edge only makes sense once we have agreed which way the edge points. In this book every edge of
 	a simplicial complex points from its lower-numbered vertex to its higher-numbered one (the convention of <Ref to="homology/chains" />),
-	and in the figures the arrows are drawn. Tap a trail in Figure 4.1 to flip its arrow: the number on it changes sign, and nothing else
+	and in the figures the arrows are drawn. Tap a trail in Figure 4.1.1 to flip its arrow: the number on it changes sign, and nothing else
 	changes. This is the same <Term t="orientation">orientation</Term> bookkeeping that gave chains their signs.
 </p>
 
@@ -227,7 +227,7 @@
 
 <Question>
 	<p>
-		In Figure 4.1, put the Lake at 1700 m. Which trail numbers change? Now walk the loop Spring → Lake → Ridge → Spring in your head:
+		In Figure 4.1.1, put the Lake at 1700 m. Which trail numbers change? Now walk the loop Spring → Lake → Ridge → Spring in your head:
 		why must the three climbs still add up to zero, whatever the Lake’s height?
 	</p>
 </Question>
@@ -245,7 +245,7 @@
 	sometimes no, and the difference between the two is the first glimpse of cohomology. Try it yourself before reading on.
 </p>
 
-<Figure size="wide" num="4.2" title="Find the potential" hint="Tap a vertex, set its height · or integrate from it">
+<Figure size="wide" num="4.1.2" title="Find the potential" hint="Tap a vertex, set its height · or integrate from it">
 	<FindPotential />
 	{#snippet caption()}
 		The gold numbers on the edges are given; your job is to put heights on the vertices so that every edge equals head minus tail.
@@ -269,7 +269,7 @@
 
 <h3>On a loop, the numbers must add up to zero</h3>
 <p>
-	The square puzzle “A loop that does not” in Figure 4.2 has \(+1\) on each of its four edges, all pointing the same way around. Say
+	The square puzzle “A loop that does not” in Figure 4.1.2 has \(+1\) on each of its four edges, all pointing the same way around. Say
 	the bottom-left vertex has height \(h\). Following the arrows, the next vertex must be at \(h + 1\), the next at \(h + 2\), the next at
 	\(h + 3\) — and the last edge leads back to the start, which would then have to be at \(h + 4\). But it is at \(h\). Since
 	\(h \neq h + 4\), there is no solution, whatever \(h\) you choose.
@@ -304,7 +304,7 @@
 	A graph can have a great many loops, but we do not have to test them all. Recall from <Ref to="homology/cycles-and-boundaries" /> how
 	a <Term t="spanning-tree">spanning tree</Term> organises the loops of a graph: the edges outside the tree are the troublemakers, and
 	each one closes exactly one <em>fundamental loop</em> with the tree. Every loop of the graph is a combination of fundamental loops, and
-	loop sums add up the same way, so it is enough to check the fundamental ones. That is exactly what “Integrate” does in Figure 4.2: it
+	loop sums add up the same way, so it is enough to check the fundamental ones. That is exactly what “Integrate” does in Figure 4.1.2: it
 	builds heights along a spanning tree (the tree edges are automatically satisfied) and then tests each leftover edge. The mismatch on a
 	leftover edge, \(\psi(e) - (f(\text{head}) - f(\text{tail}))\), is precisely the sum of \(\psi\) around that edge’s fundamental loop.
 </p>
@@ -315,7 +315,7 @@
 \[ E - V + c. \]
 <p>
 	You have seen this number before: it is the first <Term t="betti-number">Betti number</Term> \(b_1\) of the graph, the number of
-	independent holes, from <Ref to="homology/cycles-and-boundaries" />. The trail map of Figure 4.1 has \(9 - 7 + 1 = 3\) of them, which
+	independent holes, from <Ref to="homology/cycles-and-boundaries" />. The trail map of Figure 4.1.1 has \(9 - 7 + 1 = 3\) of them, which
 	is why “Next loop” cycles through three loops.
 </p>
 
@@ -350,7 +350,7 @@
 	connects them, so nothing forces them to agree. Such a function is called <dfn>locally constant</dfn>.
 </p>
 
-<Figure num="4.3" title="Islands" hint="Drag the vertices · flatten each island">
+<Figure num="4.1.3" title="Islands" hint="Drag the vertices · flatten each island">
 	<PotentialPainter mode="islands" />
 	{#snippet caption()}
 		A graph in three pieces. An edge glows rose whenever its two ends have different heights. \(\delta f = 0\) everywhere exactly when
@@ -403,7 +403,7 @@
 	every term cancels. That is the discrete version of a fact you may remember from calculus, “the curl of a gradient is zero”.
 </p>
 
-<Figure num="4.4" title="The local test" hint="Tap a vertex or an edge · use ±1">
+<Figure num="4.1.4" title="The local test" hint="Tap a vertex or an edge · use ±1">
 	<CurlTriangle />
 	{#snippet caption()}
 		One filled triangle. When the edge numbers are differences of heights, the circulation in the middle is always \(0\), however you
@@ -434,7 +434,7 @@
 	hole out to the edge.
 </p>
 
-<Figure size="wide" num="4.5" title="Closed but not exact" hint="Tap an edge (±1) or switch to bumps · try “Smooth it out”">
+<Figure size="wide" num="4.1.5" title="Closed but not exact" hint="Tap an edge (±1) or switch to bumps · try “Smooth it out”">
 	<AnnulusCochain />
 	{#snippet caption()}
 		Every one of the six triangle tests passes (the green ticks), yet the loop around the hole sums to \(1\), so these numbers are not
@@ -497,7 +497,7 @@
 
 <Question>
 	<p>
-		In Figure 4.5, switch to “Add a bump at a vertex” and tap \(a_1\) a few times. The fence of ones moves and bends — can you make it run
+		In Figure 4.1.5, switch to “Add a bump at a vertex” and tap \(a_1\) a few times. The fence of ones moves and bends — can you make it run
 		from the hole to the outside along a different route? Can you make it disappear altogether?
 	</p>
 </Question>
@@ -523,10 +523,10 @@
 	In our language the staircase is an edge labelling. Make a graph with one vertex per step and one edge from each step to the next; the
 	edges form a single loop. “Each step goes up by one” labels every edge \(+1\). If the staircase could exist, there would be a height
 	function on the steps with these differences — but the loop sum is the number of steps, not \(0\), so by the gradient test no height
-	function exists. The staircase is the “loop that does not close” from Figure 4.2, drawn by an artist.
+	function exists. The staircase is the “loop that does not close” from Figure 4.1.2, drawn by an artist.
 </p>
 
-<Figure size="wide" num="4.6" title="Possible after all — from one direction" hint="Drag to turn · use the button to find the trick">
+<Figure size="wide" num="4.1.6" title="Possible after all — from one direction" hint="Drag to turn · use the button to find the trick">
 	<ImpossibleObjects />
 	{#snippet caption()}
 		These are real three-dimensional objects, seen through a camera without perspective. From one special direction the top of the
@@ -537,7 +537,7 @@
 </Figure>
 
 <p>
-	The real object in Figure 4.6 does have a height function: step \(i\) sits at height \(i\). Its differences are \(+1\) on every edge
+	The real object in Figure 4.1.6 does have a height function: step \(i\) sits at height \(i\). Its differences are \(+1\) on every edge
 	except the one that closes the loop, where it drops by \(N - 1\) — the cliff, hidden behind the camera angle. Compare that with the
 	impossible labelling \(\psi\) that is \(+1\) everywhere: the two differ only on the cliff edge, by exactly \(N\), the loop sum. You may
 	put the cliff wherever you like (that is adding a bump, changing \(f\)), but you cannot get rid of it, because the loop sum \(N\) does not
@@ -583,7 +583,7 @@
 	\(n\) is even.
 </p>
 
-<Figure num="4.7" title="A ring of gears" hint="Change the number of gears · follow the spins">
+<Figure num="4.1.7" title="A ring of gears" hint="Change the number of gears · follow the spins">
 	<GearRing />
 	{#snippet caption()}
 		Every mesh carries the label \(1\) in \(\Z/2\): “turn the other way”. With an even number of gears the labels add up to \(0\) around
@@ -607,7 +607,7 @@
 	money, from nothing but the rates.
 </p>
 
-<Figure num="4.8" title="An arbitrage loop" hint="Slide the pound–yen rate · open a euro–yen market">
+<Figure num="4.1.8" title="An arbitrage loop" hint="Slide the pound–yen rate · open a euro–yen market">
 	<Arbitrage />
 	{#snippet caption()}
 		Exchange rates multiply around a loop; their logarithms add. At £1 = ¥200 the loop is fair and the log loop sum is \(0\); at any other
@@ -621,7 +621,7 @@
 	\(\psi(e) = \ln r(e)\) instead. A market is <em>fair</em> if every currency has a “value” \(V\) (in some common unit) and every rate is the
 	ratio of values, \(r(u \to v) = V(u)/V(v)\). Taking logarithms, \(\psi(u \to v) = \ln V(u) - \ln V(v)\): the log-rates are exactly the
 	differences of the potential \(-\ln V\). So <em>fair market = gradient</em>, and the gradient test says: a market is fair if and only if
-	no loop of trades makes money. In Figure 4.8 the log loop sum is \(\ln(r/200)\), zero only at the fair rate \(r = 200\).
+	no loop of trades makes money. In Figure 4.1.8 the log loop sum is \(\ln(r/200)\), zero only at the fair rate \(r = 200\).
 </p>
 <p>
 	A trader who checks every three-currency triangle is running the local curl test. If all six pairs of currencies trade, every triangle is
@@ -737,7 +737,7 @@
 	We will make full use of this in <Ref to="cohomology/cohomology-groups" />.
 </p>
 
-<Figure num="4.9" title="The mirror">
+<Figure num="4.1.9" title="The mirror">
 	<MirrorDiagram />
 	{#snippet caption()}
 		Chains (places) and cochains (measurements) sit in the same three columns. The boundary maps \(\partial\) lower the dimension; the
@@ -805,7 +805,7 @@
 	1930s.
 </p>
 
-<Figure size="wide" num="4.10" title="Taking a flow apart" hint="Choose a flow · tap an edge in the first panel and use ±1">
+<Figure size="wide" num="4.1.10" title="Taking a flow apart" hint="Choose a flow · tap an edge in the first panel and use ±1">
 	<HodgeDecomposer />
 	{#snippet caption()}
 		The upper triangle \(1, 2, 3\) is filled; the lower triangle \(1, 3, 4\) is a hole. Any flow (gold) is the sum of a gradient (teal:
@@ -814,7 +814,7 @@
 	{/snippet}
 </Figure>
 
-<p>Look at the example in Figure 4.10, the flow \(X = (3, 3, 3, 2, -2)\) on the edges \(1\to2,\ 2\to3,\ 1\to3,\ 3\to4,\ 1\to4\).</p>
+<p>Look at the example in Figure 4.1.10, the flow \(X = (3, 3, 3, 2, -2)\) on the edges \(1\to2,\ 2\to3,\ 1\to3,\ 3\to4,\ 1\to4\).</p>
 <ul>
 	<li>
 		The <strong>gradient part</strong> \(\delta f = (1, 1, 2, -1, 1)\) comes from the heights \(f = (0, 1, 2, 1)\) on vertices \(1, 2, 3, 4\).
@@ -847,7 +847,7 @@
 	<p>
 		If \(X\) is closed (it passes every local test), its curl part is zero, and \(X = \delta f + X_{\text{harm}}\). The harmonic part is then
 		a canonical representative of the obstruction: the unique labelling, among all \(X + \delta g\), that is spread out as evenly as
-		possible. In the annulus of Figure 4.5 it is \(\tfrac13\) on every edge around the hole and \(\pm\tfrac16\) on the spokes — the jump of
+		possible. In the annulus of Figure 4.1.5 it is \(\tfrac13\) on every edge around the hole and \(\pm\tfrac16\) on the spokes — the jump of
 		\(1\) shared out evenly around the ring. The harmonic labellings form a space whose dimension is the number of independent holes.
 	</p>
 </KeyIdea>
@@ -915,7 +915,7 @@
 
 <Exercise level={2} title="Bumps never change loop sums">
 	<p>
-		On the annulus of Figure 4.5, let \(g\) be the potential that is \(1\) at \(a_1\) and \(0\) at the other five vertices. The vertex
+		On the annulus of Figure 4.1.5, let \(g\) be the potential that is \(1\) at \(a_1\) and \(0\) at the other five vertices. The vertex
 		\(a_1\) lies on four edges. Write down \(\delta g\) on each of them. Add \(\delta g\) to \(\psi\) and recompute the sum around the inner
 		loop \(a_0 \to a_1 \to a_2 \to a_0\). Then explain, without computing, why adding \(\delta g\) can never change the sum of a labelling
 		around any loop, on any complex.
@@ -970,7 +970,7 @@
 	<p>
 		Four currencies, and every one of the six pairs trades, so every three-currency triangle is filled. Suppose no triangle offers an
 		arbitrage (each triangle’s rates multiply to \(1\)). Prove that no loop of trades at all offers an arbitrage. Then explain why the
-		square market of Figure 4.8, with only four trading pairs, does not have this property.
+		square market of Figure 4.1.8, with only four trading pairs, does not have this property.
 	</p>
 	{#snippet hint()}
 		<p>

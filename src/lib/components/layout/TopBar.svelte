@@ -73,7 +73,7 @@
 			<span class="hide-md">Search</span>
 			<kbd class="hide-md">/</kbd>
 		</button>
-		<a href={href('/map/')} class:active={page.url.pathname.endsWith('/map/')}>Map</a>
+		<a class="hide-xs" href={href('/map/')} class:active={page.url.pathname.endsWith('/map/')}>Map</a>
 		<a href={href('/glossary/')} class:active={page.url.pathname.endsWith('/glossary/')}>Glossary</a>
 		<a class="hide-sm" href={href('/notation/')} class:active={page.url.pathname.endsWith('/notation/')}>Notation</a>
 		<a class="hide-sm" href={href('/sources/')} class:active={page.url.pathname.endsWith('/sources/')}>Sources</a>
@@ -236,6 +236,15 @@
 		}
 		.links a {
 			padding: 0.4rem 0.5rem;
+		}
+	}
+	/* the smallest phones: the map is one tap away in the menu */
+	@media (max-width: 360px) {
+		.hide-xs {
+			display: none;
+		}
+		.links a {
+			padding: 0.4rem 0.35rem;
 		}
 	}
 </style>

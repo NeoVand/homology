@@ -592,6 +592,15 @@
 		gap: 1rem;
 		align-items: flex-start;
 	}
+	.ptop > div {
+		min-width: 0;
+	}
+	@media (max-width: 520px) {
+		.ptop {
+			flex-direction: column;
+			gap: 0.7rem;
+		}
+	}
 	.pnum {
 		font-size: 0.7rem;
 		letter-spacing: 0.22em;
