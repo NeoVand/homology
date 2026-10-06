@@ -5,8 +5,8 @@
 	// multiply to 1, so the transition map between the two charts is t ↦ 1/t.
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
+	import Handle from '$lib/components/svg/Handle.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 
@@ -61,24 +61,25 @@
 	const rS = $derived(ray(-1, tS));
 	const visible = (t: number) => Number.isFinite(t) && sx(t) >= XMIN && sx(t) <= XMAX;
 
-	function setFromPointer(e: PointerEvent) {
-		if (!svg) return;
-		const pt = svg.createSVGPoint();
-		pt.x = e.clientX;
-		pt.y = e.clientY;
-		const m = svg.getScreenCTM();
-		if (!m) return;
-		const q = pt.matrixTransform(m.inverse());
-		let a = (Math.atan2(CY - q.y, q.x - CX) * 180) / Math.PI;
+	/** Move P to the point of the circle in the direction of (x, y). */
+	function setFromPoint([x, y]: [number, number]) {
+		let a = (Math.atan2(CY - y, x - CX) * 180) / Math.PI;
 		if (a < 0) a += 360;
 		// snap onto the poles so that the two special cases can be reached
 		for (const p of [90, 270]) if (Math.abs(a - p) < 2.5) a = p;
 		deg = Math.round(a * 2) / 2;
 	}
+	function setFromPointer(e: PointerEvent) {
+		const m = svg?.getScreenCTM();
+		if (!m) return;
+		const q = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+		setFromPoint([q.x, q.y]);
+	}
 
 	const fmt = (v: number) => {
 		if (!Number.isFinite(v)) return '\\text{undefined}';
-		const s = Math.abs(v) >= 100 ? v.toFixed(0) : v.toFixed(2);
+		// (no “−0.00” for a coordinate that is zero up to rounding)
+		const s = Math.abs(v) >= 100 ? v.toFixed(0) : Math.abs(v) < 0.005 ? '0.00' : v.toFixed(2);
 		return s.replace('-', '−');
 	};
 	const product = $derived(Number.isFinite(tN) && Number.isFinite(tS) ? tN * tS : NaN);
@@ -102,28 +103,17 @@
 		{/each}
 		<!-- the circle -->
 		<circle cx={CX} cy={CY} r={R} class="circle" />
+		<!-- press anywhere on the circle to bring P there (P itself is the handle below) -->
 		<circle
 			cx={CX}
 			cy={CY}
 			r={R}
 			class="hit"
-			role="slider"
-			tabindex="0"
-			aria-label="position of P on the circle; arrow keys move it"
-			aria-valuenow={deg}
-			aria-valuemin={0}
-			aria-valuemax={360}
+			aria-hidden="true"
 			onpointerdown={(e) => {
 				dragging = true;
 				(e.target as Element).setPointerCapture?.(e.pointerId);
 				setFromPointer(e);
-			}}
-			onkeydown={(e) => {
-				const d = e.key === 'ArrowLeft' || e.key === 'ArrowDown' ? -2 : e.key === 'ArrowRight' || e.key === 'ArrowUp' ? 2 : 0;
-				if (d) {
-					e.preventDefault();
-					deg = (deg + d + 360) % 360;
-				}
 			}}
 		/>
 		<!-- the two rays -->
@@ -136,7 +126,8 @@
 		<!-- the projected points -->
 		{#if visible(tN)}
 			<circle cx={sx(tN)} cy={sy(0)} r="6" class="dot gold" />
-			<SvgTeX x={sx(tN)} y={sy(0) - 22} tex={'\\varphi_N(P)'} size={13} color="var(--gold-bright)" w={70} h={20} />
+			<!-- above the line, on the side away from the ray coming down from N -->
+			<SvgTeX x={sx(tN) + (tN >= 0 ? 30 : -30)} y={sy(0) - 22} tex={'\\varphi_N(P)'} size={13} color="var(--gold-bright)" w={70} h={20} />
 		{:else if !atN}
 			<SvgTeX
 				x={rN.off < 0 ? XMIN + 46 : XMAX - 46}
@@ -150,7 +141,8 @@
 		{/if}
 		{#if visible(tS)}
 			<circle cx={sx(tS)} cy={sy(0)} r="6" class="dot teal" />
-			<SvgTeX x={sx(tS)} y={sy(0) + 38} tex={'\\varphi_S(P)'} size={13} color="var(--teal)" w={70} h={20} />
+			<!-- below the line, on the side away from the ray coming up from S -->
+			<SvgTeX x={sx(tS) + (tS >= 0 ? 30 : -30)} y={sy(0) + 38} tex={'\\varphi_S(P)'} size={13} color="var(--teal)" w={70} h={20} />
 		{:else if !atS}
 			<SvgTeX
 				x={rS.off < 0 ? XMIN + 46 : XMAX - 46}
@@ -163,13 +155,22 @@
 			/>
 		{/if}
 		<!-- the poles -->
+		<!-- (a pole's name steps to the other side when P comes close, so the two labels never collide) -->
 		<circle cx={sx(0)} cy={sy(1)} r="5" class="pole" />
-		<SvgTeX x={sx(0) + 22} y={sy(1) - 14} tex="N" size={14} color="var(--gold-bright)" w={24} h={20} />
+		<SvgTeX x={sx(0) + (px >= 0 && py > 0.75 ? -24 : 24)} y={sy(1) - 14} tex="N" size={14} color="var(--gold-bright)" w={24} h={20} />
 		<circle cx={sx(0)} cy={sy(-1)} r="5" class="pole" />
-		<SvgTeX x={sx(0) + 22} y={sy(-1) + 16} tex="S" size={14} color="var(--teal)" w={24} h={20} />
+		<SvgTeX x={sx(0) + (px >= 0 && py < -0.75 ? -24 : 24)} y={sy(-1) + 16} tex="S" size={14} color="var(--teal)" w={24} h={20} />
 		<!-- the point P -->
-		<circle cx={sx(px)} cy={sy(py)} r="14" class="halo" />
-		<circle cx={sx(px)} cy={sy(py)} r="6.5" class="p" />
+		<Handle
+			x={sx(px)}
+			y={sy(py)}
+			r={8}
+			color="var(--violet)"
+			label="The point P on the circle: drag it round, or use the arrow keys"
+			valuetext={`${deg}°`}
+			ondrag={setFromPoint}
+			onkey={(dx, dy) => (deg = (deg + 2 * (dx || -dy) + 360) % 360)}
+		/>
 		<SvgTeX
 			x={sx(px * 1.28)}
 			y={sy(py * 1.28)}
@@ -196,7 +197,6 @@
 		{/if}
 	</div>
 	<Controls>
-		<Slider bind:value={deg} min={0} max={359.5} step={0.5} label="angle of P" format={(v) => `${v.toFixed(1)}°`} />
 		<Button onclick={() => (deg = 80)}>Near the north pole</Button>
 		<Button onclick={() => (deg = 90)}>At the north pole</Button>
 		<Button onclick={() => (deg = 270)}>At the south pole</Button>
@@ -238,9 +238,6 @@
 		touch-action: none;
 		outline: none;
 	}
-	.hit:focus-visible {
-		stroke: rgba(242, 208, 143, 0.18);
-	}
 	.ray {
 		stroke-width: 1.6;
 		stroke-dasharray: 5 4;
@@ -266,16 +263,6 @@
 		fill: #0b1020;
 		stroke: var(--ink);
 		stroke-width: 1.6;
-		pointer-events: none;
-	}
-	.halo {
-		fill: rgba(164, 147, 255, 0.18);
-		pointer-events: none;
-	}
-	.p {
-		fill: var(--violet);
-		stroke: #fff;
-		stroke-width: 1.2;
 		pointer-events: none;
 	}
 	.readout {

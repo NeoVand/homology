@@ -1,14 +1,15 @@
 <script lang="ts">
 	// Tangent planes as spaces of velocities. A curve runs through a point p of
 	// a sphere or torus; its velocity at p lies in the tangent plane T_pM. Turn
-	// the direction and the velocity sweeps out the whole plane. The microscope
+	// the direction (drag the arrow round in the plane) and the velocity sweeps
+	// out the whole plane. The microscope
 	// zooms in until the surface and its tangent plane are indistinguishable.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import { glowPoint, glowTube } from '$lib/three/materials';
 	import { sphere, torus, surfaceGeometry, type SurfaceFn } from '$lib/three/surfaces';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
@@ -74,6 +75,8 @@
 		scene.add(arrow);
 		const dot = glowPoint([0, 0, 0], { color: 'gold', size: 0.06 });
 		scene.add(dot);
+		// an unbounded copy of the tangent plane, never drawn: the pointer is aimed on it
+		const aimPlane = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }));
 		let curve: InstanceType<typeof THREE.Group> | null = null;
 
 		const P = new THREE.Vector3();
@@ -120,6 +123,9 @@
 				M.makeBasis(e1, e2, N);
 				planeGroup.quaternion.setFromRotationMatrix(M);
 				planeGroup.position.copy(P).addScaledVector(N, 0.004);
+				aimPlane.quaternion.copy(planeGroup.quaternion);
+				aimPlane.position.copy(P);
+				aimPlane.updateMatrixWorld();
 				const a = (ang * Math.PI) / 180;
 				D.copy(e1).multiplyScalar(Math.cos(a)).addScaledVector(e2, Math.sin(a));
 				arrow.position.copy(P).addScaledVector(N, 0.012);
@@ -199,21 +205,64 @@
 		};
 		api.set(surf, uv, angle);
 
+		// press on the tangent plane (or the arrow) and drag: the velocity turns to
+		// point at the pointer. A click anywhere else on the surface moves p there.
+		const aimAt = (e: PointerEvent) => {
+			const hit = ctx.pick(e, [aimPlane])[0];
+			if (!hit) return;
+			tmp.copy(hit.point).sub(P);
+			if (tmp.lengthSq() < 1e-6) return;
+			const a = (Math.atan2(tmp.dot(e2), tmp.dot(e1)) * 180) / Math.PI;
+			angle = (Math.round(a) + 360) % 360;
+		};
+		const onPlane = (e: PointerEvent) => ctx.pick(e, [arrow, planeGroup]).length > 0;
+		let aiming = false;
+		let controlsWere = true;
 		let downAt: [number, number] | null = null;
-		const onDown = (e: PointerEvent) => (downAt = [e.clientX, e.clientY]);
+		const onDown = (e: PointerEvent) => {
+			if (e.button !== 0) return;
+			if (!onPlane(e)) {
+				downAt = [e.clientX, e.clientY];
+				return;
+			}
+			downAt = null;
+			aiming = true;
+			controlsWere = controls?.enabled ?? false;
+			if (controls) controls.enabled = false;
+			canvas.setPointerCapture(e.pointerId);
+			canvas.style.cursor = 'grabbing';
+			aimAt(e);
+		};
+		const onMove = (e: PointerEvent) => {
+			if (aiming) aimAt(e);
+			else if (e.pointerType === 'mouse') canvas.style.cursor = onPlane(e) ? 'grab' : '';
+		};
 		const onUp = (e: PointerEvent) => {
+			if (aiming) {
+				aiming = false;
+				if (controls) controls.enabled = controlsWere;
+				canvas.style.cursor = '';
+				return;
+			}
 			if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) return;
 			downAt = null;
 			const hit = ctx.pick(e, [pick[curSurf]])[0];
 			if (hit?.uv) uv = [hit.uv.x, Math.min(0.995, Math.max(0.005, hit.uv.y))];
 		};
-		canvas.addEventListener('pointerdown', onDown);
+		// capture phase: runs before OrbitControls, which then finds itself disabled
+		canvas.addEventListener('pointerdown', onDown, { capture: true });
+		canvas.addEventListener('pointermove', onMove);
 		canvas.addEventListener('pointerup', onUp);
+		canvas.addEventListener('pointercancel', onUp);
 		return {
 			dispose: () => {
 				api = null;
-				canvas.removeEventListener('pointerdown', onDown);
+				aimPlane.geometry.dispose();
+				aimPlane.material.dispose();
+				canvas.removeEventListener('pointerdown', onDown, { capture: true });
+				canvas.removeEventListener('pointermove', onMove);
 				canvas.removeEventListener('pointerup', onUp);
+				canvas.removeEventListener('pointercancel', onUp);
 			}
 		};
 	}
@@ -228,6 +277,13 @@
 		const m = micro;
 		api?.zoom(m);
 	});
+
+	// the stepper turns the velocity to the next multiple of 15°, either way round
+	const dirIx = $derived(Math.round(angle / 15) % 24);
+	function turn(d: 1 | -1) {
+		const k = d > 0 ? Math.floor(angle / 15) + 1 : Math.ceil(angle / 15) - 1;
+		angle = (((k * 15) % 360) + 360) % 360;
+	}
 
 	function nextPoint() {
 		presetIx = (presetIx + 1) % presets[surf].length;
@@ -250,7 +306,7 @@
 			<span>velocity <TeX tex={`v = (${readout.v.map(f2).join(',\\ ')})`} /></span>
 			<span>check: <TeX tex={`\\hat p\\cdot v = ${f2(readout.dot)}`} /> — every velocity at <TeX tex="p" /> is perpendicular to the radius.</span>
 		{:else}
-			<span>velocity <TeX tex={`v = ${f2(readout.a)}\\,\\partial_u X + ${f2(readout.b)}\\,\\partial_v X`} /></span>
+			<span>velocity <TeX tex={`v = ${f2(readout.a)}\\,\\partial_u X ${readout.b < -0.005 ? '-' : '+'} ${f2(Math.abs(readout.b))}\\,\\partial_v X`} /></span>
 			<span>— a combination of the two coordinate directions, so it lies in the plane they span.</span>
 		{/if}
 	</div>
@@ -267,7 +323,8 @@
 				uv = presets[s][0];
 			}}
 		/>
-		<Slider bind:value={angle} min={0} max={360} step={1} label="direction of the curve" format={(v) => `${v}°`} />
+		<!-- turns the velocity in steps of 15°, for keys and taps; in the picture it is dragged -->
+		<Stepper value={dirIx} min={-1} max={24} label="Direction" format={() => `${angle}°`} onchange={(k) => turn(k > dirIx ? 1 : -1)} />
 		<Toggle bind:checked={micro} label="Microscope" />
 		<Button onclick={nextPoint}>Another point</Button>
 	</Controls>

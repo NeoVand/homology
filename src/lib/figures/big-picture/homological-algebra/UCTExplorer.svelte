@@ -22,6 +22,7 @@
 		Zn,
 		type Coeff
 	} from './abelian';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	let spaceId = $state('RP2');
 	let coeffId = $state<'Z' | 'Z2' | 'Z3' | 'Q'>('Z2');
@@ -116,7 +117,8 @@
 	<div class="legend ui">
 		<span>Each entry is <TeX tex={'H_n\\otimes G \\,\\oplus\\, \\Tor(H_{n-1},G)'} /> (homology) or <TeX tex={'\\Hom(H_n,G)\\,\\oplus\\,\\Ext(H_{n-1},G)'} /> (cohomology); the <span class="rose">rose</span> part comes from torsion one degree down.</span>
 		<span class:ok={allOk} class:bad={!allOk}>
-			{allOk ? '✓ Every entry agrees with a direct computation from the chain complex above.' : '✗ mismatch with the direct computation'}
+			<Mark ok={allOk} />
+			{allOk ? 'Every entry agrees with a direct computation from the chain complex above.' : 'This does not match a direct computation.'}
 		</span>
 	</div>
 

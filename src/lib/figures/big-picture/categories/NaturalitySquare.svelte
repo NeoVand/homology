@@ -8,6 +8,7 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { apply, transpose2, inverse2, evSquare, betaSquare, isOrthogonal, presetsT, type V2 } from './naturality';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	let tId = $state('shear');
 	const preset = $derived(presetsT.find((p) => p.id === tId)!);
@@ -160,7 +161,7 @@
 				<div class="routes ui">
 					<div><span class="r">→ then ↓</span> <TeX tex={`T^{**}(\\mathrm{ev}_v) \\leftrightarrow ${vec(ev.across)}`} /></div>
 					<div><span class="r">↓ then →</span> <TeX tex={`\\mathrm{ev}_{Tv} \\leftrightarrow ${vec(ev.down)}`} /></div>
-					<div class="verdict ok">✓ commutes</div>
+					<div class="verdict ok"><Mark ok /> commutes</div>
 				</div>
 			</div>
 
@@ -185,9 +186,9 @@
 					<div><span class="r">→ then ↓</span> <TeX tex={`(T^{-1})^*\\beta(v) \\leftrightarrow ${vec(be.across)}`} /></div>
 					<div><span class="r">↓ then →</span> <TeX tex={`\\beta(Tv) \\leftrightarrow ${vec(be.down)}`} /></div>
 					{#if same(be.across, be.down)}
-						<div class="verdict ok">✓ commutes {natural ? '(T keeps lengths and angles)' : 'for this v'}</div>
+						<div class="verdict ok"><Mark ok /> commutes {natural ? '(T keeps lengths and angles)' : 'for this v'}</div>
 					{:else}
-						<div class="verdict bad">✗ the two routes disagree</div>
+						<div class="verdict bad"><Mark ok={false} /> the two routes disagree</div>
 					{/if}
 				</div>
 			</div>

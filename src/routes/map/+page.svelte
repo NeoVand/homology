@@ -24,6 +24,8 @@
 		above: boolean;
 		/** crowded row: narrower, smaller labels */
 		dense: boolean;
+		/** characters per label line, from the space between neighbouring stations */
+		cap: number;
 	};
 	const nodes: Node[] = [];
 	parts.forEach((p, r) => {
@@ -33,7 +35,7 @@
 			const t = n === 1 ? 0.5 : i / (n - 1);
 			const along = r % 2 === 0 ? t : 1 - t;
 			const x = n === 1 ? W / 2 : PAD + span * (n <= 3 ? 0.2 + 0.6 * along : along);
-			nodes.push({ id: c.id, x, y: TOP + r * ROW, row: r, num: c.num, title: c.title, color: p.color, above: false, dense: n >= 7 });
+			nodes.push({ id: c.id, x, y: TOP + r * ROW, row: r, num: c.num, title: c.title, color: p.color, above: false, dense: n >= 7, cap: n >= 8 ? 14 : n === 7 ? 16 : 15 });
 		});
 	});
 	const pos = new Map(nodes.map((n) => [n.id, n]));
@@ -87,18 +89,34 @@
 		const bend = Math.min(120, len * 0.25);
 		return `M ${a.x} ${a.y} Q ${mx - (dy / len) * bend} ${my + (dx / len) * bend} ${b.x} ${b.y}`;
 	}
+	// Break a title into as few lines as greedy filling needs (at most `max`
+	// characters each), then even the lines out, so that no word is left alone.
 	function wrap(t: string, max = 16): string[] {
 		const words = t.split(' ');
-		const lines: string[] = [];
+		let count = 0;
 		let cur = '';
 		for (const w of words) {
 			if ((cur + ' ' + w).trim().length > max && cur) {
-				lines.push(cur);
+				count++;
 				cur = w;
 			} else cur = (cur + ' ' + w).trim();
 		}
-		if (cur) lines.push(cur);
-		return lines.slice(0, 4);
+		if (cur) count++;
+		const n = Math.min(4, count);
+		let best: string[] = [t];
+		let bestScore = Infinity;
+		// try every way of cutting the words into n lines (titles are short)
+		const cut = (start: number, left: number, acc: string[]) => {
+			if (left === 1) {
+				const lines = [...acc, words.slice(start).join(' ')];
+				const score = Math.max(...lines.map((l) => l.length));
+				if (score < bestScore) [best, bestScore] = [lines, score];
+				return;
+			}
+			for (let k = start + 1; k <= words.length - left + 1; k++) cut(k, left - 1, [...acc, words.slice(start, k).join(' ')]);
+		};
+		cut(0, n, []);
+		return best;
 	}
 </script>
 
@@ -165,7 +183,7 @@
 
 			{#each nodes as n (n.id)}
 				{@const state = !focus ? '' : n.id === focus ? 'focus' : anc.has(n.id) ? 'anc' : desc.has(n.id) ? 'desc' : 'dim'}
-				{@const lines = wrap(n.title, n.dense ? 11 : 15)}
+				{@const lines = wrap(n.title, n.cap)}
 				<a href={chapterHref(n.id)} aria-label="{n.num} {n.title}">
 					<g
 						class="station {state}"

@@ -657,10 +657,11 @@
 </p>
 
 <Definition title="Angle defect" id="def-angle-defect">
-	<p>The <dfn>angle defect</dfn> at a vertex \(v\) of a triangulated surface is</p>
 	<p>
-		\[ \delta(v) = 2\pi - \big(\text{sum of the angles at } v \text{ of the triangles containing } v\big). \]
+		The <dfn>angle defect</dfn> at a vertex \(v\) of a triangulated surface is \(2\pi\) minus the angles of the triangles
+		that meet at \(v\):
 	</p>
+	\[ \delta(v) = 2\pi - \sum \big(\text{angles at } v\big). \]
 </Definition>
 
 <p>

@@ -785,7 +785,7 @@
 	\(\Z/n\) exactly when <span class="nw">\(\gcd(n, k) = 1\).</span> On a 12-hour clock the generators are <span class="nw">\(1, 5, 7, 11\).</span>
 </p>
 
-<Figure num="1.3.4" title="Walking around a clock" hint="Tap a dot to choose k · drag n">
+<Figure num="1.3.4" title="Walking around a clock" hint="Tap a dot to choose k · change n">
 	<GeneratorExplorer />
 	{#snippet caption()}
 		Starting at \(0\) and repeatedly adding \(k\) traces a star that closes up when it returns to <span class="nw">\(0\).</span> The dots it

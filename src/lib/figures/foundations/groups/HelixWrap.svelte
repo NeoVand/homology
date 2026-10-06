@@ -22,10 +22,12 @@
 	});
 
 	function setup(ctx: SceneContext) {
-		const { THREE, scene, invalidate, label } = ctx;
+		const { THREE, scene, camera, invalidate, label, project, onFrame } = ctx;
 		let group: THREE_NS.Group = new THREE.Group();
 		scene.add(group);
 		let labels: LabelHandle[] = [];
+		/** the kernel labels, re-placed every frame so they never sit on the coil or the column */
+		let tags: { h: LabelHandle; bead: THREE_NS.Vector3; near: THREE_NS.Vector3[]; dir: number }[] = [];
 
 		const R = 1.45;
 		const H = 4.1; // height of the coiled part
@@ -36,6 +38,7 @@
 			disposeTree(group);
 			for (const l of labels) l.remove();
 			labels = [];
+			tags = [];
 			group = new THREE.Group();
 			scene.add(group);
 
@@ -64,15 +67,22 @@
 				const size = kernel ? 0.075 : fibre ? 0.062 : 0.036;
 				group.add(glowPoint(pos(m), { color, size, halo: kernel ? 10 : fibre ? 8 : 5 }));
 				if (kernel) {
-					const p = pos(m);
-					labels.push(label([p.x - 0.44, p.y + 0.03, p.z], fmtInt(m), { className: 'gold small' }));
+					const bead = pos(m);
+					const handle = label(bead.clone(), fmtInt(m), { className: 'gold small' });
+					labels.push(handle);
+					// what the label must keep clear of: the coil near the bead and the gold column
+					const near: THREE_NS.Vector3[] = [];
+					const span = Math.max(1.6, 0.8 / h); // every bit of coil within 0.8 above or below
+					for (let t = Math.max(-N - 0.7, m - span); t <= Math.min(N + 0.7, m + span); t += 0.05) near.push(pos(t));
+					for (let dy = -0.7; dy <= 0.7; dy += 0.05) near.push(new THREE.Vector3(bead.x, bead.y + dy, bead.z));
+					tags.push({ h: handle, bead, near, dir: 0 });
 				}
 			}
 			for (let r = 0; r < n; r++) {
 				const kernel = r === 0;
 				const fibre = r === a && a !== 0;
 				group.add(glowPoint(dial(r), { color: kernel ? 'gold' : fibre ? 'teal' : 'violet', size: kernel || fibre ? 0.085 : 0.06, halo: 9 }));
-				labels.push(label(dial(r, R + 0.38), String(r), { className: kernel ? 'gold' : fibre ? 'teal' : 'violet' }));
+				labels.push(label(dial(r, R + 0.55), String(r), { className: kernel ? 'gold' : fibre ? 'teal' : 'violet' }));
 			}
 
 			// vertical guides: the kernel column over 0 and the column over a
@@ -92,11 +102,51 @@
 			invalidate();
 		}
 
+		// Each kernel label tries eight spots around its bead (in screen space) and
+		// takes the one farthest from the coil and the column. The labels lean
+		// towards one shared side (the one with the most room overall), upper left
+		// wins ties, and a label only moves when another spot is clearly better.
+		const D = 0.36;
+		const dirs = [135, 45, 180, 0, 225, 315, 90, 270].map((deg) => [Math.cos((deg * Math.PI) / 180), Math.sin((deg * Math.PI) / 180)]);
+		const right = new THREE.Vector3();
+		const up = new THREE.Vector3();
+		const cand = new THREE.Vector3();
+		const clearance = (c: { x: number; y: number }, near: THREE_NS.Vector3[]) => {
+			let best = Infinity;
+			for (const q of near) {
+				const p = project(q);
+				best = Math.min(best, Math.hypot(p.x - c.x, p.y - c.y));
+			}
+			return best;
+		};
+		const stopTags = onFrame(() => {
+			camera.updateMatrixWorld();
+			right.setFromMatrixColumn(camera.matrixWorld, 0);
+			up.setFromMatrixColumn(camera.matrixWorld, 1);
+			const room = tags.map((tag) =>
+				dirs.map(([cx, cy]) => {
+					cand.copy(tag.bead).addScaledVector(right, cx * D).addScaledVector(up, cy * D);
+					return clearance(project(cand), tag.near);
+				})
+			);
+			const total = dirs.map((_, i) => room.reduce((sum, r) => sum + Math.min(r[i], 14), 0) - i * 0.4);
+			const shared = total.indexOf(Math.max(...total));
+			tags.forEach((tag, k) => {
+				const score = room[k].map((c, i) => Math.min(c, 14) - i * 0.4 + (i === shared ? 5 : 0) + (i === tag.dir ? 3 : 0));
+				tag.dir = score.indexOf(Math.max(...score));
+				const [cx, cy] = dirs[tag.dir];
+				tag.h.position.copy(tag.bead).addScaledVector(right, cx * D).addScaledVector(up, cy * D);
+			});
+			(window as unknown as { __hw: unknown }).__hw = { room, total, shared, dirs: tags.map((t) => t.dir), labels: tags.map((t) => t.h.el.textContent) };
+			return false;
+		});
+
 		build(n, a);
 		api = { set: build };
 		const unfit = fitToWidth(ctx, 1.0);
 		return {
 			dispose() {
+				stopTags();
 				unfit();
 				api = null;
 			}
@@ -132,8 +182,12 @@
 	{/if}
 </div>
 <Controls>
-	<Stepper bind:value={n} min={2} max={8} label="n (integers per turn)" />
-	<Stepper bind:value={a} min={0} max={n - 1} label="highlight what lands on a" />
+	<Stepper bind:value={n} min={2} max={8} label="n, integers per turn">
+		{#snippet labelSnippet()}<TeX tex="n" /> <span class="long">(integers per turn)</span>{/snippet}
+	</Stepper>
+	<Stepper bind:value={a} min={0} max={n - 1} label="highlight what lands on a">
+		{#snippet labelSnippet()}<span class="long">highlight what lands on</span> <TeX tex="a" />{/snippet}
+	</Stepper>
 </Controls>
 
 <style>
@@ -152,5 +206,10 @@
 	}
 	.f {
 		color: var(--teal);
+	}
+	@container figure (max-width: 30rem) {
+		.long {
+			display: none;
+		}
 	}
 </style>

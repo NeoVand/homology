@@ -23,12 +23,17 @@
 	const sBot = $derived(kind === 'susp' ? t : 0);
 	const wTop = $derived(half * (1 - sTop));
 	const wBot = $derived(half * (1 - sBot));
-	// the suspension of a circle reads better with a rounded waist
-	const yTop = $derived(top);
-	const yBot = $derived(bot);
+	// the heights of the two ends, X × {1} and X × {0}, and of the middle copy X × {½}:
+	// a cone narrows in a straight line, a suspension pinches both ends and
+	// keeps its middle, so it becomes a double cone
+	const yTop = top;
+	const yBot = bot;
+	const yMid = (top + bot) / 2;
+	const wMid = $derived(kind === 'susp' ? half : (wTop + wBot) / 2);
+	const side = (sg: number) => `M ${cx + sg * wBot} ${yBot} L ${cx + sg * wMid} ${yMid} L ${cx + sg * wTop} ${yTop}`;
 
 	const resultTeX = $derived.by(() => {
-		if (kind === 'wedge') return wedgeWith === 'circle' ? 'S^1\\vee S^1 \\;(\\text{a figure eight})' : 'S^2\\vee S^1';
+		if (kind === 'wedge') return wedgeWith === 'circle' ? 'S^1\\vee S^1 \\;(\\text{a figure eight})' : 'S^1\\vee S^2';
 		const name = { s0: 'S^0', i: 'I', s1: 'S^1' }[X];
 		if (kind === 'cone') return `C${name} \\cong ${{ s0: 'I', i: 'D^2', s1: 'D^2' }[X]}`;
 		return `\\Sigma ${name} \\cong ${{ s0: 'S^1', i: 'D^2', s1: 'S^2' }[X]}`;
@@ -68,18 +73,28 @@
 			{/if}
 		{:else if X === 's0'}
 			<!-- two points × I: two segments; their tops (and bottoms) are pulled together -->
-			<line x1={cx - wBot} y1={yBot} x2={cx - wTop} y2={yTop} stroke="var(--blue)" stroke-width="3.2" stroke-linecap="round" />
-			<line x1={cx + wBot} y1={yBot} x2={cx + wTop} y2={yTop} stroke="var(--blue)" stroke-width="3.2" stroke-linecap="round" />
+			<path d={side(-1)} fill="none" stroke="var(--blue)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+			<path d={side(1)} fill="none" stroke="var(--blue)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
 		{:else if X === 'i'}
-			<path d="M {cx - wBot} {yBot} L {cx + wBot} {yBot} L {cx + wTop} {yTop} L {cx - wTop} {yTop} Z" fill="rgba(116,169,255,0.14)" stroke="var(--blue)" stroke-width="2.4" stroke-linejoin="round" />
+			<path
+				d="M {cx - wBot} {yBot} L {cx + wBot} {yBot} L {cx + wMid} {yMid} L {cx + wTop} {yTop} L {cx - wTop} {yTop} L {cx - wMid} {yMid} Z"
+				fill="rgba(116,169,255,0.14)"
+				stroke="var(--blue)"
+				stroke-width="2.4"
+				stroke-linejoin="round"
+			/>
 		{:else}
 			<!-- a circle × I: a cylinder whose end circles shrink -->
 			<path
-				d="M {cx - wBot} {yBot} L {cx - wTop} {yTop} A {wTop} {ry * (wTop / half)} 0 0 1 {cx + wTop} {yTop} L {cx + wBot} {yBot} A {wBot} {ry * (wBot / half)} 0 0 1 {cx - wBot} {yBot} Z"
+				d="M {cx - wBot} {yBot} L {cx - wMid} {yMid} L {cx - wTop} {yTop} A {wTop} {ry * (wTop / half)} 0 0 1 {cx + wTop} {yTop} L {cx + wMid} {yMid} L {cx + wBot} {yBot} A {wBot} {ry * (wBot / half)} 0 0 1 {cx - wBot} {yBot} Z"
 				fill="rgba(116,169,255,0.12)"
 			/>
-			<line x1={cx - wBot} y1={yBot} x2={cx - wTop} y2={yTop} stroke="var(--blue)" stroke-width="2.6" />
-			<line x1={cx + wBot} y1={yBot} x2={cx + wTop} y2={yTop} stroke="var(--blue)" stroke-width="2.6" />
+			{#if kind === 'susp'}
+				<!-- the middle circle X × {½}, which the suspension keeps -->
+				<ellipse cx={cx} cy={yMid} rx={half} ry={ry} fill="none" stroke="rgba(116,169,255,0.45)" stroke-width="1.6" stroke-dasharray="5 5" />
+			{/if}
+			<path d={side(-1)} fill="none" stroke="var(--blue)" stroke-width="2.6" stroke-linejoin="round" />
+			<path d={side(1)} fill="none" stroke="var(--blue)" stroke-width="2.6" stroke-linejoin="round" />
 			<ellipse cx={cx} cy={yBot} rx={Math.max(0.01, wBot)} ry={Math.max(0.01, ry * (wBot / half))} fill="none" stroke={kind === 'susp' ? 'var(--gold-bright)' : 'var(--blue)'} stroke-width="2.6" />
 			<ellipse cx={cx} cy={yTop} rx={Math.max(0.01, wTop)} ry={Math.max(0.01, ry * (wTop / half))} fill="none" stroke="var(--gold-bright)" stroke-width="2.6" filter="url(#glow)" />
 		{/if}
@@ -111,56 +126,56 @@
 		{/if}
 		<SvgTeX x={cx} y={298} tex={resultTeX} size={18} w={420} h={30} color="var(--ink-bright)" />
 	</Svg>
-	<div class="panel ui">
-		<div class="row">
-			<Segmented
-				bind:value={kind}
-				options={[
-					{ value: 'wedge', label: 'Wedge sum' },
-					{ value: 'cone', label: 'Cone' },
-					{ value: 'susp', label: 'Suspension' }
-				]}
-				label="Construction"
-			/>
-			{#if kind === 'wedge'}
-				<Segmented
-					bind:value={wedgeWith}
-					options={[
-						{ value: 'circle', label: 'circle + circle' },
-						{ value: 'sphere', label: 'circle + sphere' }
-					]}
-					label="Spaces"
-				/>
-			{:else}
-				<Segmented
-					bind:value={X}
-					options={[
-						{ value: 's0', label: 'X = two points' },
-						{ value: 'i', label: 'X = interval' },
-						{ value: 's1', label: 'X = circle' }
-					]}
-					label="X"
-				/>
-			{/if}
-		</div>
-		<Timeline
-			bind:value={t}
-			duration={2.4}
-			from={kind === 'wedge' ? 'apart' : 'cylinder'}
-			to={kind === 'wedge' ? 'wedged' : kind === 'cone' ? 'cone' : 'suspension'}
-			label={kind === 'wedge' ? 'Bringing the base points together' : kind === 'cone' ? 'Collapsing the top to a point' : 'Collapsing the top and the bottom, each to a point'}
+</div>
+<div class="bar ui">
+	<div class="row">
+		<Segmented
+			bind:value={kind}
+			options={[
+				{ value: 'wedge', label: 'Wedge sum' },
+				{ value: 'cone', label: 'Cone' },
+				{ value: 'susp', label: 'Suspension' }
+			]}
+			label="Construction"
 		/>
+		{#if kind === 'wedge'}
+			<Segmented
+				bind:value={wedgeWith}
+				options={[
+					{ value: 'circle', label: 'circle + circle' },
+					{ value: 'sphere', label: 'circle + sphere' }
+				]}
+				label="Spaces"
+			/>
+		{:else}
+			<Segmented
+				bind:value={X}
+				options={[
+					{ value: 's0', label: 'X = two points' },
+					{ value: 'i', label: 'X = interval' },
+					{ value: 's1', label: 'X = circle' }
+				]}
+				label="X"
+			/>
+		{/if}
 	</div>
+	<Timeline
+		bind:value={t}
+		duration={2.4}
+		from={kind === 'wedge' ? 'apart' : 'cylinder'}
+		to={kind === 'wedge' ? 'wedged' : kind === 'cone' ? 'cone' : 'suspension'}
+		label={kind === 'wedge' ? 'Bringing the base points together' : kind === 'cone' ? 'Collapsing the top to a point' : 'Collapsing the top and the bottom, each to a point'}
+	/>
 </div>
 
 <style>
 	.cons {
 		padding: 0.6rem 0.6rem 0;
 	}
-	.panel {
+	.bar {
 		display: grid;
 		gap: 0.7rem;
-		padding: 0.75rem 1rem 0.9rem;
+		padding: 0.85rem 1.2rem 1rem;
 		border-top: 1px solid var(--line-faint);
 		background: rgba(5, 8, 16, 0.45);
 	}

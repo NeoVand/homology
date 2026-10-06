@@ -2,13 +2,13 @@
 	// Figure: following a branch of √z or log z around the puncture.
 	// A walker circles the origin in the base plane; above it, its value is
 	// tracked continuously on the "Riemann surface" of the function — the
-	// surface on which the many-valued function becomes single-valued.
-	import { onMount } from 'svelte';
+	// surface on which the many-valued function becomes single-valued. The
+	// walker can also be dragged by hand: its foot in the base plane sets both
+	// the angle walked and the distance from 0.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { glassMesh, glowPoint, glowTube } from '$lib/three/materials';
 	import { surfaceGeometry, type SurfaceFn } from '$lib/three/surfaces';
@@ -19,7 +19,6 @@
 	let mode = $state<Mode>('sqrt');
 	let t = $state(0); // angle travelled, radians, 0 … 4π
 	let rho = $state(1.5);
-	let playing = $state(false);
 
 	const TAU = Math.PI * 2;
 	const RMAX = 2.3;
@@ -27,31 +26,15 @@
 	const S = 1.12; // vertical scale of Re √z
 	const K = 3.1 / (2 * TAU); // helicoid rise per radian (two turns ≈ 3.1 units)
 	const LOG0 = -1.45; // helicoid height at θ = 0
+	const RHO_MIN = 0.6;
+	const RHO_MAX = 2.1;
 
 	const hSqrt = (r: number, th: number) => S * Math.sqrt(r) * Math.cos(th / 2);
 	const hLog = (th: number) => LOG0 + K * th;
 
 	let api: { update(): void } | null = null;
-	let raf = 0;
-	let last = 0;
 
-	function step(now: number) {
-		const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
-		last = now;
-		t += dt * 1.1;
-		if (t >= 2 * TAU) t = 0;
-		raf = requestAnimationFrame(step);
-	}
-	function toggle() {
-		playing = !playing;
-		if (playing) {
-			last = 0;
-			raf = requestAnimationFrame(step);
-		} else cancelAnimationFrame(raf);
-	}
-	onMount(() => () => cancelAnimationFrame(raf));
-
-	function setup({ scene, THREE, invalidate, label }: SceneContext) {
+	function setup({ scene, THREE, invalidate, label, canvas, camera, controls, project }: SceneContext) {
 		const groupSqrt = new THREE.Group();
 		const groupLog = new THREE.Group();
 		scene.add(groupSqrt, groupLog);
@@ -178,11 +161,81 @@
 			}
 		};
 		api.update();
+
+		// ── walk by hand: drag the foot (angle and distance) or the lifted point (angle) ──
+		const ray = new THREE.Raycaster();
+		const ndc = new THREE.Vector2();
+		const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+		const hit = new THREE.Vector3();
+		const onPlane = (e: PointerEvent, y: number) => {
+			const r = canvas.getBoundingClientRect();
+			ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+			ray.setFromCamera(ndc, camera);
+			plane.constant = -y;
+			return ray.ray.intersectPlane(plane, hit);
+		};
+		const near = (e: PointerEvent, p: THREE_NS.Vector3) => {
+			const r = canvas.getBoundingClientRect();
+			const s = project(p);
+			return Math.hypot(s.x - (e.clientX - r.left), s.y - (e.clientY - r.top)) < 18;
+		};
+		const grabbable = (e: PointerEvent) => (near(e, foot.position) ? 'foot' : near(e, lift.position) ? 'lift' : null);
+		let held: 'foot' | 'lift' | null = null;
+		let lastAngle = 0;
+		let controlsWere = true;
+		const onDown = (e: PointerEvent) => {
+			if (e.button !== 0) return;
+			held = grabbable(e);
+			if (!held) return;
+			lastAngle = t;
+			controlsWere = controls?.enabled ?? false;
+			if (controls) controls.enabled = false;
+			canvas.setPointerCapture(e.pointerId);
+			canvas.style.cursor = 'grabbing';
+		};
+		const onMove = (e: PointerEvent) => {
+			if (!held) {
+				if (e.pointerType === 'mouse') canvas.style.cursor = grabbable(e) ? 'grab' : '';
+				return;
+			}
+			const q = onPlane(e, held === 'foot' ? BASE : lift.position.y);
+			if (!q) return;
+			const a = Math.atan2(-q.z, q.x);
+			// follow the angle continuously, as the walker does, between the start and two full turns
+			const d = a - lastAngle - TAU * Math.round((a - lastAngle) / TAU);
+			const next = Math.max(0, Math.min(2 * TAU, t + d));
+			lastAngle += next - t;
+			t = next;
+			if (held === 'foot') rho = Math.max(RHO_MIN, Math.min(RHO_MAX, Math.hypot(q.x, q.z)));
+		};
+		const onUp = () => {
+			if (!held) return;
+			held = null;
+			if (controls) controls.enabled = controlsWere;
+			canvas.style.cursor = '';
+		};
+		// capture phase: runs before OrbitControls, which then finds itself disabled
+		canvas.addEventListener('pointerdown', onDown, { capture: true });
+		canvas.addEventListener('pointermove', onMove);
+		canvas.addEventListener('pointerup', onUp);
+		canvas.addEventListener('pointercancel', onUp);
 		return {
 			dispose() {
 				api = null;
+				canvas.removeEventListener('pointerdown', onDown, { capture: true });
+				canvas.removeEventListener('pointermove', onMove);
+				canvas.removeEventListener('pointerup', onUp);
+				canvas.removeEventListener('pointercancel', onUp);
 			}
 		};
+	}
+
+	// the keyboard way to change the distance from 0
+	function keyRho(e: KeyboardEvent) {
+		const k = ({ ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 } as Record<string, number>)[e.key];
+		if (!k) return;
+		e.preventDefault();
+		rho = Math.max(RHO_MIN, Math.min(RHO_MAX, rho + (e.shiftKey ? 0.1 : 0.02) * k));
 	}
 
 	$effect(() => {
@@ -197,13 +250,26 @@
 	const deg = $derived(Math.round((t * 180) / Math.PI));
 </script>
 
-<Scene3D
-	{setup}
-	height={460}
-	camera={{ position: [5.4, 1.7, 5.3], target: [0, -0.45, 0], fov: 38 }}
-	controls={{ autoRotate: false }}
-	label="A point walks around the origin of the plane. Above it, the value of the square root (two crossing sheets) or of the logarithm (a spiral ramp) is followed continuously; after one full turn the point is back where it started but its value is not."
-/>
+<div class="stage">
+	<Scene3D
+		{setup}
+		height={460}
+		camera={{ position: [5.4, 1.7, 5.3], target: [0, -0.45, 0], fov: 38 }}
+		controls={{ autoRotate: false }}
+		label="A point walks around the origin of the plane; it can be dragged by hand. Above it, the value of the square root (two crossing sheets) or of the logarithm (a spiral ramp) is followed continuously; after one full turn the point is back where it started but its value is not."
+	/>
+	<div
+		class="keys"
+		role="slider"
+		tabindex="0"
+		aria-label="Distance of the walker from 0: arrow keys change it"
+		aria-valuemin={RHO_MIN}
+		aria-valuemax={RHO_MAX}
+		aria-valuenow={rho}
+		aria-valuetext={rho.toFixed(2)}
+		onkeydown={keyRho}
+	></div>
+</div>
 
 <div class="readout ui">
 	<div class="dial">
@@ -272,12 +338,23 @@
 		]}
 		label="Function"
 	/>
-	<Slider bind:value={t} min={0} max={4 * Math.PI} step={0.01} label="Walked around 0" format={(v) => `${Math.round((v * 180) / Math.PI)}°`} />
-	<Slider bind:value={rho} min={0.6} max={2.1} step={0.01} label="Distance from 0" format={(v) => v.toFixed(2)} />
-	<Button onclick={toggle} active={playing}>{playing ? 'Pause' : 'Walk'}</Button>
+	<Timeline bind:value={t} min={0} max={2 * TAU} duration={10} from="start" to="two turns" label="Walking twice around 0" />
 </Controls>
 
 <style>
+	.stage {
+		position: relative;
+	}
+	.keys {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		outline: none;
+	}
+	.keys:focus-visible {
+		outline: 2px solid var(--gold-bright);
+		outline-offset: -4px;
+	}
 	.readout {
 		display: flex;
 		flex-wrap: wrap;

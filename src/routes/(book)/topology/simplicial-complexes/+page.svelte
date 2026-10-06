@@ -315,7 +315,7 @@
 	Barycentric coordinates also show that all \(n\)-simplices are really the same. Take the \(n+1\) points of \(\R^{n+1}\) with a
 	single coordinate equal to \(1\) and the rest \(0\): for \(n = 2\), these are \((1,0,0)\), \((0,1,0)\) and \((0,0,1)\). The simplex
 	they span is the <dfn>standard \(n\)-simplex</dfn>
-	\[ \Delta^n = \setb{(t_0, \dots, t_n) \in \R^{n+1}}{\text{every } t_i \ge 0 \text{ and } t_0 + \dots + t_n = 1}, \]
+	\[ \Delta^n = \setb{(t_0, \dots, t_n) \in \R^{n+1}}{\text{all } t_i \ge 0,\ \textstyle\sum_i t_i = 1}, \]
 	read “the set of all lists \((t_0, \dots, t_n)\) of real numbers such that every \(t_i\) is at least zero and they add up to one”.
 	A point of \(\Delta^n\) <em>is</em> its own list of barycentric coordinates. Any other \(n\)-simplex \([v_0, \dots, v_n]\) is a
 	copy of it: send \((t_0, \dots, t_n)\) to \(t_0 v_0 + \dots + t_n v_n\). That is why the gallery above could call its shapes
@@ -728,7 +728,7 @@
 	result is continuous.
 </p>
 
-<Figure num="2.5.9" title="Simplicial maps" hint="Drag the slider or press Play">
+<Figure num="2.5.9" title="Simplicial maps" hint="Pick an example · play or scrub the map">
 	<SimplicialMap />
 	{#snippet caption()}
 		Carry each vertex to its image and the edges follow. A hexagon wraps twice around a triangle (its second lap is dashed); a

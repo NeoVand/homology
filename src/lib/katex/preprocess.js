@@ -22,14 +22,65 @@ const CLOSE_DISPLAY = '\\]';
 // punctuation that should stay glued to the inline math it follows
 const TRAILING_PUNCT = /[.,;:!?)’”]/;
 
+// top-level commands whose effect would be lost if a formula were cut in pieces
+const STYLE_SWITCH = /^\\(?:color|displaystyle|textstyle|scriptstyle|scriptscriptstyle|rm|bf|it|sf|tt|cal|tiny|small|normalsize|large|Large|LARGE|huge|Huge)$/;
+
+/**
+ * Split display TeX at its top-level \qquad — the space that separates
+ * independent formulas set side by side ("a = b, \qquad c = d"). Spaces inside
+ * braces, environments or \left…\right pairs are left alone.
+ * @param {string} tex
+ * @returns {string[]}
+ */
+export function splitDisplay(tex) {
+	const parts = [];
+	let depth = 0;
+	let start = 0;
+	for (let i = 0; i < tex.length; i++) {
+		const c = tex[i];
+		if (c === '{') depth++;
+		else if (c === '}') depth--;
+		else if (c === '\\') {
+			const cmd = /^\\(?:[a-zA-Z]+|.)/.exec(tex.slice(i))?.[0] ?? '\\';
+			if (cmd === '\\begin' || cmd === '\\left') depth++;
+			else if (cmd === '\\end' || cmd === '\\right') depth--;
+			else if (depth === 0 && cmd === '\\qquad') {
+				parts.push(tex.slice(start, i));
+				start = i + cmd.length;
+			} else if (depth === 0 && STYLE_SWITCH.test(cmd)) return [tex];
+			i += cmd.length - 1;
+		}
+	}
+	parts.push(tex.slice(start));
+	const out = parts.map((s) => s.trim()).filter(Boolean);
+	return out.length ? out : [tex];
+}
+
 /**
  * Render one TeX string to HTML.
+ *
+ * Display math is responsive. Formulas set side by side with \qquad become
+ * separate pieces that wrap onto their own lines when the column is narrow,
+ * and each piece is set in display style but with inline line-breaking, so a
+ * long equation can break after a relation or an operator instead of running
+ * off the edge of a phone.
  * @param {string} tex
  * @param {boolean} display
  */
 export function renderTeX(tex, display) {
-	const html = labelKatex(katex.renderToString(tex, { ...katexOptions, displayMode: display }), tex);
-	return display ? `<span class="math-block">${html}</span>` : html;
+	if (!display) return labelKatex(katex.renderToString(tex, { ...katexOptions, displayMode: false }), tex);
+	const pieces = splitDisplay(tex).map((t) => {
+		let html;
+		try {
+			html = katex.renderToString(`\\displaystyle ${t}`, { ...katexOptions, displayMode: false });
+		} catch (e) {
+			// a few environments (CD diagrams) exist only in display mode; they cannot break anyway
+			if (!(e instanceof Error) || !/display mode/i.test(e.message)) throw e;
+			return labelKatex(katex.renderToString(t, { ...katexOptions, displayMode: true }), t);
+		}
+		return `<span class="katex-display">${labelKatex(html, t)}</span>`;
+	});
+	return `<span class="math-block">${pieces.join('')}</span>`;
 }
 
 /** Count consecutive backslashes immediately before index i. */

@@ -2,10 +2,12 @@
 	// Two straight closed curves on the flat torus; count their crossings with
 	// signs. The answer is always the determinant p₁q₂ − p₂q₁ — and it equals
 	// the cup product of their Poincaré duals, computed on a triangulation.
+	// Drag the teal curve (or its bead) to slide it across the torus.
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import GluingSquare from '$lib/components/svg/GluingSquare.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Handle from '$lib/components/svg/Handle.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
+	import { untrack } from 'svelte';
 	import { arcCrossings, fenceCochain, squareModel, torusLine, type Pt } from '../cup-product/flat';
 	import { cup11, evaluate, orientTriangles } from '../cup-product/cup';
 	import { boxMap, pathD } from '../cup-product/draw';
@@ -14,7 +16,8 @@
 	let q1 = $state(2);
 	let p2 = $state(2);
 	let q2 = $state(1);
-	let shift = $state(0.18);
+	// a point the teal curve passes through, in the unit square
+	let at = $state<Pt>([0.793, 0.457]);
 
 	const X = 70;
 	const Y = 40;
@@ -25,13 +28,87 @@
 
 	const C1 = $derived(torusLine(p1, q1, 0.137, 0.291));
 	// (the tiny irrational offset keeps the curve off the vertices of the hidden 7 × 7 triangulation)
-	const C2 = $derived(torusLine(p2, q2, 0.613 + shift + 0.000731, 0.457));
+	const C2 = $derived(torusLine(p2, q2, at[0] + 0.000731, at[1] + 0.000419));
 	const cross = $derived(arcCrossings(C1, C2));
 	const signedSum = $derived(cross.reduce((s, c) => s + c.sign, 0));
 	const det = $derived(p1 * q2 - p2 * q1);
 	const cupValue = $derived(p1 || q1 ? (p2 || q2 ? evaluate(cup11(grid.D, fenceCochain(grid, C1), fenceCochain(grid, C2)), T) : 0) : 0);
 	const pos = $derived(cross.filter((c) => c.sign > 0).length);
 	const neg = $derived(cross.length - pos);
+
+	// dragging: the square is the torus, so positions wrap around
+	const frac = (x: number) => x - Math.floor(x);
+	const wrap = (d: number) => d - Math.round(d);
+	function nudge(dx: number, dy: number) {
+		at = [frac(at[0] + dx / S), frac(at[1] - dy / S)];
+	}
+
+	// the bead rides the teal curve at at + s·(p₂, q₂)/g, where it hides no
+	// crossing, arrowhead or edge; s is chosen afresh only when the classes change
+	const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : Math.abs(a));
+	const run2 = $derived.by((): Pt => {
+		const g = gcd(p2, q2) || 1;
+		return [p2 / g, q2 / g];
+	});
+	const beadAt = (s: number): Pt => [frac(at[0] + s * run2[0]), frac(at[1] + s * run2[1])];
+	const beadS = $derived.by(() => {
+		void [p1, q1, p2, q2];
+		return untrack(() => {
+			const mid = (a: Pt[]): Pt => [(a[0][0] + a[a.length - 1][0]) / 2, (a[0][1] + a[a.length - 1][1]) / 2];
+			const avoid = [...cross.map((c) => c.p), ...C1.map(mid), ...C2.map(mid)];
+			let best = 0;
+			let top = -1;
+			for (let i = 0; i < 120; i++) {
+				const [x, y] = beadAt(i / 120);
+				let clear = 1.5 * Math.min(x, 1 - x, y, 1 - y);
+				for (const a of avoid) clear = Math.min(clear, Math.hypot(x - a[0], y - a[1]));
+				if (clear > top) ((top = clear), (best = i / 120));
+			}
+			return best;
+		});
+	});
+	function dragBead([px, py]: [number, number]) {
+		const [hx, hy] = beadAt(beadS);
+		at = [frac(at[0] + wrap((px - X) / S - hx)), frac(at[1] + wrap(1 - (py - Y) / S - hy))];
+	}
+
+	// each crossing's sign sits in the wider gap between the two curves, above the crossing
+	const signDir = $derived.by((): [number, number] => {
+		const unit = (v: [number, number]): [number, number] => {
+			const L = Math.hypot(v[0], v[1]) || 1;
+			return [v[0] / L, v[1] / L];
+		};
+		const d1 = unit([p1, -q1]);
+		const d2 = unit([p2, -q2]);
+		const acute = d1[0] * d2[0] + d1[1] * d2[1] > 0;
+		const b = unit(acute ? [d1[0] - d2[0], d1[1] - d2[1]] : [d1[0] + d2[0], d1[1] + d2[1]]);
+		return b[1] > 1e-9 || (Math.abs(b[1]) <= 1e-9 && b[0] < 0) ? [-b[0], -b[1]] : b;
+	});
+	let last: [number, number] | null = null;
+	let held = $state(false);
+	function svgPoint(e: PointerEvent): [number, number] | null {
+		const m = (e.currentTarget as SVGGElement).ownerSVGElement?.getScreenCTM();
+		if (!m) return null;
+		const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+		return [p.x, p.y];
+	}
+	function grab(e: PointerEvent) {
+		if (e.button !== 0) return;
+		e.preventDefault();
+		(e.currentTarget as SVGGElement).setPointerCapture(e.pointerId);
+		last = svgPoint(e);
+		held = true;
+	}
+	function drag(e: PointerEvent) {
+		const p = last && svgPoint(e);
+		if (!last || !p) return;
+		nudge(p[0] - last[0], p[1] - last[1]);
+		last = p;
+	}
+	function drop() {
+		last = null;
+		held = false;
+	}
 
 	/** arrowheads along a curve, showing its direction of travel */
 	function arrows(arcs: Pt[][]): string {
@@ -101,12 +178,31 @@
 				<path d={pathD(arc, map)} class="curve" style="--c:var(--teal)" filter="url(#ig-glow)" />
 			{/each}
 			<path d={arrows(C2)} class="arr" style="--c:var(--teal)" />
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
+			<g class="grab" class:held onpointerdown={grab} onpointermove={drag} onpointerup={drop} onpointercancel={drop}>
+				{#each C2 as arc, k (k)}
+					<path d={pathD(arc, map)} />
+				{/each}
+			</g>
 			{#each cross as c, k (k)}
 				{@const pt = map(c.p)}
 				<circle cx={pt[0]} cy={pt[1]} r="10" class="halo" />
 				<circle cx={pt[0]} cy={pt[1]} r="4.8" class="dot" class:neg={c.sign < 0} />
-				<text x={pt[0] + 8} y={pt[1] - 8} class="sgn" class:neg={c.sign < 0}>{c.sign > 0 ? '+' : '−'}</text>
+				<text x={pt[0] + 15 * signDir[0]} y={pt[1] + 15 * signDir[1]} class="sgn" class:neg={c.sign < 0}>{c.sign > 0 ? '+' : '−'}</text>
 			{/each}
+			{#if !zero2}
+				{@const h = map(beadAt(beadS))}
+				<Handle
+					x={h[0]}
+					y={h[1]}
+					color="var(--teal)"
+					r={8}
+					label="Teal curve C₂: drag or use the arrow keys to slide it"
+					valuetext={zero1 ? undefined : `${cross.length} ${cross.length === 1 ? 'crossing' : 'crossings'}, signed sum ${fmt(signedSum)}`}
+					ondrag={dragBead}
+					onkey={(dx, dy) => nudge(dx * 4, dy * 4)}
+				/>
+			{/if}
 		</Svg>
 	</div>
 	<div class="side ui">
@@ -122,9 +218,8 @@
 		</div>
 		<p class="lg">
 			<span class="gold">Gold</span> curve \(C_1\) goes \(p_1\) times around horizontally and \(q_1\) times vertically;
-			<span class="teal">teal</span> \(C_2\) likewise with \(p_2, q_2\).
+			<span class="teal">teal</span> \(C_2\) likewise with \(p_2, q_2\). Drag the teal curve to slide it around the torus.
 		</p>
-		<Slider bind:value={shift} min={0} max={0.999} step={0.001} label="slide the teal curve" format={(v) => v.toFixed(2)} />
 		{#if zero1 || zero2}
 			<p class="warn">Choose a nonzero class for both curves.</p>
 		{:else}
@@ -166,6 +261,18 @@
 		stroke-linecap: round;
 		stroke-linejoin: round;
 	}
+	.grab path {
+		fill: none;
+		stroke: transparent;
+		stroke-width: 18;
+		stroke-linecap: round;
+		pointer-events: stroke;
+		cursor: grab;
+		touch-action: none;
+	}
+	.grab.held path {
+		cursor: grabbing;
+	}
 	.halo {
 		fill: var(--rose);
 		opacity: 0.28;
@@ -186,6 +293,9 @@
 		font-weight: 700;
 		font-size: 15px;
 		fill: var(--rose);
+		text-anchor: middle;
+		dominant-baseline: central;
+		pointer-events: none;
 	}
 	.side {
 		display: grid;

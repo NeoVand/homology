@@ -8,6 +8,7 @@
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import GraphCanvas from './GraphCanvas.svelte';
 	import { bowtie, bowtieLabelOffsets, degrees, oddVertices, symDiff, transposePts } from './graphs';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	const G = bowtie;
 	const n = G.pos.length;
@@ -86,9 +87,9 @@
 			{#if sel.length === 0}
 				<span class="badge">empty</span> No edges chosen. (The empty set passes the test too — it is the “zero cycle”.)
 			{:else if isCycle}
-				<span class="badge">✓ cycle</span> Every vertex has even degree: no loose ends.
+				<span class="badge"><Mark ok size={12} /> cycle</span> Every vertex has even degree: no loose ends.
 			{:else}
-				<span class="badge">✗ not a cycle</span>
+				<span class="badge"><Mark ok={false} size={12} /> not a cycle</span>
 				{odd.length} loose ends (odd degree): <TeX tex={oddTeX} />
 			{/if}
 		</div>

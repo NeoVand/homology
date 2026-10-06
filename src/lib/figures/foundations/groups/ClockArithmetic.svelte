@@ -8,6 +8,8 @@
 	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import { PlayIcon } from '$lib/icons';
 	import { mod, residueColor } from './zn';
 
 	let n = $state(12);
@@ -69,6 +71,15 @@
 					<stop offset="0" stop-color="#1d2750" stop-opacity="0.85" />
 					<stop offset="1" stop-color="#0a0f1e" stop-opacity="0.4" />
 				</radialGradient>
+				<!-- glows sized for small dots (the shared ones crop a small dot's blur to a square) -->
+				<filter id="ca-glow" x="-150%" y="-150%" width="400%" height="400%">
+					<feGaussianBlur stdDeviation="3" result="b" />
+					<feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+				</filter>
+				<filter id="ca-glow-strong" x="-150%" y="-150%" width="400%" height="400%">
+					<feGaussianBlur stdDeviation="6" result="b" />
+					<feMerge><feMergeNode in="b" /><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+				</filter>
 			</defs>
 			<circle r={R + 30} fill="url(#ca-face)" stroke="rgba(216,178,110,0.28)" stroke-width="1" />
 			<circle r={R} fill="none" stroke="rgba(235,229,213,0.16)" stroke-width="1" />
@@ -89,7 +100,7 @@
 
 			{#each Array.from({ length: n }, (_, k) => k) as k (k)}
 				{@const [x, y] = at(k, R)}
-				{@const [tx, ty] = at(k, R + 19)}
+				{@const [tx, ty] = at(k, R + 21)}
 				{@const isRes = k === res && Math.abs(cur - sum) < 0.01}
 				<circle
 					cx={x}
@@ -98,17 +109,17 @@
 					fill={residueColor(k, n)}
 					stroke="#0b1020"
 					stroke-width="1"
-					filter={isRes ? 'url(#glow-strong)' : undefined}
+					filter={isRes ? 'url(#ca-glow-strong)' : undefined}
 				/>
 				<text x={tx} y={ty + 5} text-anchor="middle" class="num" class:hi={k === res && Math.abs(cur - sum) < 0.01}>{k}</text>
 			{/each}
 
 			{#if passed && wrapped}
-				<circle cx="0" cy={-R} r="14" fill="none" stroke="#5fd6cf" stroke-opacity="0.6" stroke-width="1.5" />
+				<circle cx="0" cy={-R} r="11.5" fill="none" stroke="#5fd6cf" stroke-opacity="0.6" stroke-width="1.5" />
 			{/if}
 
 			<line x1="0" y1="0" x2={hand[0]} y2={hand[1]} stroke="#fbf6e8" stroke-width="2.4" stroke-linecap="round" />
-			<circle cx={hand[0]} cy={hand[1]} r="4.5" fill="#fff8e6" filter="url(#glow)" />
+			<circle cx={hand[0]} cy={hand[1]} r="4.5" fill="#fff8e6" filter="url(#ca-glow)" />
 			<circle r="6" fill="url(#vertex-fill)" />
 		</Svg>
 		<div class="readout ui">
@@ -158,11 +169,17 @@
 	</div>
 </div>
 <Controls>
-	<Stepper bind:value={n} min={2} max={12} label="clock size n" />
-	<Stepper bind:value={a} min={0} max={n - 1} label="a" />
-	<Stepper bind:value={b} min={0} max={n - 1} label="b" />
+	<Stepper bind:value={n} min={2} max={12} label="clock size n">
+		{#snippet labelSnippet()}<span class="long">clock size&nbsp;</span><TeX tex="n" />{/snippet}
+	</Stepper>
+	<Stepper bind:value={a} min={0} max={n - 1} label="a">
+		{#snippet labelSnippet()}<TeX tex="a" />{/snippet}
+	</Stepper>
+	<Stepper bind:value={b} min={0} max={n - 1} label="b">
+		{#snippet labelSnippet()}<TeX tex="b" />{/snippet}
+	</Stepper>
 	<Toggle bind:checked={showInv} label="show inverses" />
-	<button class="again ui" onclick={play}>Replay</button>
+	<Button icon={PlayIcon} onclick={play} title="Replay the walk"><span class="long">Replay</span></Button>
 </Controls>
 
 <style>
@@ -173,10 +190,16 @@
 		padding: 1rem 1.3rem 1rem;
 		align-items: center;
 	}
-	@media (max-width: 760px) {
+	@container figure (max-width: 46rem) {
 		.clock-fig {
 			grid-template-columns: minmax(0, 1fr);
 			padding: 0.8rem 0.7rem;
+		}
+	}
+	/* on a phone the toolbar keeps to two rows: short labels, an icon-only replay */
+	@container figure (max-width: 30rem) {
+		.long {
+			display: none;
 		}
 	}
 	.num {
@@ -206,6 +229,7 @@
 	.inv {
 		color: var(--ink-dim);
 		font-size: 0.8rem;
+		text-wrap: balance;
 	}
 	.tablebox {
 		min-width: 0;
@@ -220,7 +244,8 @@
 		display: grid;
 		grid-template-columns: repeat(var(--n), minmax(0, 1fr));
 		gap: 2px;
-		max-width: 25rem;
+		/* small clocks get a compact table rather than a few huge cells */
+		max-width: min(25rem, calc(var(--n) * 2.5rem));
 		margin: 0 auto;
 	}
 	.h,
@@ -229,7 +254,7 @@
 		display: grid;
 		place-items: center;
 		font-family: var(--font-ui);
-		font-size: clamp(0.55rem, 1.6vw, 0.78rem);
+		font-size: clamp(0.55rem, 1.6cqi, 0.78rem);
 		font-variant-numeric: tabular-nums;
 		border-radius: 4px;
 		min-width: 0;
@@ -269,18 +294,5 @@
 	}
 	.plus {
 		color: var(--ink-faint);
-	}
-	.again {
-		background: none;
-		border: 1px solid var(--line);
-		color: var(--gold-bright);
-		border-radius: 9px;
-		padding: 0.4rem 0.8rem;
-		font-size: 0.76rem;
-		cursor: pointer;
-	}
-	.again:hover {
-		border-color: var(--gold);
-		background: rgba(216, 178, 110, 0.1);
 	}
 </style>

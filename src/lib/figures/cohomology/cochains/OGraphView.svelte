@@ -2,8 +2,11 @@
 	// Draw an oriented graph (optionally with filled triangles) whose edges carry
 	// numbers: the canvas for every "measurement" figure of §4.1. Use inside <Svg>.
 	// Labels are HTML pills in <foreignObject> (plain text, or TeX via labelTeX).
+	// With autoPlace, every label finds a spot clear of edges, discs and other labels.
+	import { onMount } from 'svelte';
 	import type { Pt } from './graph';
 	import { tex as renderTeX } from '$lib/katex/render';
+	import { ABOVE, BELOW, clash, placeBeside, reach, type Box, type Obstacles } from './labels';
 
 	type Paint = string | null | undefined;
 
@@ -29,6 +32,7 @@
 		vertexFill,
 		vertexStroke,
 		vertexText,
+		vertexTextColor,
 		vertexLabel,
 		vertexLabelColor,
 		vertexName,
@@ -42,6 +46,8 @@
 		clickEdge = false,
 		clickTri = false,
 		dragVertex = false,
+		autoPlace = false,
+		avoid = [],
 		onvertex,
 		onedge,
 		ontri,
@@ -77,6 +83,8 @@
 		vertexStroke?: (v: number) => Paint;
 		/** short text inside the vertex disc */
 		vertexText?: (v: number) => string | null | undefined;
+		/** colour of that text (default: dark ink for a light disc) */
+		vertexTextColor?: (v: number) => Paint;
 		/** pill label above the vertex (e.g. a height) */
 		vertexLabel?: (v: number) => string | null | undefined;
 		vertexLabelColor?: (v: number) => Paint;
@@ -93,6 +101,10 @@
 		clickTri?: boolean;
 		/** vertical dragging of vertices: ondrag(v, total dy in SVG units since pointerdown) */
 		dragVertex?: boolean;
+		/** place vertex pills, names and edge labels where they touch no edge, disc or other label */
+		autoPlace?: boolean;
+		/** other strokes the placed labels must keep clear of */
+		avoid?: [Pt, Pt][];
 		onvertex?: (v: number) => void;
 		onedge?: (e: number) => void;
 		ontri?: (t: number) => void;
@@ -143,9 +155,156 @@
 		}
 	}
 	const vertexInteractive = $derived(clickVertex || dragVertex);
+
+	// ── label positions (centres, in user units) ──
+	// pill sizes are measured: a foreignObject lays its content out in user units
+	let ew = $state<number[]>([]);
+	let eh = $state<number[]>([]);
+	let vw = $state<number[]>([]);
+	let vh = $state<number[]>([]);
+	// the part of the plane the <svg> element shows (wider than the viewBox when
+	// its height is capped), less a small margin: labels must stay inside it
+	let root: SVGGElement | undefined = $state();
+	let bounds = $state<[number, number, number, number] | null>(null);
+	onMount(() => {
+		const svg = root?.ownerSVGElement;
+		const vb = svg?.viewBox.baseVal;
+		if (!svg || !vb || !vb.width) return;
+		const measure = () => {
+			const W = svg.clientWidth || vb.width;
+			const H = svg.clientHeight || vb.height;
+			const k = Math.min(W / vb.width, H / vb.height);
+			const hw = W / k / 2;
+			const hh = H / k / 2;
+			const cx = vb.x + vb.width / 2;
+			const cy = vb.y + vb.height / 2;
+			bounds = [cx - hw + 3, cy - hh + 3, cx + hw - 3, cy + hh - 3];
+		};
+		measure();
+		const ro = new ResizeObserver(measure);
+		ro.observe(svg);
+		return () => ro.disconnect();
+	});
+	const guessW = (s: string, px: number) => s.length * px * 0.62 + px * 0.9;
+	const keepV: number[] = [];
+	const keepN: number[] = [];
+
+	const layout = $derived.by(() => {
+		const edgeAt: (Pt | null)[] = [];
+		const edge2At: (Pt | null)[] = [];
+		const pillAt: (Pt | null)[] = [];
+		const nameAt: (Pt | null)[] = [];
+		const segs = edges.map(([a, b], i) => ({ a: pos[a], b: pos[b], r: (edgeWidth?.(i) ?? 2.4) / 2 + 4 }));
+		const extra = avoid.map(([a, b]) => ({ a, b, r: 4 }));
+		const o: Obstacles = { segs: [...segs, ...extra], discs: pos.map((c) => ({ c, r: vertexRadius + 3 })), boxes: [], bounds };
+		edges.forEach(([a, b], i) => {
+			const label = edgeLabel?.(i) ?? edgeLabelTeX?.(i);
+			const label2 = edgeLabel2?.(i);
+			const A = pos[a];
+			const B = pos[b];
+			const len = Math.hypot(B[0] - A[0], B[1] - A[1]) || 1;
+			const mid: Pt = [(A[0] + B[0]) / 2, (A[1] + B[1]) / 2];
+			const normal = (side: number): Pt => [(side * (B[1] - A[1])) / len, (-side * (B[0] - A[0])) / len];
+			const side0 = edgeLabelSide?.(i) ?? 1;
+			const given = edgeLabelOffset?.(i);
+			let side = side0;
+			if (!label) edgeAt.push(null);
+			else if (!autoPlace) {
+				const n = normal(side);
+				const off = given ?? 17;
+				edgeAt.push([mid[0] + n[0] * off, mid[1] + n[1] * off]);
+			} else {
+				const w = ew[i] || guessW(label, 13);
+				const h = eh[i] || 20;
+				// clear of the chevron when the arrowhead sits by the label, else of the stroke
+				const clear = Math.abs((arrowAt?.(i) ?? 0.5) - 0.5) * len < 9 + w / 2 ? 10 : 6;
+				const others = { ...o, segs: o.segs.filter((_, j) => j !== i) };
+				let best: Box | null = null;
+				let bestCost = Infinity;
+				// either side of the edge, at its middle or slid a little along it
+				for (const s of given === 0 ? [side0] : [side0, -side0]) {
+					for (const slide of [0, -0.13, 0.13]) {
+						const n = normal(s);
+						const off = given === 0 ? 0 : Math.max(given ?? 0, clear + reach(n, w, h));
+						const cx = mid[0] + (B[0] - A[0]) * slide + n[0] * off;
+						const cy = mid[1] + (B[1] - A[1]) * slide + n[1] * off;
+						const box = { x: cx, y: cy, w, h };
+						const cost = clash(box, others) + (s === side0 ? 0 : 1) + (slide ? 2 : 0);
+						if (cost < bestCost) {
+							bestCost = cost;
+							best = box;
+							side = s;
+						}
+					}
+				}
+				o.boxes.push(best!);
+				edgeAt.push([best!.x, best!.y]);
+			}
+			if (!label2) edge2At.push(null);
+			else {
+				const n = normal(-side);
+				const off = autoPlace ? Math.max(16, 10 + reach(n, guessW(label2, 11.5), 18)) : 16;
+				const at: Pt = [mid[0] + n[0] * off, mid[1] + n[1] * off];
+				if (autoPlace) o.boxes.push({ x: at[0], y: at[1], w: guessW(label2, 11.5), h: 18 });
+				edge2At.push(at);
+			}
+		});
+		if (!autoPlace) {
+			pos.forEach(([x, y], v) => {
+				pillAt.push(vertexLabel?.(v) ? [x, y - vertexRadius - 19] : null);
+				nameAt.push(vertexName?.(v) ? [x, y + vertexRadius + 11] : null);
+			});
+			return { edgeAt, edge2At, pillAt, nameAt };
+		}
+		// pills above, names below; placed in both orders, keeping whichever crowds less
+		const pass = (namesFirst: boolean) => {
+			const q: Obstacles = { ...o, boxes: [...o.boxes] };
+			const pills: (Pt | null)[] = [];
+			const names: (Pt | null)[] = [];
+			const kp: number[] = [];
+			const kn: number[] = [];
+			let total = 0;
+			const doPills = () =>
+				pos.forEach(([x, y], v) => {
+					const label = vertexLabel?.(v);
+					if (!label) return void (pills[v] = null);
+					const r = placeBeside([x, y], vertexRadius + 4, vw[v] || guessW(label, 12.5), vh[v] || 20, ABOVE, q, keepV[v]);
+					kp[v] = r.k;
+					total += r.cost;
+					q.boxes.push(r.box);
+					pills[v] = [r.box.x, r.box.y];
+				});
+			const doNames = () =>
+				pos.forEach(([x, y], v) => {
+					const name = vertexName?.(v);
+					if (!name) return void (names[v] = null);
+					const r = placeBeside([x, y], vertexRadius + 3, name.length * 6.6 + 2, 11, BELOW, q, keepN[v]);
+					kn[v] = r.k;
+					total += r.cost;
+					q.boxes.push(r.box);
+					names[v] = [r.box.x, r.box.y];
+				});
+			if (namesFirst) {
+				doNames();
+				doPills();
+			} else {
+				doPills();
+				doNames();
+			}
+			return { pills, names, kp, kn, total };
+		};
+		const a = pass(false);
+		const b = vertexName ? pass(true) : a;
+		const best = b.total < a.total ? b : a;
+		best.kp.forEach((k, v) => (keepV[v] = k));
+		best.kn.forEach((k, v) => (keepN[v] = k));
+		pillAt.push(...best.pills);
+		nameAt.push(...best.names);
+		return { edgeAt, edge2At, pillAt, nameAt };
+	});
 </script>
 
-<g class="og">
+<g class="og" bind:this={root}>
 	<!-- triangles -->
 	{#each tris as t, i (i)}
 		{@const fill = triFill?.(i)}
@@ -227,36 +386,27 @@
 	{/if}
 
 	<!-- edge labels -->
-	{#each edges as [a, b], i (i)}
+	{#each edges as _, i (i)}
 		{@const txt = edgeLabel?.(i)}
 		{@const tx = edgeLabelTeX?.(i)}
-		{#if txt || tx}
-			{@const A = pos[a]}
-			{@const B = pos[b]}
-			{@const len = Math.hypot(B[0] - A[0], B[1] - A[1]) || 1}
-			{@const side = edgeLabelSide?.(i) ?? 1}
-			{@const off = edgeLabelOffset?.(i) ?? 17}
-			{@const nx = (side * (B[1] - A[1])) / len}
-			{@const ny = (-side * (B[0] - A[0])) / len}
-			{@const lx = (A[0] + B[0]) / 2 + nx * off}
-			{@const ly = (A[1] + B[1]) / 2 + ny * off}
-			<foreignObject x={lx - 50} y={ly - 13} width="100" height="26" class="fo">
+		{@const at = layout.edgeAt[i]}
+		{#if (txt || tx) && at}
+			<foreignObject x={at[0] - 50} y={at[1] - 13} width="100" height="26" class="fo">
 				<div class="lblwrap">
-					<span class="pill" class:sel={selectedEdge === i} style="--c:{edgeLabelColor?.(i) ?? 'var(--gold-bright)'}"
-						>{#if tx}{@html renderTeX(tx)}{:else}{txt}{/if}</span
+					<span
+						class="pill"
+						class:sel={selectedEdge === i}
+						style="--c:{edgeLabelColor?.(i) ?? 'var(--gold-bright)'}"
+						bind:offsetWidth={ew[i]}
+						bind:offsetHeight={eh[i]}>{#if tx}{@html renderTeX(tx)}{:else}{txt}{/if}</span
 					>
 				</div>
 			</foreignObject>
 		{/if}
 		{@const t2 = edgeLabel2?.(i)}
-		{#if t2}
-			{@const A = pos[a]}
-			{@const B = pos[b]}
-			{@const len = Math.hypot(B[0] - A[0], B[1] - A[1]) || 1}
-			{@const side = -(edgeLabelSide?.(i) ?? 1)}
-			{@const nx = (side * (B[1] - A[1])) / len}
-			{@const ny = (-side * (B[0] - A[0])) / len}
-			<foreignObject x={(A[0] + B[0]) / 2 + nx * 16 - 50} y={(A[1] + B[1]) / 2 + ny * 16 - 12} width="100" height="24" class="fo">
+		{@const at2 = layout.edge2At[i]}
+		{#if t2 && at2}
+			<foreignObject x={at2[0] - 50} y={at2[1] - 12} width="100" height="24" class="fo">
 				<div class="lblwrap">
 					<span class="pill small2" style="--c:{edgeLabel2Color?.(i) ?? 'var(--violet)'}">{t2}</span>
 				</div>
@@ -268,6 +418,8 @@
 	{#each pos as [x, y], v (v)}
 		{@const fill = vertexFill?.(v)}
 		{@const sel = selectedVertex === v}
+		{@const pill = layout.pillAt[v]}
+		{@const nm = layout.nameAt[v]}
 		<g class="vert {vertexClass?.(v) ?? ''}" class:sel class:hot={hoverV === v}>
 			{#if sel}
 				<circle cx={x} cy={y} r={vertexRadius + 9} class="vhalo" />
@@ -293,17 +445,27 @@
 				onpointerleave={() => (hoverV = null)}
 			/>
 			{#if vertexText?.(v)}
-				<text {x} y={y + 0.5} class="vtext" style="font-size:{vertexTextSize}px">{vertexText(v)}</text>
+				<text
+					{x}
+					y={y + 0.5}
+					class="vtext"
+					style="font-size:{vertexTextSize}px{vertexTextColor?.(v) ? `; fill:${vertexTextColor(v)} !important` : ''}">{vertexText(v)}</text
+				>
 			{/if}
-			{#if vertexLabel?.(v)}
-				<foreignObject x={x - 60} y={y - vertexRadius - 32} width="120" height="26" class="fo">
+			{#if vertexLabel?.(v) && pill}
+				<foreignObject x={pill[0] - 60} y={pill[1] - 13} width="120" height="26" class="fo">
 					<div class="lblwrap">
-						<span class="pill vpill" style="--c:{vertexLabelColor?.(v) ?? 'var(--gold-bright)'}">{vertexLabel(v)}</span>
+						<span
+							class="pill vpill"
+							style="--c:{vertexLabelColor?.(v) ?? 'var(--gold-bright)'}"
+							bind:offsetWidth={vw[v]}
+							bind:offsetHeight={vh[v]}>{vertexLabel(v)}</span
+						>
 					</div>
 				</foreignObject>
 			{/if}
-			{#if vertexName?.(v)}
-				<text {x} y={y + vertexRadius + 15} class="vname">{vertexName(v)}</text>
+			{#if vertexName?.(v) && nm}
+				<text x={nm[0]} y={nm[1]} class="vname">{vertexName(v)}</text>
 			{/if}
 		</g>
 	{/each}
@@ -317,6 +479,16 @@
 	}
 	.tri.clickable {
 		cursor: pointer;
+	}
+	/* a mouse press focuses these too: no browser ring, keyboard focus is drawn below */
+	.tri:focus,
+	.hit:focus,
+	.vdot:focus {
+		outline: none;
+	}
+	.tri.clickable:focus-visible {
+		stroke: var(--gold-bright);
+		stroke-width: 2;
 	}
 	.stroke {
 		stroke-linecap: round;
@@ -402,6 +574,7 @@
 		letter-spacing: 0.06em;
 		fill: var(--ink-faint) !important;
 		text-anchor: middle;
+		dominant-baseline: central;
 		pointer-events: none;
 	}
 	.fo {

@@ -54,7 +54,7 @@
 		f(0.75, 0.5, q);
 		label(q.clone().add(new THREE.Vector3(0, 0.32, -0.1)), tex('\\text{core}'), { className: 'gold small' });
 		f(0.4, 1, q);
-		label(q.clone().multiplyScalar(1.14).add(new THREE.Vector3(0, 0.15, 0)), tex('\\text{boundary}'), { className: 'teal small' });
+		label(q.clone().multiplyScalar(1.22).add(new THREE.Vector3(0, 0.15, 0)), tex('\\text{boundary}'), { className: 'teal small' });
 
 		const a = new THREE.Vector3();
 		const b = new THREE.Vector3();

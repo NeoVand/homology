@@ -49,6 +49,21 @@
 	const bandBot = $derived(Math.min(Y0, sy(fa - eps)));
 	const winL = $derived(sx(Math.max(0, a - delta)));
 	const winR = $derived(sx(Math.min(4, a + delta)));
+	// the ε label sits just outside the band, at the end of the frame away from the
+	// window, unless the graph or a window edge runs through it there
+	const epsLabel = $derived.by(() => {
+		const y = epsY + (epsUp ? -12 : 12);
+		const clearance = (px0: number, px1: number) => {
+			let m = Infinity;
+			for (let px = px0; px <= px1; px += 3) m = Math.min(m, Math.abs(sy(F(ux(px))) - y));
+			for (const e of [a - delta, a + delta]) if (sx(e) > px0 - 6 && sx(e) < px1 + 6) m = 0;
+			return m;
+		};
+		const right = { x: X1 - 14, anchor: 'end' as const, y, c: clearance(X1 - 64, X1 - 14) };
+		const left = { x: X0 + 18, anchor: 'start' as const, y, c: clearance(X0 + 18, X0 + 68) };
+		const [pref, other] = deltaRight ? [right, left] : [left, right];
+		return pref.c > 13 || pref.c >= other.c ? pref : other;
+	});
 	const setA = (v: number) => (a = clamp(snap(v, 0.01), 0.3, 3.7));
 	const setEps = (v: number) => (eps = clamp(snap(v, 0.01), 0.05, 0.8));
 	const setDelta = (v: number) => (delta = clamp(snap(v, 0.005), 0.01, 1));
@@ -67,47 +82,53 @@
 		return segs;
 	});
 
-	// the part of the graph over the δ-window, split into "inside the band" and "escaped"
+	// the part of the graph over the δ-window, split into "inside the band" and "escaped".
+	// Sampled finely, and right up to the edges of the (open) window, so a jump just
+	// inside an edge is never missed.
 	const windowPts = $derived.by(() => {
 		let worst = 0;
 		const lo = Math.max(0, a - delta);
 		const hi = Math.min(4, a + delta);
-		const h = (hi - lo) / 160;
+		const n = Math.max(160, Math.ceil((hi - lo) / 0.002));
 		let cur: [number, number][] = [];
 		const runs: { ok: boolean; pts: [number, number][] }[] = [];
 		let curOk: boolean | null = null;
-		for (let i = 1; i < 160; i++) {
-			const x = lo + h * i;
+		let prevY = F(lo);
+		for (let i = 0; i <= n; i++) {
+			const x = i === 0 ? lo + 1e-6 : i === n ? hi - 1e-6 : lo + ((hi - lo) * i) / n;
 			const y = F(x);
 			const ok = Math.abs(y - fa) < eps;
 			worst = Math.max(worst, Math.abs(y - fa));
 			// start a new run when the colour changes, or across the jump
-			if (curOk === null || ok !== curOk || Math.abs(y - F(x - h)) > 0.3) {
+			if (curOk === null || ok !== curOk || Math.abs(y - prevY) > 0.3) {
 				if (cur.length) runs.push({ ok: curOk!, pts: cur });
 				cur = [];
 				curOk = ok;
 			}
 			cur.push([sx(x), sy(y)]);
+			prevY = y;
 		}
 		if (cur.length) runs.push({ ok: curOk!, pts: cur });
 		return { runs, worst, ok: worst < eps };
 	});
 
-	// the largest δ that works (searching on a fine grid), or none
+	// the largest δ that works: walk out from a on each side to the first input whose
+	// value leaves the band. The window is open, so δ may reach (just short of) it;
+	// rounded down to the 0.005 grid δ moves on. Infinity if the graph never leaves.
 	const bestDelta = $derived.by(() => {
-		let best = 0;
-		for (let k = 1; k <= 400; k++) {
-			const d = k * 0.005;
-			let ok = true;
-			for (let i = 1; i < 120 && ok; i++) {
-				const x1 = a - d + (2 * d * i) / 120;
-				if (x1 < 0 || x1 > 4) continue;
-				if (Math.abs(F(x1) - fa) >= eps) ok = false;
+		const h = 0.001;
+		let reach = Infinity;
+		for (const dir of [-1, 1]) {
+			for (let k = 1; k * h < reach; k++) {
+				const x = a + dir * k * h;
+				if (x < 0 || x > 4) break;
+				if (Math.abs(F(x) - fa) >= eps) {
+					reach = (k - 1) * h;
+					break;
+				}
 			}
-			if (!ok) break;
-			best = d;
 		}
-		return best;
+		return reach === Infinity ? reach : Math.floor(reach / 0.005 + 1e-9) * 0.005;
 	});
 
 	function challenge() {
@@ -162,16 +183,15 @@
 		<circle cx={sx(a)} cy={sy(fa)} r="6.5" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.4" filter="url(#glow)" />
 		<SvgTeX x={sx(a)} y={Y0 + 34} tex="a" color="var(--gold-bright)" size={16} w={30} h={22} />
 		<SvgTeX x={X0 - 32} y={sy(fa)} tex="f(a)" color="var(--gold-bright)" size={15} w={46} h={22} />
-		<!-- the ε label sits on the side of the frame away from the window -->
 		<SvgTeX
-			x={deltaRight ? X1 - 14 : X0 + 18}
-			y={epsY + (epsUp ? -12 : 12)}
+			x={epsLabel.x}
+			y={epsLabel.y}
 			tex={epsUp ? 'f(a)+\\varepsilon' : 'f(a)-\\varepsilon'}
 			color="var(--teal)"
 			size={13}
 			w={80}
 			h={20}
-			anchor={deltaRight ? 'end' : 'start'}
+			anchor={epsLabel.anchor}
 		/>
 		<SvgTeX x={deltaX + (deltaRight ? 16 : -16)} y={Y1} tex={deltaRight ? 'a+\\delta' : 'a-\\delta'} color="var(--violet)" size={13} w={50} h={20} anchor={deltaRight ? 'start' : 'end'} />
 		<!-- the three handles -->
@@ -205,38 +225,40 @@
 			onkey={(dx) => setA(a + dx * 0.01)}
 		/>
 	</Svg>
-	<div class="panel ui">
-		<div class="row">
-			<Segmented bind:value={fn} options={(Object.keys(fns) as FnId[]).map((k) => ({ value: k, label: fns[k].label }))} label="Function" />
-			<Button variant="ghost" onclick={challenge}>Challenger: smaller ε!</Button>
-			<span class="vals nums" aria-hidden="true">
-				<span><i class="a">a</i> = {a.toFixed(2)}</span>
-				<span><i class="e">ε</i> = {eps.toFixed(2)}</span>
-				<span><i class="d">δ</i> = {delta.toFixed(3)}</span>
-			</span>
-		</div>
-		<p class="verdict" aria-live="polite">
-			{#if windowPts.ok}
-				<strong class="ok">You win this round:</strong> every input within <TeX tex={'\\delta'} /> of <TeX tex="a" /> lands within
-				<TeX tex={'\\varepsilon'} /> of <TeX tex="f(a)" />.
-			{:else}
-				<strong class="no">Not this δ:</strong> part of the graph over the window escapes the band (shown in rose).
-			{/if}
-			{#if bestDelta > 0}
-				<span class="hint">The largest δ that works here is about <TeX tex={bestDelta.toFixed(3)} />.</span>
-			{:else}
-				<span class="hint bad">No δ at all works for this ε: arbitrarily close to <TeX tex="a" /> the graph jumps away. The function is not continuous at <TeX tex="a" />.</span>
-			{/if}
-		</p>
+</div>
+<div class="bar ui">
+	<div class="row">
+		<Segmented bind:value={fn} options={(Object.keys(fns) as FnId[]).map((k) => ({ value: k, label: fns[k].label }))} label="Function" />
+		<Button variant="ghost" onclick={challenge}>Challenger: smaller ε!</Button>
+		<span class="vals nums" aria-hidden="true">
+			<span><i class="a">a</i> = {a.toFixed(2)}</span>
+			<span><i class="e">ε</i> = {eps.toFixed(2)}</span>
+			<span><i class="d">δ</i> = {delta.toFixed(3)}</span>
+		</span>
 	</div>
+	<p class="verdict" aria-live="polite">
+		{#if windowPts.ok}
+			<strong class="ok">You win this round:</strong> every input within <TeX tex={'\\delta'} /> of <TeX tex="a" /> lands within
+			<TeX tex={'\\varepsilon'} /> of <TeX tex="f(a)" />.
+		{:else}
+			<strong class="no">Not this δ:</strong> part of the graph over the window escapes the band (shown in rose).
+		{/if}
+		{#if bestDelta === Infinity}
+			<span class="hint">Any δ works here: the whole graph stays inside the band.</span>
+		{:else if bestDelta > 0}
+			<span class="hint">The largest δ that works here is about <TeX tex={bestDelta.toFixed(3)} />.</span>
+		{:else}
+			<span class="hint bad">No δ at all works for this ε: arbitrarily close to <TeX tex="a" /> the graph jumps away. The function is not continuous at <TeX tex="a" />.</span>
+		{/if}
+	</p>
 </div>
 
 <style>
 	.ed {
 		padding: 0.6rem 0.6rem 0;
 	}
-	.panel {
-		padding: 0.75rem 1rem 0.9rem;
+	.bar {
+		padding: 0.85rem 1.2rem 1rem;
 		border-top: 1px solid var(--line-faint);
 		background: rgba(5, 8, 16, 0.45);
 		font-size: 0.85rem;

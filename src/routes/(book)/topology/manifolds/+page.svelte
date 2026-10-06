@@ -166,7 +166,7 @@
 	loop: a circle’s worth of directions in which you can walk away from \(p\). Any other answer is a warning sign.
 </p>
 
-<Figure num="2.4.1" title="The small-sphere test" hint="Pick a space · click it to move the probe · resize the sphere">
+<Figure num="2.4.1" title="The small-sphere test" hint="Pick a space · click it to move the probe · drag the sphere’s rim to resize it">
 	<LinkProbe />
 	{#snippet caption()}
 		A glass probe sphere around a point, and in teal the set where it meets the shape. Ordinary points of a curve give two points;
@@ -685,7 +685,7 @@
 	</p>
 </Example>
 
-<Figure num="2.4.6" title="Tangent planes" hint="Click the surface to move the point · turn the direction · try the microscope">
+<Figure num="2.4.6" title="Tangent planes" hint="Drag in the tangent plane to turn the velocity · click the surface to move the point · try the microscope">
 	<TangentPlane />
 	{#snippet caption()}
 		A curve (teal) through a point \(p\) of a sphere or a torus, and its velocity arrow, which always lies in the glassy tangent plane.
@@ -776,7 +776,7 @@
 	anticlockwise to someone standing outside the sphere. The surprise is that not every surface is orientable.
 </p>
 
-<Figure num="2.4.8" title="A walk round a band" hint="Choose a band · walk a lap · drag to rotate">
+<Figure num="2.4.8" title="A walk round a band" hint="Choose a band · play the walk, or drag the F along the band · drag elsewhere to turn">
 	<OrientationWalk />
 	{#snippet caption()}
 		A flat creature — the letter F with a turning arrow — walks once around the middle of a band, while a faint ghost stays at the start.

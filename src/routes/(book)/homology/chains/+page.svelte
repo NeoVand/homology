@@ -147,7 +147,8 @@
 	\partial[v_0] &= 0, \\
 	\partial[v_0, v_1] &= [v_0] + [v_1], \\
 	\partial[v_0, v_1, v_2] &= [v_1, v_2] + [v_0, v_2] + [v_0, v_1], \\
-	\partial[v_0, v_1, v_2, v_3] &= [v_1, v_2, v_3] + [v_0, v_2, v_3] + [v_0, v_1, v_3] + [v_0, v_1, v_2].
+	\partial[v_0, v_1, v_2, v_3] &= [v_1, v_2, v_3] + [v_0, v_2, v_3] \\
+	&\quad + [v_0, v_1, v_3] + [v_0, v_1, v_2].
 	\end{aligned}
 	\]
 	<p>
@@ -436,8 +437,10 @@
 	<p>Linearity lets us take boundaries of any chain, one simplex at a time. For \(c = 2[0,1,2] + [1,2,3]\),</p>
 	\[
 	\begin{aligned}
-	\partial c &= 2\big([1,2] - [0,2] + [0,1]\big) + \big([2,3] - [1,3] + [1,2]\big) \\
-	&= 2[0,1] - 2[0,2] + 3[1,2] - [1,3] + [2,3].
+	\partial c &= 2\big([1,2] - [0,2] + [0,1]\big) \\
+	&\quad + \big([2,3] - [1,3] + [1,2]\big) \\
+	&= 2[0,1] - 2[0,2] + 3[1,2] \\
+	&\quad - [1,3] + [2,3].
 	\end{aligned}
 	\]
 	<p>

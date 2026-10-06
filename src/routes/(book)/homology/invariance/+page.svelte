@@ -77,7 +77,7 @@
 <p>
 	A chain is a formal sum of oriented simplices (<Ref to="homology/chains" />). Since \(f\) sends simplices to simplices, it ought to send chains to chains. On a single oriented simplex, apply \(f\) to its vertices:
 </p>
-\[ f_\#[v_0,\dots,v_k] \;=\; \begin{cases} [f(v_0),\dots,f(v_k)] & \text{if the } f(v_i) \text{ are all different,}\\[2pt] 0 & \text{if two of them coincide.} \end{cases} \]
+\[ f_\#[v_0,\dots,v_k] \;=\; \begin{cases} [f(v_0),\dots,f(v_k)] & \text{if the } f(v_i) \text{ are distinct,}\\[2pt] 0 & \text{if two of them coincide.} \end{cases} \]
 <p>
 	Then extend to sums by \(f_\#\bigl(\sum n_i \sigma_i\bigr) = \sum n_i\, f_\#(\sigma_i)\). The symbol \(f_\#\) is read “\(f\) sharp”; the sharp sign marks a map on <em>chains</em>, as opposed to the map \(f_*\) (“\(f\) lower star”) on homology that we are about to build.
 </p>
@@ -299,7 +299,7 @@
 \[ \partial P(z) = g_\#(z) - f_\#(z). \]
 <p>The two image cycles differ by a boundary. They are homologous, so \(f_*[z] = g_*[z]\).</p>
 
-<Figure num="3.5.3" title="A homotopy sweeps out a prism" hint="Drag to rotate · move the time slider">
+<Figure num="3.5.3" title="A homotopy sweeps out a prism" hint="Play or scrub the homotopy · drag to rotate">
 	<PrismSweep />
 	{#snippet caption()}
 		A loop on a torus slides and ripples along a homotopy. The swept band (violet) is the chain \(P(z)\). Its boundary is the final loop \(g_\#(z)\) (teal) minus the initial loop \(f_\#(z)\) (gold), so the two loops are homologous.
@@ -564,10 +564,10 @@
 	The individual preimages come and go as \(y\) moves, but the signed count never changes. Milnor’s little book <em>Topology from the Differentiable Viewpoint</em> builds the whole theory from this formula. Figure 3.5.8 lets you watch it happen.
 </p>
 
-<Figure num="3.5.8" title="Counting preimages with signs" hint="Drag to rotate · change the degree, the wobble and the target">
+<Figure num="3.5.8" title="Counting preimages with signs" hint="Drag the target point · change n and the wobble · drag elsewhere to rotate">
 	<DegreeHelix />
 	{#snippet caption()}
-		The graph of \(f(\theta) = n\theta + a\sin\theta\), a map from the circle to the circle, drawn on a glass cylinder. Height is the position on the domain circle; angle is where \(f\) sends it. Its shadow on the blue target circle winds \(n\) times. The white line rises from a target point and meets the graph at every preimage: green where \(f\) runs forwards, rose where it runs backwards. Add wobble and preimages appear in pairs, one of each sign, so the count \(\#(+) - \#(-)\) stays \(n\).
+		The graph of \(f(\theta) = n\theta + a\sin\theta\), a map from the circle to the circle, drawn on a glass cylinder. Height is the position on the domain circle; angle is where \(f\) sends it. Its shadow on the blue target circle winds \(n\) times. The white line rises from a target point \(y\) and meets the graph at every preimage: green where \(f\) runs forwards, rose where it runs backwards. Add wobble and preimages appear in pairs, one of each sign, so the count \(\#(+) - \#(-)\) stays \(n\).
 	{/snippet}
 </Figure>
 
@@ -725,10 +725,10 @@
 	The kernel of \(h\) is not just an algebraic curiosity; you can see it. Punch a hole in a torus. The punctured torus deformation retracts onto the figure eight \(a\vee b\), so its \(\pi_1\) is the free group on \(a\) and \(b\). The loop that runs around the edge of the gluing square, \(aba^{-1}b^{-1}\), is a commutator. It can be slid onto the rim of the hole. There it is the <em>boundary of the whole punctured torus</em>, so in \(H_1\) it is zero. But in \(\pi_1\) it is not the identity: the hole is in the way, and no amount of sliding will shrink it to a point.
 </p>
 
-<Figure num="3.5.10" title="A loop that bounds but cannot shrink" hint="Drag to rotate · slide the loop">
+<Figure num="3.5.10" title="A loop that bounds but cannot shrink" hint="Drag the teal loop · drag elsewhere to rotate">
 	<CommutatorTorus />
 	{#snippet caption()}
-		On a torus with a hole (rim in rose), the teal loop runs along \(a\), then \(b\), then \(a\) backwards, then \(b\) backwards — follow the white bead. Slide it towards the hole. At every stage it is the boundary of the shaded teal surface, so it is \(0\) in \(H_1\). Yet it is the commutator \(aba^{-1}b^{-1}\neq 1\) in \(\pi_1\): it hugs the hole and cannot be shrunk.
+		On a torus with a hole (rim in rose), the teal loop runs along \(a\), then \(b\), then \(a\) backwards, then \(b\) backwards — follow the white bead. Drag it towards the hole. At every stage it is the boundary of the shaded teal surface, so it is \(0\) in \(H_1\). Yet it is the commutator \(aba^{-1}b^{-1}\neq 1\) in \(\pi_1\): it hugs the hole and cannot be shrunk.
 	{/snippet}
 </Figure>
 

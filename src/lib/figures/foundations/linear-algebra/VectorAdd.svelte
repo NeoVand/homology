@@ -3,11 +3,9 @@
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
-	import Controls from '$lib/components/ui/Controls.svelte';
 	import Handle from './Handle.svelte';
 	import Arrow from './Arrow.svelte';
-	import { makeView, add, mul, snap2, clamp, tfmt, C, len, type V2 } from './geom';
+	import { makeView, add, sub, mul, dot, snap2, snapTo, clamp, clipLine, tfmt, C, len, type V2 } from './geom';
 
 	const view = makeView(440, 380, 46, 170, 250);
 	let svg = $state<SVGSVGElement>();
@@ -29,9 +27,30 @@
 
 	const set = (which: 'u' | 'v', w: V2) => {
 		const p = snap2([clamp(w[0], view.xmin + 0.5, view.xmax - 0.5), clamp(w[1], view.ymin + 0.5, view.ymax - 0.5)], 0.5);
-		if (which === 'u') u = p;
-		else v = p;
+		if (which === 'u') {
+			u = p;
+			setC(c);
+		} else v = p;
 	};
+
+	// c moves in steps of 0.25 within [−2, 2], and only as far as keeps the tip of c·u on the canvas
+	const inView = (p: V2) => p[0] >= view.xmin + 0.3 && p[0] <= view.xmax - 0.3 && p[1] >= view.ymin + 0.3 && p[1] <= view.ymax - 0.3;
+	function setC(k: number) {
+		k = clamp(snapTo(k, 0.25), -2, 2);
+		while (k !== 0 && !inView(mul(k, u))) k -= Math.sign(k) * 0.25;
+		c = k;
+	}
+	// the tip of c·u slides along the line through u: drag it there, or step it with the arrow keys
+	function moveC(w: V2, e?: PointerEvent) {
+		const uu = dot(u, u);
+		if (uu < 1e-9) return;
+		if (e) setC(dot(w, u) / uu);
+		else {
+			const d = dot(sub(w, cu), u);
+			if (Math.abs(d) > 1e-9) setC(c + Math.sign(d) * 0.25);
+		}
+	}
+	const uLine = $derived(clipLine(view, [0, 0], u, 0));
 	const paren = (x: number) => (x < 0 ? `(${tfmt(x)})` : tfmt(x));
 	const off = (p: V2, d: V2): V2 => {
 		const L = len(d) || 1;
@@ -55,6 +74,9 @@
 			<polygon class="para" points="{view.P([0, 0])} {view.P(u)} {view.P(s)} {view.P(v)}" />
 
 			<!-- c·u along the line of u -->
+			{#if uLine}
+				<line x1={view.X(uLine[0][0])} y1={view.Y(uLine[0][1])} x2={view.X(uLine[1][0])} y2={view.Y(uLine[1][1])} class="uline" />
+			{/if}
 			<Arrow {view} to={cu} color={C.green} width={2} head={10} glow={false} dashed opacity={0.85} />
 
 			<!-- translated copies: tip-to-tail -->
@@ -77,6 +99,10 @@
 
 			<Handle {view} {svg} pos={u} color={C.violet} label="tip of vector u" onmove={(w) => set('u', w)} />
 			<Handle {view} {svg} pos={v} color={C.blue} label="tip of vector v" onmove={(w) => set('v', w)} />
+			<!-- drawn last, so that at c = 1 (where it sits on the tip of u) it can still be dragged away -->
+			{#if len(u) > 0}
+				<Handle {view} {svg} pos={cu} color={C.green} r={5.5} label="tip of c·u, on the line through u (c = {tfmt(c)})" onmove={moveC} />
+			{/if}
 			{@const pu = off(u, [u[0] - v[0], u[1] - v[1]])}
 			{@const pv = off(v, [v[0] - u[0], v[1] - u[1]])}
 			<SvgTeX x={view.X(pu[0])} y={view.Y(pu[1])} tex={'\\mathbf u'} color={C.violet} size={17} w={30} />
@@ -102,9 +128,6 @@
 		</p>
 	</div>
 </div>
-<Controls>
-	<Slider bind:value={c} min={-2} max={2} step={0.25} label="scalar c in c·u" />
-</Controls>
 
 <style>
 	.va {
@@ -114,7 +137,7 @@
 		align-items: center;
 		padding: 1rem 1.2rem 0.6rem;
 	}
-	@media (max-width: 760px) {
+	@container figure (max-width: 720px) {
 		.va {
 			grid-template-columns: minmax(0, 1fr);
 			padding: 0.6rem 0.6rem 0.4rem;
@@ -131,6 +154,11 @@
 	}
 	.grid.axis {
 		stroke: rgba(235, 229, 213, 0.28);
+	}
+	.uline {
+		stroke: rgba(132, 217, 162, 0.22);
+		stroke-width: 1.2;
+		stroke-dasharray: 2 5;
 	}
 	.para {
 		fill: rgba(242, 208, 143, 0.07);

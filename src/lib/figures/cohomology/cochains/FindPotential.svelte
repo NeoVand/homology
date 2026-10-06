@@ -7,6 +7,7 @@
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import OGraphView from './OGraphView.svelte';
 	import { integrate, cycleRank, signed, type Integration } from './graph';
 	import { puzzles } from './presets';
@@ -32,16 +33,11 @@
 		run = null;
 	});
 
-	function nudge(d: number) {
+	// the first press on an unset vertex gives it height 0, later presses step by 1
+	function setHeight(v: number) {
 		if (selected === null) return;
 		run = null;
-		const cur = f[selected];
-		f[selected] = cur === null ? 0 : cur + d;
-	}
-	function setZero() {
-		if (selected === null) return;
-		run = null;
-		f[selected] = 0;
+		f[selected] = f[selected] === null ? 0 : v;
 	}
 	function clearAll() {
 		clearTimeout(timer);
@@ -163,10 +159,13 @@
 			vertexFill={(v) => (f[v] === null ? 'rgba(40,50,80,0.95)' : current?.v === v ? 'var(--teal)' : undefined)}
 			vertexStroke={(v) => (f[v] === null ? 'rgba(206,198,176,0.6)' : undefined)}
 			vertexText={(v) => (f[v] === null ? '?' : null)}
-			vertexLabel={(v) => (f[v] === null ? null : String(f[v]))}
+			vertexTextColor={() => 'var(--gold-pale)'}
+			vertexTextSize={13}
+			vertexLabel={(v) => (f[v] === null ? null : signed(f[v]!, false))}
 			vertexLabelColor={(v) => (current?.v === v ? 'var(--teal)' : 'var(--gold-bright)')}
 			selectedVertex={run ? null : selected}
 			clickVertex={true}
+			autoPlace
 			onvertex={(v) => (selected = v)}
 		/>
 	</Svg>
@@ -174,10 +173,17 @@
 </div>
 <Controls>
 	<div class="row">
-		<span class="ui lbl">Selected vertex:</span>
-		<Button onclick={() => nudge(-1)} disabled={selected === null}>−1</Button>
-		<Button onclick={setZero} disabled={selected === null}>0</Button>
-		<Button onclick={() => nudge(1)} disabled={selected === null}>+1</Button>
+		{#if selected !== null}
+			{@const h = f[selected]}
+			<Stepper
+				label="Height of the selected vertex"
+				value={h ?? 0}
+				min={-20}
+				max={20}
+				format={(v) => (h === null ? '?' : signed(v, false))}
+				onchange={setHeight}
+			/>
+		{/if}
 		<span class="sp"></span>
 		<Button variant="gold" onclick={integrateNow}>Integrate from the selected vertex</Button>
 		<Button variant="subtle" onclick={clearAll}>Clear</Button>
@@ -213,12 +219,8 @@
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: 0.5rem 0.6rem;
+		gap: 0.5rem 0.75rem;
 		width: 100%;
-	}
-	.lbl {
-		font-size: 0.78rem;
-		color: var(--ink-faint);
 	}
 	.sp {
 		flex: 1;
@@ -234,5 +236,10 @@
 	}
 	.dot {
 		color: var(--ink-ghost);
+	}
+	@container figure (max-width: 30rem) {
+		.dot {
+			display: none;
+		}
 	}
 </style>

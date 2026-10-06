@@ -191,6 +191,14 @@ h4 {
 
 /* ── prose ────────────────────────────────────────────────────────────── */
 
+/* no one-word last lines in running text */
+p,
+li,
+figcaption,
+blockquote {
+	text-wrap: pretty;
+}
+
 .prose {
 	max-width: var(--measure);
 	margin-inline: auto;
@@ -381,12 +389,27 @@ code {
 	font-style: inherit;
 }
 
+/* Display math (built by src/lib/katex/preprocess.js). Each formula set side
+   by side with \qquad is its own piece; pieces share a line when there is room
+   and stack, centred, when there is not. A piece too long for the column
+   breaks after a relation or an operator. Only a wide matrix or diagram, which
+   cannot break, scrolls sideways. */
 .math-block {
-	display: block;
+	--math-scale: 1.14;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	justify-content: safe center;
+	align-items: baseline;
+	/* a \qquad at the formula's size (KaTeX sets math at 1.21em) */
+	column-gap: calc(2.42em * var(--math-scale));
+	row-gap: 0.55em;
 	margin: 1.1em 0 1.3em;
 	overflow-x: auto;
 	overflow-y: hidden;
-	padding: 0.2em 0;
+	/* a few pixels at the sides: KaTeX's braces and arrows reach a hair past
+	   their boxes, which would otherwise show a scrollbar */
+	padding: 0.2em 3px;
 	scrollbar-width: thin;
 }
 
@@ -395,7 +418,15 @@ code {
 }
 
 .math-block .katex-display > .katex {
-	font-size: 1.14em;
+	font-size: calc(var(--math-scale) * 1em);
+	white-space: normal;
+	text-wrap: balance;
+}
+
+@media (max-width: 30rem) {
+	.math-block {
+		--math-scale: 1;
+	}
 }
 
 .tx-gold {

@@ -56,7 +56,7 @@
 			}}
 			triLabel={(t) => {
 				const p = t === 0 ? triA : triB;
-				return Math.abs(p - 1) < 1e-6 ? 'no arbitrage ✓' : `×${p.toFixed(3)} ✗`;
+				return Math.abs(p - 1) < 1e-6 ? 'no arbitrage' : `×${p.toFixed(3)}`;
 			}}
 			triLabelColor={(t) => (Math.abs((t === 0 ? triA : triB) - 1) < 1e-6 ? 'var(--green)' : 'var(--rose)')}
 			edgeColor={(e) => (e === 2 ? 'var(--gold-bright)' : e === 4 ? 'var(--violet)' : fair ? 'var(--green)' : 'rgba(242,208,143,0.75)')}

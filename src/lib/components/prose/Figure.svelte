@@ -59,10 +59,6 @@
 		width: var(--w);
 		margin: 2.5rem 0 2.6rem calc((100% - var(--w)) / 2);
 		container: figure / inline-size;
-		/* plates far from the viewport are not laid out or painted until they come
-		   near; once seen, their real height is remembered */
-		content-visibility: auto;
-		contain-intrinsic-size: auto 34rem;
 	}
 	.frame {
 		position: relative;

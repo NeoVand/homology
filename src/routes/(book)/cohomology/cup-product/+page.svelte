@@ -659,13 +659,13 @@
 	support of \(\alpha\smile\beta\).
 </p>
 
-<Figure num="4.5.4" title="Bands on a torus" hint="Drag to rotate · slide and bend the bands · switch products">
+<Figure num="4.5.4" title="Bands on a torus" hint="Drag a band to slide it · drag elsewhere to rotate · play the bend">
 	<BandsTorus />
 	{#snippet caption()}
 		Two fences on a torus and their crossings. The first readout counts crossings with signs; the second
 		computes the cup product honestly, by front face × back face on a \(12\times 12\) triangulation
-		built from the bands. Slide the bands anywhere and the answer stays \(+1\). Bend \(\alpha\) into an S
-		until it crosses \(\beta\) three times: the signs read \(+1-1+1\), and the total is still \(+1\). For
+		built from the bands. Drag the bands anywhere and the answer stays \(+1\). Play the bend: \(\alpha\)
+		becomes an S that crosses \(\beta\) three times, the signs read \(+1-1+1\), and the total is still \(+1\). For
 		\(\alpha\smile\alpha\), a pushed-off copy \(\alpha'\) never meets \(\alpha\): the square is zero.
 	{/snippet}
 </Figure>
@@ -892,7 +892,7 @@
 	side and has to cross the original.
 </p>
 
-<Figure num="4.5.7" title="Pushing a fence off itself" hint="Choose the fence · drag the slider">
+<Figure num="4.5.7" title="Pushing a fence off itself" hint="Choose the fence · drag the dashed copy">
 	<PushOff />
 	{#snippet caption()}
 		On the torus, every fence can be slid off itself, so every square is zero. On the Klein bottle the
@@ -976,9 +976,10 @@
 		On a closed surface, draw a degree-1 class \(\alpha\) as a fence \(F_\alpha\) and \(\beta\) as a fence
 		\(F_\beta\), in general position. Then
 	</p>
-	\[ \ip{\alpha\smile\beta}{[M]} = \text{the number of points where } F_\alpha \text{ crosses } F_\beta, \]
+	\[ \ip{\alpha\smile\beta}{[M]} = \#\,\big(F_\alpha \cap F_\beta\big), \]
 	<p>
-		counted with signs over \(\Z\) (and simply counted, mod 2, over \(\Z/2\)). To square a class, cross its
+		the number of points where \(F_\alpha\) crosses \(F_\beta\), counted with signs over \(\Z\) (and simply
+		counted, mod 2, over \(\Z/2\)). To square a class, cross its
 		fence with a pushed-off copy of itself.
 	</p>
 </KeyIdea>

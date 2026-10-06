@@ -116,13 +116,23 @@
 		color: var(--ink-dim);
 		background: rgba(6, 10, 20, 0.66);
 		border: 1px solid var(--line-faint);
-		border-radius: 999px;
+		border-radius: 0.9rem;
 		padding: 0.25rem 0.8rem;
-		white-space: nowrap;
 		pointer-events: none;
-		max-width: 92%;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		/* clear of the reset-view button in the corner; a long stage wraps */
+		width: max-content;
+		max-width: calc(100% - 7rem);
+		text-align: center;
+		text-wrap: pretty;
+	}
+	@container figure (max-width: 520px) {
+		/* too narrow to float over the scene: sit under it instead */
+		.stage {
+			position: static;
+			transform: none;
+			max-width: calc(100% - 1.6rem);
+			margin: 0.2rem auto 0.7rem;
+		}
 	}
 	.bar {
 		display: flex;

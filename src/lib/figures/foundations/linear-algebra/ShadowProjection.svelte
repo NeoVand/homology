@@ -10,16 +10,13 @@
 	import { glassMesh, glowTube, glowPoint, pointCloud, iridescent } from '$lib/three/materials';
 	import { surfaceGeometry, plane } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
-	import Slider from '$lib/components/ui/Slider.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
-	import { easeInOut } from './geom';
 
 	let t = $state(0);
 	let showFibres = $state(true);
 	let api: { setT(v: number): void; setFibres(on: boolean): void } | null = null;
-	let raf = 0;
 
 	// kernel direction in three.js coordinates (y is up; the floor y = 0 is the image)
 	const KDIR: [number, number, number] = [0.55, 1, 0.35];
@@ -205,20 +202,6 @@
 		api?.setFibres(on);
 	});
 
-	function play() {
-		cancelAnimationFrame(raf);
-		const from = t > 0.5 ? 1 : 0;
-		const to = 1 - from;
-		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		const dur = reduced ? 0 : 2200;
-		const t0 = performance.now();
-		const step = (now: number) => {
-			const u = dur ? Math.min(1, (now - t0) / dur) : 1;
-			t = from + (to - from) * easeInOut(u);
-			if (u < 1) raf = requestAnimationFrame(step);
-		};
-		raf = requestAnimationFrame(step);
-	}
 	const badge = tex('3 = \\underbrace{\\textcolor{#f2d08f}{2}}_{\\text{rank}} + \\underbrace{\\textcolor{#5fd6cf}{1}}_{\\text{nullity}}');
 </script>
 
@@ -227,13 +210,12 @@
 	height={460}
 	controls={{ autoRotate: true, autoRotateSpeed: 0.45 }}
 	camera={{ position: [4.9, 3.5, 5.6], target: [0, 0.15, 0], fov: 40 }}
-	label="A glass cube floats above a golden floor. A slider applies a linear map that slides every point along one slanted teal direction until it reaches the floor: the cube flattens into its shadow, the teal line through the origin shrinks to a single point, and four thin teal lines parallel to it each collapse to one gold point on the floor."
+	label="A glass cube floats above a golden floor. Applying a linear map slides every point along one slanted teal direction until it reaches the floor: the cube flattens into its shadow, the teal line through the origin shrinks to a single point, and four thin teal lines parallel to it each collapse to one gold point on the floor."
 >
 	<div class="badge ui">{@html badge}</div>
 </Scene3D>
 <Controls>
-	<Slider bind:value={t} min={0} max={1} step={0.01} label="apply the map" format={(v) => (v < 0.005 ? 'before' : v > 0.995 ? 'after' : v.toFixed(2))} />
-	<Button variant="gold" onclick={play}>{t > 0.5 ? 'Undo' : 'Apply'}</Button>
+	<Timeline bind:value={t} duration={2.2} from="cube" to="shadow" label="Applying the map" />
 	<Toggle bind:checked={showFibres} label="show parallel lines (fibres)" />
 </Controls>
 

@@ -197,12 +197,12 @@
 	</li>
 </ul>
 
-<Figure num="1.5.2" title="Adding arrows, adding lists" hint="Drag u and v · slide c">
+<Figure num="1.5.2" title="Adding arrows, adding lists" hint="Drag u and v · drag the green tip to scale u">
 	<VectorAdd />
 	{#snippet caption()}
 		Walking along \(\mathbf u\) and then along \(\mathbf v\) ends at the same place as walking along \(\mathbf v\) and then along
 		\(\mathbf u\): the gold diagonal of the parallelogram, \(\mathbf u + \mathbf v\). The readout computes the same sum with lists.
-		The green arrow is \(c\,\mathbf u\); however you set \(c\), it stays on the line through \(\mathbf u\).
+		The green arrow is \(c\,\mathbf u\): drag its tip and it slides along the line through \(\mathbf u\), never off it.
 	{/snippet}
 </Figure>
 
@@ -470,7 +470,7 @@
 	columns of a table of numbers. That table is the <dfn>matrix</dfn> of \(T\).
 </p>
 
-<Figure num="1.5.5" title="A linear map is a grid that stays a grid" hint="Drag the arrow tips">
+<Figure num="1.5.5" title="A linear map is a grid that stays a grid" hint="Drag the arrow tips · try a preset · play the map">
 	<LinearMapPlayground />
 	{#snippet caption()}
 		Drag where \(\mathbf e_1\) and \(\mathbf e_2\) land: the whole grid follows, and the matrix \(A\) records the two landing spots as
@@ -633,7 +633,7 @@
 	slanted sunlight. Every point slides along one fixed direction until it reaches the floor.
 </p>
 
-<Figure num="1.5.6" title="Crushing one dimension" hint="Drag to rotate · Apply">
+<Figure num="1.5.6" title="Crushing one dimension" hint="Play or scrub the map · drag to rotate">
 	<ShadowProjection />
 	{#snippet caption()}
 		A rank-2 map of three-dimensional space. Apply it, and every point slides along the slanted direction until it reaches the floor.
@@ -1613,8 +1613,8 @@
 	}
 	/* on phones, display formulas are set a little smaller so that they fit the column */
 	@media (max-width: 560px) {
-		.la :global(.math-block .katex-display > .katex) {
-			font-size: 1em;
+		.la :global(.math-block) {
+			--math-scale: 1;
 		}
 	}
 </style>

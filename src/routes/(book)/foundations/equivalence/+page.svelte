@@ -839,7 +839,7 @@
 	string whose two ends are tied together: a loop. The quotient of an interval by “its ends are the same” is a circle.
 </p>
 
-<Figure title="Gluing the ends" hint="Press “Glue” or drag the bend slider" num="1.2.5">
+<Figure title="Gluing the ends" hint="Play or scrub the gluing" num="1.2.5">
 	<IntervalToCircle />
 	{#snippet caption()}
 		Bending the interval changes nothing about which points are the same; only when the ends meet do \(0\) and \(1\) become a

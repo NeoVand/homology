@@ -5,7 +5,7 @@
 	// you set the edge numbers yourself and the circulation can be anything.
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import OGraphView from './OGraphView.svelte';
@@ -35,9 +35,12 @@
 	const formula = $derived(
 		`\\psi(AB) + \\psi(BC) - \\psi(AC) = ${values[0]} ${values[1] < 0 ? '-' : '+'} ${Math.abs(values[1])} ${values[2] < 0 ? '+' : '-'} ${Math.abs(values[2])} = ${circ}`
 	);
-	function bump(d: number) {
-		if (mode === 'heights' && selV !== null) f[selV] += d;
-		if (mode === 'free' && selE !== null) psi[selE] += d;
+	const edgeName = (e: number) => names[edges[e][0]] + names[edges[e][1]];
+	const stepLabel = $derived(mode === 'heights' ? (selV === null ? '' : `Height of ${names[selV]}`) : selE === null ? '' : `Number on ${edgeName(selE)}`);
+	const stepValue = $derived(mode === 'heights' ? (selV === null ? 0 : f[selV]) : selE === null ? 0 : psi[selE]);
+	function setValue(v: number) {
+		if (mode === 'heights' && selV !== null) f[selV] = v;
+		if (mode === 'free' && selE !== null) psi[selE] = v;
 	}
 </script>
 
@@ -69,6 +72,7 @@
 			selectedEdge={mode === 'free' ? selE : null}
 			clickVertex={mode === 'heights'}
 			clickEdge={mode === 'free'}
+			autoPlace
 			onvertex={(v) => (selV = v)}
 			onedge={(e) => (selE = e)}
 		/>
@@ -81,9 +85,7 @@
 </div>
 <Controls>
 	<div class="row">
-		<span class="ui lbl">{mode === 'heights' ? `Height of ${selV === null ? '—' : names[selV]}:` : 'Selected edge:'}</span>
-		<Button onclick={() => bump(-1)}>−1</Button>
-		<Button onclick={() => bump(1)}>+1</Button>
+		<Stepper label={stepLabel} value={stepValue} min={-20} max={20} onchange={setValue} />
 		<span class="formula" class:ok={circ === 0}><TeX tex={formula} /></span>
 	</div>
 </Controls>
@@ -122,10 +124,6 @@
 		align-items: center;
 		gap: 0.5rem 0.7rem;
 		width: 100%;
-	}
-	.lbl {
-		font-size: 0.8rem;
-		color: var(--ink-dim);
 	}
 	.formula {
 		margin-left: auto;

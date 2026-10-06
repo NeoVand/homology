@@ -4,15 +4,10 @@
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import { renderMathInText } from '$lib/katex/render';
-	import { prefersReducedMotion } from 'svelte/motion';
-	import { onDestroy } from 'svelte';
 
 	let g = $state(0);
-	let playing = $state(false);
-	let raf = 0;
 
 	const W = 600;
 	const H = 300;
@@ -46,33 +41,6 @@
 	const glued = $derived(g > 0.995);
 	const ticks = [0.25, 0.5, 0.75];
 	const tickTeX = ['\\tfrac14', '\\tfrac12', '\\tfrac34'];
-
-	function stop() {
-		playing = false;
-		if (raf && typeof cancelAnimationFrame !== 'undefined') cancelAnimationFrame(raf);
-		raf = 0;
-	}
-	function play() {
-		if (playing) return stop();
-		if (prefersReducedMotion.current) {
-			g = g > 0.995 ? 0 : 1;
-			return;
-		}
-		const from = g;
-		const to = g > 0.995 ? 0 : 1;
-		const t0 = performance.now();
-		const dur = 1800 * Math.abs(to - from) + 200;
-		playing = true;
-		const step = (now: number) => {
-			const f = Math.min(1, (now - t0) / dur);
-			const e = f < 0.5 ? 4 * f * f * f : 1 - Math.pow(-2 * f + 2, 3) / 2;
-			g = from + (to - from) * e;
-			if (f < 1) raf = requestAnimationFrame(step);
-			else playing = false;
-		};
-		raf = requestAnimationFrame(step);
-	}
-	onDestroy(stop);
 
 	const end0 = $derived(pt(0, g));
 	const end1 = $derived(pt(1, g));
@@ -119,8 +87,7 @@
 	</Svg>
 	<p class="readout" aria-live="polite">{@html renderMathInText(readout)}</p>
 	<Controls>
-		<Button variant="gold" onclick={play}>{playing ? 'Pause' : glued ? 'Unglue' : 'Glue 0 to 1'}</Button>
-		<div class="sl"><Slider bind:value={g} min={0} max={1} step={0.005} label="bend" oninput={stop} format={(v) => (v > 0.995 ? 'glued' : Math.round(v * 100) + '%')} /></div>
+		<Timeline bind:value={g} duration={2} from="interval" to="circle" label="Bending the interval until 0 meets 1" />
 	</Controls>
 </div>
 
@@ -168,8 +135,5 @@
 		font-size: 0.95rem;
 		color: var(--ink-dim);
 		min-height: 3em;
-	}
-	.sl {
-		flex: 1 1 12rem;
 	}
 </style>

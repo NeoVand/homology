@@ -6,6 +6,7 @@
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import { spaces, homologyOf, tensorFG, torFG, kunneth, tensorComplex, groupTeX, equal, isZero } from './abelian';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	let xId = $state('RP2');
 	let yId = $state('RP2');
@@ -67,7 +68,7 @@
 		Each anti-diagonal <TeX tex="i + j = n" /> (same colour) adds up to <TeX tex={`H_n`} />; {torCells.length
 			? 'the rose Tor terms jump one diagonal up.'
 			: 'here there is no torsion to tensor together, so no Tor terms appear.'}
-		<span class:ok class:bad={!ok}>{ok ? '✓ Agrees with the homology of the product cell complex.' : '✗ mismatch'}</span>
+		<span class:ok class:bad={!ok}><Mark {ok} /> {ok ? 'Agrees with the homology of the product cell complex.' : 'Does not match the product cell complex.'}</span>
 	</p>
 	<Controls>
 		<span class="lbl ui"><TeX tex="X =" /></span>

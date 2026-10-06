@@ -8,6 +8,7 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	let tab = $state<'set' | 'gcd' | 'ker'>('set');
 
@@ -159,9 +160,9 @@
 		</Svg>
 		<div class="readout ui">
 			{#if allGood}
-				<span class="ok">✓ Both triangles commute: <TeX tex={'p_1\\circ h = f,\\; p_2\\circ h = g'} />. Try to find a different <TeX tex="h" /> that also works — click an element of <TeX tex="X" />, then a pair.</span>
+				<span class="ok"><Mark ok /> Both triangles commute: <TeX tex={'p_1\\circ h = f,\\; p_2\\circ h = g'} />. Try to find a different <TeX tex="h" /> that also works — click an element of <TeX tex="X" />, then a pair.</span>
 			{:else}
-				<span class="bad">✗ With this <TeX tex="h" />, {bad.map((b, i) => (b.p1 ? `p₁∘h ≠ f at ${Xs[i]}` : b.p2 ? `p₂∘h ≠ g at ${Xs[i]}` : '')).filter(Boolean).join('; ')}. Only the pair <TeX tex={'(f(x), g(x))'} /> works.</span>
+				<span class="bad"><Mark ok={false} /> With this <TeX tex="h" />, {bad.map((b, i) => (b.p1 ? `p₁∘h ≠ f at ${Xs[i]}` : b.p2 ? `p₂∘h ≠ g at ${Xs[i]}` : '')).filter(Boolean).join('; ')}. Only the pair <TeX tex={'(f(x), g(x))'} /> works.</span>
 				<Button variant="subtle" onclick={resetH}>Restore ⟨f, g⟩</Button>
 			{/if}
 		</div>

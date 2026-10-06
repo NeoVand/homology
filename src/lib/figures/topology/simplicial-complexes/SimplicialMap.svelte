@@ -2,47 +2,21 @@
 	// Figure: simplicial maps. Vertices are sent to vertices, and every simplex is
 	// carried along (straight lines go to straight lines). Two examples: a hexagon
 	// wrapping twice around a triangle, and a triangle collapsing onto an edge.
-	import { onMount } from 'svelte';
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import { ease } from './kit3d';
 
 	type P = [number, number];
 	let ex = $state<'wrap' | 'collapse'>('wrap');
 	let cw = $state(640);
 	const k = $derived(cw < 560 ? 1.6 : 1);
 	let t = $state(0);
-	let reduced = false;
-	let raf = 0;
-	onMount(() => {
-		reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		return () => cancelAnimationFrame(raf);
-	});
 	$effect(() => {
 		void ex;
 		t = 0;
 	});
-	function play() {
-		cancelAnimationFrame(raf);
-		if (reduced) {
-			t = t > 0.5 ? 0 : 1;
-			return;
-		}
-		const from = t > 0.99 ? 0 : t;
-		const to = 1;
-		const t0 = performance.now();
-		const dur = 1600 * (to - from) + 200;
-		const step = (now: number) => {
-			const s = Math.min(1, (now - t0) / dur);
-			t = from + (to - from) * ease(s);
-			if (s < 1) raf = requestAnimationFrame(step);
-		};
-		raf = requestAnimationFrame(step);
-	}
 
 	const colours = ['#f2d08f', '#5fd6cf', '#a493ff'];
 	const C: P = [320, 198];
@@ -118,8 +92,7 @@
 		]}
 		label="Example"
 	/>
-	<div class="sl"><Slider bind:value={t} min={0} max={1} step={0.01} label="Carry the source along the map" format={(v) => `${Math.round(v * 100)}%`} /></div>
-	<Button variant="gold" onclick={play}>Play</Button>
+	<Timeline bind:value={t} duration={2} from="source" to="image" label="Carrying the source along the map" />
 </div>
 
 <style>
@@ -170,9 +143,5 @@
 		padding: 0.75rem 1.2rem 0.9rem;
 		border-top: 1px solid var(--line-faint);
 		background: rgba(5, 8, 16, 0.45);
-	}
-	.sl {
-		flex: 1;
-		min-width: 12rem;
 	}
 </style>

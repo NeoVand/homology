@@ -94,6 +94,9 @@
 	let host: HTMLDivElement;
 	let labelLayer: HTMLDivElement;
 	let status = $state<'idle' | 'live' | 'error'>('idle');
+	// the canvas fades in once its first frame is drawn (compiling the shaders
+	// can take a moment), instead of popping in
+	let shown = $state(false);
 	let coarse = $state(false);
 	let engaged = $state(false);
 	let resetView: (() => void) | null = null;
@@ -303,6 +306,7 @@
 					handle?.update?.(elapsed, dt);
 					if (animate) tickMaterials(scene, elapsed);
 					renderer.render(scene, cam);
+					if (!shown) shown = true;
 					placeLabels();
 				},
 				evict: () => destroy()
@@ -327,6 +331,7 @@
 				resetView = null;
 				setEngaged = null;
 				status = 'idle';
+				shown = false;
 				engaged = false;
 			};
 			destroyFn = destroy;
@@ -362,8 +367,8 @@
 </script>
 
 <div class="scene3d" bind:this={container} style="height:{height}px">
-	<div class="host" bind:this={host}></div>
-	<div class="labels" bind:this={labelLayer} aria-hidden="true"></div>
+	<div class="host" class:shown bind:this={host}></div>
+	<div class="labels" class:shown bind:this={labelLayer} aria-hidden="true"></div>
 	{#if status === 'error'}
 		<div class="fallback ui">
 			<p>This interactive figure needs WebGL, which your browser could not start.</p>
@@ -404,6 +409,12 @@
 	.labels {
 		position: absolute;
 		inset: 0;
+		opacity: 0;
+		transition: opacity 0.5s var(--ease);
+	}
+	.host.shown,
+	.labels.shown {
+		opacity: 1;
 	}
 	.host :global(canvas) {
 		display: block;

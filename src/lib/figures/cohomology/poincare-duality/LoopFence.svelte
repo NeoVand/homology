@@ -94,22 +94,65 @@
 				dyn.add(bead);
 				movers.push({ obj: bead, c: s.G, phase: k / 3 + 0.1 });
 			}
+			// name the curves where the names land clear of both curves and of the signs
+			ctx.camera.updateMatrixWorld();
+			const ink = [s.C, s.G].flatMap((c) =>
+				Array.from({ length: 160 }, (_, i) => {
+					const [x, y] = c(i / 160);
+					return ctx.project(liftPoint(f, x, y, 0.02).P);
+				})
+			);
+			const taken: { x: number; y: number }[] = [];
 			for (const c of s.crossings) {
 				const tC = nearestParam(s.C, c.p);
 				const tG = nearestParam(s.G, c.p);
 				const patch = crossingPatch(f, s.C, tC, s.G, tG, view === 'fence' ? 0.1 : 0.05);
 				if (view === 'fence') dyn.add(patch.mesh);
 				dyn.add(glowPoint(patch.center.clone().addScaledVector(patch.normal, 0.012), { color: 'rose', size: 0.04, halo: 8 }));
-				labels.push(ctx.label(patch.center.clone().addScaledVector(patch.normal, 0.27), c.sign > 0 ? '+1' : '−1', { className: 'rose sign3d', normal: patch.normal }));
+				const at = patch.center.clone().addScaledVector(patch.normal, 0.27);
+				labels.push(ctx.label(at, c.sign > 0 ? '+1' : '−1', { className: 'rose sign3d', normal: patch.normal }));
+				taken.push(ctx.project(at));
 			}
-			const [cx, cy] = s.C(0.1);
-			const lc = liftPoint(f, cx, cy, 0.3);
+			const lc = spot('C', s.C, ink, taken);
 			labels.push(ctx.label(lc.P, tex('C'), { className: view === 'loop' ? 'gold' : 'teal', normal: lc.N }));
-			const [gx, gy] = s.G(0.62);
-			const lg = liftPoint(f, gx, gy, 0.3);
+			const lg = spot('γ', s.G, ink, taken);
 			labels.push(ctx.label(lg.P, tex('\\gamma'), { className: 'violet', normal: lg.N }));
 			placeMovers(0);
 			ctx.invalidate();
+		}
+		// a place for a curve's name: lifted off the surface where it faces the
+		// camera, a little way off its own curve on screen, clear of everything
+		// else drawn and inside the picture
+		const eye = new THREE.Vector3();
+		const lastT = new Map<string, number>();
+		function spot(key: string, c: (t: number) => UV, ink: { x: number; y: number }[], taken: { x: number; y: number }[]) {
+			const w = ctx.canvas.clientWidth;
+			const h = ctx.canvas.clientHeight;
+			let best = liftPoint(f, ...c(0), 0.3);
+			let top = -Infinity;
+			let bestT = 0;
+			const was = lastT.get(key);
+			for (let i = 0; i < 96; i++) {
+				const t = i / 96;
+				const [x, y] = c(t);
+				const l = liftPoint(f, x, y, 0.3);
+				const facing = l.N.dot(eye.copy(ctx.camera.position).sub(l.P).normalize());
+				if (facing < 0.25) continue;
+				const q = ctx.project(l.P);
+				if (q.x < 20 || q.y < 20 || q.x > w - 20 || q.y > h - 20) continue;
+				const foot = ctx.project(liftPoint(f, x, y, 0.02).P);
+				const gap = Math.hypot(q.x - foot.x, q.y - foot.y);
+				let clear = 30;
+				for (const k of ink) clear = Math.min(clear, Math.hypot(k.x - q.x, k.y - q.y));
+				for (const k of taken) clear = Math.min(clear, Math.hypot(k.x - q.x, k.y - q.y) - 14);
+				let score = clear - 0.6 * Math.abs(gap - 24) + 6 * facing;
+				// stay where the name was unless somewhere else is clearly better
+				if (was !== undefined) score -= 40 * Math.min(Math.abs(t - was - Math.round(t - was)), 0.25);
+				if (score > top) ((top = score), (best = l), (bestT = t));
+			}
+			lastT.set(key, bestT);
+			taken.push(ctx.project(best.P));
+			return best;
 		}
 		function placeMovers(time: number) {
 			for (const m of movers) {

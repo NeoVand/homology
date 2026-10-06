@@ -1,6 +1,7 @@
 <script lang="ts">
 	// Figure: which pictures obey the two rules of a simplicial complex?
 	import Svg from '$lib/components/svg/Svg.svelte';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	type P = [number, number];
 	interface Panel {
@@ -201,7 +202,7 @@
 				{/each}
 			</Svg>
 			<div class="lbl ui">
-				<span class="mark" aria-hidden="true">{pnl.ok ? '✓' : '✗'}</span>
+				<span class="mark"><Mark ok={pnl.ok} /></span>
 				<span class="t">{pnl.title}</span>
 			</div>
 			<div class="why">{pnl.why}</div>

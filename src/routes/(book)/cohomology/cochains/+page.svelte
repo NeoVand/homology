@@ -250,8 +250,8 @@
 	{#snippet caption()}
 		The gold numbers on the edges are given; your job is to put heights on the vertices so that every edge equals head minus tail.
 		An edge turns green when it is satisfied and rose when it is not. “Integrate” does it systematically: start at one vertex, walk a
-		spanning tree, then test every leftover edge. The test fails exactly when the leftover edge closes a loop whose numbers do not add
-		up to \(0\).
+		spanning tree (teal), then test every leftover edge. The test fails exactly when the leftover edge closes a loop whose numbers do
+		not add up to \(0\), and that whole loop turns rose.
 	{/snippet}
 </Figure>
 
@@ -662,12 +662,8 @@
 <p>
 	Now look again at our two operations, side by side with the boundary formulas of <Ref to="homology/chains" />:
 </p>
-\[
-\begin{aligned}
-\partial[u, v] &= v - u, & (\delta f)([u, v]) &= f(v) - f(u) = f(\partial[u,v]), \\
-\partial[a, b, c] &= [b, c] - [a, c] + [a, b], & (\delta \psi)([a, b, c]) &= \psi([b,c]) - \psi([a,c]) + \psi([a,b]) = \psi(\partial[a,b,c]).
-\end{aligned}
-\]
+\[ \partial[u, v] = v - u, \qquad (\delta f)([u, v]) = f(v) - f(u) = f(\partial[u,v]), \]
+\[ \partial[a, b, c] = [b, c] - [a, c] + [a, b], \qquad (\delta \psi)([a, b, c]) = \psi([b,c]) - \psi([a,c]) + \psi([a,b]) = \psi(\partial[a,b,c]). \]
 <p>
 	In both cases the new cochain is computed by <em>evaluating the old cochain on the boundary</em>. That is the definition in every degree.
 </p>

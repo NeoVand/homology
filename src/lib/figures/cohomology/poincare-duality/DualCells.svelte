@@ -15,7 +15,6 @@
 	type Sel = { kind: 'v' | 'e' | 't'; i: number } | null;
 	let mode = $state<'patch' | 'torus'>('patch');
 	let t = $state(0.3);
-	// one selection per triangulation, so switching never points into the wrong model
 	let svgEl = $state<SVGSVGElement>();
 
 	const VB = { w: 520, h: 440 };
@@ -24,6 +23,7 @@
 		torus: { M: squareModel('torus', 3), map: boxMap(0, 1, 0, 1, 90, 40, 340, 340) }
 	};
 	const centreV = (M: FlatModel, c: Pt) => M.vertexPts.findIndex((ps) => ps.some((p) => Math.abs(p[0] - c[0]) < 1e-9 && Math.abs(p[1] - c[1]) < 1e-9));
+	// one selection per triangulation, so switching never points into the wrong model
 	let selPatch = $state<Sel>({ kind: 'v', i: centreV(models.patch.M, [0, 0]) });
 	let selTorus = $state<Sel>({ kind: 'v', i: centreV(models.torus.M, [1 / 3, 1 / 3]) });
 	const sel = $derived(mode === 'patch' ? selPatch : selTorus);
@@ -34,7 +34,6 @@
 	const cur = $derived(models[mode]);
 	const C = $derived(dualCells(cur.M));
 	const D = $derived(cur.M.D);
-
 
 	const P = (p: Pt) => cur.map(p);
 	const pts = (ps: Pt[]) => ps.map((p) => P(p).map((x) => x.toFixed(1)).join(',')).join(' ');

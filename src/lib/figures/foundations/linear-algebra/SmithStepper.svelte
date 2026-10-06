@@ -7,6 +7,7 @@
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { smithSteps, cokernelTeX, kernelTeX } from './smithsteps';
 	import { smith } from '$lib/math/linalg';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	const presets = {
 		parity: {
@@ -98,7 +99,7 @@
 		<div class="summary ui">
 			<div class="s-row">
 				<span class="k">diagonal</span>
-				<span class="v"><TeX tex={diagTeX} /> {#if check}<span class="ok">✓ agrees with the book’s engine</span>{/if}</span>
+				<span class="v"><TeX tex={diagTeX} /> {#if check}<span class="ok"><Mark ok /> agrees with the book’s engine</span>{/if}</span>
 			</div>
 			<div class="s-row">
 				<span class="k gold">cokernel</span>

@@ -147,7 +147,7 @@
 
 <p>Figure 4.4.2 makes this literal. Over each point of the punctured plane, stack all its possible angles \(\theta, \theta \pm 2\pi, \theta \pm 4\pi, \ldots\) as heights. These stacks form a single smooth spiral surface, the <em>helicoid</em>, like a parking-garage ramp around the missing axis. A loop in the plane, together with a continuously chosen angle along it, traces a path on the ramp. If the loop goes around the hole, the path climbs a full storey per lap; if it does not, the path rises and falls and comes back to its start.</p>
 
-<Figure title="The angle as a spiral staircase" hint="Drag to rotate · walk the laps with the slider" num="4.4.2">
+<Figure title="The angle as a spiral staircase" hint="Drag to rotate · play or scrub the walk" num="4.4.2">
 	<Helicoid />
 	{#snippet caption()}The helicoid has one sheet for each possible value of the angle; its storeys are \(2\pi\) apart, and the rose axis is the missing origin. The gold loop in the floor lifts to the gold path on the ramp. Around the hole, each lap climbs exactly one storey — the integral of \(d\theta\) along the loop is the height gained. Beside the hole, the path returns to its starting height. (This surface is a picture of what mathematicians call the Riemann surface of the logarithm.){/snippet}
 </Figure>

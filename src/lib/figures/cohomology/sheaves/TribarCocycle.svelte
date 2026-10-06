@@ -7,10 +7,10 @@
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { tribarFaces, project, eyeModel, ratios, corners, type Vec3, type Axis } from './tribar';
-	import { ease, prefersReducedMotion } from './svgutil';
 
 	const faces = tribarFaces();
 	const { mu } = eyeModel(30);
@@ -24,8 +24,8 @@
 	const minY = Math.min(...ys);
 	const maxY = Math.max(...ys);
 	const W = 640;
-	const H = 430;
-	const SC = Math.min((W - 120) / (maxX - minX), (H - 110) / (maxY - minY));
+	const H = 470;
+	const SC = Math.min((W - 120) / (maxX - minX), (H - 150) / (maxY - minY));
 	const OX = W / 2 - (SC * (minX + maxX)) / 2;
 	const OY = H / 2 - (SC * (minY + maxY)) / 2 + 6;
 	const toScreen = (p: [number, number]): [number, number] => [OX + SC * p[0], OY + SC * p[1]];
@@ -99,31 +99,13 @@
 		const vx = c[0] - picCentre[0];
 		const vy = c[1] - picCentre[1];
 		const L = Math.hypot(vx, vy) || 1;
-		const e = ease(explode);
-		return [(vx / L) * 70 * e, (vy / L) * 70 * e];
+		// apart, the pieces drift a little downwards too, so the top one and its label stay in the picture
+		return [(vx / L) * 70 * explode, (vy / L) * 70 * explode + 26 * explode];
 	}
 	const pts = (p: [number, number][], k: number) => {
 		const [dx, dy] = offset(k);
 		return p.map(([x, y]) => `${(x + dx).toFixed(1)},${(y + dy).toFixed(1)}`).join(' ');
 	};
-
-	let anim = 0;
-	function animateExplode(to: number) {
-		cancelAnimationFrame(anim);
-		if (prefersReducedMotion()) {
-			explode = to;
-			return;
-		}
-		const from = explode;
-		const t0 = performance.now();
-		const dur = 900;
-		const tick = (now: number) => {
-			const s = Math.min(1, (now - t0) / dur);
-			explode = from + (to - from) * s;
-			if (s < 1) anim = requestAnimationFrame(tick);
-		};
-		anim = requestAnimationFrame(tick);
-	}
 
 	const okColour = (x: number) => (Math.abs(Math.log(x)) < 0.004 ? 'var(--green)' : 'var(--rose)');
 	const f3 = (x: number) => x.toFixed(3);
@@ -145,10 +127,14 @@
 	const dLabel = ['d_{12}', 'd_{23}', 'd_{31}'];
 </script>
 
+{#snippet u1()}<TeX tex="U_1" />{/snippet}
+{#snippet u2()}<TeX tex="U_2" />{/snippet}
+{#snippet u3()}<TeX tex="U_3" />{/snippet}
+
 <div class="wrap">
 	<Svg
 		viewBox="0 0 {W} {H}"
-		maxHeight={470}
+		maxHeight={514}
 		label="The Penrose impossible triangle drawn as three overlapping pieces, each a genuine three-dimensional corner. The pieces can be pulled apart."
 	>
 		<defs>
@@ -225,15 +211,15 @@
 	</div>
 
 	<Controls>
-		<Slider bind:value={explode} min={0} max={1} step={0.01} label="Pull the pieces apart" format={(v) => `${Math.round(v * 100)}%`} />
-		<Button onclick={() => animateExplode(explode > 0.5 ? 0 : 1)}>{explode > 0.5 ? 'Reassemble' : 'Explode'}</Button>
+		<Timeline bind:value={explode} duration={1.2} from="together" to="apart" label="Pulling the pieces apart" />
 		<Button onclick={matchTwo}>Agree on two overlaps</Button>
 		<Button onclick={spread}>Spread the blame</Button>
 	</Controls>
 	<Controls>
-		<Slider bind:value={l1} min={-1} max={1} step={0.01} label="Rescale U₁ about the eye" format={(v) => `×${(2 ** v).toFixed(2)}`} />
-		<Slider bind:value={l2} min={-1} max={1} step={0.01} label="Rescale U₂ about the eye" format={(v) => `×${(2 ** v).toFixed(2)}`} />
-		<Slider bind:value={l3} min={-1} max={1} step={0.01} label="Rescale U₃ about the eye" format={(v) => `×${(2 ** v).toFixed(2)}`} />
+		<span class="lead">Rescale a piece about the eye — its drawing does not change</span>
+		<Slider bind:value={l1} min={-1} max={1} step={0.01} label="Rescale U₁ about the eye" labelSnippet={u1} format={(v) => `×${(2 ** v).toFixed(2)}`} />
+		<Slider bind:value={l2} min={-1} max={1} step={0.01} label="Rescale U₂ about the eye" labelSnippet={u2} format={(v) => `×${(2 ** v).toFixed(2)}`} />
+		<Slider bind:value={l3} min={-1} max={1} step={0.01} label="Rescale U₃ about the eye" labelSnippet={u3} format={(v) => `×${(2 ** v).toFixed(2)}`} />
 	</Controls>
 </div>
 
@@ -255,6 +241,12 @@
 		transition:
 			fill 0.3s,
 			stroke 0.3s;
+	}
+	.lead {
+		flex-basis: 100%;
+		font-size: 0.76rem;
+		color: var(--ink-dim);
+		letter-spacing: 0.02em;
 	}
 	.panel {
 		padding: 0.4rem 1.2rem 0.7rem;

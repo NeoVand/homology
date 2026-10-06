@@ -13,6 +13,7 @@
 	import { tex } from '$lib/katex/render';
 	import { latticeLabel, latticePoint, latticeUV, torus7Triangles, csaszarByLabel } from './data';
 	import { seven, sevenCss, vertexBead, setPointColor, polygonGeometry, edgeTube, fitCamera } from './kit3d';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	let picked = $state<number | null>(0);
 	let seen = $state<Set<string>>(new Set([1, 2, 3, 4, 5, 6].map((m) => `0,${m}`)));
@@ -273,7 +274,7 @@
 	{:else}
 		<span>Tap a vertex.</span>
 	{/if}
-	<span class="tally" class:done={seen.size === 21}>Pairs checked: {seen.size} of 21{seen.size === 21 ? ' — every pair is an edge ✓' : ''}</span>
+	<span class="tally" class:done={seen.size === 21}>Pairs checked: {seen.size} of 21{#if seen.size === 21}: every pair is an edge <Mark ok />{/if}</span>
 </div>
 <div class="bar ui">
 	<Segmented

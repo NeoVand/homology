@@ -1,19 +1,23 @@
 <script lang="ts">
 	// Torus versus Klein bottle, mod 2: try to slide a fence off itself.
 	// On the torus every fence escapes (all squares vanish); on the Klein bottle
-	// the fence through the twist cannot (β ⌣ β ≠ 0).
+	// the fence through the twist cannot (β ⌣ β ≠ 0). Drag the dashed copy in
+	// either square; the two copies move together.
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import GluingSquare from '$lib/components/svg/GluingSquare.svelte';
+	import Handle from '$lib/components/svg/Handle.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { arcCrossings, type Pt } from './flat';
 	import { boxMap, pathD } from './draw';
 	import { cupSpaces } from './spaces';
 
 	let which = $state<'alpha' | 'beta'>('beta');
+	// how far the copy is pushed off the fence
 	let eps = $state(0.16);
+	const EPS_MIN = 0.04;
+	const EPS_MAX = 0.34;
 
 	const SZ = 220;
 	const X = 50;
@@ -95,6 +99,30 @@
 		klein: all.find((x) => x.id === 'klein')!.table
 	};
 	const col = $derived(which === 'alpha' ? 'var(--gold-bright)' : 'var(--teal)');
+
+	// the bead on each copy, and the way it moves: α's copy slides sideways, the
+	// torus's β copy up and down, and the Klein bottle's β copy tilts about the
+	// centre, so its bead rides a vertical line a quarter of the way across
+	const KX = 0.25;
+	function bead(space: string, e: number): { at: Pt; dir: [number, number] } {
+		if (which === 'alpha') return { at: [0.42 + e, 0.5], dir: [1, 0] };
+		if (space === 'torus') return { at: [0.5, 0.58 - e], dir: [0, 1] };
+		return { at: [KX, 0.42 + e + KX * (1 - 2 * (0.42 + e))], dir: [0, -1] };
+	}
+	const clampEps = (e: number) => Math.max(EPS_MIN, Math.min(EPS_MAX, e));
+	function dragTo(space: string, [px, py]: [number, number]) {
+		const u = (px - X) / SZ;
+		const v = 1 - (py - Y) / SZ;
+		if (which === 'alpha') eps = clampEps(u - 0.42);
+		else if (space === 'torus') eps = clampEps(0.58 - v);
+		else eps = clampEps((v - 0.42 - KX * (1 - 2 * 0.42)) / (1 - 2 * KX));
+	}
+	function step(space: string, dx: number, dy: number) {
+		const { dir } = bead(space, eps);
+		// along the copy's motion on screen; the other arrows push it farther or bring it back
+		const d = dir[0] * dx + dir[1] * dy || dx - dy;
+		eps = clampEps(eps + d * 0.01);
+	}
 	const formTeX = (name: string, F: number[][]) =>
 		`${name}:\\quad \\begin{pmatrix} \\alpha^2 & \\alpha\\beta \\\\ \\beta\\alpha & \\beta^2 \\end{pmatrix} = \\begin{pmatrix} ${F[0][0]} & ${F[0][1]} \\\\ ${F[1][0]} & ${F[1][1]} \\end{pmatrix}`;
 </script>
@@ -130,6 +158,17 @@
 						<circle cx={p[0]} cy={p[1]} r="12" class="halo" />
 						<circle cx={p[0]} cy={p[1]} r="5.5" class="dot" />
 					{/each}
+					{@const b = map(bead(d.id, eps).at)}
+					<Handle
+						x={b[0]}
+						y={b[1]}
+						color={col}
+						r={8}
+						label="The pushed-off copy of {which === 'alpha' ? 'α' : 'β'} on the {d.id === 'torus' ? 'torus' : 'Klein bottle'}: drag it, or use the arrow keys"
+						valuetext="pushed {eps.toFixed(2)} away, {d.cr.length} {d.cr.length === 1 ? 'crossing' : 'crossings'}"
+						ondrag={(p) => dragTo(d.id, p)}
+						onkey={(dx, dy) => step(d.id, dx, dy)}
+					/>
 					<SvgTeX x={X + SZ / 2} y={Y + SZ + 48} tex={d.name} size={22} w={60} h={30} />
 					<text x={X + SZ / 2} y={Y + SZ + 80} class="t-ui cnt" class:hit={d.cr.length % 2 === 1}
 						>{d.cr.length} crossing{d.cr.length === 1 ? '' : 's'} → {which === 'alpha' ? 'α²' : 'β²'} = {d.cr.length % 2}</text
@@ -147,7 +186,6 @@
 				{ value: 'beta', label: 'square β (crosses b)' }
 			]}
 		/>
-		<Slider bind:value={eps} min={0.04} max={0.34} step={0.005} label="push the copy away" format={(v) => v.toFixed(2)} />
 	</div>
 	<div class="forms ui">
 		{#each data as d (d.id)}

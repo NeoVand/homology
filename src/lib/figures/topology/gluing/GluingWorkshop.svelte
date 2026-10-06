@@ -22,6 +22,7 @@
 	const classColors = ['#fbf6e8', '#f28db6', '#a493ff'];
 	const classColor3 = ['ivory', 'rose', 'violet'] as const;
 	const nClasses = $derived(new Set(P.corners).size);
+	const rules = $derived(P.rule.split(',\\ '));
 	const stage = $derived.by(() => {
 		let s = P.stages[0].label;
 		for (const st of P.stages) if (t >= st.at) s = st.label;
@@ -178,7 +179,13 @@
 			{/each}
 		</Svg>
 		<dl class="facts ui">
-			<div><dt>Rule</dt><dd><TeX tex={P.rule} /></dd></div>
+			<div>
+					<dt>Rule</dt>
+					<dd>
+						<!-- one relation per unbreakable piece, so a long rule wraps at its comma -->
+						{#each rules as r, i (i)}<span class="rel"><TeX tex={i < rules.length - 1 ? r + ',' : r} /></span>{' '}{/each}
+					</dd>
+				</div>
 			<div>
 				<dt>Word</dt>
 				<dd>{#if P.word}<TeX tex={P.word} />{:else}<span class="dim">has free edges</span>{/if}</dd>
@@ -244,13 +251,14 @@
 		color: var(--ink-dim);
 		background: rgba(6, 10, 20, 0.66);
 		border: 1px solid var(--line-faint);
-		border-radius: 999px;
+		border-radius: 0.9rem;
 		padding: 0.25rem 0.8rem;
-		white-space: nowrap;
 		pointer-events: none;
-		max-width: 92%;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		/* clear of the reset-view button in the corner; long stages wrap */
+		width: max-content;
+		max-width: calc(100% - 7rem);
+		text-align: center;
+		text-wrap: pretty;
 	}
 	.facts {
 		margin: 0;
@@ -274,6 +282,9 @@
 		margin: 0;
 		color: var(--ink);
 	}
+	.rel {
+		white-space: nowrap;
+	}
 	dd.no {
 		color: var(--rose);
 	}
@@ -296,7 +307,7 @@
 		border-top: 1px solid var(--line-faint);
 		background: rgba(5, 8, 16, 0.45);
 	}
-	@media (max-width: 720px) {
+	@container figure (max-width: 700px) {
 		.workshop {
 			grid-template-columns: 1fr;
 			padding: 0.5rem 0.4rem 0;
@@ -306,6 +317,20 @@
 			grid-template-columns: 150px 1fr;
 			align-items: center;
 			padding: 0 0.4rem;
+		}
+	}
+	@container figure (max-width: 520px) {
+		.facts div {
+			grid-template-columns: 1fr;
+			gap: 0;
+		}
+		/* too narrow to float over the scene: sit under it instead */
+		.stage {
+			position: static;
+			transform: none;
+			display: block;
+			max-width: calc(100% - 1.6rem);
+			margin: 0.2rem auto 0.7rem;
 		}
 	}
 </style>

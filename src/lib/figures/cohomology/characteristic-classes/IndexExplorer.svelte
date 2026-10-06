@@ -7,7 +7,7 @@
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { circleLoop, fieldAt, indexOf, windingAlong, type Zero, type ZeroKind } from './fields';
@@ -297,7 +297,7 @@
 				]}
 				label="Kind of zero"
 			/>
-			<Slider bind:value={walk} min={0} max={1} step={0.005} label="Walk around the loop" format={(v) => `${Math.round(v * 360)}°`} />
+			<Timeline bind:value={walk} duration={4} from="start" to="once around" label="Walking around the loop" />
 		{:else}
 			<Button onclick={() => add('source')}>+ index +1</Button>
 			<Button onclick={() => add('saddle')}>+ saddle (−1)</Button>

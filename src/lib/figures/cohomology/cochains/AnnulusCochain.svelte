@@ -11,6 +11,7 @@
 	import OGraphView from './OGraphView.svelte';
 	import { curl, pathSum, findEdge, fracText, fracTeX, clean, snap, hodge } from './graph';
 	import { annulus } from './presets';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	const A = annulus();
 	const E = A.edges.length;
@@ -160,7 +161,7 @@
 	</div>
 	<div class="row tests ui">
 		<span class="t" class:ok={allPass} class:bad={!allPass}>
-			Local tests: {nPass} of {curls.length} triangles pass {allPass ? '✓' : '✗'}
+			Local tests: {nPass} of {curls.length} triangles pass <Mark ok={allPass} />
 		</span>
 		<span class="t" class:ok={loopTotal === 0} class:bad={loopTotal !== 0}>
 			{loopNames[loopId]}: <TeX tex={loopTeX} />

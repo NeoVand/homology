@@ -6,6 +6,7 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { SvelteSet } from 'svelte/reactivity';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	// subsets as bit masks: a = 1, b = 2, c = 4
 	const names = ['a', 'b', 'c'];
@@ -122,18 +123,18 @@
 	<div class="panel ui" aria-live="polite">
 		<ol class="axioms">
 			<li class:pass={check.t1} class:fail={!check.t1}>
-				<span class="mark">{check.t1 ? '✓' : '✗'}</span>
+				<span class="mark"><Mark ok={check.t1} /></span>
 				<TeX tex={'\\varnothing'} /> and <TeX tex="X" /> are open
 			</li>
 			<li class:pass={!check.t2} class:fail={!!check.t2}>
-				<span class="mark">{check.t2 ? '✗' : '✓'}</span>
+				<span class="mark"><Mark ok={!check.t2} /></span>
 				unions of open sets are open
 				{#if check.t2}<span class="why"
 						>— but <TeX tex={`${texOf(check.t2.a)} \\cup ${texOf(check.t2.b)} = ${texOf(check.t2.r)}`} /> is missing</span
 					>{/if}
 			</li>
 			<li class:pass={!check.t3} class:fail={!!check.t3}>
-				<span class="mark">{check.t3 ? '✗' : '✓'}</span>
+				<span class="mark"><Mark ok={!check.t3} /></span>
 				intersections of two open sets are open
 				{#if check.t3}<span class="why"
 						>— but <TeX tex={`${texOf(check.t3.a)} \\cap ${texOf(check.t3.b)} = ${texOf(check.t3.r)}`} /> is missing</span

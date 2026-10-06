@@ -4,12 +4,17 @@
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { renderMathInText } from '$lib/katex/render';
 	import { candidates, sameValue, type Verdict } from './axioms';
+	import Mark from '$lib/components/ui/Mark.svelte';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import { ChevronLeftIcon, ChevronRightIcon } from '$lib/icons';
 
 	let ci = $state(1);
 	let shown = $state<boolean[]>([false, false, false, false]);
-	let ia = $state(0);
-	let ib = $state(1);
-	let ic = $state(2);
+	// the same starting picks that choose() makes
+	let ia = $state(2);
+	let ib = $state(4);
+	let ic = $state(1);
 
 	const c = $derived(candidates[ci]);
 
@@ -72,7 +77,7 @@
 						<span class="what">{r.what}</span>
 						{#if shown[i]}
 							<span class="mark" class:ok={r.v.ok === true} class:bad={r.v.ok === false} class:na={r.v.ok === null}>
-								{r.v.ok === true ? '✓ holds' : r.v.ok === false ? '✗ fails' : '— n/a'}
+								{#if r.v.ok === true}<Mark ok /> holds{:else if r.v.ok === false}<Mark ok={false} /> fails{:else}not applicable{/if}
 							</span>
 						{:else}
 							<span class="mark ask">check?</span>
@@ -95,7 +100,7 @@
 				<span class="note">{@html renderMathInText(c.note)}</span>
 			{:else}
 				<span class="dim">Predict each axiom, then tap it to check.</span>
-				<button class="link" onclick={() => (shown = [true, true, true, true])}>Reveal all</button>
+				<Button variant="subtle" onclick={() => (shown = [true, true, true, true])}>Reveal all</Button>
 			{/if}
 		</div>
 	</div>
@@ -105,19 +110,19 @@
 		<div class="pickers ui">
 			{#each [['a', ia], ['b', ib], ['c', ic]] as [lbl, idx], k (lbl)}
 				<span class="picker">
-					<span class="pl">{lbl} =</span>
+					<span class="pl"><TeX tex={String(lbl)} /><span class="eq">&nbsp;=</span></span>
 					<button
 						class="st"
 						aria-label="previous value for {lbl}"
 						onclick={() => (k === 0 ? (ia = cycle(ia, -1)) : k === 1 ? (ib = cycle(ib, -1)) : (ic = cycle(ic, -1)))}
-						>‹</button
+						><Icon icon={ChevronLeftIcon} size={15} stroke={1.8} /></button
 					>
 					<span class="pv"><TeX tex={c.fmt(c.sample[idx as number])} /></span>
 					<button
 						class="st"
 						aria-label="next value for {lbl}"
 						onclick={() => (k === 0 ? (ia = cycle(ia, 1)) : k === 1 ? (ib = cycle(ib, 1)) : (ic = cycle(ic, 1)))}
-						>›</button
+						><Icon icon={ChevronRightIcon} size={15} stroke={1.8} /></button
 					>
 				</span>
 			{/each}
@@ -138,7 +143,7 @@
 			<div class="t">
 				<TeX tex={`${c.fmt(B)} ${c.op} ${arg(A)} = ${c.fmt(ba)}`} />
 				<span class="tag" class:ok={sameValue(ab, ba)} class:warn={!sameValue(ab, ba)}
-					>{sameValue(ab, ba) ? 'same as a∘b' : 'differs from a∘b'}</span
+					>{sameValue(ab, ba) ? 'same as' : 'differs from'} <TeX tex={`a ${c.op} b`} /></span
 				>
 			</div>
 		</div>
@@ -147,14 +152,14 @@
 
 <style>
 	.ax {
-		padding: 1rem 1.2rem 1.2rem;
+		padding: 1rem 1.25rem 1.4rem;
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
 	}
-	@media (max-width: 600px) {
+	@container figure (max-width: 38rem) {
 		.ax {
-			padding: 0.8rem 0.7rem 1rem;
+			padding: 0.8rem 1rem 1.4rem;
 		}
 	}
 	.chips {
@@ -205,6 +210,7 @@
 		color: var(--ink-dim);
 		font-style: italic;
 		font-size: 0.95rem;
+		text-wrap: pretty;
 	}
 	.rows {
 		display: flex;
@@ -230,7 +236,7 @@
 		color: var(--ink);
 		min-height: 2.4rem;
 	}
-	@media (max-width: 600px) {
+	@container figure (max-width: 38rem) {
 		.rowhead {
 			display: grid;
 			grid-template-columns: minmax(0, 1fr) auto;
@@ -253,6 +259,9 @@
 		flex: 1;
 	}
 	.mark {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
 		font-size: 0.74rem;
 		font-weight: 650;
 		letter-spacing: 0.05em;
@@ -305,16 +314,6 @@
 	.dim {
 		color: var(--ink-faint);
 	}
-	.link {
-		background: none;
-		border: 0;
-		color: var(--gold);
-		cursor: pointer;
-		text-decoration: underline;
-		text-underline-offset: 0.2em;
-		font-size: 0.8rem;
-		padding: 0.3rem 0;
-	}
 	.bench {
 		border-top: 1px solid var(--line-faint);
 		padding-top: 0.8rem;
@@ -339,7 +338,7 @@
 	}
 	.pl {
 		color: var(--ink-dim);
-		font-size: 0.82rem;
+		font-size: 0.95rem;
 	}
 	.pv {
 		min-width: 2.6rem;
@@ -359,6 +358,35 @@
 	}
 	.st:hover {
 		background: rgba(216, 178, 110, 0.15);
+	}
+	/* phones: three narrow columns, each letter above its own picker */
+	@container figure (max-width: 30rem) {
+		.pickers {
+			display: grid;
+			grid-template-columns: repeat(3, auto);
+			justify-content: space-between;
+			gap: 0.5rem;
+		}
+		.picker {
+			display: grid;
+			grid-template-columns: auto auto auto;
+			align-items: center;
+			justify-items: center;
+			gap: 0.15rem 0.2rem;
+		}
+		.pl {
+			grid-column: 1 / -1;
+		}
+		.eq {
+			display: none;
+		}
+		.st {
+			width: 1.85rem;
+			height: 1.85rem;
+		}
+		.pv {
+			min-width: 2.3rem;
+		}
 	}
 	.tests {
 		display: flex;
@@ -382,6 +410,9 @@
 		letter-spacing: 0.05em;
 		padding: 0.1rem 0.5rem;
 		border-radius: 999px;
+	}
+	.tag :global(.katex) {
+		letter-spacing: 0;
 	}
 	.tag.ok {
 		color: var(--green);

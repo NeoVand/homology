@@ -2,22 +2,20 @@
 	// A two-dimensional creature (the letter F, with a little clock-arrow showing
 	// its sense of "counter-clockwise") walks once round the core of a band.
 	// On a cylinder it comes home unchanged; on a Möbius band it comes home as
-	// its own mirror image. Two laps undo the flip.
-	import { onMount } from 'svelte';
+	// its own mirror image. Two laps undo the flip. Play the walk, or take the
+	// creature and drag it along the band yourself.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import { glowTube } from '$lib/three/materials';
 	import { surfaceGeometry } from '$lib/three/surfaces';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import { glass } from '../homotopy/glass';
 
 	type Band = 'cylinder' | 'mobius';
 	let band = $state<Band>('mobius');
 	let s = $state(0);
 	let playing = $state(false);
-	let raf = 0;
 	let api: { set(b: Band, s: number): void } | null = null;
 
 	const R = 1.7;
@@ -35,7 +33,7 @@
 	}
 
 	function setup(ctx: SceneContext) {
-		const { scene, THREE } = ctx;
+		const { scene, THREE, canvas, controls, pick } = ctx;
 		ctx.camera.near = 0.5;
 		ctx.camera.far = 60;
 		ctx.camera.updateProjectionMatrix();
@@ -115,8 +113,10 @@
 			obj.quaternion.setFromRotationMatrix(M);
 			obj.position.copy(P).addScaledVector(N, 0.004);
 		}
+		let shown: Band = band;
 		api = {
 			set(b, sv) {
+				shown = b;
 				bands.cylinder.visible = b === 'cylinder';
 				bands.mobius.visible = b === 'mobius';
 				place(ghost, b, TH0 + GHOST);
@@ -125,7 +125,75 @@
 			}
 		};
 		api.set(band, s);
-		return { dispose: () => (api = null) };
+
+		// ── take the creature and walk it along the band ──
+		// Both bands sit over the circle of radius R in the plane y = 0, so the angle
+		// round the band is read off where the pointer meets that plane.
+		const floor = new THREE.Mesh(new THREE.PlaneGeometry(40, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }));
+		floor.updateMatrixWorld();
+		const angleAt = (e: PointerEvent) => {
+			const hit = pick(e, [floor])[0];
+			return hit ? Math.atan2(hit.point.z, hit.point.x) : null;
+		};
+		const wrap = (a: number) => a - TAU * Math.round(a / TAU);
+		// pressed on the creature, or on the band right where it stands
+		const grabbable = (e: PointerEvent) => {
+			const hit = pick(e, [walker, bands[shown]])[0];
+			if (!hit) return false;
+			let o: InstanceType<typeof THREE.Object3D> | null = hit.object;
+			while (o && o !== walker) o = o.parent;
+			if (o === walker) return true;
+			return Math.abs(wrap(Math.atan2(hit.point.z, hit.point.x) - (TH0 + TAU * s))) < 0.4;
+		};
+		let dragging = false;
+		let last = 0;
+		let controlsWere = true;
+		const onDown = (e: PointerEvent) => {
+			if (e.button !== 0 || playing || !grabbable(e)) return;
+			const a = angleAt(e);
+			if (a === null) return;
+			dragging = true;
+			last = a;
+			controlsWere = controls?.enabled ?? false;
+			if (controls) controls.enabled = false;
+			canvas.setPointerCapture(e.pointerId);
+			canvas.style.cursor = 'grabbing';
+		};
+		const onMove = (e: PointerEvent) => {
+			if (!dragging) {
+				if (e.pointerType === 'mouse') canvas.style.cursor = !playing && grabbable(e) ? 'grab' : '';
+				return;
+			}
+			const a = angleAt(e);
+			if (a === null) return;
+			// unwrap, so that the laps add up; settle exactly at home when close
+			let v = Math.min(2, Math.max(0, s + wrap(a - last) / TAU));
+			if (Math.abs(v - Math.round(v)) < 0.012) v = Math.round(v);
+			last = a;
+			s = v;
+		};
+		const onUp = () => {
+			if (!dragging) return;
+			dragging = false;
+			if (controls) controls.enabled = controlsWere;
+			canvas.style.cursor = '';
+		};
+		// capture phase: runs before OrbitControls, which then finds itself disabled
+		canvas.addEventListener('pointerdown', onDown, { capture: true });
+		canvas.addEventListener('pointermove', onMove);
+		canvas.addEventListener('pointerup', onUp);
+		canvas.addEventListener('pointercancel', onUp);
+		return {
+			dispose() {
+				api = null;
+				floor.geometry.dispose();
+				floor.material.dispose();
+				canvas.removeEventListener('pointerdown', onDown, { capture: true });
+				canvas.removeEventListener('pointermove', onMove);
+				canvas.removeEventListener('pointerup', onUp);
+				canvas.removeEventListener('pointercancel', onUp);
+			}
+		};
 	}
 
 	$effect(() => {
@@ -134,36 +202,11 @@
 		api?.set(b, v);
 	});
 
-	const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
-	function play() {
-		if (playing) {
-			cancelAnimationFrame(raf);
-			playing = false;
-			return;
-		}
-		const from = s >= 1.999 ? 0 : s;
-		const to = Math.min(2, Math.floor(from + 1e-6) + 1);
-		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-			s = to;
-			return;
-		}
-		playing = true;
-		const t0 = performance.now();
-		const dur = 3600 * (to - from);
-		const tick = (now: number) => {
-			const x = Math.min(1, (now - t0) / dur);
-			s = from + (to - from) * ease(x);
-			if (x < 1) raf = requestAnimationFrame(tick);
-			else playing = false;
-		};
-		raf = requestAnimationFrame(tick);
-	}
-	onMount(() => () => cancelAnimationFrame(raf));
-
 	const message = $derived.by(() => {
 		const laps = Math.round(s * 100) / 100;
 		const home = Math.abs(s - Math.round(s)) < 0.015 && Math.round(s) > 0;
-		if (!home) return `The creature has walked ${laps.toFixed(2)} of the way round${laps > 1 ? ' (second lap)' : ''}.`;
+		if (s < 0.005) return 'At the start, just ahead of its faint ghost. Play the walk, or drag the F along the band.';
+		if (!home) return s < 1 ? `The creature has walked ${laps.toFixed(2)} of the way round.` : `Second lap: ${(laps - 1).toFixed(2)} of the way round again.`;
 		if (band === 'cylinder') return 'Back home, exactly as it left: the F still matches its ghost.';
 		return Math.round(s) === 1
 			? 'Back home — as its mirror image. The F is reversed and its arrow now turns clockwise relative to the ghost.'
@@ -189,8 +232,7 @@
 			]}
 			label="Which band"
 		/>
-		<Slider bind:value={s} min={0} max={2} step={0.005} label="laps walked" format={(v) => v.toFixed(2)} />
-		<Button variant="gold" onclick={play}>{playing ? 'Pause' : s >= 1.999 ? 'Start again' : 'Walk one lap'}</Button>
+		<Timeline bind:value={s} bind:playing min={0} max={2} duration={7.2} from="start" to="two laps" label="The creature’s walk round the band" />
 	</Controls>
 </div>
 

@@ -5,8 +5,7 @@
 	import { glassMesh, glowTube, glowPoint, iridescent, disposeTree } from '$lib/three/materials';
 	import { torus, surfaceGeometry, SurfaceCurve, surfaceNormal } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
-	import Slider from '$lib/components/ui/Slider.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import type * as THREE_NS from 'three';
@@ -14,7 +13,6 @@
 	import { fitCamera, isNarrow } from './three-fit';
 
 	let t = $state(0.62);
-	let playing = $state(false);
 	let narrow = $state(false);
 	onMount(() => {
 		narrow = isNarrow();
@@ -27,7 +25,7 @@
 	const uOf = (th: number, s: number) => U0 + DU * s + 0.05 * Math.sin(2 * Math.PI * 2 * th) * Math.sin(Math.PI * s);
 
 	function setup(ctx: SceneContext) {
-		const { scene, THREE, invalidate, label, onFrame, reducedMotion } = ctx;
+		const { scene, THREE, invalidate, label } = ctx;
 		const unfit = fitCamera(ctx, 1.7);
 		const f = torus(1.6, 0.62);
 		scene.add(glassMesh(surfaceGeometry(f, 160, 64), { opacity: 0.55, grid: [48, 20], gridStrength: 0.22 }));
@@ -116,22 +114,9 @@
 		setT(t);
 		api = { setT };
 
-		// the "Sweep again" button plays the homotopy once (instantly if motion is reduced)
-		let clock = 0;
-		const stop = onFrame((_time, dt) => {
-			if (!playing) return;
-			clock += reducedMotion ? 10 : dt;
-			const s = Math.min(1, clock / 3.2);
-			t = s < 0.5 ? 2 * s * s : 1 - Math.pow(-2 * s + 2, 2) / 2;
-			if (s >= 1) {
-				playing = false;
-				clock = 0;
-			}
-		});
 		return {
 			dispose: () => {
 				unfit();
-				stop();
 				api = null;
 			}
 		};
@@ -143,11 +128,6 @@
 		const v = t;
 		api?.setT(v);
 	});
-
-	function play() {
-		t = 0;
-		playing = true;
-	}
 </script>
 
 <Scene3D
@@ -159,8 +139,7 @@
 	label="A loop on a torus slides along a homotopy and sweeps out a violet band whose boundary is the final loop minus the initial loop"
 />
 <Controls>
-	<Slider bind:value={t} min={0} max={1} step={0.005} label="time s of the homotopy" format={(v) => v.toFixed(2)} />
-	<Button variant="gold" onclick={play}>Sweep again</Button>
+	<Timeline bind:value={t} from="s = 0" to="s = 1" label="Sliding the loop along the homotopy" duration={3.2} />
 	<span class="eq"><TeX tex={String.raw`\partial\,P(z) = g_\#(z) - f_\#(z)`} /></span>
 </Controls>
 

@@ -5,6 +5,8 @@
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import { ResetIcon } from '$lib/icons';
 	import { D3, compose, cayleyTable, matrixOf, partialMove, mul, apply, det, slot, type Mat2 } from './d3';
 
 	const R = 92;
@@ -184,14 +186,15 @@
 			/>
 			<!-- an arrow printed on the face: it reverses when the triangle is turned over -->
 			<g transform={svgMatrix} opacity={0.25 + 0.6 * Math.min(1, Math.abs(d))}>
+				<!-- anticlockwise (on screen) from 30° round to 290°, head at the end -->
 				<path
-					d="M 20 -6 A 21 21 0 1 0 6 19"
+					d="M 18.19 -10.5 A 21 21 0 1 0 7.18 19.73"
 					fill="none"
 					stroke={faceUp ? '#d9d4ff' : '#ffc2db'}
 					stroke-width="2.4"
 					stroke-linecap="round"
 				/>
-				<path d="M 20 -6 L 26 4 L 13 3 Z" fill={faceUp ? '#d9d4ff' : '#ffc2db'} />
+				<path d="M 13.07 16.98 L 8.02 25.07 L 3.62 15.65 Z" fill={faceUp ? '#d9d4ff' : '#ffc2db'} stroke-linejoin="round" />
 			</g>
 
 			{#each pts as p, i (i)}
@@ -216,7 +219,7 @@
 					<TeX tex={g.tex} />
 				</button>
 			{/each}
-			<button class="mv reset" onclick={reset} title="Put the triangle back to the start">Reset</button>
+			<Button icon={ResetIcon} onclick={reset} title="Put the triangle back to the start">Reset</Button>
 		</div>
 	</div>
 
@@ -253,8 +256,8 @@
 		<div class="tfoot ui">
 			<span class="count"><b>{discovered}</b> of 36 products discovered</span>
 			<span class="btns">
-				<button class="link" onclick={fillAll}>Fill in the rest</button>
-				<button class="link" onclick={clearTable}>Clear</button>
+				<Button variant="subtle" onclick={fillAll} disabled={discovered === 36}>Fill in the rest</Button>
+				<Button variant="subtle" onclick={clearTable} disabled={discovered === 0}>Clear</Button>
 			</span>
 		</div>
 		<div class="news ui" aria-live="polite">
@@ -268,7 +271,7 @@
 			{:else if last}
 				<p>
 					New entry: <TeX tex={`${D3[last.g].tex} \\circ ${D3[last.h].tex} = ${D3[table[last.g][last.h]].tex}`} />
-					<span class="dim">(first {D3[last.h].label}, then {D3[last.g].label})</span>
+					<span class="dim">(first <TeX tex={D3[last.h].tex} />, then <TeX tex={D3[last.g].tex} />)</span>
 				</p>
 			{:else}
 				<p class="dim">Each move you make from the current position fills in one entry. Tap any cell to watch that product.</p>
@@ -285,7 +288,7 @@
 		padding: 1rem 1.3rem 1.2rem;
 		align-items: start;
 	}
-	@media (max-width: 760px) {
+	@container figure (max-width: 46rem) {
 		.tp {
 			grid-template-columns: minmax(0, 1fr);
 			padding: 0.8rem 0.8rem 1rem;
@@ -333,16 +336,17 @@
 	.dim {
 		color: var(--ink-faint);
 	}
+	/* one row at every width: the move keys shrink before anything wraps */
 	.moves {
 		display: flex;
-		flex-wrap: wrap;
 		justify-content: center;
 		gap: 0.45rem;
 	}
 	.mv {
-		min-width: 2.7rem;
+		flex: 0 1 2.9rem;
+		min-width: 0;
 		height: 2.35rem;
-		padding: 0 0.7rem;
+		padding: 0;
 		border-radius: 10px;
 		border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
 		background: color-mix(in srgb, var(--c) 9%, rgba(8, 12, 24, 0.6));
@@ -358,12 +362,6 @@
 	}
 	.mv:active {
 		transform: translateY(1px);
-	}
-	.mv.reset {
-		--c: #8b8676;
-		font-size: 0.74rem;
-		letter-spacing: 0.06em;
-		color: var(--ink-dim);
 	}
 	.tablebox {
 		display: flex;
@@ -450,18 +448,17 @@
 	}
 	.btns {
 		display: inline-flex;
-		gap: 0.8rem;
+		gap: 0.2rem;
+		margin-right: -0.8rem;
 	}
-	.link {
-		background: none;
-		border: 0;
-		padding: 0.3rem 0;
-		color: var(--gold);
-		cursor: pointer;
-		font-size: 0.76rem;
-		text-decoration: underline;
-		text-underline-offset: 0.2em;
-		text-decoration-color: rgba(216, 178, 110, 0.4);
+	@container figure (max-width: 26rem) {
+		/* the count and the two buttons take a line each: centre both */
+		.tfoot {
+			justify-content: center;
+		}
+		.btns {
+			margin-right: 0;
+		}
 	}
 	.news {
 		min-height: 3.2rem;

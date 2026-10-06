@@ -3,19 +3,22 @@
 	// at where it meets the space. Points of a surface give one circle; a boundary
 	// point gives an arc; a figure eight's crossing gives four points; the tip of
 	// a double cone gives two circles; two crossing planes give two circles that
-	// cross. Click a shape to move the probe; shrink the sphere to zoom in.
+	// cross. Click a shape to move the probe; pull the sphere's rim in to shrink
+	// it and zoom in.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import { glowPoint, glowTube } from '$lib/three/materials';
 	import { surfaceGeometry } from '$lib/three/surfaces';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { glass } from '../homotopy/glass';
 	import { linkOfCurve, linkOfPatch, polylineGap, type Patch, type Polyline, type V3 } from './link';
 
 	type Key = 'eight' | 'cone' | 'double' | 'planes' | 'disk';
 	let key = $state<Key>('double');
+	const RMIN = 0.12;
+	const RMAX = 0.6;
 	let rho = $state(0.42);
 	let centre = $state<V3>([0, 0, 0]);
 	let verdict = $state<{ kind: 'ok' | 'bad' | 'edge' | 'warn'; title: string; text: string }>({ kind: 'ok', title: '', text: '' });
@@ -148,7 +151,7 @@
 	}
 
 	function setup(ctx: SceneContext) {
-		const { scene, THREE, canvas } = ctx;
+		const { scene, THREE, canvas, camera, controls } = ctx;
 		ctx.camera.near = 0.4;
 		ctx.camera.far = 60;
 		ctx.camera.updateProjectionMatrix();
@@ -274,10 +277,50 @@
 		};
 		api.set(key, centre, rho);
 
-		// click (not drag) to move the probe
+		// press on the sphere's rim and drag to resize it; click (not drag) a shape
+		// to move the probe there
+		const c3 = new THREE.Vector3();
+		const side = new THREE.Vector3();
+		const rim = (e: PointerEvent) => {
+			c3.set(...centre);
+			const c = ctx.project(c3);
+			side.setFromMatrixColumn(camera.matrixWorld, 0).multiplyScalar(rho).add(c3);
+			const s = ctx.project(side);
+			const box = canvas.getBoundingClientRect();
+			const d = Math.hypot(e.clientX - box.left - c.x, e.clientY - box.top - c.y);
+			const R = Math.hypot(s.x - c.x, s.y - c.y);
+			return { d, near: !c.behind && Math.abs(d - R) < Math.max(9, 0.14 * R) };
+		};
+		let resizing: { d0: number; r0: number } | null = null;
+		let controlsWere = true;
 		let downAt: [number, number] | null = null;
-		const onDown = (e: PointerEvent) => (downAt = [e.clientX, e.clientY]);
+		const onDown = (e: PointerEvent) => {
+			if (e.button !== 0) return;
+			const h = rim(e);
+			if (!h.near || h.d < 1) {
+				downAt = [e.clientX, e.clientY];
+				return;
+			}
+			downAt = null;
+			resizing = { d0: h.d, r0: rho };
+			controlsWere = controls?.enabled ?? false;
+			if (controls) controls.enabled = false;
+			canvas.setPointerCapture(e.pointerId);
+			canvas.style.cursor = 'grabbing';
+		};
+		const onMove = (e: PointerEvent) => {
+			if (resizing) {
+				const r = (resizing.r0 * rim(e).d) / resizing.d0;
+				rho = Math.round(Math.min(RMAX, Math.max(RMIN, r)) * 100) / 100;
+			} else if (e.pointerType === 'mouse') canvas.style.cursor = rim(e).near ? 'grab' : '';
+		};
 		const onUp = (e: PointerEvent) => {
+			if (resizing) {
+				resizing = null;
+				if (controls) controls.enabled = controlsWere;
+				canvas.style.cursor = '';
+				return;
+			}
 			if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) return;
 			downAt = null;
 			const hit = ctx.pick(e, pickables[key])[0];
@@ -298,13 +341,18 @@
 			if (distSpecial(key, q) < 0.12) q = key === 'planes' ? onLine(q[0] * LD[0] + q[2] * LD[2]) : key === 'disk' ? [1.55 * Math.cos(Math.atan2(q[2], q[0])), 0, 1.55 * Math.sin(Math.atan2(q[2], q[0]))] : special[key];
 			centre = q;
 		};
-		canvas.addEventListener('pointerdown', onDown);
+		// capture phase: runs before OrbitControls, which then finds itself disabled
+		canvas.addEventListener('pointerdown', onDown, { capture: true });
+		canvas.addEventListener('pointermove', onMove);
 		canvas.addEventListener('pointerup', onUp);
+		canvas.addEventListener('pointercancel', onUp);
 		return {
 			dispose: () => {
 				api = null;
-				canvas.removeEventListener('pointerdown', onDown);
+				canvas.removeEventListener('pointerdown', onDown, { capture: true });
+				canvas.removeEventListener('pointermove', onMove);
 				canvas.removeEventListener('pointerup', onUp);
+				canvas.removeEventListener('pointercancel', onUp);
 			}
 		};
 	}
@@ -315,6 +363,13 @@
 		const r = rho;
 		api?.set(k, c, r);
 	});
+
+	// the stepper shrinks or grows the sphere to the next multiple of 0.06
+	const sizeIx = $derived(rho <= RMIN ? 2 : rho >= RMAX ? 10 : Math.min(9, Math.max(3, Math.round(rho / 0.06))));
+	function resize(d: 1 | -1) {
+		const k = d > 0 ? Math.floor(rho / 0.06 + 1e-9) + 1 : Math.ceil(rho / 0.06 - 1e-9) - 1;
+		rho = Math.round(Math.min(RMAX, Math.max(RMIN, k * 0.06)) * 100) / 100;
+	}
 
 	const options: { value: Key; label: string }[] = [
 		{ value: 'eight', label: 'Figure eight' },
@@ -340,7 +395,7 @@
 	</div>
 	<Controls>
 		<Segmented bind:value={key} {options} label="Which space" onchange={(k) => (centre = special[k])} />
-		<Slider bind:value={rho} min={0.12} max={0.6} step={0.01} label="sphere size" format={(v) => v.toFixed(2)} />
+		<Stepper value={sizeIx} min={2} max={10} label="Sphere radius" format={() => rho.toFixed(2)} onchange={(k) => resize(k > sizeIx ? 1 : -1)} />
 		<Button onclick={() => (centre = special[key])}>Probe {specialName[key]}</Button>
 		<Button onclick={() => (centre = ordinary[key])}>Probe an ordinary point</Button>
 	</Controls>

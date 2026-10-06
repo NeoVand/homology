@@ -7,6 +7,7 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { checkDrawing, closeUnderFaces, describe, segDist, type Pt } from './builder';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	type Tool = 'move' | 'vertex' | 'edge' | 'triangle' | 'erase';
 	interface Vtx {
@@ -343,9 +344,9 @@
 		</div>
 		<div class="fvec"><TeX tex={`(n_0, n_1, n_2) = (${verts.length}, ${nE}, ${nT})`} /></div>
 		{#if problems.length === 0}
-			<div class="status ok">✓ This is a simplicial complex.</div>
+			<div class="status ok"><Mark ok /> This is a simplicial complex.</div>
 		{:else}
-			<div class="status bad">✗ Not a simplicial complex ({problems.length} {problems.length === 1 ? 'problem' : 'problems'})</div>
+			<div class="status bad"><Mark ok={false} /> Not a simplicial complex ({problems.length} {problems.length === 1 ? 'problem' : 'problems'})</div>
 			<ul class="probs">
 				{#each problems.slice(0, 3) as pr, i (i)}
 					<li class:amber={pr.kind === 'missing-face'}>{describe(pr, name)}</li>

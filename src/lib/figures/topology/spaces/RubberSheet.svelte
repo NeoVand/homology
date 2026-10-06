@@ -4,6 +4,7 @@
 	// "outside", "closed" and "crosses twice" do not — unless you tear or glue.
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	const W = 640;
 	const H = 400;
@@ -337,11 +338,13 @@
 				<h4>Survives any stretching</h4>
 				<ul>
 					<li class:ok={!torn && stats.inside} class:bad={torn}>
-						{torn ? '✗ the loop is broken: nothing is enclosed any more' : stats.inside ? '✓ the rose point is inside the loop' : '✗ the rose point has escaped'}
+						<Mark ok={!torn && stats.inside} />
+				{torn ? 'the loop is broken: nothing is enclosed any more' : stats.inside ? 'the rose point is inside the loop' : 'the rose point has escaped'}
 					</li>
-					<li class:ok={stats.outside}>{stats.outside ? '✓ the teal point is outside it' : '✗ the teal point is inside'}</li>
+					<li class:ok={stats.outside}><Mark ok={stats.outside} /> {stats.outside ? 'the teal point is outside it' : 'the teal point is inside'}</li>
 					<li class:ok={!glued && stats.cross === 2} class:bad={glued}>
-						{glued ? '✗ the loop now touches itself: its inside has split in two' : `✓ the violet curve crosses the loop ${stats.cross} times`}
+						<Mark ok={!glued} />
+				{glued ? 'the loop now touches itself: its inside has split in two' : `the violet curve crosses the loop ${stats.cross} times`}
 					</li>
 				</ul>
 			</div>

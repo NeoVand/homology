@@ -9,6 +9,7 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	let m = $state(2);
 	let k = $state(2);
@@ -121,9 +122,9 @@
 
 		<!-- verdicts under each column -->
 		<g class="verdicts">
-			<text x={xL} y={388} text-anchor="middle" class:ok={exactLeft} class:no={!exactLeft}>{exactLeft ? 'exact ✓' : 'gap: ℤ'}</text>
-			<text x={xM} y={388} text-anchor="middle" class:ok={exactMid} class:no={!exactMid}>{exactMid ? 'exact ✓' : isComplex ? 'gap' : 'not a complex'}</text>
-			<text x={cR[0]} y={388} text-anchor="middle" class="ok">exact ✓</text>
+			<text x={xL} y={388} text-anchor="middle" class:ok={exactLeft} class:no={!exactLeft}>{exactLeft ? 'exact' : 'gap: ℤ'}</text>
+			<text x={xM} y={388} text-anchor="middle" class:ok={exactMid} class:no={!exactMid}>{exactMid ? 'exact' : isComplex ? 'gap' : 'not a complex'}</text>
+			<text x={cR[0]} y={388} text-anchor="middle" class="ok">exact</text>
 		</g>
 	</Svg>
 

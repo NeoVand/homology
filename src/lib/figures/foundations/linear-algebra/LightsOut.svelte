@@ -11,6 +11,7 @@
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import { analyse, applyPresses, bits, popcount, pressMask, QUIET_5 } from './lightsout';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	let { mode = 'full', size = 5 }: { mode?: 'play' | 'full'; size?: 3 | 4 | 5 } = $props();
 
@@ -198,7 +199,7 @@
 						>
 							<span class="nm">check {k + 1}</span>
 							<span class="ct">{counts[k]} of {popcount(q)} cells lit</span>
-							<span class="verdict">{counts[k] % 2 === 0 ? 'even ✓' : 'odd ✗'}</span>
+							<span class="verdict">{counts[k] % 2 === 0 ? 'even' : 'odd'} <Mark ok={counts[k] % 2 === 0} size={12} /></span>
 						</button>
 					{/each}
 					<div class="hint">Hover (or tap) a check to outline its cells. A board is solvable exactly when every check is even.</div>

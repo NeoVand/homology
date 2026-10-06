@@ -10,6 +10,8 @@
 	import { hollowTriangle, filledTriangle, hollowTetrahedron, figureEight, torusGrid, twoPoints, type Example } from './complexes';
 	import { ledger, alternating } from './ledger';
 	import { paddedViewBox } from './flat';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { ChevronLeftIcon, ChevronRightIcon, PauseIcon, PlayIcon } from '$lib/icons';
 
 	const examples: Example[] = [twoPoints(), hollowTriangle(), filledTriangle(), figureEight(), hollowTetrahedron(), torusGrid()];
 	const short: Record<string, string> = {
@@ -175,15 +177,11 @@
 		</div>
 	</div>
 	<div class="ctl ui">
-		<button class="b" aria-label="Previous" disabled={s === 0} onclick={() => (stop(), s--)}>‹</button>
+		<button class="b" aria-label="Previous" disabled={s === 0} onclick={() => (stop(), s--)}><Icon icon={ChevronLeftIcon} size={16} stroke={1.8} /></button>
 		<button class="b play" aria-label={playing ? 'Pause' : 'Play'} onclick={play}>
-			{#if playing}
-				<svg viewBox="0 0 20 20" width="12" height="12"><path d="M6 4h3v12H6zM11 4h3v12h-3z" fill="currentColor" /></svg>
-			{:else}
-				<svg viewBox="0 0 20 20" width="12" height="12"><path d="M6 4l10 6-10 6z" fill="currentColor" /></svg>
-			{/if}
+			<Icon icon={playing ? PauseIcon : PlayIcon} size={15} stroke={1.8} />
 		</button>
-		<button class="b" aria-label="Next" disabled={s >= N} onclick={() => (stop(), s++)}>›</button>
+		<button class="b" aria-label="Next" disabled={s >= N} onclick={() => (stop(), s++)}><Icon icon={ChevronRightIcon} size={16} stroke={1.8} /></button>
 		<input type="range" min="0" max={N} step="1" bind:value={s} oninput={stop} aria-label="Number of simplices added" style="--p:{(s / N) * 100}%" />
 		<span class="count">{s} / {N}</span>
 	</div>
@@ -344,33 +342,84 @@
 		gap: 0.5rem;
 		padding: 0.8rem 0 0.7rem;
 	}
+	/* the same look as the shared step controls and timeline */
 	.b {
 		display: grid;
 		place-items: center;
 		flex: none;
 		width: 2rem;
 		height: 2rem;
+		padding: 0;
 		border-radius: 50%;
-		border: 1px solid var(--line);
-		background: rgba(216, 178, 110, 0.05);
-		color: var(--gold-bright);
+		border: 1px solid rgba(216, 178, 110, 0.32);
+		background: transparent;
+		color: var(--gold-pale);
 		cursor: pointer;
-		font-size: 1.1rem;
-		line-height: 1;
+		transition:
+			background 0.15s var(--ease),
+			border-color 0.15s var(--ease);
+	}
+	.b:hover:not(:disabled) {
+		background: rgba(216, 178, 110, 0.1);
+		border-color: rgba(216, 178, 110, 0.65);
 	}
 	.b:disabled {
-		opacity: 0.35;
+		opacity: 0.32;
 		cursor: default;
 	}
 	.play {
-		background: linear-gradient(180deg, #f6dca0, #d2a95f);
-		color: #1a1206;
-		border: 0;
+		border-color: rgba(216, 178, 110, 0.7);
+		color: var(--gold-bright);
 	}
 	input[type='range'] {
+		--thumb: 13px;
+		-webkit-appearance: none;
+		appearance: none;
 		flex: 1;
 		min-width: 6rem;
-		accent-color: var(--gold);
+		height: 2rem;
+		margin: 0 0.3rem;
+		background: transparent;
+		cursor: pointer;
+		touch-action: pan-y;
+	}
+	input[type='range']:focus-visible {
+		outline: none;
+	}
+	input[type='range']::-webkit-slider-runnable-track {
+		height: 2px;
+		border-radius: 2px;
+		background: linear-gradient(90deg, var(--gold-bright) var(--p), rgba(235, 229, 213, 0.16) var(--p));
+	}
+	input[type='range']::-moz-range-track {
+		height: 2px;
+		background: rgba(235, 229, 213, 0.16);
+	}
+	input[type='range']::-moz-range-progress {
+		height: 2px;
+		background: var(--gold-bright);
+	}
+	input[type='range']::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		width: var(--thumb);
+		height: var(--thumb);
+		margin-top: calc(1px - var(--thumb) / 2);
+		border-radius: 50%;
+		border: 0;
+		background: var(--gold-bright);
+		box-shadow: 0 0 0 3px #0a0f1d;
+	}
+	input[type='range']::-moz-range-thumb {
+		width: var(--thumb);
+		height: var(--thumb);
+		border-radius: 50%;
+		border: 0;
+		background: var(--gold-bright);
+		box-shadow: 0 0 0 3px #0a0f1d;
+	}
+	input:focus-visible::-webkit-slider-thumb {
+		outline: 2px solid var(--gold-bright);
+		outline-offset: 3px;
 	}
 	.count {
 		font-size: 0.78rem;

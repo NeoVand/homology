@@ -55,7 +55,7 @@
 			{/key}
 			{#each Array.from({ length: n }, (_, j) => j) as j (j)}
 				{@const [x, y] = at(j)}
-				{@const [tx, ty] = at(j, R + 21)}
+				{@const [tx, ty] = at(j, R + 25)}
 				{@const on = inSub.has(j)}
 				{#if showGens && gens.has(j)}
 					<circle cx={x} cy={y} r="12" fill="none" stroke="#5fd6cf" stroke-width="1.6" stroke-opacity="0.85" />
@@ -82,8 +82,10 @@
 	<div class="info ui">
 		<div class="line big"><TeX tex={`\\langle ${k} \\rangle = ${listTeX}`} /></div>
 		<div class="line">
-			order of <TeX tex={String(k)} /> = number of dots visited =
-			<TeX tex={`\\dfrac{${n}}{\\gcd(${n}, ${k})} = \\dfrac{${n}}{${g}} = ${ord}`} />
+			The order of <TeX tex={String(k)} /> is the number of dots visited:
+			<div class="formula">
+				<TeX tex={`\\operatorname{order}(${k}) = \\dfrac{${n}}{\\gcd(${n}, ${k})} = \\dfrac{${n}}{${g}} = ${ord}`} />
+			</div>
 		</div>
 		<div class="line verdict" class:yes={ord === n}>
 			{#if ord === n}
@@ -97,11 +99,12 @@
 		<div class="subs">
 			<span class="slabel">All subgroups of <TeX tex={`\\mathbb{Z}/${n}`} />:</span>
 			{#each subs as s (s.d)}
-				<button class="sub" class:on={walk.length === s.size} onclick={() => (k = s.d)}>
+				<button class="sub" class:on={walk.length === s.size} onclick={() => (k = s.d)} title="{s.size} {s.size === 1 ? 'element' : 'elements'}">
 					<TeX tex={`\\langle ${s.d} \\rangle`} /><span class="sz">{s.size}</span>
 				</button>
 			{/each}
 		</div>
+		<div><Toggle bind:checked={showGens} label="show all generators" /></div>
 		{#if showGens}
 			<div class="line gl">
 				Generators (teal rings): <TeX tex={'\\{' + [...gens].join(', ') + '\\}'} /> — exactly the
@@ -111,9 +114,12 @@
 	</div>
 </div>
 <Controls>
-	<Stepper bind:value={n} min={2} max={24} label="n" />
-	<Stepper bind:value={k} min={0} max={n - 1} label="k (or tap a dot)" />
-	<Toggle bind:checked={showGens} label="show all generators" />
+	<Stepper bind:value={n} min={2} max={24} label="n">
+		{#snippet labelSnippet()}<TeX tex="n" />{/snippet}
+	</Stepper>
+	<Stepper bind:value={k} min={0} max={n - 1} label="k">
+		{#snippet labelSnippet()}<TeX tex="k" />{/snippet}
+	</Stepper>
 </Controls>
 
 <style>
@@ -124,7 +130,7 @@
 		padding: 1rem 1.3rem;
 		align-items: center;
 	}
-	@media (max-width: 720px) {
+	@container figure (max-width: 45rem) {
 		.gen {
 			grid-template-columns: minmax(0, 1fr);
 			padding: 0.8rem 0.8rem;
@@ -172,6 +178,12 @@
 	}
 	.line {
 		line-height: 1.6;
+	}
+	.formula {
+		margin-top: 0.25rem;
+		font-size: 1.02rem;
+		color: var(--ink);
+		white-space: nowrap;
 	}
 	.big {
 		font-size: 1.05rem;

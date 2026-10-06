@@ -7,6 +7,7 @@
 	import { renderMathInText, tex } from '$lib/katex/render';
 	import { classColor } from './palette';
 	import { checkRule, representatives, rules } from './relations';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	let n = $state(6);
 	let ruleId = $state('mod4');
@@ -60,7 +61,7 @@
 						</span>
 					{/each}
 				</span>
-				<span class="mark" aria-label={r.ok ? 'consistent' : 'inconsistent'}>{r.ok ? '✓' : '✗'}</span>
+				<span class="mark"><Mark ok={r.ok} label={r.ok ? 'consistent' : 'inconsistent'} /></span>
 			</div>
 		{/each}
 	</div>

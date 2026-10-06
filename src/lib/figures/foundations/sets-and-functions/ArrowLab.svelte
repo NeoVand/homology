@@ -9,6 +9,7 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import { renderMathInText } from '$lib/katex/render';
 	import { classify, image, preimage, type Arrow } from './maps';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	type Mode = 'draw' | 'image' | 'preimage';
 	let mode = $state<Mode>('draw');
@@ -144,7 +145,7 @@
 	<div class="badges">
 		{#each badges as b (b.name)}
 			<div class="badge" class:ok={b.ok === true} class:no={b.ok === false} class:na={b.ok === null}>
-				<span class="ic">{b.ok === true ? '✓' : b.ok === false ? '✗' : '–'}</span>
+				<span class="ic">{#if b.ok === null || b.ok === undefined}–{:else}<Mark ok={b.ok} size={12} />{/if}</span>
 				<span class="nm ui">{b.name}</span>
 				<span class="why">{b.why}</span>
 			</div>

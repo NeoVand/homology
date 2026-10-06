@@ -5,6 +5,7 @@
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { tex } from '$lib/katex/render';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	type Verdict = 'kept' | 'broken';
 	const cases = [
@@ -70,7 +71,7 @@
 					</div>
 				{:else}
 					<div class="res" aria-live="polite">
-						<span class="mark">{pick === c.answer ? '✓' : '✗'}</span>
+						<span class="mark"><Mark ok={pick === c.answer} size={13} /></span>
 						<span class="verdict">{c.answer === 'kept' ? 'Kept' : 'Broken'}</span>
 						<p class="why">{c.why}</p>
 					</div>

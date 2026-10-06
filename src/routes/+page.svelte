@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Hero3D from '$lib/components/home/Hero3D.svelte';
 	import Ornament from '$lib/components/layout/Ornament.svelte';
-	import { parts } from '$lib/content/toc';
+	import { chapterById, parts } from '$lib/content/toc';
 	import { chapterHref, href } from '$lib/util/paths';
 	import { progress } from '$lib/stores/progress.svelte';
 	import Icon from '$lib/components/ui/Icon.svelte';
@@ -11,7 +11,13 @@
 	const chapterCount = parts.flatMap((p) => p.chapters).length;
 
 	let open = $state<Record<string, boolean>>({});
-	const visitedCount = $derived(Object.keys(progress.visited).length);
+	// a returning reader continues with the chapter they last opened
+	const resume = $derived.by(() => {
+		let best = '';
+		let at = 0;
+		for (const [id, t] of Object.entries(progress.visited)) if (t > at && chapterById.has(id)) [best, at] = [id, t];
+		return best ? chapterById.get(best)! : null;
+	});
 </script>
 
 <svelte:head>
@@ -32,7 +38,9 @@
 		<Hero3D height={600} />
 	</div>
 	<div class="hero-text">
-		<p class="eyebrow">An illustrated journey · from first principles</p>
+		<p class="eyebrow">
+			<span>An illustrated journey</span><span class="eb-dot" aria-hidden="true"> · </span><span>from first principles</span>
+		</p>
 		<h1 class="title">
 			<span class="gold-text">Homology</span>
 			<span class="amp">&amp;</span>
@@ -43,20 +51,26 @@
 			curious, with every prerequisite taught along the way.
 		</p>
 		<div class="ctas ui">
-			<a class="btn gold" href={chapterHref('prelude/shape-of-a-question')}>
-				{visitedCount ? 'Continue the journey' : 'Begin the journey'}
+			<a class="btn gold" href={chapterHref(resume?.id ?? 'prelude/shape-of-a-question')}>
+				{resume ? `Continue with ${resume.num} ${resume.title}` : 'Begin the journey'}
 				<Icon icon={ArrowRightIcon} size={18} stroke={1.8} />
 			</a>
 			<a class="btn ghost" href={href('/map/')}>See the map</a>
 		</div>
+		<!-- two groups, so that on a phone the line breaks between them and
+		     never leaves a separator dangling at the start or end of a line -->
 		<div class="stats ui nums">
-			<span><b>{chapterCount}</b> chapters</span>
-			<span class="dot">·</span>
-			<span>a prelude + <b>{parts.length - 1}</b> parts</span>
-			<span class="dot">·</span>
-			<span>about <b>{Math.round(totalMinutes / 60)}</b> hours</span>
-			<span class="dot">·</span>
-			<span>no background needed</span>
+			<span class="grp">
+				<span><b>{chapterCount}</b> chapters</span>
+				<span class="dot" aria-hidden="true">·</span>
+				<span>a prelude + <b>{parts.length - 1}</b> parts</span>
+			</span>
+			<span class="dot between" aria-hidden="true">·</span>
+			<span class="grp">
+				<span>about <b>{Math.round(totalMinutes / 60)}</b> hours</span>
+				<span class="dot" aria-hidden="true">·</span>
+				<span>no background needed</span>
+			</span>
 		</div>
 	</div>
 </section>
@@ -244,12 +258,14 @@
 
 <footer class="site-foot ui">
 	<span>Homology &amp; Cohomology — an illustrated journey</span>
-	<span class="sep">·</span>
-	<a href={href('/cheatsheet/')}>Cheat sheet</a>
-	<span class="sep">·</span>
-	<a href={href('/sources/')}>Sources &amp; further reading</a>
-	<span class="sep">·</span>
-	<a href="https://github.com/NeoVand/homology" target="_blank" rel="noopener noreferrer">Source code</a>
+	<span class="sep between" aria-hidden="true">·</span>
+	<span class="grp">
+		<a href={href('/cheatsheet/')}>Cheat sheet</a>
+		<span class="sep" aria-hidden="true">·</span>
+		<a href={href('/sources/')}>Sources<span class="long"> &amp; further reading</span></a>
+		<span class="sep" aria-hidden="true">·</span>
+		<a href="https://github.com/NeoVand/homology" target="_blank" rel="noopener noreferrer">Source code</a>
+	</span>
 </footer>
 
 <style>
@@ -391,8 +407,45 @@
 		color: var(--gold);
 		font-weight: 600;
 	}
+	.stats .grp,
+	.site-foot .grp {
+		display: inline-flex;
+		flex-wrap: nowrap;
+		gap: inherit;
+		white-space: nowrap;
+	}
 	.dot {
 		opacity: 0.5;
+	}
+	/* phones: each half on its own line, no separator between them */
+	@media (max-width: 34rem) {
+		.stats,
+		.site-foot {
+			flex-direction: column;
+			align-items: center;
+		}
+		.between {
+			display: none;
+		}
+		.eyebrow span {
+			display: block;
+		}
+		.eyebrow .eb-dot {
+			display: none;
+		}
+		.site-foot .long {
+			display: none;
+		}
+	}
+	@media (max-width: 30rem) {
+		.ctas {
+			flex-direction: column;
+			align-items: center;
+		}
+		.ctas .btn {
+			justify-content: center;
+			width: min(100%, 18rem);
+		}
 	}
 
 	.quote,

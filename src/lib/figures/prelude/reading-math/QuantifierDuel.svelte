@@ -6,6 +6,7 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { renderMathInText, tex } from '$lib/katex/render';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	type Stmt = 'sum' | 'bigger';
 	type Order = 'AE' | 'EA';
@@ -139,7 +140,7 @@
 		</div>
 		<div class="hist ui" aria-label="recent rounds">
 			{#each history as h, i (i)}
-				<span class="h" class:win={h.win} title="x = {h.x}, y = {h.y}">{h.win ? '✓' : '✗'}</span>
+				<span class="h" class:win={h.win} title="x = {h.x}, y = {h.y}"><Mark ok={h.win} size={12} /></span>
 			{/each}
 		</div>
 	</div>

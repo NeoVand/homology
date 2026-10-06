@@ -710,13 +710,13 @@
 	following a local solution around a loop and coming back to a different one — is called <dfn>monodromy</dfn>.
 </p>
 
-<Figure num="4.7.5" title="Following a branch around the puncture" hint="Drag to rotate · slide or press Walk">
+<Figure num="4.7.5" title="Following a branch around the puncture" hint="Drag the gold point to walk · play the walk · drag elsewhere to rotate">
 	<BranchSurface />
 	{#snippet caption()}
-		The walker circles the origin in the plane below. Above it, its chosen value is followed continuously on the
-		<em>Riemann surface</em> of the function. For \(\sqrt z\) (height = real part) the surface has two sheets, and one
-		turn moves you from one to the other; the dial shows the value turning only half a turn. For \(\log z\) the surface is
-		a spiral ramp, and every turn adds \(2\pi i\).
+		The walker circles the origin in the plane below; play the walk, or drag the walker around \(0\) yourself. Above
+		it, its chosen value is followed continuously on the <em>Riemann surface</em> of the function. For \(\sqrt z\)
+		(height = real part) the surface has two sheets, and one turn moves you from one to the other; the dial shows
+		the value turning only half a turn. For \(\log z\) the surface is a spiral ramp, and every turn adds \(2\pi i\).
 	{/snippet}
 </Figure>
 

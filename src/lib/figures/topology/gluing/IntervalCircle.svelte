@@ -59,36 +59,36 @@
 			<SvgTeX x={L1[0]} y={L1[1]} tex="1" size={15} w={20} h={20} />
 		{/if}
 	</Svg>
-	<div class="panel ui">
-		<div class="row">
-			<Timeline bind:value={g} duration={2.4} from="interval" to="circle" label="Gluing the ends together" />
-			<Segmented
-				bind:value={which}
-				options={[
-					{ value: 'good', label: 'An arc around the glued point' },
-					{ value: 'bad', label: 'A one-sided arc' }
-				]}
-				label="Which set"
-			/>
-		</div>
-		<p class="read" aria-live="polite">
-			{#if which === 'good'}
-				Before gluing, this set is <TeX tex={'[0,\\varepsilon)\\cup(1-\\varepsilon,1]'} />: open in <TeX tex={'[0,1]'} />, since every point of it has some room
-				inside <TeX tex={'[0,1]'} />. So after gluing it is <b class="ok">open</b> — the glued point has room on both sides.
-			{:else}
-				This set contains the glued point, so before gluing it is <TeX tex={'[0,\\varepsilon)\\cup\\{1\\}'} />. The lonely point <TeX tex="1" /> has no room at
-				all, so this is <b class="no">not open</b> — just as the picture suggests: the arc stops dead at the glued point.
-			{/if}
-		</p>
+</div>
+<div class="bar ui">
+	<div class="row">
+		<Timeline bind:value={g} duration={2.4} from="interval" to="circle" label="Gluing the ends together" />
+		<Segmented
+			bind:value={which}
+			options={[
+				{ value: 'good', label: 'An arc around the glued point' },
+				{ value: 'bad', label: 'A one-sided arc' }
+			]}
+			label="Which set"
+		/>
 	</div>
+	<p class="read" aria-live="polite">
+		{#if which === 'good'}
+			Before gluing, this set is <TeX tex={'[0,\\varepsilon)\\cup(1-\\varepsilon,1]'} />: open in <TeX tex={'[0,1]'} />, since every point of it has some room
+			inside <TeX tex={'[0,1]'} />. So after gluing it is <b class="ok">open</b> — the glued point has room on both sides.
+		{:else}
+			This set contains the glued point, so before gluing it is <TeX tex={'[0,\\varepsilon)\\cup\\{1\\}'} />. The lonely point <TeX tex="1" /> has no room at
+			all, so this is <b class="no">not open</b> — just as the picture suggests: the arc stops dead at the glued point.
+		{/if}
+	</p>
 </div>
 
 <style>
 	.ic {
 		padding: 0.6rem 0.6rem 0;
 	}
-	.panel {
-		padding: 0.7rem 1rem 0.9rem;
+	.bar {
+		padding: 0.85rem 1.2rem 1rem;
 		border-top: 1px solid var(--line-faint);
 		background: rgba(5, 8, 16, 0.45);
 		font-size: 0.85rem;

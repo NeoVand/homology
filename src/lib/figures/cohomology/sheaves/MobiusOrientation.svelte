@@ -5,11 +5,10 @@
 	// agree (+1) or disagree (−1). Flipping a patch changes two signs at once, so
 	// the product of the three signs never changes: −1 for the Möbius band, +1
 	// for the cylinder. A golden arrow carried once around comes back reversed.
-	import { onMount } from 'svelte';
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { glassMesh, glowCore, glowTube, glowPoint, palette } from '$lib/three/materials';
@@ -20,7 +19,6 @@
 	let kind = $state<Kind>('mobius');
 	let eps = $state<[number, number, number]>([1, 1, 1]);
 	let carry = $state(0); // 0 … 2 laps
-	let playing = $state(false);
 
 	const TAU = Math.PI * 2;
 	const R = 1.55;
@@ -243,21 +241,6 @@
 		api?.carry();
 	});
 
-	let raf = 0;
-	function toggle() {
-		playing = !playing;
-		if (!playing) return cancelAnimationFrame(raf);
-		let last = 0;
-		const step = (now: number) => {
-			const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
-			last = now;
-			carry = (carry + dt * 0.18) % 2;
-			if (playing) raf = requestAnimationFrame(step);
-		};
-		raf = requestAnimationFrame(step);
-	}
-	onMount(() => () => cancelAnimationFrame(raf));
-
 	const flip = (k: number) => {
 		const e = [...eps] as [number, number, number];
 		e[k] = -e[k];
@@ -286,8 +269,10 @@
 		{:else}
 			On the cylinder you can make all three signs +1 — the local orientations glue to a global one.
 		{/if}
-		{#if carry > 0.98 && carry < 1.02 && kind === 'mobius'}
+		{#if kind === 'mobius' && carry > 0.98 && carry < 1.02}
 			<strong class="flip">The carried arrow is back at the start — pointing the other way.</strong>
+		{:else if kind === 'mobius' && carry > 1.98}
+			<strong class="flip">After a second lap it points the original way again.</strong>
 		{/if}
 	</div>
 </div>
@@ -304,8 +289,7 @@
 	<Button onclick={() => flip(0)}>Flip U₁</Button>
 	<Button onclick={() => flip(1)}>Flip U₂</Button>
 	<Button onclick={() => flip(2)}>Flip U₃</Button>
-	<Slider bind:value={carry} min={0} max={2} step={0.005} label="Carry the gold arrow" format={(v) => `${(v * 360).toFixed(0)}°`} />
-	<Button onclick={toggle} active={playing}>{playing ? 'Pause' : 'Carry'}</Button>
+	<Timeline bind:value={carry} min={0} max={2} duration={8} from="start" to="two laps" label="Carrying the gold arrow around the band" />
 </Controls>
 
 <style>

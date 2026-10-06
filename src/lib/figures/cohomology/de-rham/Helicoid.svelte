@@ -10,9 +10,8 @@
 	import { surfaceGeometry } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { fmt } from '$lib/figures/cohomology/differential-forms/calc';
 	import { TAU } from './derham';
@@ -166,33 +165,6 @@
 		const l = laps;
 		api?.set(m, l);
 	});
-
-	let playing = $state(false);
-	let raf = 0;
-	function play() {
-		if (playing) {
-			playing = false;
-			cancelAnimationFrame(raf);
-			return;
-		}
-		playing = true;
-		laps = 0;
-		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		if (reduced) {
-			laps = 2;
-			playing = false;
-			return;
-		}
-		let last = 0;
-		const tick = (now: number) => {
-			const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
-			last = now;
-			laps = Math.min(2, laps + dt / 3.2);
-			if (laps < 2 && playing) raf = requestAnimationFrame(tick);
-			else playing = false;
-		};
-		raf = requestAnimationFrame(tick);
-	}
 </script>
 
 <svelte:window bind:innerWidth />
@@ -215,8 +187,7 @@
 				{ value: 'beside', label: 'Beside the hole' }
 			]}
 		/>
-		<Slider bind:value={laps} min={0} max={2} step={0.01} label="Laps walked" />
-		<Button variant="gold" onclick={play}>{playing ? 'Pause' : 'Walk two laps'}</Button>
+		<Timeline bind:value={laps} min={0} max={2} duration={6.4} from="start" to="two laps" label="Walking the loop twice" />
 	</Controls>
 	<div class="readout">
 		<TeX tex={String.raw`\text{angle followed continuously:}\quad \theta_{\text{now}} - \theta_{\text{start}} = ${fmt(swept, 2).replace('−', '-')} \;=\; ${fmt(swept / TAU, 2).replace('−', '-')}\times 2\pi`} />

@@ -129,7 +129,8 @@
 		align-items: baseline;
 		gap: 0.2rem 0.5rem;
 		width: max-content;
-		max-width: 90%;
+		/* clear of the reset-view button in the corner */
+		max-width: calc(100% - 7rem);
 		font-size: 0.78rem;
 		color: var(--ink-dim);
 		background: rgba(6, 10, 20, 0.7);
@@ -137,6 +138,16 @@
 		border-radius: 12px;
 		padding: 0.3rem 0.85rem;
 		pointer-events: none;
+	}
+	@container figure (max-width: 520px) {
+		/* too narrow to float over the scene: sit under it instead */
+		.res {
+			position: static;
+			transform: none;
+			max-width: calc(100% - 1.6rem);
+			margin: 0.2rem auto 0.7rem;
+			text-align: center;
+		}
 	}
 	.res :global(.katex) {
 		color: var(--gold-bright);

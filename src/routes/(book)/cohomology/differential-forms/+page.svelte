@@ -64,7 +64,7 @@
 <h3 id="fundamental-theorem">The fundamental theorem</h3>
 
 <p>Now put the two ideas together. Take \(f = F'\), the slope of our road, and add up the predicted rises \(F'(x_i)\,\Delta x\) across the interval from \(a\) to \(b\). Each predicted rise is close to the actual rise \(F(x_{i+1}) - F(x_i)\) on its piece, and the actual rises add up in a wonderfully lazy way. With three pieces, \(a = x_0 \lt x_1 \lt x_2 \lt x_3 = b\):</p>
-\[ \begin{aligned} &\big[F(x_1) - F(x_0)\big] + \big[F(x_2) - F(x_1)\big] + \big[F(x_3) - F(x_2)\big] \\ &\qquad = F(x_3) - F(x_0). \end{aligned} \]
+\[ \big[F(x_1) - F(x_0)\big] + \big[F(x_2) - F(x_1)\big] + \big[F(x_3) - F(x_2)\big] = F(x_3) - F(x_0). \]
 <p>Every intermediate height appears once with a plus sign and once with a minus sign, and cancels. Only the two ends survive. Sums that collapse like this are called <em>telescoping</em>, after the way a pocket telescope folds up. Letting the pieces shrink gives the most important theorem of calculus.</p>
 
 <Theorem id="thm-ftc" title="Fundamental theorem of calculus">
@@ -174,9 +174,9 @@
 \[ \oint_{\partial S} \mathbf F\cdot d\mathbf r = \iint_S (\operatorname{curl}\mathbf F)\cdot\mathbf n\,dA \quad\text{(Kelvin–Stokes)}, \qquad \iint_{\partial V} \mathbf F\cdot\mathbf n\,dA = \iiint_V \operatorname{div}\mathbf F\,dV \quad\text{(Gauss)}. \]
 <p>In the first, \(S\) is a surface with boundary curve \(\partial S\); in the second, \(V\) is a solid with boundary surface \(\partial V\), and \(\mathbf n\) points outward. The second one is the <dfn>divergence theorem</dfn>: what flows out through the skin is what was created inside.</p>
 
-<Figure title="The divergence theorem in space" hint="Drag to rotate · move and resize the sphere · add a wind" num="4.3.5">
+<Figure title="The divergence theorem in space" hint="Drag the sphere to move it, its rim to resize · drag elsewhere to rotate" num="4.3.5">
 	<Flux3D />
-	{#snippet caption()}The glowing blob is a source: the field’s divergence is concentrated there. Arrows on the glass sphere show the flow through its surface (gold out, teal in). Both totals are computed independently, by adding up over the sphere’s surface and over its solid inside. Move the sphere off the blob and the flux drops to zero; switch on the wind and arrows point inward on one side and outward on the other, but the total does not change, because a uniform wind creates nothing.{/snippet}
+	{#snippet caption()}The glowing blob is a source: the field’s divergence is concentrated there. Arrows on the glass sphere show the flow through its surface (gold out, teal in). Both totals are computed independently, by adding up over the sphere’s surface and over its solid inside. Drag the sphere off the blob and the flux drops to zero; switch on the wind and arrows point inward on one side and outward on the other, but the total does not change, because a uniform wind creates nothing.{/snippet}
 </Figure>
 
 <p>Line up what we have so far:</p>
@@ -326,7 +326,9 @@
 <h3 id="grad-curl-div">Gradient, curl and divergence are one operator</h3>
 
 <p>In space, apply the same rule in each degree:</p>
-\[ \begin{aligned} df &= f_x\,dx + f_y\,dy + f_z\,dz, \\ d(P\,dx + Q\,dy + R\,dz) &= (R_y - Q_z)\,dy\wedge dz + (P_z - R_x)\,dz\wedge dx + (Q_x - P_y)\,dx\wedge dy, \\ d(A\,dy\wedge dz + B\,dz\wedge dx + C\,dx\wedge dy) &= (A_x + B_y + C_z)\,dx\wedge dy\wedge dz . \end{aligned} \]
+\[ df = f_x\,dx + f_y\,dy + f_z\,dz, \]
+\[ d(P\,dx + Q\,dy + R\,dz) = (R_y - Q_z)\,dy\wedge dz + (P_z - R_x)\,dz\wedge dx + (Q_x - P_y)\,dx\wedge dy, \]
+\[ d(A\,dy\wedge dz + B\,dz\wedge dx + C\,dx\wedge dy) = (A_x + B_y + C_z)\,dx\wedge dy\wedge dz . \]
 <p>Read the coefficients: the first line is the gradient, the second the curl, the third the divergence. The three operators of vector calculus, each with its own formula to memorise, are one and the same \(d\), applied to forms of degree \(0\), \(1\) and \(2\).</p>
 
 <Figure title="The de Rham ladder" num="4.3.9">

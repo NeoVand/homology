@@ -2,9 +2,10 @@
 	// "Bands on a torus": two fences α (gold) and β (teal); their product lives
 	// where they cross. The readout is computed twice: by counting signed
 	// crossings, and by the front-face × back-face formula on a triangulation.
+	// Grab a band on the surface to slide it; the timeline bends α into an S.
 	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { glassMesh, glowPoint, disposeTree } from '$lib/three/materials';
 	import { surfaceGeometry } from '$lib/three/surfaces';
@@ -18,6 +19,7 @@
 	let uA = $state(0.25);
 	let vB = $state(0.86);
 	let wiggle = $state(0);
+	const frac = (x: number) => x - Math.floor(x);
 
 	const grid = squareModel('torus', 12);
 	const T = orientTriangles(grid.D)!;
@@ -105,12 +107,9 @@
 			for (const [k, cv] of s.curves.entries()) {
 				const mesh = bandMesh(f, cv.c, W, cv.col, { opacity: k === 1 && (mode === 'aa' || mode === 'bb') ? 0.8 : 1, anim, segments: 320 });
 				dynamic.add(mesh);
-				// label each band where it faces the camera: α low on the outside, β towards the right
-				const tl = cv.col === 'gold' ? (k === 0 ? 0.935 : 0.9) : k === 0 ? 0.86 : 0.8;
-				const [x, y] = cv.c(tl);
-				const { P, N } = liftPoint(f, x, y, 0.24);
-				labels.push(ctx.label(P, tex(cv.name), { className: cv.col, normal: N }));
 			}
+			ctx.camera.updateMatrixWorld();
+			const taken: { x: number; y: number }[] = [];
 			for (const c of s.crossings) {
 				const tA = nearestParam(s.first.c, c.p);
 				const tB = nearestParam(s.second.c, c.p);
@@ -120,8 +119,54 @@
 				dynamic.add(dot);
 				const lp = patch.center.clone().addScaledVector(patch.normal, 0.26);
 				labels.push(ctx.label(lp, c.sign > 0 ? '+1' : '−1', { className: 'rose sign3d', normal: patch.normal }));
+				taken.push(ctx.project(lp));
+			}
+			// name each band beside it, where the name is clear of every band and sign
+			const ink = s.curves.flatMap((cv) =>
+				Array.from({ length: 160 }, (_, i) => {
+					const [x, y] = cv.c(i / 160);
+					return ctx.project(liftPoint(f, x, y, 0.02).P);
+				})
+			);
+			for (const cv of s.curves) {
+				const { P, N } = spot(cv.name, cv.c, ink, taken);
+				labels.push(ctx.label(P, tex(cv.name), { className: cv.col, normal: N }));
 			}
 			ctx.invalidate();
+		}
+		// a place for a band's name: lifted off the surface where it faces the
+		// camera, a little way off its own band on screen, clear of everything
+		// else drawn and inside the picture
+		const eye = new THREE.Vector3();
+		const lastT = new Map<string, number>();
+		function spot(key: string, c: (t: number) => UV, ink: { x: number; y: number }[], taken: { x: number; y: number }[]) {
+			const w = ctx.canvas.clientWidth;
+			const h = ctx.canvas.clientHeight;
+			let best = liftPoint(f, ...c(0), 0.3);
+			let top = -Infinity;
+			let bestT = 0;
+			const was = lastT.get(key);
+			for (let i = 0; i < 96; i++) {
+				const t = i / 96;
+				const [x, y] = c(t);
+				const l = liftPoint(f, x, y, 0.3);
+				const facing = l.N.dot(eye.copy(ctx.camera.position).sub(l.P).normalize());
+				if (facing < 0.25) continue;
+				const q = ctx.project(l.P);
+				if (q.x < 20 || q.y < 20 || q.x > w - 20 || q.y > h - 20) continue;
+				const foot = ctx.project(liftPoint(f, x, y, 0.02).P);
+				const gap = Math.hypot(q.x - foot.x, q.y - foot.y);
+				let clear = 32;
+				for (const k of ink) clear = Math.min(clear, Math.hypot(k.x - q.x, k.y - q.y));
+				for (const k of taken) clear = Math.min(clear, Math.hypot(k.x - q.x, k.y - q.y) - 16);
+				let score = clear - 0.6 * Math.abs(gap - 28) + 6 * facing;
+				// stay where the name was unless somewhere else is clearly better
+				if (was !== undefined) score -= 40 * Math.min(Math.abs(t - was - Math.round(t - was)), 0.25);
+				if (score > top) ((top = score), (best = l), (bestT = t));
+			}
+			lastT.set(key, bestT);
+			taken.push(ctx.project(best.P));
+			return best;
 		}
 		api = { rebuild };
 		rebuild();
@@ -129,14 +174,85 @@
 		const off = ctx.onFrame(() => {
 			if (fit()) ctx.invalidate();
 		});
+
+		// ── grab a band and slide it: α around the hole, β around the tube ──
+		const { canvas, controls } = ctx;
+		const surface = surf.children[1];
+		const onSurface = (e: PointerEvent) => {
+			const hit = ctx.pick(e, [surface])[0];
+			return hit?.uv ? { uv: [hit.uv.x, hit.uv.y] as UV, point: hit.point } : null;
+		};
+		const bandAt = (e: PointerEvent) => {
+			const h = onSurface(e);
+			if (!h) return null;
+			let best: { band: 'a' | 'b'; uv: UV } | null = null;
+			let bd = 0.16;
+			for (const cv of sim.curves) {
+				const [x, y] = cv.c(nearestParam(cv.c, h.uv, 160));
+				const d = liftPoint(f, x, y, 0).P.distanceTo(h.point);
+				if (d < bd) ((bd = d), (best = { band: cv.col === 'gold' ? 'a' : 'b', uv: h.uv }));
+			}
+			return best;
+		};
+		let grab: { band: 'a' | 'b'; uv: UV } | null = null;
+		let controlsWere = true;
+		const onDown = (e: PointerEvent) => {
+			if (e.button !== 0) return;
+			grab = bandAt(e);
+			if (!grab) return;
+			controlsWere = controls?.enabled ?? false;
+			if (controls) controls.enabled = false;
+			canvas.setPointerCapture(e.pointerId);
+			canvas.style.cursor = 'grabbing';
+		};
+		const onMove = (e: PointerEvent) => {
+			if (!grab) {
+				if (e.pointerType === 'mouse') canvas.style.cursor = bandAt(e) ? 'grab' : '';
+				return;
+			}
+			const h = onSurface(e);
+			if (!h) return;
+			// the shortest way round from the last point, so crossing the seam is seamless
+			const d = (a: number, b: number) => a - b - Math.round(a - b);
+			if (grab.band === 'a') uA = frac(uA + d(h.uv[0], grab.uv[0]));
+			else vB = frac(vB + d(h.uv[1], grab.uv[1]));
+			grab.uv = h.uv;
+		};
+		const onUp = () => {
+			if (!grab) return;
+			grab = null;
+			if (controls) controls.enabled = controlsWere;
+			canvas.style.cursor = '';
+		};
+		// capture phase: runs before OrbitControls, which then finds itself disabled
+		canvas.addEventListener('pointerdown', onDown, { capture: true });
+		canvas.addEventListener('pointermove', onMove);
+		canvas.addEventListener('pointerup', onUp);
+		canvas.addEventListener('pointercancel', onUp);
 		return {
 			dispose() {
 				off();
 				api = null;
 				for (const l of labels) l.remove();
+				canvas.removeEventListener('pointerdown', onDown, { capture: true });
+				canvas.removeEventListener('pointermove', onMove);
+				canvas.removeEventListener('pointerup', onUp);
+				canvas.removeEventListener('pointercancel', onUp);
 			}
 		};
 	}
+
+	// the keyboard way to slide the bands: focus one and use the arrow keys
+	function keyFor(set: (d: number) => void) {
+		return (e: KeyboardEvent) => {
+			const k = ({ ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 } as Record<string, number>)[e.key];
+			if (!k) return;
+			e.preventDefault();
+			set((e.shiftKey ? 0.05 : 0.01) * k);
+		};
+	}
+	const keyA = keyFor((d) => (uA = frac(uA + d)));
+	const keyB = keyFor((d) => (vB = frac(vB + d)));
 
 	$effect(() => {
 		void sim;
@@ -145,15 +261,37 @@
 </script>
 
 <div class="bands">
-	<!-- signs next to the crossings are 3D labels; style them as small pills -->
-	<Scene3D
-		{setup}
-		height={460}
-		animate
-		camera={{ position: [0.2, 3.3, 5.5], fov: 38 }}
-		controls={{ autoRotate: false }}
-		label="A glassy torus with a gold band running around its tube and a teal band running around its hole. Where the bands cross, a small rose patch glows; signs +1 or −1 mark each crossing."
-	/>
+	<div class="stage">
+		<!-- signs next to the crossings are 3D labels; style them as small pills -->
+		<Scene3D
+			{setup}
+			height={460}
+			animate
+			camera={{ position: [0.2, 3.3, 5.5], fov: 38 }}
+			controls={{ autoRotate: false }}
+			label="A glassy torus with a gold band running around its tube and a teal band running around its hole; either band can be dragged along the surface. Where the bands cross, a small rose patch glows; signs +1 or −1 mark each crossing."
+		/>
+		<div
+			class="keys"
+			role="slider"
+			tabindex="0"
+			aria-label="Band α: arrow keys slide it around the hole"
+			aria-valuemin={0}
+			aria-valuemax={99}
+			aria-valuenow={Math.round(uA * 100)}
+			onkeydown={keyA}
+		></div>
+		<div
+			class="keys"
+			role="slider"
+			tabindex="0"
+			aria-label="Band β: arrow keys slide it around the tube"
+			aria-valuemin={0}
+			aria-valuemax={99}
+			aria-valuenow={Math.round(vB * 100)}
+			onkeydown={keyB}
+		></div>
+	</div>
 	<div class="readout ui" aria-live="polite">
 		<div class="row">
 			<span class="k">Signed crossings</span>
@@ -178,11 +316,7 @@
 				{ value: 'bb', label: 'β ⌣ β' }
 			]}
 		/>
-		<div class="sliders">
-			<Slider bind:value={uA} min={0} max={0.999} step={0.001} label="slide α around the hole" format={(v) => v.toFixed(2)} />
-			<Slider bind:value={vB} min={0} max={0.999} step={0.001} label="slide β around the tube" format={(v) => v.toFixed(2)} />
-			<Slider bind:value={wiggle} min={0} max={1} step={0.01} label="bend α into an S" format={(v) => `${Math.round(v * 100)}%`} />
-		</div>
+		<Timeline bind:value={wiggle} from="α straight" to="α bent" duration={3} label="Bending α into an S" />
 	</div>
 </div>
 
@@ -228,21 +362,28 @@
 		margin-left: 0.4rem;
 	}
 	.ctl {
-		display: grid;
-		gap: 0.8rem;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.8rem 1.6rem;
 		padding: 0.85rem 1.2rem 1rem;
 		border-top: 1px solid var(--line-faint);
 		background: rgba(5, 8, 16, 0.45);
 	}
-	.sliders {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 0.6rem 1.2rem;
+	.stage {
+		position: relative;
 	}
-	@media (max-width: 640px) {
-		.sliders {
-			grid-template-columns: 1fr;
-		}
+	.keys {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		outline: none;
+	}
+	.keys:focus-visible {
+		outline: 2px solid var(--gold-bright);
+		outline-offset: -4px;
+	}
+	@container figure (max-width: 640px) {
 		.k {
 			min-width: 0;
 		}

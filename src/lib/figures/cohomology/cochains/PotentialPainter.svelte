@@ -8,10 +8,12 @@
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import OGraphView from './OGraphView.svelte';
 	import { gradient, components, pathSum, signed, type Pt } from './graph';
 	import { trailMap, trailLoops, islands } from './presets';
+	import { ArrowRightIcon, ShuffleIcon } from '$lib/icons';
 
 	let { mode: modeProp = 'trail' }: { mode?: 'trail' | 'islands' } = $props();
 
@@ -22,6 +24,7 @@
 	const lo = mode === 'trail' ? 1100 : 0;
 	const hi = mode === 'trail' ? 2000 : 600;
 	const stepM = 10;
+	const nudgeBy = mode === 'trail' ? 50 : 30; // one press of the stepper
 
 	let heights = $state<number[]>([...L.heights]);
 	let flip = $state<boolean[]>(new Array(E).fill(false));
@@ -91,9 +94,11 @@
 		const h = dragStart - dy * perUnit;
 		heights[v] = Math.max(lo, Math.min(hi, Math.round(h / stepM) * stepM));
 	}
-	function nudge(d: number) {
+	// the stepper offers h ± 1; each press moves the junction a whole notch
+	function nudge(v: number) {
 		if (selected === null) return;
-		heights[selected] = Math.max(lo, Math.min(hi, heights[selected] + d));
+		const h = heights[selected];
+		heights[selected] = Math.max(lo, Math.min(hi, h + Math.sign(v - h) * nudgeBy));
 	}
 
 	// loops (trail mode)
@@ -138,11 +143,11 @@
 		if (loopEdges.has(e)) return 'var(--gold-bright)';
 		return 'var(--teal)';
 	};
-	const selName = $derived(selected === null ? '' : (L.names?.[selected] ?? `vertex ${selected + 1}`));
+	const selName = $derived(selected === null ? '' : (L.names?.[selected] || `Vertex ${selected + 1}`));
 </script>
 
 <div class="painter">
-	<Svg viewBox={mode === 'trail' ? '20 26 440 316' : '30 40 420 280'} maxHeight={430} label={mode === 'trail' ? 'A trail map: junction heights and the climbs along each trail' : 'Three islands of a graph with heights on their vertices'}>
+	<Svg viewBox={mode === 'trail' ? '-8 26 476 316' : '30 22 420 284'} maxHeight={430} label={mode === 'trail' ? 'A trail map: junction heights and the climbs along each trail' : 'Three islands of a graph with heights on their vertices'}>
 		<!-- terrain: ground shadow and pillars -->
 		{#if t > 0.01}
 			<g style="opacity:{t}">
@@ -169,6 +174,8 @@
 			vertexName={(v) => (mode === 'trail' && t < 0.5 ? L.names?.[v] : null)}
 			selectedVertex={selected}
 			dragVertex={true}
+			autoPlace
+			avoid={t > 0.01 ? groundPos.map((g, v) => [g, pos[v]] as [Pt, Pt]) : []}
 			clickEdge={mode === 'trail'}
 			onedge={(e) => (flip[e] = !flip[e])}
 			onvertex={(v) => (selected = v)}
@@ -179,31 +186,35 @@
 </div>
 
 <Controls>
-	<div class="row">
-		<span class="sel ui">
+	<div class="row top">
+		<span class="sel">
 			{#if selected !== null}
-				<span class="nm">{selName}</span>
-				<span class="h nums">{heights[selected]}{mode === 'trail' ? ' m' : ''}</span>
+				<Stepper
+					label={selName}
+					value={heights[selected]}
+					min={lo}
+					max={hi}
+					format={(v) => (mode === 'trail' ? `${v} m` : String(v))}
+					onchange={nudge}
+				/>
 			{:else}
-				<span class="nm dim">Tap a vertex</span>
+				<span class="ui dim">Tap a vertex to raise or lower it</span>
 			{/if}
 		</span>
-		<Button onclick={() => nudge(-stepM * (mode === 'trail' ? 5 : 3))} disabled={selected === null} title="Lower the selected vertex">▼ lower</Button>
-		<Button onclick={() => nudge(stepM * (mode === 'trail' ? 5 : 3))} disabled={selected === null} title="Raise the selected vertex">▲ raise</Button>
 		<Toggle bind:checked={terrain} label="Terrain view" />
 	</div>
 	{#if mode === 'trail'}
 		<div class="row readout">
-			<Button variant="subtle" onclick={() => (loopIx = (loopIx + 1) % trailLoops.length)}>Next loop ↻</Button>
+			<Button icon={ArrowRightIcon} onclick={() => (loopIx = (loopIx + 1) % trailLoops.length)}>Next loop</Button>
 			<span class="loop ui">
 				Climbs around the <span class="gold">gold loop</span>:
-				<TeX tex={loopTeX} />
+				<span class="sum"><TeX tex={loopTeX} /></span>
 			</span>
 		</div>
 	{:else}
 		<div class="row readout">
-			<Button variant="subtle" onclick={flatten}>Flatten each island</Button>
-			<Button variant="subtle" onclick={scramble}>Scramble</Button>
+			<Button onclick={flatten}>Flatten each island</Button>
+			<Button icon={ShuffleIcon} onclick={scramble}>Scramble</Button>
 			<span class="loop ui">
 				{#if flatEverywhere}
 					<span class="ok">δf = 0 on every edge</span> — each island is flat, but the {comps.count} islands sit at their own heights.
@@ -239,28 +250,21 @@
 		gap: 0.6rem 0.9rem;
 		width: 100%;
 	}
+	.top {
+		justify-content: space-between;
+	}
 	.readout {
 		border-top: 1px solid var(--line-faint);
 		padding-top: 0.7rem;
 	}
 	.sel {
 		display: inline-flex;
-		align-items: baseline;
-		gap: 0.5rem;
-		min-width: 9.5rem;
-		font-size: 0.82rem;
+		align-items: center;
+		min-height: 2.25rem;
 	}
-	.nm {
-		color: var(--ink-dim);
-		letter-spacing: 0.04em;
-	}
-	.nm.dim {
+	.dim {
 		color: var(--ink-faint);
-	}
-	.h {
-		color: var(--gold-bright);
-		font-weight: 650;
-		font-size: 0.95rem;
+		font-size: 0.76rem;
 	}
 	.loop {
 		font-size: 0.84rem;
@@ -273,6 +277,10 @@
 	}
 	.gold {
 		color: var(--gold-bright);
+	}
+	.sum {
+		display: inline-block;
+		white-space: nowrap;
 	}
 	.ok {
 		color: var(--green);

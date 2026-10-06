@@ -8,6 +8,7 @@
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { analyseGraph, fundamentalLoop, type Edge } from './graph';
 	import { segDist, type Pt } from '../simplicial-complexes/builder';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	interface Vtx {
 		id: number;
@@ -278,7 +279,7 @@
 		</div>
 		<div class="row small">
 			<TeX tex={`b_0 - b_1 = ${A.pieces} - ${A.loops} = ${A.pieces - A.loops}`} />
-			<span class="ok">= χ ✓</span>
+			<span class="ok">= χ <Mark ok /></span>
 		</div>
 		<p class="msg">{lastMsg || 'Each gold edge closes a loop. Hover one to see its loop.'}</p>
 	</div>

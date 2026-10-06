@@ -1,12 +1,12 @@
 <script lang="ts">
 	// Figure (3D): the divergence theorem. A glowing blob is a source (div F > 0
-	// there and ≈ 0 elsewhere); particles stream out of it. Move and resize the
-	// glass sphere: the flux out through its surface always equals the total
-	// divergence inside — even with a wind blowing through.
+	// there and ≈ 0 elsewhere); particles stream out of it. Drag the glass
+	// sphere along its axis, or its rim to resize it: the flux out through its
+	// surface always equals the total divergence inside — even with a wind
+	// blowing through.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import { glassMesh, glowPoint, pointCloud } from '$lib/three/materials';
 	import { sphere, surfaceGeometry } from '$lib/three/surfaces';
-	import Slider from '$lib/components/ui/Slider.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
@@ -15,8 +15,13 @@
 	import { mulberry } from './flow';
 
 	const WIND = 0.32;
+	const CX_MIN = -0.6;
+	const CX_MAX = 2.8;
+	const R_MIN = 0.4;
+	const R_MAX = 1.6;
 	let cx = $state(0.8);
 	let R = $state(1.15);
+	const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 	let wind = $state(false);
 	let innerWidth = $state(1000);
 
@@ -193,12 +198,160 @@
 			tGeo.attributes.color.needsUpdate = true;
 		};
 
-		if (reducedMotion) return { dispose: () => (api = null) };
+		// ── drag the sphere along its axis, or its rim to resize it ──
+		const { canvas, camera, controls, project } = ctx;
+		// the rim: a thin ring on the sphere's silhouette, shown while it can be grabbed
+		const rimMat = new THREE.MeshBasicMaterial({
+			color: 0xf6d394,
+			transparent: true,
+			opacity: 0,
+			depthTest: false,
+			depthWrite: false,
+			blending: THREE.AdditiveBlending
+		});
+		const rim = new THREE.Mesh(new THREE.RingGeometry(0.99, 1.01, 160), rimMat);
+		rim.renderOrder = 6;
+		scene.add(rim);
+		let rimR = 0;
+		let rimGlow = 0;
+		const toCam = new THREE.Vector3();
+		const right = new THREE.Vector3();
+		/** the silhouette circle of the sphere: its centre, and its radius in world units */
+		function silhouette() {
+			toCam.copy(camera.position).sub(sph.position);
+			const D = toCam.length();
+			const rad = sph.scale.x;
+			const centre = sph.position.clone().addScaledVector(toCam.normalize(), (rad * rad) / D);
+			return { centre, rs: rad * Math.sqrt(Math.max(0, 1 - (rad * rad) / (D * D))) };
+		}
+		/** the silhouette on screen, in CSS px of the canvas */
+		function onScreen() {
+			const { centre, rs } = silhouette();
+			right.setFromMatrixColumn(camera.matrixWorld, 0);
+			const c = project(centre);
+			const e = project(centre.clone().addScaledVector(right, rs));
+			const ax = project(new THREE.Vector3(sph.position.x + 1, 0, 0));
+			const o = project(sph.position);
+			return { c, r: Math.hypot(e.x - c.x, e.y - c.y), axis: { x: ax.x - o.x, y: ax.y - o.y } };
+		}
+		const pointer = (e: PointerEvent) => {
+			const b = canvas.getBoundingClientRect();
+			return { x: e.clientX - b.left, y: e.clientY - b.top };
+		};
+		function hitTest(e: PointerEvent): 'rim' | 'body' | null {
+			const q = pointer(e);
+			const s = onScreen();
+			const d = Math.hypot(q.x - s.c.x, q.y - s.c.y);
+			if (Math.abs(d - s.r) < 12) return 'rim';
+			return d < s.r ? 'body' : null;
+		}
+		const resizeCursor = (e: PointerEvent) => {
+			const q = pointer(e);
+			const c = onScreen().c;
+			const a = ((Math.atan2(q.y - c.y, q.x - c.x) * 180) / Math.PI + 180) % 180;
+			return a < 22.5 || a >= 157.5 ? 'ew-resize' : a < 67.5 ? 'nwse-resize' : a < 112.5 ? 'ns-resize' : 'nesw-resize';
+		};
+		let held: 'rim' | 'body' | null = null;
+		let hover: 'rim' | 'body' | null = null;
+		let last = { x: 0, y: 0 };
+		let controlsWere = true;
+		const onDown = (e: PointerEvent) => {
+			if (e.button !== 0) return;
+			held = hitTest(e);
+			if (!held) return;
+			last = pointer(e);
+			controlsWere = controls?.enabled ?? false;
+			if (controls) controls.enabled = false;
+			canvas.setPointerCapture(e.pointerId);
+			canvas.style.cursor = held === 'rim' ? resizeCursor(e) : 'grabbing';
+			invalidate();
+		};
+		const onMove = (e: PointerEvent) => {
+			if (!held) {
+				if (e.pointerType !== 'mouse') return;
+				const h = hitTest(e);
+				if (h !== hover) invalidate();
+				hover = h;
+				canvas.style.cursor = h === 'rim' ? resizeCursor(e) : h === 'body' ? 'grab' : '';
+				return;
+			}
+			const q = pointer(e);
+			const s = onScreen();
+			if (held === 'rim') {
+				// scale the radius until the rim on screen sits under the pointer
+				const d = Math.hypot(q.x - s.c.x, q.y - s.c.y);
+				if (s.r > 1) R = clamp(R * (d / s.r), R_MIN, R_MAX);
+			} else {
+				// along the sphere's axis: the pointer's motion projected on the axis as drawn
+				const a = s.axis;
+				const L2 = Math.max(a.x * a.x + a.y * a.y, 400);
+				cx = clamp(cx + ((q.x - last.x) * a.x + (q.y - last.y) * a.y) / L2, CX_MIN, CX_MAX);
+			}
+			last = q;
+		};
+		const onUp = () => {
+			if (!held) return;
+			held = null;
+			if (controls) controls.enabled = controlsWere;
+			canvas.style.cursor = '';
+			invalidate();
+		};
+		const onLeave = () => {
+			if (held || !hover) return;
+			hover = null;
+			invalidate();
+		};
+		// capture phase: runs before OrbitControls, which then finds itself disabled
+		canvas.addEventListener('pointerdown', onDown, { capture: true });
+		canvas.addEventListener('pointermove', onMove);
+		canvas.addEventListener('pointerup', onUp);
+		canvas.addEventListener('pointercancel', onUp);
+		canvas.addEventListener('pointerleave', onLeave);
+
+		function placeRim(dt: number) {
+			const { centre, rs } = silhouette();
+			rim.position.copy(centre);
+			rim.quaternion.copy(camera.quaternion);
+			if (Math.abs(rs - rimR) > 1e-3) {
+				rimR = rs;
+				rim.geometry.dispose();
+				rim.geometry = new THREE.RingGeometry(rs - 0.012, rs + 0.012, 160);
+			}
+			const want = held === 'rim' ? 0.9 : hover === 'rim' ? 0.6 : 0;
+			rimGlow += (want - rimGlow) * Math.min(1, dt * 14);
+			rimMat.opacity = rimGlow;
+			rim.visible = rimGlow > 0.01;
+		}
+
 		return {
-			update: (_t: number, dt: number) => step(Math.min(dt, 1 / 30)),
-			dispose: () => (api = null)
+			update: (_t: number, dt: number) => {
+				placeRim(dt);
+				if (NP) step(Math.min(dt, 1 / 30));
+			},
+			dispose: () => {
+				api = null;
+				rim.geometry.dispose();
+				rimMat.dispose();
+				canvas.removeEventListener('pointerdown', onDown, { capture: true });
+				canvas.removeEventListener('pointermove', onMove);
+				canvas.removeEventListener('pointerup', onUp);
+				canvas.removeEventListener('pointercancel', onUp);
+				canvas.removeEventListener('pointerleave', onLeave);
+			}
 		};
 	}
+
+	// the keyboard way: focus the picture and use the arrow keys
+	function keyFor(set: (d: number) => void) {
+		return (e: KeyboardEvent) => {
+			const k = ({ ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 } as Record<string, number>)[e.key];
+			if (!k) return;
+			e.preventDefault();
+			set((e.shiftKey ? 10 : 1) * k);
+		};
+	}
+	const keyMove = keyFor((d) => (cx = clamp(cx + 0.02 * d, CX_MIN, CX_MAX)));
+	const keySize = keyFor((d) => (R = clamp(R + 0.02 * d, R_MIN, R_MAX)));
 
 	$effect(() => {
 		// read the state first: `api?.` would short-circuit and skip subscribing
@@ -212,17 +365,39 @@
 <svelte:window bind:innerWidth />
 
 <div class="flux3d">
-	<Scene3D
-		{setup}
-		height={innerWidth < 640 ? 380 : 470}
-		camera={{ position: [1.0, 1.55, 4.7], target: [0.75, 0, 0], fov: 40 }}
-		controls={{ minPolarAngle: 0.3, maxPolarAngle: 2.6 }}
-		animate
-		label="A glowing source of fluid with particles streaming out of it, and a transparent sphere whose surface is pierced by arrows showing the flux."
-	/>
+	<div class="stage">
+		<Scene3D
+			{setup}
+			height={innerWidth < 640 ? 380 : 470}
+			camera={{ position: [1.0, 1.55, 4.7], target: [0.75, 0, 0], fov: 40 }}
+			controls={{ minPolarAngle: 0.3, maxPolarAngle: 2.6 }}
+			animate
+			label="A glowing source of fluid with particles streaming out of it, and a transparent sphere, which can be dragged along its axis and resized by its rim, whose surface is pierced by arrows showing the flux."
+		/>
+		<div
+			class="keys"
+			role="slider"
+			tabindex="0"
+			aria-label="Position of the sphere: arrow keys move it along its axis"
+			aria-valuemin={CX_MIN}
+			aria-valuemax={CX_MAX}
+			aria-valuenow={cx}
+			aria-valuetext={cx.toFixed(2)}
+			onkeydown={keyMove}
+		></div>
+		<div
+			class="keys"
+			role="slider"
+			tabindex="0"
+			aria-label="Radius of the sphere: arrow keys resize it"
+			aria-valuemin={R_MIN}
+			aria-valuemax={R_MAX}
+			aria-valuenow={R}
+			aria-valuetext={R.toFixed(2)}
+			onkeydown={keySize}
+		></div>
+	</div>
 	<Controls>
-		<Slider bind:value={cx} min={-0.6} max={2.8} step={0.01} label="Move the sphere" />
-		<Slider bind:value={R} min={0.4} max={1.6} step={0.01} label="Radius" />
 		<Toggle bind:checked={wind} label="Add a wind" />
 	</Controls>
 	<div class="readout">
@@ -239,6 +414,19 @@
 </div>
 
 <style>
+	.stage {
+		position: relative;
+	}
+	.keys {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		outline: none;
+	}
+	.keys:focus-visible {
+		outline: 2px solid var(--gold-bright);
+		outline-offset: -4px;
+	}
 	.readout {
 		display: grid;
 		grid-template-columns: 1fr auto 1fr;

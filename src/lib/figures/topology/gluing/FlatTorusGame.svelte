@@ -5,6 +5,8 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { RotateLeftIcon, RotateRightIcon } from '$lib/icons';
 
 	type Mode = 'torus' | 'klein' | 'rp2';
 	let mode = $state<Mode>('torus');
@@ -339,7 +341,7 @@
 				aria-label="Turn left"
 				onpointerdown={() => hold('left', true)}
 				onpointerup={() => hold('left', false)}
-				onpointerleave={() => (keys.left = false)}>⟲</button
+				onpointerleave={() => (keys.left = false)}><Icon icon={RotateLeftIcon} size={20} /></button
 			>
 			<button
 				class="key thrust"
@@ -353,7 +355,7 @@
 				aria-label="Turn right"
 				onpointerdown={() => hold('right', true)}
 				onpointerup={() => hold('right', false)}
-				onpointerleave={() => (keys.right = false)}>⟳</button
+				onpointerleave={() => (keys.right = false)}><Icon icon={RotateRightIcon} size={20} /></button
 			>
 		</div>
 		<p class="read" aria-live="polite">

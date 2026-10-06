@@ -14,6 +14,7 @@
 	import { tex } from '$lib/katex/render';
 	import { gridPieces, gridDefects, gridLabel, binom } from './data';
 	import { vertexBead, setPointColor, surfaceTriangle, fitCamera } from './kit3d';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	let n = $state(3);
 	let hoverLabel = $state<number | null>(null);
@@ -232,7 +233,7 @@
 	{#if n === 3}
 		<p>
 			<TeX tex={`${defects.vertices}`} /> vertices, <TeX tex={`${defects.edgeCount}`} /> edges, <TeX tex={`${defects.triangleCount}`} /> triangles.
-			<span class="ok">Every edge has its own pair of endpoints and every triangle its own three corners ✓</span>
+			<span class="ok">Every edge has its own pair of endpoints and every triangle its own three corners <Mark ok /></span>
 		</p>
 	{:else}
 		<p>
@@ -240,9 +241,9 @@
 			<TeX tex={`\\binom{4}{2} = ${binom(4, 2)}`} /> pairs and <TeX tex={`\\binom{4}{3} = ${binom(4, 3)}`} /> triples.
 			<span class="bad">
 				{#if current?.kind === 'edge'}
-					Two different edges (rose and violet) both join {pieces.edges[current.ids[0]].labels[0]} and {pieces.edges[current.ids[0]].labels[1]} ✗
+					Two different edges (rose and violet) both join {pieces.edges[current.ids[0]].labels[0]} and {pieces.edges[current.ids[0]].labels[1]} <Mark ok={false} />
 				{:else if current}
-					Two different triangles (rose and violet) both have corners {pieces.triangles[current.ids[0]].key.replace(/,/g, ', ')} ✗
+					Two different triangles (rose and violet) both have corners {pieces.triangles[current.ids[0]].key.replace(/,/g, ', ')} <Mark ok={false} />
 				{/if}
 			</span>
 		</p>

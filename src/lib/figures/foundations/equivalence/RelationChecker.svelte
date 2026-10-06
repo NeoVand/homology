@@ -15,6 +15,7 @@
 		fromPredicate,
 		type Matrix
 	} from './relations';
+	import Mark from '$lib/components/ui/Mark.svelte';
 
 	const N = 4;
 	const names = ['1', '2', '3', '4'];
@@ -233,17 +234,17 @@
 
 	<div class="lights">
 		<div class="light" class:ok={refl.ok}>
-			<span class="badge">{refl.ok ? '✓' : '✗'}</span>
+			<span class="badge"><Mark ok={refl.ok} size={12} /></span>
 			<span class="nm">Reflexive</span>
 			<span class="why">{@html renderMathInText(reason.refl)}</span>
 		</div>
 		<div class="light" class:ok={sym.ok}>
-			<span class="badge">{sym.ok ? '✓' : '✗'}</span>
+			<span class="badge"><Mark ok={sym.ok} size={12} /></span>
 			<span class="nm">Symmetric</span>
 			<span class="why">{@html renderMathInText(reason.sym)}</span>
 		</div>
 		<div class="light" class:ok={trans.ok}>
-			<span class="badge">{trans.ok ? '✓' : '✗'}</span>
+			<span class="badge"><Mark ok={trans.ok} size={12} /></span>
 			<span class="nm">Transitive</span>
 			<span class="why">{@html renderMathInText(reason.trans)}</span>
 		</div>

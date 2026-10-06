@@ -7,7 +7,7 @@
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Handle from './Handle.svelte';
 	import Arrow from './Arrow.svelte';
@@ -18,7 +18,9 @@
 
 	let c1 = $state<V2>([1.5, 0.5]);
 	let c2 = $state<V2>([-0.5, 1]);
+	// how far the map has been applied: 0 is the plane before, 1 after
 	let t = $state(1);
+	let playing = $state(false);
 
 	let reduced = false;
 	let raf = 0;
@@ -99,6 +101,8 @@
 	const kerTag = $derived(rank === 1 ? freeEnd(kdir, [m1, m2, imgTag]) : ([0, 0] as V2));
 
 	function setCol(which: 1 | 2, w: V2) {
+		// the arrows are on the move while the map plays; take hold of them after
+		if (playing) return;
 		cancelAnimationFrame(raf);
 		t = 1;
 		const v = snap2([clamp(w[0], -4.5, 4.5), clamp(w[1], -4.5, 4.5)], 0.5);
@@ -111,6 +115,8 @@
 		const f1: V2 = [...c1];
 		const f2: V2 = [...c2];
 		const f0 = t;
+		// while the map plays, the timeline owns t; otherwise finish it along with the columns
+		const ownT = !playing;
 		const t0 = performance.now();
 		const dur = reduced ? 0 : 750;
 		const step = (now: number) => {
@@ -118,25 +124,12 @@
 			const e = easeInOut(u);
 			c1 = lerp2(f1, n1, e);
 			c2 = lerp2(f2, n2, e);
-			t = f0 + (1 - f0) * e;
+			if (ownT) t = f0 + (1 - f0) * e;
 			if (u < 1) raf = requestAnimationFrame(step);
 			else {
 				c1 = n1;
 				c2 = n2;
 			}
-		};
-		raf = requestAnimationFrame(step);
-	}
-
-	function replay() {
-		cancelAnimationFrame(raf);
-		const t0 = performance.now();
-		const dur = reduced ? 0 : 1300;
-		t = 0;
-		const step = (now: number) => {
-			const u = dur ? Math.min(1, (now - t0) / dur) : 1;
-			t = easeInOut(u);
-			if (u < 1) raf = requestAnimationFrame(step);
 		};
 		raf = requestAnimationFrame(step);
 	}
@@ -306,8 +299,8 @@
 				{#if det < 0}The determinant is negative: the map also flips the plane over, like a mirror.{/if}
 			{:else if rank === 1}
 				The columns lie on one line, so the whole plane is flattened onto the <span class="g">gold image line</span>. The
-				<span class="t">teal kernel line</span> is crushed to the single point <TeX tex={'\\mathbf 0'} />. Press
-				<em>Replay</em> to watch it happen.
+				<span class="t">teal kernel line</span> is crushed to the single point <TeX tex={'\\mathbf 0'} />. Play the map
+				below to watch it happen.
 			{:else}
 				Every vector is sent to <TeX tex={'\\mathbf 0'} />: the image is a single point and the kernel is the whole plane.
 			{/if}
@@ -321,10 +314,7 @@
 			<Button variant="subtle" onclick={() => animateTo(p.c1, p.c2)}>{p.label}</Button>
 		{/each}
 	</div>
-	<div class="row2">
-		<Slider bind:value={t} min={0} max={1} step={0.01} label="before → after" format={(v) => (v < 0.005 ? 'before' : v > 0.995 ? 'after' : v.toFixed(2))} />
-		<Button variant="gold" onclick={replay}>Replay</Button>
-	</div>
+	<Timeline bind:value={t} bind:playing duration={1.4} from="before" to="after" label="Applying the map to the plane" />
 </Controls>
 
 <style>
@@ -335,7 +325,7 @@
 		align-items: center;
 		padding: 1rem 1.2rem 0.6rem;
 	}
-	@media (max-width: 760px) {
+	@container figure (max-width: 720px) {
 		.lmp {
 			grid-template-columns: minmax(0, 1fr);
 			padding: 0.6rem 0.6rem 0.4rem;
@@ -506,12 +496,6 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.25rem;
-		width: 100%;
-	}
-	.row2 {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
 		width: 100%;
 	}
 </style>

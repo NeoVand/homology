@@ -106,6 +106,12 @@
 		border: 1px solid color-mix(in srgb, var(--c) 26%, transparent);
 		box-shadow: 0 10px 40px -24px rgba(0, 0, 0, 0.9);
 	}
+	/* phones: give the text, and its formulas, the width */
+	@media (max-width: 30rem) {
+		.callout {
+			padding-inline: 1rem 0.95rem;
+		}
+	}
 	.callout::before {
 		content: '';
 		position: absolute;
