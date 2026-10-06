@@ -375,6 +375,11 @@ code {
 	text-rendering: auto;
 }
 
+/* inline math plus the punctuation that follows it never splits across lines */
+.math-nw {
+	white-space: nowrap;
+}
+
 .math-block {
 	display: block;
 	margin: 1.1em 0 1.3em;

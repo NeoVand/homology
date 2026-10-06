@@ -18,6 +18,8 @@ const OPEN_INLINE = '\\(';
 const CLOSE_INLINE = '\\)';
 const OPEN_DISPLAY = '\\[';
 const CLOSE_DISPLAY = '\\]';
+// punctuation that should stay glued to the inline math it follows
+const TRAILING_PUNCT = /[.,;:!?)’”]/;
 
 /**
  * Render one TeX string to HTML.
@@ -167,6 +169,16 @@ function transform(src, filename) {
 			} catch (e) {
 				const msg = e instanceof Error ? e.message : String(e);
 				throw new Error(`[katex] ${filename}:${lineOf(src, i)} — ${msg}\n    in: ${tex}`);
+			}
+			// Keep punctuation that directly follows inline math on the same line as
+			// the math, so a line never starts with a stray full stop or comma. Long
+			// formulas are left alone: they must stay free to break internally.
+			let k = end + 2;
+			if (isInline && tex.length <= 60) while (k < n && TRAILING_PUNCT.test(src[k])) k++;
+			if (k > end + 2) {
+				out += `<span class="math-nw">{@html ${JSON.stringify(html)}}${src.slice(end + 2, k)}</span>`;
+				i = k;
+				continue;
 			}
 			out += `{@html ${JSON.stringify(html)}}`;
 			i = end + 2;

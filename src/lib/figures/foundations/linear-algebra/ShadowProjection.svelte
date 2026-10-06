@@ -34,13 +34,11 @@
 
 		// ── the floor: the image of the map ───────────────────────────────
 		const floor = glassMesh(surfaceGeometry(plane(4.8, 4.8), 4, 4), {
-			// (the shared shader skips the sRGB output conversion, so colours are
-			// given paler than their intended look: this pale cream shows as gold)
 			opacity: 0.45,
 			grid: [12, 12],
 			gridStrength: 1.0,
-			gridColor: 0xfff1cf,
-			tint: 0x4a4434,
+			gridColor: 'gold',
+			tint: 0x110f09,
 			tintMix: 0.72,
 			film: 0.12,
 			rim: 0.1,
