@@ -160,8 +160,9 @@
 		function reshape() {
 			if (!geo) return;
 			const s = strength;
-			const wob = wobble ? 0.25 * Math.sin(wobblePhase) : 0;
-			const bumps = [...presetBumps[mode].map((b, i) => ({ ...b, amp: b.amp * s * (1 + (i % 2 ? -wob : wob)) })), ...clicks];
+			// while wobbling, each bump breathes in and out with its own phase
+			const wob = (i: number) => (wobble ? 0.45 * Math.sin(wobblePhase + 1.9 * i) : 0);
+			const bumps = [...presetBumps[mode].map((b, i) => ({ ...b, amp: b.amp * s * (1 + wob(i)) })), ...clicks];
 			if (mode === 'sphere') shapeSphere(basePos, pos, { R: 1.3, bumps, waves, squash, twist });
 			else shapeTorus(uv, pos, { R: 1.45, r: 0.55, bumps, waves, squash, twist });
 			angleDefects({ pos, tri }, defects);
