@@ -65,7 +65,7 @@
 </p>
 
 <p>
-	Here is the example we will live with for a while. Let \(K\) be a <strong>hexagon</strong>: six vertices \(v_0, \dots, v_5\) joined in a ring by six edges. It is a triangulated circle. Let \(L\) be the <strong>hollow triangle</strong> from <Ref to="homology/homology-groups" />, with vertices \(0, 1, 2\) and three edges — another triangulated circle. Every pair of vertices of \(L\) spans an edge, so <em>any</em> way of labelling the hexagon's vertices with \(0, 1, 2\) is a simplicial map. An edge whose endpoints get different labels lands on an edge of the triangle. An edge whose endpoints get the same label is squashed onto a single vertex.
+	Here is the example we will live with for a while. Let \(K\) be a <strong>hexagon</strong>: six vertices \(v_0, \dots, v_5\) joined in a ring by six edges. It is a triangulated circle. Let \(L\) be the <strong>hollow triangle</strong> from <Ref to="homology/homology-groups" />, with vertices \(0, 1, 2\) and three edges — another triangulated circle. Every pair of vertices of \(L\) spans an edge, so <em>any</em> way of labelling the hexagon’s vertices with \(0, 1, 2\) is a simplicial map. An edge whose endpoints get different labels lands on an edge of the triangle. An edge whose endpoints get the same label is squashed onto a single vertex.
 </p>
 
 <p>
@@ -252,7 +252,7 @@
 </Definition>
 
 <p>
-	Why “singular”? In Hatcher's words, the word is “used here to express the idea that σ need not be a nice embedding but can have ‘singularities’ where its image does not look at all like a simplex.” A singular triangle can be crumpled, folded onto a curve, or collapsed to a single point. All that is required is continuity.
+	Why “singular”? In Hatcher’s words, the word is “used here to express the idea that σ need not be a nice embedding but can have ‘singularities’ where its image does not look at all like a simplex.” A singular triangle can be crumpled, folded onto a curve, or collapsed to a single point. All that is required is continuity.
 </p>
 
 <p>
@@ -266,7 +266,7 @@
 </Theorem>
 
 <p>
-	We will not prove this. The proof is not deep, but it is long; it is Theorem 2.27 in Hatcher's <em>Algebraic Topology</em>, and it uses the tools of the next chapter. Its practical meaning is the important thing. From now on, \(H_n(X)\) means singular homology, a property of the space \(X\) alone, and we may <em>compute</em> it from any triangulation we like, as in <Ref to="homology/computing" />, or from a cell structure, as in <Ref to="homology/exact-sequences" />.
+	We will not prove this. The proof is not deep, but it is long; it is Theorem 2.27 in Hatcher’s <em>Algebraic Topology</em>, and it uses the tools of the next chapter. Its practical meaning is the important thing. From now on, \(H_n(X)\) means singular homology, a property of the space \(X\) alone, and we may <em>compute</em> it from any triangulation we like, as in <Ref to="homology/computing" />, or from a cell structure, as in <Ref to="homology/exact-sequences" />.
 </p>
 
 <Example title="Two computations straight from the definition">
@@ -374,7 +374,7 @@
 </KeyIdea>
 
 <!-- ───────────────────────────────────────────────────────────────────── -->
-<h2 id="brouwer">First triumph: Brouwer's fixed point theorem</h2>
+<h2 id="brouwer">First triumph: Brouwer’s fixed point theorem</h2>
 
 <h3>Spheres are not contractible</h3>
 
@@ -420,9 +420,9 @@
 	</p>
 </Intuition>
 
-<h3>Brouwer's theorem</h3>
+<h3>Brouwer’s theorem</h3>
 
-<Theorem id="thm-brouwer" label="Theorem (Brouwer's fixed point theorem)">
+<Theorem id="thm-brouwer" label="Theorem (Brouwer’s fixed point theorem)">
 	<p>Every continuous map \(f\colon D^n \to D^n\) has a <dfn>fixed point</dfn>: a point \(x\) with \(f(x) = x\).</p>
 </Theorem>
 
@@ -503,7 +503,7 @@
 
 <Remark title="Local versions">
 	<p>
-		The same idea, applied near a single point, shows that a nonempty open subset of \(\R^m\) can only be homeomorphic to an open subset of \(\R^n\) if \(m = n\). This uses the <em>local homology</em> groups \(H_k(U, U\setminus\{x\})\), defined in the next chapter, which equal \(\Z\) exactly when \(k = m\). It is what makes the <em>dimension of a manifold</em> (<Ref to="topology/manifolds" />) well defined. A deeper cousin is Brouwer's <dfn>invariance of domain</dfn>: a continuous one-to-one map from an open subset of \(\R^n\) to \(\R^n\) has open image. One consequence: a continuous bijection \(\R^n \to \R^n\) automatically has a continuous inverse.
+		The same idea, applied near a single point, shows that a nonempty open subset of \(\R^m\) can only be homeomorphic to an open subset of \(\R^n\) if \(m = n\). This uses the <em>local homology</em> groups \(H_k(U, U\setminus\{x\})\), defined in the next chapter, which equal \(\Z\) exactly when \(k = m\). It is what makes the <em>dimension of a manifold</em> (<Ref to="topology/manifolds" />) well defined. A deeper cousin is Brouwer’s <dfn>invariance of domain</dfn>: a continuous one-to-one map from an open subset of \(\R^n\) to \(\R^n\) has open image. One consequence: a continuous bijection \(\R^n \to \R^n\) automatically has a continuous inverse.
 	</p>
 </Remark>
 
@@ -516,7 +516,7 @@
 </Theorem>
 
 <p>
-	For a circle or a triangle this is obvious. But a simple closed curve can be fractal like the Koch snowflake, nowhere smooth, or so wiggly that it has positive area. The statement is easy to believe and slippery to prove. Camille Jordan stated and proved it in 1887, but his proof was long considered incomplete, and Oswald Veblen's proof of 1905 is often credited as the first rigorous one. Homology gives a clean proof. It shows that for any embedded circle \(C\) in the sphere \(S^2\) (the plane plus one point at infinity),
+	For a circle or a triangle this is obvious. But a simple closed curve can be fractal like the Koch snowflake, nowhere smooth, or so wiggly that it has positive area. The statement is easy to believe and slippery to prove. Camille Jordan stated and proved it in 1887, but his proof was long considered incomplete, and Oswald Veblen’s proof of 1905 is often credited as the first rigorous one. Homology gives a clean proof. It shows that for any embedded circle \(C\) in the sphere \(S^2\) (the plane plus one point at infinity),
 </p>
 \[ \tilde H_0\bigl(S^2\setminus C\bigr) \cong \Z, \]
 <p>
@@ -561,7 +561,7 @@
 </p>
 \[ \deg f = \sum_{x\in f^{-1}(y)} \pm 1. \]
 <p>
-	The individual preimages come and go as \(y\) moves, but the signed count never changes. Milnor's little book <em>Topology from the Differentiable Viewpoint</em> builds the whole theory from this formula. Figure 3.5.8 lets you watch it happen.
+	The individual preimages come and go as \(y\) moves, but the signed count never changes. Milnor’s little book <em>Topology from the Differentiable Viewpoint</em> builds the whole theory from this formula. Figure 3.5.8 lets you watch it happen.
 </p>
 
 <Figure num="3.5.8" title="Counting preimages with signs" hint="Drag to rotate · change the degree, the wobble and the target">
@@ -601,12 +601,12 @@
 
 <Remark title="A check by computer">
 	<p>
-		For \(S^2\), property (6) says the antipodal map reverses orientation: degree \(-1\). This book's test suite checks it with nothing but the recipe of Section 1. Triangulate \(S^2\) as an octahedron, with vertices \(\pm e_1,\pm e_2,\pm e_3\). The antipodal map is the simplicial map swapping each vertex with its opposite. Applying \(f_\#\) to the fundamental cycle, the sum of all eight oriented triangles, returns exactly its negative.
+		For \(S^2\), property (6) says the antipodal map reverses orientation: degree \(-1\). This book’s test suite checks it with nothing but the recipe of Section 1. Triangulate \(S^2\) as an octahedron, with vertices \(\pm e_1,\pm e_2,\pm e_3\). The antipodal map is the simplicial map swapping each vertex with its opposite. Applying \(f_\#\) to the fundamental cycle, the sum of all eight oriented triangles, returns exactly its negative.
 	</p>
 </Remark>
 
 <!-- ───────────────────────────────────────────────────────────────────── -->
-<h2 id="hairy-ball">You can't comb a hairy ball</h2>
+<h2 id="hairy-ball">You can’t comb a hairy ball</h2>
 
 <p>
 	A <dfn>tangent vector field</dfn> on the sphere \(S^n\subset\R^{n+1}\) assigns to each point \(x\) a vector \(v(x)\) that is tangent to the sphere there — perpendicular to \(x\), so \(x\cdot v(x) = 0\) — and varies continuously with \(x\). Picture hair lying flat on a scalp: \(v(x)\) is the direction the hair at \(x\) points. A <em>zero</em> of the field, where \(v(x) = 0\), is a cowlick or a bald spot.
@@ -640,10 +640,10 @@
 	So a coconut cannot be combed, and at every moment there is somewhere on Earth where the horizontal wind is calm (assuming the wind is a continuous tangent field on a round Earth). A doughnut, on the other hand, can be combed perfectly, as the last option in Figure 3.5.9 shows. Brush every hair around the hole, all in the same direction.
 </p>
 
-<h3>A glimpse of Lefschetz's fixed point theorem</h3>
+<h3>A glimpse of Lefschetz’s fixed point theorem</h3>
 
 <p>
-	Brouwer's theorem and the hairy ball theorem look like cousins: one is about points that do not move, the other about directions that cannot be chosen. They are both shadows of one theorem. For a linear map, the <dfn>trace</dfn> \(\operatorname{tr}\) is the sum of the diagonal entries of its matrix; it does not depend on the basis chosen.
+	Brouwer’s theorem and the hairy ball theorem look like cousins: one is about points that do not move, the other about directions that cannot be chosen. They are both shadows of one theorem. For a linear map, the <dfn>trace</dfn> \(\operatorname{tr}\) is the sum of the diagonal entries of its matrix; it does not depend on the basis chosen.
 </p>
 
 <Theorem id="thm-lefschetz" label="Theorem (Lefschetz fixed point theorem)">
@@ -669,7 +669,7 @@
 
 <Example title="Fixed points of a cat">
 	<p>
-		An integer matrix \(A\) defines a map of the torus \(\R^2/\Z^2\) by \(x\mapsto Ax\) (mod \(1\)). On \(H_1(T^2;\Q) = \Q^2\) it acts by \(A\) itself, on \(H_0\) and \(H_2\) by \(1\) and \(\det A\), so \(\tau = 1 - \operatorname{tr}A + \det A = \det(I - A)\). For Arnold's “cat map” \(A = \left(\begin{smallmatrix}2&1\\1&1\end{smallmatrix}\right)\), \(\tau = -1\): there must be a fixed point, and in fact there is exactly one, the corner \((0,0)\). For \(A = -I\), the half-turn \(x\mapsto -x\), \(\tau = 4\), and there are exactly four fixed points: \((0,0)\), \((\tfrac12,0)\), \((0,\tfrac12)\) and \((\tfrac12,\tfrac12)\).
+		An integer matrix \(A\) defines a map of the torus \(\R^2/\Z^2\) by \(x\mapsto Ax\) (mod \(1\)). On \(H_1(T^2;\Q) = \Q^2\) it acts by \(A\) itself, on \(H_0\) and \(H_2\) by \(1\) and \(\det A\), so \(\tau = 1 - \operatorname{tr}A + \det A = \det(I - A)\). For Arnold’s “cat map” \(A = \left(\begin{smallmatrix}2&1\\1&1\end{smallmatrix}\right)\), \(\tau = -1\): there must be a fixed point, and in fact there is exactly one, the corner \((0,0)\). For \(A = -I\), the half-turn \(x\mapsto -x\), \(\tau = 4\), and there are exactly four fixed points: \((0,0)\), \((\tfrac12,0)\), \((0,\tfrac12)\) and \((\tfrac12,\tfrac12)\).
 	</p>
 </Example>
 
@@ -706,7 +706,7 @@
 </Theorem>
 
 <p>
-	Hatcher puts the geometric meaning in one sentence. Abelianizing lets you rotate the letters of a loop's word cyclically, which is the same as choosing a different starting point: “Thus loops become cycles, without a chosen basepoint.”
+	Hatcher puts the geometric meaning in one sentence. Abelianizing lets you rotate the letters of a loop’s word cyclically, which is the same as choosing a different starting point: “Thus loops become cycles, without a chosen basepoint.”
 </p>
 
 <Example title="Abelianizing some fundamental groups">
@@ -740,7 +740,7 @@
 
 <Warning>
 	<p>
-		Homology is a powerful invariant, but not a complete one: spaces can have identical homology and still be different. Poincaré's <em>homology sphere</em> (1904) has exactly the homology of \(S^3\), but its fundamental group has \(120\) elements. And \(\CP^2\) and \(S^2\vee S^4\) have the same homology groups (\(\Z, 0, \Z, 0, \Z\)) but are not homotopy equivalent. The cup product of <Ref to="cohomology/cup-product" /> tells them apart.
+		Homology is a powerful invariant, but not a complete one: spaces can have identical homology and still be different. Poincaré’s <em>homology sphere</em> (1904) has exactly the homology of \(S^3\), but its fundamental group has \(120\) elements. And \(\CP^2\) and \(S^2\vee S^4\) have the same homology groups (\(\Z, 0, \Z, 0, \Z\)) but are not homotopy equivalent. The cup product of <Ref to="cohomology/cup-product" /> tells them apart.
 	</p>
 </Warning>
 
@@ -789,7 +789,7 @@
 
 <Exercise level={2} title="Where Brouwer fails">
 	<p>
-		For each space, find a continuous map of it to itself with no fixed point, and say which hypothesis of Brouwer's theorem is missing: (a) the circle \(S^1\); (b) the annulus \(1\le\abs{x}\le 2\) in the plane; (c) the open interval \((0,1)\); (d) the plane \(\R^2\).
+		For each space, find a continuous map of it to itself with no fixed point, and say which hypothesis of Brouwer’s theorem is missing: (a) the circle \(S^1\); (b) the annulus \(1\le\abs{x}\le 2\) in the plane; (c) the open interval \((0,1)\); (d) the plane \(\R^2\).
 	</p>
 	{#snippet solution()}
 		<p>

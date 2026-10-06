@@ -1,288 +1,271 @@
 <script lang="ts">
-	// Two paths from x0 to x1 in the punctured plane, and the straight-line
-	// "movie" between them. Drag the handle on γ1: the movie is legal exactly
-	// when it never sweeps across the puncture; paths on opposite sides of the
+	// Two paths from x0 to x1 in the punctured plane, and the straight-line movie
+	// H(s, t) = (1 − t)·γ0(s) + t·γ1(s) between them: every point slides along a
+	// straight track (drawn faintly). Drag the teal bead to reshape γ1, and the
+	// white bead along its track to run the movie. The movie is a homotopy exactly
+	// when no frame passes through the puncture; paths on opposite sides of the
 	// puncture are not homotopic at all.
 	import { onMount } from 'svelte';
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
+	import Handle from '$lib/components/svg/Handle.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import {
-		arcThrough,
-		cubic,
-		distToPolyline,
-		lerpPath,
-		pathD,
-		straightLineHit,
-		windingNumber,
-		type Pt
-	} from './geom';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { PauseIcon, PlayIcon, VisitedIcon, CloseIcon } from '$lib/icons';
+	import { arcThrough, cubic, distToPolyline, lerpPath, pathD, straightLineHit, windingNumber, type Pt } from './geom';
 
 	const W = 680;
-	const H = 380;
-	const X0: Pt = [92, 258];
-	const X1: Pt = [588, 258];
-	const HOLE: Pt = [340, 208];
+	const H = 330;
+	const X0: Pt = [96, 172];
+	const X1: Pt = [584, 172];
+	// off the midline, so the time bead never sits on top of the puncture
+	const HOLE: Pt = [292, 160];
+	const HOLE_R = 11;
 	const N = 160;
+	const ABOVE: Pt = [340, 100];
+	const BELOW: Pt = [340, 272];
 
-	const g0 = cubic(X0, [196, 66], [484, 66], X1, N);
+	const g0 = cubic(X0, [200, 4], [480, 4], X1, N);
+	const MID = N / 2;
 
-	let handle = $state<Pt>([340, 338]);
-	let t = $state(0.5);
-	let svg = $state<SVGSVGElement>();
-	let dragging = false;
+	let handle = $state<Pt>(BELOW);
+	let t = $state(0.25);
 	let playing = $state(false);
 	let raf = 0;
 
 	const g1 = $derived(arcThrough(X0, handle, X1, N));
 	const frame = $derived(lerpPath(g0, g1, t));
-	const strip = $derived([0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875].map((s) => pathD(lerpPath(g0, g1, s))));
 	const hit = $derived(straightLineHit(g0, g1, HOLE));
 	const wind = $derived(windingNumber([...g0, ...g1.slice().reverse()], HOLE));
-	const through = $derived(distToPolyline(HOLE, g1) < 7);
-	const frameHits = $derived(distToPolyline(HOLE, frame) < 7);
+	const through = $derived(distToPolyline(HOLE, g1) < HOLE_R + 2);
+	const frameHits = $derived(distToPolyline(HOLE, frame) < HOLE_R + 1);
 	const region = $derived(pathD([...g0, ...g1.slice().reverse()], true));
+	const side = $derived(wind === 0 ? 'same' : 'opposite');
 
-	function toSvg(e: PointerEvent): Pt {
-		if (!svg) return [0, 0];
-		const p = svg.createSVGPoint();
-		p.x = e.clientX;
-		p.y = e.clientY;
-		const q = p.matrixTransform(svg.getScreenCTM()!.inverse());
-		return [Math.max(30, Math.min(W - 30, q.x)), Math.max(24, Math.min(H - 20, q.y))];
-	}
-	function down(e: PointerEvent) {
-		dragging = true;
-		svg?.setPointerCapture(e.pointerId);
-		handle = toSvg(e);
-		e.preventDefault();
-	}
-	function move(e: PointerEvent) {
-		if (dragging) handle = toSvg(e);
-	}
-	function up() {
-		dragging = false;
-	}
-	function onKey(e: KeyboardEvent) {
-		const step = e.shiftKey ? 20 : 6;
-		const [x, y] = handle;
-		if (e.key === 'ArrowUp') handle = [x, Math.max(24, y - step)];
-		else if (e.key === 'ArrowDown') handle = [x, Math.min(H - 20, y + step)];
-		else if (e.key === 'ArrowLeft') handle = [Math.max(30, x - step), y];
-		else if (e.key === 'ArrowRight') handle = [Math.min(W - 30, x + step), y];
-		else return;
-		e.preventDefault();
+	// each point of γ0 slides along a straight track to the matching point of γ1
+	const tracks = $derived([1, 2, 3, 4, 5, 6, 7].map((k) => [g0[(k * N) / 8], g1[(k * N) / 8]] as [Pt, Pt]));
+	const frames = $derived([0.25, 0.5, 0.75].map((s) => pathD(lerpPath(g0, g1, s))));
+	const bead = $derived(frame[MID]);
+
+	const clampPt = ([x, y]: Pt): Pt => [Math.max(40, Math.min(W - 40, x)), Math.max(74, Math.min(H - 30, y))];
+
+	function dragT([x, y]: Pt) {
+		stop();
+		const a = g0[MID];
+		const b = g1[MID];
+		const dx = b[0] - a[0];
+		const dy = b[1] - a[1];
+		const L2 = dx * dx + dy * dy;
+		if (L2 < 1) return;
+		t = Math.max(0, Math.min(1, ((x - a[0]) * dx + (y - a[1]) * dy) / L2));
 	}
 
 	const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+	function stop() {
+		cancelAnimationFrame(raf);
+		playing = false;
+	}
 	function play() {
-		if (playing) {
-			cancelAnimationFrame(raf);
-			playing = false;
+		if (playing) return stop();
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			t = t < 1 ? 1 : 0;
 			return;
 		}
-		const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		if (reduce) {
-			t = 1;
-			return;
-		}
-		playing = true;
+		const from = t >= 0.999 ? 0 : t;
 		const start = performance.now();
-		const dur = 2600;
+		const dur = 2600 * (1 - from);
+		playing = true;
 		const tick = (now: number) => {
 			const x = Math.min(1, (now - start) / dur);
-			t = ease(x);
+			t = from + (1 - from) * ease(x);
 			if (x < 1) raf = requestAnimationFrame(tick);
 			else playing = false;
 		};
 		raf = requestAnimationFrame(tick);
 	}
-	onMount(() => () => cancelAnimationFrame(raf));
+	onMount(() => stop);
 
-	// little arrowheads that show the direction of travel
-	function arrowAt(pts: Pt[], i: number, size = 7): string {
+	function choose(v: string) {
+		stop();
+		handle = v === 'same' ? ABOVE : BELOW;
+	}
+
+	// a small arrowhead showing the direction of travel at sample i
+	function arrowAt(pts: Pt[], i: number, size = 6.5): string {
 		const a = pts[Math.max(0, i - 2)];
 		const b = pts[Math.min(pts.length - 1, i + 2)];
-		const dx = b[0] - a[0];
-		const dy = b[1] - a[1];
-		const L = Math.hypot(dx, dy) || 1;
-		const ux = dx / L;
-		const uy = dy / L;
+		const L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
+		const ux = (b[0] - a[0]) / L;
+		const uy = (b[1] - a[1]) / L;
 		const [x, y] = pts[i];
 		return `M${x - ux * size - uy * size * 0.6} ${y - uy * size + ux * size * 0.6} L${x + ux * size * 0.6} ${y + uy * size * 0.6} L${x - ux * size + uy * size * 0.6} ${y - uy * size - ux * size * 0.6}`;
 	}
+
+	const g1Color = $derived(through ? 'var(--rose)' : 'var(--teal)');
+	const g1Label = $derived<Pt>([handle[0] + 26, handle[1] + (handle[1] > HOLE[1] ? 6 : -6)]);
 </script>
 
 <div class="wrap">
-	<Svg
-		viewBox="0 0 {W} {H}"
-		maxHeight={430}
-		label="Two paths from x0 to x1 in a plane with a puncture, and the straight-line homotopy between them"
-		bind:svg
-		onpointermove={move}
-		onpointerup={up}
-		onpointerleave={up}
-	>
+	<Svg viewBox="0 0 {W} {H}" maxHeight={420} label="Two paths from x0 to x1 in a plane with a puncture, and the straight-line homotopy between them">
 		<defs>
-			<radialGradient id="ph-hole" cx="50%" cy="50%" r="50%">
-				<stop offset="0" stop-color="#05070d" />
-				<stop offset="0.62" stop-color="#05070d" />
-				<stop offset="0.8" stop-color="#f28db6" stop-opacity="0.85" />
-				<stop offset="1" stop-color="#f28db6" stop-opacity="0" />
-			</radialGradient>
-			<pattern id="ph-dots" width="24" height="24" patternUnits="userSpaceOnUse">
-				<circle cx="12" cy="12" r="0.9" fill="rgba(200,210,255,0.13)" />
+			<pattern id="ph-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+				<circle cx="10" cy="10" r="0.9" fill="rgba(200,210,255,0.14)" />
 			</pattern>
+			<radialGradient id="ph-hole" cx="50%" cy="42%" r="60%">
+				<stop offset="0" stop-color="#020308" />
+				<stop offset="0.75" stop-color="#05070e" />
+				<stop offset="1" stop-color="#140d18" />
+			</radialGradient>
 		</defs>
+
+		<!-- the space X: the plane, with a puncture -->
 		<rect x="0" y="0" width={W} height={H} fill="url(#ph-dots)" />
 
-		<!-- the region swept out between the two paths -->
-		<path
-			d={region}
-			fill={wind !== 0 ? 'rgba(242,141,182,0.10)' : 'rgba(164,147,255,0.10)'}
-			stroke="none"
-		/>
+		<!-- the region swept by the movie -->
+		<path d={region} fill={wind !== 0 ? 'rgba(242,141,182,0.08)' : 'rgba(164,147,255,0.08)'} />
 
-		<!-- film strip: intermediate frames of the movie -->
-		{#each strip as d, i (i)}
-			<path {d} fill="none" stroke="rgba(164,147,255,0.30)" stroke-width="1.2" stroke-dasharray="3 5" />
+		<!-- straight tracks and three frames of the movie -->
+		{#each tracks as [a, b], i (i)}
+			<line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke="rgba(235,229,213,0.13)" stroke-width="1" />
 		{/each}
+		{#each frames as d, i (i)}
+			<path {d} fill="none" stroke="rgba(164,147,255,0.34)" stroke-width="1.1" stroke-dasharray="3 5" />
+		{/each}
+		<!-- the midpoint's track: the white bead runs along it -->
+		<line x1={g0[MID][0]} y1={g0[MID][1]} x2={g1[MID][0]} y2={g1[MID][1]} stroke="rgba(251,246,232,0.35)" stroke-width="1.2" stroke-dasharray="1 4" stroke-linecap="round" />
 
-		<!-- the frame at which the straight-line movie would cross the hole -->
+		<!-- the first frame that would pass through the puncture -->
 		{#if hit && !through}
-			<path d={pathD(lerpPath(g0, g1, hit.t))} fill="none" stroke="#f28db6" stroke-width="1.6" stroke-opacity="0.75" stroke-dasharray="7 5" />
+			<path d={pathD(lerpPath(g0, g1, hit.t))} fill="none" stroke="var(--rose)" stroke-width="1.5" stroke-opacity="0.8" stroke-dasharray="6 5" />
 		{/if}
 
 		<!-- the two paths -->
-		<path d={pathD(g0)} fill="none" stroke="#f2d08f" stroke-width="3" filter="url(#glow)" stroke-linecap="round" />
-		<path d={arrowAt(g0, N / 2)} fill="none" stroke="#f2d08f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
-		<path
-			d={pathD(g1)}
-			fill="none"
-			stroke={through ? '#f28db6' : '#5fd6cf'}
-			stroke-width="3"
-			filter="url(#glow)"
-			stroke-linecap="round"
-		/>
-		<path
-			d={arrowAt(g1, Math.round(N * 0.3))}
-			fill="none"
-			stroke={through ? '#f28db6' : '#5fd6cf'}
-			stroke-width="2.4"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		/>
+		<path d={pathD(g0)} fill="none" stroke="var(--gold-bright)" stroke-width="2.8" stroke-linecap="round" filter="url(#glow)" />
+		<path d={arrowAt(g0, Math.round(N * 0.3))} fill="none" stroke="var(--gold-bright)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+		<path d={pathD(g1)} fill="none" stroke={g1Color} stroke-width="2.8" stroke-linecap="round" filter="url(#glow)" />
+		<path d={arrowAt(g1, Math.round(N * 0.3))} fill="none" stroke={g1Color} stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
 
-		<!-- the current frame of the movie -->
-		<path
-			d={pathD(frame)}
-			fill="none"
-			stroke={frameHits ? '#f28db6' : '#fbf6e8'}
-			stroke-width={frameHits ? 3.4 : 2.2}
-			stroke-opacity="0.95"
-			filter={frameHits ? 'url(#glow-strong)' : undefined}
-		/>
+		<!-- the current frame H_t -->
+		<path d={pathD(frame)} fill="none" stroke={frameHits ? 'var(--rose)' : '#fbf6e8'} stroke-width="2.4" stroke-linecap="round" filter={frameHits ? 'url(#glow)' : undefined} />
 
 		<!-- the puncture -->
-		<circle cx={HOLE[0]} cy={HOLE[1]} r={frameHits || through ? 22 : 16} fill="url(#ph-hole)" class="hole" />
-		<circle cx={HOLE[0]} cy={HOLE[1]} r="6.5" fill="#04060c" stroke="#f28db6" stroke-width="1.6" />
-		<SvgTeX x={HOLE[0] + 44} y={HOLE[1] + 2} tex={String.raw`\hole{\text{hole}}`} size={13} color="var(--rose)" w={70} h={22} />
+		<circle cx={HOLE[0]} cy={HOLE[1]} r={HOLE_R + 7} fill="none" stroke="var(--rose)" stroke-opacity={frameHits || through ? 0.5 : 0.16} stroke-width="5" />
+		<circle cx={HOLE[0]} cy={HOLE[1]} r={HOLE_R} fill="url(#ph-hole)" stroke="var(--rose)" stroke-width="1.5" />
+		<SvgTeX x={HOLE[0] - HOLE_R - 10} y={HOLE[1] - 14} tex={String.raw`\text{puncture}`} size={12.5} color="var(--rose)" w={80} h={20} anchor="end" />
 
-		<!-- endpoints -->
-		<circle cx={X0[0]} cy={X0[1]} r="7" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.4" />
-		<circle cx={X1[0]} cy={X1[1]} r="7" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.4" />
-		<SvgTeX x={X0[0] - 4} y={X0[1] + 26} tex="x_0" size={17} w={40} h={26} />
-		<SvgTeX x={X1[0] + 4} y={X1[1] + 26} tex="x_1" size={17} w={40} h={26} />
-		<SvgTeX x={340} y={58} tex={String.raw`\cyc{\gamma_0}`} size={18} w={50} h={28} />
-		<SvgTeX x={handle[0]} y={handle[1] + (handle[1] > HOLE[1] ? 30 : -30)} tex={String.raw`\bdy{\gamma_1}`} size={18} w={50} h={28} />
+		<!-- endpoints and names -->
+		<circle cx={X0[0]} cy={X0[1]} r="6.5" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.4" />
+		<circle cx={X1[0]} cy={X1[1]} r="6.5" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.4" />
+		<SvgTeX x={X0[0] - 2} y={X0[1] + 24} tex="x_0" size={17} w={40} h={26} />
+		<SvgTeX x={X1[0] + 2} y={X1[1] + 24} tex="x_1" size={17} w={40} h={26} />
+		<SvgTeX x={g0[MID][0]} y={g0[MID][1] - 20} tex={String.raw`\gamma_0`} size={18} color="var(--gold-bright)" w={44} h={26} />
+		<SvgTeX x={g1Label[0]} y={g1Label[1]} tex={String.raw`\gamma_1`} size={18} color={g1Color} w={44} h={26} anchor="start" />
+		<SvgTeX x={bead[0] + 16} y={bead[1] - 12} tex={`t = ${t.toFixed(2)}`} size={13} color="#fbf6e8" w={80} h={20} anchor="start" />
 
-		<!-- the draggable handle on γ1 -->
-		<g
-			class="handle"
-			role="slider"
-			tabindex="0"
-			aria-label="Middle of the path gamma 1; use arrow keys to move"
-			aria-valuenow={Math.round(handle[1])}
-			onpointerdown={down}
-			onkeydown={onKey}
-		>
-			<circle cx={handle[0]} cy={handle[1]} r="24" fill="transparent" />
-			<circle cx={handle[0]} cy={handle[1]} r="10" fill="rgba(95,214,207,0.18)" stroke="#5fd6cf" stroke-width="2" />
-			<circle cx={handle[0]} cy={handle[1]} r="3.5" fill="#e9fffd" />
-		</g>
+		<Handle
+			x={bead[0]}
+			y={bead[1]}
+			r={7.5}
+			color="#fbf6e8"
+			label="Movie time t: drag along the track, or use the arrow keys"
+			valuetext={`t = ${t.toFixed(2)}`}
+			ondrag={dragT}
+			onkey={(dx, dy) => {
+				stop();
+				t = Math.max(0, Math.min(1, t + (dx + dy) * 0.02));
+			}}
+		/>
+		<Handle
+			x={handle[0]}
+			y={handle[1]}
+			color={g1Color}
+			label="The middle of the path gamma 1: drag it, or use the arrow keys"
+			valuetext={side === 'same' ? 'on the same side of the puncture as gamma 0' : 'on the other side of the puncture'}
+			ondrag={(p) => (handle = clampPt(p))}
+			onkey={(dx, dy) => (handle = clampPt([handle[0] + dx * 6, handle[1] + dy * 6]))}
+		/>
 	</Svg>
+
 	<div class="readout ui" aria-live="polite">
 		{#if through}
-			<p class="bad">
-				<TeX tex={String.raw`\gamma_1`} /> runs straight through the hole, so it is not a path in the punctured plane at all. Drag it off.
+			<p>
+				<span class="chip bad"><Icon icon={CloseIcon} size={13} stroke={2} />Not a path in <TeX tex="X" /></span>
+				<TeX tex={String.raw`\gamma_1`} /> runs through the puncture, which is not part of the space. Drag it off.
 			</p>
 		{:else if wind !== 0}
-			<p class="bad">
-				<strong>Not homotopic.</strong> The two paths pass on opposite sides of the hole: together they encircle it, and no movie can carry one to the other without crossing it.
+			<p>
+				<span class="chip bad"><Icon icon={CloseIcon} size={13} stroke={2} />Not homotopic</span>
+				The paths pass on opposite sides of the puncture, so every movie from one to the other has to sweep across it.{#if hit}{' '}The
+					straight-line movie hits it at <TeX tex={'t \\approx ' + hit.t.toFixed(2)} />.{/if}
 			</p>
 		{:else}
-			<p class="good">
-				<strong>Homotopic.</strong> Both paths pass on the same side of the hole, so one can be slid onto the other.
-			</p>
-		{/if}
-		{#if !through}
-			<p class="movie">
+			<p>
+				<span class="chip good"><Icon icon={VisitedIcon} size={13} stroke={2} />Homotopic</span>
 				{#if hit}
-					The straight-line movie hits the hole at time <TeX tex={'t \\approx ' + hit.t.toFixed(2)} /> — that frame is not a path in <TeX
-						tex={String.raw`X`}
-					/>.
+					Both paths pass on the same side of the puncture. This straight-line movie happens to hit it at <TeX
+						tex={'t \\approx ' + hit.t.toFixed(2)}
+					/>, but a movie that bends around it does not.
 				{:else}
-					The straight-line movie <TeX tex={String.raw`H(s,t) = (1-t)\,\gamma_0(s) + t\,\gamma_1(s)`} /> never touches the hole: it is a homotopy.
+					Both paths pass on the same side of the puncture, and the straight-line movie slides <TeX tex={String.raw`\gamma_0`} /> onto <TeX
+						tex={String.raw`\gamma_1`}
+					/> without ever touching it.
 				{/if}
 			</p>
 		{/if}
 	</div>
+
 	<Controls>
-		<Slider bind:value={t} min={0} max={1} step={0.005} label="time t" format={(v) => v.toFixed(2)} />
-		<Button variant="gold" onclick={play}>{playing ? 'Pause' : 'Play the movie'}</Button>
-		<Button onclick={() => (handle = [340, 136])}>Over the hole</Button>
-		<Button onclick={() => (handle = [340, 338])}>Under the hole</Button>
+		<Button variant="gold" icon={playing ? PauseIcon : PlayIcon} onclick={play}>{playing ? 'Pause' : 'Play the movie'}</Button>
+		<Segmented
+			value={side}
+			label="Where γ1 passes"
+			options={[
+				{ value: 'same', label: 'Same side' },
+				{ value: 'opposite', label: 'Opposite sides' }
+			]}
+			onchange={choose}
+		/>
 	</Controls>
 </div>
 
 <style>
 	.wrap {
-		padding-top: 0.4rem;
-	}
-	.handle {
-		cursor: grab;
-		outline: none;
-		touch-action: none;
-	}
-	.handle:active {
-		cursor: grabbing;
-	}
-	.handle:focus-visible circle:nth-child(2) {
-		stroke: var(--gold-bright);
-		stroke-width: 3;
-	}
-	.hole {
-		transition: r 0.25s var(--ease);
+		padding-top: 0.25rem;
 	}
 	.readout {
-		padding: 0.2rem 1.2rem 0.4rem;
+		min-height: 3.6rem;
+		padding: 0.15rem 1.25rem 0.75rem;
 		font-size: 0.86rem;
-		line-height: 1.5;
-		min-height: 4.6rem;
+		line-height: 1.55;
+		color: var(--ink-dim);
 	}
 	.readout p {
-		margin: 0.3rem 0;
+		margin: 0;
 	}
-	.good strong {
+	.chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		margin-right: 0.5rem;
+		padding: 0.05rem 0.55rem 0.05rem 0.4rem;
+		border-radius: 999px;
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		vertical-align: 0.08em;
+	}
+	.chip.good {
 		color: var(--green);
+		background: rgba(132, 217, 162, 0.1);
+		box-shadow: inset 0 0 0 1px rgba(132, 217, 162, 0.35);
 	}
-	.bad strong {
+	.chip.bad {
 		color: var(--rose);
-	}
-	.movie {
-		color: var(--ink-dim);
+		background: rgba(242, 141, 182, 0.1);
+		box-shadow: inset 0 0 0 1px rgba(242, 141, 182, 0.35);
 	}
 </style>

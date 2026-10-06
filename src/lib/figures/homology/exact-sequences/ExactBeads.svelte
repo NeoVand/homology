@@ -5,7 +5,7 @@
 	// no ring glows rose: it is a "gap", i.e. homology.
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
@@ -143,8 +143,8 @@
 		{/if}
 	</div>
 	<Controls>
-		<Slider bind:value={m} min={0} max={6} step={1} label="first map: multiply by m" format={(v) => String(v)} />
-		<Slider bind:value={k} min={1} max={6} step={1} label="second map: reduce mod k" format={(v) => String(v)} />
+		<Stepper bind:value={m} min={0} max={6} label="first map: multiply by m" />
+		<Stepper bind:value={k} min={1} max={6} label="second map: reduce mod k" />
 		{#each presets as p (p.label)}
 			<Button variant="ghost" active={m === p.m && k === p.k} onclick={() => ((m = p.m), (k = p.k))}>{p.label}</Button>
 		{/each}

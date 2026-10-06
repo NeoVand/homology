@@ -2,7 +2,6 @@
 	// Four deformation retractions, scrubbed by a time slider:
 	// disk → point, annulus → circle, Möbius band → core circle,
 	// punctured torus → figure eight (the rim of the puncture becomes aba⁻¹b⁻¹).
-	import { onMount } from 'svelte';
 	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
 	import { glowTube, glowPoint } from '$lib/three/materials';
 	import { glass as glassGroup } from './glass';
@@ -10,8 +9,7 @@
 	import { tex } from '$lib/katex/render';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import GluingSquare from '$lib/components/svg/GluingSquare.svelte';
 	import { DynTube } from './dynTube';
 	import { annulusModel, diskModel, mobiusModel, puncturedTorusModel } from './retract';
@@ -19,8 +17,6 @@
 	type Mode = 'disk' | 'annulus' | 'mobius' | 'torus';
 	let mode = $state<Mode>('torus');
 	let t = $state(0);
-	let playing = $state(false);
-	let raf = 0;
 	let api: { set(m: Mode, t: number): void } | null = null;
 
 	const options: { value: Mode; label: string }[] = [
@@ -176,31 +172,6 @@
 		api?.set(m, tt);
 	});
 
-	const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
-	function play() {
-		if (playing) {
-			cancelAnimationFrame(raf);
-			playing = false;
-			return;
-		}
-		const from = t > 0.98 ? 1 : t;
-		const to = t > 0.98 ? 0 : 1;
-		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-			t = to;
-			return;
-		}
-		playing = true;
-		const start = performance.now();
-		const dur = 2800 * Math.max(0.25, Math.abs(to - from));
-		const tick = (now: number) => {
-			const x = Math.min(1, (now - start) / dur);
-			t = from + (to - from) * ease(x);
-			if (x < 1) raf = requestAnimationFrame(tick);
-			else playing = false;
-		};
-		raf = requestAnimationFrame(tick);
-	}
-	onMount(() => () => cancelAnimationFrame(raf));
 
 	// ── the flat picture (inset) ──
 	const holePath = $derived.by(() => {
@@ -274,8 +245,7 @@
 	</Scene3D>
 	<Controls>
 		<Segmented bind:value={mode} {options} label="Which deformation retraction" />
-		<Slider bind:value={t} min={0} max={1} step={0.005} label="time t" format={(v) => v.toFixed(2)} />
-		<Button variant="gold" onclick={play}>{playing ? 'Pause' : t > 0.98 ? 'Play backwards' : 'Play'}</Button>
+		<Timeline bind:value={t} from="t = 0" to="t = 1" label="The deformation retraction" duration={2.8} />
 	</Controls>
 	<p class="formula ui">
 		<span class="lbl">at time <em>t</em>:</span>

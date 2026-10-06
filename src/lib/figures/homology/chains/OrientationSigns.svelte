@@ -7,7 +7,7 @@
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import GraphCanvas from '../cycles-and-boundaries/GraphCanvas.svelte';
 	import { orderedBoundary, orderedBoundaryTerms, permSign } from './chains';
@@ -150,7 +150,7 @@
 				<button class="chip" class:on={o.join('') === w.join('')} class:odd={permSign(o) < 0} onclick={() => (w = o)}>[{o.join(',')}]</button>
 			{/each}
 		</div>
-		<Slider bind:value={c} min={-3} max={3} step={1} label="Multiply by c" format={(v) => (v > 0 ? `+${v}` : `${v}`)} />
+		<Stepper bind:value={c} min={-3} max={3} label="Multiply by c" format={(v) => (v > 0 ? `+${v}` : `${v}`)} />
 	</Controls>
 </div>
 

@@ -2,7 +2,7 @@
 	// The Cartesian product A × B as a grid of dots: one dot per ordered pair.
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import { renderMathInText } from '$lib/katex/render';
 
@@ -104,8 +104,8 @@
 		<div class="sub">{@html renderMathInText(readout.sub)}</div>
 	</div>
 	<Controls>
-		<div class="sl"><Slider bind:value={m} min={1} max={6} step={1} label="size of A" /></div>
-		<div class="sl"><Slider bind:value={n} min={1} max={5} step={1} label="size of B" /></div>
+		<Stepper bind:value={m} min={1} max={6} label="size of A" />
+		<Stepper bind:value={n} min={1} max={5} label="size of B" />
 		<Toggle bind:checked={swapped} label="show B × A instead" />
 	</Controls>
 </div>
@@ -200,8 +200,5 @@
 		font-size: 0.9rem;
 		color: var(--ink-dim);
 		margin-top: 0.2rem;
-	}
-	.sl {
-		flex: 1 1 9rem;
 	}
 </style>

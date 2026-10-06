@@ -287,7 +287,7 @@
 
 <p>
 	For the Möbius band, \(w_1\) is the nonzero element of \(H^1(S^1;\Z/2)\cong\Z/2\) — the very class you met as the
-	orientation sheaf's obstruction in <Ref to="cohomology/sheaves" />. In fact real line bundles over a reasonable space
+	orientation sheaf’s obstruction in <Ref to="cohomology/sheaves" />. In fact real line bundles over a reasonable space
 	\(B\) correspond exactly to elements of \(H^1(B;\Z/2)\): there are \(2\) over a circle, \(4\) over a torus (\(H^1(T^2;\Z/2)
 	\cong (\Z/2)^2\)), and only the trivial one over a sphere.
 </p>
@@ -334,7 +334,7 @@
 <Definition title="Index of a zero" id="def-index">
 	<p>
 		The <dfn>index</dfn> of an isolated zero of a vector field in the plane is the number of anticlockwise turns made by
-		the field's arrow as you go once anticlockwise around a small loop enclosing the zero (and no other). On a surface, use
+		the field’s arrow as you go once anticlockwise around a small loop enclosing the zero (and no other). On a surface, use
 		coordinates near the zero and do the same.
 	</p>
 </Definition>
@@ -507,7 +507,7 @@
 <Theorem label="Theorem (total turning)">
 	<p>
 		For a smooth closed plane curve, \(\oint \kappa\,ds = 2\pi k\), where the <dfn>turning number</dfn> \(k\) is an
-		integer. If the curve is simple (does not cross itself), then \(k = \pm 1\) (Hopf's <em>Umlaufsatz</em>, 1935).
+		integer. If the curve is simple (does not cross itself), then \(k = \pm 1\) (Hopf’s <em>Umlaufsatz</em>, 1935).
 	</p>
 </Theorem>
 
@@ -563,7 +563,7 @@
 </blockquote>
 
 <p>
-	“Developed” means bent without stretching, as you can bend paper but not a ping-pong ball. Gauss's <dfn
+	“Developed” means bent without stretching, as you can bend paper but not a ping-pong ball. Gauss’s <dfn
 		>Theorema Egregium</dfn
 	> (“remarkable theorem”) says that \(K\), although we defined it by looking at the surface from outside, can be measured
 	by an ant who lives <em>in</em> the surface and only measures lengths and angles there. It explains why a slice of pizza
@@ -620,7 +620,7 @@
 <h2 id="gauss-bonnet">The Gauss–Bonnet theorem</h2>
 
 <p>
-	Now cover a whole closed surface with geodesic triangles and add up Gauss's formula over all of them. The answer turns out
+	Now cover a whole closed surface with geodesic triangles and add up Gauss’s formula over all of them. The answer turns out
 	not to depend on the shape at all.
 </p>
 
@@ -714,7 +714,7 @@
 		\[ \iint_M K\,dA + \oint_{\partial M} k_g\,ds = 2\pi\chi(M), \]
 		where \(k_g\) is the geodesic curvature (how much the boundary bends within the surface); if the boundary has
 		corners, their exterior angles join the left-hand side. For a geodesic triangle, a disk with \(\chi = 1\) and
-		straight sides, this is Gauss's angle-excess theorem:
+		straight sides, this is Gauss’s angle-excess theorem:
 		\[ \iint_T K\,dA + (\pi - \alpha) + (\pi - \beta) + (\pi - \gamma) = 2\pi. \]
 		For a flat region it is the total turning theorem. Gauss proved the triangle version in 1827; Pierre Ossian Bonnet
 		published the version for regions with curved boundaries in 1848.
@@ -727,7 +727,7 @@
 	Here is the point of view that generalises. The expression \(K\,dA\) is a <Term t="k-form">\(2\)-form</Term> on
 	\(M\) (<Ref to="cohomology/differential-forms" />). On a surface every \(2\)-form is closed, so it has a de Rham
 	cohomology class in \(H^2_{\dR}(M)\) (<Ref to="cohomology/de-rham" />). Changing the shape (the way lengths are measured)
-	changes \(K\,dA\) only by an exact form \(d\eta\), and by Stokes' theorem an exact form integrates to zero over a closed
+	changes \(K\,dA\) only by an exact form \(d\eta\), and by Stokes’ theorem an exact form integrates to zero over a closed
 	surface. So the <em>class</em> of \(\tfrac{1}{2\pi}K\,dA\) does not depend on the shape at all: it is the Euler class of
 	the tangent bundle, and Gauss–Bonnet says \(\tfrac{1}{2\pi}\iint_M K\,dA = e(TM) = \chi(M)\).
 </p>
@@ -795,7 +795,7 @@
 
 <p>
 	There are higher Stiefel–Whitney classes \(w_i\), higher Chern classes \(c_i\) and Pontryagin classes \(p_i\); Milnor
-	and Stasheff's book is the classic guide. We look more closely at the one that physics needs most, \(c_1\).
+	and Stasheff’s book is the classic guide. We look more closely at the one that physics needs most, \(c_1\).
 </p>
 
 <h3>Complex line bundles and the first Chern class</h3>
@@ -837,7 +837,7 @@
 	characteristic classes in physics, with simplifications flagged as we go.
 </p>
 
-<h3>Dirac's monopole and the quantisation of charge</h3>
+<h3>Dirac’s monopole and the quantisation of charge</h3>
 
 <p>
 	A magnet always has two poles; cut it in half and you get two smaller magnets. But nothing in the equations of
@@ -850,8 +850,8 @@
 
 <p>
 	Quantum mechanics describes magnetism not by \(\mathbf B\) but by a <em>vector potential</em> \(\mathbf A\) with
-	\(\operatorname{curl}\mathbf A = \mathbf B\): the potential is what shifts the phase of a charged particle's
-	wavefunction. But no such \(\mathbf A\) can exist on a whole sphere around the monopole. If it did, Stokes' theorem would
+	\(\operatorname{curl}\mathbf A = \mathbf B\): the potential is what shifts the phase of a charged particle’s
+	wavefunction. But no such \(\mathbf A\) can exist on a whole sphere around the monopole. If it did, Stokes’ theorem would
 	give \(\iint_{S^2}\mathbf B\cdot d\mathbf S = \iint_{S^2}\operatorname{curl}\mathbf A\cdot d\mathbf S = 0\) (a closed
 	surface has no boundary), contradicting the flux \(4\pi g\). In 1931 Paul Dirac found a way around this. In 1975 Tai Tsun
 	Wu and Chen Ning Yang gave it its cleanest form, with two patches: use one potential \(\mathbf A_N\) on the northern patch
@@ -876,7 +876,7 @@
 	A wavefunction must have a single value at each point, so the phase \(e^{iq\chi/\hbar} = e^{i(2qg/\hbar)\varphi}\) must
 	come back to itself after one turn around the equator. That forces
 	\[ \frac{2qg}{\hbar} = n \in \Z. \]
-	This is <dfn>Dirac's quantisation condition</dfn>, and it is exactly the statement that the transition function is a
+	This is <dfn>Dirac’s quantisation condition</dfn>, and it is exactly the statement that the transition function is a
 	map of winding number \(n\): the monopole is a complex line bundle over the sphere with Chern number \(n\). Its
 	consequence is remarkable. If a single magnetic monopole exists anywhere in the universe, every electric charge \(q\)
 	must be a whole multiple of \(\hbar/2g\): <em>electric charge is quantised</em>, as it is observed to be. No monopole has
@@ -891,18 +891,18 @@
 	</p>
 </Warning>
 
-<h3>Berry's phase</h3>
+<h3>Berry’s phase</h3>
 
 <p>
 	Take a quantum system that depends on some external knobs — a spin sitting in a magnetic field whose direction you can
 	turn. Turn the knobs slowly around a loop and back. The system ends where it started, except for a phase, and in 1984
 	Michael Berry showed that part of this phase is <em>geometric</em>: it depends only on the loop of knob settings, not on
 	how fast you went around. For a spin-\(\frac12\) particle it is half the solid angle swept out by the direction of the
-	field. Barry Simon recognised in 1983, having seen Berry's work before publication, that this phase is the holonomy of a
+	field. Barry Simon recognised in 1983, having seen Berry’s work before publication, that this phase is the holonomy of a
 	connection on a complex line bundle over the space of knob settings — the phase picked up by going around a loop,
 	exactly like the transition function of the monopole. Its curvature, the <dfn>Berry curvature</dfn>, integrates over a
 	closed surface of settings to \(2\pi\) times a Chern number. For the spin it is the field of a monopole of strength
-	\(\frac12\) sitting at the setting where the field vanishes: Dirac's monopole, reappearing in the space of parameters.
+	\(\frac12\) sitting at the setting where the field vanishes: Dirac’s monopole, reappearing in the space of parameters.
 </p>
 
 <h3>The quantum Hall effect and topological matter</h3>
@@ -1002,7 +1002,7 @@
 	</p>
 	{#snippet solution()}
 		<p>
-			(a) Excess \(3\cdot\pi/2 - \pi = \pi/2\), so the area is \(\frac{\pi}{2}R^2\) — one eighth of the sphere's area
+			(a) Excess \(3\cdot\pi/2 - \pi = \pi/2\), so the area is \(\frac{\pi}{2}R^2\) — one eighth of the sphere’s area
 			\(4\pi R^2\). (b) Excess \(= \text{area}/R^2 = 10^6 / 6371^2 \approx 0.0246\) radians \(\approx 1.41^\circ\).
 		</p>
 	{/snippet}
@@ -1037,18 +1037,18 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={3} title="Dirac's argument">
+<Exercise level={3} title="Dirac’s argument">
 	<p>
-		Suppose a monopole of strength \(g\) exists and particles of charges \(q_1\) and \(q_2\) both satisfy Dirac's condition
+		Suppose a monopole of strength \(g\) exists and particles of charges \(q_1\) and \(q_2\) both satisfy Dirac’s condition
 		\(2q_k g/\hbar \in \Z\). Show that every charge is a whole multiple of a smallest unit, and identify the unit. Why does
 		the argument need only <em>one</em> monopole in the whole universe?
 	</p>
 	{#snippet solution()}
 		<p>
-			Dirac's condition says \(q_k = n_k\cdot\frac{\hbar}{2g}\) with \(n_k\in\Z\). So every charge is an integer multiple of
+			Dirac’s condition says \(q_k = n_k\cdot\frac{\hbar}{2g}\) with \(n_k\in\Z\). So every charge is an integer multiple of
 			\(q_0 = \hbar/(2g)\), and the ratio \(q_1/q_2 = n_1/n_2\) of any two charges is a rational number. (The charges
 			that actually occur may all be multiples of a larger unit, but that unit is then itself a multiple of \(q_0\).) The
-			condition comes from the requirement that each particle's wavefunction be single-valued
+			condition comes from the requirement that each particle’s wavefunction be single-valued
 			around a sphere enclosing the monopole, and such spheres exist wherever the particle is; so the existence of a
 			single monopole anywhere constrains every charge everywhere.
 		</p>
@@ -1100,7 +1100,7 @@
 		</li>
 		<li>
 			<strong>Chern classes</strong>: complex line bundles over \(S^2\) are classified by the winding number \(n\) of a
-			transition function \(e^{in\varphi}\). Physics: Dirac's monopole (charge quantisation), Berry's phase, and the quantum
+			transition function \(e^{in\varphi}\). Physics: Dirac’s monopole (charge quantisation), Berry’s phase, and the quantum
 			Hall effect, where the measured conductance, in units of \(e^2/h\), is a sum of Chern numbers.
 		</li>
 	</ul>

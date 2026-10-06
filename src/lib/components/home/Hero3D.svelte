@@ -23,10 +23,10 @@
 		});
 		root.add(body);
 
-		const longitude = new SurfaceCurve(f, loopPath(1, 0, 0, 0.22), 0.02);
-		const meridian = new SurfaceCurve(f, loopPath(0, 1, 0.08, 0), 0.02);
-		root.add(glowTube(longitude, { color: 'gold', radius: 0.026, closed: true, segments: 320 }));
-		root.add(glowTube(meridian, { color: 'gold', radius: 0.026, closed: true, segments: 160 }));
+		const longitude = new SurfaceCurve(f, loopPath(1, 0, 0, 0.22), 0.03);
+		const meridian = new SurfaceCurve(f, loopPath(0, 1, 0.08, 0), 0.03);
+		root.add(glowTube(longitude, { color: 'gold', radius: 0.034, haloScale: 2.6, closed: true, segments: 320 }));
+		root.add(glowTube(meridian, { color: 'gold', radius: 0.034, haloScale: 2.6, closed: true, segments: 160 }));
 
 		// light pulses travelling along each cycle
 		const pulseMat = (c: number) =>

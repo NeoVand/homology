@@ -4,7 +4,7 @@
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { renderMathInText, tex } from '$lib/katex/render';
 	import { Tween, prefersReducedMotion } from 'svelte/motion';
@@ -115,7 +115,7 @@
 	</div>
 
 	<Controls>
-		<div class="sl"><Slider bind:value={x} min={-5} max={5} step={1} label="starting number x" oninput={run} /></div>
+		<Stepper bind:value={x} min={-5} max={5} label="starting number x" onchange={run} />
 		<div class="kpick" role="radiogroup" aria-label="Choose the bottom map k">
 			<span class="pl ui">bottom map k:</span>
 			{#each Object.entries(ks) as [id, kk] (id)}
@@ -210,9 +210,6 @@
 	}
 	.verdict.ok {
 		color: var(--green);
-	}
-	.sl {
-		flex: 1 1 11rem;
 	}
 	.kpick {
 		display: flex;

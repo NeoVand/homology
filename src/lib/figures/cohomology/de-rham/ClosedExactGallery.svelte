@@ -200,7 +200,7 @@
 		</div>
 		<p class="note">
 			{#if holesIn.length && isFinite(loop) && Math.abs(loop - inside) > 1e-3}
-				The two numbers disagree, and that is no contradiction: the disk is not inside the domain of ω, so Green's theorem does not apply to it.
+				The two numbers disagree, and that is no contradiction: the disk is not inside the domain of ω, so Green’s theorem does not apply to it.
 			{:else}
 				{F.blurb}
 			{/if}

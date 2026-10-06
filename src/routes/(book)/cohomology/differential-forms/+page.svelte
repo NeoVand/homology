@@ -31,14 +31,14 @@
 	import PullbackFigure from '$lib/figures/cohomology/differential-forms/PullbackFigure.svelte';
 </script>
 
-<Epigraph author="Michael Spivak" source="Calculus on Manifolds (1965), p. 104">Stokes' theorem shares three important attributes with many fully evolved major theorems: 1. It is trivial. 2. It is trivial because the terms appearing in it have been properly defined. 3. It has significant consequences.</Epigraph>
+<Epigraph author="Michael Spivak" source="Calculus on Manifolds (1965), p. 104">Stokes’ theorem shares three important attributes with many fully evolved major theorems: 1. It is trivial. 2. It is trivial because the terms appearing in it have been properly defined. 3. It has significant consequences.</Epigraph>
 
 <p class="lead">In the last two chapters you met a curious kind of calculus that lives on the edges of a graph. You put heights on the vertices, took differences along the edges, and discovered that some edge labellings could not come from any heights at all — the impossible staircase. That discrete calculus has an older, smooth sibling: the calculus of slopes, flows, areas and volumes that engineers and physicists have used for three centuries. This chapter rebuilds it from nothing, in a language called <em>differential forms</em>, which makes the shape of the space visible in the calculus.</p>
 
-<p>Along the way, four famous theorems — the fundamental theorem of calculus, Green's theorem, Stokes' theorem and the divergence theorem — will collapse into a single line, \(\int_{\partial M} \omega = \int_M d\omega\). You will not need to remember any calculus to follow. We will relearn slopes and areas with pictures first, and only then make the jump to forms.</p>
+<p>Along the way, four famous theorems — the fundamental theorem of calculus, Green’s theorem, Stokes’ theorem and the divergence theorem — will collapse into a single line, \(\int_{\partial M} \omega = \int_M d\omega\). You will not need to remember any calculus to follow. We will relearn slopes and areas with pictures first, and only then make the jump to forms.</p>
 
 <Ahead>
-	<p>Differential forms are the smooth version of the <Term t="cochain">cochains</Term> of <Ref to="cohomology/cochains" />: a 1-form is something you can add up along any curve, just as a 1-cochain gives a number to each edge. The exterior derivative \(d\) is the smooth version of the coboundary \(\delta\), and Stokes' theorem is the smooth version of the rule \((\delta\varphi)(c) = \varphi(\partial c)\). In <Ref to="cohomology/de-rham" /> we will use forms to detect holes with calculus: a form whose derivative is zero everywhere, yet which is not the derivative of anything, is a hole announcing itself. De Rham's theorem will then say that this smooth story and the combinatorial one compute the same cohomology.</p>
+	<p>Differential forms are the smooth version of the <Term t="cochain">cochains</Term> of <Ref to="cohomology/cochains" />: a 1-form is something you can add up along any curve, just as a 1-cochain gives a number to each edge. The exterior derivative \(d\) is the smooth version of the coboundary \(\delta\), and Stokes’ theorem is the smooth version of the rule \((\delta\varphi)(c) = \varphi(\partial c)\). In <Ref to="cohomology/de-rham" /> we will use forms to detect holes with calculus: a form whose derivative is zero everywhere, yet which is not the derivative of anything, is a hole announcing itself. De Rham’s theorem will then say that this smooth story and the combinatorial one compute the same cohomology.</p>
 </Ahead>
 
 <h2 id="calculus-refresher">A calculus refresher in pictures</h2>
@@ -49,9 +49,9 @@
 
 <p>Imagine walking along a hilly road. Let \(F(x)\) be your height above sea level when you are at horizontal position \(x\). Between two nearby positions \(x\) and \(x + h\), the road rises by \(F(x+h) - F(x)\) over a horizontal distance \(h\), so its average steepness there is</p>
 \[ \frac{\text{rise}}{\text{run}} = \frac{F(x+h) - F(x)}{h}. \]
-<p>As \(h\) shrinks towards \(0\), this ratio settles down (for the smooth roads we will consider) to a single number, the <dfn>derivative</dfn> \(F'(x)\), read "\(F\) prime of \(x\)" and also written \(\tfrac{dF}{dx}\). It is the slope of the graph at \(x\): positive going uphill, negative going downhill, zero at a summit. If \(F(t)\) were your position at time \(t\) instead, \(F'(t)\) would be your speed — the number on a speedometer.</p>
+<p>As \(h\) shrinks towards \(0\), this ratio settles down (for the smooth roads we will consider) to a single number, the <dfn>derivative</dfn> \(F'(x)\), read “\(F\) prime of \(x\)” and also written \(\tfrac{dF}{dx}\). It is the slope of the graph at \(x\): positive going uphill, negative going downhill, zero at a summit. If \(F(t)\) were your position at time \(t\) instead, \(F'(t)\) would be your speed — the number on a speedometer.</p>
 
-<p>Here is the reformulation that matters for this chapter. Turn the definition around: for a <em>small</em> step \(\Delta x\) (read "delta \(x\)", a small change in \(x\)), the change in height is approximately</p>
+<p>Here is the reformulation that matters for this chapter. Turn the definition around: for a <em>small</em> step \(\Delta x\) (read “delta \(x\)”, a small change in \(x\)), the change in height is approximately</p>
 \[ \Delta F \;\approx\; F'(x)\,\Delta x . \]
 <p>So the derivative is a little machine: feed it a small step, and it predicts how much you will climb. Notice that the prediction is <em>linear</em> in the step — twice the step, twice the climb; a step backwards, a negative climb. Keep this machine in mind. It is the seed from which differential forms grow.</p>
 
@@ -59,7 +59,7 @@
 
 <p>The second idea runs the other way: from a rate to a total. If you know your speed at every moment, how far did you travel? Chop the time interval into many short pieces of length \(\Delta t\); on each piece, distance \(\approx\) speed \(\times\) \(\Delta t\); add the pieces up. As the pieces get shorter, these sums approach a single number, the <dfn>integral</dfn>,</p>
 \[ \int_a^b f(x)\,dx \;=\; \lim_{n\to\infty} \sum_{i=1}^{n} f(x_i)\,\Delta x . \]
-<p>The long S, \(\int\), is an old-fashioned letter S for "sum"; \(a\) and \(b\) are where the adding starts and stops; \(dx\) remembers the little widths \(\Delta x\). In a picture, each term \(f(x_i)\,\Delta x\) is the area of a thin rectangle, so the integral is the area under the graph of \(f\) — with the convention that area below the axis counts as negative.</p>
+<p>The long S, \(\int\), is an old-fashioned letter S for “sum”; \(a\) and \(b\) are where the adding starts and stops; \(dx\) remembers the little widths \(\Delta x\). In a picture, each term \(f(x_i)\,\Delta x\) is the area of a thin rectangle, so the integral is the area under the graph of \(f\) — with the convention that area below the axis counts as negative.</p>
 
 <h3 id="fundamental-theorem">The fundamental theorem</h3>
 
@@ -79,11 +79,11 @@
 <p>Read the theorem as a sentence about <em>insides and boundaries</em>. The left side adds up a derivative over the inside of the interval \([a, b]\). The right side looks only at the boundary of the interval — its two endpoints — counting the end \(b\) with a plus sign and the start \(a\) with a minus sign. You have seen exactly this signed boundary before: in <Ref to="homology/chains" /> the boundary of an edge \([a, b]\) was \(\partial[a,b] = b - a\). Hold on to this sentence. The rest of the chapter is about making it true in every dimension:</p>
 
 <KeyIdea>
-	<p>The total of a derivative over a region equals the total of the original quantity over the region's boundary.</p>
+	<p>The total of a derivative over a region equals the total of the original quantity over the region’s boundary.</p>
 </KeyIdea>
 
 <Question>
-	<p>What does the theorem say when \(F\) is constant? And what is \(\int_a^a F'(x)\,dx\)? Both answers are "zero", for reasons that should now feel inevitable rather than computed.</p>
+	<p>What does the theorem say when \(F\) is constant? And what is \(\int_a^a F'(x)\,dx\)? Both answers are “zero”, for reasons that should now feel inevitable rather than computed.</p>
 </Question>
 
 <h2 id="vector-fields">Arrows everywhere: vector fields and work</h2>
@@ -94,7 +94,7 @@
 
 <p>For a small step \((\Delta x, \Delta y)\) in any direction, the change in height is approximately the eastward part of the step times the eastward slope, plus the northward part times the northward slope:</p>
 \[ \Delta f \;\approx\; \frac{\partial f}{\partial x}\,\Delta x + \frac{\partial f}{\partial y}\,\Delta y. \]
-<p>Again a machine that eats a step and predicts a climb — and again linear in the step. The two slopes are often packaged as an arrow, the <dfn>gradient</dfn> \(\nabla f = \big(\tfrac{\partial f}{\partial x}, \tfrac{\partial f}{\partial y}\big)\) (the symbol \(\nabla\) is read "nabla" or simply "grad"). The gradient points straight uphill, its length is the steepness, and it is perpendicular to the contour lines of the map, along which the height does not change.</p>
+<p>Again a machine that eats a step and predicts a climb — and again linear in the step. The two slopes are often packaged as an arrow, the <dfn>gradient</dfn> \(\nabla f = \big(\tfrac{\partial f}{\partial x}, \tfrac{\partial f}{\partial y}\big)\) (the symbol \(\nabla\) is read “nabla” or simply “grad”). The gradient points straight uphill, its length is the steepness, and it is perpendicular to the contour lines of the map, along which the height does not change.</p>
 
 <h3 id="arrows-everywhere">Arrows everywhere</h3>
 
@@ -120,12 +120,12 @@
 <p>This is the fundamental theorem again, now along a curved path in the plane. It has two striking consequences. The work does not depend on the route, only on where you start and finish. And around any closed loop, where the start is the end, the work is zero. Fields with these properties are called <dfn>conservative</dfn>: gravity near the ground is one, with \(f = -mgy\) (height times weight, with a sign).</p>
 
 <Example title="A field that is not a gradient">
-	<p>Take the rotation \(\mathbf F = (-y, x)\) and walk once counterclockwise around the unit circle, \(\gamma(t) = (\cos t, \sin t)\) for \(0 \le t \le 2\pi\). At time \(t\) you are at \((\cos t, \sin t)\), your small step is \(\Delta\mathbf r \approx (-\sin t, \cos t)\,\Delta t\), and the force there is \((-\sin t, \cos t)\). Their dot product is \((\sin^2 t + \cos^2 t)\,\Delta t = \Delta t\). The force always pushes you along, and the total work is \(\oint_\gamma \mathbf F\cdot d\mathbf r = 2\pi\), not zero. So no landscape \(f\) has \(\nabla f = (-y, x)\): there is no consistent "height" whose slopes are these arrows. Remember the impossible staircase of <Ref to="cohomology/cochains" />? This is the same phenomenon in smooth clothing.</p>
+	<p>Take the rotation \(\mathbf F = (-y, x)\) and walk once counterclockwise around the unit circle, \(\gamma(t) = (\cos t, \sin t)\) for \(0 \le t \le 2\pi\). At time \(t\) you are at \((\cos t, \sin t)\), your small step is \(\Delta\mathbf r \approx (-\sin t, \cos t)\,\Delta t\), and the force there is \((-\sin t, \cos t)\). Their dot product is \((\sin^2 t + \cos^2 t)\,\Delta t = \Delta t\). The force always pushes you along, and the total work is \(\oint_\gamma \mathbf F\cdot d\mathbf r = 2\pi\), not zero. So no landscape \(f\) has \(\nabla f = (-y, x)\): there is no consistent “height” whose slopes are these arrows. Remember the impossible staircase of <Ref to="cohomology/cochains" />? This is the same phenomenon in smooth clothing.</p>
 </Example>
 
 <h2 id="swirl-and-spread">Swirl and spread: three famous theorems</h2>
 
-<p>The loop integral around a closed curve deserves a name: it is the <dfn>circulation</dfn> of \(\mathbf F\) around the curve, the total push you feel going round. Since a gradient has zero circulation around every loop, circulation is a test for "being a gradient". But a loop is a global thing. Is there a <em>local</em> quantity, measured at single points, that adds up to the circulation?</p>
+<p>The loop integral around a closed curve deserves a name: it is the <dfn>circulation</dfn> of \(\mathbf F\) around the curve, the total push you feel going round. Since a gradient has zero circulation around every loop, circulation is a test for “being a gradient”. But a loop is a global thing. Is there a <em>local</em> quantity, measured at single points, that adds up to the circulation?</p>
 
 <h3 id="circulation-and-curl">Circulation and curl</h3>
 
@@ -138,7 +138,7 @@
 
 <p>A physical picture: drop a tiny paddle wheel into the flow. It turns counterclockwise where the curl is positive, clockwise where it is negative, and the rate at which it turns is exactly half the curl. For the rotation \((-y, x)\) the curl is \(1 - (-1) = 2\) everywhere. For the shear \((y, 0)\) it is \(0 - 1 = -1\): the flow lines are straight, but the water above the wheel moves faster than the water below it, so the wheel turns clockwise. Switch on the curl colouring in Figure 4.3.2 and watch.</p>
 
-<p>For a gradient, \(P = f_x\) and \(Q = f_y\), so \(\operatorname{curl}\nabla f = f_{yx} - f_{xy}\): the difference of the two "mixed" second derivatives, taken in the two possible orders. For every function with continuous second derivatives these are equal — a classical fact usually credited to Schwarz or Clairaut — so a gradient has zero curl everywhere. Zero curl is the <em>local</em> shadow of having zero circulation.</p>
+<p>For a gradient, \(P = f_x\) and \(Q = f_y\), so \(\operatorname{curl}\nabla f = f_{yx} - f_{xy}\): the difference of the two “mixed” second derivatives, taken in the two possible orders. For every function with continuous second derivatives these are equal — a classical fact usually credited to Schwarz or Clairaut — so a gradient has zero curl everywhere. Zero curl is the <em>local</em> shadow of having zero circulation.</p>
 
 <h3 id="flux-and-divergence">Flux and divergence</h3>
 
@@ -146,24 +146,24 @@
 \[ \Big(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y}\Big)\,h^2 \;=\; \operatorname{div}\mathbf F \times\text{area}. \]
 <p>The <dfn>divergence</dfn> \(\operatorname{div}\mathbf F = \tfrac{\partial P}{\partial x} + \tfrac{\partial Q}{\partial y}\) is the outflow per unit area: positive at a source, where fluid appears; negative at a sink, where it disappears. The source \((x, y)\) has divergence \(2\) everywhere; the rotation has divergence \(0\).</p>
 
-<h3 id="greens-theorem">Green's theorem</h3>
+<h3 id="greens-theorem">Green’s theorem</h3>
 
-<p>Here is the idea that turns local into global. Take a region \(R\) in the plane and tile it with tiny squares. Add up the circulations of all the tiles. Each interior edge belongs to two neighbouring tiles, which walk it in opposite directions, so its contributions cancel. Only the edges on the outer boundary survive, and they make up the counterclockwise walk around the boundary of \(R\), written \(\partial R\). On the other hand, each tile's circulation is about its curl times its area, and these add up to the total curl inside.</p>
+<p>Here is the idea that turns local into global. Take a region \(R\) in the plane and tile it with tiny squares. Add up the circulations of all the tiles. Each interior edge belongs to two neighbouring tiles, which walk it in opposite directions, so its contributions cancel. Only the edges on the outer boundary survive, and they make up the counterclockwise walk around the boundary of \(R\), written \(\partial R\). On the other hand, each tile’s circulation is about its curl times its area, and these add up to the total curl inside.</p>
 
 <Figure title="Why the inside talks to the boundary" hint="Step through, or press play" num="4.3.3">
 	<TilesFigure />
 	{#snippet caption()}Tile a region with small squares, each walked counterclockwise. An edge shared by two tiles is walked once in each direction, so it cancels; only the outer boundary is left. This is the same cancellation that makes the boundary of a sum of triangles in <Ref to="homology/chains" /> lose all its interior edges.{/snippet}
 </Figure>
 
-<Theorem id="thm-green" title="Green's theorem">
+<Theorem id="thm-green" title="Green’s theorem">
 	<p>Let \(R\) be a bounded region in the plane whose boundary \(\partial R\) is a piecewise smooth curve, walked counterclockwise (with \(R\) on your left). For a vector field \(\mathbf F = (P, Q)\) with continuous partial derivatives on and around \(R\),</p>
 	\[ \oint_{\partial R} P\,dx + Q\,dy \;=\; \iint_R \Big(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\Big)\,dA . \]
 	<p>The same reasoning with outward flux gives \(\oint_{\partial R} \mathbf F\cdot\mathbf n\,ds = \iint_R \operatorname{div}\mathbf F\,dA\).</p>
 </Theorem>
 
-<p>The tiling argument is the whole idea of the proof; making "about" precise is a matter of careful estimates. Rather than take it on trust, test it. In Figure 4.3.4 the computer evaluates the two sides independently — one by walking along your curve, the other by adding up over the region inside it — and you can drag the curve wherever you like.</p>
+<p>The tiling argument is the whole idea of the proof; making “about” precise is a matter of careful estimates. Rather than take it on trust, test it. In Figure 4.3.4 the computer evaluates the two sides independently — one by walking along your curve, the other by adding up over the region inside it — and you can drag the curve wherever you like.</p>
 
-<Figure title="Green's theorem, live" hint="Drag the round handles to reshape · the diamond moves the loop" num="4.3.4">
+<Figure title="Green’s theorem, live" hint="Drag the round handles to reshape · the diamond moves the loop" num="4.3.4">
 	<GreenFigure />
 	{#snippet caption()}The background is coloured by the curl (rose counterclockwise, teal clockwise) or the divergence (gold source, blue sink). The number on the left is computed along the gold curve; the number on the right, over the shaded region inside it. Put the loop around one eddy, then around both: their swirls cancel. Make a figure eight: the two lobes are walked in opposite senses and count with opposite signs.{/snippet}
 </Figure>
@@ -176,7 +176,7 @@
 
 <Figure title="The divergence theorem in space" hint="Drag to rotate · move and resize the sphere · add a wind" num="4.3.5">
 	<Flux3D />
-	{#snippet caption()}The glowing blob is a source: the field's divergence is concentrated there. Arrows on the glass sphere show the flow through its surface (gold out, teal in). Both totals are computed independently, by adding up over the sphere's surface and over its solid inside. Move the sphere off the blob and the flux drops to zero; switch on the wind and arrows point inward on one side and outward on the other, but the total does not change, because a uniform wind creates nothing.{/snippet}
+	{#snippet caption()}The glowing blob is a source: the field’s divergence is concentrated there. Arrows on the glass sphere show the flow through its surface (gold out, teal in). Both totals are computed independently, by adding up over the sphere’s surface and over its solid inside. Move the sphere off the blob and the flux drops to zero; switch on the wind and arrows point inward on one side and outward on the other, but the total does not change, because a uniform wind creates nothing.{/snippet}
 </Figure>
 
 <p>Line up what we have so far:</p>
@@ -198,7 +198,7 @@
 <p>Four theorems, one shape: <em>a derivative integrated over the inside equals the original thing integrated over the boundary</em>. Four different kinds of derivative (slope, gradient, curl, divergence), four kinds of integral (along intervals, curves, surfaces, solids). It is hard to believe this is a coincidence, and it is not. To see the single theorem behind all four, we need the right things to integrate.</p>
 
 <History>
-	<p>The theorem we now call Stokes' theorem first appeared in a letter from William Thomson (later Lord Kelvin) to George Stokes, dated 2 July 1850. Stokes set it as an examination question for the Smith's Prize at Cambridge in 1854 — and that year the prize was shared by two students who sat it, Edward Routh and a young James Clerk Maxwell — who would later make these theorems central to his theory of electricity and magnetism. The modern unified form, with differential forms, grew out of Élie Cartan's work beginning in 1899.</p>
+	<p>The theorem we now call Stokes’ theorem first appeared in a letter from William Thomson (later Lord Kelvin) to George Stokes, dated 2 July 1850. Stokes set it as an examination question for the Smith’s Prize at Cambridge in 1854 — and that year the prize was shared by two students who sat it, Edward Routh and a young James Clerk Maxwell — who would later make these theorems central to his theory of electricity and magnetism. The modern unified form, with differential forms, grew out of Élie Cartan’s work beginning in 1899.</p>
 </History>
 
 <h2 id="one-forms">Covectors and 1-forms: stacks of sheets</h2>
@@ -214,7 +214,7 @@
 <p>Every covector on the plane is a combination \(\alpha = a\,dx + b\,dy\), with \(\alpha(\mathbf v) = a v_1 + b v_2\). For instance, with \(\mathbf v = (3, 4)\): \(dx(\mathbf v) = 3\), \(dy(\mathbf v) = 4\), and \((2\,dx + dy)(\mathbf v) = 2\cdot 3 + 4 = 10\).</p>
 
 <Notation title="Why the d?">
-	<p>The symbols \(dx\) and \(dy\) look like the "infinitely small changes" of old calculus books, and that resemblance is deliberate — but it is safest to ignore it for now. Keenan Crane, who teaches this subject to computer-graphics students, puts it this way: "Stay sane: think of these symbols as bases; forget they look like derivatives!" Shortly we will define an operator \(d\), and then \(dx\) will turn out to be, honestly, \(d\) applied to the function \(x\).</p>
+	<p>The symbols \(dx\) and \(dy\) look like the “infinitely small changes” of old calculus books, and that resemblance is deliberate — but it is safest to ignore it for now. Keenan Crane, who teaches this subject to computer-graphics students, puts it this way: “Stay sane: think of these symbols as bases; forget they look like derivatives!” Shortly we will define an operator \(d\), and then \(dx\) will turn out to be, honestly, \(d\) applied to the function \(x\).</p>
 </Notation>
 
 <p>How should you <em>picture</em> a covector? An arrow is the wrong picture. Draw instead the lines where the linear function \(a x + b y\) takes the values \(\ldots, -2, -1, 0, 1, 2, \ldots\): a <em>stack</em> of evenly spaced parallel lines, with a marked direction in which the value increases. Then \(\alpha(\mathbf v)\) is simply the number of lines the arrow \(\mathbf v\) crosses, counted positively in the marked direction and negatively against it. A large covector is a dense stack; \(dx\) is the stack of vertical lines one unit apart. This picture comes from the great physics textbook <em>Gravitation</em> by Misner, Thorne and Wheeler, who describe a 1-form as a family of surfaces and the measurement as counting how many surfaces an arrow pierces.</p>
@@ -231,11 +231,11 @@
 	<p>At the point \(p\), it measures a small arrow \(\mathbf v\) based at \(p\) by \(\omega_p(\mathbf v) = P(p)\,v_1 + Q(p)\,v_2\). The set of all 1-forms on a region \(U\) is written \(\Omega^1(U)\), and functions are called <em>0-forms</em>, \(\Omega^0(U)\).</p>
 </Definition>
 
-<p>The most important example comes from a function. Our "step in, climb out" machine \(\Delta f \approx f_x\,\Delta x + f_y\,\Delta y\) is exactly a 1-form, the <dfn>differential</dfn> of \(f\):</p>
+<p>The most important example comes from a function. Our “step in, climb out” machine \(\Delta f \approx f_x\,\Delta x + f_y\,\Delta y\) is exactly a 1-form, the <dfn>differential</dfn> of \(f\):</p>
 \[ df = \frac{\partial f}{\partial x}\,dx + \frac{\partial f}{\partial y}\,dy. \]
-<p>Apply this to the function \(f(x, y) = x\): its partial derivatives are \(1\) and \(0\), so \(d(x) = 1\,dx + 0\,dy\). The basic covector \(dx\) really is "\(d\) of \(x\)", which justifies the notation.</p>
+<p>Apply this to the function \(f(x, y) = x\): its partial derivatives are \(1\) and \(0\), so \(d(x) = 1\,dx + 0\,dy\). The basic covector \(dx\) really is “\(d\) of \(x\)”, which justifies the notation.</p>
 
-<p>The stack picture now becomes a map. A 1-form is a field of tiny stacks, one at each point. For \(df\) the stacks fit together into the <Term t="level-set">level curves</Term> \(f = 0, \pm\varepsilon, \pm 2\varepsilon, \ldots\) of \(f\), for some small spacing \(\varepsilon\) (epsilon): the contour lines of a hiking map. And \(dx\) is the stack of vertical lines \(x = \text{const}\): "\(dx\) counts how many \(x\)-sheets you cross".</p>
+<p>The stack picture now becomes a map. A 1-form is a field of tiny stacks, one at each point. For \(df\) the stacks fit together into the <Term t="level-set">level curves</Term> \(f = 0, \pm\varepsilon, \pm 2\varepsilon, \ldots\) of \(f\), for some small spacing \(\varepsilon\) (epsilon): the contour lines of a hiking map. And \(dx\) is the stack of vertical lines \(x = \text{const}\): “\(dx\) counts how many \(x\)-sheets you cross”.</p>
 
 <h3 id="integrating-one-forms">Integrating a 1-form</h3>
 
@@ -269,7 +269,7 @@
 </Figure>
 
 <Definition id="def-wedge" title="Wedge product">
-	<p>For covectors \(\alpha\) and \(\beta\), the <dfn>wedge product</dfn> \(\alpha\wedge\beta\) (read "alpha wedge beta") is the measuring device for pairs of arrows</p>
+	<p>For covectors \(\alpha\) and \(\beta\), the <dfn>wedge product</dfn> \(\alpha\wedge\beta\) (read “alpha wedge beta”) is the measuring device for pairs of arrows</p>
 	\[ (\alpha\wedge\beta)(\mathbf u, \mathbf v) = \alpha(\mathbf u)\,\beta(\mathbf v) - \beta(\mathbf u)\,\alpha(\mathbf v). \]
 	<p>In particular \((dx\wedge dy)(\mathbf u, \mathbf v) = u_1 v_2 - u_2 v_1\) is the signed area.</p>
 </Definition>
@@ -285,10 +285,10 @@
 <p>In space, with coordinates \(x, y, z\), there is more room:</p>
 <ul>
 	<li><strong>1-forms</strong> \(P\,dx + Q\,dy + R\,dz\) measure arrows, and are integrated along curves.</li>
-	<li><strong>2-forms</strong> \(A\,dy\wedge dz + B\,dz\wedge dx + C\,dx\wedge dy\) measure parallelograms. Each basic piece measures a <em>shadow</em>: \(dx\wedge dy\) gives the signed area of the parallelogram's shadow on the floor (the \(xy\)-plane), \(dy\wedge dz\) its shadow on the \(yz\)-wall, \(dz\wedge dx\) on the \(zx\)-wall. They are integrated over surfaces.</li>
+	<li><strong>2-forms</strong> \(A\,dy\wedge dz + B\,dz\wedge dx + C\,dx\wedge dy\) measure parallelograms. Each basic piece measures a <em>shadow</em>: \(dx\wedge dy\) gives the signed area of the parallelogram’s shadow on the floor (the \(xy\)-plane), \(dy\wedge dz\) its shadow on the \(yz\)-wall, \(dz\wedge dx\) on the \(zx\)-wall. They are integrated over surfaces.</li>
 	<li><strong>3-forms</strong> \(f\,dx\wedge dy\wedge dz\) measure boxes: \(dx\wedge dy\wedge dz\) gives the signed volume of the box spanned by three arrows, the \(3\times 3\) determinant. They are integrated over solids.</li>
 </ul>
-<p>Counting the basic pieces gives \(1, 3, 3, 1\) in degrees \(0, 1, 2, 3\): a row of Pascal's triangle. In \(n\) dimensions a <dfn>k-form</dfn> measures tiny oriented \(k\)-dimensional parallelepipeds, there are \(\binom{n}{k}\) basic ones, and there are no nonzero \(k\)-forms with \(k > n\), because some \(dx_i\) would have to appear twice and \(dx_i\wedge dx_i = 0\). The space of \(k\)-forms on \(U\) is written \(\Omega^k(U)\).</p>
+<p>Counting the basic pieces gives \(1, 3, 3, 1\) in degrees \(0, 1, 2, 3\): a row of Pascal’s triangle. In \(n\) dimensions a <dfn>k-form</dfn> measures tiny oriented \(k\)-dimensional parallelepipeds, there are \(\binom{n}{k}\) basic ones, and there are no nonzero \(k\)-forms with \(k > n\), because some \(dx_i\) would have to appear twice and \(dx_i\wedge dx_i = 0\). The space of \(k\)-forms on \(U\) is written \(\Omega^k(U)\).</p>
 
 <KeyIdea>
 	<p>A \(k\)-form is something you integrate over oriented \(k\)-dimensional pieces: 0-forms (functions) at points, 1-forms along curves, 2-forms over surfaces, 3-forms over solids. The degree of the form must match the dimension of the piece.</p>
@@ -307,7 +307,7 @@
 \[ d\omega = dP\wedge dx + dQ\wedge dy = (P_x\,dx + P_y\,dy)\wedge dx + (Q_x\,dx + Q_y\,dy)\wedge dy . \]
 <p>Two of the four products contain \(dx\wedge dx\) or \(dy\wedge dy\) and vanish, and \(dy\wedge dx = -dx\wedge dy\), leaving</p>
 \[ d(P\,dx + Q\,dy) = \Big(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\Big)\,dx\wedge dy . \]
-<p>That is the curl, appearing on its own. For example, \(d(x^2 y\,dx + xy\,dy) = (y - x^2)\,dx\wedge dy\). Now Green's theorem can be written without a single arrow:</p>
+<p>That is the curl, appearing on its own. For example, \(d(x^2 y\,dx + xy\,dy) = (y - x^2)\,dx\wedge dy\). Now Green’s theorem can be written without a single arrow:</p>
 \[ \oint_{\partial R}\omega = \iint_R d\omega . \]
 
 <h3 id="where-sheets-end">Where sheets end</h3>
@@ -315,12 +315,12 @@
 <p>What does \(d\omega\) look like? Take \(\omega = x\,dy\). Its covectors are multiples of \(dy\), so its sheets are horizontal lines; but at horizontal position \(x\) the stack has density \(x\) — the lines crowd together as you move right. Horizontal lines whose density grows towards the right cannot all run forever: new lines must <em>begin</em>. Mark each beginning with a dot. The dots turn out to be spread perfectly evenly, one per unit of area (in units of \(\varepsilon\)), and that even sprinkling is the 2-form \(dx\wedge dy = d(x\,dy)\). By contrast the sheets of \(dy\), or the contour lines of any function, never begin or end, and indeed \(d(dy) = 0\) and \(d(df) = 0\).</p>
 
 <Intuition title="d marks where the sheets end">
-	<p>Picture a 1-form as a field of sheets. Wherever sheets begin or end, leave a dot, with a sign recording whether the count goes up or down there. The dots are the 2-form \(d\omega\). This picture (due to Dan Piponi, building on Misner, Thorne and Wheeler) explains Stokes' theorem at a glance: the net number of sheets crossing the boundary of a region equals the number of sheet-ends inside it, because every sheet that enters must either leave again or end inside.</p>
+	<p>Picture a 1-form as a field of sheets. Wherever sheets begin or end, leave a dot, with a sign recording whether the count goes up or down there. The dots are the 2-form \(d\omega\). This picture (due to Dan Piponi, building on Misner, Thorne and Wheeler) explains Stokes’ theorem at a glance: the net number of sheets crossing the boundary of a region equals the number of sheet-ends inside it, because every sheet that enters must either leave again or end inside.</p>
 </Intuition>
 
 <Figure title="d marks where the sheets end" hint="Pick a form · drag the rectangle, or its corner to resize" num="4.3.8">
 	<SheetEnds />
-	{#snippet caption()}Each 1-form is drawn as co-oriented curves (ticks mark the side that counts \(+1\)); dots mark where curves begin — gold for positive, rose rings for negative — and together the dots are \(d\omega\). For every rectangle, the net number of curves piercing its counterclockwise boundary equals the signed number of dots inside: Stokes' theorem as pure counting. The last-but-one form, \(d\theta\), has no dots at all, yet curves stream out of any rectangle around the origin.{/snippet}
+	{#snippet caption()}Each 1-form is drawn as co-oriented curves (ticks mark the side that counts \(+1\)); dots mark where curves begin — gold for positive, rose rings for negative — and together the dots are \(d\omega\). For every rectangle, the net number of curves piercing its counterclockwise boundary equals the signed number of dots inside: Stokes’ theorem as pure counting. The last-but-one form, \(d\theta\), has no dots at all, yet curves stream out of any rectangle around the origin.{/snippet}
 </Figure>
 
 <h3 id="grad-curl-div">Gradient, curl and divergence are one operator</h3>
@@ -331,7 +331,7 @@
 
 <Figure title="The de Rham ladder" num="4.3.9">
 	<DLadder />
-	{#snippet caption()}Top row: forms on \(\R^3\), with \(d\) raising the degree. Bottom row: the pieces they are integrated over, with the boundary operator \(\partial\) lowering the dimension. Integration pairs each column. Stokes' theorem says that taking \(d\) on top and taking \(\partial\) underneath give the same number.{/snippet}
+	{#snippet caption()}Top row: forms on \(\R^3\), with \(d\) raising the degree. Bottom row: the pieces they are integrated over, with the boundary operator \(\partial\) lowering the dimension. Integration pairs each column. Stokes’ theorem says that taking \(d\) on top and taking \(\partial\) underneath give the same number.{/snippet}
 </Figure>
 
 <h3 id="d-squared">d of d is zero</h3>
@@ -346,7 +346,7 @@
 	<p>because the mixed partial derivatives are equal. In general the same thing happens: \(d(d\omega)\) is a sum of terms \(\tfrac{\partial^2 f}{\partial x_i\,\partial x_j}\,dx_i\wedge dx_j\wedge\cdots\), and each pair \(i \ne j\) appears twice, with equal coefficients but with \(dx_i\wedge dx_j = -dx_j\wedge dx_i\), so everything cancels; the terms with \(i = j\) vanish because \(dx_i\wedge dx_i = 0\).</p>
 </Proof>
 
-<p>In the language of vector calculus, \(d\circ d = 0\) on functions says \(\operatorname{curl}(\operatorname{grad} f) = 0\), and on 1-forms says \(\operatorname{div}(\operatorname{curl}\mathbf F) = 0\). In the sheet picture it says something lovely: <em>the ends of sheets have no ends</em>. And it should ring a bell. In <Ref to="homology/chains" /> you proved \(\partial\circ\partial = 0\), "the boundary of a boundary is empty", and in <Ref to="cohomology/cohomology-groups" /> its mirror image \(\delta\circ\delta = 0\). The exterior derivative belongs to the same family. Whenever an operator squares to zero, its image sits inside its kernel, and the gap between them — the things killed by \(d\) that are not produced by \(d\) — is going to measure something.</p>
+<p>In the language of vector calculus, \(d\circ d = 0\) on functions says \(\operatorname{curl}(\operatorname{grad} f) = 0\), and on 1-forms says \(\operatorname{div}(\operatorname{curl}\mathbf F) = 0\). In the sheet picture it says something lovely: <em>the ends of sheets have no ends</em>. And it should ring a bell. In <Ref to="homology/chains" /> you proved \(\partial\circ\partial = 0\), “the boundary of a boundary is empty”, and in <Ref to="cohomology/cohomology-groups" /> its mirror image \(\delta\circ\delta = 0\). The exterior derivative belongs to the same family. Whenever an operator squares to zero, its image sits inside its kernel, and the gap between them — the things killed by \(d\) that are not produced by \(d\) — is going to measure something.</p>
 
 <Remark title="A preview of the next chapter">
 	<p>A form with \(d\omega = 0\) is called <em>closed</em>, and a form \(\omega = d\eta\) is called <em>exact</em>. Because \(d\circ d = 0\), every exact form is closed. Is every closed form exact — is every curl-free field a gradient? Figure 4.3.8 has already hinted at the answer: the form \(d\theta\) is closed, yet its sheets stream out of a box around the origin, which is impossible for the contour lines of a function. That gap is where cohomology lives.</p>
@@ -369,12 +369,12 @@
 <Example title="Polar coordinates">
 	<p>Let \(\varphi(r, \theta) = (r\cos\theta,\, r\sin\theta)\). Substituting \(x = r\cos\theta\) and \(y = r\sin\theta\) gives \(dx = \cos\theta\,dr - r\sin\theta\,d\theta\) and \(dy = \sin\theta\,dr + r\cos\theta\,d\theta\). Wedge them together, remembering \(dr\wedge dr = d\theta\wedge d\theta = 0\) and \(d\theta\wedge dr = -dr\wedge d\theta\):</p>
 	\[ \varphi^*(dx\wedge dy) = \big(\cos\theta\cdot r\cos\theta - (-r\sin\theta)\sin\theta\big)\,dr\wedge d\theta = r\,dr\wedge d\theta . \]
-	<p>So the area of a disk of radius \(R\) is \(\int_0^{2\pi}\int_0^R r\,dr\,d\theta = 2\pi\cdot\tfrac{R^2}{2} = \pi R^2\). The factor \(r\) is the familiar "Jacobian" of polar coordinates, and Figure 4.3.10 shows where it comes from.</p>
+	<p>So the area of a disk of radius \(R\) is \(\int_0^{2\pi}\int_0^R r\,dr\,d\theta = 2\pi\cdot\tfrac{R^2}{2} = \pi R^2\). The factor \(r\) is the familiar “Jacobian” of polar coordinates, and Figure 4.3.10 shows where it comes from.</p>
 </Example>
 
 <Figure title="Pulling back area" hint="Drag the highlighted cell in either picture · arrow keys" num="4.3.10">
 	<PullbackFigure />
-	{#snippet caption()}A grid cell in the \((r, \theta)\) rectangle is carried by \(\varphi\) to a curved cell in the plane. Its area there is exactly \(\bar r\,\Delta r\,\Delta\theta\), where \(\bar r\) is the cell's middle radius: cells farther out are stretched more. That stretching factor is why \(\varphi^*(dx\wedge dy) = r\,dr\wedge d\theta\).{/snippet}
+	{#snippet caption()}A grid cell in the \((r, \theta)\) rectangle is carried by \(\varphi\) to a curved cell in the plane. Its area there is exactly \(\bar r\,\Delta r\,\Delta\theta\), where \(\bar r\) is the cell’s middle radius: cells farther out are stretched more. That stretching factor is why \(\varphi^*(dx\wedge dy) = r\,dr\wedge d\theta\).{/snippet}
 </Figure>
 
 <p>Notice the direction of travel. The map \(\varphi\) carries points from \(U\) to \(V\), but the pullback carries forms the other way, from \(V\) back to \(U\). This is our fourth recurring idea, <em>reversed arrows</em>, again: preimages of sets in <Ref to="foundations/sets-and-functions" />, transposes of matrices, cochains in <Ref to="cohomology/cochains" /> — and now forms. Measuring devices always travel against the map.</p>
@@ -393,9 +393,9 @@
 \[ \ip{\omega}{c} = \int_c \omega \]
 <p>between \(k\)-forms and \(k\)-chains — the same kind of pairing as between cochains and chains in <Ref to="cohomology/cohomology-groups" />.</p>
 
-<h2 id="stokes">Stokes' theorem: the crown jewel</h2>
+<h2 id="stokes">Stokes’ theorem: the crown jewel</h2>
 
-<p>Everything is now in place to state the theorem that this chapter has been circling. An oriented region \(M\) has a boundary \(\partial M\), and the boundary inherits an orientation by the rule "outward first": at a boundary point, an arrow pointing out of \(M\), followed by the boundary's own orientation, should give the orientation of \(M\). In the plane this means walking the boundary counterclockwise, with the region on your left; for an interval \([a, b]\) it means \(b\) counts plus and \(a\) counts minus.</p>
+<p>Everything is now in place to state the theorem that this chapter has been circling. An oriented region \(M\) has a boundary \(\partial M\), and the boundary inherits an orientation by the rule “outward first”: at a boundary point, an arrow pointing out of \(M\), followed by the boundary’s own orientation, should give the orientation of \(M\). In the plane this means walking the boundary counterclockwise, with the region on your left; for an interval \([a, b]\) it means \(b\) counts plus and \(a\) counts minus.</p>
 
 <Theorem id="thm-stokes" label="Theorem (Stokes)">
 	<p>Let \(M\) be a compact oriented \(k\)-dimensional manifold with boundary \(\partial M\), carrying the boundary orientation, and let \(\omega\) be a smooth \((k-1)\)-form on \(M\). Then</p>
@@ -408,12 +408,12 @@
 <div class="table-wrap">
 	<table>
 		<thead>
-			<tr><th>\(M\)</th><th>\(\omega\)</th><th>Stokes' theorem becomes</th></tr>
+			<tr><th>\(M\)</th><th>\(\omega\)</th><th>Stokes’ theorem becomes</th></tr>
 		</thead>
 		<tbody>
 			<tr><td>an interval \([a,b]\)</td><td>a function \(F\)</td><td>\(F(b) - F(a) = \int_a^b F'\,dx\)</td></tr>
 			<tr><td>a curve \(\gamma\) in space</td><td>a function \(f\)</td><td>\(f(\text{end}) - f(\text{start}) = \int_\gamma df\)</td></tr>
-			<tr><td>a region in the plane</td><td>\(P\,dx + Q\,dy\)</td><td>Green's theorem</td></tr>
+			<tr><td>a region in the plane</td><td>\(P\,dx + Q\,dy\)</td><td>Green’s theorem</td></tr>
 			<tr><td>a surface in space</td><td>a 1-form</td><td>the Kelvin–Stokes theorem</td></tr>
 			<tr><td>a solid in space</td><td>a 2-form</td><td>the divergence theorem</td></tr>
 		</tbody>
@@ -422,11 +422,11 @@
 
 <p>Why is it true? You have already seen both reasons. The first is the tiling argument of Figure 4.3.3: chop \(M\) into tiny cubes; for a single tiny cube the theorem is the fundamental theorem of calculus applied in each direction; and when the cubes are put back together, every interior face is counted twice with opposite orientations and cancels, leaving only \(\partial M\). The second is the sheet picture of Figure 4.3.8: \(\int_{\partial M}\omega\) counts the sheets of \(\omega\) entering and leaving through the boundary, each sheet that enters must leave again or end inside, and the ends inside are what \(d\omega\) counts.</p>
 
-<p>Spivak's verdict, in the epigraph of this chapter, is that the theorem is <em>trivial</em> — "because the terms appearing in it have been properly defined". He goes on: "Since this entire chapter was little more than a series of definitions which made the statement and proof of Stokes' theorem possible, the reader should be willing to grant the first two of these attributes to Stokes' theorem." The difficulty was never in the theorem. It was in finding the right objects — forms, \(d\), oriented chains — for which it becomes a single honest line.</p>
+<p>Spivak’s verdict, in the epigraph of this chapter, is that the theorem is <em>trivial</em> — “because the terms appearing in it have been properly defined”. He goes on: “Since this entire chapter was little more than a series of definitions which made the statement and proof of Stokes’ theorem possible, the reader should be willing to grant the first two of these attributes to Stokes’ theorem.” The difficulty was never in the theorem. It was in finding the right objects — forms, \(d\), oriented chains — for which it becomes a single honest line.</p>
 
 <h3 id="d-and-boundary">d and ∂ are mirror images</h3>
 
-<p>Write Stokes' theorem with the pairing \(\ip{\omega}{c} = \int_c\omega\):</p>
+<p>Write Stokes’ theorem with the pairing \(\ip{\omega}{c} = \int_c\omega\):</p>
 \[ \ip{d\omega}{c} \;=\; \ip{\omega}{\partial c}. \]
 <p>This is exactly the defining property of the coboundary in <Ref to="cohomology/cohomology-groups" />, \((\delta\varphi)(c) = \varphi(\partial c)\): there, \(\delta\) was the transpose of \(\partial\). So differential forms behave like cochains, with \(d\) in the role of \(\delta\). Two consequences follow in one line each, and they are the doorway to the next chapter.</p>
 <ul>
@@ -436,7 +436,7 @@
 <p>So when a closed form is integrated over a cycle, the answer only depends on the cycle up to boundaries, and only on the form up to exact forms. Integrating closed forms over cycles is a way of pairing homology with something new. That something is de Rham cohomology.</p>
 
 <KeyIdea>
-	<p>Forms are measurements that can be made everywhere at once; chains are the places where we measure. The exterior derivative \(d\) and the boundary \(\partial\) are mirror images under integration, \(\int_c d\omega = \int_{\partial c}\omega\), and both satisfy "twice is zero".</p>
+	<p>Forms are measurements that can be made everywhere at once; chains are the places where we measure. The exterior derivative \(d\) and the boundary \(\partial\) are mirror images under integration, \(\int_c d\omega = \int_{\partial c}\omega\), and both satisfy “twice is zero”.</p>
 </KeyIdea>
 
 <h2 id="exercises">Exercises</h2>
@@ -464,7 +464,7 @@
 	{#snippet solution()}<p>\(df = 3x^2y^2\,dx + 2x^3y\,dy\). Then \(d(df) = \big(\tfrac{\partial}{\partial x}(2x^3y) - \tfrac{\partial}{\partial y}(3x^2y^2)\big)\,dx\wedge dy = (6x^2y - 6x^2y)\,dx\wedge dy = 0\).</p>{/snippet}
 </Exercise>
 
-<Exercise level={2} title="Green's theorem on a square">
+<Exercise level={2} title="Green’s theorem on a square">
 	<p>Let \(R = [0,1]\times[0,1]\) be the unit square with its counterclockwise boundary, and \(\omega = x\,dy\). Compute \(\oint_{\partial R}\omega\) edge by edge, and compare with \(\iint_R d\omega\). Then do the same for \(\omega = -y\,dx + x\,dy\).</p>
 	{#snippet hint()}<p>Along a horizontal edge \(dy = 0\); along a vertical edge \(x\) is constant.</p>{/snippet}
 	{#snippet solution()}<p>For \(\omega = x\,dy\): the bottom and top edges are horizontal, so \(dy = 0\) and they contribute nothing. The left edge has \(x = 0\), so it contributes nothing either. The right edge has \(x = 1\) and is walked upwards from \(y = 0\) to \(y = 1\), contributing \(\int_0^1 1\,dy = 1\). On the other side, \(d\omega = dx\wedge dy\), whose integral over the square is its area, \(1\). They agree.</p><p>For \(\omega = -y\,dx + x\,dy\): \(d\omega = 2\,dx\wedge dy\), so the area integral is \(2\). Along the edges: bottom (\(y = 0\), going right) gives \(0\); right (\(x = 1\), going up) gives \(\int_0^1 dy = 1\); top (\(y = 1\), going left, so \(x\) runs from \(1\) to \(0\)) gives \(\int_1^0 -1\,dx = 1\); left (\(x = 0\)) gives \(0\). The total is \(2\).</p>{/snippet}
@@ -492,12 +492,12 @@
 <Recap>
 	<ul>
 		<li>The derivative is a rate; the integral is a total; the fundamental theorem says the total of a derivative over an interval is the signed boundary values: \(\int_a^b F' = F(b) - F(a)\).</li>
-		<li>Vector fields assign arrows to points. Their line integrals measure work; curl measures circulation per area, divergence outflow per area. Green's, Stokes' and the divergence theorem all say "derivative inside = original on the boundary", and all come from cancelling interior edges.</li>
+		<li>Vector fields assign arrows to points. Their line integrals measure work; curl measures circulation per area, divergence outflow per area. Green’s, Stokes’ and the divergence theorem all say “derivative inside = original on the boundary”, and all come from cancelling interior edges.</li>
 		<li>A covector is a linear measuring device for arrows, pictured as a stack of lines; a 1-form is a covector at every point, pictured as local stacks of sheets. Line integrals count sheets crossed, and \(\int_\gamma df = f(B) - f(A)\).</li>
 		<li>The wedge product measures oriented area: \((dx\wedge dy)(\mathbf u, \mathbf v) = u_1v_2 - u_2v_1\). \(k\)-forms measure oriented \(k\)-dimensional pieces and are integrated over them.</li>
 		<li>The exterior derivative \(d\) is gradient, curl and divergence in one; pictorially it marks where sheets end. It satisfies \(d\circ d = 0\), the cousin of \(\partial\circ\partial = 0\).</li>
 		<li>Forms pull back along maps (arrows reverse), and pullback commutes with \(d\), so forms and \(d\) live on manifolds.</li>
-		<li>Stokes' theorem \(\int_{\partial M}\omega = \int_M d\omega\) unifies the classical theorems and says that \(d\) is the mirror image of \(\partial\) under integration.</li>
+		<li>Stokes’ theorem \(\int_{\partial M}\omega = \int_M d\omega\) unifies the classical theorems and says that \(d\) is the mirror image of \(\partial\) under integration.</li>
 	</ul>
 </Recap>
 

@@ -3,7 +3,7 @@
 	// that turns an n × n square into an (n+1) × (n+1) square.
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import { renderMathInText } from '$lib/katex/render';
 
 	let n = $state(4);
@@ -47,7 +47,7 @@
 	</Svg>
 	<p class="readout" aria-live="polite">{@html renderMathInText(readout)}</p>
 	<Controls>
-		<div class="sl"><Slider bind:value={n} min={1} max={8} step={1} label="n" /></div>
+		<Stepper bind:value={n} min={1} max={8} label="n" />
 	</Controls>
 </div>
 
@@ -72,10 +72,5 @@
 		font-size: 0.98rem;
 		color: var(--ink-dim);
 		min-height: 3em;
-	}
-	.sl {
-		flex: 1 1 12rem;
-		max-width: 24rem;
-		margin: 0 auto;
 	}
 </style>

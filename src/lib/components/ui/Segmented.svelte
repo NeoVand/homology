@@ -33,12 +33,12 @@
 </script>
 
 <div class="seg ui" role="radiogroup" aria-label={label || undefined} bind:this={root}>
-	{#each options as o (o.value)}
+	{#each options as o, i (o.value)}
 		<button
 			type="button"
 			role="radio"
 			aria-checked={value === o.value}
-			tabindex={value === o.value ? 0 : -1}
+			tabindex={value === o.value || (i === 0 && !options.some((x) => x.value === value)) ? 0 : -1}
 			class:on={value === o.value}
 			{onkeydown}
 			onclick={() => choose(o.value)}>{o.label}</button

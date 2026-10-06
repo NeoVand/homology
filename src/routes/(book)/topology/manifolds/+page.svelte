@@ -110,7 +110,7 @@
 	<p>
 		Manifolds are where the theory in this book is at its most beautiful. The boundary operator \(\partial\) of homology (<Ref
 			to="homology/chains"
-		/>) is a combinatorial shadow of the boundary of a manifold, and its basic law \(\partial\partial = 0\) echoes this chapter's slogan
+		/>) is a combinatorial shadow of the boundary of a manifold, and its basic law \(\partial\partial = 0\) echoes this chapter’s slogan
 		“a boundary has no boundary”. Orientation decides whether the top homology group of a closed surface is \(\Z\) or \(0\) (<Ref
 			to="homology/computing"
 		/>). Differential forms and de Rham cohomology (<Ref to="cohomology/differential-forms" />, <Ref to="cohomology/de-rham" />) live on
@@ -142,7 +142,7 @@
 <Intuition title="The ant’s-eye view">
 	<p>
 		Imagine a tiny ant living <em>in</em> a surface, who can see only a little way around itself. On a sphere, a torus or a Klein bottle,
-		the ant's world looks like a flat plane in every direction; only by going on long journeys can it discover the global shape. This
+		the ant’s world looks like a flat plane in every direction; only by going on long journeys can it discover the global shape. This
 		view from the inside is the point of view of manifold theory. The definition will talk only about small neighbourhoods, and it will
 		never mention a bigger space in which the manifold might sit.
 	</p>
@@ -162,8 +162,8 @@
 <p>
 	Which spaces are <em>not</em> manifolds? Here is a test you can do by eye. Put a small sphere around a point \(p\) and look at where it
 	meets the space, like a radar picture of the neighbourhood of \(p\). If \(p\) lies on a curve, the small sphere meets the curve in two
-	points, one on each side — Riemann's “forwards or backwards”. If \(p\) lies in the middle of a surface, the sphere meets it in a closed
-	loop: a circle's worth of directions in which you can walk away from \(p\). Any other answer is a warning sign.
+	points, one on each side — Riemann’s “forwards or backwards”. If \(p\) lies in the middle of a surface, the sphere meets it in a closed
+	loop: a circle’s worth of directions in which you can walk away from \(p\). Any other answer is a warning sign.
 </p>
 
 <Figure num="2.4.1" title="The small-sphere test" hint="Pick a space · click it to move the probe · resize the sphere">
@@ -302,7 +302,7 @@
 			<strong>Dimension 2.</strong> The plane, the open disk, the <Term t="sphere">sphere</Term> \(S^2\), the
 			<Term t="torus">torus</Term> \(T^2\), and the <Term t="klein-bottle">Klein bottle</Term> \(K\) and the
 			<Term t="real-projective-plane">projective plane</Term> \(\RP^2\), which <Ref to="topology/gluing" /> built abstractly by gluing.
-			The definition never asks a manifold to sit inside \(\R^3\), so the Klein bottle's difficulties with ordinary space are no obstacle.
+			The definition never asks a manifold to sit inside \(\R^3\), so the Klein bottle’s difficulties with ordinary space are no obstacle.
 		</li>
 		<li>
 			<strong>Dimension 3.</strong> Ordinary space \(\R^3\); the 3-sphere \(S^3\), the points of \(\R^4\) at distance 1 from the
@@ -869,10 +869,10 @@
 	Its one-dimension-lower cousin, the Jordan curve theorem, appears in <Ref to="homology/invariance" />, and both can be proved with
 	homology. The consequence is striking: the Klein bottle and the projective plane cannot be built in ordinary space without passing
 	through themselves. Every glass Klein bottle you have seen is an <Term t="immersion">immersion</Term>, with a circle along which the
-	surface crosses itself, and <Term t="boys-surface">Boy's surface</Term> is an immersion of the projective plane. With a fourth
+	surface crosses itself, and <Term t="boys-surface">Boy’s surface</Term> is an immersion of the projective plane. With a fourth
 	dimension to move in, the crossings can be avoided: the Klein bottle embeds in \(\R^4\). Hassler Whitney proved in 1944 that every
 	smooth \(n\)-manifold can be embedded in \(\R^{2n}\) — so every surface fits in \(\R^4\) — and immersed in \(\R^{2n-1}\) when
-	\(n \ge 2\). The definition of a manifold never needed a surrounding space; Whitney's theorem says that one can always be found.
+	\(n \ge 2\). The definition of a manifold never needed a surrounding space; Whitney’s theorem says that one can always be found.
 </p>
 
 <h2 id="connected-sum">Connected sums: building surfaces like Lego</h2>
@@ -939,7 +939,7 @@
 </Theorem>
 
 <p>
-	Dyck's theorem means that mixing handles and cross-caps never produces anything new: any mixture with at least one cross-cap is a
+	Dyck’s theorem means that mixing handles and cross-caps never produces anything new: any mixture with at least one cross-cap is a
 	connected sum of projective planes alone.
 </p>
 
@@ -984,7 +984,7 @@
 	{#snippet caption()}
 		The classification as a gallery. The orientable surfaces are spheres with \(g\) handles; each handle carries a gold loop around its
 		tube and a teal loop around its hole. The non-orientable surfaces cannot be built in \(\R^3\) without crossing themselves, so they
-		are drawn as immersions: the projective plane as Boy's surface and the Klein bottle as the classic bottle.
+		are drawn as immersions: the projective plane as Boy’s surface and the Klein bottle as the classic bottle.
 	{/snippet}
 </Figure>
 
@@ -1024,7 +1024,7 @@
 		<li>
 			<strong>Simplify the word.</strong> Cut-and-paste moves change the polygon without changing the surface: cancel a pair
 			\(aa^{-1}\) that sits side by side (a fold), bring the two letters of a pair \(\dots a \dots a \dots\) together into a cross-cap
-			\(aa\), gather interlocked pairs into handles \(aba^{-1}b^{-1}\), and use Dyck's theorem to turn handles into cross-caps when a
+			\(aa\), gather interlocked pairs into handles \(aba^{-1}b^{-1}\), and use Dyck’s theorem to turn handles into cross-caps when a
 			cross-cap is present.
 		</li>
 		<li><strong>Read off the answer.</strong> The final word is one of the normal forms in the theorem.</li>
@@ -1037,13 +1037,13 @@
 
 <History title="From Riemann to Conway">
 	<p>
-		The word “manifold” comes from Bernhard Riemann's <em>Mannigfaltigkeit</em>, in the lecture he gave at Göttingen on 10 June 1854 to
+		The word “manifold” comes from Bernhard Riemann’s <em>Mannigfaltigkeit</em>, in the lecture he gave at Göttingen on 10 June 1854 to
 		qualify as a university teacher. Riemann had offered three topics, and Carl Friedrich Gauss, who was in the audience, chose the one on
-		the foundations of geometry. The lecture was published only in 1868, two years after Riemann's death; Hermann Weyl gave the first
+		the foundations of geometry. The lecture was published only in 1868, two years after Riemann’s death; Hermann Weyl gave the first
 		modern, intrinsic definition — for surfaces, by neighbourhoods and coordinate charts — in 1913. Surfaces were classified long before the definition was settled. August Möbius
 		classified the closed orientable surfaces in 1863, and Camille Jordan did so independently in 1866; Walther von Dyck added the
 		non-orientable ones in 1888, proving the theorem that bears his name along the way. The first proof that meets modern standards
-		was given by Max Dehn and Poul Heegaard in 1907, for surfaces built from polygons, and Radó's triangulation theorem closed the last gap
+		was given by Max Dehn and Poul Heegaard in 1907, for surfaces built from polygons, and Radó’s triangulation theorem closed the last gap
 		in 1925. Around 1992 John Conway found the ZIP proof — the name stands for “zero irrelevancy proof”.
 	</p>
 </History>
@@ -1053,7 +1053,7 @@
 		Closed curves are easy: every connected one is a circle. Closed surfaces are decided by two pieces of data. In dimension three the
 		story is far harder. In 1904 Henri Poincaré asked whether a closed 3-manifold in which every loop can be shrunk to a point
 		(<Term t="simply-connected">simply connected</Term>, <Ref to="topology/homotopy" />) must be the 3-sphere. The question became the
-		Poincaré conjecture, and it was settled only in 2003 by Grigori Perelman, as part of William Thurston's programme for describing all
+		Poincaré conjecture, and it was settled only in 2003 by Grigori Perelman, as part of William Thurston’s programme for describing all
 		3-manifolds by geometry. In dimension four no complete list is possible, in a precise sense: in 1958 A. A. Markov proved that no
 		algorithm can decide whether two given 4-manifolds are homeomorphic. Algebraic topology was invented to bring order to this zoo, and
 		homology is its first and most useful tool.
@@ -1118,7 +1118,7 @@
 	{#snippet solution()}
 		<p>
 			(a) Two circles, of radius 1 and 2. (b) \(\partial(D^2 \times S^1) = S^1 \times S^1\), the torus: the solid torus is a doughnut
-			and its boundary is the doughnut's skin. (c) The perimeter of the square, which is homeomorphic to a circle. The corners are no
+			and its boundary is the doughnut’s skin. (c) The perimeter of the square, which is homeomorphic to a circle. The corners are no
 			problem for topology: a small neighbourhood of a corner is a quarter-disk, which is homeomorphic to a half-disk (open it out like
 			a fan, doubling every angle), so the square is a 2-manifold with boundary. They would matter for smoothness.
 		</p>
@@ -1151,7 +1151,7 @@
 		<p>
 			(a) Non-orientable: every letter appears twice with the same exponent. (b) Orientable: each letter appears once with each
 			exponent. (c) Non-orientable: this is another word for the projective plane. (d) Non-orientable, because of \(cc\). It is a torus
-			with a cross-cap, \(T^2 \mathbin{\#} \RP^2\), which by Dyck's theorem is \(N_3\).
+			with a cross-cap, \(T^2 \mathbin{\#} \RP^2\), which by Dyck’s theorem is \(N_3\).
 		</p>
 	{/snippet}
 </Exercise>
@@ -1159,17 +1159,17 @@
 <Exercise level={2} title="Counting with connected sums">
 	<p>
 		Using \(\chi(M \mathbin{\#} N) = \chi(M) + \chi(N) - 2\), \(\chi(S^2) = 2\), \(\chi(T^2) = 0\) and \(\chi(\RP^2) = 1\), show that
-		\(\chi(\Sigma_g) = 2 - 2g\) and \(\chi(N_k) = 2 - k\). Then check that both sides of Dyck's theorem have the same Euler
+		\(\chi(\Sigma_g) = 2 - 2g\) and \(\chi(N_k) = 2 - k\). Then check that both sides of Dyck’s theorem have the same Euler
 		characteristic.
 	</p>
 	{#snippet solution()}
 		<p>
 			By induction on \(g\): \(\chi(\Sigma_1) = 0 = 2 - 2\), and
 			\(\chi(\Sigma_{g+1}) = \chi(\Sigma_g \mathbin{\#} T^2) = (2 - 2g) + 0 - 2 = 2 - 2(g + 1)\). Likewise \(\chi(N_1) = 1 = 2 - 1\) and
-			\(\chi(N_{k+1}) = (2 - k) + 1 - 2 = 2 - (k + 1)\). For Dyck's theorem, \(\chi(T^2 \mathbin{\#} \RP^2) = 0 + 1 - 2 = -1\) and
+			\(\chi(N_{k+1}) = (2 - k) + 1 - 2 = 2 - (k + 1)\). For Dyck’s theorem, \(\chi(T^2 \mathbin{\#} \RP^2) = 0 + 1 - 2 = -1\) and
 			\(\chi(N_3) = 2 - 3 = -1\). (Equal Euler characteristics alone prove nothing — the torus and the Klein bottle share one too. With the fact that both sides
-			are non-orientable, the classification confirms Dyck's theorem; but that is a consistency check, not a proof, since the proof of the
-			classification uses Dyck's theorem.)
+			are non-orientable, the classification confirms Dyck’s theorem; but that is a consistency check, not a proof, since the proof of the
+			classification uses Dyck’s theorem.)
 		</p>
 	{/snippet}
 </Exercise>
@@ -1188,7 +1188,7 @@
 		<p>
 			For \((u, v) \mapsto (v, w)\) the Jacobian matrix has rows \((0,\ 1)\) and \((-u/w,\ -v/w)\), with determinant \(u/w\), positive on
 			the overlap, where \(u = x > 0\). For \((u, v) \mapsto (u, w)\) the rows are \((1,\ 0)\) and \((-u/w,\ -v/w)\), with determinant
-			\(-v/w\), negative on the overlap, where \(v = y > 0\). So the atlas is not oriented as it stands. Repair it by listing each chart's
+			\(-v/w\), negative on the overlap, where \(v = y > 0\). So the atlas is not oriented as it stands. Repair it by listing each chart’s
 			two coordinates in an order that looks anticlockwise from outside the sphere: keep \((x, y)\) on \(z > 0\), \((y, z)\) on
 			\(x > 0\) and \((x, z)\) on \(y < 0\), but use \((z, x)\) on \(y > 0\), \((y, x)\) on \(z < 0\) and \((z, y)\) on \(x < 0\).
 			Swapping two coordinates is a reflection, which changes the sign of every Jacobian determinant involving that chart. With these

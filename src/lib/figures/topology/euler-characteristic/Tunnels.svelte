@@ -4,7 +4,7 @@
 	import * as THREE from 'three';
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { disposeTree } from '$lib/three/materials';
 	import { pictureFrame, tunnelSlab } from './tunnels';
@@ -104,7 +104,7 @@
 		label="Which polyhedron"
 	/>
 	{#if mode === 'slab'}
-		<div class="sl"><Slider bind:value={g} min={0} max={4} step={1} label="Number of tunnels g" /></div>
+		<Stepper bind:value={g} min={0} max={4} label="Number of tunnels g" />
 	{/if}
 </div>
 
@@ -178,10 +178,6 @@
 		padding: 0.75rem 1.2rem 0.9rem;
 		border-top: 1px solid var(--line-faint);
 		background: rgba(5, 8, 16, 0.45);
-	}
-	.sl {
-		flex: 1;
-		min-width: 12rem;
 	}
 	@media (max-width: 760px) {
 		.wrap {

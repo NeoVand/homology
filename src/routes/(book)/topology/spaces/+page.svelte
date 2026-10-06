@@ -149,7 +149,7 @@
 </p>
 <p>
 	A point of the plane is a pair of numbers \(x = (x_1, x_2)\). The <strong>straight-line distance</strong> between
-	\(x\) and \(y = (y_1, y_2)\) comes from Pythagoras' theorem:
+	\(x\) and \(y = (y_1, y_2)\) comes from Pythagoras’ theorem:
 </p>
 \[ d_2(x, y) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2}. \]
 <p>
@@ -189,7 +189,7 @@
 <p>
 	A slightly mischievous example shows how loose the definition is. On <em>any</em> set, declare that the distance between two
 	different points is always \(1\), and the distance from a point to itself is \(0\). You can check that the three rules hold.
-	This is the <strong>discrete metric</strong>: every point is at arm's length from every other, and nothing is close to
+	This is the <strong>discrete metric</strong>: every point is at arm’s length from every other, and nothing is close to
 	anything.
 </p>
 
@@ -639,7 +639,7 @@
 	which is the same as no gluing on the way there. A homeomorphism is a stretching you can perfectly undo.
 </p>
 <p>
-	Why insist that the inverse be continuous? Isn't a continuous bijection enough? Figure 2.1.6 shows why not.
+	Why insist that the inverse be continuous? Isn’t a continuous bijection enough? Figure 2.1.6 shows why not.
 </p>
 
 <Figure num="2.1.6" title="A continuous bijection that tears when reversed">
@@ -663,7 +663,7 @@
 			difference between finite and infinite length.
 		</li>
 		<li>
-			A square (with its inside) is homeomorphic to a disk: push each point towards or away from the centre until the square's
+			A square (with its inside) is homeomorphic to a disk: push each point towards or away from the centre until the square’s
 			edge lands on the circle. Corners mean nothing to a topologist.
 		</li>
 	</ul>
@@ -681,7 +681,7 @@
 	<CupToDonut />
 	{#snippet caption()}
 		A solid mug becomes a solid doughnut (a <em>solid torus</em>) without tearing or gluing, so the two are homeomorphic. The
-		same deformation takes the mug's surface to the doughnut's surface, the torus. The gold loop around the handle survives
+		same deformation takes the mug’s surface to the doughnut’s surface, the torus. The gold loop around the handle survives
 		the whole way: holes, unlike dents, cannot be stretched away.
 	{/snippet}
 </Figure>
@@ -705,8 +705,8 @@
 
 <History title="Rubber sheets and rulers">
 	<p>
-		Johann Listing coined the word <em>Topologie</em> in 1847. Abstract distance came in Maurice Fréchet's 1906 thesis, and Felix
-		Hausdorff's <em>Grundzüge der Mengenlehre</em> (1914) gave a definition of topological space built on neighbourhoods. The open-set
+		Johann Listing coined the word <em>Topologie</em> in 1847. Abstract distance came in Maurice Fréchet’s 1906 thesis, and Felix
+		Hausdorff’s <em>Grundzüge der Mengenlehre</em> (1914) gave a definition of topological space built on neighbourhoods. The open-set
 		axioms in the form above became standard over the following decades — so the definitions in this chapter are younger than
 		the motor car.
 	</p>
@@ -753,7 +753,7 @@
 	\(\gamma \colon [0, 1] \to X\) (gamma, a Greek letter often used for paths) with \(\gamma(0) = x\) and \(\gamma(1) = y\) — a
 	journey through the space that starts at \(x\) at time \(0\) and arrives at \(y\) at time \(1\). A space is
 	<dfn>path-connected</dfn> if any two of its points can be joined by a path. Every path-connected space is connected. The
-	converse fails only for rather wild spaces (the standard example, the “topologist's sine curve”, wiggles infinitely fast), and
+	converse fails only for rather wild spaces (the standard example, the “topologist’s sine curve”, wiggles infinitely fast), and
 	for every space we will meet in this book the two notions agree.
 </p>
 <p id="path-components">
@@ -848,7 +848,7 @@
 	{#snippet caption()}
 		Removing a junction of T leaves three pieces, but no single point of O leaves more than one. The numbers of free ends, of
 		three-way and four-way junctions, and of loops are invariants, and in this font they sort the 26 capitals into eight
-		classes. In other fonts the answer can change: if K's arms met its stem at two different points, K would be like H instead
+		classes. In other fonts the answer can change: if K’s arms met its stem at two different points, K would be like H instead
 		of X.
 	{/snippet}
 </Figure>
@@ -1030,7 +1030,7 @@
 	{#snippet solution()}
 		<p>
 			(a) Removing the junction of X leaves four pieces; no single point of T leaves more than three (its junction leaves
-			exactly three, any other point at most two). A homeomorphism would have to send X's junction to a point of T whose removal
+			exactly three, any other point at most two). A homeomorphism would have to send X’s junction to a point of T whose removal
 			leaves four pieces, and there is none.
 		</p>
 		<p>

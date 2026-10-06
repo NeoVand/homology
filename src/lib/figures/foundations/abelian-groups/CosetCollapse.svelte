@@ -8,7 +8,7 @@
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import { residueColor, mod, fmtInt } from '../groups/zn';
@@ -211,7 +211,7 @@
 		]}
 		label="Stage"
 	/>
-	<Slider bind:value={n} min={2} max={5} step={1} label="n" />
+	<Stepper bind:value={n} min={2} max={5} label="n" />
 	<button class="again ui" onclick={reroll} disabled={a === null}>Other representatives</button>
 </Controls>
 

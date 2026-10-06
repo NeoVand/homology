@@ -39,13 +39,13 @@
 	const kClash = conflicts(klein.K, kEps).c;
 </script>
 
-<Epigraph author="Michael Atiyah" source="Mathematics in the 20th Century (2001)">Algebra is the offer made by the devil to the mathematician. The devil says: 'I will give you this powerful machine, and it will answer any question you like. All you need to do is give me your soul; give up geometry and you will have this marvellous machine.'</Epigraph>
+<Epigraph author="Michael Atiyah" source="Mathematics in the 20th Century (2001)">Algebra is the offer made by the devil to the mathematician. The devil says: ‘I will give you this powerful machine, and it will answer any question you like. All you need to do is give me your soul; give up geometry and you will have this marvellous machine.’</Epigraph>
 
 <p class="lead">We left the last chapter in an uncomfortable tie. The torus and the Klein bottle are different surfaces, one orientable and one not, yet with coefficients in \(\Z/2\) their homology agrees exactly: Betti numbers \(1, 2, 1\) for both. This chapter breaks the tie.</p>
 
 <p class="lead">The tool is the oldest one in the subject: matrices. We will see that computing homology is linear algebra, and that over a field it comes down to ranks. Over the integers, where we may not divide, something extra survives the computation. That extra, called <em>torsion</em>, is exactly what separates the Klein bottle from the torus.</p>
 
-<p>Along the way we turn homology into a completely mechanical procedure, the "powerful machine" of Atiyah's devil. Then we build that machine into a calculator you can feed any complex you like. But we will also keep our souls: at every step we will ask what the algebra means geometrically. The answer for torsion is beautiful. It is the shadow of a surface that is <em>twisted onto itself</em>.</p>
+<p>Along the way we turn homology into a completely mechanical procedure, the “powerful machine” of Atiyah’s devil. Then we build that machine into a calculator you can feed any complex you like. But we will also keep our souls: at every step we will ask what the algebra means geometrically. The answer for torsion is beautiful. It is the shadow of a surface that is <em>twisted onto itself</em>.</p>
 
 <Ahead>
 	<p>Every computation of homology in practice runs on the matrices of this chapter. Persistent homology (<Ref to="homology/persistence" />) is the \(\Z/2\) column reduction you will see here, run on a growing complex. Cohomology (<Ref to="cohomology/cohomology-groups" />) uses the same boundary matrices, transposed. And the comparison of coefficients at the end of this chapter is a first look at the Universal Coefficient Theorem, which reappears in Parts IV and V.</p>
@@ -72,7 +72,7 @@
 
 <p>So over a field, computing homology means computing ranks, and the standard way to compute a rank is <Term t="row-reduction">row reduction</Term>. Choose a non-zero entry in the first column, the <em>pivot</em>; swap its row to the top; subtract multiples of that row from the rows below so that the rest of the column becomes zero. Then move one row down and one column right, and repeat. When you run out of pivots the matrix is in echelon form, and the rank is the number of pivots.</p>
 
-<p>Over \(\Z/2\) this is especially pleasant. Every non-zero entry is \(1\), since \(-1 = 1\) in \(\Z/2\). "Subtracting a multiple of a row" is just adding the pivot row, entry by entry, with \(1 + 1 = 0\). Figure 3.4.2 runs the procedure on the second boundary matrix of the six-vertex projective plane, a \(15 \times 10\) matrix, one pivot per step. Run it twice, once over \(\Z/2\) and once over \(\Q\).</p>
+<p>Over \(\Z/2\) this is especially pleasant. Every non-zero entry is \(1\), since \(-1 = 1\) in \(\Z/2\). “Subtracting a multiple of a row” is just adding the pivot row, entry by entry, with \(1 + 1 = 0\). Figure 3.4.2 runs the procedure on the second boundary matrix of the six-vertex projective plane, a \(15 \times 10\) matrix, one pivot per step. Run it twice, once over \(\Z/2\) and once over \(\Q\).</p>
 
 <Figure num="3.4.2" title="Rank by row reduction" hint="Step through · switch number system">
 	<MatrixLab matrix="rp2" mode="Z2" modes={['Z2', 'Q']} matrices={['sphere', 'rp2', 'klein']} />
@@ -83,7 +83,7 @@
 
 \[ \text{over } \Z/2: \quad b_1 = 15 - 5 - 9 = 1, \quad b_2 = 10 - 9 = 1; \qquad \text{over } \Q: \quad b_1 = 15 - 5 - 10 = 0, \quad b_2 = 0. \]
 
-<p>So which is right: does \(\RP^2\) have a non-bounding loop or not? Both answers are correct. They answer different questions, because "bounding" depends on what coefficients the filling chain may have. To see the whole truth at once we must work over the integers, and over the integers we may not divide at all.</p>
+<p>So which is right: does \(\RP^2\) have a non-bounding loop or not? Both answers are correct. They answer different questions, because “bounding” depends on what coefficients the filling chain may have. To see the whole truth at once we must work over the integers, and over the integers we may not divide at all.</p>
 
 <Question>
 	<p>For the hollow tetrahedron, \(\partial_2\) has rank \(3\) over both fields (try it in Figure 3.4.2). What does that tell you about its Betti numbers over \(\Z/2\) and over \(\Q\)? (They agree: \(1, 0, 1\). Disagreement between fields can only come from entries such as the \(2\) above.)</p>
@@ -91,14 +91,14 @@
 
 <h2 id="integers">When you cannot divide</h2>
 
-<p>Here is the simplest possible example of the trouble. Consider the map "multiply by 2" from the integers to themselves, \(x \mapsto 2x\). As a matrix it is the \(1\times1\) matrix \((2)\). Figure 3.4.3 looks at it through three lenses.</p>
+<p>Here is the simplest possible example of the trouble. Consider the map “multiply by 2” from the integers to themselves, \(x \mapsto 2x\). As a matrix it is the \(1\times1\) matrix \((2)\). Figure 3.4.3 looks at it through three lenses.</p>
 
 <Figure num="3.4.3" title="One map, three number systems" hint="Switch the number system">
 	<TimesTwo />
-	{#snippet caption()}The map \(x \mapsto 2x\). Over \(\Q\) it is invertible, so it has rank \(1\) and leaves nothing behind. Over \(\Z/2\) it is the zero map, rank \(0\). Over \(\Z\) it is one-to-one, but it reaches only the even numbers (teal); the odd numbers (rose) are missed, and "even versus odd" is the two-element group \(\Z/2\Z \cong \Z/2\).{/snippet}
+	{#snippet caption()}The map \(x \mapsto 2x\). Over \(\Q\) it is invertible, so it has rank \(1\) and leaves nothing behind. Over \(\Z/2\) it is the zero map, rank \(0\). Over \(\Z\) it is one-to-one, but it reaches only the even numbers (teal); the odd numbers (rose) are missed, and “even versus odd” is the two-element group \(\Z/2\Z \cong \Z/2\).{/snippet}
 </Figure>
 
-<p>Over \(\Z\), the map \((2)\) is neither "rank 1, nothing left over" (as over \(\Q\)) nor "rank 0" (as over \(\Z/2\)). It is one-to-one, but its image \(2\Z\) is not everything; the quotient \(\Z/2\Z\) has two elements. Now imagine that this \((2)\) sits inside a boundary matrix \(\partial_{k+1}\). Then some cycle \(z\) is not a boundary, yet \(2z\) is the boundary of something. In \(H_k\) this means \([z] \ne 0\) but \(2[z] = [2z] = 0\).</p>
+<p>Over \(\Z\), the map \((2)\) is neither “rank 1, nothing left over” (as over \(\Q\)) nor “rank 0” (as over \(\Z/2\)). It is one-to-one, but its image \(2\Z\) is not everything; the quotient \(\Z/2\Z\) has two elements. Now imagine that this \((2)\) sits inside a boundary matrix \(\partial_{k+1}\). Then some cycle \(z\) is not a boundary, yet \(2z\) is the boundary of something. In \(H_k\) this means \([z] \ne 0\) but \(2[z] = [2z] = 0\).</p>
 
 <Definition id="def-torsion">
 	{#snippet head()}Torsion classes{/snippet}
@@ -109,7 +109,7 @@
 
 \[ H_k(K) \;\cong\; \Z^{b_k} \;\oplus\; \Z/d_1 \oplus \Z/d_2 \oplus \cdots \oplus \Z/d_m, \qquad d_1 \mid d_2 \mid \cdots \mid d_m, \]
 
-<p>a free part counted by the Betti number, plus finitely many finite cyclic groups, the torsion. (Read \(d_1 \mid d_2\) as "\(d_1\) divides \(d_2\)".) Ranks alone see only \(b_k\). To find the \(d_i\) we need a finer tool that works with whole numbers only.</p>
+<p>a free part counted by the Betti number, plus finitely many finite cyclic groups, the torsion. (Read \(d_1 \mid d_2\) as “\(d_1\) divides \(d_2\)”.) Ranks alone see only \(b_k\). To find the \(d_i\) we need a finer tool that works with whole numbers only.</p>
 
 <h3>Integer row and column operations</h3>
 
@@ -129,7 +129,7 @@
 	<p>The numbers \(d_1, \dots, d_r\), the <dfn>invariant factors</dfn> of \(A\), do not depend on the operations chosen, and \(r = \rank A\) over \(\Q\).</p>
 </Theorem>
 
-<p>The algorithm behind the theorem is Euclid's algorithm for greatest common divisors, played on a whole matrix. Move the smallest non-zero entry to the top-left corner. Divide every other entry of its row and column by it, with remainder, and subtract the corresponding multiples of its row and column; what remains are the remainders, which are smaller. Repeat until the corner entry divides everything in its row and column, clear them, and continue with the smaller matrix that is left. (A final tidying step makes each \(d_i\) divide the next; you met the details in <Ref to="foundations/linear-algebra" />.) Now the payoff.</p>
+<p>The algorithm behind the theorem is Euclid’s algorithm for greatest common divisors, played on a whole matrix. Move the smallest non-zero entry to the top-left corner. Divide every other entry of its row and column by it, with remainder, and subtract the corresponding multiples of its row and column; what remains are the remainders, which are smaller. Repeat until the corner entry divides everything in its row and column, clear them, and continue with the smaller matrix that is left. (A final tidying step makes each \(d_i\) divide the next; you met the details in <Ref to="foundations/linear-algebra" />.) Now the payoff.</p>
 
 <Theorem id="thm-homology-snf" label="Theorem (homology from Smith normal forms)">
 	<p>Let \(r_j = \rank\partial_j\), and let \(d_1, \dots, d_{r_{k+1}}\) be the invariant factors of \(\partial_{k+1}\). Then</p>
@@ -206,7 +206,7 @@
 
 <Figure num="3.4.6" title="The tie, broken" hint="Drag to rotate · switch coefficients">
 	<TorusKleinPair lens="Z" toggle />
-	{#snippet caption()}The torus and the Klein bottle again. Through the \(\Z/2\) lens their homology is identical. Through the \(\Z\) lens the Klein bottle's seam (rose) is doubled: \(\partial(\sum \pm t) = 2a\), so \(H_1(K) \cong \Z \oplus \Z/2\) and \(H_2(K) = 0\), while the torus keeps \(\Z^2\) and \(\Z\).{/snippet}
+	{#snippet caption()}The torus and the Klein bottle again. Through the \(\Z/2\) lens their homology is identical. Through the \(\Z\) lens the Klein bottle’s seam (rose) is doubled: \(\partial(\sum \pm t) = 2a\), so \(H_1(K) \cong \Z \oplus \Z/2\) and \(H_2(K) = 0\), while the torus keeps \(\Z^2\) and \(\Z\).{/snippet}
 </Figure>
 
 <h2 id="projective-plane">The projective plane</h2>
@@ -228,15 +228,15 @@
 
 \[ \partial\Big(\sum_{10\text{ triangles}} \pm\, t\Big) \;=\; 2c. \]
 
-<p>And \(c\) is not a boundary. Over \(\Z/2\) a 2-chain is just a set of triangles, and there are only \(2^{10} = 1024\) of them; a computer (or a patient reader) checks that no set has boundary \(c\). An integer chain \(x\) with \(\partial x = c\) would give such a set by reducing mod 2, so none exists. Hence \([c]\) generates \(H_1(\RP^2) \cong \Z/2\). In fact all ten triangles of edges that are <em>not</em> faces, such as \(1 \to 2 \to 4 \to 1\), are cycles in this same class; they are the "projective lines" of the projective plane.</p>
+<p>And \(c\) is not a boundary. Over \(\Z/2\) a 2-chain is just a set of triangles, and there are only \(2^{10} = 1024\) of them; a computer (or a patient reader) checks that no set has boundary \(c\). An integer chain \(x\) with \(\partial x = c\) would give such a set by reducing mod 2, so none exists. Hence \([c]\) generates \(H_1(\RP^2) \cong \Z/2\). In fact all ten triangles of edges that are <em>not</em> faces, such as \(1 \to 2 \to 4 \to 1\), are cycles in this same class; they are the “projective lines” of the projective plane.</p>
 
-<Figure num="3.4.8" title="The loop c on Boy's surface" hint="Drag to rotate">
+<Figure num="3.4.8" title="The loop c on Boy’s surface" hint="Drag to rotate">
 	<BoySurface3D />
-	{#snippet caption()}Boy's surface, a model of \(\RP^2\) in space that is allowed to pass through itself, carrying the same ten triangles. The gold loop is \(c\). On the hexagon it was half of the rim; here the two halves of the rim land on the same curve, so the rim of the disk runs around \(c\) twice. That is \(\partial(\sum \pm t) = 2c\), made visible.{/snippet}
+	{#snippet caption()}Boy’s surface, a model of \(\RP^2\) in space that is allowed to pass through itself, carrying the same ten triangles. The gold loop is \(c\). On the hexagon it was half of the rim; here the two halves of the rim land on the same curve, so the rim of the disk runs around \(c\) twice. That is \(\partial(\sum \pm t) = 2c\), made visible.{/snippet}
 </Figure>
 
 <Warning title="Is the projective plane hollow?">
-	<p>Mod 2, \(H_2(\RP^2;\Z/2) \cong \Z/2\): the set of all ten triangles is a 2-cycle, because every edge lies in exactly two triangles. It is tempting to read this as "\(\RP^2\) encloses a cavity", like a sphere. It does not. Over \(\Z\), \(H_2(\RP^2) = 0\): the ten triangles can never be signed so that every edge cancels, since that would require a coherent orientation. Mod-2 top homology detects a closed surface; integer top homology detects a closed <em>orientable</em> one. The extra mod-2 class is a shadow of the torsion one dimension down.</p>
+	<p>Mod 2, \(H_2(\RP^2;\Z/2) \cong \Z/2\): the set of all ten triangles is a 2-cycle, because every edge lies in exactly two triangles. It is tempting to read this as “\(\RP^2\) encloses a cavity”, like a sphere. It does not. Over \(\Z\), \(H_2(\RP^2) = 0\): the ten triangles can never be signed so that every edge cancels, since that would require a coherent orientation. Mod-2 top homology detects a closed surface; integer top homology detects a closed <em>orientable</em> one. The extra mod-2 class is a shadow of the torsion one dimension down.</p>
 </Warning>
 
 <h2 id="torsion-and-orientation">What torsion means</h2>
@@ -264,11 +264,11 @@
 </Figure>
 
 <History title="Twisted onto itself">
-	<p>Poincaré discovered torsion in 1900, in the second of the five long supplements to his <em>Analysis Situs</em>, when he noticed that his two different ways of defining Betti numbers, with and without division, could disagree. He explained the name himself: the existence of torsion coefficients, he wrote, comes from the fact that the pieces of a polyhedron can form non-orientable manifolds, so that "the polyhedron is so to speak twisted onto itself". When Emmy Noether later built Betti numbers and torsion numbers into the homology groups, the word, as John Stillwell puts it, "took up residence in algebra, much to the mystification of group theory students who were not informed of its origin in topology."</p>
+	<p>Poincaré discovered torsion in 1900, in the second of the five long supplements to his <em>Analysis Situs</em>, when he noticed that his two different ways of defining Betti numbers, with and without division, could disagree. He explained the name himself: the existence of torsion coefficients, he wrote, comes from the fact that the pieces of a polyhedron can form non-orientable manifolds, so that “the polyhedron is so to speak twisted onto itself”. When Emmy Noether later built Betti numbers and torsion numbers into the homology groups, the word, as John Stillwell puts it, “took up residence in algebra, much to the mystification of group theory students who were not informed of its origin in topology.”</p>
 </History>
 
 <Warning title="Torsion is not always a twist of orientation">
-	<p>For surfaces, torsion in \(H_1\) happens exactly for the non-orientable ones, as we just proved. In higher dimensions the link breaks: the three-dimensional projective space \(\RP^3\) is orientable, yet \(H_1(\RP^3) \cong \Z/2\), and there are orientable 3-manifolds with any finite cyclic group you like as \(H_1\). Poincaré's explanation of the name was too narrow. The general meaning is the one in the definition: a loop (or a higher cycle) that does not bound, some multiple of which does.</p>
+	<p>For surfaces, torsion in \(H_1\) happens exactly for the non-orientable ones, as we just proved. In higher dimensions the link breaks: the three-dimensional projective space \(\RP^3\) is orientable, yet \(H_1(\RP^3) \cong \Z/2\), and there are orientable 3-manifolds with any finite cyclic group you like as \(H_1\). Poincaré’s explanation of the name was too narrow. The general meaning is the one in the definition: a loop (or a higher cycle) that does not bound, some multiple of which does.</p>
 </Warning>
 
 <h2 id="coefficients">Three lenses: \(\Z\), \(\Q\) and \(\Z/2\)</h2>
@@ -292,7 +292,7 @@
 </Figure>
 
 <Remark title="The Universal Coefficient Theorem, in one sentence">
-	<p>What we have just described is a special case of the Universal Coefficient Theorem: the integer homology of a space determines its homology with any coefficients. The general statement needs the tensor product and the "Tor" construction of <Ref to="big-picture/homological-algebra" />, and its cohomology version, with its surprising shift of torsion up one degree, is in <Ref to="cohomology/cohomology-groups" />. The converse fails: mod 2 alone could not tell the Klein bottle from the torus, and \(\Q\) alone cannot tell \(\RP^2\) from a point.</p>
+	<p>What we have just described is a special case of the Universal Coefficient Theorem: the integer homology of a space determines its homology with any coefficients. The general statement needs the tensor product and the “Tor” construction of <Ref to="big-picture/homological-algebra" />, and its cohomology version, with its surprising shift of torsion up one degree, is in <Ref to="cohomology/cohomology-groups" />. The converse fails: mod 2 alone could not tell the Klein bottle from the torus, and \(\Q\) alone cannot tell \(\RP^2\) from a point.</p>
 </Remark>
 
 <p>Which lens should you use? \(\Z/2\) is the simplest: no signs, no orientations, sets instead of sums, and the arithmetic of light switches. It is what most software for data uses. \(\Q\) (or \(\R\)) gives the honest Betti numbers, and it is the right setting for calculus on spaces, as in Part IV. \(\Z\) is the full truth, at the price of the Smith normal form.</p>
@@ -303,11 +303,11 @@
 
 <Figure num="3.4.11" title="Homology calculator" hint="Choose a space · or build your own">
 	<HomologyCalculator />
-	{#snippet caption()}Everything this chapter computes, for any complex. The table shows \(H_k\) over \(\Z\) (torsion tinted rose) and the Betti numbers over \(\Q\), \(\Z/2\) and \(\Z/3\). Click a generator to highlight it; open "Boundary matrices" to see the matrices themselves.{/snippet}
+	{#snippet caption()}Everything this chapter computes, for any complex. The table shows \(H_k\) over \(\Z\) (torsion tinted rose) and the Betti numbers over \(\Q\), \(\Z/2\) and \(\Z/3\). Click a generator to highlight it; open “Boundary matrices” to see the matrices themselves.{/snippet}
 </Figure>
 
 <Question>
-	<p>Some experiments to try. (1) In "Build your own", start from three faces of a tetrahedron, then add the fourth face \(123\): watch \(H_2\) appear. (2) Load the Möbius band, then add the five triangles of a cone on its boundary: the result is \(\RP^2\), and \(H_1\) changes from \(\Z\) to \(\Z/2\) (Exercise 3 explains why). (3) Use "Edit a copy" on the Klein bottle and delete the triangle \(014\). Did the torsion survive? (4) Can you build a complex with \(H_1 \cong \Z/3\)? (Look at the triple wrap first.)</p>
+	<p>Some experiments to try. (1) In “Build your own”, start from three faces of a tetrahedron, then add the fourth face \(123\): watch \(H_2\) appear. (2) Load the Möbius band, then add the five triangles of a cone on its boundary: the result is \(\RP^2\), and \(H_1\) changes from \(\Z\) to \(\Z/2\) (Exercise 3 explains why). (3) Use “Edit a copy” on the Klein bottle and delete the triangle \(014\). Did the torsion survive? (4) Can you build a complex with \(H_1 \cong \Z/3\)? (Look at the triple wrap first.)</p>
 </Question>
 
 <h2 id="generators-and-scale">Generators, and computing at scale</h2>
@@ -316,11 +316,11 @@
 
 <p>Knowing that \(H_1 \cong \Z \oplus \Z/2\) is one thing; pointing at loops that generate it is another. The Smith normal form gives generators for free. In the proof above, the basis vectors \(f_i\) with \(d_i > 1\) are cycles generating the torsion, and the extra cycles \(g_j\) generate the free part; keeping track of the row operations expresses them in terms of the original edges. Over \(\Z/2\) there is an even simpler procedure, the one the calculator uses: reduce the columns of \(\partial_k\) from left to right, recording which original columns were added together. Every column that reduces to zero gives a cycle, and comparing with the columns of \(\partial_{k+1}\) tells which of these cycles are independent modulo boundaries. Exactly this column reduction, run on a complex that grows over time, is the standard algorithm of persistent homology in <Ref to="homology/persistence" />.</p>
 
-<p>Generators are not unique: any cycle homologous to a generator works just as well, and adding boundaries can make it wiggle all over the space. Choosing a "nice" representative, such as a shortest loop in a given class, is a genuinely harder optimization problem than computing the group, and an active area of computational topology.</p>
+<p>Generators are not unique: any cycle homologous to a generator works just as well, and adding boundaries can make it wiggle all over the space. Choosing a “nice” representative, such as a shortest loop in a given class, is a genuinely harder optimization problem than computing the group, and an active area of computational topology.</p>
 
 <h3>Millions of simplices</h3>
 
-<p>Our examples are tiny. The torus grid has \(54\) simplices and a \(27\times18\) matrix. A surface scanned from a real object, or a complex built from data in <Ref to="homology/persistence" />, can have millions. Then the slogan "it is just linear algebra" stops being comforting. Robert Ghrist put it memorably:</p>
+<p>Our examples are tiny. The torus grid has \(54\) simplices and a \(27\times18\) matrix. A surface scanned from a real object, or a complex built from data in <Ref to="homology/persistence" />, can have millions. Then the slogan “it is just linear algebra” stops being comforting. Robert Ghrist put it memorably:</p>
 
 <blockquote>There is no recourse to chanting “Homology is just linear algebra” when faced with millions of simplices: one needs good algorithms.</blockquote>
 
@@ -328,7 +328,7 @@
 
 <ul>
 	<li><strong>Sparsity.</strong> A \(k\)-simplex has only \(k+1\) faces, so each column of \(\partial_k\) has at most \(k+1\) non-zero entries, however large the complex. Algorithms that touch only the non-zero entries are far faster than the textbook bound for elimination, which grows like the cube of the matrix size.</li>
-	<li><strong>Shrinking first.</strong> Many simplices can be removed without changing homology at all, for instance a triangle together with an edge that belongs to no other triangle (an "elementary collapse"). Removing such pairs before doing any linear algebra, a strategy refined by discrete Morse theory, often shrinks the problem enormously.</li>
+	<li><strong>Shrinking first.</strong> Many simplices can be removed without changing homology at all, for instance a triangle together with an edge that belongs to no other triangle (an “elementary collapse”). Removing such pairs before doing any linear algebra, a strategy refined by discrete Morse theory, often shrinks the problem enormously.</li>
 	<li><strong>Working mod a prime.</strong> Integer Smith normal forms can produce enormous intermediate numbers. Computing ranks modulo a few primes avoids this and still detects torsion: a prime \(p\) that divides an invariant factor makes the rank mod \(p\) drop.</li>
 	<li><strong>Good software.</strong> Libraries such as GUDHI and Ripser routinely compute homology and persistent homology of complexes with millions of simplices.</li>
 </ul>
@@ -338,7 +338,7 @@
 <Exercise level={1} title="The matrix (2)">
 	<p>View the \(1\times1\) matrix \((2)\) as a map \(\Z\to\Z\). What is its rank over \(\Q\), over \(\Z/2\) and over \(\Z/3\)? What is its cokernel (the target divided by the image) over \(\Z\)? If \((2)\) were the matrix of \(\partial_{k+1}\colon C_{k+1}\to C_k\) and \(\partial_k = 0\), what would \(H_k\) be?</p>
 	{#snippet solution()}
-		<p>Over \(\Q\) the rank is \(1\), over \(\Z/2\) it is \(0\) (since \(2 = 0\)), and over \(\Z/3\) it is \(1\) (since \(2 \ne 0\) in \(\Z/3\); indeed \(2\cdot2 = 4 = 1\), so \(2\) is invertible there). Over \(\Z\) the image is \(2\Z\) and the cokernel is \(\Z/2\Z \cong \Z/2\). With \(\partial_k = 0\) every element of \(C_k = \Z\) is a cycle and the boundaries are \(2\Z\), so \(H_k \cong \Z/2\). This is exactly the projective plane's \(H_1\), in its smallest possible model (one cell in each dimension, <Ref to="homology/exact-sequences" />).</p>
+		<p>Over \(\Q\) the rank is \(1\), over \(\Z/2\) it is \(0\) (since \(2 = 0\)), and over \(\Z/3\) it is \(1\) (since \(2 \ne 0\) in \(\Z/3\); indeed \(2\cdot2 = 4 = 1\), so \(2\) is invertible there). Over \(\Z\) the image is \(2\Z\) and the cokernel is \(\Z/2\Z \cong \Z/2\). With \(\partial_k = 0\) every element of \(C_k = \Z\) is a cycle and the boundaries are \(2\Z\), so \(H_k \cong \Z/2\). This is exactly the projective plane’s \(H_1\), in its smallest possible model (one cell in each dimension, <Ref to="homology/exact-sequences" />).</p>
 	{/snippet}
 </Exercise>
 
@@ -362,7 +362,7 @@
 <Exercise level={2} title="The other Klein bottle loop">
 	<p>On the Klein bottle grid, let \(\psi(x)\) be the signed number of times a 1-chain \(x\) crosses the top seam going upward (edges from the top row of small squares into the glued top count \(+1\) when run upward, \(-1\) when run downward). Show that \(\psi\) vanishes on every boundary, and deduce that no non-zero multiple of \(b = [0,3] + [3,6] - [0,6]\) is a boundary. Why does the same trick fail for the horizontal loop \(a\)?</p>
 	{#snippet solution()}
-		<p>The boundary of a triangle in the top row of squares crosses the seam once upward and once downward (or not at all), so \(\psi(\partial t) = 0\), and by linearity \(\psi(\partial x) = 0\) for every 2-chain \(x\). The flip in the gluing reverses left and right but not up and down, so "upward" makes sense on both sides of the seam. The loop \(b\) crosses the top seam once upward, so \(\psi(nb) = n\), which is non-zero for \(n \ne 0\); hence \(nb\) is never a boundary. For \(a\) one would count crossings of the left/right seam, from left to right. But a path that crosses the flipped top seam comes back with left and right exchanged, so "rightward" is not consistent: that count is not well defined over \(\Z\) (only mod 2). Its failure is exactly why \(2a\) can bound.</p>
+		<p>The boundary of a triangle in the top row of squares crosses the seam once upward and once downward (or not at all), so \(\psi(\partial t) = 0\), and by linearity \(\psi(\partial x) = 0\) for every 2-chain \(x\). The flip in the gluing reverses left and right but not up and down, so “upward” makes sense on both sides of the seam. The loop \(b\) crosses the top seam once upward, so \(\psi(nb) = n\), which is non-zero for \(n \ne 0\); hence \(nb\) is never a boundary. For \(a\) one would count crossings of the left/right seam, from left to right. But a path that crosses the flipped top seam comes back with left and right exchanged, so “rightward” is not consistent: that count is not well defined over \(\Z\) (only mod 2). Its failure is exactly why \(2a\) can bound.</p>
 	{/snippet}
 </Exercise>
 
@@ -376,12 +376,12 @@
 <Exercise level={3} title="Non-orientable means no 2-cycles">
 	<p>Write out in full the argument that on a closed connected surface every 2-cycle \(\sum a_t t\) has all \(\lvert a_t\rvert\) equal, and that a non-zero 2-cycle orients the surface coherently. Where exactly did you use that every edge lies in <em>exactly two</em> triangles, and what goes wrong for the Möbius band?</p>
 	{#snippet solution()}
-		<p>Take an edge \(e\) with its two triangles \(t, t'\). In \(\partial(\sum a_s s)\) the coefficient of \(e\) is \(\sigma a_t + \sigma' a_{t'}\), with \(\sigma, \sigma' = \pm1\) the signs of \(e\) in \(\partial t\) and \(\partial t'\). It vanishes only if \(a_{t'} = -\sigma\sigma' a_t\); in particular \(\lvert a_t\rvert = \lvert a_{t'}\rvert\), and the oriented triangles \(\operatorname{sign}(a_t)\,t\) and \(\operatorname{sign}(a_{t'})\,t'\) induce opposite directions on \(e\). Connectedness spreads the equality \(\lvert a_t \rvert = m\) to all triangles, and if \(m \ne 0\) the signs give a coherent orientation. "Exactly two" was used to write the coefficient of \(e\) as a sum of just two terms. On the Möbius band the edges of the rim lie in only one triangle, so their coefficient is \(\pm a_t\), forcing \(a_t = 0\) for every triangle along the rim and then, by the same spreading argument, everywhere. The band has no 2-cycles, but for a different reason: it has a boundary.</p>
+		<p>Take an edge \(e\) with its two triangles \(t, t'\). In \(\partial(\sum a_s s)\) the coefficient of \(e\) is \(\sigma a_t + \sigma' a_{t'}\), with \(\sigma, \sigma' = \pm1\) the signs of \(e\) in \(\partial t\) and \(\partial t'\). It vanishes only if \(a_{t'} = -\sigma\sigma' a_t\); in particular \(\lvert a_t\rvert = \lvert a_{t'}\rvert\), and the oriented triangles \(\operatorname{sign}(a_t)\,t\) and \(\operatorname{sign}(a_{t'})\,t'\) induce opposite directions on \(e\). Connectedness spreads the equality \(\lvert a_t \rvert = m\) to all triangles, and if \(m \ne 0\) the signs give a coherent orientation. “Exactly two” was used to write the coefficient of \(e\) as a sum of just two terms. On the Möbius band the edges of the rim lie in only one triangle, so their coefficient is \(\pm a_t\), forcing \(a_t = 0\) for every triangle along the rim and then, by the same spreading argument, everywhere. The band has no 2-cycles, but for a different reason: it has a boundary.</p>
 	{/snippet}
 </Exercise>
 
 <Exercise level={3} title="Punctured surfaces">
-	<p>Remove the single triangle \([0,1,4]\) from the torus grid, and separately from the Klein bottle grid. Predict the homology of both results before checking in the calculator. What happened to the Klein bottle's torsion?</p>
+	<p>Remove the single triangle \([0,1,4]\) from the torus grid, and separately from the Klein bottle grid. Predict the homology of both results before checking in the calculator. What happened to the Klein bottle’s torsion?</p>
 	{#snippet solution()}
 		<p>Both become \(\Z, \Z^2, 0\). Removing an open triangle from a closed surface leaves a surface with one boundary circle, which deformation retracts onto a wedge of two circles (the edges \(a\) and \(b\) of the square). In particular \(H_2\) becomes \(0\), and the Klein bottle loses its torsion: the relation \(2a = \partial(\sum \pm t)\) needed <em>all</em> eighteen triangles, and with one missing, the boundary of the remaining seventeen also contains the rim of the hole. The torsion was a global property of the closed surface, not of any small piece of it.</p>
 	{/snippet}
@@ -397,7 +397,7 @@
 		<li>Klein bottle: \(\Z, \Z \oplus \Z/2, 0\), with \(2a = \partial(\sum \pm t)\). Projective plane: \(\Z, \Z/2, 0\), with \(2c = \partial(\sum \pm t)\). Torus: \(\Z, \Z^2, \Z\). The cliffhanger is resolved.</li>
 		<li>A closed connected surface has \(H_2 \cong \Z\) if orientable and \(0\) if not. The clash cycle of any orientation choice represents a class of order two that vanishes exactly when the surface is orientable.</li>
 		<li>\(\Q\) forgets torsion; \(\Z/p\) sees each torsion summand of order divisible by \(p\) twice, in two adjacent degrees. Integer homology determines all the others.</li>
-		<li>Real computations rely on sparsity, collapses and modular arithmetic: in Ghrist's words, one needs good algorithms.</li>
+		<li>Real computations rely on sparsity, collapses and modular arithmetic: in Ghrist’s words, one needs good algorithms.</li>
 	</ul>
 </Recap>
 

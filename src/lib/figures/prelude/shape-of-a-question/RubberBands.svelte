@@ -4,8 +4,8 @@
 	// but the band around the tube cannot: it encircles a hole.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import { PlayIcon, ResetIcon } from '$lib/icons';
 	import { glassMesh, glowTube, disposeTree, faceMaterial } from '$lib/three/materials';
 	import { sphere, torus, surfaceGeometry, SurfaceCurve } from '$lib/three/surfaces';
 	import * as THREE from 'three';
@@ -91,7 +91,7 @@
 		api = { set };
 
 		onFrame((_, dt) => {
-			if (!playing) return;
+			if (!playing) return false;
 			pull = Math.min(1, pull + dt * 0.35);
 			if (pull >= 1) playing = false;
 		});
@@ -111,6 +111,9 @@
 	label="Rubber bands on a sphere and on a torus. As they are pulled tight, the band on the sphere and a small band on the torus shrink to points, while the band around the torus's tube cannot shrink."
 />
 <Controls>
-	<Button variant="gold" onclick={() => ((pull = 0), (playing = true))}>Pull tight</Button>
-	<Slider bind:value={pull} min={0} max={1} step={0.005} label="How tight" format={(v) => Math.round(v * 100) + '%'} />
+	{#if pull >= 1}
+		<Button icon={ResetIcon} onclick={() => ((playing = false), (pull = 0))}>Loosen the bands</Button>
+	{:else}
+		<Button variant="gold" icon={PlayIcon} disabled={playing} onclick={() => (playing = true)}>{playing ? 'Pulling…' : 'Pull the bands tight'}</Button>
+	{/if}
 </Controls>

@@ -4,7 +4,8 @@
 	// space. Circles over one circle of latitude fill a torus; any two are linked.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Segmented from '$lib/components/ui/Segmented.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import { glowTube, glassMesh, disposeTree } from '$lib/three/materials';
 	import { surfaceGeometry } from '$lib/three/surfaces';
@@ -175,8 +176,16 @@
 		</div>
 	</Scene3D>
 	<Controls>
-		<Slider bind:value={perCircle} min={4} max={32} step={1} label="Circles over each latitude" format={(v) => String(v)} />
-		<Slider bind:value={circles} min={1} max={4} step={1} label="Latitudes on S²" format={(v) => String(v)} />
+		<Segmented
+			bind:value={perCircle}
+			label="Circles over each latitude"
+			options={[
+				{ value: 6, label: '6 circles' },
+				{ value: 12, label: '12' },
+				{ value: 24, label: '24' }
+			]}
+		/>
+		<Stepper bind:value={circles} min={1} max={4} label="Latitudes on S²" />
 		<Toggle bind:checked={showTori} label="Show the tori they fill" />
 	</Controls>
 </div>

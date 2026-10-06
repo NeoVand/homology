@@ -8,6 +8,7 @@
 	import { cylinder, surfaceGeometry } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
 	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { circlePreimages, wobbleLift } from './maps';
@@ -162,7 +163,7 @@
 	label="A gold curve climbs a glass cylinder, winding n times around it; a vertical line through a target point meets it at the preimages, marked green or rose by orientation"
 />
 <Controls>
-	<Slider bind:value={n} min={-3} max={3} step={1} label="degree n" format={(v) => String(v)} />
+	<Stepper bind:value={n} min={-3} max={3} label="degree n" />
 	<Slider bind:value={a} min={0} max={2.6} step={0.01} label="wobble" format={(v) => v.toFixed(2)} />
 	<Slider bind:value={phiDeg} min={0} max={359} step={1} label="target point" format={(v) => `${v}°`} />
 	<div class="hud ui">

@@ -42,10 +42,14 @@ export function shaderColor(c: PaletteName | number | string): THREE.Color {
 // ── iridescent surface ─────────────────────────────────────────────────────
 
 // A smooth, time-varying bump field used to "knead" surfaces on the GPU
-// (shape-of-a-question). Its gradient tilts the normals to match.
+// (shape-of-a-question), plus one Gaussian "pull" the reader controls with the
+// pointer. Their gradient tilts the normals to match.
 const wobbleGLSL = /* glsl */ `
 	uniform float uWobble;
 	uniform float uWobbleT;
+	uniform vec3 uPoke;
+	uniform float uPokeAmp;
+	uniform float uPokeR;
 	float wobble(vec3 p, float t) {
 		return 0.42 * sin(1.7 * p.x + 0.9 * t) * cos(1.3 * p.y - 0.6 * t)
 			+ 0.3 * sin(2.3 * p.z + 1.1 * p.y + 0.7 * t)
@@ -83,6 +87,10 @@ const iridescentVertex = /* glsl */ `
 		#ifdef WOBBLE
 		float s = uWobble * wobble(position, uWobbleT);
 		vec3 gr = uWobble * wobbleGrad(position, uWobbleT);
+		vec3 dp = position - uPoke;
+		float g = uPokeAmp * exp(-dot(dp, dp) / (uPokeR * uPokeR));
+		s += g;
+		gr -= (2.0 * g / (uPokeR * uPokeR)) * dp;
 		pos += normal * s;
 		nrm = normalize(normal - (gr - dot(gr, normal) * normal));
 		#endif
@@ -256,7 +264,8 @@ export interface IridescentOptions {
 	side?: THREE.Side;
 	depthWrite?: boolean;
 	clippingPlanes?: THREE.Plane[];
-	/** knead the surface on the GPU: set uniforms.uWobble (amplitude) and uWobbleT (time) */
+	/** knead the surface on the GPU: uniforms uWobble (amplitude) and uWobbleT (time),
+	 *  plus one pull uPoke (centre, object space), uPokeAmp and uPokeR (radius) */
 	wobble?: boolean;
 	/** grid lines for implicit surfaces without (u, v): around these hole centres (x) */
 	implicitGrid?: { centres: number[]; R: number };
@@ -293,6 +302,9 @@ export function iridescent(o: IridescentOptions = {}): THREE.ShaderMaterial {
 		defines.WOBBLE = '';
 		uniforms.uWobble = { value: 0 };
 		uniforms.uWobbleT = { value: 0 };
+		uniforms.uPoke = { value: new THREE.Vector3() };
+		uniforms.uPokeAmp = { value: 0 };
+		uniforms.uPokeR = { value: 0.5 };
 	}
 	if (o.implicitGrid) {
 		defines.IMPLICIT_GRID = '';
@@ -397,7 +409,7 @@ export function orientOutward(geometry: THREE.BufferGeometry): boolean {
 /** The depth-only twin of a surface material (same vertex shader, so the depths match). */
 function depthPrepass(face: THREE.ShaderMaterial): THREE.ShaderMaterial {
 	const shared: Record<string, THREE.IUniform> = {};
-	for (const k of ['uWobble', 'uWobbleT', 'uCut0', 'uCut1']) if (face.uniforms[k]) shared[k] = face.uniforms[k];
+	for (const k of ['uWobble', 'uWobbleT', 'uPoke', 'uPokeAmp', 'uPokeR', 'uCut0', 'uCut1']) if (face.uniforms[k]) shared[k] = face.uniforms[k];
 	return new THREE.ShaderMaterial({
 		vertexShader: iridescentVertex,
 		fragmentShader: prepassFragment,
@@ -550,7 +562,7 @@ export function glowHalo(c: PaletteName | number | string = 'gold', intensity = 
  * The hidden part of a curve or point, drawn faintly: the material passes the
  * depth test only where something nearer (a surface) covers it.
  */
-function ghostCore(c: PaletteName | number | string, opacity: number) {
+export function ghostCore(c: PaletteName | number | string, opacity: number) {
 	const m = glowCore(c, 0.9, opacity);
 	m.transparent = true;
 	m.depthWrite = false;
@@ -570,7 +582,8 @@ export function glowTube(
 		intensity?: number;
 		closed?: boolean;
 		radialSegments?: number;
-		/** opacity of the parts hidden behind surfaces (0 = invisible, the default) */
+		/** opacity of the parts hidden behind surfaces, drawn faintly as in a line
+		 *  drawing (default 0.28; 0 hides them) */
 		xray?: number;
 	} = {}
 ): THREE.Group {
@@ -590,8 +603,9 @@ export function glowTube(
 		halo.renderOrder = 6;
 		g.add(halo);
 	}
-	if (o.xray) {
-		const ghost = new THREE.Mesh(coreGeo, ghostCore(o.color ?? 'gold', o.xray));
+	const xray = o.xray ?? 0.28;
+	if (xray > 0) {
+		const ghost = new THREE.Mesh(coreGeo, ghostCore(o.color ?? 'gold', xray));
 		ghost.renderOrder = 9;
 		g.add(ghost);
 	}
@@ -635,7 +649,13 @@ export function dotTexture(): THREE.Texture {
 /** A glowing point: a solid bead plus an additive sprite halo. */
 export function glowPoint(
 	pos: THREE.Vector3 | [number, number, number],
-	o: { color?: PaletteName | number | string; size?: number; halo?: number; xray?: number } = {}
+	o: {
+		color?: PaletteName | number | string;
+		size?: number;
+		halo?: number;
+		/** opacity of the bead where a surface hides it (default 0.28; 0 hides it) */
+		xray?: number;
+	} = {}
 ): THREE.Group {
 	const g = new THREE.Group();
 	const p = Array.isArray(pos) ? new THREE.Vector3(...pos) : pos;
@@ -658,8 +678,9 @@ export function glowPoint(
 	sprite.renderOrder = 8;
 	// children[0] is the bead and children[1] the halo sprite (figures rely on this)
 	g.add(bead, sprite);
-	if (o.xray) {
-		const ghost = new THREE.Mesh(beadGeo, ghostCore(o.color ?? 'ivory', o.xray));
+	const xray = o.xray ?? 0.28;
+	if (xray > 0) {
+		const ghost = new THREE.Mesh(beadGeo, ghostCore(o.color ?? 'ivory', xray));
 		ghost.renderOrder = 9;
 		g.add(ghost);
 	}

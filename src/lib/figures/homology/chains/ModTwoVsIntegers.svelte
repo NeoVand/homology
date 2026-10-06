@@ -6,7 +6,7 @@
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
@@ -129,8 +129,8 @@
 		/>
 		{#if mode === 'z'}
 			<div class="sliders">
-				<Slider bind:value={a} min={-2} max={2} step={1} label="a: coefficient of [0,1,2]" format={(v) => (v > 0 ? `+${v}` : `${v}`)} />
-				<Slider bind:value={b} min={-2} max={2} step={1} label="b: coefficient of [1,2,3]" format={(v) => (v > 0 ? `+${v}` : `${v}`)} />
+				<Stepper bind:value={a} min={-2} max={2} label="a: coefficient of [0,1,2]" format={(v) => (v > 0 ? `+${v}` : `${v}`)} />
+				<Stepper bind:value={b} min={-2} max={2} label="b: coefficient of [1,2,3]" format={(v) => (v > 0 ? `+${v}` : `${v}`)} />
 			</div>
 			<Button variant="ghost" onclick={() => ((a = 1), (b = 1))}>a = b = 1</Button>
 			<Button variant="ghost" onclick={() => ((a = 1), (b = -1))}>a = 1, b = −1</Button>

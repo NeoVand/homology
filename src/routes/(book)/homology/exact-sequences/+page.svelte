@@ -106,7 +106,7 @@
 </p>
 \[ \sum_i (-1)^i\,\rank A_i = 0. \]
 <p>
-	The reason is rank–nullity (<Ref to="foundations/linear-algebra" />) applied at each spot: each group's rank splits into the part killed by the next map and the part that survives, and exactness makes these pieces cancel in the alternating sum. For example, \(0\to\Z\to\Z^3\to\Z^2\to0\) is consistent, \(1 - 3 + 2 = 0\), while no exact sequence \(0\to\Z\to\Z^3\to\Z\to0\) can exist.
+	The reason is rank–nullity (<Ref to="foundations/linear-algebra" />) applied at each spot: each group’s rank splits into the part killed by the next map and the part that survives, and exactness makes these pieces cancel in the alternating sum. For example, \(0\to\Z\to\Z^3\to\Z^2\to0\) is consistent, \(1 - 3 + 2 = 0\), while no exact sequence \(0\to\Z\to\Z^3\to\Z\to0\) can exist.
 </p>
 
 <!-- ───────────────────────────────────────────────────────────────────── -->
@@ -187,7 +187,7 @@
 <h2 id="relative-homology">Relative homology: homology after crushing</h2>
 
 <p>
-	Sometimes we want homology to ignore part of a space: to focus on what happens near one point, or to study \(X\) with a subspace \(A\) squashed flat. The algebra for this is a quotient, the first of the book's recurring ideas.
+	Sometimes we want homology to ignore part of a space: to focus on what happens near one point, or to study \(X\) with a subspace \(A\) squashed flat. The algebra for this is a quotient, the first of the book’s recurring ideas.
 </p>
 
 <Definition id="def-relative">
@@ -233,7 +233,7 @@
 </Theorem>
 
 <p>
-	The neighbourhood condition is a technicality that rules out pathological subspaces. The relative groups behave as if \(A\) had been crushed, and, as we will see in a moment, also as if a small neighbourhood of \(A\) had been thrown away. That is Hatcher's Proposition 2.22, and it rests on excision.
+	The neighbourhood condition is a technicality that rules out pathological subspaces. The relative groups behave as if \(A\) had been crushed, and, as we will see in a moment, also as if a small neighbourhood of \(A\) had been thrown away. That is Hatcher’s Proposition 2.22, and it rests on excision.
 </p>
 
 <h3>The long exact sequence of a pair</h3>
@@ -339,7 +339,7 @@
 	</p>
 	\[ H_1(S^1)\;\cong\;\ker\Phi\;\cong\;\Z. \]
 	<p>
-		The generator is the loop \(z\) that runs up through \(U\) and back down through \(V\): cutting it as \(z = u + v\) gives \(\partial u = p - q\). The circle's hole is detected as “the two overlap pieces, which are not connected inside the overlap, are joined around the other side”.
+		The generator is the loop \(z\) that runs up through \(U\) and back down through \(V\): cutting it as \(z = u + v\) gives \(\partial u = p - q\). The circle’s hole is detected as “the two overlap pieces, which are not connected inside the overlap, are joined around the other side”.
 	</p>
 </Example>
 
@@ -368,7 +368,7 @@
 
 <History>
 	<p>
-		The sequence is named after Walther Mayer and Leopold Vietoris, who developed the method of computing homology from a decomposition in 1929–1930. That was only a few years after Emmy Noether had persuaded topologists to treat Betti numbers and torsion as properties of <em>groups</em>, and the new language made such sequences possible. Hatcher calls Mayer–Vietoris “the analog for homology of van Kampen's theorem” for the fundamental group.
+		The sequence is named after Walther Mayer and Leopold Vietoris, who developed the method of computing homology from a decomposition in 1929–1930. That was only a few years after Emmy Noether had persuaded topologists to treat Betti numbers and torsion as properties of <em>groups</em>, and the new language made such sequences possible. Hatcher calls Mayer–Vietoris “the analog for homology of van Kampen’s theorem” for the fundamental group.
 	</p>
 </History>
 
@@ -406,7 +406,7 @@
 
 <Remark title="The numerical shadow">
 	<p>
-		The Euler characteristic version of the same cut reads \(\chi(S^n) = \chi(D^n) + \chi(D^n) - \chi(S^{n-1}) = 2 - \chi(S^{n-1})\). Starting from \(\chi(S^0) = 2\), this gives \(\chi(S^n) = 1 + (-1)^n\): \(2\) for even spheres and \(0\) for odd ones, exactly as the homology groups predict. The same alternation will reappear in the hairy ball theorem's “only odd spheres can be combed”.
+		The Euler characteristic version of the same cut reads \(\chi(S^n) = \chi(D^n) + \chi(D^n) - \chi(S^{n-1}) = 2 - \chi(S^{n-1})\). Starting from \(\chi(S^0) = 2\), this gives \(\chi(S^n) = 1 + (-1)^n\): \(2\) for even spheres and \(0\) for odd ones, exactly as the homology groups predict. The same alternation will reappear in the hairy ball theorem’s “only odd spheres can be combed”.
 	</p>
 </Remark>
 
@@ -486,7 +486,7 @@
 
 <Remark title="These computations were checked by machine">
 	<p>
-		The groups in both tables were confirmed by this book's homology engine on triangulated models, with the strips as actual subcomplexes. In the Klein bottle the overlap circle comes out as exactly twice the core of each Möbius band, in homology.
+		The groups in both tables were confirmed by this book’s homology engine on triangulated models, with the strips as actual subcomplexes. In the Klein bottle the overlap circle comes out as exactly twice the core of each Möbius band, in homology.
 	</p>
 </Remark>
 
@@ -517,7 +517,7 @@
 </Definition>
 
 <p>
-	This is Hatcher's “homology squared”: the chain groups are themselves homology groups, and the boundary maps are built from the long exact sequences of pairs. Before stating the punchline, let us watch the machine run once by hand.
+	This is Hatcher’s “homology squared”: the chain groups are themselves homology groups, and the boundary maps are built from the long exact sequences of pairs. Before stating the punchline, let us watch the machine run once by hand.
 </p>
 
 <Example title="The torus, one skeleton at a time">

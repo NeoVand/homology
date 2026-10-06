@@ -5,7 +5,7 @@
 	import { onMount } from 'svelte';
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
@@ -161,7 +161,7 @@
 </div>
 <Controls>
 	<div class="row">
-		<Slider bind:value={n} min={3} max={12} step={1} label="Number of gears" />
+		<Stepper bind:value={n} min={3} max={12} label="Number of gears" />
 		<Button variant="gold" onclick={startFollow}>Follow the spins</Button>
 		<Toggle bind:checked={showZ2} label="Show the ℤ/2 labels" />
 	</div>

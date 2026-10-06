@@ -164,7 +164,7 @@
 </Question>
 
 <p>
-	If the three offsets add up to zero as you go around the ring, yes: fix one hiker's zero and the other two are forced.
+	If the three offsets add up to zero as you go around the ring, yes: fix one hiker’s zero and the other two are forced.
 	If they do not add up to zero, no shifting can ever make the readings consistent; the trail would be an Escher staircase,
 	climbing forever and yet returning to its start. You met exactly this test in <Ref to="cohomology/cochains" />: a labelling
 	of the edges of a loop is a gradient exactly when its sum around the loop is zero.
@@ -308,7 +308,7 @@
 <Definition title="Good cover" id="def-good-cover">
 	<p>
 		An open cover is <dfn>good</dfn> if every nonempty finite intersection \(U_{i_0\cdots i_p}\) of its pieces is
-		contractible. (Bott and Tu's book, the standard reference, asks a little more for covers of manifolds: every
+		contractible. (Bott and Tu’s book, the standard reference, asks a little more for covers of manifolds: every
 		nonempty finite intersection should look like a copy of \(\R^n\). For our purposes contractible is what matters.)
 	</p>
 </Definition>
@@ -372,7 +372,7 @@
 	Cover the ring trail \(X = S^1\) by three open arcs \(U_0, U_1, U_2\), the stretches of the three hikers. Fix a group of
 	values \(G\) — the real numbers \(\R\), or the integers \(\Z\). Hiker \(i\) shifts her readings by some amount
 	\(f_i \in G\) (moving her zero). On the overlap \(U_{ij}\) of two stretches, with \(i \lt j\), let \(c_{ij}\) be the
-	offset: how much higher hiker \(j\)'s zero sits than hiker \(i\)'s. Shifting the zeros by \(f\) removes the offsets
+	offset: how much higher hiker \(j\)’s zero sits than hiker \(i\)’s. Shifting the zeros by \(f\) removes the offsets
 	exactly when
 	\[ c_{ij} = f_j - f_i \quad\text{on every overlap } U_{ij}. \]
 	That is a system of three equations in three unknowns — and a familiar one.
@@ -485,15 +485,15 @@
 	\[ \delta(f_U, f_V) = (f_V - f_U,\; f_V - f_U). \]
 	The image is the diagonal \(\{(a,a)\}\), so \(\check H^0 \cong G\) and \(\check H^1 = G^2/\{(a,a)\} \cong G\) via
 	\((c_1, c_2)\mapsto c_2 - c_1\). The correct answer again. Try it in the figure: whenever \(c_{W_1} \neq c_{W_2}\) the
-	two hikers' zeros disagree on one side or the other, however they shift.
+	two hikers’ zeros disagree on one side or the other, however they shift.
 </p>
 
 <Warning title="Data on overlaps, not on edges of the nerve">
 	<p>
 		The Čech complex is built from the actual overlaps, with one copy of \(G\) for each connected piece of each overlap,
 		and it gets the right answer for the two-arc cover. The <em>nerve</em> forgets that \(U\cap V\) has two pieces, so it
-		gets the wrong shape: the two-arc cover is not good, and the nerve theorem does not apply. Leray's theorem, below, says
-		precisely when a cover's Čech complex can be trusted.
+		gets the wrong shape: the two-arc cover is not good, and the nerve theorem does not apply. Leray’s theorem, below, says
+		precisely when a cover’s Čech complex can be trusted.
 	</p>
 </Warning>
 
@@ -552,7 +552,7 @@
 </Figure>
 
 <p>
-	Here is the fourth of the book's recurring ideas, <strong>reversed arrows</strong>, in its purest form. Sets get smaller
+	Here is the fourth of the book’s recurring ideas, <strong>reversed arrows</strong>, in its purest form. Sets get smaller
 	along inclusions \(W\to V \to U\), but data travels the other way, \(F(U)\to F(V)\to F(W)\). That is the same reversal
 	as cochains pulling back along maps, and it is why cohomology, not homology, is the natural home for local data.
 </p>
@@ -742,7 +742,7 @@
 
 <Remark title="Riemann surfaces">
 	<p>
-		Bernhard Riemann's response to monodromy (1851) was to change the space rather than the function: glue together all the
+		Bernhard Riemann’s response to monodromy (1851) was to change the space rather than the function: glue together all the
 		local branches into a new surface lying over the plane, on which the branch becomes an honest single-valued function.
 		The spiral ramp of \(\log z\) and the two-sheeted surface of \(\sqrt z\) in the figure are those surfaces. (The two
 		sheets of \(\sqrt z\) seem to pass through each other along the negative real axis only because we drew them in
@@ -802,13 +802,13 @@
 	distances whose ratio is some number \(d_{12} \gt 0\). Rescaling the pieces changes the ratios — rescaling piece \(i\)
 	by \(\lambda_i\) multiplies \(d_{ij}\) by \(\lambda_i/\lambda_j\) — and the three pieces fit together into one real
 	object exactly when we can make every ratio equal to \(1\), that is, when \(d_{ij} = \lambda_j/\lambda_i\) for some
-	choice of the \(\lambda\)'s. In the language of this chapter, \(d\) is a Čech \(1\)-cochain with values in the group
+	choice of the \(\lambda\)’s. In the language of this chapter, \(d\) is a Čech \(1\)-cochain with values in the group
 	\((\R_{\gt 0},\times)\) of positive numbers under multiplication, and the figure is realizable exactly when \(d\) is a
 	coboundary. The loop test, written multiplicatively, is
 	\[ d_{12}\, d_{23}\, d_{31} = 1. \]
 </p>
 
-<Figure num="4.7.7" title="Penrose's cocycle" hint="Pull the pieces apart · rescale them">
+<Figure num="4.7.7" title="Penrose’s cocycle" hint="Pull the pieces apart · rescale them">
 	<TribarCocycle />
 	{#snippet caption()}
 		The impossible triangle is three overlapping pieces, each a genuine corner — pull them apart to check. Rescaling a piece
@@ -820,7 +820,7 @@
 <p>
 	For the tribar the product is not \(1\). Going around the triangle, each corner tells you that the next beam recedes from
 	you, so the depth ratios compound instead of cancelling. The drawing is a nonzero class in \(\check H^1\) of an annulus
-	(the shape of the drawing) with coefficients in the positive real numbers. Penrose's analysis gives a new meaning to the
+	(the shape of the drawing) with coefficients in the positive real numbers. Penrose’s analysis gives a new meaning to the
 	slogan of this chapter: an impossible figure is a <em>locally consistent</em> picture whose consistency fails to glue.
 </p>
 
@@ -904,7 +904,7 @@
 	instances.
 </p>
 
-<h3>Leray's theorem: when one cover is enough</h3>
+<h3>Leray’s theorem: when one cover is enough</h3>
 
 <p>
 	The true sheaf cohomology \(H^p(X;F)\) is defined without choosing any cover, either as the limit of
@@ -941,7 +941,7 @@
 	\[ H^1_{\dR}(M) \;\cong\; \check H^1(M;\R). \]
 	For the angle form on the circle with our three arcs, the local primitives are three branches of the angle, and the
 	offsets are \(0, 0\) and \(2\pi\): holonomy \(-2\pi \ne 0\), the class of \(d\theta\). The same argument in every degree,
-	organised by Bott and Tu into the “tic-tac-toe” Čech–de Rham complex, proves de Rham's theorem.
+	organised by Bott and Tu into the “tic-tac-toe” Čech–de Rham complex, proves de Rham’s theorem.
 </p>
 
 <History title="A topologist in captivity">
@@ -951,8 +951,8 @@
 		the Germans to know that he was an expert in hydrodynamics, since he feared that if they found out he would be forced
 		to undertake war work for them, Leray claimed to be a topologist.” In the camp he and his fellow prisoners organised a
 		university in captivity, with Leray as its rector, and in topology lectures there he developed the ideas he published in
-		1946: sheaves and spectral sequences. Henri Cartan's seminar reworked sheaf cohomology around 1950; Jean-Pierre Serre
-		made sheaves the language of algebraic geometry in 1955; Grothendieck's 1957 paper made sheaf cohomology a derived
+		1946: sheaves and spectral sequences. Henri Cartan’s seminar reworked sheaf cohomology around 1950; Jean-Pierre Serre
+		made sheaves the language of algebraic geometry in 1955; Grothendieck’s 1957 paper made sheaf cohomology a derived
 		functor.
 	</p>
 </History>
@@ -977,7 +977,7 @@
 
 <p>
 	The data at a vertex restrict to its edges just as data on an open set restrict to smaller sets. (Think of a vertex as
-	standing for the little star-shaped open set around it, and an edge for the smaller open set around the edge's middle.)
+	standing for the little star-shaped open set around it, and an edge for the smaller open set around the edge’s middle.)
 	The cochains are \(C^0 = \bigoplus_v F(v)\) and \(C^1 = \bigoplus_e F(e)\), and the coboundary measures disagreement on
 	each edge \(e\) from \(u\) to \(v\):
 	\[ (\delta x)_e = F_{v\trianglelefteq e}\,x_v - F_{u\trianglelefteq e}\,x_u, \]
@@ -991,7 +991,7 @@
 <Figure num="4.7.9" title="A sheaf of prices" hint="Change prices with − and + · let them settle · try both rate tables">
 	<GraphSheaf />
 	{#snippet caption()}
-		Each vertex holds the price of the same coffee in its own currency; each edge converts one price into the other's
+		Each vertex holds the price of the same coffee in its own currency; each edge converts one price into the other’s
 		currency and compares. A global section is a consistent price list. With honest rates there is a one-dimensional space
 		of them; with an arbitrage loop, only the zero price list is consistent. “Let prices settle” runs the sheaf heat
 		equation, which slides to the nearest consistent list.
@@ -1139,7 +1139,7 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={2} title="Penrose's invariant">
+<Exercise level={2} title="Penrose’s invariant">
 	<p>
 		Show that rescaling the three pieces of the tribar by \(\lambda_1,\lambda_2,\lambda_3 \gt 0\) does not change
 		\(d_{12}d_{23}d_{31}\). Conclude that the three pieces can be assembled into one real object only if this product is
@@ -1219,7 +1219,7 @@
 		</li>
 		<li>
 			With two arcs the overlap has two pieces: the Čech complex (one value per piece) still gives the right answer, but the
-			one-edge nerve does not. <strong>Leray's theorem</strong> says when a cover computes true cohomology.
+			one-edge nerve does not. <strong>Leray’s theorem</strong> says when a cover computes true cohomology.
 		</li>
 		<li>
 			A <strong>presheaf</strong> is data on open sets with restriction maps (arrows reversed); a <strong>sheaf</strong>
@@ -1227,13 +1227,13 @@
 			functions do not. For a sheaf, \(\check H^0 = F(X)\), the global sections.
 		</li>
 		<li>
-			Monodromy of \(\sqrt z\) and \(\log z\), the orientation sheaf of the Möbius band, and Penrose's impossible triangle
+			Monodromy of \(\sqrt z\) and \(\log z\), the orientation sheaf of the Möbius band, and Penrose’s impossible triangle
 			are all nonzero classes in \(\check H^1\): local solutions exist, but their comparisons on overlaps do not come from a
 			global choice.
 		</li>
 		<li>
 			<strong>Cellular sheaves</strong> on graphs bring all this to data: \(H^0\) is the space of consistent global pictures,
-			and the sheaf Laplacian's heat flow finds them by local averaging.
+			and the sheaf Laplacian’s heat flow finds them by local averaging.
 		</li>
 	</ul>
 </Recap>

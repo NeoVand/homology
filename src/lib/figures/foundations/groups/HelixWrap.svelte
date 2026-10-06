@@ -5,7 +5,7 @@
 	// lands on 0 — lines up in one glowing gold column.
 	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
 	import { glowTube, glowPoint, disposeTree } from '$lib/three/materials';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import type * as THREE_NS from 'three';
@@ -132,8 +132,8 @@
 	{/if}
 </div>
 <Controls>
-	<Slider bind:value={n} min={2} max={8} step={1} label="n (integers per turn)" />
-	<Slider bind:value={a} min={0} max={n - 1} step={1} label="highlight what lands on a" />
+	<Stepper bind:value={n} min={2} max={8} label="n (integers per turn)" />
+	<Stepper bind:value={a} min={0} max={n - 1} label="highlight what lands on a" />
 </Controls>
 
 <style>

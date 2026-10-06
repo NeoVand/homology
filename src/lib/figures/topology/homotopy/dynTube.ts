@@ -3,7 +3,7 @@
 // Visually it matches `glowTube` from $lib/three/materials (bright core plus an
 // additive halo), so animated curves look like the book's static ones.
 import * as THREE from 'three';
-import { glowCore, glowHalo, type PaletteName } from '$lib/three/materials';
+import { ghostCore, glowCore, glowHalo, type PaletteName } from '$lib/three/materials';
 
 const _t = new THREE.Vector3();
 const _n = new THREE.Vector3();
@@ -166,6 +166,8 @@ export interface DynTubeOptions {
 	halo?: boolean;
 	haloScale?: number;
 	intensity?: number;
+	/** opacity where a surface hides the tube (default 0.28, as for glowTube) */
+	xray?: number;
 }
 
 /** A glowing tube (core + halo) with `samples` centre-line points, updatable in place. */
@@ -196,6 +198,13 @@ export class DynTube {
 			haloMesh.renderOrder = 6;
 			haloMesh.frustumCulled = false;
 			this.group.add(haloMesh);
+		}
+		const xray = o.xray ?? 0.28;
+		if (xray > 0) {
+			const ghost = new THREE.Mesh(this.core.geometry, ghostCore(o.color ?? 'gold', xray));
+			ghost.renderOrder = 9;
+			ghost.frustumCulled = false;
+			this.group.add(ghost);
 		}
 	}
 

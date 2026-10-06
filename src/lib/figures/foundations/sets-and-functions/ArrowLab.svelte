@@ -5,7 +5,7 @@
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { renderMathInText } from '$lib/katex/render';
 	import { classify, image, preimage, type Arrow } from './maps';
@@ -232,8 +232,8 @@
 			onchange={() => (pending = null)}
 		/>
 		<div class="sizes">
-			<div class="sl"><Slider bind:value={m} min={1} max={6} step={1} label="size of X" /></div>
-			<div class="sl"><Slider bind:value={n} min={1} max={6} step={1} label="size of Y" /></div>
+			<Stepper bind:value={m} min={1} max={6} label="size of X" />
+			<Stepper bind:value={n} min={1} max={6} label="size of Y" />
 		</div>
 		<div class="presets">
 			<span class="pl ui">Load:</span>
@@ -428,9 +428,6 @@
 		display: flex;
 		gap: 1rem;
 		flex: 1 1 16rem;
-	}
-	.sl {
-		flex: 1;
 	}
 	.presets {
 		display: flex;

@@ -99,8 +99,8 @@
 		Gluing is how this book builds every space it studies. In <Ref to="topology/simplicial-complexes" /> spaces are made from
 		triangles glued along their edges; in homology the gluing instructions become algebra. The words we write around the edges of
 		a square in this chapter — like \(aba^{-1}b^{-1}\) for the torus — will turn, almost literally, into the boundary formulas that
-		compute homology in <Ref to="homology/computing" />. The twist in the Klein bottle's word \(abab^{-1}\) will reappear there as a
-		mysterious \(\Z/2\). And gluing is an instance of one of the book's four big ideas: <strong>quotients</strong>, making new
+		compute homology in <Ref to="homology/computing" />. The twist in the Klein bottle’s word \(abab^{-1}\) will reappear there as a
+		mysterious \(\Z/2\). And gluing is an instance of one of the book’s four big ideas: <strong>quotients</strong>, making new
 		things by declaring different things the same.
 	</p>
 </Ahead>
@@ -127,7 +127,7 @@
 <p>
 	What shape is this universe? Picture the screen as a sheet of rubber. Gluing the top edge to the bottom edge rolls the sheet
 	into a tube. Gluing the left edge to the right edge then bends the tube round until its two end circles meet. The result is the
-	surface of a doughnut, the <strong>torus</strong>. The ship's straight flight paths become loops wound around the doughnut.
+	surface of a doughnut, the <strong>torus</strong>. The ship’s straight flight paths become loops wound around the doughnut.
 </p>
 <p>
 	There is another way to see the same thing, and the neighbouring copies in the figure show it. Instead of gluing, imagine the
@@ -359,7 +359,7 @@
 	(1, y)\), and the word becomes \(abab^{-1}\). This is the <strong>Klein bottle</strong> \(K\). Roll the square into a tube as
 	before. Now the two end circles must be glued, but with their directions reversed. Bending the tube round as for the torus would
 	match them the wrong way. The only way to make the arrows agree is to bring one end <em>inside</em> the tube and meet the other
-	end from within — and in our three-dimensional space, getting inside means passing through the tube's own wall. Watch the
+	end from within — and in our three-dimensional space, getting inside means passing through the tube’s own wall. Watch the
 	workshop: the rose circle is where the surface crosses itself.
 </p>
 <p>
@@ -392,14 +392,14 @@
 	opposite point of the rim</em>. This is the <strong>real projective plane</strong> \(\RP^2\). Its corners form two classes.
 </p>
 <p>
-	The projective plane has another life, which explains its name. Every line through the centre of a ball pierces the ball's
+	The projective plane has another life, which explains its name. Every line through the centre of a ball pierces the ball’s
 	surface in two opposite points. So the set of lines through a point of space is the sphere with opposite points glued — and the
 	upper half of the sphere already contains one point of every line, except that opposite points of its rim (the equator) still
 	need gluing. That is our disk with opposite rim points glued. Artists know this space well: it is the space of all directions of
 	sight-lines in perspective drawing, where parallel lines meet “at infinity”.
 </p>
 <p>
-	In the workshop, the disk grows into a famous surface called Boy's surface. It crosses itself along three rose loops, which meet
+	In the workshop, the disk grows into a famous surface called Boy’s surface. It crosses itself along three rose loops, which meet
 	at a single <em>triple point</em> where three sheets pass through each other. Fly in projective-plane mode in Figure 2.2.1: every
 	edge you cross flips you over.
 </p>
@@ -464,7 +464,7 @@
 	always divides space into an inside and an outside. (This is the Jordan–Brouwer separation theorem, a three-dimensional relative
 	of the fact that a loop drawn in the plane without crossing itself has an inside and an outside.) A surface with an inside and an
 	outside has two sides: you could paint the inside red and the outside blue. But the Klein bottle and the projective plane
-	contain Möbius bands — look at the vertical strip in the middle of the Klein bottle's square, glued with a flip — so they have
+	contain Möbius bands — look at the vertical strip in the middle of the Klein bottle’s square, glued with a flip — so they have
 	only one side, and cannot have an inside and an outside.
 </p>
 <p>
@@ -477,7 +477,7 @@
 <Figure num="2.2.5" title="Surfaces that must cross themselves" hint="Pick a surface · drag to turn it · try the fourth coordinate">
 	<Immersions />
 	{#snippet caption()}
-		Two pictures of the Klein bottle and two of the projective plane, each with its double curve in rose. Boy's surface is a
+		Two pictures of the Klein bottle and two of the projective plane, each with its double curve in rose. Boy’s surface is a
 		smooth immersion with a single triple point; the cross-cap is simpler to describe but has two pinch points, where it fails to
 		be smooth. With colour as a fourth coordinate, the sheets crossing at each rose point get different colours: in four
 		dimensions they never touch.
@@ -490,7 +490,7 @@
 		1882; the English name may come from a pun or a mistranslation of the German <em>Fläche</em> (surface) as <em>Flasche</em>
 		(bottle), though the story is hard to pin down. In 1901 Werner Boy, a student of David Hilbert, was asked to show that the
 		projective plane could not be immersed in space without singular points — and found an immersion instead. The formula we
-		use for Boy's surface is due to Robert Bryant and Rob Kusner.
+		use for Boy’s surface is due to Robert Bryant and Rob Kusner.
 	</p>
 </History>
 
@@ -581,7 +581,7 @@
 	The word is two copies of the torus word, one after the other. Figure 2.2.8 shows why the result has two holes. Cut the octagon
 	along a diagonal \(c\) that separates the first four edges from the last four. Each half is a pentagon with word
 	\(a_1b_1a_1^{-1}b_1^{-1}c^{-1}\) or \(c\,a_2b_2a_2^{-1}b_2^{-1}\): a torus diagram with an extra free edge. Gluing its \(a\) and
-	\(b\) edges gives a torus with a hole cut out, the hole's rim being \(c\). Glue the two holes together along \(c\), undoing the
+	\(b\) edges gives a torus with a hole cut out, the hole’s rim being \(c\). Glue the two holes together along \(c\), undoing the
 	cut, and you have a surface with two handles: the genus-two surface \(\Sigma_2\).
 </p>
 
@@ -614,8 +614,8 @@
 <KeyIdea>
 	<p>
 		To glue is to take a quotient: \(U\) is open in \(X/{\sim}\) exactly when \(q^{-1}(U)\) is open in \(X\). A polygon whose edges
-		carry letters and arrows is a complete recipe for a surface — and the word around its edges, with its \(a\)'s and
-		\(a^{-1}\)'s, is a first glimpse of the algebra that homology will make of it.
+		carry letters and arrows is a complete recipe for a surface — and the word around its edges, with its \(a\)’s and
+		\(a^{-1}\)’s, is a first glimpse of the algebra that homology will make of it.
 	</p>
 </KeyIdea>
 
@@ -637,7 +637,7 @@
 			(a) One class (all four corners), and \(1 - 2 + 1 = 0\). (b) Two classes: the bottom-left corner is glued to the top-right,
 			and the bottom-right to the top-left; \(2 - 2 + 1 = 1\). (c) Number the corners \(0, 1, \dots, 5\) anticlockwise, with edge
 			\(a\) running from corner \(0\) to corner \(1\). The second \(a\) runs from corner \(4\) to corner \(3\), so \(0 \sim 4\) and
-			\(1 \sim 3\); the \(b\)'s give \(1 \sim 5\) and \(2 \sim 4\); the \(c\)'s give \(2 \sim 0\) and \(3 \sim 5\). The classes are
+			\(1 \sim 3\); the \(b\)’s give \(1 \sim 5\) and \(2 \sim 4\); the \(c\)’s give \(2 \sim 0\) and \(3 \sim 5\). The classes are
 			\(\set{0, 2, 4}\) and \(\set{1, 3, 5}\): two corners, three edges, one face, \(2 - 3 + 1 = 0\). (The hexagon with opposite
 			sides glued is another picture of the torus.)
 		</p>
@@ -686,7 +686,7 @@
 	{#snippet solution()}
 		<p>
 			The bottom half \([0,1] \times [0, \tfrac12]\) has its left edge \((0, y)\), \(y \le \tfrac12\), glued to \((1, 1 - y)\),
-			which lies on the right edge of the <em>top</em> half. Likewise the top half's left edge is glued to the bottom half's right
+			which lies on the right edge of the <em>top</em> half. Likewise the top half’s left edge is glued to the bottom half’s right
 			edge. So the two halves join end to end into one long strip, glued at both ends without a net flip: a single piece, a band
 			with two boundary circles — topologically a cylinder. (In space it comes out with two full twists, which is why it surprises
 			people.)
@@ -712,12 +712,12 @@
 
 <Exercise level={2} title="Unglued corners" id="ex-unglued-corners">
 	<p>
-		Using the table in this chapter, show that no homeomorphism can turn the sphere's square into the torus's square <em>edge by
+		Using the table in this chapter, show that no homeomorphism can turn the sphere’s square into the torus’s square <em>edge by
 		edge and corner by corner</em>. Then explain why this alone does not prove that the sphere and torus are different surfaces.
 	</p>
 	{#snippet solution()}
 		<p>
-			The sphere's diagram has three corner classes and the torus's has one, so no matching of diagrams sends corners to corners.
+			The sphere’s diagram has three corner classes and the torus’s has one, so no matching of diagrams sends corners to corners.
 			But a surface can be drawn by many different diagrams — the torus is also a hexagon with two corner classes (<a href="#ex-count-corners">the first exercise</a>). Corner
 			counts belong to the diagram, not the surface. What <em>is</em> a property of the surface is the combination corners − edges +
 			faces (\(2\) versus \(0\)), but proving that this does not depend on the diagram is real work, done in
@@ -737,8 +737,8 @@
 	{/snippet}
 	{#snippet solution()}
 		<p>
-			The middle strip's bottom edge \((x, 0)\), \(\tfrac14 \le x \le \tfrac34\), is glued to \((1 - x, 1)\), and \(1 - x\) is also
-			between \(\tfrac14\) and \(\tfrac34\): the strip's top is glued to its own bottom with a flip, which is a Möbius band. The outer
+			The middle strip’s bottom edge \((x, 0)\), \(\tfrac14 \le x \le \tfrac34\), is glued to \((1 - x, 1)\), and \(1 - x\) is also
+			between \(\tfrac14\) and \(\tfrac34\): the strip’s top is glued to its own bottom with a flip, which is a Möbius band. The outer
 			strips \([0, \tfrac14]\) and \([\tfrac34, 1]\) are joined by \((0, y) \sim (1, y)\) into one strip; its bottom is glued to its top
 			by \(x \mapsto 1 - x\), which swaps the two parts — again with a flip, so another Möbius band. The cut lines \(x = \tfrac14\)
 			and \(x = \tfrac34\) are glued end to end (the top of one to the bottom of the other) into a single circle, which is the

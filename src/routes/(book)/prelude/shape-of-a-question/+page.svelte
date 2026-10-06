@@ -101,7 +101,7 @@
 	infinitely many. This is the central difficulty of topology, and it is where our story really begins.
 </p>
 
-<Figure title="Stretch, don't tear" hint="Drag the slider · drag to rotate" num="0.1.1">
+<Figure title="Stretch, don’t tear" hint="Press and hold a shape to pull it · drag around it to turn the view" num="0.1.1">
 	<StretchFigure />
 	{#snippet caption()}
 		A sphere and a torus being kneaded like clay. Their geometry — lengths, angles, curvature — changes completely.
@@ -179,7 +179,7 @@
 	</p>
 </Warning>
 
-<h2 id="eulers-clue">Euler's clue</h2>
+<h2 id="eulers-clue">Euler’s clue</h2>
 
 <p>
 	The first hint that something like homology exists came from an innocent-looking observation about solids with flat
@@ -193,7 +193,7 @@
 <p>
 	Try it for the other solids in the figure below. A tetrahedron (triangular pyramid): \(4 - 6 + 4 = 2\). An
 	icosahedron, with its twenty triangles: \(12 - 30 + 20 = 2\). Every time, the answer is 2. This is
-	<strong>Euler's polyhedron formula</strong>, and it holds for every polyhedron that is, topologically, a ball — no
+	<strong>Euler’s polyhedron formula</strong>, and it holds for every polyhedron that is, topologically, a ball — no
 	matter how many faces it has, how irregular they are, or how it is drawn.
 </p>
 
@@ -226,14 +226,14 @@
 		Leonhard Euler described the formula around 1750; René Descartes had found closely related facts in notes that
 		were lost and only rediscovered much later. In 1813 Simon Lhuilier pointed out polyhedra with tunnels where the
 		formula gives other values — the first glimpse of a topological invariant. A century later Henri Poincaré, in
-		his 1895 memoir <em>Analysis Situs</em> (“the analysis of position”), saw that Euler's number is an alternating sum
+		his 1895 memoir <em>Analysis Situs</em> (“the analysis of position”), saw that Euler’s number is an alternating sum
 		of hole-counts, \(\chi = b_0 - b_1 + b_2\), and founded what we now call algebraic topology.
 	</p>
 </History>
 
 <p>
 	For the cube: \(b_0 = 1\) piece, \(b_1 = 0\) loop-holes, \(b_2 = 1\) cavity, and \(1 - 0 + 1 = 2\). For the picture
-	frame, whose surface is a torus: \(1 - 2 + 1 = 0\). That Euler's crude count equals this alternating sum of Betti
+	frame, whose surface is a torus: \(1 - 2 + 1 = 0\). That Euler’s crude count equals this alternating sum of Betti
 	numbers is a genuine theorem — you will prove it in <Ref to="homology/homology-groups" />. It is our first clue that
 	the holes of a shape can be counted by finite, mechanical calculations.
 </p>
@@ -248,7 +248,7 @@
 	the hole it surrounds.
 </p>
 
-<Figure title="Rubber bands" hint="Press “Pull tight” or drag the slider · drag to rotate" num="0.1.4">
+<Figure title="Rubber bands" hint="Pull the bands tight · drag to rotate" num="0.1.4">
 	<RubberBands />
 	{#snippet caption()}
 		On the sphere, the band shrinks to a point, sweeping across the shaded cap — the region it <em>bounds</em>. On
@@ -344,7 +344,7 @@
 
 <p>
 	This is the logic of the famous <em>impossible staircase</em> of Lionel and Roger Penrose, made immortal by M. C.
-	Escher's lithograph <em>Ascending and Descending</em>, where monks climb forever around a square stairway. Every small
+	Escher’s lithograph <em>Ascending and Descending</em>, where monks climb forever around a square stairway. Every small
 	part of the picture is a perfectly good staircase. The impossibility lives only in the whole loop. It is, quite
 	literally, a nonzero cohomology class — and Roger Penrose later wrote a paper analysing impossible figures in exactly
 	these terms.
@@ -362,7 +362,7 @@
 	It turns out that cohomology carries more structure than homology. Measurements can be <em>multiplied</em>, and this
 	product — the <em>cup product</em> of <Ref to="cohomology/cup-product" /> — can tell apart shapes that homology alone
 	cannot. And when the shape is smooth, cohomology turns into calculus: the theory of differential forms, where the
-	fundamental theorem of calculus, Green's theorem and Stokes' theorem all become a single statement about boundaries.
+	fundamental theorem of calculus, Green’s theorem and Stokes’ theorem all become a single statement about boundaries.
 	That story is Part IV.
 </p>
 
@@ -384,14 +384,14 @@
 	Here is a taste of the very first great application, which you will prove yourself in <Ref
 		to="homology/invariance"
 	/>. Stir a cup of coffee and let it settle. However you stirred — as long as the coffee did not slosh out of the cup
-	or splash apart — at least one point of the coffee is exactly where it started. This is <strong>Brouwer's fixed
+	or splash apart — at least one point of the coffee is exactly where it started. This is <strong>Brouwer’s fixed
 		point theorem</strong>, proved by the Dutch mathematician L. E. J. Brouwer in the early 1910s. Its proof is a
 	two-line argument about holes: if there were no fixed point, you could use the stirring to push the disk onto its
-	boundary circle without tearing, and that would destroy the circle's hole — which homology says is impossible.
+	boundary circle without tearing, and that would destroy the circle’s hole — which homology says is impossible.
 </p>
 
 <p>
-	Brouwer's theorem underlies the existence of equilibria in economics. Persistent homology (<Ref to="homology/persistence" />)
+	Brouwer’s theorem underlies the existence of equilibria in economics. Persistent homology (<Ref to="homology/persistence" />)
 	finds circles, voids and tunnels hidden in clouds of data points, from protein structures to the activity of
 	neurons. Homology detects gaps in the coverage of a sensor network using only which sensors can see each other.
 	Cohomology explains why the Hall conductance of certain thin materials comes in perfectly whole-number steps —
@@ -481,7 +481,7 @@
 	{/snippet}
 </Exercise>
 
-<Exercise title="Euler's formula for a pyramid" level={1}>
+<Exercise title="Euler’s formula for a pyramid" level={1}>
 	<p>
 		A pyramid with a square base has how many vertices, edges and faces? Check that \(V - E + F = 2\). Then do the
 		same for a prism whose two ends are pentagons.
@@ -499,7 +499,7 @@
 <Exercise title="Splitting faces" level={2}>
 	<p>
 		Start from a cube and draw a diagonal across one face, splitting it into two triangles. Then put a new vertex in
-		the middle of one of those triangles and join it to the triangle's three corners. Keep track of \(V\), \(E\) and
+		the middle of one of those triangles and join it to the triangle’s three corners. Keep track of \(V\), \(E\) and
 		\(F\) after each step. What happens to \(V - E + F\), and why?
 	</p>
 	{#snippet hint()}

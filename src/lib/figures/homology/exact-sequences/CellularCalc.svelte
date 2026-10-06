@@ -7,7 +7,7 @@
 	import MatrixView from '$lib/components/prose/MatrixView.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
@@ -234,7 +234,7 @@
 				{:else if space === 'CP'}
 					There are no cells in odd dimensions, so every boundary map goes to or from \(0\). Every boundary map vanishes, and \(H_{2k}\cong\Z\) for \(0\le k\le n\).
 				{:else}
-					With only a \(0\)-cell and an \(n\)-cell there is nothing for the boundary to hit (for \(n = 1\) the edge's two ends are the same vertex, so \(d_1 = 0\)).
+					With only a \(0\)-cell and an \(n\)-cell there is nothing for the boundary to hit (for \(n = 1\) the edge’s two ends are the same vertex, so \(d_1 = 0\)).
 				{/if}
 			</p>
 		</div>
@@ -248,7 +248,7 @@
 					{ value: 'S', label: 'Sⁿ' }
 				]}
 			/>
-			<Slider bind:value={n} min={1} max={maxN} step={1} label="n" format={(v) => String(v)} />
+			<Stepper bind:value={n} min={1} max={maxN} label="n" />
 			<Toggle bind:checked={mod2} label="Coefficients ℤ/2" />
 		</Controls>
 	{/if}

@@ -132,7 +132,7 @@
 		<p>
 			Now attach a <em>measurement</em> to every step — a height difference, a voltage, an exchange rate. Each step
 			can be perfectly sensible on its own, yet going all the way around can leave you higher than you started, like
-			Escher's impossible staircase. <strong>Cohomology</strong> measures exactly these obstructions: local data that
+			Escher’s impossible staircase. <strong>Cohomology</strong> measures exactly these obstructions: local data that
 			cannot be made globally consistent.
 		</p>
 	</article>

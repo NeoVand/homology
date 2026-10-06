@@ -7,6 +7,7 @@
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { glassMesh, glowTube, glowPoint, disposeTree } from '$lib/three/materials';
 	import { cylinder, disk, surfaceGeometry } from '$lib/three/surfaces';
@@ -279,7 +280,7 @@
 			label="Which quotient"
 		/>
 		{#if mode === 'int'}
-			<div class="sl"><Slider bind:value={n} min={2} max={12} step={1} label="n (points per turn)" /></div>
+			<Stepper bind:value={n} min={2} max={12} label="n (points per turn)" />
 		{:else}
 			<div class="sl"><Slider bind:value={tval} min={-0.5} max={0.5} step={0.01} label="t" /></div>
 		{/if}

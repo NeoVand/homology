@@ -5,7 +5,7 @@
 	import { cubicInOut } from 'svelte/easing';
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import { mod, residueColor } from './zn';
@@ -158,9 +158,9 @@
 	</div>
 </div>
 <Controls>
-	<Slider bind:value={n} min={2} max={12} step={1} label="clock size n" />
-	<Slider bind:value={a} min={0} max={n - 1} step={1} label="a" />
-	<Slider bind:value={b} min={0} max={n - 1} step={1} label="b" />
+	<Stepper bind:value={n} min={2} max={12} label="clock size n" />
+	<Stepper bind:value={a} min={0} max={n - 1} label="a" />
+	<Stepper bind:value={b} min={0} max={n - 1} label="b" />
 	<Toggle bind:checked={showInv} label="show inverses" />
 	<button class="again ui" onclick={play}>Replay</button>
 </Controls>

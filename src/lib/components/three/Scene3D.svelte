@@ -23,8 +23,10 @@
 		reducedMotion: boolean;
 		/** request one render (for scenes that only change on input) */
 		invalidate(): void;
-		/** run a callback every frame while visible; returns an unsubscribe */
-		onFrame(cb: (t: number, dt: number) => void): () => void;
+		/** run a callback every frame while visible; returns an unsubscribe. The
+		 *  callback may return false to say nothing changed this frame, so the
+		 *  scene is not redrawn (unless something else asked for it). */
+		onFrame(cb: (t: number, dt: number) => boolean | void): () => void;
 		/** an HTML label (may contain KaTeX HTML) pinned to a 3D point */
 		label(
 			pos: THREE_NS.Vector3 | [number, number, number],
@@ -171,7 +173,7 @@
 			};
 
 			let needs = true;
-			const frameCbs = new Set<(t: number, dt: number) => void>();
+			const frameCbs = new Set<(t: number, dt: number) => boolean | void>();
 			const labels = new Set<LabelHandle>();
 			const raycaster = new THREE.Raycaster();
 			const ndc = new THREE.Vector2();
@@ -294,10 +296,10 @@
 				frame: (_t, dt) => {
 					elapsed += dt;
 					const moved = controls ? controls.update(dt) : false;
-					const animating = animate || frameCbs.size > 0 || !!handle?.update;
-					if (!(needs || moved || animating)) return;
+					let draw = needs || moved || animate || !!handle?.update;
+					for (const cb of frameCbs) if (cb(elapsed, dt) !== false) draw = true;
+					if (!draw) return;
 					needs = false;
-					for (const cb of frameCbs) cb(elapsed, dt);
 					handle?.update?.(elapsed, dt);
 					if (animate) tickMaterials(scene, elapsed);
 					renderer.render(scene, cam);

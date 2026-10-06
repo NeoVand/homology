@@ -8,8 +8,8 @@
 	import { sphere, torus, surfaceGeometry, surfaceNormal } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import { PauseIcon, PlayIcon, ResetIcon } from '$lib/icons';
 	import { DynTube } from './dynTube';
 	import { glass } from './glass';
 
@@ -57,7 +57,7 @@
 		gT.add(loopA.group, loopB.group);
 
 		const lblS = ctx.label(sphereAt.clone().add(new THREE.Vector3(0, -SR - 0.55, 0)), '', { className: 'small' });
-		const lblT = ctx.label(torusAt.clone().add(new THREE.Vector3(0, -1.5, 0)), '', { className: 'small' });
+		const lblT = ctx.label(torusAt.clone().add(new THREE.Vector3(0, -SR - 0.55, 0)), '', { className: 'small' });
 		const p = new THREE.Vector3();
 		const n = new THREE.Vector3();
 		const TAU = Math.PI * 2;
@@ -154,8 +154,9 @@
 		label="Left: a sphere with a wiggly gold loop that slides up and shrinks to a point. Right: a torus with a gold loop around the tube and a teal loop around the hole, which tighten but cannot shrink."
 	/>
 	<Controls>
-		<Slider bind:value={s} min={0} max={1} step={0.005} label="pull the loops tight" format={(v) => `${Math.round(v * 100)}%`} />
-		<Button variant="gold" onclick={play}>{playing ? 'Pause' : s > 0.98 ? 'Loosen' : 'Tighten'}</Button>
+		<Button variant="gold" icon={playing ? PauseIcon : s > 0.98 ? ResetIcon : PlayIcon} onclick={play}
+			>{playing ? 'Pause' : s > 0.98 ? 'Loosen again' : s > 0.02 ? 'Keep pulling' : 'Pull the loops tight'}</Button
+		>
 	</Controls>
 </div>
 

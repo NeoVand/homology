@@ -242,7 +242,7 @@
 			<p class="note">Outside the wire the field has no curl at all, yet a loop around the wire collects μ₀I each time round: the field is closed but not exact.</p>
 		{:else}
 			<TeX tex={String.raw`\text{phase} = \frac{q}{\hbar}\oint_\gamma \mathbf A\cdot d\mathbf l \;=\; \frac{q}{\hbar}\,\Phi \times ${lk}`} />
-			<p class="note">The electron's path never enters the solenoid, where the magnetic field lives; outside, B = 0. Still, the potential A is not exact there, and the interference pattern shifts by an amount set by how many times the path winds round.</p>
+			<p class="note">The electron’s path never enters the solenoid, where the magnetic field lives; outside, B = 0. Still, the potential A is not exact there, and the interference pattern shifts by an amount set by how many times the path winds round.</p>
 		{/if}
 	</div>
 </div>

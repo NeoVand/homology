@@ -2,7 +2,7 @@
 	// Is a rule on ℤ/n well defined? Ask several representatives of every class
 	// the same question and see whether they agree.
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { renderMathInText, tex } from '$lib/katex/render';
 	import { classColor } from './palette';
@@ -75,7 +75,7 @@
 				</button>
 			{/each}
 		</div>
-		<div class="nsl"><Slider bind:value={n} min={2} max={12} step={1} label="n (we work in ℤ/n)" /></div>
+		<Stepper bind:value={n} min={2} max={12} label="n (we work in ℤ/n)" />
 	</Controls>
 </div>
 
@@ -214,8 +214,5 @@
 		background: rgba(216, 178, 110, 0.22);
 		color: var(--ink-bright);
 		box-shadow: 0 0 14px -4px rgba(242, 205, 135, 0.6);
-	}
-	.nsl {
-		flex: 1 1 12rem;
 	}
 </style>

@@ -57,7 +57,7 @@
 			<h2>Invariance and functoriality</h2>
 			<p>A continuous map \(f\colon X\to Y\) induces \(f_*\colon H_k(X)\to H_k(Y)\), with</p>
 			\[ (g\circ f)_* = g_*\circ f_*, \qquad (\id_X)_* = \id, \qquad f\simeq g \;\Rightarrow\; f_* = g_*. \]
-			<p>So homotopy-equivalent spaces have isomorphic homology. Payoffs: Brouwer's fixed point theorem, the hairy ball theorem, invariance of dimension.</p>
+			<p>So homotopy-equivalent spaces have isomorphic homology. Payoffs: Brouwer’s fixed point theorem, the hairy ball theorem, invariance of dimension.</p>
 			<a class="go ui" href={chapterHref('homology/invariance')}>§3.5 Maps, invariance, and first triumphs<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 
@@ -65,7 +65,7 @@
 			<h2>Exact sequences</h2>
 			<p>Mayer–Vietoris, for \(X = U\cup V\) with \(U, V\) open:</p>
 			\[ \cdots \to H_k(U\cap V) \to H_k(U)\oplus H_k(V) \to H_k(X) \xrightarrow{\;\partial_*\;} H_{k-1}(U\cap V) \to \cdots \]
-			<p>Every map's image is exactly the next map's kernel.</p>
+			<p>Every map’s image is exactly the next map’s kernel.</p>
 			<a class="go ui" href={chapterHref('homology/exact-sequences')}>§3.6 Exact sequences and Mayer–Vietoris<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 

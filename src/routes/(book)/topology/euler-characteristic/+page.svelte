@@ -50,7 +50,7 @@
 			title: 'Euler’s Formula and Graph Duality',
 			author: '3Blue1Brown (Grant Sanderson)',
 			url: 'https://www.3blue1brown.com/lessons/eulers-characteristic-formula',
-			note: 'A beautifully animated version of the "two trees" proof in this chapter.',
+			note: 'A beautifully animated version of the “two trees” proof in this chapter.',
 			kind: 'video' as const,
 			free: true
 		},
@@ -173,7 +173,7 @@
 </Theorem>
 
 <p>
-	"Convex" means the solid has no dents: the straight segment between any two of its points stays inside it. Every polyhedron in the
+	“Convex” means the solid has no dents: the straight segment between any two of its points stays inside it. Every polyhedron in the
 	gallery is convex. The more general phrasing says the same thing topologically: the surface must be <em>a sphere in disguise</em>
 	— homeomorphic to a sphere, in the language of <Ref to="topology/spaces" />. That condition is not decoration. We will see that the
 	whole content of the formula is a fact about the sphere, and that other surfaces give other numbers.
@@ -306,7 +306,7 @@
 <Intuition title="A first look at loops">
 	<p>
 		Hover a grey edge in the figure: adding it to the tree closes exactly one loop. A connected network with \(V\) vertices and \(E\)
-		edges therefore has \(E - (V - 1)\) "extra" edges, each closing its own loop. Counting loops this way is the starting point of
+		edges therefore has \(E - (V - 1)\) “extra” edges, each closing its own loop. Counting loops this way is the starting point of
 		<Ref to="homology/cycles-and-boundaries" />, and we will come back to it at the end of this chapter.
 	</p>
 </Intuition>
@@ -339,7 +339,7 @@
 	<SubdivisionPlayground />
 	{#snippet caption()}
 		Every click changes \(V\), \(E\) and \(F\); the readout shows by how much. The glowing number \(V - E + F\) never moves from 2.
-		"Ten random moves" lets the computer try.
+		“Ten random moves” lets the computer try.
 	{/snippet}
 </Figure>
 
@@ -354,7 +354,7 @@
 		The <strong>Euler characteristic</strong> of a finite simplicial complex \(K\) is the alternating sum
 		\[ \chi(K) = n_0 - n_1 + n_2 - n_3 + \cdots, \]
 		and for a finite CW complex, the same alternating sum of its numbers of cells, \(c_0 - c_1 + c_2 - \cdots\). For a polyhedron or a
-		surface cut into polygons, \(\chi = V - E + F\). The letter \(\chi\) is the Greek "chi", pronounced "kai".
+		surface cut into polygons, \(\chi = V - E + F\). The letter \(\chi\) is the Greek “chi”, pronounced “kai”.
 	</p>
 </Definition>
 
@@ -401,7 +401,7 @@
 	disguise. It is a <Term t="torus">torus</Term>.
 </p>
 
-<Figure num="2.6.5" title="Polyhedra with tunnels" hint="Switch shapes · drag the slider · drag to rotate">
+<Figure num="2.6.5" title="Polyhedra with tunnels" hint="Switch shapes · change the number of tunnels · drag to rotate">
 	<Tunnels />
 	{#snippet caption()}
 		Lhuilier’s picture frame has \(V - E + F = 0\). Switch to the slab of cubes and add tunnels: each one lowers \(V - E + F\) by 2, so a
@@ -421,7 +421,7 @@
 </p>
 
 <p>
-	Lhuilier had another "monster", as Lakatos would later call such examples: a cube with a cube-shaped cavity hidden inside it, like a
+	Lhuilier had another “monster”, as Lakatos would later call such examples: a cube with a cube-shaped cavity hidden inside it, like a
 	hollow box with thick walls. Its surface is made of two separate pieces — the outside of the box and the inside of the cavity —
 	each a cube’s surface. Counting everything gives \(V = 8 + 8 = 16\), \(E = 12 + 12 = 24\), \(F = 6 + 6 = 12\), and
 	\[ V - E + F = 16 - 24 + 12 = 4 = 2 + 2. \]
@@ -579,7 +579,7 @@
 <p>
 	Indeed, among orientable surfaces \(\chi = 2 - 2g\) determines the number of handles \(g\), and among non-orientable ones \(\chi = 2
 	- k\) determines the number of projective planes \(k\). Neither number is enough alone: the torus and the Klein bottle both have
-	\(\chi = 0\) (one is orientable, the other not), and the sphere and the projective plane are both "made of one disk" but have
+	\(\chi = 0\) (one is orientable, the other not), and the sphere and the projective plane are both “made of one disk” but have
 	\(\chi = 2\) and \(\chi = 1\).
 </p>
 
@@ -594,7 +594,7 @@
 <KeyIdea>
 	<p>
 		To identify a mystery closed surface, cut it into pieces however you like, count \(V - E + F\), and check whether it can be
-		oriented. Those two facts tell you exactly which surface it is — a complete answer to "what shape is this?" from two simple tests.
+		oriented. Those two facts tell you exactly which surface it is — a complete answer to “what shape is this?” from two simple tests.
 	</p>
 </KeyIdea>
 
@@ -629,14 +629,14 @@
 <Figure num="2.6.7" title="Pieces and loops" hint="Tap to add vertices and edges · switch modes · hover a gold edge">
 	<GraphChi />
 	{#snippet caption()}
-		Each colour is one piece. Gold dashed edges are the "extra" edges: each closes one loop (hover to see it). However you edit the
+		Each colour is one piece. Gold dashed edges are the “extra” edges: each closes one loop (hover to see it). However you edit the
 		graph, \(V - E\) equals the number of pieces minus the number of independent loops.
 	{/snippet}
 </Figure>
 
 <p>
 	For a connected graph this says that the number of independent loops is \(E - V + 1\), a formula found by Gustav Kirchhoff in 1847
-	while studying electrical circuits (it counts how many independent currents a circuit can carry). The words "independent loop" need
+	while studying electrical circuits (it counts how many independent currents a circuit can carry). The words “independent loop” need
 	care — the graph \(K_4\) has seven different loops but only \(3\) independent ones — and <Ref to="homology/cycles-and-boundaries" />
 	will make them precise. In that chapter the number of pieces is called \(b_0\) and the number of independent loops \(b_1\).
 </p>
@@ -658,7 +658,7 @@
 	\[ \chi(S^2) = 1 - 0 + 1 = 2, \qquad \chi(T^2) = 1 - 2 + 1 = 0, \qquad \chi(\Sigma_g) = 1 - 2g + 1 = 2 - 2g. \]
 	This is the <em>Euler–Poincaré formula</em>,
 	\[ \chi \;=\; b_0 - b_1 + b_2 - b_3 + \cdots, \]
-	where the numbers \(b_k\), the <em>Betti numbers</em>, count "\(k\)-dimensional holes". Making "hole" precise, defining the \(b_k\)
+	where the numbers \(b_k\), the <em>Betti numbers</em>, count “\(k\)-dimensional holes”. Making “hole” precise, defining the \(b_k\)
 	properly, and proving the formula is the business of Part III; it happens in <Ref to="homology/homology-groups" />. The proof is
 	the alternating ledger you saw with graphs, in every dimension: each new cell either creates a new hole or fills an old one, and
 	the alternating signs keep the books balanced.
@@ -678,7 +678,7 @@
 	short of flat while each of the eight corners around the tunnel overshoots by \(90°\).
 	For smooth surfaces the defects become <em>curvature</em>, and the Gauss–Bonnet theorem says the total curvature of a closed
 	surface is \(2\pi\chi\), whatever its shape. A vector field on a closed surface — a breeze blowing along it — must have calm points
-	whose "indices" add up to \(\chi\); since \(\chi(S^2) = 2 \neq 0\), every breeze on the Earth has a calm spot somewhere (the hairy
+	whose “indices” add up to \(\chi\); since \(\chi(S^2) = 2 \neq 0\), every breeze on the Earth has a calm spot somewhere (the hairy
 	ball theorem), while a torus, with \(\chi = 0\), can be combed smooth. These stories are told in
 	<Ref to="cohomology/characteristic-classes" />.
 </p>
@@ -693,7 +693,7 @@
 
 <Exercise title="Checking the formula" level={1}>
 	<p>
-		Count \(V\), \(E\) and \(F\) for a triangular prism, a square pyramid, and a "house" (a cube with a square pyramid on top as its
+		Count \(V\), \(E\) and \(F\) for a triangular prism, a square pyramid, and a “house” (a cube with a square pyramid on top as its
 		roof, so the top face of the cube is no longer a face). Check \(V - E + F = 2\).
 	</p>
 	{#snippet solution()}
@@ -724,7 +724,7 @@
 <Exercise title="Why exactly twelve pentagons?" level={2}>
 	<p>
 		Suppose a polyhedron shaped like a sphere has only pentagons and hexagons as faces, with three faces at every corner. Show that it
-		has exactly 12 pentagons, however many hexagons it has. (This is why every soccer ball — and every "buckyball" molecule of carbon —
+		has exactly 12 pentagons, however many hexagons it has. (This is why every soccer ball — and every “buckyball” molecule of carbon —
 		has 12 pentagons.)
 	</p>
 	{#snippet solution()}

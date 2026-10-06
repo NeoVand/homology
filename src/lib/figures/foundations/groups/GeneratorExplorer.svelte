@@ -3,7 +3,7 @@
 	// and come home. The dots it visits form the cyclic subgroup ⟨k⟩.
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import { cycleOf, gcd, divisors, generators, mod } from './zn';
@@ -111,8 +111,8 @@
 	</div>
 </div>
 <Controls>
-	<Slider bind:value={n} min={2} max={24} step={1} label="n" />
-	<Slider bind:value={k} min={0} max={n - 1} step={1} label="k (or tap a dot)" />
+	<Stepper bind:value={n} min={2} max={24} label="n" />
+	<Stepper bind:value={k} min={0} max={n - 1} label="k (or tap a dot)" />
 	<Toggle bind:checked={showGens} label="show all generators" />
 </Controls>
 

@@ -96,7 +96,7 @@
 		in disguise: a fence <em>is</em> a loop. It explains the symmetry of Betti numbers and forces the Euler
 		characteristic of every closed odd-dimensional manifold to vanish. It turns the cup products of
 		<Ref to="cohomology/cup-product" /> into intersections of cycles. It gives every four-dimensional
-		manifold an "intersection form" that is the starting point of the modern classification of such
+		manifold an “intersection form” that is the starting point of the modern classification of such
 		spaces. Its cousins, the Lefschetz and Alexander duality theorems, handle manifolds with boundary and
 		the complements of knots. And in <Ref to="cohomology/characteristic-classes" /> the Euler class will turn
 		out to be the Poincaré dual of the zeros of a vector field.
@@ -134,7 +134,7 @@
 	like a flat plane. The disk has \(1,0,0\) — it is a manifold, but it has a boundary, a rim where it stops.
 	And the <Term t="klein-bottle">Klein bottle</Term> has rational Betti numbers \(1,1,0\): it is a closed manifold, but it is not
 	<Term t="orientable">orientable</Term> — an ant walking around it can come back mirror-reversed
-	(<Ref to="topology/manifolds" />). Strikingly, the Klein bottle's Betti numbers <em>mod 2</em> are
+	(<Ref to="topology/manifolds" />). Strikingly, the Klein bottle’s Betti numbers <em>mod 2</em> are
 	\(1,2,1\), a palindrome again.
 </p>
 
@@ -192,7 +192,7 @@
 </p>
 
 <p>
-	The fundamental class is the "whole manifold" as a cycle, and measuring a top-dimensional cochain on
+	The fundamental class is the “whole manifold” as a cycle, and measuring a top-dimensional cochain on
 	it means integrating over all of \(M\). That is how, in the previous chapter, we turned a 2-cochain on
 	the torus into a number: \(H^n(M;\Z)\cong\Z\) by \(\omega\mapsto\ip{\omega}{[M]}\) for closed, connected,
 	orientable \(M\).
@@ -201,13 +201,13 @@
 <h2 id="dual-cells">Cutting a manifold the other way</h2>
 
 <p>
-	Here is Poincaré's key idea, and the picture to keep in mind for the rest of the chapter. Take a
+	Here is Poincaré’s key idea, and the picture to keep in mind for the rest of the chapter. Take a
 	triangulated surface and build a <em>second</em> decomposition of it into cells, as follows.
 </p>
 
 <ul>
 	<li>
-		In the middle of each triangle, put a <strong>dual vertex</strong> — the triangle's centre of mass, its
+		In the middle of each triangle, put a <strong>dual vertex</strong> — the triangle’s centre of mass, its
 		barycentre.
 	</li>
 	<li>
@@ -249,7 +249,7 @@
 	<p>
 		Let \(M\) be a triangulated closed \(n\)-manifold. The <dfn>dual cell</dfn> \(\sigma^*\) of a
 		\(k\)-simplex \(\sigma\) is the union of the small simplices of the barycentric subdivision whose first
-		corner is the barycentre of \(\sigma\) and which then run "outwards" through barycentres of larger and
+		corner is the barycentre of \(\sigma\) and which then run “outwards” through barycentres of larger and
 		larger simplices containing \(\sigma\). It is a cell of dimension \(n-k\), and it meets \(\sigma\) in exactly
 		one point, the barycentre of \(\sigma\), crossing it transversally. The dual cells form a new cell
 		decomposition \(K^*\) of \(M\).
@@ -306,7 +306,7 @@
 	counterclockwise, and each dual face is oriented counterclockwise. A direct computation on the \(3\times3\)
 	torus confirms that this works: with these choices the boundary matrices of the dual complex are exactly the
 	transposes of the original ones (one of them up to an overall minus sign), that is, the coboundary matrices. On a
-	<em>non-orientable</em> surface "counterclockwise" cannot be chosen consistently, and the signs cannot be
+	<em>non-orientable</em> surface “counterclockwise” cannot be chosen consistently, and the signs cannot be
 	made to match — except mod 2, where signs do not matter.
 </p>
 
@@ -422,7 +422,7 @@
 	</p>
 	\[ \sigma\frown\varphi = \varphi([v_0,\dots,v_p])\cdot[v_p,\dots,v_n], \]
 	<p>
-		read "sigma cap phi", extended to all chains by linearity. The cochain eats the front face; the back face
+		read “sigma cap phi”, extended to all chains by linearity. The cochain eats the front face; the back face
 		is what is left over.
 	</p>
 </Definition>
@@ -443,7 +443,7 @@
 </Definition>
 
 <p>
-	Hatcher's formula \(\partial(\sigma\frown\varphi) = \pm(\partial\sigma\frown\varphi - \sigma\frown\delta\varphi)\) shows
+	Hatcher’s formula \(\partial(\sigma\frown\varphi) = \pm(\partial\sigma\frown\varphi - \sigma\frown\delta\varphi)\) shows
 	that since \(\partial[M]=0\), cocycles go to cycles and coboundaries go to boundaries. So \(D\) is defined
 	on classes, \(D\colon H^p(M)\to H_{n-p}(M)\). The modern statement of Poincaré duality is that
 	<strong>this map is an isomorphism</strong>.
@@ -491,7 +491,7 @@
 <p>
 	We have been counting crossings with signs all along; let us make it official. Take two oriented closed
 	curves \(C_1, C_2\) on an oriented surface, in general position — they cross at finitely many points, each
-	crossing a clean "×", never a tangency.
+	crossing a clean “×”, never a tangency.
 </p>
 
 <Definition id="def-intersection-number" title="Intersection number">
@@ -601,7 +601,7 @@
 		every unimodular symmetric form occurs. Simon Donaldson showed (1983) that for <em>smooth</em> such manifolds
 		with a definite form (all eigenvalues of one sign), the form must be equivalent to \(\pm\) the identity matrix.
 		Together they imply, for example, that the topological 4-manifold whose form is the famous
-		eight-dimensional "\(E_8\) form" admits no smooth structure at all. We only glimpse this world; it lies far
+		eight-dimensional “\(E_8\) form” admits no smooth structure at all. We only glimpse this world; it lies far
 		beyond this book.
 	</p>
 </Remark>
@@ -609,12 +609,12 @@
 <History>
 	<p>
 		Poincaré announced the symmetry of Betti numbers in 1893 and tried to prove it in his 1895 memoir
-		<em>Analysis Situs</em>, by intersecting cycles with one another. Poul Heegaard's criticism of 1898 showed
+		<em>Analysis Situs</em>, by intersecting cycles with one another. Poul Heegaard’s criticism of 1898 showed
 		that the argument had a serious gap. In the first two supplements to the memoir Poincaré gave a new proof,
 		built on the dual decomposition of this chapter and on tables of incidence numbers — the ancestors of our
-		boundary matrices. The modern statement had to wait: as the Wikipedia account puts it, "Poincaré duality did
+		boundary matrices. The modern statement had to wait: as the Wikipedia account puts it, “Poincaré duality did
 		not take on its modern form until the advent of cohomology in the 1930s, when Eduard Čech and Hassler Whitney
-		invented the cup and cap products and formulated Poincaré duality in these new terms."
+		invented the cup and cap products and formulated Poincaré duality in these new terms.”
 	</p>
 </History>
 
@@ -688,7 +688,7 @@
 	<li>
 		<strong>Knots in space.</strong> A knot \(K\) is a circle embedded in \(S^3\). Then
 		\(H_1(S^3\setminus K)\cong H^1(K)=H^1(S^1)=\Z\): every knot complement has the first homology of a circle,
-		generated by a small loop around the knot's strand, its <dfn>meridian</dfn>. Removing the single point at
+		generated by a small loop around the knot’s strand, its <dfn>meridian</dfn>. Removing the single point at
 		infinity does not change \(H_1\), so the same is true in ordinary space \(\R^3\).
 	</li>
 </ul>
@@ -697,7 +697,7 @@
 	A loop \(\gamma\) in the complement is therefore some multiple \(n\,[m]\) of the meridian class, and the number
 	\(n\) is the <dfn>linking number</dfn> of \(\gamma\) with \(K\): how many times \(\gamma\) winds around the knot. Gauss
 	found an integral formula for it in 1833, and the figure computes that integral numerically. Dually,
-	\(H^1(S^3\setminus K)\cong\Z\) is generated by the measurement "linking number with \(K\)", and that measurement has
+	\(H^1(S^3\setminus K)\cong\Z\) is generated by the measurement “linking number with \(K\)”, and that measurement has
 	a fence — now a surface, since we are in three dimensions: a <dfn>Seifert surface</dfn>, an oriented surface whose
 	boundary is the knot. For the unknot it is simply a disk, and the linking number of a loop is the signed number
 	of times it pierces the disk.
@@ -709,7 +709,7 @@
 		The complement of any knot has \(H_1\cong\Z\), generated by a meridian \(m\). The class of a loop is its linking
 		number with the knot, computed here by the Gauss linking integral: \(1\) for a meridian, \(2\) for a loop going
 		twice around the strand, \(0\) for a loop that does not link. For the unknot, the glassy disk is a fence for the
-		class "linking number": the signed piercings agree with the integral.
+		class “linking number”: the signed piercings agree with the integral.
 	{/snippet}
 </Figure>
 
@@ -717,7 +717,7 @@
 	<p>
 		Alexander duality cuts both ways: since \(H_*(S^3\setminus K)\) is the same for every knot, homology alone cannot
 		distinguish a trefoil from an unknot. Knot theorists use finer invariants — the fundamental group of the
-		complement (the "knot group"), and polynomial invariants descended from Alexander's own 1928 polynomial.
+		complement (the “knot group”), and polynomial invariants descended from Alexander’s own 1928 polynomial.
 	</p>
 </Warning>
 
@@ -725,8 +725,8 @@
 	<p>
 		In Alexander duality the degrees \(i\) and \(n-i-1\) add up to \(n-1\), not \(n\). Picture a knot in 3-space: the
 		knot is 1-dimensional, and the loop that detects it is also 1-dimensional; \(1+1=2=3-1\). The missing
-		dimension is the "linking" direction: a loop and a knot can link in \(\R^3\) precisely because their dimensions
-		add up to one less than the dimension of the space — the same reason two points can be "linked" on a circle (they
+		dimension is the “linking” direction: a loop and a knot can link in \(\R^3\) precisely because their dimensions
+		add up to one less than the dimension of the space — the same reason two points can be “linked” on a circle (they
 		cut it into two arcs) and two circles can link in space.
 	</p>
 </Intuition>
@@ -832,7 +832,7 @@
 		<p>
 			For the first form, \(Q(x,x) = 2x_1x_2\) is always even. For the second, \(Q((1,0),(1,0)) = 1\) is odd. A change of
 			basis over \(\Z\) replaces \(x\) by another integer vector but does not change the set of values \(Q(x,x)\), so an
-			"even" form cannot become an "odd" one. A homotopy equivalence would induce an isomorphism of cohomology rings
+			“even” form cannot become an “odd” one. A homotopy equivalence would induce an isomorphism of cohomology rings
 			preserving the fundamental class up to sign, hence an equivalence of the forms up to sign — and \(-Q\) is even exactly
 			when \(Q\) is. So the manifolds are not homotopy equivalent. (Both forms have signature \(0\); evenness is what tells
 			them apart.)

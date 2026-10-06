@@ -274,7 +274,7 @@
 	</p>
 </Remark>
 
-<Figure num="1.3.2" title="Clock arithmetic" hint="Drag the sliders · tap a cell of the table">
+<Figure num="1.3.2" title="Clock arithmetic" hint="Change n, a and b · tap a cell of the table">
 	<ClockArithmetic />
 	{#snippet caption()}
 		The gold arc walks \(a\) steps, the teal arc \(b\) more; when the walk passes \(0\) it simply keeps going round. In

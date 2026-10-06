@@ -49,7 +49,12 @@
 		align-items: center;
 		line-height: 1;
 		white-space: nowrap;
-		text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+		/* a halo in the plate colour, so a label stays legible where a curve passes under it */
+		text-shadow:
+			0 0 1px #090e1b,
+			0 0 2px #090e1b,
+			0 0 4px #090e1b,
+			0 0 8px rgba(9, 14, 27, 0.85);
 	}
 	.svgtex :global(.katex) {
 		font-size: 1em;

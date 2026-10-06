@@ -106,7 +106,7 @@
 					<Button onclick={() => (S = new Set(K.simplices[2].map((_, i) => i)))}>All ten</Button>
 				</div>
 				{#if S.size === 10}
-					<p class="note">All ten triangles: mod 2 the boundary is empty, so the whole surface is a mod-2 2-cycle. That is the "extra" \(H_2(\RP^2;\Z/2) \cong \Z/2\).</p>
+					<p class="note">All ten triangles: mod 2 the boundary is empty, so the whole surface is a mod-2 2-cycle. That is the “extra” \(H_2(\RP^2;\Z/2) \cong \Z/2\).</p>
 				{/if}
 			{/if}
 		</div>

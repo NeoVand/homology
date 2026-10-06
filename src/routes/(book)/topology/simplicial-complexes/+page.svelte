@@ -116,7 +116,7 @@
 <p>
 	Look at any animated film or video game and you are looking at triangles. A dragon, a face, a waving flag: each is stored in the
 	computer as a <em>mesh</em> — a long list of corner points, and a list saying which three corners make up each little triangle.
-	The computer never stores "a smooth surface". It stores finitely many numbers, and the smooth-looking surface is something your eye
+	The computer never stores “a smooth surface”. It stores finitely many numbers, and the smooth-looking surface is something your eye
 	assembles from them.
 </p>
 
@@ -131,7 +131,7 @@
 
 <p>
 	This suggests a plan. If we glue simple pieces together under rules strict enough that the gluing is completely described by a
-	list — "these three corners form a triangle, these two corners form an edge" — then the list <em>is</em> the shape, as far as
+	list — “these three corners form a triangle, these two corners form an edge” — then the list <em>is</em> the shape, as far as
 	topology is concerned. Everything we want to know about holes must be readable from the list. In <Ref to="topology/gluing" /> you
 	already built a torus by <Term t="gluing">gluing</Term> the sides of a square. This chapter makes that kind of gluing systematic and
 	finite.
@@ -175,7 +175,7 @@
 
 <p>
 	The pattern is: <em>a simplest shape of dimension \(n\) has \(n+1\) corners.</em> Each such shape is called a
-	<dfn>simplex</dfn> (plural <dfn>simplices</dfn>; the word is Latin for "simple"). A point is a 0-simplex, an edge a 1-simplex, a
+	<dfn>simplex</dfn> (plural <dfn>simplices</dfn>; the word is Latin for “simple”). A point is a 0-simplex, an edge a 1-simplex, a
 	triangle a 2-simplex, a tetrahedron a 3-simplex. The pattern does not stop at three. A 4-simplex has five corners and lives in
 	four-dimensional space; we cannot see it, but we can describe it perfectly well, and we can draw its shadow.
 </p>
@@ -184,7 +184,7 @@
 	There is one catch. Three points in a row do not span a triangle — they span only a segment — and four points lying in one plane do
 	not span a tetrahedron. So we insist that the corners are in <dfn>general position</dfn> (mathematicians also say
 	<em>affinely independent</em>): no corner lies on the line, plane or flat space passing through the others. With that proviso, the
-	corners determine the simplex completely: it is everything you can reach by "filling in" between them.
+	corners determine the simplex completely: it is everything you can reach by “filling in” between them.
 </p>
 
 <Definition id="def-simplex">
@@ -194,8 +194,8 @@
 		span is the set of all points you can reach by filling in between them — precisely, the points
 		\[ t_0 v_0 + t_1 v_1 + \dots + t_n v_n \qquad\text{with every } t_i \ge 0 \text{ and } t_0 + t_1 + \dots + t_n = 1. \]
 		The points \(v_i\) are its <strong>vertices</strong> (the corners), and \(n\) is its <strong>dimension</strong>. We name the
-		simplex by listing its vertices, \([v_0, v_1, \dots, v_n]\), and use Greek letters such as \(\sigma\) ("sigma") or \(\tau\)
-		("tau") for simplices in general.
+		simplex by listing its vertices, \([v_0, v_1, \dots, v_n]\), and use Greek letters such as \(\sigma\) (“sigma”) or \(\tau\)
+		(“tau”) for simplices in general.
 	</p>
 </Definition>
 
@@ -229,7 +229,7 @@
 </p>
 \[ \#\{k\text{-faces of an } n\text{-simplex}\} \;=\; \binom{n+1}{k+1}, \]
 <p>
-	read "\(n+1\) choose \(k+1\)". For the tetrahedron (\(n = 3\)) this gives \(\binom{4}{1} = 4\) vertices, \(\binom{4}{2} = 6\)
+	read “\(n+1\) choose \(k+1\)”. For the tetrahedron (\(n = 3\)) this gives \(\binom{4}{1} = 4\) vertices, \(\binom{4}{2} = 6\)
 	edges, \(\binom{4}{3} = 4\) triangles and \(\binom{4}{4} = 1\) tetrahedron. These binomial numbers are exactly the entries of
 	<em>Pascal’s triangle</em>, in which every number is the sum of the two above it: row \(n+1\) of Pascal’s triangle lists the faces
 	of the \(n\)-simplex, dimension by dimension. Try it in the figure.
@@ -246,14 +246,14 @@
 
 <p>
 	Adding up a whole row gives the total number of faces. Each vertex is either used or not used — two choices per vertex, \(2^{n+1}\)
-	choices in all — but the choice "use nothing" is not a face, so an \(n\)-simplex has \(2^{n+1} - 1\) faces altogether. The
+	choices in all — but the choice “use nothing” is not a face, so an \(n\)-simplex has \(2^{n+1} - 1\) faces altogether. The
 	tetrahedron has \(4 + 6 + 4 + 1 = 15 = 2^4 - 1\).
 </p>
 
 <Remark title="The empty face">
 	<p>
 		Each row of Pascal’s triangle begins with an extra 1, drawn faintly in the figure. It counts the one way of choosing <em>no</em>
-		vertices. Some authors include the empty set as a "face of dimension \(-1\)"; it is a useful bookkeeping trick in later chapters
+		vertices. Some authors include the empty set as a “face of dimension \(-1\)”; it is a useful bookkeeping trick in later chapters
 		(reduced homology, in <Ref to="homology/homology-groups" />), but in this chapter faces always have at least one vertex.
 	</p>
 </Remark>
@@ -316,7 +316,7 @@
 	single coordinate equal to \(1\) and the rest \(0\): for \(n = 2\), these are \((1,0,0)\), \((0,1,0)\) and \((0,0,1)\). The simplex
 	they span is the <dfn>standard \(n\)-simplex</dfn>
 	\[ \Delta^n = \setb{(t_0, \dots, t_n) \in \R^{n+1}}{\text{every } t_i \ge 0 \text{ and } t_0 + \dots + t_n = 1}, \]
-	read "the set of all lists \((t_0, \dots, t_n)\) of real numbers such that every \(t_i\) is at least zero and they add up to one".
+	read “the set of all lists \((t_0, \dots, t_n)\) of real numbers such that every \(t_i\) is at least zero and they add up to one”.
 	A point of \(\Delta^n\) <em>is</em> its own list of barycentric coordinates. Any other \(n\)-simplex \([v_0, \dots, v_n]\) is a
 	copy of it: send \((t_0, \dots, t_n)\) to \(t_0 v_0 + \dots + t_n v_n\). That is why the gallery above could call its shapes
 	\(\Delta^0\) to \(\Delta^4\).
@@ -324,8 +324,8 @@
 
 <History title="A geometer’s weights">
 	<p>
-		Barycentric coordinates were introduced by August Ferdinand Möbius in his book <em>Der barycentrische Calcul</em> ("The
-		barycentric calculus") of 1827 — the same Möbius whose one-sided band you met in <Ref to="topology/gluing" />, and, as we shall
+		Barycentric coordinates were introduced by August Ferdinand Möbius in his book <em>Der barycentrische Calcul</em> (“The
+		barycentric calculus”) of 1827 — the same Möbius whose one-sided band you met in <Ref to="topology/gluing" />, and, as we shall
 		see in a moment, the first person to describe the smallest triangulated torus.
 	</p>
 </History>
@@ -354,8 +354,8 @@
 
 <p>
 	Rule 1 says the collection is complete: if a triangle is in it, so are its three edges and three vertices. It would be strange to
-	have a triangle but not its edges, and the rule forbids it. Rule 2 says that simplices may only touch "corner to corner, edge to
-	edge": two triangles may share a whole edge, or a single vertex, but they may not overlap, cross, or have the corner of one resting
+	have a triangle but not its edges, and the rule forbids it. Rule 2 says that simplices may only touch “corner to corner, edge to
+	edge”: two triangles may share a whole edge, or a single vertex, but they may not overlap, cross, or have the corner of one resting
 	in the middle of an edge of the other. Here are the possibilities side by side.
 </p>
 
@@ -369,7 +369,7 @@
 
 <Warning title="“A common face” means a face of both">
 	<p>
-		In the "corner on an edge" picture the two triangles do meet in a single point, and that point is a vertex — of one of them. Rule
+		In the “corner on an edge” picture the two triangles do meet in a single point, and that point is a vertex — of one of them. Rule
 		2 requires more: the meeting must be a face of <em>both</em> simplices. A point in the middle of an edge is not a face of that
 		edge (faces are spanned by vertices), so the picture is ruled out. To repair it, add the touching point as a vertex of the long
 		edge, splitting it into two edges — and the big triangle into two triangles.
@@ -395,7 +395,7 @@
 <Figure num="2.5.4" title="Build a simplicial complex" hint="Pick a tool · tap to add · drag to move">
 	<ComplexBuilder />
 	{#snippet caption()}
-		Add vertices, edges and triangles, or drag vertices around. With "fill in missing faces" switched on, rule 1 is enforced for you
+		Add vertices, edges and triangles, or drag vertices around. With “fill in missing faces” switched on, rule 1 is enforced for you
 		(new edges flash teal); switch it off and missing faces show up as dashed amber lines. Anything that breaks rule 2 is circled in
 		rose. Try to make a crossing, then drag a vertex until it disappears.
 	{/snippet}
@@ -403,7 +403,7 @@
 
 <Question>
 	<p>
-		In the builder, start from "Corner on an edge" and repair it so that it obeys rule 2 without deleting anything. (One way: add the
+		In the builder, start from “Corner on an edge” and repair it so that it obeys rule 2 without deleting anything. (One way: add the
 		offending corner as a new vertex <em>of</em> the long edge by deleting that edge and drawing two shorter edges and two triangles
 		in its place — or simply drag the corner away.)
 	</p>
@@ -431,7 +431,7 @@
 </Definition>
 
 <p>
-	Rule 1 has become the second bullet ("subsets of simplices are simplices"), and rule 2 has disappeared — there is nothing left that
+	Rule 1 has become the second bullet (“subsets of simplices are simplices”), and rule 2 has disappeared — there is nothing left that
 	could overlap or cross, because there are no positions any more. For example, with vertices \(0, 1, 2\), the hollow triangle is the
 	list
 	\[ K = \Big\{ \set{0}, \set{1}, \set{2}, \set{0,1}, \set{0,2}, \set{1,2} \Big\}, \]
@@ -514,7 +514,7 @@
 	<strong>The circle.</strong> The hollow triangle — three vertices, three edges — is a circle: inflate it like a balloon, and its
 	three straight sides round out into a circle without tearing. Could two vertices do? With two vertices there is only one possible
 	edge (an edge is determined by its two endpoints), and one edge is a segment, not a circle. So three vertices is the minimum. This
-	"hollow triangle" is the first spine example of the book, and it will reappear in almost every chapter as the simplest shape with a
+	“hollow triangle” is the first spine example of the book, and it will reappear in almost every chapter as the simplest shape with a
 	hole.
 </p>
 
@@ -643,8 +643,8 @@
 </p>
 
 <p>
-	For a triangle, an orientation is a direction of travel around it. The order \([v_0, v_1, v_2]\) means "go from \(v_0\) to \(v_1\)
-	to \(v_2\) and back to \(v_0\)". Starting the same tour at a different corner — \([v_1, v_2, v_0]\) or \([v_2, v_0, v_1]\) — goes
+	For a triangle, an orientation is a direction of travel around it. The order \([v_0, v_1, v_2]\) means “go from \(v_0\) to \(v_1\)
+	to \(v_2\) and back to \(v_0\)”. Starting the same tour at a different corner — \([v_1, v_2, v_0]\) or \([v_2, v_0, v_1]\) — goes
 	round in the same direction, so these three orders give the same orientation. The other three orders, such as \([v_1, v_0, v_2]\),
 	go round the other way. In a picture, one orientation is anticlockwise and the other clockwise.
 </p>
@@ -675,7 +675,7 @@
 </Figure>
 
 <p>
-	For a tetrahedron \([v_0, v_1, v_2, v_3]\), the two orientations are the two "handednesses" of a screw: curl the fingers of your
+	For a tetrahedron \([v_0, v_1, v_2, v_3]\), the two orientations are the two “handednesses” of a screw: curl the fingers of your
 	right hand around the face \([v_1, v_2, v_3]\) in the direction \(v_1 \to v_2 \to v_3\); your thumb then points either towards
 	\(v_0\) or away from it, and swapping any two vertices switches which. You will not need to picture higher orientations; the
 	swap-counting rule handles every dimension at once.
@@ -708,7 +708,7 @@
 <h2 id="maps-and-subdivision">Simplicial maps and subdivision</h2>
 
 <p>
-	Shapes are more interesting with maps between them. Since a simplicial complex is "vertices plus which sets span simplices", the
+	Shapes are more interesting with maps between them. Since a simplicial complex is “vertices plus which sets span simplices”, the
 	natural maps between complexes send vertices to vertices and respect those sets.
 </p>
 
@@ -737,7 +737,7 @@
 </Figure>
 
 <p>
-	The "wrap twice" map is a good example to keep in mind: it is the combinatorial version of the map that winds a circle twice around
+	The “wrap twice” map is a good example to keep in mind: it is the combinatorial version of the map that winds a circle twice around
 	another, and in <Ref to="homology/invariance" /> such maps will acquire a <em>degree</em> (here, 2). Simplicial maps are the
 	stand-ins for continuous maps throughout the simplicial theory of homology.
 </p>
@@ -797,7 +797,7 @@
 <h3 id="delta-complexes">Δ-complexes</h3>
 
 <p>
-	A <dfn>Δ-complex</dfn> ("delta complex") is built from simplices too, but they may be glued more freely: the faces of a single
+	A <dfn>Δ-complex</dfn> (“delta complex”) is built from simplices too, but they may be glued more freely: the faces of a single
 	simplex may be glued to each other, and several simplices may share exactly the same vertices. The only requirement is that faces
 	are glued to faces matching the order of their vertices, so the gluing is still recorded by a finite list of which face goes where.
 	The \(2 \times 2\) grid torus, illegal before, is a perfectly good Δ-complex — and so is something much smaller.
@@ -836,7 +836,7 @@
 </ol>
 
 <p>
-	The result is a <dfn>CW complex</dfn>. (The letters stand for two technical conditions, "closure-finite" and "weak topology",
+	The result is a <dfn>CW complex</dfn>. (The letters stand for two technical conditions, “closure-finite” and “weak topology”,
 	introduced by J. H. C. Whitehead in 1949; for the finite complexes in this book they hold automatically.) The space built after the
 	\(k\)-th stage is the <em>\(k\)-skeleton</em>, just as for simplicial complexes. Let us see how few cells our favourite shapes need.
 </p>
@@ -961,7 +961,7 @@
 			(a) With labels \(0, 1\) on the bottom row (and \(2, 3\) above), the bottom edge of the left square runs from \(0\) to \(1\),
 			and the bottom edge of the right square runs from \(1\) to the corner, which is glued to \(0\). Two different edges, both joining
 			\(0\) and \(1\). (b) With a \(1 \times 1\) grid all four corners are the same vertex, so every edge — the sides \(a\), \(b\) and the
-			diagonal — starts and ends at that one vertex, which no simplex can do, and the two triangles have the "same" three corners. (It
+			diagonal — starts and ends at that one vertex, which no simplex can do, and the two triangles have the “same” three corners. (It
 			is the two-triangle Δ-complex torus.) (c) Each of the \(n^2\) small squares contributes its bottom-left corner, three edges
 			(bottom, left, diagonal) and two triangles, and after gluing every vertex, edge and triangle is counted exactly once.
 		</p>
@@ -975,7 +975,7 @@
 	</p>
 	{#snippet hint()}
 		<p>
-			Count the pairs that are "out of order" (a larger label before a smaller one). Each swap of neighbours changes that count by one,
+			Count the pairs that are “out of order” (a larger label before a smaller one). Each swap of neighbours changes that count by one,
 			so its parity is the parity of the number of swaps.
 		</p>
 	{/snippet}
@@ -983,7 +983,7 @@
 		<p>
 			For the triangle: \([2,0,1]\) has 2 out-of-order pairs (2 before 0, 2 before 1): same orientation. \([1,0,2]\) has 1: opposite.
 			\([2,1,0]\) has 3: opposite. For the tetrahedron: \([1,0,3,2]\) has 2: same. \([1,2,3,0]\) has 3 (each of 1, 2, 3 before 0):
-			opposite. \([3,2,1,0]\) has all 6 pairs out of order: same. (Note that a "rotation" of four labels is three swaps, so unlike for a
+			opposite. \([3,2,1,0]\) has all 6 pairs out of order: same. (Note that a “rotation” of four labels is three swaps, so unlike for a
 			triangle it reverses the orientation.)
 		</p>
 	{/snippet}
@@ -996,7 +996,7 @@
 	</p>
 	{#snippet hint()}
 		<p>
-			New vertices are the 15 faces of the tetrahedron. A new edge is a pair "face inside a bigger face"; a new tetrahedron is a full
+			New vertices are the 15 faces of the tetrahedron. A new edge is a pair “face inside a bigger face”; a new tetrahedron is a full
 			flag \(v \subset e \subset t \subset T\).
 		</p>
 	{/snippet}

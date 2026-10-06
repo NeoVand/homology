@@ -206,7 +206,7 @@
 		</div>
 		<p class="note">
 			{#if holeInside}
-				The rectangle surrounds the missing origin, so it is not a region of the punctured plane: rays pass out through its boundary although none of them ends inside. Stokes' theorem does not apply here.
+				The rectangle surrounds the missing origin, so it is not a region of the punctured plane: rays pass out through its boundary although none of them ends inside. Stokes’ theorem does not apply here.
 			{:else}
 				{P.note}
 			{/if}

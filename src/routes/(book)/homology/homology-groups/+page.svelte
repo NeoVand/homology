@@ -52,7 +52,7 @@
 
 <p class="lead">This chapter turns it. We define the <em>homology groups</em> of a simplicial complex, the precise version of the slogan from <Ref to="homology/cycles-and-boundaries" />: a hole is a cycle that is not a boundary. Then we compute them, completely and by hand, for seven spaces, from a single point to a torus.</p>
 
-<p>The definition fits on one line: \(H_k = Z_k / B_k\), "cycles modulo boundaries". Everything else in this chapter is about understanding that line. We will see why it needs a quotient, what its elements look like, and how to compute it with nothing but matrices and their ranks. We will prove that its first piece, \(H_0\), simply counts the pieces of a space. We will find the Euler characteristic of <Ref to="topology/euler-characteristic" /> hiding inside it. And at the end we will meet a puzzle that sends us to the integers in the next chapter.</p>
+<p>The definition fits on one line: \(H_k = Z_k / B_k\), “cycles modulo boundaries”. Everything else in this chapter is about understanding that line. We will see why it needs a quotient, what its elements look like, and how to compute it with nothing but matrices and their ranks. We will prove that its first piece, \(H_0\), simply counts the pieces of a space. We will find the Euler characteristic of <Ref to="topology/euler-characteristic" /> hiding inside it. And at the end we will meet a puzzle that sends us to the integers in the next chapter.</p>
 
 <Ahead>
 	<p>This is the central definition of the book, and every later chapter leans on it. In <Ref to="homology/invariance" /> continuous maps push homology classes around, which proves the fixed-point theorems. In <Ref to="homology/exact-sequences" /> we compute homology by cutting spaces into pieces. Persistent homology (<Ref to="homology/persistence" />) watches classes being born and dying as data grows. And all of cohomology, Part IV, is this same construction with the arrows reversed. If you read one chapter of the book slowly, make it this one.</p>
@@ -64,7 +64,7 @@
 
 \[ \partial_k[v_0, v_1, \dots, v_k] \;=\; \sum_{i=0}^{k} (-1)^i\, [v_0, \dots, \hat v_i, \dots, v_k] \]
 
-<p>(the hat means "leave this vertex out") turns a \(k\)-chain into a \((k-1)\)-chain. Lined up, the chain groups and boundary maps form the <Term t="chain-complex">chain complex</Term> of <Ref to="homology/chains" />:</p>
+<p>(the hat means “leave this vertex out”) turns a \(k\)-chain into a \((k-1)\)-chain. Lined up, the chain groups and boundary maps form the <Term t="chain-complex">chain complex</Term> of <Ref to="homology/chains" />:</p>
 
 \[ \cdots \xrightarrow{\;\partial_3\;} C_2(K) \xrightarrow{\;\partial_2\;} C_1(K) \xrightarrow{\;\partial_1\;} C_0(K) \xrightarrow{\;\partial_0\;} 0. \]
 
@@ -81,7 +81,7 @@
 	</ul>
 </Definition>
 
-<p>Read \(Z_k\) aloud as "zee \(k\)", the \(k\)-cycles; the letter comes from the German <em>Zyklus</em>, cycle. Read \(B_k\) as "bee \(k\)", the \(k\)-boundaries. Notice the shift in the indices: cycles in dimension \(k\) are defined using \(\partial_k\), the map going <em>out</em> of \(C_k\), while boundaries in dimension \(k\) are defined using \(\partial_{k+1}\), the map coming <em>in</em> from one dimension up.</p>
+<p>Read \(Z_k\) aloud as “zee \(k\)”, the \(k\)-cycles; the letter comes from the German <em>Zyklus</em>, cycle. Read \(B_k\) as “bee \(k\)”, the \(k\)-boundaries. Notice the shift in the indices: cycles in dimension \(k\) are defined using \(\partial_k\), the map going <em>out</em> of \(C_k\), while boundaries in dimension \(k\) are defined using \(\partial_{k+1}\), the map coming <em>in</em> from one dimension up.</p>
 
 <Example title="The hollow and the filled triangle">
 	<p>On the hollow triangle (vertices \(0, 1, 2\) and its three edges), take the walk \(0 \to 1 \to 2 \to 0\). As a chain it is \(z = [0,1] + [1,2] - [0,2]\): the edge \([0,2]\) is walked from \(2\) back to \(0\), against its orientation, so it gets a minus sign. Its boundary is</p>
@@ -103,7 +103,7 @@
 	<p>Let \(b \in B_k\). By definition there is a \((k+1)\)-chain \(c\) with \(b = \partial_{k+1} c\). Then \(\partial_k b = \partial_k \partial_{k+1} c = 0\), because the boundary of a boundary is zero. So \(b\) has zero boundary: \(b \in Z_k\).</p>
 </Proof>
 
-<p>In words: a boundary has no boundary. The loop of edges around a filled triangle closes up precisely because it is the rim of something. The converse is false, and the hollow triangle shows it: its loop \(z\) is a cycle but not a boundary. The gap between "cycle" and "boundary" is exactly what homology measures. Figure 3.3.1 draws the whole situation at once.</p>
+<p>In words: a boundary has no boundary. The loop of edges around a filled triangle closes up precisely because it is the rim of something. The converse is false, and the hollow triangle shows it: its loop \(z\) is a cycle but not a boundary. The gap between “cycle” and “boundary” is exactly what homology measures. Figure 3.3.1 draws the whole situation at once.</p>
 
 <Figure num="3.3.1" title="The anatomy of a chain complex">
 	<ChainComplexDiagram />
@@ -115,12 +115,12 @@
 <p>We want to measure the cycles that are not boundaries. The obvious first attempt is to collect them into a set, \(Z_k\) with \(B_k\) removed. That attempt fails in three different ways, and each failure teaches us something.</p>
 
 <ol>
-	<li><strong>It is not a group.</strong> It does not contain \(0\). Worse, on an annulus (a ring-shaped region) the inner rim and the outer rim, run in opposite directions, are both cycles that bound nothing on their own; but their sum is the full boundary of the annulus, which bounds. Adding two "holes" produced a non-hole.</li>
+	<li><strong>It is not a group.</strong> It does not contain \(0\). Worse, on an annulus (a ring-shaped region) the inner rim and the outer rim, run in opposite directions, are both cycles that bound nothing on their own; but their sum is the full boundary of the annulus, which bounds. Adding two “holes” produced a non-hole.</li>
 	<li><strong>It is far too big.</strong> On the hollow triangle, \(z, 2z, -z, 3z, \dots\) are all cycles that are not boundaries: infinitely many, although there is clearly only one hole.</li>
 	<li><strong>It over-counts.</strong> On a cylinder, the bottom circle and the top circle are different cycles. Neither bounds, yet they obviously go around the same hole.</li>
 </ol>
 
-<p>What we really want is to <em>ignore</em> boundaries, since they enclose nothing, and to regard two cycles as <em>the same</em> whenever they differ by a boundary. You have seen this move before. On a clock, 13 o'clock and 1 o'clock are the same hour because they differ by 12: clock arithmetic ignores multiples of 12 (<Ref to="foundations/equivalence" />). In <Ref to="foundations/abelian-groups" /> the same idea became the <Term t="quotient-group">quotient group</Term> \(G/H\): the elements of \(G\), where two elements count as equal when their difference lies in the subgroup \(H\). Homology is exactly this construction with \(G = Z_k\) and \(H = B_k\). This is the first of the book's four recurring ideas, <strong>quotients</strong>, making its decisive appearance.</p>
+<p>What we really want is to <em>ignore</em> boundaries, since they enclose nothing, and to regard two cycles as <em>the same</em> whenever they differ by a boundary. You have seen this move before. On a clock, 13 o’clock and 1 o’clock are the same hour because they differ by 12: clock arithmetic ignores multiples of 12 (<Ref to="foundations/equivalence" />). In <Ref to="foundations/abelian-groups" /> the same idea became the <Term t="quotient-group">quotient group</Term> \(G/H\): the elements of \(G\), where two elements count as equal when their difference lies in the subgroup \(H\). Homology is exactly this construction with \(G = Z_k\) and \(H = B_k\). This is the first of the book’s four recurring ideas, <strong>quotients</strong>, making its decisive appearance.</p>
 
 <Definition id="def-homology">
 	{#snippet head()}The homology group \(H_k(K)\){/snippet}
@@ -129,7 +129,7 @@
 	<p>Its elements are the cosets \([z] = z + B_k\) of \(k\)-cycles \(z\), called <dfn>homology classes</dfn>. Two cycles \(z\) and \(z'\) are <dfn>homologous</dfn>, written \(z \sim z'\), if their difference is a boundary: \(z - z' = \partial c\) for some \((k+1)\)-chain \(c\). Homologous cycles have the same class: \([z] = [z']\).</p>
 </Definition>
 
-<p>Read \(H_k(K)\) aloud as "H \(k\) of \(K\)", and \(Z_k/B_k\) as "Z \(k\) modulo B \(k\)". In plain words:</p>
+<p>Read \(H_k(K)\) aloud as “H \(k\) of \(K\)”, and \(Z_k/B_k\) as “Z \(k\) modulo B \(k\)”. In plain words:</p>
 
 <KeyIdea>
 	<p>\(H_k\) is the set of \(k\)-cycles, where two cycles count as the same when they differ by a boundary. The zero class consists of the cycles that bound. A non-zero class is a hole, and a class is never a single cycle but a whole family of cycles, any two of which differ by a boundary.</p>
@@ -137,14 +137,14 @@
 
 <p>The group operation is inherited from chains: \([z] + [z'] = [z + z']\). This is <em>well defined</em> (<Ref to="prelude/reading-math" />): if we replace \(z\) by a homologous cycle \(z + \partial c\) and \(z'\) by \(z' + \partial c'\), the sum changes by \(\partial(c + c')\), another boundary, so its class does not change. That is precisely the reason \(B_k\) had to be a subgroup, and the reason the general construction of quotient groups in <Ref to="foundations/abelian-groups" /> works. The zero element is the class \([0] = B_k\) of all boundaries, and the negative of \([z]\) is \([-z]\), the same cycle run backwards.</p>
 
-<p>Figure 3.3.2 lets you feel the definition with your hands. The gold cycle runs around a triangulated annulus. Clicking a triangle \(t\) <em>pushes</em> the cycle across it: the figure adds \(+\partial t\) or \(-\partial t\), whichever cancels the edges the cycle shares with \(t\). The edges you crossed disappear and the triangle's other edges take their place. The cycle changes shape, but its class does not.</p>
+<p>Figure 3.3.2 lets you feel the definition with your hands. The gold cycle runs around a triangulated annulus. Clicking a triangle \(t\) <em>pushes</em> the cycle across it: the figure adds \(+\partial t\) or \(-\partial t\), whichever cancels the edges the cycle shares with \(t\). The edges you crossed disappear and the triangle’s other edges take their place. The cycle changes shape, but its class does not.</p>
 
 <Figure num="3.3.2" title="Cycles modulo boundaries" hint="Click triangles · try other starts">
 	<HomologousCycles />
-	{#snippet caption()}Pushing a cycle \(z\) across triangles. After any number of pushes the new cycle is \(z' = z + \partial c\), where the violet 2-chain \(c\) records every triangle you crossed (darker means crossed more often, or in both directions). Since \(z' - z = \partial c\) is a boundary, \([z'] = [z]\): the badge never changes. Start from "Inner − outer" to meet two loops that together bound.{/snippet}
+	{#snippet caption()}Pushing a cycle \(z\) across triangles. After any number of pushes the new cycle is \(z' = z + \partial c\), where the violet 2-chain \(c\) records every triangle you crossed (darker means crossed more often, or in both directions). Since \(z' - z = \partial c\) is a boundary, \([z'] = [z]\): the badge never changes. Start from “Inner − outer” to meet two loops that together bound.{/snippet}
 </Figure>
 
-<p>Play with it for a minute; it is worth more than a page of text. Notice three things. However wildly you push, the badge stays the same, because every push adds a boundary. The violet region \(c\) is literally the surface swept out between the old cycle and the new one: \(z' - z = \partial c\) says that \(z\) and \(z'\) together form the rim of \(c\). And no amount of pushing ever makes "once around" become zero: to collapse the loop you would have to push it across the hole, and the hole contains no triangles.</p>
+<p>Play with it for a minute; it is worth more than a page of text. Notice three things. However wildly you push, the badge stays the same, because every push adds a boundary. The violet region \(c\) is literally the surface swept out between the old cycle and the new one: \(z' - z = \partial c\) says that \(z\) and \(z'\) together form the rim of \(c\). And no amount of pushing ever makes “once around” become zero: to collapse the loop you would have to push it across the hole, and the hole contains no triangles.</p>
 
 <p>That gives three complementary pictures of a homology class, all worth keeping.</p>
 
@@ -155,11 +155,11 @@
 </ul>
 
 <Warning title="Homologous is not the same as deformable">
-	<p>It is tempting to think of homologous cycles as "loops that can be slid into each other". Sliding is one way to be homologous, but not the only one. Homology lets cycles split and merge: the inner rim minus the outer rim of an annulus is homologous to zero, although it consists of two separate loops that cannot shrink to nothing. And a single loop can bound without being shrinkable: the rim of a torus with a disk cut out (the commutator loop \(aba^{-1}b^{-1}\) of <Ref to="topology/gluing" />) bounds the whole punctured torus, yet it cannot be contracted within it. Homology is coarser than homotopy (<Ref to="topology/homotopy" />). That is the price of being computable, and it is a price well worth paying.</p>
+	<p>It is tempting to think of homologous cycles as “loops that can be slid into each other”. Sliding is one way to be homologous, but not the only one. Homology lets cycles split and merge: the inner rim minus the outer rim of an annulus is homologous to zero, although it consists of two separate loops that cannot shrink to nothing. And a single loop can bound without being shrinkable: the rim of a torus with a disk cut out (the commutator loop \(aba^{-1}b^{-1}\) of <Ref to="topology/gluing" />) bounds the whole punctured torus, yet it cannot be contracted within it. Homology is coarser than homotopy (<Ref to="topology/homotopy" />). That is the price of being computable, and it is a price well worth paying.</p>
 </Warning>
 
 <Notation title="Coefficients">
-	<p>Everything above works word for word if the coefficients are taken in \(\Z/2\) (also written \(\F_2\)) instead of \(\Z\). Then a chain is just a set of simplices and \(\partial\) keeps the faces that appear an odd number of times (<Ref to="homology/chains" />). It works equally well with rational coefficients \(\Q\). We write \(H_k(K;\Z/2)\), \(H_k(K;\Q)\), and in general \(H_k(K;G)\) for "homology with coefficients in \(G\)". Plain \(H_k(K)\) always means integer coefficients. Over \(\Z/2\) and \(\Q\) the chain groups are vector spaces and the quotient is a quotient vector space (<Ref to="foundations/linear-algebra" />), which, as we are about to see, makes counting easy.</p>
+	<p>Everything above works word for word if the coefficients are taken in \(\Z/2\) (also written \(\F_2\)) instead of \(\Z\). Then a chain is just a set of simplices and \(\partial\) keeps the faces that appear an odd number of times (<Ref to="homology/chains" />). It works equally well with rational coefficients \(\Q\). We write \(H_k(K;\Z/2)\), \(H_k(K;\Q)\), and in general \(H_k(K;G)\) for “homology with coefficients in \(G\)”. Plain \(H_k(K)\) always means integer coefficients. Over \(\Z/2\) and \(\Q\) the chain groups are vector spaces and the quotient is a quotient vector space (<Ref to="foundations/linear-algebra" />), which, as we are about to see, makes counting easy.</p>
 </Notation>
 
 <Question>
@@ -167,7 +167,7 @@
 </Question>
 
 <History title="Numbers become groups">
-	<p>For thirty years after Poincaré's <em>Analysis Situs</em> (1895), topologists computed Betti numbers and "torsion coefficients" as numbers read off from matrices. The step to groups was taken around 1925–1927 by Emmy Noether in Göttingen and, independently, by Leopold Vietoris in Vienna. Noether never wrote a paper about it. Her ideas spread through conversation, including the "algebraic-topological" walks she led, remembered fondly by Pavel Alexandroff, and through the young topologists who attended her lectures. Friedrich Hirzebruch summed it up: "She published half a sentence and has an everlasting effect." Not everyone was convinced at first. As late as 1930, Solomon Lefschetz wrote that translating everything into the theory of groups "is of course a mere question of a different terminology". Today it is simply how the subject is done.</p>
+	<p>For thirty years after Poincaré’s <em>Analysis Situs</em> (1895), topologists computed Betti numbers and “torsion coefficients” as numbers read off from matrices. The step to groups was taken around 1925–1927 by Emmy Noether in Göttingen and, independently, by Leopold Vietoris in Vienna. Noether never wrote a paper about it. Her ideas spread through conversation, including the “algebraic-topological” walks she led, remembered fondly by Pavel Alexandroff, and through the young topologists who attended her lectures. Friedrich Hirzebruch summed it up: “She published half a sentence and has an everlasting effect.” Not everyone was convinced at first. As late as 1930, Solomon Lefschetz wrote that translating everything into the theory of groups “is of course a mere question of a different terminology”. Today it is simply how the subject is done.</p>
 </History>
 
 <h2 id="betti-numbers">Betti numbers and the rank formula</h2>
@@ -182,7 +182,7 @@
 <p>In data science the Betti numbers are often written \(\beta_k\). Roughly: \(b_0\) counts pieces, \(b_1\) counts independent loops that bound nothing, \(b_2\) counts enclosed cavities, and so on up the dimensions.</p>
 
 <Warning title="Groups are not always lattices">
-	<p>In general \(H_k(K) \cong \Z^{b_k} \oplus T\), where \(T\) is a finite group called the <em>torsion</em> (recall the classification of finitely generated abelian groups in <Ref to="foundations/abelian-groups" />). Torsion never appears in this chapter's examples, but it is the star of the next one, where it is exactly what tells a torus from a Klein bottle. The rank \(b_k\) ignores \(T\).</p>
+	<p>In general \(H_k(K) \cong \Z^{b_k} \oplus T\), where \(T\) is a finite group called the <em>torsion</em> (recall the classification of finitely generated abelian groups in <Ref to="foundations/abelian-groups" />). Torsion never appears in this chapter’s examples, but it is the star of the next one, where it is exactly what tells a torus from a Klein bottle. The rank \(b_k\) ignores \(T\).</p>
 </Warning>
 
 <p>Over a field, computing Betti numbers needs nothing but the ranks of the boundary matrices. Write \(n_k\) for the number of \(k\)-simplices of \(K\).</p>
@@ -198,7 +198,7 @@
 </Proof>
 
 <Intuition title="A budget">
-	<p>Read the formula as a budget. You have \(n_k\) independent directions in \(C_k\), one per \(k\)-simplex. Exactly \(\rank\partial_k\) of them are "spent going down": they have a non-zero boundary, so they are not cycles. Of the \(\dim Z_k\) directions that remain, exactly \(\rank \partial_{k+1}\) are "filled in from above": they are boundaries. What is left over, \(b_k\) directions, are the holes.</p>
+	<p>Read the formula as a budget. You have \(n_k\) independent directions in \(C_k\), one per \(k\)-simplex. Exactly \(\rank\partial_k\) of them are “spent going down”: they have a non-zero boundary, so they are not cycles. Of the \(\dim Z_k\) directions that remain, exactly \(\rank \partial_{k+1}\) are “filled in from above”: they are boundaries. What is left over, \(b_k\) directions, are the holes.</p>
 </Intuition>
 
 <p>For the hollow triangle, \(n_0 = 3\), \(n_1 = 3\), and the boundary matrix \(\partial_1\) has rank \(2\), so \(b_0 = 3 - 0 - 2 = 1\) and \(b_1 = 3 - 2 - 0 = 1\). Fill the triangle in and \(\partial_2\) has rank \(1\), so \(b_1 = 3 - 2 - 1 = 0\) and \(b_2 = 1 - 1 - 0 = 0\). Computing Betti numbers is nothing more than computing ranks of matrices, something you practised in <Ref to="foundations/linear-algebra" /> and something a computer does in a blink. Next, we do it by hand.</p>
@@ -209,7 +209,7 @@
 
 <Figure num="3.3.3" title="Seven test complexes">
 	<Gallery />
-	{#snippet caption()}The complexes computed in this section, with their homology. Labels on the torus repeat because the square's opposite sides are glued: the four corners are all vertex \(0\). The hollow tetrahedron is drawn as its net; fold the three flaps up and their tips meet at vertex \(3\).{/snippet}
+	{#snippet caption()}The complexes computed in this section, with their homology. Labels on the torus repeat because the square’s opposite sides are glued: the four corners are all vertex \(0\). The hollow tetrahedron is drawn as its net; fold the three flaps up and their tips meet at vertex \(3\).{/snippet}
 </Figure>
 
 <h3>A point</h3>
@@ -230,7 +230,7 @@
 
 \[ C_0 \cong \Z^3 \;(\text{basis } [0],[1],[2]), \qquad C_1 \cong \Z^3 \;(\text{basis } [0,1],[0,2],[1,2]), \qquad C_2 = 0. \]
 
-<p>The boundary of an edge is \(\partial[i,j] = [j] - [i]\). Writing each edge's boundary as a column, in the vertex basis, gives the boundary matrix:</p>
+<p>The boundary of an edge is \(\partial[i,j] = [j] - [i]\). Writing each edge’s boundary as a column, in the vertex basis, gives the boundary matrix:</p>
 
 <MatrixView M={d1tri} rowLabels={tri.K.simplices[0].map(lab)} colLabels={tri.K.simplices[1].map(lab)} caption={'\\partial_1 ='} />
 
@@ -308,7 +308,7 @@
 <p>and every 1-cycle is uniquely \(m z_1 + n z_2\) for integers \(m, n\). (A cycle must use the edge \([0,1]\) as often as \([1,2]\), as often as \(-[0,2]\), and similarly in the second lobe.) So \(H_1 \cong \Z^2\), with basis \([z_1], [z_2]\).</p>
 
 <Remark title="Homology forgets the order">
-	<p>The fundamental group of the figure eight (<Ref to="topology/homotopy" />) is not abelian: going around the first lobe and then the second is a different loop from going around the second and then the first. Homology cannot see the difference, because chains add commutatively: both loops give \(z_1 + z_2\). Homology keeps only the net number of times each lobe is traversed. Allen Hatcher puts it neatly: "loops become cycles, without a chosen basepoint." The precise relationship between the two, \(H_1 = \pi_1\) made abelian, is in <Ref to="homology/invariance" />.</p>
+	<p>The fundamental group of the figure eight (<Ref to="topology/homotopy" />) is not abelian: going around the first lobe and then the second is a different loop from going around the second and then the first. Homology cannot see the difference, because chains add commutatively: both loops give \(z_1 + z_2\). Homology keeps only the net number of times each lobe is traversed. Allen Hatcher puts it neatly: “loops become cycles, without a chosen basepoint.” The precise relationship between the two, \(H_1 = \pi_1\) made abelian, is in <Ref to="homology/invariance" />.</p>
 </Remark>
 
 <h3>The torus</h3>
@@ -337,7 +337,7 @@
 
 <Figure num="3.3.5" title="The torus and its generators" hint="Drag to rotate · pick a view">
 	<TorusGenerators3D />
-	{#snippet caption()}The 3×3 torus wrapped onto a doughnut. The gold loop \(a\) runs once around the hole and the rose loop \(b\) once around the tube; their classes generate \(H_1 \cong \Z^2\). "Slide \(a\) to \(a'\)" shows the middle row \(a'\) and the strip of six triangles between the two rows: \(a - a' = \partial(\text{strip})\), so \([a'] = [a]\). "The 2-cycle" orients all 18 triangles coherently; their sum \(T\) has no boundary and generates \(H_2 \cong \Z\).{/snippet}
+	{#snippet caption()}The 3×3 torus wrapped onto a doughnut. The gold loop \(a\) runs once around the hole and the rose loop \(b\) once around the tube; their classes generate \(H_1 \cong \Z^2\). “Slide \(a\) to \(a'\)” shows the middle row \(a'\) and the strip of six triangles between the two rows: \(a - a' = \partial(\text{strip})\), so \([a'] = [a]\). “The 2-cycle” orients all 18 triangles coherently; their sum \(T\) has no boundary and generates \(H_2 \cong \Z\).{/snippet}
 </Figure>
 
 <p>Look at the seven results side by side (they are under the pictures in Figure 3.3.3). A point and a disk: \(\Z, 0, 0\). Two points: \(\Z^2\). A circle: \(\Z, \Z\). A figure eight: \(\Z, \Z^2\). A sphere: \(\Z, 0, \Z\). A torus: \(\Z, \Z^2, \Z\). In every case the numbers match what the eye sees: pieces, loops, cavities. The difference is that now they are theorems, computed by a procedure that works for any complex whatsoever.</p>
@@ -355,7 +355,7 @@
 
 <Proof>
 	<p><em>Step 1: vertices in the same piece are homologous.</em> If \([u,v]\) is an edge, then \([v] - [u] = \partial[u,v]\) is a boundary, so \([u] = [v]\) in \(H_0\). Along an edge path \(u = v_0, v_1, \dots, v_m = w\) we get \([u] = [v_1] = \cdots = [w]\). Choose a vertex \(p_i\) in each component \(K_i\). Every vertex is then homologous to the chosen vertex of its component, so every 0-chain is homologous to some combination \(n_1[p_1] + \cdots + n_c[p_c]\).</p>
-	<p><em>Step 2: different pieces are independent.</em> For each component \(K_i\) let \(\varepsilon_i\) be "the sum of the coefficients on \(K_i\)": \(\varepsilon_i\big(\sum_v a_v [v]\big) = \sum_{v \in K_i} a_v\). Each edge lies inside a single component, and \(\partial[u,v] = [v] - [u]\) has coefficient sum \(0\) there, so every \(\varepsilon_i\) vanishes on \(B_0\). Hence \(\varepsilon = (\varepsilon_1, \dots, \varepsilon_c)\) gives a well-defined homomorphism \(H_0(K) \to \Z^c\). It sends \([p_i]\) to the \(i\)-th basis vector, so it is onto. And it is one-to-one: by Step 1 every class is \(\sum n_i [p_i]\), whose image is \((n_1, \dots, n_c)\), which is zero only if every \(n_i = 0\).</p>
+	<p><em>Step 2: different pieces are independent.</em> For each component \(K_i\) let \(\varepsilon_i\) be “the sum of the coefficients on \(K_i\)”: \(\varepsilon_i\big(\sum_v a_v [v]\big) = \sum_{v \in K_i} a_v\). Each edge lies inside a single component, and \(\partial[u,v] = [v] - [u]\) has coefficient sum \(0\) there, so every \(\varepsilon_i\) vanishes on \(B_0\). Hence \(\varepsilon = (\varepsilon_1, \dots, \varepsilon_c)\) gives a well-defined homomorphism \(H_0(K) \to \Z^c\). It sends \([p_i]\) to the \(i\)-th basis vector, so it is onto. And it is one-to-one: by Step 1 every class is \(\sum n_i [p_i]\), whose image is \((n_1, \dots, n_c)\), which is zero only if every \(n_i = 0\).</p>
 </Proof>
 
 <Figure num="3.3.6" title="H₀ counts pieces" hint="Click edges · click two vertices">
@@ -363,11 +363,11 @@
 	{#snippet caption()}Each piece of the graph gets its own colour, and \(H_0 \cong \Z^c\). The rank formula agrees: \(b_0 = n_0 - \rank\partial_1\). Click two vertices in the same piece and the figure shows an edge path between them, a 1-chain whose boundary is their difference; in different pieces no such chain exists.{/snippet}
 </Figure>
 
-<p>As you add and remove edges, watch the second line of the readout too. For a graph, \(b_1 = n_1 - \rank\partial_1\), and since \(\rank\partial_1 = n_0 - c\) this is \(b_1 = E - V + c\), Kirchhoff's count of independent loops from <Ref to="homology/cycles-and-boundaries" />. Every edge you add either joins two pieces (and \(b_0\) drops by one) or closes a loop (and \(b_1\) rises by one). Never both, never neither. Hold on to that observation: it is the heart of the Euler–Poincaré formula below.</p>
+<p>As you add and remove edges, watch the second line of the readout too. For a graph, \(b_1 = n_1 - \rank\partial_1\), and since \(\rank\partial_1 = n_0 - c\) this is \(b_1 = E - V + c\), Kirchhoff’s count of independent loops from <Ref to="homology/cycles-and-boundaries" />. Every edge you add either joins two pieces (and \(b_0\) drops by one) or closes a loop (and \(b_1\) rises by one). Never both, never neither. Hold on to that observation: it is the heart of the Euler–Poincaré formula below.</p>
 
 <h2 id="reduced-homology">Reduced homology</h2>
 
-<p>A point has \(H_0 \cong \Z\). Nothing is wrong with that, since the \(\Z\) counts the single piece, but it means that "a space with no holes at all" does not have all its homology groups equal to zero. Many statements become cleaner if we shift \(H_0\) down by one copy of \(\Z\). The tool is the map \(\varepsilon\) we already used for the triangle.</p>
+<p>A point has \(H_0 \cong \Z\). Nothing is wrong with that, since the \(\Z\) counts the single piece, but it means that “a space with no holes at all” does not have all its homology groups equal to zero. Many statements become cleaner if we shift \(H_0\) down by one copy of \(\Z\). The tool is the map \(\varepsilon\) we already used for the triangle.</p>
 
 <Definition id="def-reduced">
 	{#snippet head()}Reduced homology \(\tilde H_k\){/snippet}
@@ -376,7 +376,7 @@
 	<p>and its homology is the <dfn>reduced homology</dfn>: \(\tilde H_0(K) = \ker\varepsilon / \im\partial_1\), and \(\tilde H_k(K) = H_k(K)\) for \(k \ge 1\).</p>
 </Definition>
 
-<p>Read \(\tilde H_k\) as "H tilde \(k\)". For this to be a chain complex we need \(\varepsilon \circ \partial_1 = 0\), and indeed \(\varepsilon(\partial[u,v]) = \varepsilon([v] - [u]) = 1 - 1 = 0\). The only change from ordinary homology is in degree 0, where we now count only those 0-cycles whose coefficients add up to zero.</p>
+<p>Read \(\tilde H_k\) as “H tilde \(k\)”. For this to be a chain complex we need \(\varepsilon \circ \partial_1 = 0\), and indeed \(\varepsilon(\partial[u,v]) = \varepsilon([v] - [u]) = 1 - 1 = 0\). The only change from ordinary homology is in degree 0, where we now count only those 0-cycles whose coefficients add up to zero.</p>
 
 <Proposition id="prop-reduced">
 	<p>\(H_0(K) \cong \tilde H_0(K) \oplus \Z\). In particular, if \(K\) has \(c\) pieces then \(\tilde H_0(K) \cong \Z^{c-1}\).</p>
@@ -436,11 +436,11 @@
 <ul>
 	<li><strong>The numbers agree.</strong> Sphere: \(4 - 6 + 4 = 2 = 1 - 0 + 1\). Torus: \(9 - 27 + 18 = 0 = 1 - 2 + 1\). Figure eight: \(5 - 6 = -1 = 1 - 2\).</li>
 	<li><strong>The mystery of §2.6 is explained.</strong> In <Ref to="homology/invariance" /> we prove that the Betti numbers of a space do not depend on the triangulation. Then the alternating sum of Betti numbers is independent of the triangulation, and therefore so is \(\chi\). Subdividing a triangle changes \(n_0, n_1, n_2\) wildly but cannot change a single Betti number.</li>
-	<li><strong>Lhuilier's torus.</strong> A closed orientable surface of genus \(g\) has \(b_0 = 1\), \(b_1 = 2g\), \(b_2 = 1\) (we computed \(g = 1\); the general case is in <Ref to="homology/exact-sequences" />), so \(\chi = 2 - 2g\), the formula of <Ref to="topology/euler-characteristic" />. A doughnut "has one hole" but two independent loops; that is why \(\chi\) drops by \(2\) per handle.</li>
+	<li><strong>Lhuilier’s torus.</strong> A closed orientable surface of genus \(g\) has \(b_0 = 1\), \(b_1 = 2g\), \(b_2 = 1\) (we computed \(g = 1\); the general case is in <Ref to="homology/exact-sequences" />), so \(\chi = 2 - 2g\), the formula of <Ref to="topology/euler-characteristic" />. A doughnut “has one hole” but two independent loops; that is why \(\chi\) drops by \(2\) per handle.</li>
 </ul>
 
 <History title="Learned on a walk">
-	<p>Poincaré proved the formula \(\sum (-1)^k n_k = \sum (-1)^k b_k\) at the end of the nineteenth century, with Betti numbers defined through incidence matrices. The short proof above, rank–nullity applied to cycles and boundaries, is the one Heinz Hopf and Pavel Alexandroff learned from Emmy Noether in Göttingen in the late 1920s. Hopf later recalled how new this basis-free view was at the time; he was not even sure, he wrote, whether the concept of a "homology group" had yet appeared "schwarz auf weiß", in black and white, anywhere in the literature.</p>
+	<p>Poincaré proved the formula \(\sum (-1)^k n_k = \sum (-1)^k b_k\) at the end of the nineteenth century, with Betti numbers defined through incidence matrices. The short proof above, rank–nullity applied to cycles and boundaries, is the one Heinz Hopf and Pavel Alexandroff learned from Emmy Noether in Göttingen in the late 1920s. Hopf later recalled how new this basis-free view was at the time; he was not even sure, he wrote, whether the concept of a “homology group” had yet appeared “schwarz auf weiß”, in black and white, anywhere in the literature.</p>
 </History>
 
 <h2 id="cliffhanger">A cliffhanger: two surfaces, one set of numbers</h2>
@@ -471,7 +471,7 @@
 
 \[ b_0 = 9 - 8 = 1, \qquad b_1 = 27 - 8 - 17 = 2, \qquad b_2 = 18 - 17 = 1, \]
 
-<p>exactly the torus's \(1, 2, 1\). The bottom row \(a\) and the left column \(b\) generate \(H_1(K;\Z/2) \cong (\Z/2)^2\), and the set of all 18 triangles is a mod-2 2-cycle, because every edge is a face of exactly two of them, an even number. Even the Euler characteristics agree: \(\chi = 0\) for both.</p>
+<p>exactly the torus’s \(1, 2, 1\). The bottom row \(a\) and the left column \(b\) generate \(H_1(K;\Z/2) \cong (\Z/2)^2\), and the set of all 18 triangles is a mod-2 2-cycle, because every edge is a face of exactly two of them, an even number. Even the Euler characteristics agree: \(\chi = 0\) for both.</p>
 
 <Figure num="3.3.9" title="Same numbers, different surfaces" hint="Drag to rotate">
 	<TorusKleinPair lens="Z2" />
@@ -494,7 +494,7 @@
 <Exercise level={1} title="Filling one triangle at a time">
 	<p>Take a square with vertices \(0, 1, 2, 3\) (in order around it), its four sides \([0,1], [1,2], [2,3], [0,3]\), and the diagonal \([0,2]\). Compute \(b_1\) in three cases: (a) no triangles; (b) only the triangle \([0,1,2]\); (c) both triangles \([0,1,2]\) and \([0,2,3]\). Describe a generator of \(H_1\) in case (b).</p>
 	{#snippet hint()}
-		<p>The graph is connected, so \(\rank\partial_1 = 4 - 1 = 3\). Each added triangle raises \(\rank\partial_2\) by one, because the triangles' boundaries are independent.</p>
+		<p>The graph is connected, so \(\rank\partial_1 = 4 - 1 = 3\). Each added triangle raises \(\rank\partial_2\) by one, because the triangles’ boundaries are independent.</p>
 	{/snippet}
 	{#snippet solution()}
 		<p>Here \(n_0 = 4\), \(n_1 = 5\) and \(\rank\partial_1 = 3\). (a) No triangles: \(b_1 = 5 - 3 - 0 = 2\), the two triangular loops. (b) \(\rank\partial_2 = 1\): \(b_1 = 5 - 3 - 1 = 1\). The surviving hole is the loop \(0 \to 2 \to 3 \to 0\), that is \([0,2] + [2,3] - [0,3]\); the other loop, around \([0,1,2]\), is now a boundary. (c) \(\rank\partial_2 = 2\): \(b_1 = 5 - 3 - 2 = 0\), and \(b_2 = 2 - 2 = 0\). The filled square is a disk.</p>
@@ -504,7 +504,7 @@
 <Exercise level={2} title="Homologous or not?">
 	<p>On the 3×3 torus, let \(a\) be the bottom row and \(b\) the left column, as in the text. (a) Is the middle row \(a' = [3,4] + [4,5] - [3,5]\) homologous to \(a\)? (b) Is \(a + b\) homologous to \(a - b\)? (c) Is the loop \(0 \to 1 \to 4 \to 0\) homologous to zero?</p>
 	{#snippet solution()}
-		<p>(a) Yes. The six triangles of the bottom strip, each oriented counterclockwise in the picture, form a 2-chain whose boundary is \(a - a'\): the vertical and diagonal edges inside the strip cancel in pairs, the strip's two short sides are glued and cancel, and what is left is the bottom row run rightward and the middle row run leftward. (Figure 3.3.5 shows this strip.) (b) No. Their difference is \(2b\), and the seam-crossing count \(\psi\) gives \(\psi(2b) = 2\), while \(\psi\) of every boundary is \(0\). (c) Yes: it is \(\partial[0,1,4]\), the boundary of a single triangle. As a chain it is \([0,1] + [1,4] - [0,4]\), exactly \(\partial[0,1,4]\).</p>
+		<p>(a) Yes. The six triangles of the bottom strip, each oriented counterclockwise in the picture, form a 2-chain whose boundary is \(a - a'\): the vertical and diagonal edges inside the strip cancel in pairs, the strip’s two short sides are glued and cancel, and what is left is the bottom row run rightward and the middle row run leftward. (Figure 3.3.5 shows this strip.) (b) No. Their difference is \(2b\), and the seam-crossing count \(\psi\) gives \(\psi(2b) = 2\), while \(\psi\) of every boundary is \(0\). (c) Yes: it is \(\partial[0,1,4]\), the boundary of a single triangle. As a chain it is \([0,1] + [1,4] - [0,4]\), exactly \(\partial[0,1,4]\).</p>
 	{/snippet}
 </Exercise>
 
@@ -530,9 +530,9 @@
 </Exercise>
 
 <Exercise level={3} title="Why the signs matter">
-	<p>Suppose we tried a sign-free "boundary" with integer coefficients, \(\partial'[i,j] = [i] + [j]\) and \(\partial'[i,j,k] = [j,k] + [i,k] + [i,j]\). Compute \(\partial'\partial'[0,1,2]\), and explain why "\(\ker\partial' / \im\partial'\)" would not make sense. What happens to this computation over \(\Z/2\)?</p>
+	<p>Suppose we tried a sign-free “boundary” with integer coefficients, \(\partial'[i,j] = [i] + [j]\) and \(\partial'[i,j,k] = [j,k] + [i,k] + [i,j]\). Compute \(\partial'\partial'[0,1,2]\), and explain why “\(\ker\partial' / \im\partial'\)” would not make sense. What happens to this computation over \(\Z/2\)?</p>
 	{#snippet solution()}
-		<p>\(\partial'\partial'[0,1,2] = ([1]+[2]) + ([0]+[2]) + ([0]+[1]) = 2[0] + 2[1] + 2[2] \ne 0\). So the 1-chain \(\partial'[0,1,2]\) lies in the image of \(\partial'\) but not in the kernel: the "boundaries" are not all "cycles", and a quotient of the kernel by the image is not even defined, because the image does not sit inside the kernel. Over \(\Z/2\), however, \(2 = 0\) and signs do not matter, so \(\partial' = \partial\) and the problem disappears. That is why mod-2 homology can ignore orientations, while integer homology needs the alternating signs.</p>
+		<p>\(\partial'\partial'[0,1,2] = ([1]+[2]) + ([0]+[2]) + ([0]+[1]) = 2[0] + 2[1] + 2[2] \ne 0\). So the 1-chain \(\partial'[0,1,2]\) lies in the image of \(\partial'\) but not in the kernel: the “boundaries” are not all “cycles”, and a quotient of the kernel by the image is not even defined, because the image does not sit inside the kernel. Over \(\Z/2\), however, \(2 = 0\) and signs do not matter, so \(\partial' = \partial\) and the problem disappears. That is why mod-2 homology can ignore orientations, while integer homology needs the alternating signs.</p>
 	{/snippet}
 </Exercise>
 

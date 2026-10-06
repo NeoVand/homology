@@ -8,7 +8,7 @@
 	import { cubicInOut } from 'svelte/easing';
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import { gcd, lcm, residueColor } from '../groups/zn';
 
@@ -174,8 +174,8 @@
 	<button class="b ui" onclick={stepOnce} disabled={k >= L}>Step</button>
 	<button class="b ui gold" onclick={play}>{playing ? 'Pause' : 'Play'}</button>
 	<button class="b ui" onclick={reset}>Reset</button>
-	<Slider bind:value={m} min={2} max={8} step={1} label="m" />
-	<Slider bind:value={n} min={2} max={8} step={1} label="n" />
+	<Stepper bind:value={m} min={2} max={8} label="m" />
+	<Stepper bind:value={n} min={2} max={8} label="n" />
 </Controls>
 
 <style>

@@ -221,7 +221,7 @@
 		</div>
 		<div class="verdict" class:ok={agree}>
 			{#if agree}
-				The nerve's loops that bound nothing match the holes one for one — the nerve theorem at work.
+				The nerve’s loops that bound nothing match the holes one for one — the nerve theorem at work.
 			{:else}
 				Two disks are exactly tangent here; nudge one and the counts agree again.
 			{/if}

@@ -101,7 +101,7 @@
 	In <Ref to="topology/spaces" /> we called two spaces the same when there is a <Term t="homeomorphism">homeomorphism</Term> between
 	them: a continuous bijection with a continuous inverse, a perfect rubber-sheet correspondence. That notion is exact, but for counting
 	holes it is too fussy. A thick ring and a thin circle are not homeomorphic (one is two-dimensional, the other one-dimensional), yet
-	they obviously have "the same hole". A solid disk and a single point are not homeomorphic either, yet neither has any hole at all.
+	they obviously have “the same hole”. A solid disk and a single point are not homeomorphic either, yet neither has any hole at all.
 	Homotopy is the coarser, more forgiving notion of sameness that sees holes and nothing else.
 </p>
 
@@ -111,7 +111,7 @@
 		opposite. It means that to compute the homology of a complicated space we may first squash it onto a much simpler one — a punctured
 		torus onto a figure eight, a thick letter onto a thin one — and compute there. This <em>homotopy invariance</em> is proved in
 		<Ref to="homology/invariance" />. The fundamental group built in this chapter is also the ancestor of the first homology group: there
-		we will see that \(H_1\) is exactly the fundamental group "made commutative" (the Hurewicz theorem). And the winding number reappears
+		we will see that \(H_1\) is exactly the fundamental group “made commutative” (the Hurewicz theorem). And the winding number reappears
 		in <Ref to="cohomology/de-rham" /> as an integral.
 	</p>
 </Ahead>
@@ -133,7 +133,7 @@
 </Definition>
 
 <p>
-	Read \(\gamma\) ("gamma") as a traveller's itinerary: at each moment \(s \in I\) it tells you <em>where</em> the traveller is,
+	Read \(\gamma\) (“gamma”) as a traveller’s itinerary: at each moment \(s \in I\) it tells you <em>where</em> the traveller is,
 	\(\gamma(s) \in X\). Continuity says the traveller never teleports. Two features of this definition will matter again and again.
 </p>
 
@@ -157,8 +157,8 @@
 <Example title="Paths in the plane">
 	<p>
 		The straight segment from \(p\) to \(q\) in \(\R^2\) is the path \(\gamma(s) = (1-s)\,p + s\,q\). At \(s = 0\) it is at \(p\), at
-		\(s = 1\) at \(q\), and at \(s = \tfrac12\) at the midpoint. The formula \((1-s)p + sq\) — "a weighted average of \(p\) and \(q\),
-		with the weight sliding from \(p\) to \(q\)" — will be our main tool for building films in a moment.
+		\(s = 1\) at \(q\), and at \(s = \tfrac12\) at the midpoint. The formula \((1-s)p + sq\) — “a weighted average of \(p\) and \(q\),
+		with the weight sliding from \(p\) to \(q\)” — will be our main tool for building films in a moment.
 	</p>
 </Example>
 
@@ -167,16 +167,17 @@
 <p>
 	Here is the question that drives the chapter. In the plane with a hole punched in it, take two paths from a point \(x_0\) to a point
 	\(x_1\). <em>Can one path be continuously slid onto the other, keeping its ends pinned down, without ever passing through the
-	hole?</em> Try it below: the gold path \(\gamma_0\) stays put; drag the teal handle to reshape \(\gamma_1\), then play the movie that
+	hole?</em> Try it below: the gold path \(\gamma_0\) stays put; drag the teal bead to reshape \(\gamma_1\), then play the movie that
 	slides one onto the other.
 </p>
 
-<Figure num="2.3.1" title="Paths around a hole" hint="Drag the teal handle · play the movie">
+<Figure num="2.3.1" title="Paths around a hole" hint="Drag the teal bead to reshape γ₁ · drag the white bead to run the movie">
 	<PathHomotopy />
 	{#snippet caption()}
-		The straight-line movie \(H(s,t) = (1-t)\,\gamma_0(s) + t\,\gamma_1(s)\): the faint dashed curves are its frames. When both paths pass
-		on the same side of the hole the movie never touches it. When they pass on opposite sides, the frames are forced across the hole (the
-		pink dashed frame), and no other movie can do better: the two paths are not homotopic.
+		The straight-line movie \(H(s,t) = (1-t)\,\gamma_0(s) + t\,\gamma_1(s)\): every point of \(\gamma_0\) slides along a straight
+		track (the faint lines) to the matching point of \(\gamma_1\), and the dashed curves are frames of the movie. When both paths pass on
+		the same side of the puncture, the movie never touches it. When they pass on opposite sides, the frames are forced across the puncture
+		(the pink dashed frame), and no other movie can do better: the two paths are not homotopic.
 	{/snippet}
 </Figure>
 
@@ -202,9 +203,9 @@
 
 <p>
 	Let us read every symbol. \(X \times I\) is the <Term t="product-topology">product</Term> of the space \(X\) with the time interval:
-	its points are pairs \((x, t)\) — "the point \(x\), at time \(t\)". The homotopy \(H\) takes such a pair and says where \(x\) has been
+	its points are pairs \((x, t)\) — “the point \(x\), at time \(t\)”. The homotopy \(H\) takes such a pair and says where \(x\) has been
 	sent at that moment. The two equations pin down the first and last frames: at time \(0\) the film shows \(f\), at time \(1\) it shows
-	\(g\). The symbol \(\simeq\) is read "is homotopic to".
+	\(g\). The symbol \(\simeq\) is read “is homotopic to”.
 </p>
 
 <Warning title="It is the map that moves, not the space">
@@ -245,7 +246,7 @@
 <h3>Homotopy is an equivalence relation</h3>
 
 <p>
-	"Is homotopic to" behaves like a sameness relation, in the precise sense of <Ref to="foundations/equivalence" />: it is an
+	“Is homotopic to” behaves like a sameness relation, in the precise sense of <Ref to="foundations/equivalence" />: it is an
 	<Term t="equivalence-relation">equivalence relation</Term>. Each of the three properties is an operation on films.
 </p>
 
@@ -270,12 +271,12 @@
 <h2 id="homotopy-equivalence">The same shape in a broader sense</h2>
 
 <p>
-	Now we use films to compare <em>spaces</em>. The example with which Hatcher opens his book, right after this chapter's epigraph, is the
+	Now we use films to compare <em>spaces</em>. The example with which Hatcher opens his book, right after this chapter’s epigraph, is the
 	alphabet. Write each capital letter in two ways: as a thin skeleton of curves, and as a fat, inflated version of itself. The thin letter
 	sits inside the fat one, and the fat one can be squashed onto it by sliding each point straight in towards the skeleton.
 </p>
 
-<Figure num="2.3.2" title="Thick letters, thin letters" hint="Shrink the letters · sort them">
+<Figure num="2.3.2" title="Thick letters, thin letters" hint="Tap a letter to shrink it · sort them">
 	<LetterMelter />
 	{#snippet caption()}
 		Each thick letter shrinks onto its gold skeleton without tearing. Sorted by homotopy type, the letters fall into just three families:
@@ -335,7 +336,7 @@
 
 <Intuition title="What survives a homotopy equivalence">
 	<p>
-		Thickness, dimension, length and the number of "branches" at a point are all forgotten. What survives is the pattern of holes: how
+		Thickness, dimension, length and the number of “branches” at a point are all forgotten. What survives is the pattern of holes: how
 		many independent loops cannot be shrunk, how many hollow chambers cannot be filled, and how the space falls into pieces. That is
 		exactly the information homology will measure.
 	</p>
@@ -362,11 +363,11 @@
 </Definition>
 
 <p>
-	Explore four of them below. Pick a space, then drag the time slider: you are watching the frames \(f_t\) of the film, and the faint grid
+	Explore four of them below. Pick a space, then play or scrub through time: you are watching the frames \(f_t\) of the film, and the faint grid
 	lines are painted on the space so that you can see every point travel. The inset shows the same film drawn flat.
 </p>
 
-<Figure num="2.3.3" title="Deformation retractions" hint="Choose a space · drag time · drag to rotate">
+<Figure num="2.3.3" title="Deformation retractions" hint="Choose a space · play or scrub time · drag to rotate">
 	<DeformationRetract />
 	{#snippet caption()}
 		A disk shrinks to its centre; an annulus is squeezed onto its middle circle; a Möbius band is squeezed onto its gold core circle (watch
@@ -447,14 +448,14 @@
 <Question>
 	<p>
 		Is the circle \(S^1\) contractible? It certainly <em>looks</em> as if it is not: shrinking the whole circle to a point would seem to
-		require tearing it, or pulling it off itself. But "it looks impossible" is not a proof — perhaps some ingenious film manages it. Keep
+		require tearing it, or pulling it off itself. But “it looks impossible” is not a proof — perhaps some ingenious film manages it. Keep
 		this question in mind: by the end of the chapter we will have a tool that settles it.
 	</p>
 </Question>
 
 <p>
 	This is the moment to say why homotopy is the right lens for this book. We are looking for <dfn>invariants</dfn>: numbers, or groups,
-	attached to spaces in such a way that equal spaces get equal labels. The finer the notion of "equal", the more labels are allowed and
+	attached to spaces in such a way that equal spaces get equal labels. The finer the notion of “equal”, the more labels are allowed and
 	the harder they are to compute. Homotopy is the coarse, generous notion — and invariants that do not change under homotopy equivalence
 	have a superpower.
 </p>
@@ -470,7 +471,7 @@
 <History>
 	<p>
 		The idea of studying a space through the loops in it, and of declaring two loops the same when one can be deformed into the other,
-		goes back to Henri Poincaré's founding paper <em>Analysis Situs</em> of 1895, where the fundamental group of the next sections first
+		goes back to Henri Poincaré’s founding paper <em>Analysis Situs</em> of 1895, where the fundamental group of the next sections first
 		appears. Poincaré used it to tell apart three-dimensional spaces that his numerical invariants (the Betti numbers, ancestors of
 		homology) could not distinguish.
 	</p>
@@ -514,12 +515,14 @@
 	timetables. The difference is only one of timing, and timing can be changed continuously.
 </p>
 
-<Figure num="2.3.4" title="Timetables" hint="Choose a homotopy · drag time">
+<Figure num="2.3.4" title="Timetables" hint="Drag the point in the square · run the trip">
 	<Timetable />
 	{#snippet caption()}
-		Left: the square of a homotopy, with loop-time \(s\) running across and film-time \(t\) running up. Sliding the two breakpoints from
-		\(\tfrac14, \tfrac12\) to \(\tfrac12, \tfrac34\) turns \((\alpha\cdot\beta)\cdot\gamma\) into \(\alpha\cdot(\beta\cdot\gamma)\).
-		Choose “Inverses” to see \(\alpha\cdot\bar\alpha\) shrink to the constant loop by turning back earlier and earlier.
+		Left: the square of a homotopy \(H\), with trip time \(s\) running across and movie time \(t\) running up. Right: the space, three
+		loops at \(x_0\). Each point \((s,t)\) of the square is a position \(H(s,t)\) in the space: the white bead. Sliding the two
+		breakpoints from \(\tfrac14, \tfrac12\) to \(\tfrac12, \tfrac34\) turns \((\alpha\cdot\beta)\cdot\gamma\) into
+		\(\alpha\cdot(\beta\cdot\gamma)\). Choose “Inverses” to see \(\alpha\cdot\bar\alpha\) shrink to the constant loop by turning back
+		earlier and earlier.
 	{/snippet}
 </Figure>
 
@@ -551,7 +554,7 @@
 <h2 id="fundamental-group">The fundamental group</h2>
 
 <p>
-	We are ready for the chapter's main construction. Up to homotopy, loops compose associatively, have an identity and have inverses — so
+	We are ready for the chapter’s main construction. Up to homotopy, loops compose associatively, have an identity and have inverses — so
 	homotopy <em>classes</em> of loops form a <Term t="group">group</Term>, in the sense of <Ref to="foundations/groups" />.
 </p>
 
@@ -565,14 +568,14 @@
 </Definition>
 
 <p>
-	Read \(\pi_1\) as "pi one"; the "1" is there because there are higher versions \(\pi_2, \pi_3, \dots\) built from spheres instead of
+	Read \(\pi_1\) as “pi one”; the “1” is there because there are higher versions \(\pi_2, \pi_3, \dots\) built from spheres instead of
 	loops, which we will only mention. Remember that a homotopy of loops keeps the basepoint fixed for the whole film: the loop may wriggle
 	as it likes, but it is always anchored at home.
 </p>
 
 <p>
 	One point needs checking before this is a definition at all. The product is defined by choosing loops from the two classes; what if we
-	had chosen others? This is the "is it well-defined?" question from <Ref to="prelude/reading-math" />. Suppose \(\alpha \simeq \alpha'\)
+	had chosen others? This is the “is it well-defined?” question from <Ref to="prelude/reading-math" />. Suppose \(\alpha \simeq \alpha'\)
 	by a film \(F\) and \(\beta \simeq \beta'\) by a film \(G\). Then running \(F\) and \(G\) side by side — \(F\) in the first half of each
 	frame, \(G\) in the second — is a film from \(\alpha\cdot\beta\) to \(\alpha'\cdot\beta'\). So the class of the product depends only on
 	the classes we started with, and the three facts of the previous section become the group axioms.
@@ -583,7 +586,7 @@
 		If \(X\) is path-connected, no: a path \(h\) from \(x_0\) to \(x_1\) turns each loop \(\alpha\) at \(x_1\) into the loop
 		\(h\cdot\alpha\cdot\bar h\) at \(x_0\) (walk over, do \(\alpha\), walk back), and this gives an
 		<Term t="isomorphism">isomorphism</Term> \(\pi_1(X, x_1) \cong \pi_1(X, x_0)\). So for path-connected spaces one often writes simply
-		\(\pi_1(X)\), meaning the group "up to isomorphism".
+		\(\pi_1(X)\), meaning the group “up to isomorphism”.
 	</p>
 </Remark>
 
@@ -634,11 +637,11 @@
 		\(S^2 \setminus \set{p}\), hence inside \(S^2\).
 	</p>
 	<p>
-		The honest difficulty is the first step. There are continuous loops that pass through <em>every</em> point of the sphere — "space-filling
-		curves", relatives of the famous curves of Peano and Hilbert — so "pick a point the loop misses" is not always possible. The fix is
+		The honest difficulty is the first step. There are continuous loops that pass through <em>every</em> point of the sphere — “space-filling
+		curves”, relatives of the famous curves of Peano and Hilbert — so “pick a point the loop misses” is not always possible. The fix is
 		to first replace the loop by a homotopic one that does miss a point: chop it into short arcs, each lying in a small cap of the sphere,
 		and replace each arc by the shortest great-circle arc with the same ends (a homotopy inside the cap). The new loop is made of finitely
-		many great-circle arcs, and those cannot cover the whole sphere. Hatcher's Proposition 1.14 carries this out in detail.
+		many great-circle arcs, and those cannot cover the whole sphere. Hatcher’s Proposition 1.14 carries this out in detail.
 	</p>
 </Proof>
 
@@ -654,7 +657,7 @@
 <h2 id="circle">Winding numbers: the fundamental group of the circle</h2>
 
 <p>
-	Now for the torus's stuck loops, and the rubber band on the flagpole. The simplest space with a hole is the circle \(S^1\), or
+	Now for the torus’s stuck loops, and the rubber band on the flagpole. The simplest space with a hole is the circle \(S^1\), or
 	equivalently (by the deformation retraction above) the punctured plane \(\R^2 \setminus \set{0}\). A loop in the punctured plane can wind
 	around the hole some whole number of times. Let us measure it.
 </p>
@@ -666,7 +669,7 @@
 	<dfn>winding number</dfn> of the loop.
 </p>
 
-<Figure num="2.3.6" title="Winding number" hint="Drag the gold points or the puncture · run the probe">
+<Figure num="2.3.6" title="Winding number" hint="Reshape the loop · drag the puncture · drag the teal probe along the loop">
 	<WindingNumber />
 	{#snippet caption()}
 		As the probe runs round the loop, the dashed ray from the puncture turns; the teal spiral records the total angle so far, and the
@@ -677,9 +680,9 @@
 </Figure>
 
 <p>
-	The graph on the right deserves a name. The angle of a point of the circle is only defined up to adding whole turns: "a quarter turn"
-	and "one and a quarter turns" are the same direction. Following the traveller continuously picks out one consistent value at each
-	moment, a function \(\tilde\alpha\colon I \to \R\) (read "alpha tilde") with no jumps. It is called the <dfn>lift</dfn> of the loop:
+	The graph on the right deserves a name. The angle of a point of the circle is only defined up to adding whole turns: “a quarter turn”
+	and “one and a quarter turns” are the same direction. Following the traveller continuously picks out one consistent value at each
+	moment, a function \(\tilde\alpha\colon I \to \R\) (read “alpha tilde”) with no jumps. It is called the <dfn>lift</dfn> of the loop:
 	picture the real line wound into an endless spiral staircase above the circle, one storey per turn, and \(\tilde\alpha\) as the route
 	of someone walking up and down the staircase while their shadow traces the loop.
 </p>
@@ -699,7 +702,7 @@
 </Theorem>
 
 <Proof>
-	<p>Here is the shape of the argument (Hatcher's Theorem 1.7 gives every detail). There are three steps.</p>
+	<p>Here is the shape of the argument (Hatcher’s Theorem 1.7 gives every detail). There are three steps.</p>
 	<ol>
 		<li>
 			<strong>Lifts exist and are unique.</strong> Every path in the circle has exactly one lift to the spiral staircase starting at a
@@ -761,16 +764,16 @@
 </Theorem>
 
 <p>
-	That different reduced words give non-homotopic loops is the hard part; it is usually proved with van Kampen's theorem or with covering
+	That different reduced words give non-homotopic loops is the hard part; it is usually proved with van Kampen’s theorem or with covering
 	spaces (Hatcher, §1.2–1.3), and we shall take it on trust. The figure below shows the idea behind the covering-space proof. Build your
 	own loops from the four letters and watch three pictures at once.
 </p>
 
-<Figure num="2.3.7" title="Loops on the figure eight" hint="Type a word · trace it · pull it tight">
+<Figure num="2.3.7" title="Loops on the figure eight" hint="Build a word from the letter keys · tap a letter to remove it · pull it tight">
 	<LoopWords />
 	{#snippet caption()}
 		Left: the loop, one petal per letter, numbered in order (dashed petals cancel). Middle: the same trip as a walk on an infinite tree,
-		one direction per letter — this tree is the "staircase" of the figure eight, and the walk's end point is the reduced word. Right: the
+		one direction per letter — this tree is the “staircase” of the figure eight, and the walk’s end point is the reduced word. Right: the
 		walk on the grid \(\Z^2\), which only remembers how many steps went each way. Compare \(ab\) with \(ba\): different ends on the tree,
 		the same end on the grid.
 	{/snippet}
@@ -779,14 +782,14 @@
 <p>
 	Try \(ab\) and then \(ba\). As loops, they go round the two circles in opposite orders; as reduced words they are different, so they
 	are <em>not</em> homotopic: \(ab \ne ba\) in \(\pi_1\). The fundamental group of the figure eight is not abelian. Now try the
-	<dfn>commutator</dfn> \(aba^{-1}b^{-1}\). Each circle is traversed once in each direction, so every "net count" is zero, and the grid walk
+	<dfn>commutator</dfn> \(aba^{-1}b^{-1}\). Each circle is traversed once in each direction, so every “net count” is zero, and the grid walk
 	returns home. Yet the word is already reduced, the tree walk ends four steps away, and the loop cannot be shrunk.
 </p>
 
 <p>
 	Here, finally, is the punctured torus again. It deformation retracts onto the figure eight, so its fundamental group is free on \(a\)
 	and \(b\) too — and the rim of the puncture, which the film of the earlier figure carried onto \(aba^{-1}b^{-1}\), is a loop that cannot
-	be shrunk. Fill the puncture back in and the square reappears to shrink it: the torus's \(ab = ba\) is precisely the effect of the one
+	be shrunk. Fill the puncture back in and the square reappears to shrink it: the torus’s \(ab = ba\) is precisely the effect of the one
 	missing disk.
 </p>
 
@@ -804,10 +807,10 @@
 
 <p>
 	The grid on the right of the figure is a picture of what happens if we <em>insist</em> that loops commute, declaring \(ab = ba\) for all
-	elements. A word then only remembers its <dfn>exponent sums</dfn>: the total number of \(a\)'s (counting \(a^{-1}\) as \(-1\)) and the
-	total number of \(b\)'s. The non-abelian free group collapses to the abelian group \(\Z^2\), written additively as \(m\,a + n\,b\). This
+	elements. A word then only remembers its <dfn>exponent sums</dfn>: the total number of \(a\)’s (counting \(a^{-1}\) as \(-1\)) and the
+	total number of \(b\)’s. The non-abelian free group collapses to the abelian group \(\Z^2\), written additively as \(m\,a + n\,b\). This
 	process — forcing a group to become commutative in the most economical way — is called <dfn>abelianization</dfn>. (Precisely, one
-	divides the group by the subgroup generated by all commutators; for free groups the result is always "count each letter".)
+	divides the group by the subgroup generated by all commutators; for free groups the result is always “count each letter”.)
 </p>
 
 <KeyIdea>
@@ -825,8 +828,8 @@
 	whether two words describe the same element is, for general spaces, provably impossible to automate. The higher homotopy groups
 	\(\pi_n\) are wilder still: even for the 2-sphere they are non-zero in infinitely many dimensions and are not completely known. Homology
 	gives up the order of loops, and in exchange becomes <em>computable</em> — by the linear algebra of <Ref to="foundations/linear-algebra" />
-	— in every dimension at once, detecting the sphere's hollow along the way. Hatcher's way of putting the bridge: abelianizing frees loops
-	from their basepoint, so that "loops become cycles". Cycles are where Part III begins.
+	— in every dimension at once, detecting the sphere’s hollow along the way. Hatcher’s way of putting the bridge: abelianizing frees loops
+	from their basepoint, so that “loops become cycles”. Cycles are where Part III begins.
 </p>
 
 <h2 id="exercises">Exercises</h2>
@@ -956,7 +959,7 @@
 	</p>
 	{#snippet solution()}
 		<p>
-			(a) Around \(p\), only the \(a\)'s wind: \(+1 - 1 = 0\). Around \(q\), only the \(b\)'s: \(+1 - 1 = 0\). (b) In \(\pi_1(P)\) the word
+			(a) Around \(p\), only the \(a\)’s wind: \(+1 - 1 = 0\). Around \(q\), only the \(b\)’s: \(+1 - 1 = 0\). (b) In \(\pi_1(P)\) the word
 			\(aba^{-1}b^{-1}\) is reduced and non-empty, so it is not the identity: winding numbers, being abelian, are blind to it. If \(q\) is
 			filled in, the space becomes \(\R^2 \setminus \set{p}\), whose fundamental group is \(\Z\), generated by \(a\); the loop \(b\) now
 			shrinks to the constant loop, so the word becomes \(a\,a^{-1}\), which cancels. This is the picture-hanging puzzle, and a first
@@ -970,7 +973,7 @@
 <Recap>
 	<ul>
 		<li>
-			A <strong>homotopy</strong> \(H\colon X \times I \to Y\) is a continuous film of maps from \(f\) to \(g\); "homotopic" (\(\simeq\)) is
+			A <strong>homotopy</strong> \(H\colon X \times I \to Y\) is a continuous film of maps from \(f\) to \(g\); “homotopic” (\(\simeq\)) is
 			an equivalence relation. For paths we keep the ends fixed.
 		</li>
 		<li>
@@ -983,12 +986,12 @@
 			<strong>contractible</strong>).
 		</li>
 		<li>
-			Homotopy classes of loops at a basepoint form the <strong>fundamental group</strong> \(\pi_1(X, x_0)\); composition is "one loop then
-			the other", inverses run backwards. It is a homotopy invariant.
+			Homotopy classes of loops at a basepoint form the <strong>fundamental group</strong> \(\pi_1(X, x_0)\); composition is “one loop then
+			the other”, inverses run backwards. It is a homotopy invariant.
 		</li>
 		<li>
 			\(\pi_1(S^1) \cong \Z\) via the <strong>winding number</strong>; \(\pi_1(T^2) \cong \Z^2\); \(\pi_1(S^2) = 0\), yet \(S^2\) is not
-			contractible — loops cannot see the sphere's hollow.
+			contractible — loops cannot see the sphere’s hollow.
 		</li>
 		<li>
 			\(\pi_1(S^1 \vee S^1)\) is <strong>free</strong> on \(a, b\) and non-abelian: \(ab \ne ba\). Abelianizing keeps only the net counts

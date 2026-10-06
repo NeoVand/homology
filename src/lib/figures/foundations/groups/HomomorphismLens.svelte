@@ -3,7 +3,7 @@
 	// m·k = 0 in ℤ/n. Arrows show φ; the kernel glows gold, the image teal.
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import { homImages, homKernel, homImage, mod, setTeX } from './zn';
 
@@ -125,8 +125,8 @@
 	</div>
 </div>
 <Controls>
-	<Slider bind:value={m} min={2} max={12} step={1} label="m (domain ℤ/m)" />
-	<Slider bind:value={n} min={2} max={12} step={1} label="n (target ℤ/n)" />
+	<Stepper bind:value={m} min={2} max={12} label="m (domain ℤ/m)" />
+	<Stepper bind:value={n} min={2} max={12} label="n (target ℤ/n)" />
 	<div class="ks ui">
 		<span class="kl">choose <TeX tex={'\\varphi(1)'} />:</span>
 		{#each Array.from({ length: n }, (_, y) => y) as y (y)}

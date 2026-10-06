@@ -148,7 +148,7 @@
 <Figure num="4.1.1" title="Heights make climbs" hint="Drag a junction up or down · tap a trail to flip its arrow">
 	<PotentialPainter />
 	{#snippet caption()}
-		Heights on the junctions (gold) produce climbs on the trails (teal): each trail carries the height at its arrow's head minus the
+		Heights on the junctions (gold) produce climbs on the trails (teal): each trail carries the height at its arrow’s head minus the
 		height at its tail. Raising one junction changes only the trails that touch it. However you set the heights, the climbs around
 		every closed loop add up to \(0\) — try the three loops with “Next loop”, and try the tilted terrain view.
 	{/snippet}

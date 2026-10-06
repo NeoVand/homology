@@ -277,7 +277,7 @@
 		</div>
 		<p class="small">
 			{#if w === 0}
-				The image cycle is <b>zero</b>: going forwards and backwards cancels, so the hexagon's loop is sent to the trivial class.
+				The image cycle is <b>zero</b>: going forwards and backwards cancels, so the hexagon’s loop is sent to the trivial class.
 			{:else}
 				Going once around the hexagon goes <b>{Math.abs(w)}</b> time{Math.abs(w) === 1 ? '' : 's'} around the triangle{w < 0 ? ', backwards' : ''}: on homology,
 				<TeX tex={'f_*'} /> is multiplication by <b>{w}</b>.
