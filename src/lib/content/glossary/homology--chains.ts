@@ -33,16 +33,16 @@ export const entries: GlossaryEntry[] = [
 		anchor: 'def-integer-chain'
 	},
 	{
-		key: 'facet',
-		term: 'Facet (codimension-one face)',
-		def: 'A face of a simplex obtained by deleting exactly one vertex. A *k*-simplex has \\(k+1\\) facets: a triangle has three edges, a tetrahedron four triangles.',
+		key: 'codimension-one-face',
+		term: 'Codimension-one face',
+		def: 'A face of a simplex obtained by deleting exactly one vertex: a \\((k-1)\\)-face of a *k*-simplex. A *k*-simplex has \\(k+1\\) of them: a triangle has three edges, a tetrahedron four triangles.',
 		chapter,
 		anchor: 'boundary-mod-2'
 	},
 	{
 		key: 'boundary-operator',
 		term: 'Boundary operator ∂',
-		def: 'The map \\(\\partial_k\\colon C_k \\to C_{k-1}\\) sending a simplex to the (signed) sum of its facets and extended to chains by linearity. Mod 2, \\(\\partial c\\) is the set of faces occurring an odd number of times: the loose ends of a set of edges, the rim of a set of triangles.',
+		def: 'The map \\(\\partial_k\\colon C_k \\to C_{k-1}\\) sending a simplex to the (signed) sum of its codimension-one faces and extended to chains by linearity. Mod 2, \\(\\partial c\\) is the set of faces occurring an odd number of times: the loose ends of a set of edges, the rim of a set of triangles.',
 		chapter,
 		anchor: 'def-signed-boundary',
 		see: ['boundary-formula', 'boundary-of-a-boundary']
@@ -83,25 +83,12 @@ export const entries: GlossaryEntry[] = [
 		anchor: 'thm-dd'
 	},
 	{
-		key: 'oriented-simplex',
-		term: 'Oriented simplex',
-		def: 'A simplex with a chosen order of its vertices, two orders counting as the same if they differ by an even number of swaps. Reversing the orientation negates it: \\([v_1, v_0] = -[v_0, v_1]\\). By convention we write vertices in increasing order.',
-		chapter,
-		anchor: 'orientation'
-	},
-	{
 		key: 'reordering-sign',
 		term: 'Sign of a reordering',
 		def: '\\(+1\\) if a reordering of a list can be done with an even number of swaps, \\(-1\\) if it needs an odd number. Reordering an oriented simplex multiplies it (and its boundary) by this sign: \\([2,0,1] = [0,1,2]\\), \\([0,2,1] = -[0,1,2]\\).',
 		chapter,
-		anchor: 'orientation'
-	},
-	{
-		key: 'coherent-orientation',
-		term: 'Coherently oriented',
-		def: 'Neighbouring triangles are coherently oriented when they turn the same way, so that they cross their shared edge in opposite directions and it cancels in the boundary of their sum.',
-		chapter,
-		anchor: 'integer-chains'
+		anchor: 'orientation',
+		see: ['orientation-of-a-simplex']
 	},
 	{
 		key: 'boundary-matrix',

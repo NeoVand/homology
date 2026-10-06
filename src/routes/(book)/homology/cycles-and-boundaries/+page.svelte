@@ -208,8 +208,9 @@
 
 <Definition id="def-symmetric-difference" title="Sum of edge sets (symmetric difference)">
 	<p>
-		For sets of edges \(A\) and \(B\), their <dfn>sum</dfn> \(A + B\) is the set of edges that belong to exactly one of them. Set theorists call this the
-		<dfn>symmetric difference</dfn> and write \(A \mathbin{\triangle} B\).
+		For sets of edges \(A\) and \(B\), their <dfn>sum</dfn> \(A + B\) is the set of edges that belong to exactly one of them. This is the
+		<Term t="symmetric-difference">symmetric difference</Term> of the two sets, also written \(A \mathbin{\triangle} B\): exactly the addition of vectors over
+		\(\Z/2\) from <Ref to="foundations/linear-algebra" hash="vectors" />, with one switch for each edge.
 	</p>
 </Definition>
 
@@ -564,7 +565,7 @@
 
 <Warning title="b₁ is not the everyday number of holes">
 	<p>
-		A surface with \(g\) handles — a surface of <Term t="genus">genus</Term> \(g\) (see <Ref to="topology/manifolds" />) — has \(b_1 = 2g\), not \(g\): each
+		A surface with \(g\) handles — a surface of <Term t="genus-g-surface">genus</Term> \(g\) (see <Ref to="topology/manifolds" />) — has \(b_1 = 2g\), not \(g\): each
 		handle carries two independent loops, one going around the handle the way your fingers wrap around a mug’s handle, and one going through it. A pretzel
 		surface with three handles has \(b_1 = 6\). This is why the honest answer to “is \(b_1\) the number of holes?” is “sometimes”. The precise statement is
 		the one we have been building: \(b_1\) is the number of <em>independent cycles that are not boundaries</em>.
