@@ -68,7 +68,7 @@
 			title: 'Klein bottle; Boy’s surface',
 			author: 'Wikipedia',
 			url: 'https://en.wikipedia.org/wiki/Klein_bottle',
-			note: 'Good pictures of many immersions of the Klein bottle and its four-dimensional embedding; see also the article on Boy’s surface (https://en.wikipedia.org/wiki/Boy%27s_surface).',
+			note: 'Good pictures of many immersions of the Klein bottle and its four-dimensional embedding; see also Wikipedia’s article on Boy’s surface.',
 			kind: 'web' as const,
 			free: true
 		}

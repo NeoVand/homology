@@ -26,6 +26,11 @@ describe('the KaTeX preprocessor', () => {
 		expect(run('<p>\\(x\\) — and</p>')).not.toContain('math-nw');
 	});
 
+	it('gives every formula an accessible name', () => {
+		const code = run('<p>\\(\\cyc{z} = \\partial c\\)</p>');
+		expect(code).toContain('role=\\"math\\" aria-label=\\"{z} = \\\\partial c\\"');
+	});
+
 	it('refuses math inside attributes and unclosed delimiters', () => {
 		expect(() => run('<Figure title="\\(x\\)"></Figure>')).toThrow(/attribute/);
 		expect(() => run('<p>\\(x</p>')).toThrow(/unclosed/);

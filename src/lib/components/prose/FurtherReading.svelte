@@ -24,7 +24,7 @@
 	{#each items as r (r.title)}
 		<li>
 			<span class="kind ui" aria-hidden="true">{icons[r.kind ?? 'web']}</span>
-			<div>
+			<div class="body">
 				<div class="head">
 					{#if r.url}<a href={r.url} target="_blank" rel="noopener noreferrer">{r.title}</a>{:else}<span class="t">{r.title}</span>{/if}
 					<span class="by">— {r.author}</span>
@@ -90,5 +90,10 @@
 		font-size: 0.92em;
 		line-height: 1.55;
 		margin-top: 0.15rem;
+	}
+	/* long titles, author lists or addresses must wrap on phones */
+	.body {
+		min-width: 0;
+		overflow-wrap: anywhere;
 	}
 </style>

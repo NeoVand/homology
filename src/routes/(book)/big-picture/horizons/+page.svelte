@@ -411,8 +411,8 @@
 
 <Remark title="An honest shortcut">
 	<p>
-		The figure uses persistence only to choose its starting scale: the barcode shows the range of scales at which the complex is
-		connected with a single loop, and the figure starts in the middle of it. After that it computes \(H^1\) of
+		The figure uses persistence only to choose its starting scale: it computes the barcode behind the scenes, finds the longest range of
+		scales at which the complex is connected with a single loop, and starts in the middle of it. After that it computes \(H^1\) of
 		the single Rips complex at the scale you choose, rather than running the full persistent-cohomology algorithm, which would pick out
 		the longest-lived class automatically and work with coefficients mod a prime before lifting to the integers. For one clean loop the outcome is the same; for messy data, persistence is what tells you which loops are worth
 		coordinates.

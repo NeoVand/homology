@@ -1,6 +1,7 @@
 // Runtime KaTeX helpers (used by <TeX> and by build-time endpoints).
 import katex from 'katex';
 import { katexOptions } from './macros.js';
+import { labelKatex } from './a11y.js';
 
 const cache = new Map<string, string>();
 
@@ -11,7 +12,7 @@ export function tex(src: string, display = false): string {
 	if (hit !== undefined) return hit;
 	let html: string;
 	try {
-		html = katex.renderToString(src, { ...katexOptions, displayMode: display, throwOnError: false, output: 'html' });
+		html = labelKatex(katex.renderToString(src, { ...katexOptions, displayMode: display, throwOnError: false, output: 'html' }), src);
 	} catch {
 		html = `<span class="tex-error">${escapeHtml(src)}</span>`;
 	}

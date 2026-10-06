@@ -487,7 +487,7 @@
 
 <Question>
 	<p>
-		Is \(\Big\{ \set{0,1,2}, \set{0,1}, \set{1,2}, \set{0}, \set{1}, \set{2} \Big\}\) an abstract simplicial complex? (No: the subset
+		Is \(\Big\{ \set{0,1,2},\allowbreak \set{0,1},\allowbreak \set{1,2},\allowbreak \set{0},\allowbreak \set{1},\allowbreak \set{2} \Big\}\) an abstract simplicial complex? (No: the subset
 		\(\set{0,2}\) of the simplex \(\set{0,1,2}\) is missing. Add it and you have the filled triangle.)
 	</p>
 </Question>
@@ -917,9 +917,9 @@
 <Exercise title="Lists or not?" level={1}>
 	<p>Which of these are abstract simplicial complexes? Describe the shape of those that are.</p>
 	<ol>
-		<li>\(\set{0}, \set{1}, \set{2}, \set{0,1}, \set{1,2}\)</li>
-		<li>\(\set{0}, \set{1}, \set{0,1}, \set{0,2}, \set{1,2}, \set{0,1,2}\)</li>
-		<li>\(\set{0}, \set{1}, \set{2}, \set{3}, \set{0,1}, \set{0,2}, \set{1,2}, \set{0,1,2}\)</li>
+		<li>\(\set{0},\allowbreak \set{1},\allowbreak \set{2},\allowbreak \set{0,1},\allowbreak \set{1,2}\)</li>
+		<li>\(\set{0},\allowbreak \set{1},\allowbreak \set{0,1},\allowbreak \set{0,2},\allowbreak \set{1,2},\allowbreak \set{0,1,2}\)</li>
+		<li>\(\set{0},\allowbreak \set{1},\allowbreak \set{2},\allowbreak \set{3},\allowbreak \set{0,1},\allowbreak \set{0,2},\allowbreak \set{1,2},\allowbreak \set{0,1,2}\)</li>
 	</ol>
 	{#snippet solution()}
 		<ol>

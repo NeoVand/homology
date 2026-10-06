@@ -93,6 +93,11 @@ Required shape:
 least 3 of them interactive** (2D or 3D); 4–8 exercises with full solutions;
 glossary entries for every term introduced.
 
+**Figure numbers** are `num="<chapter>.<k>"` in document order (`2.4.1`,
+`2.4.2`, …), and the prose refers to them the same way ("see Figure 2.4.3").
+`src/lib/content/chapters.test.ts` enforces the numbering and the closing
+sections (exercises, summary, further reading).
+
 Use `<h3>` for subsections inside an `<h2>`. Do not use `<h1>` (the layout owns
 it). Headings may contain math.
 
@@ -124,6 +129,10 @@ Rules (the build enforces them with clear errors):
   `<TeX tex={…} display? />` with a JS string (remember to escape backslashes, or
   use `String.raw\`\frac{a}{b}\``).
 - Inside SVG figures, use `<SvgTeX x y tex />`.
+- Punctuation written straight after inline math (`\(x\).`) is kept on the same
+  line as the formula automatically, so do not put a space before it.
+- Every rendered formula gets `role="math"` and an `aria-label` with its TeX
+  source (KaTeX's HTML output is otherwise hidden from screen readers).
 
 ### Macros (defined in `src/lib/katex/macros.js`)
 
@@ -430,7 +439,10 @@ radius r = L/2 — convert in the UI.
 ## 11. Checking your work (required before you finish)
 
 1. `npm run check` — TeX-aware svelte-check; **0 errors** and no warnings in your files.
-2. `npm test` — passes (add tests for any computed claims you make).
+2. `npm test` — passes (add tests for any computed claims you make). Whole-book
+   tests check that every glossary entry's math compiles, that its anchor and
+   see-also keys exist, that every `<Term t="…">` resolves, and that figures
+   are numbered in order.
 3. `npm run build` — passes (TeX errors fail here with file:line).
 4. Screenshots: serve the build and photograph your pages at desktop and phone sizes:
    ```sh

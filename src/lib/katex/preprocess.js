@@ -13,6 +13,7 @@
 
 import katex from 'katex';
 import { katexOptions } from './macros.js';
+import { labelKatex } from './a11y.js';
 
 const OPEN_INLINE = '\\(';
 const CLOSE_INLINE = '\\)';
@@ -27,7 +28,7 @@ const TRAILING_PUNCT = /[.,;:!?)’”]/;
  * @param {boolean} display
  */
 export function renderTeX(tex, display) {
-	const html = katex.renderToString(tex, { ...katexOptions, displayMode: display });
+	const html = labelKatex(katex.renderToString(tex, { ...katexOptions, displayMode: display }), tex);
 	return display ? `<span class="math-block">${html}</span>` : html;
 }
 
