@@ -7,6 +7,12 @@
 		<meta name="theme-color" content="#060912" />
 		<meta name="color-scheme" content="dark" />
 		<meta name="description" content="An illustrated, interactive journey through homology and cohomology — from first principles, with every prerequisite taught along the way." />
+		<script>
+			// restore a hidden chapter sidebar before the first paint
+			try {
+				if (localStorage.getItem('hc-sidebar') === 'closed') document.documentElement.dataset.sidebar = 'closed';
+			} catch (e) {}
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

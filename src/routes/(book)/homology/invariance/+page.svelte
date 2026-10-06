@@ -102,7 +102,7 @@
 	<p>where \(z' = [01] + [12] - [02]\) is the loop once around the triangle. The algebra has counted the winding for us.</p>
 </Example>
 
-<Figure size="wide" num="3.5.1" title="Wrapping a hexagon around a triangle" hint="Click a vertex to change its image · hover an edge or a matrix column">
+<Figure num="3.5.1" title="Wrapping a hexagon around a triangle" hint="Click a vertex to change its image · hover an edge or a matrix column">
 	<HexagonMap />
 	{#snippet caption()}
 		A simplicial map from the hexagon \(K\) to the hollow triangle \(L\). Each hexagon vertex is labelled with the triangle vertex it goes to. Gold edges step forwards around the triangle, rose edges step backwards, and dashed edges are squashed to a point (so \(f_\#\) sends them to \(0\)). The bead shows the map in motion. On homology, \(f_*\) is multiplication by the net number of turns. Try “There and back”: the forward and backward steps cancel, and the image cycle is zero.
@@ -299,7 +299,7 @@
 \[ \partial P(z) = g_\#(z) - f_\#(z). \]
 <p>The two image cycles differ by a boundary. They are homologous, so \(f_*[z] = g_*[z]\).</p>
 
-<Figure size="wide" num="3.5.3" title="A homotopy sweeps out a prism" hint="Drag to rotate · move the time slider">
+<Figure num="3.5.3" title="A homotopy sweeps out a prism" hint="Drag to rotate · move the time slider">
 	<PrismSweep />
 	{#snippet caption()}
 		A loop on a torus slides and ripples along a homotopy. The swept band (violet) is the chain \(P(z)\). Its boundary is the final loop \(g_\#(z)\) (teal) minus the initial loop \(f_\#(z)\) (gold), so the two loops are homologous.
@@ -441,7 +441,7 @@
 	<p>So \(r\) is a retraction of \(D^n\) onto \(S^{n-1}\), which the previous theorem says cannot exist. Therefore \(f\) has a fixed point.</p>
 </Proof>
 
-<Figure size="wide" num="3.5.5" title="Stirring a disk" hint="Drag the gold handle · move the sliders · try the retraction view">
+<Figure num="3.5.5" title="Stirring a disk" hint="Drag the gold handle · move the sliders · try the retraction view">
 	<BrouwerStir />
 	{#snippet caption()}
 		A “stirring” map of the disk: swirl it, squeeze it, and slide its centre to the gold handle. Each point is coloured by the <em>direction</em> it moves (arrows), and darkened where it barely moves. Going once around the rim, the colours run once through the whole wheel, so somewhere inside they must all meet — at a fixed point (glowing). With strong stirring several fixed points appear, but their indices always add up to \(1\). Turn on the retraction view: the rays from \(f(x)\) through \(x\) push the disk onto its rim, and near a fixed point they spin in every direction. That is where the would-be retraction tears.
@@ -523,7 +523,7 @@
 	which says exactly “two path components”. The proof (Hatcher, Proposition 2B.1) chops the curve into smaller and smaller arcs and applies the Mayer–Vietoris sequence of the next chapter at each step. We will not reproduce it, but the tool it needs will be fully explained there.
 </p>
 
-<Figure size="wide" num="3.5.7" title="Inside or outside?" hint="Drag the probe (or use arrow keys)">
+<Figure num="3.5.7" title="Inside or outside?" hint="Drag the probe (or use arrow keys)">
 	<JordanProbe />
 	{#snippet caption()}
 		A Jordan curve shaped like a serpent. Is the probe inside? Count where the dashed ray to the right crosses the curve: odd means inside, even means outside. The <Term t="winding-number">winding number</Term> of the curve around the probe — how many times the curve turns around it — is \(\pm 1\) inside and \(0\) outside. It is the degree of a map of circles (Section 7), so it cannot change while the probe moves without touching the curve.
@@ -564,7 +564,7 @@
 	The individual preimages come and go as \(y\) moves, but the signed count never changes. Milnor's little book <em>Topology from the Differentiable Viewpoint</em> builds the whole theory from this formula. Figure 3.5.8 lets you watch it happen.
 </p>
 
-<Figure size="wide" num="3.5.8" title="Counting preimages with signs" hint="Drag to rotate · change the degree, the wobble and the target">
+<Figure num="3.5.8" title="Counting preimages with signs" hint="Drag to rotate · change the degree, the wobble and the target">
 	<DegreeHelix />
 	{#snippet caption()}
 		The graph of \(f(\theta) = n\theta + a\sin\theta\), a map from the circle to the circle, drawn on a glass cylinder. Height is the position on the domain circle; angle is where \(f\) sends it. Its shadow on the blue target circle winds \(n\) times. The white line rises from a target point and meets the graph at every preimage: green where \(f\) runs forwards, rose where it runs backwards. Add wobble and preimages appear in pairs, one of each sign, so the count \(\#(+) - \#(-)\) stays \(n\).
@@ -629,7 +629,7 @@
 	</p>
 </Proof>
 
-<Figure size="wide" num="3.5.9" title="A hairy ball and a combed doughnut" hint="Drag to rotate · choose a combing">
+<Figure num="3.5.9" title="A hairy ball and a combed doughnut" hint="Drag to rotate · choose a combing">
 	<HairyBall />
 	{#snippet caption()}
 		Tangent vector fields made visible as flowing streaks. However you comb the sphere, a calm spot appears where the field is zero (rose): two for a whirl, two for a north-flowing field, and one — but a doubly strong one — for the cleverest combing. The <em>indices</em> of the zeros always add up to \(2 = \chi(S^2)\), a fact explained in <Ref to="cohomology/characteristic-classes" />. The torus, whose Euler characteristic is \(0\), can be combed with no calm spot at all.
@@ -725,7 +725,7 @@
 	The kernel of \(h\) is not just an algebraic curiosity; you can see it. Punch a hole in a torus. The punctured torus deformation retracts onto the figure eight \(a\vee b\), so its \(\pi_1\) is the free group on \(a\) and \(b\). The loop that runs around the edge of the gluing square, \(aba^{-1}b^{-1}\), is a commutator. It can be slid onto the rim of the hole. There it is the <em>boundary of the whole punctured torus</em>, so in \(H_1\) it is zero. But in \(\pi_1\) it is not the identity: the hole is in the way, and no amount of sliding will shrink it to a point.
 </p>
 
-<Figure size="wide" num="3.5.10" title="A loop that bounds but cannot shrink" hint="Drag to rotate · slide the loop">
+<Figure num="3.5.10" title="A loop that bounds but cannot shrink" hint="Drag to rotate · slide the loop">
 	<CommutatorTorus />
 	{#snippet caption()}
 		On a torus with a hole (rim in rose), the teal loop runs along \(a\), then \(b\), then \(a\) backwards, then \(b\) backwards — follow the white bead. Slide it towards the hole. At every stage it is the boundary of the shaded teal surface, so it is \(0\) in \(H_1\). Yet it is the commutator \(aba^{-1}b^{-1}\neq 1\) in \(\pi_1\): it hugs the hole and cannot be shrunk.

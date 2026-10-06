@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { ArrowRightIcon } from '$lib/icons';
 	import Ornament from '$lib/components/layout/Ornament.svelte';
 	import { chapterHref } from '$lib/util/paths';
 </script>
@@ -23,7 +25,7 @@
 			\[ C_k(K;G) = \Big\{ \textstyle\sum_i g_i \sigma_i \Big\}. \]
 			<p>The boundary operator:</p>
 			\[ \partial[v_0,\dots,v_k] = \sum_{i=0}^{k} (-1)^i\,[v_0,\dots,\hat v_i,\dots,v_k], \qquad \partial\circ\partial = 0. \]
-			<a class="go ui" href={chapterHref('homology/chains')}>§3.2 Chains and the boundary operator →</a>
+			<a class="go ui" href={chapterHref('homology/chains')}>§3.2 Chains and the boundary operator<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 
 		<section class="card panel">
@@ -32,7 +34,7 @@
 			\[ Z_k = \ker\partial_k, \qquad B_k = \im\partial_{k+1} \subseteq Z_k, \qquad H_k = Z_k / B_k. \]
 			<p>Betti numbers (over a field \(\F\)), with \(n_k\) the number of \(k\)-simplices:</p>
 			\[ b_k = \dim H_k = n_k - \rank\partial_k - \rank\partial_{k+1}. \]
-			<a class="go ui" href={chapterHref('homology/homology-groups')}>§3.3 Homology groups →</a>
+			<a class="go ui" href={chapterHref('homology/homology-groups')}>§3.3 Homology groups<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 
 		<section class="card panel">
@@ -40,7 +42,7 @@
 			<p>The alternating count of cells equals the alternating sum of Betti numbers:</p>
 			\[ \chi(X) = \sum_k (-1)^k n_k = \sum_k (-1)^k b_k. \]
 			<p>For closed surfaces: \(\chi(\Sigma_g) = 2 - 2g\) (orientable, genus \(g\)); \(\chi = 2 - k\) for a sum of \(k\) projective planes.</p>
-			<a class="go ui" href={chapterHref('topology/euler-characteristic')}>§2.6 The Euler characteristic →</a>
+			<a class="go ui" href={chapterHref('topology/euler-characteristic')}>§2.6 The Euler characteristic<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 
 		<section class="card panel">
@@ -48,7 +50,7 @@
 			<p>Every finitely generated abelian group is</p>
 			\[ \Z^{r} \oplus \Z/d_1 \oplus \cdots \oplus \Z/d_m, \qquad d_1 \mid d_2 \mid \cdots \mid d_m . \]
 			<p>The free rank is read from ranks of boundary matrices; the torsion \(\Z/d_i\) of \(H_k\) from the Smith normal form of \(\partial_{k+1}\) (diagonal entries \(d_i > 1\)).</p>
-			<a class="go ui" href={chapterHref('homology/computing')}>§3.4 Computing homology →</a>
+			<a class="go ui" href={chapterHref('homology/computing')}>§3.4 Computing homology<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 
 		<section class="card panel">
@@ -56,7 +58,7 @@
 			<p>A continuous map \(f\colon X\to Y\) induces \(f_*\colon H_k(X)\to H_k(Y)\), with</p>
 			\[ (g\circ f)_* = g_*\circ f_*, \qquad (\id_X)_* = \id, \qquad f\simeq g \;\Rightarrow\; f_* = g_*. \]
 			<p>So homotopy-equivalent spaces have isomorphic homology. Payoffs: Brouwer's fixed point theorem, the hairy ball theorem, invariance of dimension.</p>
-			<a class="go ui" href={chapterHref('homology/invariance')}>§3.5 Maps, invariance, and first triumphs →</a>
+			<a class="go ui" href={chapterHref('homology/invariance')}>§3.5 Maps, invariance, and first triumphs<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 
 		<section class="card panel">
@@ -64,7 +66,7 @@
 			<p>Mayer–Vietoris, for \(X = U\cup V\) with \(U, V\) open:</p>
 			\[ \cdots \to H_k(U\cap V) \to H_k(U)\oplus H_k(V) \to H_k(X) \xrightarrow{\;\partial_*\;} H_{k-1}(U\cap V) \to \cdots \]
 			<p>Every map's image is exactly the next map's kernel.</p>
-			<a class="go ui" href={chapterHref('homology/exact-sequences')}>§3.6 Exact sequences and Mayer–Vietoris →</a>
+			<a class="go ui" href={chapterHref('homology/exact-sequences')}>§3.6 Exact sequences and Mayer–Vietoris<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 
 		<section class="card panel">
@@ -73,7 +75,7 @@
 			\[ C^k(K;G) = \Hom(C_k(K), G), \qquad (\delta\varphi)(\sigma) = \varphi(\partial\sigma), \qquad \delta\circ\delta = 0, \]
 			\[ H^k = \ker\delta^k \big/ \im\delta^{k-1}. \]
 			<p>Maps pull back: \(f\colon X\to Y\) gives \(f^*\colon H^k(Y)\to H^k(X)\).</p>
-			<a class="go ui" href={chapterHref('cohomology/cohomology-groups')}>§4.2 Cohomology groups →</a>
+			<a class="go ui" href={chapterHref('cohomology/cohomology-groups')}>§4.2 Cohomology groups<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 
 		<section class="card panel">
@@ -81,21 +83,21 @@
 			<p>Cohomology is determined by homology, but torsion moves up one degree:</p>
 			\[ H^k(X;\Z) \;\cong\; \Hom\big(H_k(X),\Z\big) \,\oplus\, \Ext\big(H_{k-1}(X),\Z\big). \]
 			<p>Example: \(H_1(\RP^2) = \Z/2\) and \(H_2(\RP^2) = 0\), yet \(H^2(\RP^2;\Z) = \Z/2\).</p>
-			<a class="go ui" href={chapterHref('big-picture/homological-algebra')}>§5.2 Homological algebra →</a>
+			<a class="go ui" href={chapterHref('big-picture/homological-algebra')}>§5.2 Homological algebra<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 
 		<section class="card panel">
 			<h2>de Rham and Stokes</h2>
 			\[ \int_{\partial M}\omega = \int_M d\omega, \qquad d\circ d = 0, \qquad H^k_{\dR}(M) = \frac{\{\text{closed } k\text{-forms}\}}{\{\text{exact } k\text{-forms}\}} \cong H^k(M;\R). \]
 			<p>On the punctured plane, \(d\theta = \frac{-y\,dx + x\,dy}{x^2+y^2}\) is closed but not exact: \(\oint_\gamma d\theta = 2\pi\cdot(\text{winding number of }\gamma)\).</p>
-			<a class="go ui" href={chapterHref('cohomology/de-rham')}>§4.4 de Rham cohomology →</a>
+			<a class="go ui" href={chapterHref('cohomology/de-rham')}>§4.4 de Rham cohomology<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 
 		<section class="card panel">
 			<h2>Cup product</h2>
 			\[ (\alpha\smile\beta)(\sigma) = \alpha\big(\sigma|_{[v_0,\dots,v_p]}\big)\,\beta\big(\sigma|_{[v_p,\dots,v_{p+q}]}\big), \qquad \alpha\smile\beta = (-1)^{pq}\,\beta\smile\alpha. \]
 			<p>\(T^2\) and \(S^1\vee S^1\vee S^2\) have the same groups; on \(T^2\), \(a\smile b\) generates \(H^2\), on the wedge every such product is \(0\).</p>
-			<a class="go ui" href={chapterHref('cohomology/cup-product')}>§4.5 The cup product →</a>
+			<a class="go ui" href={chapterHref('cohomology/cup-product')}>§4.5 The cup product<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 
 		<section class="card panel">
@@ -103,7 +105,7 @@
 			<p>For a closed, oriented \(n\)-manifold \(M\):</p>
 			\[ H^k(M;\Z) \;\cong\; H_{n-k}(M;\Z), \qquad b_k = b_{n-k}. \]
 			<p>With \(\Z/2\) coefficients it holds for every closed manifold, orientable or not.</p>
-			<a class="go ui" href={chapterHref('cohomology/poincare-duality')}>§4.6 Poincaré duality →</a>
+			<a class="go ui" href={chapterHref('cohomology/poincare-duality')}>§4.6 Poincaré duality<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 
 		<section class="card panel">
@@ -111,7 +113,7 @@
 			<p>Total curvature of a closed surface is topology:</p>
 			\[ \int_M K\, dA = 2\pi\,\chi(M). \]
 			<p>Sphere: \(4\pi\). Torus: \(0\). The hairy ball theorem: a sphere has no nowhere-zero tangent vector field, because \(\chi(S^2) = 2 \neq 0\).</p>
-			<a class="go ui" href={chapterHref('cohomology/characteristic-classes')}>§4.8 Curvature and characteristic classes →</a>
+			<a class="go ui" href={chapterHref('cohomology/characteristic-classes')}>§4.8 Curvature and characteristic classes<Icon icon={ArrowRightIcon} size={14} stroke={1.8} /></a>
 		</section>
 	</div>
 
@@ -201,6 +203,10 @@
 		margin: 0.4rem 0 0.8rem;
 	}
 	.go {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		align-self: flex-start;
 		margin-top: auto;
 		padding-top: 0.6rem;
 		font-size: 0.76rem;

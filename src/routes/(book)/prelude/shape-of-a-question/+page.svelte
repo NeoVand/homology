@@ -101,7 +101,7 @@
 	infinitely many. This is the central difficulty of topology, and it is where our story really begins.
 </p>
 
-<Figure size="wide" title="Stretch, don't tear" hint="Drag the slider · drag to rotate" num="0.1.1">
+<Figure title="Stretch, don't tear" hint="Drag the slider · drag to rotate" num="0.1.1">
 	<StretchFigure />
 	{#snippet caption()}
 		A sphere and a torus being kneaded like clay. Their geometry — lengths, angles, curvature — changes completely.
@@ -161,7 +161,7 @@
 	<li>and so on, in higher dimensions that we cannot picture but can compute.</li>
 </ul>
 
-<Figure size="wide" title="A first gallery of holes" hint="Choose which holes to light up" num="0.1.2">
+<Figure title="A first gallery of holes" hint="Choose which holes to light up" num="0.1.2">
 	<HoleGallery />
 	{#snippet caption()}
 		The Betti numbers of four basic shapes. The torus has \(b_1 = 2\): one loop around the central hole and one around
@@ -197,7 +197,7 @@
 	matter how many faces it has, how irregular they are, or how it is drawn.
 </p>
 
-<Figure size="wide" title="Counting corners, edges and faces" hint="Choose a solid · drag to rotate" num="0.1.3">
+<Figure title="Counting corners, edges and faces" hint="Choose a solid · drag to rotate" num="0.1.3">
 	<EulerSolids />
 	{#snippet caption()}
 		For every solid shaped like a ball, \(V - E + F = 2\). The picture frame has a tunnel through it, and the count
@@ -248,7 +248,7 @@
 	the hole it surrounds.
 </p>
 
-<Figure size="wide" title="Rubber bands" hint="Press “Pull tight” or drag the slider · drag to rotate" num="0.1.4">
+<Figure title="Rubber bands" hint="Press “Pull tight” or drag the slider · drag to rotate" num="0.1.4">
 	<RubberBands />
 	{#snippet caption()}
 		On the sphere, the band shrinks to a point, sweeping across the shaded cap — the region it <em>bounds</em>. On
@@ -333,7 +333,7 @@
 	can be no.
 </p>
 
-<Figure size="wide" title="An impossible staircase" hint="Walk around the loop · then make the staircase possible" num="0.1.6">
+<Figure title="An impossible staircase" hint="Walk around the loop · then make the staircase possible" num="0.1.6">
 	<StaircaseWalk />
 	{#snippet caption()}
 		Every step says “up by one”, and each step on its own is perfectly reasonable. But after twelve steps up you are
@@ -373,7 +373,7 @@
 	it has found a remarkable second life in science and technology in the twenty-first.
 </p>
 
-<Figure size="wide" title="Where homology turns up" num="0.1.7">
+<Figure title="Where homology turns up" num="0.1.7">
 	<Applications />
 	{#snippet caption()}
 		A few of the places where homology and cohomology do real work. Each is discussed in the chapter shown.

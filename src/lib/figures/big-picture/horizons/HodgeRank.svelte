@@ -7,7 +7,7 @@
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import Stepper from '../categories/Stepper.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import { hodgeRank } from './hodgerank';
 
 	const teams = [

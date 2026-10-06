@@ -145,7 +145,7 @@
 	numbers on the trails next to it change.
 </p>
 
-<Figure size="wide" num="4.1.1" title="Heights make climbs" hint="Drag a junction up or down · tap a trail to flip its arrow">
+<Figure num="4.1.1" title="Heights make climbs" hint="Drag a junction up or down · tap a trail to flip its arrow">
 	<PotentialPainter />
 	{#snippet caption()}
 		Heights on the junctions (gold) produce climbs on the trails (teal): each trail carries the height at its arrow's head minus the
@@ -245,7 +245,7 @@
 	sometimes no, and the difference between the two is the first glimpse of cohomology. Try it yourself before reading on.
 </p>
 
-<Figure size="wide" num="4.1.2" title="Find the potential" hint="Tap a vertex, set its height · or integrate from it">
+<Figure num="4.1.2" title="Find the potential" hint="Tap a vertex, set its height · or integrate from it">
 	<FindPotential />
 	{#snippet caption()}
 		The gold numbers on the edges are given; your job is to put heights on the vertices so that every edge equals head minus tail.
@@ -434,7 +434,7 @@
 	hole out to the edge.
 </p>
 
-<Figure size="wide" num="4.1.5" title="Closed but not exact" hint="Tap an edge (±1) or switch to bumps · try “Smooth it out”">
+<Figure num="4.1.5" title="Closed but not exact" hint="Tap an edge (±1) or switch to bumps · try “Smooth it out”">
 	<AnnulusCochain />
 	{#snippet caption()}
 		Every one of the six triangle tests passes (the green ticks), yet the loop around the hole sums to \(1\), so these numbers are not
@@ -526,7 +526,7 @@
 	function exists. The staircase is the “loop that does not close” from Figure 4.1.2, drawn by an artist.
 </p>
 
-<Figure size="wide" num="4.1.6" title="Possible after all — from one direction" hint="Drag to turn · use the button to find the trick">
+<Figure num="4.1.6" title="Possible after all — from one direction" hint="Drag to turn · use the button to find the trick">
 	<ImpossibleObjects />
 	{#snippet caption()}
 		These are real three-dimensional objects, seen through a camera without perspective. From one special direction the top of the
@@ -805,7 +805,7 @@
 	1930s.
 </p>
 
-<Figure size="wide" num="4.1.10" title="Taking a flow apart" hint="Choose a flow · tap an edge in the first panel and use ±1">
+<Figure num="4.1.10" title="Taking a flow apart" hint="Choose a flow · tap an edge in the first panel and use ±1">
 	<HodgeDecomposer />
 	{#snippet caption()}
 		The upper triangle \(1, 2, 3\) is filled; the lower triangle \(1, 3, 4\) is a hole. Any flow (gold) is the sum of a gradient (teal:

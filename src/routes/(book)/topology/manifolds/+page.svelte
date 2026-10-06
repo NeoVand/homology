@@ -166,7 +166,7 @@
 	loop: a circle's worth of directions in which you can walk away from \(p\). Any other answer is a warning sign.
 </p>
 
-<Figure size="wide" num="2.4.1" title="The small-sphere test" hint="Pick a space · click it to move the probe · resize the sphere">
+<Figure num="2.4.1" title="The small-sphere test" hint="Pick a space · click it to move the probe · resize the sphere">
 	<LinkProbe />
 	{#snippet caption()}
 		A glass probe sphere around a point, and in teal the set where it meets the shape. Ordinary points of a curve give two points;
@@ -243,7 +243,7 @@
 	<Ref to="topology/gluing" />.
 </p>
 
-<Figure size="wide" num="2.4.2" title="The line with two origins">
+<Figure num="2.4.2" title="The line with two origins">
 	<TwoOrigins />
 	{#snippet caption()}
 		Take two copies of \(\R\) and glue each point \(x \neq 0\) of the first to the same point of the second, leaving the two zeros
@@ -367,7 +367,7 @@
 	</p>
 </Example>
 
-<Figure size="wide" num="2.4.3" title="An atlas of the sphere" hint="Hover or tap the globe · click a map">
+<Figure num="2.4.3" title="An atlas of the sphere" hint="Hover or tap the globe · click a map">
 	<SphereCharts />
 	{#snippet caption()}
 		The six hemisphere charts of the sphere. The gold point lies in two or three of them (the coloured caps), and each of those flat maps
@@ -427,7 +427,7 @@
 	is a number \(\varphi_N(P)\): the coordinate of \(P\) as seen from the north pole.
 </p>
 
-<Figure size="wide" num="2.4.4" title="Stereographic projection" hint="Drag P around the circle">
+<Figure num="2.4.4" title="Stereographic projection" hint="Drag P around the circle">
 	<StereoCircle />
 	{#snippet caption()}
 		Projection from the north pole (gold) and from the south pole (teal). Each is a chart that covers all of the circle except its own
@@ -514,7 +514,7 @@
 	</p>
 </Definition>
 
-<Figure size="wide" num="2.4.5" title="Interior and boundary points">
+<Figure num="2.4.5" title="Interior and boundary points">
 	<BoundaryChart />
 	{#snippet caption()}
 		In the closed disk, an interior point \(p\) has a neighbourhood that a chart \(\varphi\) flattens onto an open disk inside the
@@ -685,7 +685,7 @@
 	</p>
 </Example>
 
-<Figure size="wide" num="2.4.6" title="Tangent planes" hint="Click the surface to move the point · turn the direction · try the microscope">
+<Figure num="2.4.6" title="Tangent planes" hint="Click the surface to move the point · turn the direction · try the microscope">
 	<TangentPlane />
 	{#snippet caption()}
 		A curve (teal) through a point \(p\) of a sphere or a torus, and its velocity arrow, which always lies in the glassy tangent plane.
@@ -728,7 +728,7 @@
 	and \(v\).
 </p>
 
-<Figure size="wide" num="2.4.7" title="Orienting the plane" hint="Drag the tips of u and v">
+<Figure num="2.4.7" title="Orienting the plane" hint="Drag the tips of u and v">
 	<PlaneOrientation />
 	{#snippet caption()}
 		The parallelogram is green when the pair \((u, v)\) is positive (turning from \(u\) to \(v\) is anticlockwise) and rose when it is
@@ -776,7 +776,7 @@
 	anticlockwise to someone standing outside the sphere. The surprise is that not every surface is orientable.
 </p>
 
-<Figure size="wide" num="2.4.8" title="A walk round a band" hint="Choose a band · walk a lap · drag to rotate">
+<Figure num="2.4.8" title="A walk round a band" hint="Choose a band · walk a lap · drag to rotate">
 	<OrientationWalk />
 	{#snippet caption()}
 		A flat creature — the letter F with a turning arrow — walks once around the middle of a band, while a faint ghost stays at the start.
@@ -889,7 +889,7 @@
 	</p>
 </Definition>
 
-<Figure size="wide" num="2.4.9" title="Connected sum" hint="Step through · drag to rotate">
+<Figure num="2.4.9" title="Connected sum" hint="Step through · drag to rotate">
 	<ConnectedSum />
 	{#snippet caption()}
 		The connected sum of two tori in four steps: cut a small disk out of each (the gold circles), join the two holes by a tube, and smooth
@@ -979,7 +979,7 @@
 	\(k\) of cross-caps is sometimes called its non-orientable genus.
 </p>
 
-<Figure size="wide" num="2.4.10" title="Closed surfaces" hint="Choose a surface · drag to rotate">
+<Figure num="2.4.10" title="Closed surfaces" hint="Choose a surface · drag to rotate">
 	<GenusSurfaces />
 	{#snippet caption()}
 		The classification as a gallery. The orientable surfaces are spheres with \(g\) handles; each handle carries a gold loop around its

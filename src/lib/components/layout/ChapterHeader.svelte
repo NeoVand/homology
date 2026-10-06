@@ -3,6 +3,8 @@
 	import { chapterById } from '$lib/content/toc';
 	import { chapterHref } from '$lib/util/paths';
 	import Ornament from './Ornament.svelte';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { ClockIcon } from '$lib/icons';
 
 	let { chapter }: { chapter: Chapter & { part: Part } } = $props();
 	const prereqs = $derived(chapter.prereqs.map((id) => chapterById.get(id)).filter((c) => !!c));
@@ -20,15 +22,7 @@
 	<Ornament width={240} class="orn" />
 	<div class="meta ui">
 		<span class="time">
-			<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"
-				><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5" /><path
-					d="M12 7.5V12l3 2"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="1.5"
-					stroke-linecap="round"
-				/></svg
-			>
+			<Icon icon={ClockIcon} size={15} />
 			about {chapter.minutes} min
 		</span>
 		{#if prereqs.length}

@@ -96,7 +96,7 @@
 	tunnel running round inside it. Nobody drew the surface. Your visual system invented it.
 </p>
 
-<Figure size="wide" id="fig-torus" num="3.7.1" title="Dots in space" hint="Drag to rotate · slide the number of points">
+<Figure id="fig-torus" num="3.7.1" title="Dots in space" hint="Drag to rotate · slide the number of points">
 	<TorusCloud />
 	{#snippet caption()}
 		Points sampled at random from the surface of a torus in \(\R^3\), with a little noise. With 40 points you see a scatter; with a few
@@ -594,9 +594,8 @@
 </p>
 
 <Figure
-	size="wide"
 	id="fig-playground"
- num="3.7.6"
+	num="3.7.6"
 	title="The persistence playground"
 	hint="Drag points · switch to Add or Erase to edit · drag across the barcode · hover or tap a bar"
 >
@@ -686,7 +685,7 @@
 	\(3\), and the triangle \(012\) at time \(4\).
 </p>
 
-<Figure size="wide" id="fig-reduction" num="3.7.7" title="The reduction algorithm, step by step" hint="Press play, or step with the arrows">
+<Figure id="fig-reduction" num="3.7.7" title="The reduction algorithm, step by step" hint="Press play, or step with the arrows">
 	<ReductionStepper />
 	{#snippet caption()}
 		The filtration boundary matrix of a triangle being built. Shaded cells mark each column’s low; rose cells have just changed. Column
@@ -782,7 +781,7 @@
 	most \(\delta\) moves every feature by at most \(\delta\).
 </p>
 
-<Figure size="wide" id="fig-stability" num="3.7.8" title="Stability" hint="Slide the noise · press New noise for a different jiggle">
+<Figure id="fig-stability" num="3.7.8" title="Stability" hint="Slide the noise · press New noise for a different jiggle">
 	<StabilityDemo />
 	{#snippet caption()}
 		Every point is pushed a random distance of at most \(\delta\) (rose segments). Hollow markers show the original diagram, solid ones
@@ -823,7 +822,7 @@
 	range; <a href="#fig-gallery">Figure 3.7.9</a> sketches six of them.
 </p>
 
-<Figure size="wide" id="fig-gallery" num="3.7.9" title="A gallery of applications" hint="Schematic pictures, not data">
+<Figure id="fig-gallery" num="3.7.9" title="A gallery of applications" hint="Schematic pictures, not data">
 	<AppGallery />
 	{#snippet caption()}
 		Six fields where persistence has found structure. The pictures are schematic sketches of the idea, not the data of the cited studies.

@@ -159,7 +159,7 @@
 	check it one vertex at a time, without ever looking at the whole loop — and yet it captures a <strong>global</strong> property, closedness. Try it.
 </p>
 
-<Figure size="wide" num="3.1.1" title="The parity test" hint="Tap edges to select · add face rims">
+<Figure num="3.1.1" title="The parity test" hint="Tap edges to select · add face rims">
 	<CycleExplorer />
 	{#snippet caption()}
 		Tap edges to choose a set \(S\). Vertices of odd degree — loose ends — glow red. When nothing glows, \(S\) is a cycle. Can you find a cycle that is
@@ -316,7 +316,7 @@
 	</p>
 </Definition>
 
-<Figure size="wide" num="3.1.2" title="Trees and fundamental cycles" hint="Tap a numbered edge · switch to “Cut edges”">
+<Figure num="3.1.2" title="Trees and fundamental cycles" hint="Tap a numbered edge · switch to “Cut edges”">
 	<SpanningTree />
 	{#snippet caption()}
 		A spanning tree (blue) reaches every vertex using \(V - 1 = 7\) edges. Each of the \(5\) edges it leaves out (dashed, numbered) closes up exactly one
@@ -417,7 +417,7 @@
 	</p>
 </KeyIdea>
 
-<Figure size="wide" num="3.1.3" title="Fill it in" hint="Tap edges to draw a loop · switch mode to fill triangles">
+<Figure num="3.1.3" title="Fill it in" hint="Tap edges to draw a loop · switch mode to fill triangles">
 	<FillIn />
 	{#snippet caption()}
 		A patch of ten triangles, two of them empty (\(\hole{h_1}\) and \(\hole{h_2}\)). Draw a loop, or pick one. If every triangle inside the loop is filled,
@@ -495,7 +495,7 @@
 
 <p>Here is the same idea in three dimensions, on the most famous object in the hole debate.</p>
 
-<Figure size="wide" num="3.1.4" title="Homologous loops on a straw" hint="Drag to rotate · move and wiggle loop B">
+<Figure num="3.1.4" title="Homologous loops on a straw" hint="Drag to rotate · move and wiggle loop B">
 	<HomologousBand />
 	{#snippet caption()}
 		Loops \(\cyc{A}\) and \(\cyc{B}\) both go once around a straw. Neither is the rim of anything on the straw, but together they are the rim of the teal band
@@ -525,7 +525,7 @@
 	sphere, every cycle is a boundary. The sphere has no 1-dimensional holes: \(b_1 = 0\).
 </p>
 
-<Figure size="wide" num="3.1.5" title="The sphere: every loop bounds" hint="Drag to rotate · choose what to look at">
+<Figure num="3.1.5" title="The sphere: every loop bounds" hint="Drag to rotate · choose what to look at">
 	<SphereVoid />
 	{#snippet caption()}
 		A loop on the sphere bounds the cap on either side of it. Switch to “the whole sphere”: the surface itself has no rim, so it is a cycle of a new kind, and
@@ -541,7 +541,7 @@
 	around the central hole, and again it stays in one piece.
 </p>
 
-<Figure size="wide" num="3.1.6" title="Loops on a torus" hint="Drag to rotate · choose a loop · cut along it">
+<Figure num="3.1.6" title="Loops on a torus" hint="Drag to rotate · choose a loop · cut along it">
 	<TorusLoops />
 	{#snippet caption()}
 		A small loop is the rim of a teal disk; it can shrink away. The meridian, the longitude, and every \((p, q)\) loop (going \(p\) times around the hole and
@@ -618,7 +618,7 @@
 	of pieces, \(b_0 = c\). That is why the number of pieces belongs in the same family as the number of holes.
 </p>
 
-<Figure size="normal" num="3.1.7" title="Holes in dimensions 0, 1 and 2">
+<Figure num="3.1.7" title="Holes in dimensions 0, 1 and 2">
 	<HolesByDimension />
 	{#snippet caption()}
 		Left: \(p\) and \(q\) lie in different pieces, so no path has them as its ends — \(b_0\) counts the pieces. Middle: a loop around an empty disk.
@@ -652,7 +652,7 @@
 	ask the figure whether they bound.
 </p>
 
-<Figure size="wide" num="3.1.8" title="How many holes?" hint="Choose an object · tap rims and loops">
+<Figure num="3.1.8" title="How many holes?" hint="Choose an object · tap rims and loops">
 	<HoleGallery />
 	{#snippet caption()}
 		Each opening of a straw, trousers or T-shirt has a rim, and every rim is a cycle that bounds nothing on its own. But all the rims of an object together

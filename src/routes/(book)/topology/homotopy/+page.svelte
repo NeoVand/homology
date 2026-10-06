@@ -171,7 +171,7 @@
 	slides one onto the other.
 </p>
 
-<Figure num="2.3.1" size="wide" title="Paths around a hole" hint="Drag the teal handle · play the movie">
+<Figure num="2.3.1" title="Paths around a hole" hint="Drag the teal handle · play the movie">
 	<PathHomotopy />
 	{#snippet caption()}
 		The straight-line movie \(H(s,t) = (1-t)\,\gamma_0(s) + t\,\gamma_1(s)\): the faint dashed curves are its frames. When both paths pass
@@ -275,7 +275,7 @@
 	sits inside the fat one, and the fat one can be squashed onto it by sliding each point straight in towards the skeleton.
 </p>
 
-<Figure num="2.3.2" size="wide" title="Thick letters, thin letters" hint="Shrink the letters · sort them">
+<Figure num="2.3.2" title="Thick letters, thin letters" hint="Shrink the letters · sort them">
 	<LetterMelter />
 	{#snippet caption()}
 		Each thick letter shrinks onto its gold skeleton without tearing. Sorted by homotopy type, the letters fall into just three families:
@@ -366,7 +366,7 @@
 	lines are painted on the space so that you can see every point travel. The inset shows the same film drawn flat.
 </p>
 
-<Figure num="2.3.3" size="wide" title="Deformation retractions" hint="Choose a space · drag time · drag to rotate">
+<Figure num="2.3.3" title="Deformation retractions" hint="Choose a space · drag time · drag to rotate">
 	<DeformationRetract />
 	{#snippet caption()}
 		A disk shrinks to its centre; an annulus is squeezed onto its middle circle; a Möbius band is squeezed onto its gold core circle (watch
@@ -514,7 +514,7 @@
 	timetables. The difference is only one of timing, and timing can be changed continuously.
 </p>
 
-<Figure num="2.3.4" size="wide" title="Timetables" hint="Choose a homotopy · drag time">
+<Figure num="2.3.4" title="Timetables" hint="Choose a homotopy · drag time">
 	<Timetable />
 	{#snippet caption()}
 		Left: the square of a homotopy, with loop-time \(s\) running across and film-time \(t\) running up. Sliding the two breakpoints from
@@ -613,7 +613,7 @@
 	Now compare a sphere with a torus.
 </p>
 
-<Figure num="2.3.5" size="wide" title="Loops on a sphere and on a torus" hint="Pull the loops tight · drag to rotate">
+<Figure num="2.3.5" title="Loops on a sphere and on a torus" hint="Pull the loops tight · drag to rotate">
 	<LoopShrink />
 	{#snippet caption()}
 		Pull the loops tight. On the sphere \(S^2\) the gold loop slides over the top and shrinks to a point. On the torus \(T^2\) the gold loop
@@ -666,7 +666,7 @@
 	<dfn>winding number</dfn> of the loop.
 </p>
 
-<Figure num="2.3.6" size="wide" title="Winding number" hint="Drag the gold points or the puncture · run the probe">
+<Figure num="2.3.6" title="Winding number" hint="Drag the gold points or the puncture · run the probe">
 	<WindingNumber />
 	{#snippet caption()}
 		As the probe runs round the loop, the dashed ray from the puncture turns; the teal spiral records the total angle so far, and the
@@ -766,7 +766,7 @@
 	own loops from the four letters and watch three pictures at once.
 </p>
 
-<Figure num="2.3.7" size="full" title="Loops on the figure eight" hint="Type a word · trace it · pull it tight">
+<Figure num="2.3.7" title="Loops on the figure eight" hint="Type a word · trace it · pull it tight">
 	<LoopWords />
 	{#snippet caption()}
 		Left: the loop, one petal per letter, numbered in order (dashed petals cancel). Middle: the same trip as a walk on an infinite tree,

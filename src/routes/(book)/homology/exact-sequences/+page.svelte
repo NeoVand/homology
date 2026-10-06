@@ -94,7 +94,7 @@
 	</p>
 </KeyIdea>
 
-<Figure size="wide" num="3.6.1" title="Exactness, bead by bead" hint="Change m and k · hover a bead in the middle column">
+<Figure num="3.6.1" title="Exactness, bead by bead" hint="Change m and k · hover a bead in the middle column">
 	<ExactBeads />
 	{#snippet caption()}
 		The sequence \(0\to\Z\xrightarrow{\times m}\Z\xrightarrow{\bmod k}\Z/k\to0\), with each group drawn as beads. Teal beads lie in the <em>kernel</em> of the next map, and gold rings mark the <em>image</em> of the previous one. With \(m = k\) the sequence is exact. With \(m = 4\), \(k = 2\) the beads \(\pm2,\pm6\) are teal but unringed: a gap \(2\Z/4\Z\cong\Z/2\), which is a homology group. With \(m = 2\), \(k = 4\) the ringed bead \(2\) is not even in the kernel, so this is not a chain complex at all.
@@ -159,7 +159,7 @@
 	</p>
 </Proof>
 
-<Figure size="wide" num="3.6.2" title="The zig-zag, with real chains" hint="Step through, or press play">
+<Figure num="3.6.2" title="The zig-zag, with real chains" hint="Step through, or press play">
 	<ZigZag />
 	{#snippet caption()}
 		The connecting map for \(X\) = a filled triangle and \(A\) = its boundary circle, where \(C_n(X,A) = C_n(X)/C_n(A)\) (Section 3). Start with the whole triangle, a relative cycle in the top-right cell. Lift it, take its boundary, and pull back to \(A\). The answer is the loop around the triangle. So \(\partial_*\) sends “the disk” to “its rim”, giving \(H_2(X,A)\cong H_1(A)\cong\Z\).
@@ -213,7 +213,7 @@
 	</p>
 </Example>
 
-<Figure size="wide" num="3.6.3" title="Crushing the rim" hint="Drag the slider, or press Crush · drag to rotate">
+<Figure num="3.6.3" title="Crushing the rim" hint="Drag the slider, or press Crush · drag to rotate">
 	<CrushDisk />
 	{#snippet caption()}
 		A disk \(D^2\) whose gold boundary circle \(A = S^1\) is squeezed to a single point. The disk curls up into a sphere, \(D^2/S^1\cong S^2\). The whole disk, a relative \(2\)-cycle of \((D^2,S^1)\), becomes the \(2\)-cycle that fills the sphere. Relative homology is homology after crushing: \(H_n(D^2,S^1)\cong\tilde H_n(S^2)\).
@@ -393,7 +393,7 @@
 	<p>\(\tilde H_k(S^n)\cong\Z\) if \(k = n\), and \(\tilde H_k(S^n) = 0\) otherwise.</p>
 </Theorem>
 
-<Figure size="wide" num="3.6.6" title="Mayer–Vietoris on the sphere" hint="Step through · drag to rotate">
+<Figure num="3.6.6" title="Mayer–Vietoris on the sphere" hint="Step through · drag to rotate">
 	<MVSphere />
 	{#snippet caption()}
 		The sphere as two caps \(U\) (blue) and \(V\) (violet), overlapping in a band (gold) that shrinks to the equator. The table fills in as you step. The connecting map takes the \(2\)-cycle “whole sphere” \(=\) “north cap \(u\)” \(+\) “south cap \(v\)” to \(\partial u\), the equator: this is the isomorphism \(H_2(S^2)\cong H_1(U\cap V)\cong\Z\).
@@ -434,7 +434,7 @@
 </ul>
 <p>In both cases each of \(U\), \(V\) and each piece of \(U\cap V\) deformation retracts onto a circle.</p>
 
-<Figure size="wide" num="3.6.7" title="Cutting a torus and a Klein bottle" hint="Choose a surface · step through">
+<Figure num="3.6.7" title="Cutting a torus and a Klein bottle" hint="Choose a surface · step through">
 	<MVSquares />
 	{#snippet caption()}
 		The same cut on the same square. \(U\) is the middle strip (blue), \(V\) is the top and bottom strips (violet), and the overlap is two thin strips (gold). For the torus the overlap is two circles. For the Klein bottle the flip joins them (matching dots are the same point) into one circle that goes twice around. In the table, everything but the last column is known, and exactness does the rest.
@@ -464,7 +464,7 @@
 </p>
 \[ \Phi_1\colon\Z\to\Z^2,\qquad 1\mapsto(2,\,-2). \]
 
-<Figure size="wide" num="3.6.8" title="The boundary of a Möbius band goes around twice" hint="Drag to rotate · walk along the boundary">
+<Figure num="3.6.8" title="The boundary of a Möbius band goes around twice" hint="Drag to rotate · walk along the boundary">
 	<MobiusDouble />
 	{#snippet caption()}
 		A bead walks once along the teal boundary of a Möbius band, which is a single closed curve. Its shadow on the gold core circle goes around <em>twice</em>. That factor \(2\) is the \(\Phi_1(1) = (2,-2)\) of the Klein bottle computation, and it is where the torsion \(\Z/2\) comes from.
@@ -596,7 +596,7 @@
 	</p>
 </Warning>
 
-<Figure size="full" num="3.6.9" title="A cellular homology calculator" hint="Type a word or pick a preset · switch modes for ℝPⁿ and ℂPⁿ">
+<Figure num="3.6.9" title="A cellular homology calculator" hint="Type a word or pick a preset · switch modes for ℝPⁿ and ℂPⁿ">
 	<CellularCalc />
 	{#snippet caption()}
 		Type any word in edge letters (a capital letter or a <code>^-1</code> marks an inverse). The polygon is drawn with its arrows, and its corners are coloured by which vertex of the glued space they become. Alongside it are the cellular chain complex — \(\partial_2\) holds the exponent sums, \(\partial_1\) the ends minus the starts — and the homology, computed with the Smith normal form. Rose groups contain torsion. Try the dunce cap \(aaa^{-1}\): the space is contractible. The second mode shows the cell ladders of \(\RP^n\), \(\CP^n\) and \(S^n\).

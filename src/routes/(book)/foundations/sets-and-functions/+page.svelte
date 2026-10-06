@@ -278,7 +278,7 @@
 	shades a region.
 </p>
 
-<Figure size="wide" title="A Venn diagram laboratory" hint="Choose an operation · switch on a third set" num="1.1.1">
+<Figure title="A Venn diagram laboratory" hint="Choose an operation · switch on a third set" num="1.1.1">
 	<VennLab />
 	{#snippet caption()}
 		The universe is \(U = \set{1,\dots,12}\), with \(A\) the even numbers and \(B\) the multiples of \(3\). Each button shades a
@@ -359,7 +359,7 @@
 	</p>
 </Question>
 
-<Figure size="wide" title="A × B is a grid" hint="Tap a dot · change the sizes · swap the order" num="1.1.2">
+<Figure title="A × B is a grid" hint="Tap a dot · change the sizes · swap the order" num="1.1.2">
 	<ProductGrid />
 	{#snippet caption()}
 		Every dot is an ordered pair. The dashed lines drop from a dot to its two coordinates: reading off the first coordinate and
@@ -389,7 +389,7 @@
 	around its tube changes the second.
 </p>
 
-<Figure size="wide" title="The torus is a product of two circles" hint="Turn the dials · drag the torus to rotate" num="1.1.3">
+<Figure title="The torus is a product of two circles" hint="Turn the dials · drag the torus to rotate" num="1.1.3">
 	<TorusProduct />
 	{#snippet caption()}
 		Each point of the torus is an ordered pair: an angle \(\theta\) on the first circle and an angle \(\varphi\) on the second.
@@ -431,7 +431,7 @@
 
 <p>The best way to see the two demands is an <em>arrow diagram</em>: dots for the elements, an arrow from each \(x\) to \(f(x)\).</p>
 
-<Figure size="wide" title="Six arrow diagrams" num="1.1.4">
+<Figure title="Six arrow diagrams" num="1.1.4">
 	<MapGallery />
 	{#snippet caption()}
 		The first two diagrams are not functions: one element of \(X\) has no arrow, or two. The other four are functions, sorted by
@@ -522,7 +522,7 @@
 	\(X\hookrightarrow Y\), and surjections with a double-headed one, \(X\twoheadrightarrow Y\).
 </p>
 
-<Figure size="wide" title="The arrow-diagram lab" hint="Tap a dot in X, then a dot in Y, to draw or erase an arrow" num="1.1.5" id="fig-arrow-lab">
+<Figure title="The arrow-diagram lab" hint="Tap a dot in X, then a dot in Y, to draw or erase an arrow" num="1.1.5" id="fig-arrow-lab">
 	<ArrowLab />
 	{#snippet caption()}
 		Draw any arrows you like between \(X\) and \(Y\). The badges decide whether you have drawn a function and, if so, whether it is
@@ -612,7 +612,7 @@
 	</ul>
 </Example>
 
-<Figure size="wide" title="Image and preimage on a graph" hint="Drag the round handles · switch modes" num="1.1.6">
+<Figure title="Image and preimage on a graph" hint="Drag the round handles · switch modes" num="1.1.6">
 	<PreimageGraph />
 	{#snippet caption()}
 		The preimage of an interval \(B\) on the vertical axis: draw the band, see where it cuts the curve, and drop down to the
@@ -686,7 +686,7 @@
 	\(g\).
 </p>
 
-<Figure size="wide" title="Composition, step by step" hint="Step or play · tap a person to trace them" num="1.1.7">
+<Figure title="Composition, step by step" hint="Step or play · tap a person to trace them" num="1.1.7">
 	<CompositionAnimator />
 	{#snippet caption()}
 		\(f\) sends each person to their city, \(g\) sends each city to its country; the composite \(g\circ f\) sends each person
@@ -802,7 +802,7 @@
 	crucial part.
 </p>
 
-<Figure size="wide" title="All roads lead to the same place" hint="Pick x · change the bottom map · press the gold button" num="1.1.8">
+<Figure title="All roads lead to the same place" hint="Pick x · change the bottom map · press the gold button" num="1.1.8">
 	<CommutativeSquare />
 	{#snippet caption()}
 		Four copies of \(\Z\) and four maps. With \(k(y) = y+2\) both roads send \(x\) to \(2x+2\), for every \(x\): the square
@@ -865,7 +865,7 @@
 	though they stretch infinitely far in both directions: just alternate.
 </p>
 
-<Figure size="wide" title="Listing the integers" num="1.1.9">
+<Figure title="Listing the integers" num="1.1.9">
 	<CountingZigZag />
 	{#snippet caption()}
 		Hop outward from \(0\), alternating sides: \(0, 1, -1, 2, -2, \dots\). Every integer is reached after finitely many hops, so

@@ -4,6 +4,8 @@
 	import { parts } from '$lib/content/toc';
 	import { chapterHref, href } from '$lib/util/paths';
 	import { progress } from '$lib/stores/progress.svelte';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { ArrowRightIcon, ChevronDownIcon, InteractIcon, StepsIcon, TheoremIcon, VisitedIcon } from '$lib/icons';
 
 	const totalMinutes = parts.flatMap((p) => p.chapters).reduce((a, c) => a + c.minutes, 0);
 	const chapterCount = parts.flatMap((p) => p.chapters).length;
@@ -42,7 +44,8 @@
 		</p>
 		<div class="ctas ui">
 			<a class="btn gold" href={chapterHref('prelude/shape-of-a-question')}>
-				{visitedCount ? 'Continue the journey' : 'Begin the journey'} <span aria-hidden="true">→</span>
+				{visitedCount ? 'Continue the journey' : 'Begin the journey'}
+				<Icon icon={ArrowRightIcon} size={18} stroke={1.8} />
 			</a>
 			<a class="btn ghost" href={href('/map/')}>See the map</a>
 		</div>
@@ -138,7 +141,7 @@
 <section class="features">
 	<div class="feature">
 		<div class="ficon" aria-hidden="true">
-			<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="13" /><path d="M7 20h26M20 7c6 6 6 20 0 26M20 7c-6 6-6 20 0 26" /></svg>
+			<Icon icon={InteractIcon} size={24} />
 		</div>
 		<h3>Touch every idea</h3>
 		<p>
@@ -148,7 +151,7 @@
 	</div>
 	<div class="feature">
 		<div class="ficon" aria-hidden="true">
-			<svg viewBox="0 0 40 40"><path d="M8 32V12l12-6 12 6v20" /><path d="M8 12l12 6 12-6M20 18v14" /></svg>
+			<Icon icon={StepsIcon} size={24} />
 		</div>
 		<h3>Nothing assumed</h3>
 		<p>
@@ -158,7 +161,7 @@
 	</div>
 	<div class="feature">
 		<div class="ficon" aria-hidden="true">
-			<svg viewBox="0 0 40 40"><path d="M20 5l4 9 10 1-7.5 7 2 10L20 27l-8.5 5 2-10L6 15l10-1z" /></svg>
+			<Icon icon={TheoremIcon} size={24} />
 		</div>
 		<h3>Honest and rigorous</h3>
 		<p>
@@ -194,7 +197,7 @@
 							onclick={() => (open[part.id] = !open[part.id])}
 						>
 							{part.chapters.length} chapters
-							<span class="chev" class:up={open[part.id]} aria-hidden="true">⌄</span>
+							<span class="chev" class:up={open[part.id]}><Icon icon={ChevronDownIcon} size={14} stroke={1.8} /></span>
 						</button>
 					</div>
 					{#if open[part.id]}
@@ -207,7 +210,7 @@
 											<span class="ctitle">{ch.title}</span>
 											<span class="cblurb">{ch.blurb}</span>
 										</span>
-										{#if progress.visited[ch.id]}<span class="seen" aria-label="visited">✦</span>{/if}
+										{#if progress.visited[ch.id]}<Icon icon={VisitedIcon} size={15} stroke={2} class="seen" label="visited" />{/if}
 									</a>
 								</li>
 							{/each}
@@ -234,7 +237,9 @@
 		</p>
 		<footer class="ui"><span class="who">William P. Thurston</span>, <i>On proof and progress in mathematics</i> (1994)</footer>
 	</blockquote>
-	<a class="btn gold ui" href={chapterHref('prelude/shape-of-a-question')}>Start with the first question →</a>
+	<a class="btn gold ui" href={chapterHref('prelude/shape-of-a-question')}
+		>Start with the first question <Icon icon={ArrowRightIcon} size={18} stroke={1.8} /></a
+	>
 </section>
 
 <footer class="site-foot ui">
@@ -513,14 +518,8 @@
 		background: radial-gradient(circle at 30% 30%, rgba(242, 208, 143, 0.25), rgba(242, 208, 143, 0.04));
 		border: 1px solid var(--line);
 	}
-	.ficon svg {
-		width: 1.6rem;
-		height: 1.6rem;
-		fill: none;
-		stroke: var(--gold-bright);
-		stroke-width: 1.6;
-		stroke-linejoin: round;
-		stroke-linecap: round;
+	.ficon {
+		color: var(--gold-bright);
 	}
 
 	.journey {
@@ -636,8 +635,8 @@
 		border-color: var(--line);
 	}
 	.chev {
-		transition: transform 0.2s;
-		display: inline-block;
+		display: inline-grid;
+		transition: transform 0.2s var(--ease);
 	}
 	.chev.up {
 		transform: rotate(180deg);
@@ -705,9 +704,10 @@
 		color: var(--ink-dim);
 		line-height: 1.5;
 	}
-	.seen {
+	.clist :global(.seen) {
+		align-self: center;
 		color: var(--gold);
-		font-size: 0.7rem;
+		opacity: 0.7;
 	}
 	.closing .btn {
 		margin-top: 2rem;

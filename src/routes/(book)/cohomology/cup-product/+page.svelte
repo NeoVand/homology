@@ -111,7 +111,7 @@
 	each, and glue those three points together into a single point. Nothing else is glued.
 </p>
 
-<Figure size="wide" num="4.5.1" title="Same groups" hint="Drag to rotate · switch to “Multiply”">
+<Figure num="4.5.1" title="Same groups" hint="Drag to rotate · switch to “Multiply”">
 	<TorusVsWedge />
 	{#snippet caption()}
 		The torus \(T^2\) and the wedge \(S^1\vee S^1\vee S^2\). Counting holes gives the same answer for
@@ -318,7 +318,7 @@
 	its edges (an edge points from the earlier vertex to the later one). Play with the triangle below.
 </p>
 
-<Figure size="wide" num="4.5.2" title="Front face × back face" hint="Use − and + to change the values · swap the order">
+<Figure num="4.5.2" title="Front face × back face" hint="Use − and + to change the values · swap the order">
 	<FrontBack />
 	{#snippet caption()}
 		The product reads the left factor on the front face \([v_0,v_1]\) and the right factor on the back
@@ -602,7 +602,7 @@
 	cross.</strong>
 </p>
 
-<Figure size="wide" num="4.5.3" title="The torus, triangle by triangle" hint="Choose a product · move the fences · tap a triangle">
+<Figure num="4.5.3" title="The torus, triangle by triangle" hint="Choose a product · move the fences · tap a triangle">
 	<GridCup />
 	{#snippet caption()}
 		The number in each triangle is the value of the chosen product there: left factor on the front face
@@ -659,7 +659,7 @@
 	support of \(\alpha\smile\beta\).
 </p>
 
-<Figure size="wide" num="4.5.4" title="Bands on a torus" hint="Drag to rotate · slide and bend the bands · switch products">
+<Figure num="4.5.4" title="Bands on a torus" hint="Drag to rotate · slide and bend the bands · switch products">
 	<BandsTorus />
 	{#snippet caption()}
 		Two fences on a torus and their crossings. The first readout counts crossings with signs; the second
@@ -679,7 +679,7 @@
 	\(dx_i\) — that is \(pq\) swaps of neighbours, each one a factor \(-1\).
 </p>
 
-<Figure size="normal" num="4.5.5" title="Counting the swaps" hint="Pick degrees · step through the swaps">
+<Figure num="4.5.5" title="Counting the swaps" hint="Pick degrees · step through the swaps">
 	<SignShuffle />
 	{#snippet caption()}
 		Moving \(\beta\) (teal, degree \(q\)) past \(\alpha\) (gold, degree \(p\)) one neighbouring swap at a
@@ -767,7 +767,7 @@
 	it; choose an entry to see the fences involved and where they cross.
 </p>
 
-<Figure size="wide" num="4.5.6" title="Multiplication tables" hint="Pick a space · tap an entry of the table">
+<Figure num="4.5.6" title="Multiplication tables" hint="Pick a space · tap an entry of the table">
 	<CupTable />
 	{#snippet caption()}
 		Products of degree-1 classes for six spaces. Over \(\Z\), entries are multiples of the generator
@@ -892,7 +892,7 @@
 	side and has to cross the original.
 </p>
 
-<Figure size="wide" num="4.5.7" title="Pushing a fence off itself" hint="Choose the fence · drag the slider">
+<Figure num="4.5.7" title="Pushing a fence off itself" hint="Choose the fence · drag the slider">
 	<PushOff />
 	{#snippet caption()}
 		On the torus, every fence can be slid off itself, so every square is zero. On the Klein bottle the

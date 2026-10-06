@@ -1,5 +1,7 @@
 <script lang="ts">
 	import Ornament from '$lib/components/layout/Ornament.svelte';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { SearchIcon } from '$lib/icons';
 	import { chapterHref } from '$lib/util/paths';
 
 	let { data } = $props();
@@ -46,14 +48,7 @@
 
 	<div class="tools ui">
 		<label class="search">
-			<svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"
-				><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5" /><path
-					d="M13 13l4 4"
-					stroke="currentColor"
-					stroke-width="1.5"
-					stroke-linecap="round"
-				/></svg
-			>
+			<Icon icon={SearchIcon} size={17} />
 			<input type="search" placeholder="Search {data.entries.length} terms…" bind:value={q} aria-label="Search the glossary" />
 		</label>
 		<nav class="letters" aria-label="Jump to letter">

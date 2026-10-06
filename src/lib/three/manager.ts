@@ -15,8 +15,11 @@ const live = new Set<LiveScene>();
 let raf = 0;
 let last = 0;
 
+// `raf` stays set while the frame callbacks run, so a wake() from inside a
+// frame (a figure invalidating itself every frame) is a no-op. Clearing it
+// first would schedule a second loop per frame, then four, then eight — an
+// exponential pile-up of renders that freezes the browser within seconds.
 function loop(now: number) {
-	raf = 0;
 	const t = now / 1000;
 	const dt = last ? Math.min(0.1, t - last) : 1 / 60;
 	last = t;
@@ -30,8 +33,8 @@ function loop(now: number) {
 			console.error('[Scene3D] frame error', e);
 		}
 	}
-	if (any) raf = requestAnimationFrame(loop);
-	else last = 0;
+	raf = any ? requestAnimationFrame(loop) : 0;
+	if (!any) last = 0;
 }
 
 export function wake() {

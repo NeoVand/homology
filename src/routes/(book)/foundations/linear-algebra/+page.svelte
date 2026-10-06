@@ -116,7 +116,7 @@
 	them all off?
 </p>
 
-<Figure num="1.5.1" size="wide" title="Lights Out" hint="Click a light to press it">
+<Figure num="1.5.1" title="Lights Out" hint="Click a light to press it">
 	<LightsOut mode="play" />
 	{#snippet caption()}
 		The electronic game <em>Lights Out</em>. Each press switches a plus-shaped group of lights. Play a few rounds, on the small
@@ -197,7 +197,7 @@
 	</li>
 </ul>
 
-<Figure num="1.5.2" size="wide" title="Adding arrows, adding lists" hint="Drag u and v · slide c">
+<Figure num="1.5.2" title="Adding arrows, adding lists" hint="Drag u and v · slide c">
 	<VectorAdd />
 	{#snippet caption()}
 		Walking along \(\mathbf u\) and then along \(\mathbf v\) ends at the same place as walking along \(\mathbf v\) and then along
@@ -346,7 +346,7 @@
 	is still only a line.
 </p>
 
-<Figure num="1.5.4" size="wide" title="Three spans">
+<Figure num="1.5.4" title="Three spans">
 	<SpanTriptych />
 	{#snippet caption()}
 		The span is everything you can reach with linear combinations. Left: the multiples of one vector fill a line. Middle: two vectors
@@ -470,7 +470,7 @@
 	columns of a table of numbers. That table is the <dfn>matrix</dfn> of \(T\).
 </p>
 
-<Figure num="1.5.5" size="wide" title="A linear map is a grid that stays a grid" hint="Drag the arrow tips">
+<Figure num="1.5.5" title="A linear map is a grid that stays a grid" hint="Drag the arrow tips">
 	<LinearMapPlayground />
 	{#snippet caption()}
 		Drag where \(\mathbf e_1\) and \(\mathbf e_2\) land: the whole grid follows, and the matrix \(A\) records the two landing spots as
@@ -633,7 +633,7 @@
 	slanted sunlight. Every point slides along one fixed direction until it reaches the floor.
 </p>
 
-<Figure num="1.5.6" size="wide" title="Crushing one dimension" hint="Drag to rotate · Apply">
+<Figure num="1.5.6" title="Crushing one dimension" hint="Drag to rotate · Apply">
 	<ShadowProjection />
 	{#snippet caption()}
 		A rank-2 map of three-dimensional space. Apply it, and every point slides along the slanted direction until it reaches the floor.
@@ -758,7 +758,7 @@
 	step in the figure.
 </p>
 
-<Figure num="1.5.7" size="wide" title="Row reduction, one step at a time" hint="Step through">
+<Figure num="1.5.7" title="Row reduction, one step at a time" hint="Step through">
 	<RowReduction />
 	{#snippet caption()}
 		Each step performs the row operations shown above the matrix; changed rows are tinted, the current pivot glows gold. At the end,
@@ -838,7 +838,7 @@
 	solution set is a <Term t="coset">coset</Term> of the kernel. All solutions differ by something invisible to \(A\).
 </p>
 
-<Figure num="1.5.8" size="wide" title="Solutions form a shifted copy of the kernel" hint="Drag b and x">
+<Figure num="1.5.8" title="Solutions form a shifted copy of the kernel" hint="Drag b and x">
 	<SolveByCoset />
 	{#snippet caption()}
 		This \(A\) flattens the plane onto its image, the <span class="tx-gold">gold line</span> on the right. Put \(\mathbf b\) on that
@@ -898,7 +898,7 @@
 	again a vector space, and its zero is the coset \(\mathbf 0 + W\), which is \(W\) itself.
 </p>
 
-<Figure num="1.5.9" size="wide" title="The plane modulo a line" hint="Drag p and q">
+<Figure num="1.5.9" title="The plane modulo a line" hint="Drag p and q">
 	<QuotientPlane />
 	{#snippet caption()}
 		Here \(W\) is the <span class="tx-teal">teal line</span>, and each element of \(\R^2/W\) is a whole line parallel to it. Sliding
@@ -989,7 +989,7 @@
 	</li>
 </ol>
 
-<Figure num="1.5.10" size="wide" title="Lights Out under the X-ray" hint="Click to press · tap a check">
+<Figure num="1.5.10" title="Lights Out under the X-ray" hint="Click to press · tap a check">
 	<LightsOut mode="full" />
 	{#snippet caption()}
 		The full machinery, starting from the board with every light on. <em>Solve it</em> presses the shortest solution; switch on
@@ -1076,7 +1076,7 @@
 	if it goes down the numbering), plus a fraction for the last partial step. The covector is a ruler, and the lines are its marks.
 </p>
 
-<Figure num="1.5.11" size="wide" title="A covector is a stack of lines" hint="Drag v and the blue handle">
+<Figure num="1.5.11" title="A covector is a stack of lines" hint="Drag v and the blue handle">
 	<CovectorStack mode="measure" />
 	{#snippet caption()}
 		The covector \(\varphi\) drawn as its level lines \(\varphi = 0, \pm1, \pm2, \dots\). Its value on \(\mathbf v\) is the level the
@@ -1129,7 +1129,7 @@
 	columns” is exactly the act of pulling measurements back.
 </p>
 
-<Figure num="1.5.12" size="wide" title="Pulling a measurement back" hint="Drag v and φ · change A">
+<Figure num="1.5.12" title="Pulling a measurement back" hint="Drag v and φ · change A">
 	<CovectorStack mode="pullback" />
 	{#snippet caption()}
 		\(A\) carries \(\mathbf v\) forward to \(A\mathbf v\); the transpose carries the measurement \(\varphi\) back to
@@ -1316,7 +1316,7 @@
 	</p>
 </Example>
 
-<Figure num="1.5.13" size="wide" title="The Smith normal form, step by step" hint="Step through">
+<Figure num="1.5.13" title="The Smith normal form, step by step" hint="Step through">
 	<SmithStepper />
 	{#snippet caption()}
 		Only integer operations: each step is shown above the matrix, remainders become new pivots, and finished diagonal entries turn

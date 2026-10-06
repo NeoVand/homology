@@ -118,7 +118,7 @@
 	stick. Try it in Figure 2.1.1.
 </p>
 
-<Figure size="wide" num="2.1.1" title="A rubber sheet" hint="Drag the gold pins to stretch · then try Tear and Glue">
+<Figure num="2.1.1" title="A rubber sheet" hint="Drag the gold pins to stretch · then try Tear and Glue">
 	<RubberSheet />
 	{#snippet caption()}
 		Stretching changes every measurement in the left column, but none of the facts in the right column. Tearing the loop open
@@ -193,7 +193,7 @@
 	anything.
 </p>
 
-<Figure size="wide" num="2.1.2" title="Three rulers for the plane">
+<Figure num="2.1.2" title="Three rulers for the plane">
 	<MetricBalls />
 	{#snippet caption()}
 		Left: from \(A\) to \(B\) it is \(5\) blocks as the crow flies but \(7\) by taxi, and every staircase route is equally long.
@@ -241,7 +241,7 @@
 	that fits.
 </p>
 
-<Figure size="wide" num="2.1.3" title="Wiggle room" hint="Drag x (or focus it and use the arrow keys) · switch regions and rulers">
+<Figure num="2.1.3" title="Wiggle room" hint="Drag x (or focus it and use the arrow keys) · switch regions and rulers">
 	<WiggleRoom />
 	{#snippet caption()}
 		A solid edge belongs to the set; a dashed edge does not. A set is open when every one of its points has a ball around it
@@ -440,7 +440,7 @@
 	exactly \(29\). Figure 2.1.4 lets you hunt for them, and the checker tells you exactly which rule your collection breaks.
 </p>
 
-<Figure size="wide" num="2.1.4" title="Build a topology" hint="Click a subset to make it open (or Enter on the keyboard)">
+<Figure num="2.1.4" title="Build a topology" hint="Click a subset to make it open (or Enter on the keyboard)">
 	<TopologyBuilder />
 	{#snippet caption()}
 		The eight subsets of \(X = \set{a, b, c}\), each linked to the subsets one size bigger. Choose which ones are open. For
@@ -524,7 +524,7 @@
 	\(\varepsilon\) you were given. Play the game below.
 </p>
 
-<Figure size="wide" num="2.1.5" title="The ε–δ game" hint="Choose ε, then find a δ that works · press “smaller ε!” to raise the stakes">
+<Figure num="2.1.5" title="The ε–δ game" hint="Choose ε, then find a δ that works · press “smaller ε!” to raise the stakes">
 	<EpsilonDelta />
 	{#snippet caption()}
 		Teal: the band of outputs within \(\varepsilon\) of \(f(a)\). Violet: the window of inputs within \(\delta\) of \(a\). You win
@@ -642,7 +642,7 @@
 	Why insist that the inverse be continuous? Isn't a continuous bijection enough? Figure 2.1.6 shows why not.
 </p>
 
-<Figure size="wide" num="2.1.6" title="A continuous bijection that tears when reversed">
+<Figure num="2.1.6" title="A continuous bijection that tears when reversed">
 	<WrapTear />
 	{#snippet caption()}
 		Wrapping the half-open interval \([0, 1)\) once around the circle is continuous and pairs points perfectly. But the small
@@ -677,7 +677,7 @@
 	never be pulled free, not by any stretching, because the hole it goes around is never destroyed.
 </p>
 
-<Figure size="wide" num="2.1.7" title="From coffee mug to doughnut" hint="Press Deform or drag the slider · drag the picture to turn it">
+<Figure num="2.1.7" title="From coffee mug to doughnut" hint="Press Deform or drag the slider · drag the picture to turn it">
 	<CupToDonut />
 	{#snippet caption()}
 		A solid mug becomes a solid doughnut (a <em>solid torus</em>) without tearing or gluing, so the two are homeomorphic. The
@@ -843,7 +843,7 @@
 	points out of letters and count.
 </p>
 
-<Figure size="full" num="2.1.8" title="The Letter Lab" hint="Pick a letter · click a point of it to remove that point">
+<Figure num="2.1.8" title="The Letter Lab" hint="Pick a letter · click a point of it to remove that point">
 	<LetterLab />
 	{#snippet caption()}
 		Removing a junction of T leaves three pieces, but no single point of O leaves more than one. The numbers of free ends, of

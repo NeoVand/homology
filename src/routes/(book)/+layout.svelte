@@ -16,19 +16,22 @@
 	let article: HTMLElement | undefined = $state();
 	let sidebarInner: HTMLElement | undefined = $state();
 
-	// keep the current chapter visible in the (independently scrolling) sidebar
+	// keep the current chapter in view in the (independently scrolling) sidebar
 	$effect(() => {
 		void id;
+		void ui.sidebarOpen;
 		if (!sidebarInner) return;
 		tick().then(() => {
 			const el = sidebarInner?.querySelector<HTMLElement>('a[aria-current="page"]');
 			if (!el || !sidebarInner) return;
-			const top = el.offsetTop - sidebarInner.clientHeight / 3;
-			sidebarInner.scrollTo({ top: Math.max(0, top) });
+			const box = sidebarInner.getBoundingClientRect();
+			const r = el.getBoundingClientRect();
+			if (r.top >= box.top + 40 && r.bottom <= box.bottom - 40) return;
+			sidebarInner.scrollTop += r.top - box.top - box.height / 4;
 		});
 	});
 
-	// Collect h2 sections for the sidebar and keep the active one in sync:
+	// Collect the h2 sections for the sidebar and keep the active one in sync:
 	// the active section is the last heading above ~35% of the viewport.
 	$effect(() => {
 		const currentId = id; // re-run on navigation
@@ -81,8 +84,8 @@
 	{/if}
 </svelte:head>
 
-<div class="book has-sidebar">
-	<aside class="sidebar" aria-label="Chapters">
+<div class="book">
+	<aside id="chapter-sidebar" class="sidebar" aria-label="Chapters">
 		<div class="sidebar-inner" bind:this={sidebarInner}>
 			<TocList current={id} />
 		</div>
@@ -106,32 +109,40 @@
 	.sidebar {
 		display: none;
 	}
+	/* The main column is a size container: figure plates are sized against it
+	   (100cqi), never against the viewport, so they fit with or without the
+	   sidebar and never cause sideways scrolling. */
 	.main {
 		min-width: 0;
-		padding: 0 1.25rem;
-		--avail: calc(100vw - 2.5rem);
+		padding: 0 clamp(1rem, 4vw, 2.5rem);
+		container-type: inline-size;
 	}
-	@media (min-width: 1180px) {
-		.book {
-			grid-template-columns: 17.5rem minmax(0, 1fr);
+	/* From 1024px the contents stay beside the text, unless the reader hid them
+	   (html[data-sidebar='closed'], restored before first paint by app.html). */
+	@media (min-width: 64rem) {
+		:global(html:not([data-sidebar='closed'])) .book {
+			grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
 		}
-		.sidebar {
+		:global(html:not([data-sidebar='closed'])) .sidebar {
 			display: block;
-			position: relative;
 		}
-		.sidebar-inner {
-			position: sticky;
-			top: var(--topbar-h);
-			max-height: calc(100vh - var(--topbar-h));
-			overflow-y: auto;
-			padding: 1.6rem 0.8rem 3rem 0.9rem;
-			border-right: 1px solid var(--line-faint);
-			scrollbar-width: thin;
-		}
-		.main {
-			padding: 0 2.5rem;
-			--avail: calc(100vw - 17.5rem - 5rem - 14px);
-		}
+	}
+	.sidebar-inner {
+		position: sticky;
+		top: var(--topbar-h);
+		height: calc(100vh - var(--topbar-h));
+		height: calc(100dvh - var(--topbar-h));
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		padding: 1.5rem 0.75rem 3rem 0.9rem;
+		border-right: 1px solid var(--line-faint);
+		background: linear-gradient(90deg, rgba(4, 6, 12, 0.55), rgba(4, 6, 12, 0.25));
+		scrollbar-width: thin;
+		scrollbar-color: transparent transparent;
+	}
+	.sidebar-inner:hover,
+	.sidebar-inner:focus-within {
+		scrollbar-color: rgba(216, 178, 110, 0.25) transparent;
 	}
 
 	/* automatic section numbering for h2 inside chapters */

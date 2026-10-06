@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" module>
 	// An annotated reading list for the end of a chapter.
 	export interface Reading {
 		title: string;
@@ -9,21 +9,21 @@
 		kind?: 'book' | 'paper' | 'notes' | 'video' | 'web' | 'interactive';
 		free?: boolean;
 	}
+</script>
+
+<script lang="ts">
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { BookIcon, InteractiveIcon, NotesIcon, PaperIcon, VideoIcon, WebIcon } from '$lib/icons';
+
 	let { items }: { items: Reading[] } = $props();
-	const icons: Record<string, string> = {
-		book: '📖',
-		paper: '📄',
-		notes: '📝',
-		video: '▶',
-		web: '🌐',
-		interactive: '✦'
-	};
+	const icons = { book: BookIcon, paper: PaperIcon, notes: NotesIcon, video: VideoIcon, web: WebIcon, interactive: InteractiveIcon };
+	const kinds = { book: 'Book', paper: 'Paper', notes: 'Lecture notes', video: 'Video', web: 'Web page', interactive: 'Interactive' };
 </script>
 
 <ul class="reading">
 	{#each items as r (r.title)}
 		<li>
-			<span class="kind ui" aria-hidden="true">{icons[r.kind ?? 'web']}</span>
+			<span class="kind"><Icon icon={icons[r.kind ?? 'web']} size={17} label={kinds[r.kind ?? 'web']} /></span>
 			<div class="body">
 				<div class="head">
 					{#if r.url}<a href={r.url} target="_blank" rel="noopener noreferrer">{r.title}</a>{:else}<span class="t">{r.title}</span>{/if}
@@ -53,11 +53,12 @@
 	}
 	.kind {
 		flex: none;
+		display: grid;
+		place-items: center;
 		width: 1.4rem;
-		text-align: center;
-		opacity: 0.8;
-		font-size: 0.95rem;
-		filter: grayscale(0.3);
+		height: 1.6em;
+		color: var(--gold);
+		opacity: 0.85;
 	}
 	.head {
 		display: flex;

@@ -51,6 +51,8 @@
 	import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 	import { register, unregister, wake, type LiveScene } from '$lib/three/manager';
 	import { disposeTree, tickMaterials } from '$lib/three/materials';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { ResetIcon } from '$lib/icons';
 
 	let {
 		setup,
@@ -281,6 +283,9 @@
 			} catch (e) {
 				console.error('[Scene3D] setup failed', e);
 			}
+			// test hook: performance and rendering checks read scenes from here
+			const dbg = (window as unknown as { __h3d?: unknown[] }).__h3d;
+			if (dbg) dbg.push({ label, scene, renderer, frameCbs });
 
 			let elapsed = 0;
 			live = {
@@ -376,16 +381,7 @@
 				>
 			{/if}
 			<button class="tool" title="Reset view" aria-label="Reset view" onclick={() => resetView?.()}>
-				<svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"
-					><path
-						d="M4 10a6 6 0 1 0 2-4.5M4 4v3.5h3.5"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/></svg
-				>
+				<Icon icon={ResetIcon} size={15} />
 			</button>
 		</div>
 	{/if}

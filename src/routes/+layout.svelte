@@ -4,6 +4,7 @@
 	import TopBar from '$lib/components/layout/TopBar.svelte';
 	import NavDrawer from '$lib/components/layout/NavDrawer.svelte';
 	import SearchDialog from '$lib/components/layout/SearchDialog.svelte';
+	import SvgDefs from '$lib/components/svg/SvgDefs.svelte';
 
 	let { children } = $props();
 </script>
@@ -19,6 +20,7 @@
 </svelte:head>
 
 <a class="skip ui" href="#main">Skip to content</a>
+<SvgDefs />
 <Starfield />
 <TopBar />
 <NavDrawer />

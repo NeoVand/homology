@@ -9,7 +9,7 @@
 	import StepControls from '$lib/components/ui/StepControls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import Stepper from '../categories/Stepper.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import { animate, lerp, type Pt } from '../categories/diagram';
 	import { gcd } from './abelian';
 	import { untrack } from 'svelte';

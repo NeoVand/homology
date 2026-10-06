@@ -4,6 +4,8 @@
 	import { ui } from '$lib/stores/ui.svelte';
 	import { tick } from 'svelte';
 	import { fade, scale } from 'svelte/transition';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { SearchIcon } from '$lib/icons';
 
 	type Item = {
 		type: 'chapter' | 'section' | 'term' | 'symbol';
@@ -69,15 +71,31 @@
 		sel = 0;
 	});
 
+	// A modal dialog: the page behind is inert and does not scroll; focus goes
+	// back where it was when the dialog closes.
 	$effect(() => {
 		if (!ui.searchOpen) return;
 		load();
+		const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+		const behind = [document.querySelector('.topbar'), document.getElementById('main')].filter(
+			(el): el is HTMLElement => el instanceof HTMLElement
+		);
+		for (const el of behind) el.inert = true;
 		tick().then(() => input?.focus());
 		const prev = document.body.style.overflow;
 		document.body.style.overflow = 'hidden';
 		return () => {
+			for (const el of behind) el.inert = false;
 			document.body.style.overflow = prev;
+			if (opener?.isConnected) opener.focus({ preventScroll: true });
 		};
+	});
+
+	// keep the highlighted result in view while moving with the arrow keys
+	let list = $state<HTMLElement>();
+	$effect(() => {
+		const i = sel;
+		list?.querySelector<HTMLElement>(`#sr-${i}`)?.scrollIntoView({ block: 'nearest' });
 	});
 
 	$effect(() => {
@@ -118,34 +136,41 @@
 	<div class="scrim" transition:fade={{ duration: 150 }} onclick={() => (ui.searchOpen = false)} aria-hidden="true"></div>
 	<div class="dialog" role="dialog" aria-modal="true" aria-label="Search the book" transition:scale={{ start: 0.97, duration: 180 }}>
 		<div class="bar ui">
-			<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"
-				><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5" /><path
-					d="M13 13l4 4"
-					stroke="currentColor"
-					stroke-width="1.5"
-					stroke-linecap="round"
-				/></svg
-			>
+			<Icon icon={SearchIcon} size={19} />
 			<input
 				bind:this={input}
 				bind:value={q}
 				onkeydown={onKey}
 				placeholder="Search chapters, sections, terms, symbols…"
-				aria-label="Search"
+				aria-label="Search the book"
+				role="combobox"
+				aria-expanded="true"
+				aria-controls="search-results"
+				aria-activedescendant={results.length ? `sr-${sel}` : undefined}
+				aria-autocomplete="list"
 				autocomplete="off"
 				spellcheck="false"
 			/>
 			<kbd>esc</kbd>
 		</div>
-		<ul class="results" role="listbox">
-			{#if !items}
-				<li class="empty ui">Loading…</li>
-			{:else if !results.length}
-				<li class="empty ui">Nothing found for “{q}”.</li>
-			{/if}
+		{#if !items}
+			<p class="empty ui">Loading…</p>
+		{:else if !results.length}
+			<p class="empty ui">Nothing found for “{q}”.</p>
+		{/if}
+		<ul class="results" role="listbox" id="search-results" aria-label="Results" bind:this={list}>
 			{#each results as it, i (it.type + it.path + (it.hash ?? '') + it.title)}
-				<li role="option" aria-selected={i === sel}>
-					<button class="res" class:on={i === sel} onpointerenter={() => (sel = i)} onclick={() => open(it)}>
+				<li role="presentation">
+					<button
+						class="res"
+						class:on={i === sel}
+						id="sr-{i}"
+						role="option"
+						aria-selected={i === sel}
+						tabindex="-1"
+						onpointerenter={() => (sel = i)}
+						onclick={() => open(it)}
+					>
 						<span class="tag ui t-{it.type}">{labels[it.type]}</span>
 						<span class="main">
 							<span class="ttl">{#if it.html && it.type !== 'term'}{@html it.html}{:else}{it.title}{/if}</span>
@@ -162,7 +187,9 @@
 				</li>
 			{/each}
 		</ul>
-		<div class="foot ui"><kbd>↑</kbd><kbd>↓</kbd> to move · <kbd>enter</kbd> to open · <kbd>/</kbd> or <kbd>ctrl k</kbd> to search anywhere</div>
+		<div class="foot ui">
+			<kbd>↑</kbd><kbd>↓</kbd> to move · <kbd>enter</kbd> to open · <kbd>/</kbd> or <kbd>ctrl k</kbd> to search anywhere
+		</div>
 	</div>
 {/if}
 
@@ -222,7 +249,11 @@
 		padding: 0.4rem;
 		overflow-y: auto;
 	}
+	.results:empty {
+		display: none;
+	}
 	.empty {
+		margin: 0;
 		padding: 1.2rem;
 		color: var(--ink-faint);
 		font-size: 0.9rem;

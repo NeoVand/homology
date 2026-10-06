@@ -119,7 +119,7 @@
 	faces. Then we compute \(V - E + F\). Try it in the gallery below; the figure does the counting with you.
 </p>
 
-<Figure size="wide" num="2.6.1" title="A gallery of polyhedra" hint="Choose a solid · tap a count · drag to rotate">
+<Figure num="2.6.1" title="A gallery of polyhedra" hint="Choose a solid · tap a count · drag to rotate">
 	<PolyhedronGallery />
 	{#snippet caption()}
 		Pick a solid and tap \(V\), \(E\) or \(F\) to watch the vertices, edges or faces counted one by one. However the numbers change,
@@ -335,7 +335,7 @@
 
 <p>Try to break it.</p>
 
-<Figure size="wide" num="2.6.4" title="Subdivide it yourself" hint="Pick a move · click an edge or face · drag to turn">
+<Figure num="2.6.4" title="Subdivide it yourself" hint="Pick a move · click an edge or face · drag to turn">
 	<SubdivisionPlayground />
 	{#snippet caption()}
 		Every click changes \(V\), \(E\) and \(F\); the readout shows by how much. The glowing number \(V - E + F\) never moves from 2.
@@ -401,7 +401,7 @@
 	disguise. It is a <Term t="torus">torus</Term>.
 </p>
 
-<Figure size="wide" num="2.6.5" title="Polyhedra with tunnels" hint="Switch shapes · drag the slider · drag to rotate">
+<Figure num="2.6.5" title="Polyhedra with tunnels" hint="Switch shapes · drag the slider · drag to rotate">
 	<Tunnels />
 	{#snippet caption()}
 		Lhuilier’s picture frame has \(V - E + F = 0\). Switch to the slab of cubes and add tunnels: each one lowers \(V - E + F\) by 2, so a
@@ -583,7 +583,7 @@
 	\(\chi = 2\) and \(\chi = 1\).
 </p>
 
-<Figure size="wide" num="2.6.6" title="Every closed surface has its own cell" hint="Hover or tap a surface">
+<Figure num="2.6.6" title="Every closed surface has its own cell" hint="Hover or tap a surface">
 	<SurfaceChart />
 	{#snippet caption()}
 		Columns: the Euler characteristic. Rows: orientable or not. Every closed connected surface occupies exactly one cell, and no cell
@@ -626,7 +626,7 @@
 	</p>
 </Example>
 
-<Figure size="wide" num="2.6.7" title="Pieces and loops" hint="Tap to add vertices and edges · switch modes · hover a gold edge">
+<Figure num="2.6.7" title="Pieces and loops" hint="Tap to add vertices and edges · switch modes · hover a gold edge">
 	<GraphChi />
 	{#snippet caption()}
 		Each colour is one piece. Gold dashed edges are the "extra" edges: each closes one loop (hover to see it). However you edit the

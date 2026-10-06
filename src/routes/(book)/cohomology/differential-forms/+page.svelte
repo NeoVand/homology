@@ -102,7 +102,7 @@
 
 <p>The gradient of a landscape is one example. Others are the rotation \(\mathbf F = (-y, x)\), which spins the plane counterclockwise, and the source \(\mathbf F = (x, y)\), which streams out of the origin. Figure 4.3.2 shows them as they are best seen: alive. The particles ride along the arrows, and the streaky texture behind them traces the flow lines everywhere at once.</p>
 
-<Figure size="wide" title="A gallery of vector fields" hint="Pick a field · switch the colouring · drag the paddle wheel" num="4.3.2">
+<Figure title="A gallery of vector fields" hint="Pick a field · switch the colouring · drag the paddle wheel" num="4.3.2">
 	<FieldExplorer />
 	{#snippet caption()}Six planar vector fields. The gold paddle wheel turns at the rate the fluid rotates around it; the colourings (curl, divergence, potential) are explained in the next section. Try the <em>shear</em> field: its flow lines are perfectly straight, yet the paddle wheel turns. And try <em>vortex</em> with the potential colouring: its level lines are rays, an object we will meet again.{/snippet}
 </Figure>
@@ -163,7 +163,7 @@
 
 <p>The tiling argument is the whole idea of the proof; making "about" precise is a matter of careful estimates. Rather than take it on trust, test it. In Figure 4.3.4 the computer evaluates the two sides independently — one by walking along your curve, the other by adding up over the region inside it — and you can drag the curve wherever you like.</p>
 
-<Figure size="wide" title="Green's theorem, live" hint="Drag the round handles to reshape · the diamond moves the loop" num="4.3.4">
+<Figure title="Green's theorem, live" hint="Drag the round handles to reshape · the diamond moves the loop" num="4.3.4">
 	<GreenFigure />
 	{#snippet caption()}The background is coloured by the curl (rose counterclockwise, teal clockwise) or the divergence (gold source, blue sink). The number on the left is computed along the gold curve; the number on the right, over the shaded region inside it. Put the loop around one eddy, then around both: their swirls cancel. Make a figure eight: the two lobes are walked in opposite senses and count with opposite signs.{/snippet}
 </Figure>
@@ -174,7 +174,7 @@
 \[ \oint_{\partial S} \mathbf F\cdot d\mathbf r = \iint_S (\operatorname{curl}\mathbf F)\cdot\mathbf n\,dA \quad\text{(Kelvin–Stokes)}, \qquad \iint_{\partial V} \mathbf F\cdot\mathbf n\,dA = \iiint_V \operatorname{div}\mathbf F\,dV \quad\text{(Gauss)}. \]
 <p>In the first, \(S\) is a surface with boundary curve \(\partial S\); in the second, \(V\) is a solid with boundary surface \(\partial V\), and \(\mathbf n\) points outward. The second one is the <dfn>divergence theorem</dfn>: what flows out through the skin is what was created inside.</p>
 
-<Figure size="wide" title="The divergence theorem in space" hint="Drag to rotate · move and resize the sphere · add a wind" num="4.3.5">
+<Figure title="The divergence theorem in space" hint="Drag to rotate · move and resize the sphere · add a wind" num="4.3.5">
 	<Flux3D />
 	{#snippet caption()}The glowing blob is a source: the field's divergence is concentrated there. Arrows on the glass sphere show the flow through its surface (gold out, teal in). Both totals are computed independently, by adding up over the sphere's surface and over its solid inside. Move the sphere off the blob and the flux drops to zero; switch on the wind and arrows point inward on one side and outward on the other, but the total does not change, because a uniform wind creates nothing.{/snippet}
 </Figure>

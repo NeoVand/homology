@@ -105,7 +105,7 @@
 
 <p>In words: a boundary has no boundary. The loop of edges around a filled triangle closes up precisely because it is the rim of something. The converse is false, and the hollow triangle shows it: its loop \(z\) is a cycle but not a boundary. The gap between "cycle" and "boundary" is exactly what homology measures. Figure 3.3.1 draws the whole situation at once.</p>
 
-<Figure size="wide" num="3.3.1" title="The anatomy of a chain complex">
+<Figure num="3.3.1" title="The anatomy of a chain complex">
 	<ChainComplexDiagram />
 	{#snippet caption()}Each chain group \(C_k\) (violet) contains the cycles \(Z_k\) (gold, dashed), which in turn contain the boundaries \(B_k\) (teal). The map \(\partial_{k+1}\) sends all of \(C_{k+1}\) into \(B_k\) (the teal funnel) and crushes the cycles \(Z_{k+1}\) to \(0\) (the gold arrows). The rose ring between \(Z_k\) and \(B_k\), cycles that are not boundaries, is what homology measures.{/snippet}
 </Figure>
@@ -139,7 +139,7 @@
 
 <p>Figure 3.3.2 lets you feel the definition with your hands. The gold cycle runs around a triangulated annulus. Clicking a triangle \(t\) <em>pushes</em> the cycle across it: the figure adds \(+\partial t\) or \(-\partial t\), whichever cancels the edges the cycle shares with \(t\). The edges you crossed disappear and the triangle's other edges take their place. The cycle changes shape, but its class does not.</p>
 
-<Figure size="wide" num="3.3.2" title="Cycles modulo boundaries" hint="Click triangles · try other starts">
+<Figure num="3.3.2" title="Cycles modulo boundaries" hint="Click triangles · try other starts">
 	<HomologousCycles />
 	{#snippet caption()}Pushing a cycle \(z\) across triangles. After any number of pushes the new cycle is \(z' = z + \partial c\), where the violet 2-chain \(c\) records every triangle you crossed (darker means crossed more often, or in both directions). Since \(z' - z = \partial c\) is a boundary, \([z'] = [z]\): the badge never changes. Start from "Inner − outer" to meet two loops that together bound.{/snippet}
 </Figure>
@@ -207,7 +207,7 @@
 
 <p>Here are seven test spaces, from a single point to a torus. For each one we write down the chain groups and the boundary matrices, find the cycles and the boundaries, and take the quotient. Read the first three slowly; after that the pattern repeats.</p>
 
-<Figure size="wide" num="3.3.3" title="Seven test complexes">
+<Figure num="3.3.3" title="Seven test complexes">
 	<Gallery />
 	{#snippet caption()}The complexes computed in this section, with their homology. Labels on the torus repeat because the square's opposite sides are glued: the four corners are all vertex \(0\). The hollow tetrahedron is drawn as its net; fold the three flaps up and their tips meet at vertex \(3\).{/snippet}
 </Figure>
@@ -268,7 +268,7 @@
 
 <p>Before the bigger examples, step through the computations in Figure 3.3.4. Hovering over a column of a boundary matrix lights up its simplex in the picture; hovering over an entry lights up the face it records.</p>
 
-<Figure size="wide" num="3.3.4" title="Computing homology, step by step" hint="Step through · hover the matrix">
+<Figure num="3.3.4" title="Computing homology, step by step" hint="Step through · hover the matrix">
 	<ComputationPlayer />
 	{#snippet caption()}The computation of \(H_*\) for the circle, the disk, the sphere and the torus, one idea per step. The matrices are the boundary matrices \(\partial_k\), with rows indexed by \((k-1)\)-simplices and columns by \(k\)-simplices; each column lists the boundary of one simplex.{/snippet}
 </Figure>
@@ -335,7 +335,7 @@
 
 \[ H_0(T^2) \cong \Z, \qquad H_1(T^2) \cong \Z^2, \qquad H_2(T^2) \cong \Z. \]
 
-<Figure size="wide" num="3.3.5" title="The torus and its generators" hint="Drag to rotate · pick a view">
+<Figure num="3.3.5" title="The torus and its generators" hint="Drag to rotate · pick a view">
 	<TorusGenerators3D />
 	{#snippet caption()}The 3×3 torus wrapped onto a doughnut. The gold loop \(a\) runs once around the hole and the rose loop \(b\) once around the tube; their classes generate \(H_1 \cong \Z^2\). "Slide \(a\) to \(a'\)" shows the middle row \(a'\) and the strip of six triangles between the two rows: \(a - a' = \partial(\text{strip})\), so \([a'] = [a]\). "The 2-cycle" orients all 18 triangles coherently; their sum \(T\) has no boundary and generates \(H_2 \cong \Z\).{/snippet}
 </Figure>
@@ -358,7 +358,7 @@
 	<p><em>Step 2: different pieces are independent.</em> For each component \(K_i\) let \(\varepsilon_i\) be "the sum of the coefficients on \(K_i\)": \(\varepsilon_i\big(\sum_v a_v [v]\big) = \sum_{v \in K_i} a_v\). Each edge lies inside a single component, and \(\partial[u,v] = [v] - [u]\) has coefficient sum \(0\) there, so every \(\varepsilon_i\) vanishes on \(B_0\). Hence \(\varepsilon = (\varepsilon_1, \dots, \varepsilon_c)\) gives a well-defined homomorphism \(H_0(K) \to \Z^c\). It sends \([p_i]\) to the \(i\)-th basis vector, so it is onto. And it is one-to-one: by Step 1 every class is \(\sum n_i [p_i]\), whose image is \((n_1, \dots, n_c)\), which is zero only if every \(n_i = 0\).</p>
 </Proof>
 
-<Figure size="wide" num="3.3.6" title="H₀ counts pieces" hint="Click edges · click two vertices">
+<Figure num="3.3.6" title="H₀ counts pieces" hint="Click edges · click two vertices">
 	<ComponentCounter />
 	{#snippet caption()}Each piece of the graph gets its own colour, and \(H_0 \cong \Z^c\). The rank formula agrees: \(b_0 = n_0 - \rank\partial_1\). Click two vertices in the same piece and the figure shows an edge path between them, a 1-chain whose boundary is their difference; in different pieces no such chain exists.{/snippet}
 </Figure>
@@ -426,7 +426,7 @@
 
 <p>The proof is pure bookkeeping, and Figure 3.3.7 turns the bookkeeping into a picture. Build a complex one simplex at a time, always adding faces before the simplices they bound. Each new \(k\)-simplex does exactly one of two things. Either its boundary was already a boundary, and then it creates a new \(k\)-cycle (\(b_k\) goes up by one), or its boundary was a cycle that did not yet bound, and then it fills that cycle in (\(b_{k-1}\) goes down by one). In both cases \(\chi\) changes by \((-1)^k\), and so does \(b_0 - b_1 + b_2 - \cdots\). The two alternating sums start equal (both \(0\) for the empty complex) and change in lockstep, so they are always equal.</p>
 
-<Figure size="wide" num="3.3.7" title="Euler–Poincaré as a ledger" hint="Play or drag · hover the squares">
+<Figure num="3.3.7" title="Euler–Poincaré as a ledger" hint="Play or drag · hover the squares">
 	<EulerPoincare />
 	{#snippet caption()}Building a complex one simplex at a time. Each square in row \(C_k\) is one \(k\)-simplex. A gold square created a new class; a teal square killed a class one dimension lower. A creator that was later killed is drawn hollow, and hovering over it shows the teal simplex that killed it. Each such pair cancels in the alternating sum, and the solid gold squares that remain are exactly the Betti numbers.{/snippet}
 </Figure>
@@ -473,7 +473,7 @@
 
 <p>exactly the torus's \(1, 2, 1\). The bottom row \(a\) and the left column \(b\) generate \(H_1(K;\Z/2) \cong (\Z/2)^2\), and the set of all 18 triangles is a mod-2 2-cycle, because every edge is a face of exactly two of them, an even number. Even the Euler characteristics agree: \(\chi = 0\) for both.</p>
 
-<Figure size="wide" num="3.3.9" title="Same numbers, different surfaces" hint="Drag to rotate">
+<Figure num="3.3.9" title="Same numbers, different surfaces" hint="Drag to rotate">
 	<TorusKleinPair lens="Z2" />
 	{#snippet caption()}The torus and the Klein bottle, each built from the 3×3 grid. Through the \(\Z/2\) lens they look identical: one piece, two independent loops \(a\) and \(b\), and the sum of all triangles (violet) as a 2-cycle. Yet one surface is orientable and the other is not.{/snippet}
 </Figure>

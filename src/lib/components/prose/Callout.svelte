@@ -1,4 +1,19 @@
 <script lang="ts" module>
+	import {
+		AheadIcon,
+		DefinitionIcon,
+		ExampleIcon,
+		HistoryIcon,
+		IntuitionIcon,
+		KeyIdeaIcon,
+		NotationIcon,
+		QuestionIcon,
+		RecapIcon,
+		RemarkIcon,
+		TheoremIcon,
+		WarningIcon
+	} from '$lib/icons';
+
 	export type CalloutKind =
 		| 'definition'
 		| 'theorem'
@@ -17,28 +32,31 @@
 		| 'ahead'
 		| 'proof';
 
-	export const calloutMeta: Record<CalloutKind, { label: string; color: string; icon: string }> = {
-		definition: { label: 'Definition', color: 'var(--gold)', icon: 'def' },
-		theorem: { label: 'Theorem', color: 'var(--violet)', icon: 'thm' },
-		proposition: { label: 'Proposition', color: 'var(--violet)', icon: 'thm' },
-		lemma: { label: 'Lemma', color: 'var(--violet)', icon: 'thm' },
-		corollary: { label: 'Corollary', color: 'var(--violet)', icon: 'thm' },
-		example: { label: 'Example', color: 'var(--blue)', icon: 'ex' },
-		intuition: { label: 'Intuition', color: 'var(--teal)', icon: 'idea' },
-		key: { label: 'Key idea', color: 'var(--gold-bright)', icon: 'key' },
-		warning: { label: 'Careful', color: 'var(--amber)', icon: 'warn' },
-		remark: { label: 'Remark', color: 'var(--ink-faint)', icon: 'rem' },
-		history: { label: 'A little history', color: '#c9a77a', icon: 'hist' },
-		recap: { label: 'Recap', color: 'var(--gold)', icon: 'recap' },
-		question: { label: 'Pause and ponder', color: 'var(--rose)', icon: 'q' },
-		notation: { label: 'Notation', color: 'var(--blue)', icon: 'not' },
-		ahead: { label: 'Where this is going', color: 'var(--teal)', icon: 'ahead' },
-		proof: { label: 'Proof', color: 'var(--ink-dim)', icon: 'proof' }
+	type IconNode = typeof RemarkIcon;
+
+	export const calloutMeta: Record<CalloutKind, { label: string; color: string; icon: IconNode | null }> = {
+		definition: { label: 'Definition', color: 'var(--gold)', icon: DefinitionIcon },
+		theorem: { label: 'Theorem', color: 'var(--violet)', icon: TheoremIcon },
+		proposition: { label: 'Proposition', color: 'var(--violet)', icon: TheoremIcon },
+		lemma: { label: 'Lemma', color: 'var(--violet)', icon: TheoremIcon },
+		corollary: { label: 'Corollary', color: 'var(--violet)', icon: TheoremIcon },
+		example: { label: 'Example', color: 'var(--blue)', icon: ExampleIcon },
+		intuition: { label: 'Intuition', color: 'var(--teal)', icon: IntuitionIcon },
+		key: { label: 'Key idea', color: 'var(--gold-bright)', icon: KeyIdeaIcon },
+		warning: { label: 'Careful', color: 'var(--amber)', icon: WarningIcon },
+		remark: { label: 'Remark', color: 'var(--ink-faint)', icon: RemarkIcon },
+		history: { label: 'A little history', color: '#c9a77a', icon: HistoryIcon },
+		recap: { label: 'Recap', color: 'var(--gold)', icon: RecapIcon },
+		question: { label: 'Pause and ponder', color: 'var(--rose)', icon: QuestionIcon },
+		notation: { label: 'Notation', color: 'var(--blue)', icon: NotationIcon },
+		ahead: { label: 'Where this is going', color: 'var(--teal)', icon: AheadIcon },
+		proof: { label: 'Proof', color: 'var(--ink-dim)', icon: null }
 	};
 </script>
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Icon from '$lib/components/ui/Icon.svelte';
 
 	let {
 		kind = 'remark',
@@ -63,45 +81,7 @@
 
 <aside class="callout k-{kind}" style="--c:{meta.color}" {id}>
 	<div class="c-head ui">
-		<span class="icon" aria-hidden="true">
-			{#if meta.icon === 'def'}
-				<svg viewBox="0 0 20 20"><path d="M10 2 L17 10 L10 18 L3 10 Z" /></svg>
-			{:else if meta.icon === 'thm'}
-				<svg viewBox="0 0 20 20"
-					><path d="M10 2.5l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L2.8 7.8l5-.7z" /></svg
-				>
-			{:else if meta.icon === 'ex'}
-				<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.5" /><circle cx="10" cy="10" r="2" class="fill" /></svg>
-			{:else if meta.icon === 'idea'}
-				<svg viewBox="0 0 20 20"
-					><path d="M10 2.5a5.2 5.2 0 0 0-3 9.5c.6.5 1 1.2 1 2V15h4v-1c0-.8.4-1.5 1-2a5.2 5.2 0 0 0-3-9.5z" /><path
-						d="M8 17.5h4"
-					/></svg
-				>
-			{:else if meta.icon === 'key'}
-				<svg viewBox="0 0 20 20"
-					><circle cx="10" cy="10" r="7" /><path d="M10 5.5v9M5.5 10h9" /></svg
-				>
-			{:else if meta.icon === 'warn'}
-				<svg viewBox="0 0 20 20"><path d="M10 3L18 17H2z" /><path d="M10 8.5v4M10 14.6v.2" /></svg>
-			{:else if meta.icon === 'hist'}
-				<svg viewBox="0 0 20 20"
-					><path d="M4 3.5h10a2 2 0 0 1 2 2v11H6a2 2 0 0 1-2-2z" /><path d="M7 7.5h6M7 10.5h6M7 13.5h4" /></svg
-				>
-			{:else if meta.icon === 'recap'}
-				<svg viewBox="0 0 20 20"><path d="M4 6h12M4 10h12M4 14h8" /></svg>
-			{:else if meta.icon === 'q'}
-				<svg viewBox="0 0 20 20"
-					><circle cx="10" cy="10" r="7.5" /><path d="M7.8 8a2.3 2.3 0 1 1 3.2 2.1c-.6.3-1 .8-1 1.5v.6M10 14.6v.2" /></svg
-				>
-			{:else if meta.icon === 'ahead'}
-				<svg viewBox="0 0 20 20"><path d="M3 10h12M11 5.5L15.5 10 11 14.5" /></svg>
-			{:else if meta.icon === 'not'}
-				<svg viewBox="0 0 20 20"><path d="M4 15l4-10 4 10M5.6 11h4.8M13 9h4M13 13h4" /></svg>
-			{:else}
-				<svg viewBox="0 0 20 20"><path d="M5 10h10" /></svg>
-			{/if}
-		</span>
+		{#if meta.icon}<Icon icon={meta.icon} size={17} class="c-icon" />{/if}
 		<span class="label">{label ?? meta.label}</span>
 		{#if head || title}
 			<span class="title">
@@ -144,26 +124,9 @@
 		gap: 0.25rem 0.6rem;
 		margin-bottom: 0.55rem;
 	}
-	.icon {
+	.c-head :global(.c-icon) {
 		align-self: center;
-		width: 1.05rem;
-		height: 1.05rem;
-		flex: none;
-	}
-	.icon svg {
-		width: 100%;
-		height: 100%;
-		fill: none;
-		stroke: var(--c);
-		stroke-width: 1.5;
-		stroke-linecap: round;
-		stroke-linejoin: round;
-	}
-	.icon .fill {
-		fill: var(--c);
-	}
-	.k-definition .icon svg path {
-		fill: color-mix(in srgb, var(--c) 35%, transparent);
+		color: var(--c);
 	}
 	.label {
 		font-size: 0.72rem;

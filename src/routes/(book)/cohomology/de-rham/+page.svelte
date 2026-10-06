@@ -147,7 +147,7 @@
 
 <p>Figure 4.4.2 makes this literal. Over each point of the punctured plane, stack all its possible angles \(\theta, \theta \pm 2\pi, \theta \pm 4\pi, \ldots\) as heights. These stacks form a single smooth spiral surface, the <em>helicoid</em>, like a parking-garage ramp around the missing axis. A loop in the plane, together with a continuously chosen angle along it, traces a path on the ramp. If the loop goes around the hole, the path climbs a full storey per lap; if it does not, the path rises and falls and comes back to its start.</p>
 
-<Figure size="wide" title="The angle as a spiral staircase" hint="Drag to rotate · walk the laps with the slider" num="4.4.2">
+<Figure title="The angle as a spiral staircase" hint="Drag to rotate · walk the laps with the slider" num="4.4.2">
 	<Helicoid />
 	{#snippet caption()}The helicoid has one sheet for each possible value of the angle; its storeys are \(2\pi\) apart, and the rose axis is the missing origin. The gold loop in the floor lifts to the gold path on the ramp. Around the hole, each lap climbs exactly one storey — the integral of \(d\theta\) along the loop is the height gained. Beside the hole, the path returns to its starting height. (This surface is a picture of what mathematicians call the Riemann surface of the logarithm.){/snippet}
 </Figure>
@@ -165,7 +165,7 @@
 	<p>Chop \(\gamma\) into short arcs, each lying in some half-plane that avoids the origin. On each such arc there is a smooth branch of the angle, \(\theta_i\), with \(d\theta_i = \omega\), so by the fundamental theorem of calculus the integral over the arc is the change in \(\theta_i\) along it. Choose the branches so that each one starts where the previous one ended; they then fit together into a single continuous angle \(\tilde\theta\) along the whole loop — the lift onto the staircase. Adding up the arcs, \(\oint_\gamma d\theta = \tilde\theta(\text{end}) - \tilde\theta(\text{start})\). The loop ends at its starting point, so this difference is a whole number of full turns, \(2\pi\cdot k\), and \(k\) — the net number of times the angle went around — is by definition the winding number.</p>
 </Proof>
 
-<Figure size="wide" title="Vortex and loop" hint="Drag the round handles to reshape the loop · the diamond moves it" num="4.4.3">
+<Figure title="Vortex and loop" hint="Drag the round handles to reshape the loop · the diamond moves it" num="4.4.3">
 	<VortexLoop />
 	{#snippet caption()}The field of \(d\theta\), streaming around the missing origin. A bead walks your loop while the rose spiral at the centre records the angle swept so far. Whatever loop you draw, the integral computed along it is \(2\pi\) times a whole number: \(2\pi\) once around, \(4\pi\) for the star that goes round twice, \(0\) for a loop beside the hole, \(-2\pi\) backwards. Switch to "Angle rays" to see the level curves of \(\theta\): rays that never end, but cannot be labelled consistently.{/snippet}
 </Figure>
@@ -314,7 +314,7 @@
 
 <p>Classically this would not matter, since a charged particle feels only \(\mathbf B\), and \(\mathbf B = 0\) wherever the particle goes. Quantum mechanically it matters: Aharonov and Bohm pointed out in 1959 (anticipated by Ehrenberg and Siday in 1949) that the wave of a charged particle travelling around the solenoid acquires an extra phase \(\tfrac{q}{\hbar}\oint A = \tfrac{q}{\hbar}\Phi\) per turn, which shifts the interference pattern of electrons passing on either side. The effect was confirmed experimentally, most convincingly by Akira Tonomura and colleagues in 1986 with the field completely shielded. The electrons never touch the magnetic field; what they measure is the cohomology class of \(A\).</p>
 
-<Figure size="wide" title="A wire and a solenoid" hint="Drag to rotate · choose the physics and the loop" num="4.4.7">
+<Figure title="A wire and a solenoid" hint="Drag to rotate · choose the physics and the loop" num="4.4.7">
 	<AmpereAB />
 	{#snippet caption()}Left setting: the magnetic field circles a straight current; the gold loop collects \(\mu_0 I\) for every time it goes around the wire, and nothing if it does not. Right setting: the field is trapped inside a solenoid; outside it vanishes, but the vector potential \(A = \tfrac{\Phi}{2\pi}d\theta\) still circulates (violet), and a charged particle's phase changes by \(\tfrac{q}{\hbar}\Phi\) per turn.{/snippet}
 </Figure>

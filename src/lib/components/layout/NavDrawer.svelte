@@ -5,11 +5,28 @@
 	import { ui } from '$lib/stores/ui.svelte';
 	import { href } from '$lib/util/paths';
 	import TocList from './TocList.svelte';
+	import Logo from './Logo.svelte';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { CloseIcon } from '$lib/icons';
 
 	const current = $derived(chapterIdFromRoute(page.route.id));
 
+	let drawer: HTMLElement | undefined = $state();
+
+	// A modal drawer: the page behind is inert and does not scroll, focus moves
+	// to the current chapter and comes back to the menu button on close.
 	$effect(() => {
-		if (!ui.navOpen) return;
+		if (!ui.navOpen || !drawer) return;
+		const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+		const behind = [document.querySelector('.topbar'), document.getElementById('main')].filter(
+			(el): el is HTMLElement => el instanceof HTMLElement
+		);
+		for (const el of behind) el.inert = true;
+		const body = drawer.querySelector<HTMLElement>('.drawer-body');
+		const here = drawer.querySelector<HTMLElement>('a[aria-current="page"]');
+		if (body && here) body.scrollTop += here.getBoundingClientRect().top - body.getBoundingClientRect().top - body.clientHeight / 4;
+		(here ?? drawer.querySelector<HTMLElement>('.close'))?.focus({ preventScroll: true });
+
 		const onKey = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') ui.navOpen = false;
 		};
@@ -17,8 +34,10 @@
 		const prev = document.body.style.overflow;
 		document.body.style.overflow = 'hidden';
 		return () => {
+			for (const el of behind) el.inert = false;
 			window.removeEventListener('keydown', onKey);
 			document.body.style.overflow = prev;
+			if (opener?.isConnected) opener.focus({ preventScroll: true });
 		};
 	});
 </script>
@@ -30,17 +49,19 @@
 		role="dialog"
 		aria-modal="true"
 		aria-label="Table of contents"
+		bind:this={drawer}
 		transition:fly={{ x: -320, duration: 260, opacity: 1 }}
 	>
 		<div class="drawer-head">
 			<a class="home ui" href={href('/')} onclick={() => (ui.navOpen = false)}>
-				<span class="eyebrow">An illustrated journey</span>
-				<span class="ttl gold-text">Homology &amp; Cohomology</span>
+				<Logo size={34} />
+				<span class="names">
+					<span class="eyebrow">An illustrated journey</span>
+					<span class="ttl gold-text">Homology &amp; Cohomology</span>
+				</span>
 			</a>
-			<button class="close" aria-label="Close" onclick={() => (ui.navOpen = false)}>
-				<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-					<path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-				</svg>
+			<button class="close" aria-label="Close the contents" onclick={() => (ui.navOpen = false)}>
+				<Icon icon={CloseIcon} size={18} />
 			</button>
 		</div>
 		<div class="drawer-body">
@@ -79,22 +100,29 @@
 	}
 	.drawer-head {
 		display: flex;
-		align-items: flex-start;
+		align-items: center;
 		justify-content: space-between;
-		padding: 1.1rem 1rem 0.9rem 1.2rem;
+		gap: 0.75rem;
+		padding: 1rem 0.9rem 0.9rem 1.1rem;
 		border-bottom: 1px solid var(--line-faint);
 	}
 	.home {
 		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
+		align-items: center;
+		gap: 0.75rem;
+		min-width: 0;
 		text-decoration: none;
+	}
+	.names {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
 	}
 	.ttl {
 		font-family: var(--font-display);
-		font-size: 1.12rem;
+		font-size: 1.02rem;
 		font-weight: 600;
-		letter-spacing: 0.05em;
+		letter-spacing: 0.04em;
 	}
 	.close {
 		display: grid;

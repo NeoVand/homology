@@ -235,7 +235,7 @@
 	of the \(n\)-simplex, dimension by dimension. Try it in the figure.
 </p>
 
-<Figure size="wide" num="2.5.1" title="The simplices and their faces" hint="Drag to rotate · tap a count or an entry">
+<Figure num="2.5.1" title="The simplices and their faces" hint="Drag to rotate · tap a count or an entry">
 	<SimplexGallery />
 	{#snippet caption()}
 		Choose a simplex \(\Delta^0, \dots, \Delta^4\) below, then a kind of face; the faces light up one at a time while they are
@@ -283,7 +283,7 @@
 	small triangle <em>opposite</em> \(v_0\) takes up exactly the fraction \(t_0\) of the whole area, and likewise for the others.
 </p>
 
-<Figure size="wide" num="2.5.2" title="Barycentric coordinates" hint="Drag the point · use arrow keys">
+<Figure num="2.5.2" title="Barycentric coordinates" hint="Drag the point · use arrow keys">
 	<Barycentric />
 	{#snippet caption()}
 		Drag \(p\) around. The discs at the corners show the weights \(t_0, t_1, t_2\); the shaded pieces show the same numbers as shares
@@ -359,7 +359,7 @@
 	in the middle of an edge of the other. Here are the possibilities side by side.
 </p>
 
-<Figure size="wide" num="2.5.3" title="Which gluings are allowed?">
+<Figure num="2.5.3" title="Which gluings are allowed?">
 	<NonExamples />
 	{#snippet caption()}
 		The two pictures on top obey both rules. The others each break one: a missing face breaks rule 1; a corner resting on an edge,
@@ -392,7 +392,7 @@
 	Now build some complexes yourself. The figure checks both rules as you go.
 </p>
 
-<Figure size="wide" num="2.5.4" title="Build a simplicial complex" hint="Pick a tool · tap to add · drag to move">
+<Figure num="2.5.4" title="Build a simplicial complex" hint="Pick a tool · tap to add · drag to move">
 	<ComplexBuilder />
 	{#snippet caption()}
 		Add vertices, edges and triangles, or drag vertices around. With "fill in missing faces" switched on, rule 1 is enforced for you
@@ -534,7 +534,7 @@
 	they get the same label.
 </p>
 
-<Figure size="wide" num="2.5.5" title="The square torus, cut into triangles" hint="Hover or tap a label · switch grids">
+<Figure num="2.5.5" title="The square torus, cut into triangles" hint="Hover or tap a label · switch grids">
 	<TorusGrid />
 	{#snippet caption()}
 		Left: the square with its sides glued as the arrows show; a label appears twice (or four times, at the corners) when the gluing
@@ -577,7 +577,7 @@
 	why every pair of vertices ends up joined.
 </p>
 
-<Figure size="wide" num="2.5.6" title="Seven vertices, every pair joined" hint="Tap a vertex · drag to rotate">
+<Figure num="2.5.6" title="Seven vertices, every pair joined" hint="Tap a vertex · drag to rotate">
 	<MobiusTorus />
 	{#snippet caption()}
 		Left: the labelled triangular tiling; the 14 shaded triangles form one complete copy of the torus. Tap a vertex: each of its
@@ -803,7 +803,7 @@
 	The \(2 \times 2\) grid torus, illegal before, is a perfectly good Δ-complex — and so is something much smaller.
 </p>
 
-<Figure size="wide" num="2.5.11" title="Three Δ-complexes">
+<Figure num="2.5.11" title="Three Δ-complexes">
 	<DeltaComplexes />
 	{#snippet caption()}
 		Not simplicial complexes, but legitimate Δ-complexes. A circle from one edge whose two ends are the same vertex. A sphere from two
@@ -860,7 +860,7 @@
 	</li>
 </ul>
 
-<Figure size="wide" num="2.5.12" title="Building a torus from cells" hint="Step through · drag to rotate">
+<Figure num="2.5.12" title="Building a torus from cells" hint="Step through · drag to rotate">
 	<CWBuild />
 	{#snippet caption()}
 		Step through the construction. A single point; a gold loop \(a\) and a teal loop \(b\), both attached at it; then a disk whose edge

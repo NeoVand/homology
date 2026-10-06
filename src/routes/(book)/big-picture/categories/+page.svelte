@@ -225,7 +225,7 @@
 	is just something with a source and a target that can be composed. That freedom is what makes the idea so widely applicable.
 </p>
 
-<Figure size="wide" num="5.1.1" title="Three small categories" hint="Click arrows head to tail · a third arrow tests associativity">
+<Figure num="5.1.1" title="Three small categories" hint="Click arrows head to tail · a third arrow tests associativity">
 	<CategoryExplorer />
 	{#snippet caption()}
 		Click an arrow, then an arrow that starts where the first one ends: the composite lights up in gold. In <em>A small category</em>
@@ -334,7 +334,7 @@
 	> had when they first appeared in <Ref to="foundations/sets-and-functions" />; now we will use them constantly.
 </p>
 
-<Figure size="wide" num="5.1.2" title="All roads agree" hint="Drag the temperature · press “Follow both roads”">
+<Figure num="5.1.2" title="All roads agree" hint="Drag the temperature · press “Follow both roads”">
 	<TwoRoads />
 	{#snippet caption()}
 		A commutative square from everyday life. Converting Celsius to Fahrenheit and then warming by \(18^\circ\mathrm F\) gives the
@@ -489,7 +489,7 @@
 	\(H_1\) makes of all this.
 </p>
 
-<Figure size="wide" num="5.1.3" title="A functor turns spaces into groups" hint="Change p, q (the loop) and r, s (the map)">
+<Figure num="5.1.3" title="A functor turns spaces into groups" hint="Change p, q (the loop) and r, s (the map)">
 	<FunctorCamera />
 	{#snippet caption()}
 		\(H_1\) sends each circle to \(\Z\), the torus to \(\Z^2\), and each map to a matrix: \(f_*\) sends the generator \(1\) to the
@@ -574,7 +574,7 @@
 	</p>
 </Intuition>
 
-<Figure size="wide" num="5.1.4" title="The same diagram, seen by cohomology" hint="Switch between H₁ and H¹ · change p, q, r, s">
+<Figure num="5.1.4" title="The same diagram, seen by cohomology" hint="Switch between H₁ and H¹ · change p, q, r, s">
 	<FunctorCamera mode="contravariant" />
 	{#snippet caption()}
 		Switch from \(H_1\) to \(H^1\) and every algebraic arrow turns around: \(f^*\colon\Z^2\to\Z\) and \(g^*\colon\Z\to\Z^2\). The
@@ -644,7 +644,7 @@
 	the top half as geometry and the bottom half as algebra; the functor \(H_1\) is the bridge.
 </p>
 
-<Figure size="wide" num="5.1.5" title="Brouwer, by functoriality" hint="Step through with ‹ ›, or press play">
+<Figure num="5.1.5" title="Brouwer, by functoriality" hint="Step through with ‹ ›, or press play">
 	<BrouwerTriangle />
 	{#snippet caption()}
 		If a retraction \(r\) existed, the triangle of spaces \(S^1\xrightarrow{i}D^2\xrightarrow{r}S^1\) would commute with the
@@ -751,7 +751,7 @@
 	would make the square with \(T\) on the left and \((T^{-1})^*\) on the right commute. The figure lets you test that.
 </p>
 
-<Figure size="full" num="5.1.6" title="Natural versus chosen" hint="Pick a change of perspective T · drag the vector v">
+<Figure num="5.1.6" title="Natural versus chosen" hint="Pick a change of perspective T · drag the vector v">
 	<NaturalitySquare />
 	{#snippet caption()}
 		Left: a vector \(v\) (gold), its image \(Tv\) (blue), and two measurements drawn as stacks of level lines, as in <Ref
@@ -870,7 +870,7 @@
 	</li>
 </ul>
 
-<Figure size="wide" num="5.1.7" title="Universal properties" hint="Product: click an element of X, then a pair · gcd: click two numbers · Kernel: drag g(1)">
+<Figure num="5.1.7" title="Universal properties" hint="Product: click an element of X, then a pair · gcd: click two numbers · Kernel: drag g(1)">
 	<UniversalProperty />
 	{#snippet caption()}
 		Three “best solutions”. <em>Product of sets:</em> the purple arrow \(h\) is forced — try to send an element of \(X\) to any other

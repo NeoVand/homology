@@ -241,7 +241,7 @@
 	on groups. It is worth doing it with your own hands.
 </p>
 
-<Figure size="wide" num="1.4.1" title="Collapse the cosets" hint="Choose a stage · tap two integers (or two dots) to add">
+<Figure num="1.4.1" title="Collapse the cosets" hint="Choose a stage · tap two integers (or two dots) to add">
 	<CosetCollapse />
 	{#snippet caption()}
 		Stage 1: the integers, coloured by their coset of <span class="nw">\(n\Z\).</span> Stage 2: sorted into rows; each row is one coset, a shifted
@@ -360,7 +360,7 @@
 	the two ends of the interval are glued together, and the result is a <em>circle</em>.
 </p>
 
-<Figure size="wide" num="1.4.2" title="ℝ/ℤ is a circle" hint="Press play or drag “wrap” · move the coset · drag to rotate">
+<Figure num="1.4.2" title="ℝ/ℤ is a circle" hint="Press play or drag “wrap” · move the coset · drag to rotate">
 	<CircleQuotient3D />
 	{#snippet caption()}
 		The real line, with the integers marked in teal and one coset \(t_0 + \Z\) in gold, coils into a spring whose every
@@ -390,7 +390,7 @@
 	How many cosets does \(H\) have, and what group is <span class="nw">\(\Z^2/H\)?</span> Explore before reading on.
 </p>
 
-<Figure size="full" num="1.4.3" title="Collapsing a lattice" hint="Drag the tips of v and w · or tap points · try the presets">
+<Figure num="1.4.3" title="Collapsing a lattice" hint="Drag the tips of v and w · or tap points · try the presets">
 	<LatticeQuotient />
 	{#snippet caption()}
 		Every lattice point is coloured by its coset of <span class="nw">\(H\);</span> the points of \(H\) itself are the large glowing ones. The
@@ -444,7 +444,7 @@
 	proof, watch it happen.
 </p>
 
-<Figure size="wide" num="1.4.4" title="The First Isomorphism Theorem" hint="Step through · choose k">
+<Figure num="1.4.4" title="The First Isomorphism Theorem" hint="Step through · choose k">
 	<FirstIsoTheorem />
 	{#snippet caption()}
 		The homomorphism \(\varphi(x) = kx\) on <span class="nw">\(\Z/12\).</span> Colour each element by where it lands; elements of the same colour
@@ -556,7 +556,7 @@
 	elements. Are they the same group? And \(\Z/2 \oplus \Z/2\) and <span class="nw">\(\Z/4\),</span> with four elements each?
 </p>
 
-<Figure size="wide" num="1.4.5" title="Two clocks ticking together" hint="Step or play · change m and n">
+<Figure num="1.4.5" title="Two clocks ticking together" hint="Step or play · change m and n">
 	<GearsCRT />
 	{#snippet caption()}
 		Each step adds <span class="nw">\((1, 1)\):</span> both hands advance one hour. The grid records the pairs visited; leaving it on one side
@@ -643,7 +643,7 @@
 	the next figure the three symbols are drawn as the three edges of a triangle, each with a chosen direction.
 </p>
 
-<Figure size="wide" num="1.4.6" title="Inventories of edges" hint="Step the coefficients · choose + or − · try the presets">
+<Figure num="1.4.6" title="Inventories of edges" hint="Step the coefficients · choose + or − · try the presets">
 	<InventoryCalculator />
 	{#snippet caption()}
 		The symbols \(a, b, c\) are the edges of a triangle, each with an arrow. A coefficient is drawn as the thickness of
@@ -815,7 +815,7 @@
 	every generator with no diagonal entry left over contributes a free <span class="nw">\(\Z\).</span>
 </p>
 
-<Figure size="wide" num="1.4.7" title="From relations to a group" hint="Edit the matrix · step through · try the presets">
+<Figure num="1.4.7" title="From relations to a group" hint="Edit the matrix · step through · try the presets">
 	<ClassificationExplorer />
 	{#snippet caption()}
 		Type any small relation matrix: one row per generator, one column per relation. The stepper diagonalises it by
@@ -1027,7 +1027,7 @@
 	exact: it is zero precisely when the sequence is exact. Try it.
 </p>
 
-<Figure size="wide" num="1.4.9" title="Exact, or not?" hint="Choose n and the two multipliers">
+<Figure num="1.4.9" title="Exact, or not?" hint="Choose n and the two multipliers">
 	<ExactnessExplorer />
 	{#snippet caption()}
 		Three copies of <span class="nw">\(\Z/n\),</span> joined by multiplication maps whose composite is zero. In the middle, the image of \(f\)

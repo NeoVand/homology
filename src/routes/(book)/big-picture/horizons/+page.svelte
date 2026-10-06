@@ -311,7 +311,7 @@
 	</p>
 </Example>
 
-<Figure size="full" num="5.3.1" title="Gradient + curl + harmonic" hint="Click edges to add flow · choose a complex and a starting flow">
+<Figure num="5.3.1" title="Gradient + curl + harmonic" hint="Click edges to add flow · choose a complex and a starting flow">
 	<HodgeDecomp />
 	{#snippet caption()}
 		A flow on a triangulated annulus (or a disk with two holes) and its three Hodge parts, drawn as arrows whose thickness shows their
@@ -350,7 +350,7 @@
 	locally acyclic inconsistencies” — cycles around longer loops of games, invisible to any check on three teams at a time.
 </p>
 
-<Figure size="full" num="5.3.2" title="HodgeRank: who is best?" hint="Change the score margins · switch what is drawn">
+<Figure num="5.3.2" title="HodgeRank: who is best?" hint="Change the score margins · switch what is drawn">
 	<HodgeRank />
 	{#snippet caption()}
 		Each game’s margin is a number on an edge, drawn as an arrow towards the team that did better. Aurora, Boreal and Cygnus all played
@@ -398,7 +398,7 @@
 	edge by the small amount \(\bar\alpha\), and goes once around in total.
 </p>
 
-<Figure size="wide" num="5.3.3" title="Angles from cohomology" hint="Slide the scale · pick another cocycle · new data">
+<Figure num="5.3.3" title="Angles from cohomology" hint="Slide the scale · pick another cocycle · new data">
 	<CircularCoords />
 	{#snippet caption()}
 		Forty noisy points near a loop. The figure starts in the middle of the range of scales where the Rips complex has exactly one loop
@@ -536,7 +536,7 @@
 	none of them intersecting.
 </p>
 
-<Figure size="full" num="5.3.4" title="The Hopf fibration" hint="Drag to rotate · scroll or pinch to zoom · change the number of circles">
+<Figure num="5.3.4" title="The Hopf fibration" hint="Drag to rotate · scroll or pinch to zoom · change the number of circles">
 	<HopfFibration />
 	{#snippet caption()}
 		The fibres of the Hopf map, drawn in ordinary space by stereographic projection from the 3-sphere. Each coloured circle sits over
@@ -647,7 +647,7 @@
 	</li>
 </ul>
 
-<Figure size="full" num="5.3.5" title="A map of the subject" hint="Select a star to read about that field">
+<Figure num="5.3.5" title="A map of the subject" hint="Select a star to read about that field">
 	<SubjectMap />
 	{#snippet caption()}
 		Some of the fields that grew out of homology and cohomology, grouped as pure mathematics (violet), applications (teal) and physics

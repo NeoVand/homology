@@ -237,7 +237,7 @@
 	the bundle must be twisted. Try it on the cylinder and on the Möbius band.
 </p>
 
-<Figure num="4.8.1" size="wide" title="Sections of the cylinder and the Möbius band" hint="Drag the gold points in the strip · switch bundles · drag the 3D view">
+<Figure num="4.8.1" title="Sections of the cylinder and the Möbius band" hint="Drag the gold points in the strip · switch bundles · drag the 3D view">
 	<BundleSections />
 	{#snippet caption()}
 		Above, the bundle: each blue segment is a fibre, a copy of \(\R\) whose midpoint is \(0\); the golden curve is a
@@ -311,7 +311,7 @@
 	we will find out exactly <em>how many</em> zeros a field must have, and why.
 </p>
 
-<Figure num="4.8.2" size="wide" title="Combing the sphere and the torus" hint="Choose a field · drag to rotate">
+<Figure num="4.8.2" title="Combing the sphere and the torus" hint="Choose a field · drag to rotate">
 	<CombBall />
 	{#snippet caption()}
 		Hairs combed along a tangent vector field, with particles drifting along it. Every field on the sphere has zeros —
@@ -348,7 +348,7 @@
 	continuously, and an integer that changes continuously does not change.
 </p>
 
-<Figure num="4.8.3" size="wide" title="Index explorer" hint="Choose a zero and walk around it · in the playground, drag zeros and the loop">
+<Figure num="4.8.3" title="Index explorer" hint="Choose a zero and walk around it · in the playground, drag zeros and the loop">
 	<IndexExplorer />
 	{#snippet caption()}
 		The colour shows the direction of the field (gold points right, violet up-left, teal down-left…), so around a zero of
@@ -495,7 +495,7 @@
 	\(\oint \kappa\, ds\). Since the direction returns to where it started, the total is a whole number of full turns.
 </p>
 
-<Figure num="4.8.5" size="wide" title="The total turning of a closed curve" hint="Drag the gold points · try the presets">
+<Figure num="4.8.5" title="The total turning of a closed curve" hint="Drag the gold points · try the presets">
 	<TurningCurve />
 	{#snippet caption()}
 		The comb shows the curvature along the curve: gold teeth where it turns left, teal where it turns right, longer where
@@ -582,7 +582,7 @@
 	more.
 </p>
 
-<Figure num="4.8.6" size="wide" title="Angle excess on a sphere" hint="Drag the gold corners · drag elsewhere to turn the sphere">
+<Figure num="4.8.6" title="Angle excess on a sphere" hint="Drag the gold corners · drag elsewhere to turn the sphere">
 	<AngleExcess />
 	{#snippet caption()}
 		A geodesic triangle on a sphere of radius \(R\). Its angles add up to more than \(180^\circ\), and the excess
@@ -692,7 +692,7 @@
 	triangles get finer the sum of defects becomes the integral \(\iint K\,dA\). Now play.
 </p>
 
-<Figure num="4.8.7" size="full" title="The Gauss–Bonnet sculptor" hint="Sliders reshape · click the surface to push or pull it · drag to rotate">
+<Figure num="4.8.7" title="The Gauss–Bonnet sculptor" hint="Sliders reshape · click the surface to push or pull it · drag to rotate">
 	<GaussBonnetSculptor />
 	{#snippet caption()}
 		A sphere made of 20,480 flat triangles (or a torus of 28,800), coloured by curvature — angle defect per unit area:
@@ -862,7 +862,7 @@
 	descriptions differ by the phase \(e^{iq\chi/\hbar}\) (in units where the speed of light is \(1\)).
 </p>
 
-<Figure num="4.8.8" size="wide" title="A monopole in two patches" hint="Change the charge · let it take any value · drag to rotate">
+<Figure num="4.8.8" title="A monopole in two patches" hint="Change the charge · let it take any value · drag to rotate">
 	<MonopolePatches />
 	{#snippet caption()}
 		Field lines stream out of the monopole. The northern patch (violet) and southern patch (teal) overlap in a band where

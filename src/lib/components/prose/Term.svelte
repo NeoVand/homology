@@ -3,8 +3,11 @@
 	import type { Snippet } from 'svelte';
 	import { loadGlossary, type GlossaryPopEntry } from '$lib/content/glossary-client';
 	import { chapterHref, href } from '$lib/util/paths';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { ArrowRightIcon } from '$lib/icons';
 
 	let { t, children }: { t: string; children?: Snippet } = $props();
+	const popId = $props.id();
 
 	let open = $state(false);
 	let entry = $state<GlossaryPopEntry | null>(null);
@@ -40,6 +43,12 @@
 		shift = left < margin ? margin - left : right > window.innerWidth - margin ? window.innerWidth - margin - right : 0;
 		below = r.top < pop.offsetHeight + 80;
 	}
+	// Keyboard focus opens the card; a tap or click focuses the trigger too, but
+	// there the click decides (otherwise a tap would open and at once close it).
+	function onFocusIn(e: FocusEvent) {
+		if ((e.target as HTMLElement).matches(':focus-visible')) show();
+		else clearTimeout(hideTimer);
+	}
 	function onKey(e: KeyboardEvent) {
 		if (e.key === 'Escape') open = false;
 		if (e.key === 'Enter' || e.key === ' ') {
@@ -50,33 +59,42 @@
 	}
 </script>
 
+<!-- The definition card is a sibling of the trigger, not inside it: a
+     role="button" element may not contain links. Pointer and focus handlers sit
+     on the wrapper so that moving into the card keeps it open. -->
 <span
-	class="term"
-	bind:this={root}
-	role="button"
-	tabindex="0"
-	aria-expanded={open}
+	class="term-wrap"
 	onpointerenter={(e) => e.pointerType === 'mouse' && show()}
 	onpointerleave={(e) => e.pointerType === 'mouse' && hideSoon()}
-	onclick={() => (open ? (open = false) : show())}
-	onfocus={show}
-	onblur={hideSoon}
-	onkeydown={onKey}
-	>{#if children}{@render children()}{:else}{t}{/if}{#if open}<span
+	onfocusin={onFocusIn}
+	onfocusout={hideSoon}
+	role="presentation"
+	><span
+		class="term"
+		bind:this={root}
+		role="button"
+		tabindex="0"
+		aria-expanded={open}
+		aria-controls={open ? popId : undefined}
+		onclick={() => (open ? (open = false) : show())}
+		onkeydown={onKey}>{#if children}{@render children()}{:else}{t}{/if}</span
+	>{#if open}<span
 			class="pop ui"
 			class:below
+			id={popId}
 			bind:this={pop}
-			role="tooltip"
+			role="group"
+			aria-label={entry ? `Definition of ${entry.term}` : 'Definition'}
 			style="--shift:{shift}px"
-			onpointerenter={() => clearTimeout(hideTimer)}
-			onpointerleave={hideSoon}
 		>
 			{#if entry}
 				<span class="p-term">{entry.term}</span>
 				<span class="p-def">{@html entry.html}</span>
 				<span class="p-links">
 					{#if entry.num}
-						<a href={chapterHref(entry.chapter, entry.anchor)}>Introduced in {entry.num} {entry.title} →</a>
+						<a href={chapterHref(entry.chapter, entry.anchor)}
+							>Introduced in {entry.num} {entry.title}<Icon icon={ArrowRightIcon} size={13} stroke={1.8} /></a
+						>
 					{/if}
 					<a href={href('/glossary/') + '#' + t}>Glossary</a>
 				</span>
@@ -89,8 +107,10 @@
 >
 
 <style>
-	.term {
+	.term-wrap {
 		position: relative;
+	}
+	.term {
 		cursor: help;
 		text-decoration: underline dotted;
 		text-decoration-color: rgba(244, 215, 156, 0.6);
@@ -163,6 +183,9 @@
 		border-top: 1px solid var(--line-faint);
 	}
 	.p-links a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
 		color: var(--gold);
 		text-decoration: none;
 	}

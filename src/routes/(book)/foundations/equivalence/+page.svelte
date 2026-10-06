@@ -253,7 +253,7 @@
 	</li>
 </ul>
 
-<Figure size="wide" title="Three rules, checked live" hint="Tap cells to add or remove pairs · try the presets" num="1.2.1" id="fig-relations">
+<Figure title="Three rules, checked live" hint="Tap cells to add or remove pairs · try the presets" num="1.2.1" id="fig-relations">
 	<RelationChecker />
 	{#snippet caption()}
 		A relation on \(\set{1,2,3,4}\), drawn as a table (left) and as arrows (right). The three lights test the rules; when one
@@ -548,7 +548,7 @@
 	for a moment; it is the subject of the next section.
 </p>
 
-<Figure size="wide" title="The partition painter" hint="Choose a relation · tap a point to see its class · then collapse" num="1.2.2">
+<Figure title="The partition painter" hint="Choose a relation · tap a point to see its class · then collapse" num="1.2.2">
 	<PartitionPainter />
 	{#snippet caption()}
 		Three equivalence relations, each painting its set by classes: integers with the same remainder modulo \(n\) (try several
@@ -700,7 +700,7 @@
 	can be undone by turning back; two rotations in a row make a rotation). How many different necklaces are there?
 </p>
 
-<Figure size="wide" title="Same up to rotation" hint="Switch stages · tap a necklace to light up its class" num="1.2.3">
+<Figure title="Same up to rotation" hint="Switch stages · tap a necklace to light up its class" num="1.2.3">
 	<NecklaceClasses />
 	{#snippet caption()}
 		The 16 colourings of a square’s corners, sorted into classes of colourings that differ by a rotation. The class sizes are
@@ -753,7 +753,7 @@
 	> check. (You met the word as a proof shape in <Ref to="prelude/reading-math" />.)
 </p>
 
-<Figure size="wide" title="Ask every representative" hint="Pick a rule · slide n · look for rose clashes" num="1.2.4">
+<Figure title="Ask every representative" hint="Pick a rule · slide n · look for rose clashes" num="1.2.4">
 	<WellDefinedTester />
 	{#snippet caption()}
 		A rule on \(\Z/n\) given by a formula in a representative \(x\). For each class we ask four representatives,
@@ -839,7 +839,7 @@
 	string whose two ends are tied together: a loop. The quotient of an interval by “its ends are the same” is a circle.
 </p>
 
-<Figure size="wide" title="Gluing the ends" hint="Press “Glue” or drag the bend slider" num="1.2.5">
+<Figure title="Gluing the ends" hint="Press “Glue” or drag the bend slider" num="1.2.5">
 	<IntervalToCircle />
 	{#snippet caption()}
 		Bending the interval changes nothing about which points are the same; only when the ends meet do \(0\) and \(1\) become a
@@ -879,7 +879,7 @@
 	exactly the clock face of the partition painter.
 </p>
 
-<Figure size="wide" title="Winding the line" hint="Drag to rotate · change n or t · press Project" num="1.2.6">
+<Figure title="Winding the line" hint="Drag to rotate · change n or t · press Project" num="1.2.6">
 	<HelixQuotient />
 	{#snippet caption()}
 		The integers (or the real numbers) wound into a helix. Every class is a vertical “fibre”: in \(\Z\) with \(n = 5\), the
@@ -920,7 +920,7 @@
 	four; the chain of gluings says one.
 </p>
 
-<Figure size="wide" title="A square becomes a torus" num="1.2.7">
+<Figure title="A square becomes a torus" num="1.2.7">
 	<SquareToTorus />
 	{#snippet caption()}
 		Gluing the sides marked \(a\) to each other and the sides marked \(b\) to each other, matching the arrows. Points with the

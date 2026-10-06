@@ -146,7 +146,7 @@
 	the positions of \(B\) and \(C\) are forced. Three times two is six. Try it for yourself:
 </p>
 
-<Figure size="wide" num="1.3.1" title="The six symmetries of a triangle" hint="Press the moves · tap a table cell to replay it">
+<Figure num="1.3.1" title="The six symmetries of a triangle" hint="Press the moves · tap a table cell to replay it">
 	<TrianglePlayground />
 	{#snippet caption()}
 		Every move lands the card back in its slot, so every sequence of moves is again one of the six. Each time you press
@@ -274,7 +274,7 @@
 	</p>
 </Remark>
 
-<Figure size="wide" num="1.3.2" title="Clock arithmetic" hint="Drag the sliders · tap a cell of the table">
+<Figure num="1.3.2" title="Clock arithmetic" hint="Drag the sliders · tap a cell of the table">
 	<ClockArithmetic />
 	{#snippet caption()}
 		The gold arc walks \(a\) steps, the teal arc \(b\) more; when the walk passes \(0\) it simply keeps going round. In
@@ -567,7 +567,7 @@
 	</li>
 </ul>
 
-<Figure size="wide" num="1.3.3" title="Group or impostor?" hint="Pick a candidate · predict · tap to check">
+<Figure num="1.3.3" title="Group or impostor?" hint="Pick a candidate · predict · tap to check">
 	<AxiomChecker />
 	{#snippet caption()}
 		For each candidate, guess which of the four rules hold before you tap them. Then use the test bench to try the
@@ -785,7 +785,7 @@
 	\(\Z/n\) exactly when <span class="nw">\(\gcd(n, k) = 1\).</span> On a 12-hour clock the generators are <span class="nw">\(1, 5, 7, 11\).</span>
 </p>
 
-<Figure size="wide" num="1.3.4" title="Walking around a clock" hint="Tap a dot to choose k · drag n">
+<Figure num="1.3.4" title="Walking around a clock" hint="Tap a dot to choose k · drag n">
 	<GeneratorExplorer />
 	{#snippet caption()}
 		Starting at \(0\) and repeatedly adding \(k\) traces a star that closes up when it returns to <span class="nw">\(0\).</span> The dots it
@@ -890,7 +890,7 @@
 	</ul>
 </Example>
 
-<Figure size="wide" num="1.3.5" title="Wrapping the integers around a clock" hint="Drag to rotate · change n">
+<Figure num="1.3.5" title="Wrapping the integers around a clock" hint="Drag to rotate · change n">
 	<HelixWrap />
 	{#snippet caption()}
 		The number line is coiled into a spring with \(n\) integers per turn; looking straight down, each integer lands on
@@ -994,7 +994,7 @@
 	</p>
 </KeyIdea>
 
-<Figure size="wide" num="1.3.6" title="A homomorphism under the lens" hint="Change m, n and φ(1) · hover the top dots">
+<Figure num="1.3.6" title="A homomorphism under the lens" hint="Change m, n and φ(1) · hover the top dots">
 	<HomomorphismLens />
 	{#snippet caption()}
 		A homomorphism from \(\Z/m\) is completely decided by where it sends <span class="nw">\(1\),</span> since every element is
@@ -1083,7 +1083,7 @@
 	</li>
 </ul>
 
-<Figure size="wide" num="1.3.7" title="An isomorphism is a renaming" hint="Switch the group · try the renamings">
+<Figure num="1.3.7" title="An isomorphism is a renaming" hint="Switch the group · try the renamings">
 	<RenamingIsomorphism />
 	{#snippet caption()}
 		The first table is a group’s own table, coloured by the number each element is renamed to. In the second, the

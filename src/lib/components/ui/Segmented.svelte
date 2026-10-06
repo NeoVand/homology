@@ -1,4 +1,6 @@
 <script lang="ts" generics="T extends string | number">
+	// A row of mutually exclusive choices (a radio group drawn as a segmented
+	// control). Arrow keys move the choice, as in any radio group.
 	let {
 		value = $bindable(),
 		options,
@@ -10,18 +12,36 @@
 		label?: string;
 		onchange?: (v: T) => void;
 	} = $props();
+
+	let root: HTMLElement | undefined = $state();
+
+	function choose(v: T) {
+		if (v === value) return;
+		value = v;
+		onchange?.(v);
+	}
+
+	function onkeydown(e: KeyboardEvent) {
+		const d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+		if (!d) return;
+		e.preventDefault();
+		const i = options.findIndex((o) => o.value === value);
+		const next = options[(i + d + options.length) % options.length];
+		choose(next.value);
+		root?.querySelectorAll<HTMLElement>('[role="radio"]')[options.indexOf(next)]?.focus();
+	}
 </script>
 
-<div class="seg ui" role="radiogroup" aria-label={label}>
+<div class="seg ui" role="radiogroup" aria-label={label || undefined} bind:this={root}>
 	{#each options as o (o.value)}
 		<button
+			type="button"
 			role="radio"
 			aria-checked={value === o.value}
+			tabindex={value === o.value ? 0 : -1}
 			class:on={value === o.value}
-			onclick={() => {
-				value = o.value;
-				onchange?.(o.value);
-			}}>{o.label}</button
+			{onkeydown}
+			onclick={() => choose(o.value)}>{o.label}</button
 		>
 	{/each}
 </div>
@@ -31,31 +51,43 @@
 		display: inline-flex;
 		flex-wrap: wrap;
 		gap: 2px;
-		padding: 3px;
+		padding: 2px;
 		border-radius: 10px;
-		background: rgba(255, 255, 255, 0.04);
+		background: rgba(255, 255, 255, 0.025);
 		border: 1px solid var(--line-faint);
 	}
 	button {
+		min-height: 1.75rem;
+		padding: 0.25rem 0.7rem;
 		border: 0;
+		border-radius: 8px;
 		background: transparent;
 		color: var(--ink-dim);
 		font-size: 0.76rem;
-		letter-spacing: 0.03em;
-		padding: 0.38rem 0.75rem;
-		border-radius: 7px;
-		cursor: pointer;
-		transition: all 0.18s var(--ease);
+		letter-spacing: 0.02em;
+		line-height: 1.2;
 		white-space: nowrap;
+		cursor: pointer;
+		transition:
+			color 0.15s var(--ease),
+			background 0.15s var(--ease),
+			box-shadow 0.15s var(--ease);
 	}
 	button:hover {
 		color: var(--ink-bright);
-		background: rgba(255, 255, 255, 0.05);
+		background: rgba(255, 255, 255, 0.04);
 	}
 	button.on {
-		color: #1a1206;
-		background: linear-gradient(180deg, #f6dca0, #d2a95f);
-		box-shadow: 0 2px 10px -2px rgba(216, 178, 110, 0.6);
-		font-weight: 600;
+		color: #fbe8c0;
+		background: rgba(216, 178, 110, 0.16);
+		box-shadow: inset 0 0 0 1px rgba(216, 178, 110, 0.5);
+	}
+	button:focus-visible {
+		outline-offset: 0;
+	}
+	@media (pointer: coarse) {
+		button {
+			min-height: 2.25rem;
+		}
 	}
 </style>

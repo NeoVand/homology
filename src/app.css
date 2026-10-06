@@ -71,8 +71,8 @@
 	--font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
 	--measure: 43rem; /* reading column */
-	--wide: 64rem; /* wide figures */
-	--full: 84rem;
+	--plate: 52rem; /* every figure plate: one width, centred on the column */
+	--sidebar-w: 16.5rem;
 	--radius: 14px;
 	--radius-sm: 9px;
 	--shadow: 0 18px 50px -20px rgba(0, 0, 0, 0.75), 0 2px 0 rgba(255, 255, 255, 0.02) inset;
@@ -90,16 +90,14 @@ html {
 	font-size: 16px;
 	-webkit-text-size-adjust: 100%;
 	text-size-adjust: 100%;
-	scroll-behavior: smooth;
+	/* no smooth scrolling here: it animates every page change from the old
+	   position to the top. In-page links scroll smoothly in script instead. */
 	scroll-padding-top: calc(var(--topbar-h) + 1.5rem);
 	background: var(--bg-0);
 	color-scheme: dark;
 }
 
 @media (prefers-reduced-motion: reduce) {
-	html {
-		scroll-behavior: auto;
-	}
 	*,
 	*::before,
 	*::after {
@@ -474,20 +472,6 @@ code {
 
 .nums {
 	font-variant-numeric: lining-nums tabular-nums;
-}
-
-/* Breakouts: let any block escape the reading column, centred on it.
-   --avail is set by the chapter layout to the width actually available. */
-.prose .wide {
-	--w: min(var(--wide), var(--avail, calc(100vw - 2.5rem)));
-	width: var(--w);
-	margin-left: calc((100% - var(--w)) / 2);
-}
-
-.prose .full {
-	--w: min(var(--full), var(--avail, calc(100vw - 2rem)));
-	width: var(--w);
-	margin-left: calc((100% - var(--w)) / 2);
 }
 
 /* scrollbars */

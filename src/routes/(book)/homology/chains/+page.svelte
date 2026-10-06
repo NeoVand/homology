@@ -199,7 +199,7 @@
 	</p>
 </Example>
 
-<Figure size="wide" num="3.2.1" title="A ℤ/2 chain playground" hint="Tap triangles (or edges) · take the boundary again">
+<Figure num="3.2.1" title="A ℤ/2 chain playground" hint="Tap triangles (or edges) · take the boundary again">
 	<ChainPlayground />
 	{#snippet caption()}
 		Tap triangles to build a 2-chain \(\chn{c}\); its boundary \(\bdy{\partial c}\) — the edges used an odd number of times — glows teal. Press “take the
@@ -234,7 +234,7 @@
 	</p>
 </Proof>
 
-<Figure size="normal" num="3.2.2" title="∂∂ of a triangle">
+<Figure num="3.2.2" title="∂∂ of a triangle">
 	<TriangleBoundary />
 	{#snippet caption()}
 		The triangle \(\chn{\sigma}\) has three edges; together they have six endpoints, and each vertex is an endpoint of exactly two of them. Mod 2 the pairs
@@ -248,7 +248,7 @@
 	each of the two triangles that share it. Step through it in three dimensions.
 </p>
 
-<Figure size="wide" num="3.2.3" title="The boundary of a boundary, in 3D" hint="Step through · drag to rotate · mod 2 or with signs">
+<Figure num="3.2.3" title="The boundary of a boundary, in 3D" hint="Step through · drag to rotate · mod 2 or with signs">
 	<TetraCascade />
 	{#snippet caption()}
 		A solid tetrahedron explodes into its four faces (\(\partial\sigma\), teal), and each face shows its three edges (\(\partial\partial\sigma\)). Every edge
@@ -331,7 +331,7 @@
 	</p>
 </Notation>
 
-<Figure size="wide" num="3.2.4" title="Orientation and signs" hint="Flip the edge · choose a vertex order · multiply by c">
+<Figure num="3.2.4" title="Orientation and signs" hint="Flip the edge · choose a vertex order · multiply by c">
 	<OrientationSigns />
 	{#snippet caption()}
 		Left: flipping an edge negates it, and its boundary is always <em>head minus tail</em>. Right: the six ways of writing the triangle \([0,1,2]\) — solid chips
@@ -453,7 +453,7 @@
 	simplex down — only its orientation matters, as it should.
 </p>
 
-<Figure size="normal" num="3.2.5" title="Mod 2 versus integers" hint="Choose coefficients · switch between mod 2 and integers">
+<Figure num="3.2.5" title="Mod 2 versus integers" hint="Choose coefficients · switch between mod 2 and integers">
 	<ModTwoVsIntegers />
 	{#snippet caption()}
 		Two triangles share the diagonal \([1,2]\). Mod 2, taking both always cancels the diagonal. With integers, \(\partial(a[0,1,2] + b[1,2,3])\) gives the
@@ -591,7 +591,7 @@
 	square, plus an empty triangle on top.
 </p>
 
-<Figure size="full" num="3.2.6" title="Boundary matrices" hint="Hover or tap any entry · reduce mod 2">
+<Figure num="3.2.6" title="Boundary matrices" hint="Hover or tap any entry · reduce mod 2">
 	<BoundaryMatrices />
 	{#snippet caption()}
 		Each column of \(\partial_1\) (\(5 \times 7\)) and \(\partial_2\) (\(7 \times 2\)) is the boundary of one simplex: hovering an entry lights up the column’s
@@ -685,7 +685,7 @@
 	</p>
 </Proof>
 
-<Figure size="wide" num="3.2.7" title="A chain complex as a conveyor belt" hint="Step through">
+<Figure num="3.2.7" title="A chain complex as a conveyor belt" hint="Step through">
 	<ConveyorBelt />
 	{#snippet caption()}
 		Chains travel from left to right, losing a dimension at each \(\partial\). The teal region \(\bdy{B_1}\) is everything \(\partial_2\) produces; the gold

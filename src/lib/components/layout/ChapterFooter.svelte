@@ -2,6 +2,8 @@
 	import { neighbours } from '$lib/content/toc';
 	import { chapterHref, href } from '$lib/util/paths';
 	import Ornament from './Ornament.svelte';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { ArrowLeftIcon, ArrowRightIcon } from '$lib/icons';
 
 	let { id }: { id: string } = $props();
 	const nb = $derived(neighbours(id));
@@ -15,21 +17,23 @@
 			<span class="nnum nums">Chapter {nb.next.num}</span>
 			<span class="ntitle gold-text">{nb.next.title}</span>
 			<span class="nblurb">{nb.next.blurb}</span>
-			<span class="arrow" aria-hidden="true">→</span>
+			<Icon icon={ArrowRightIcon} size={26} stroke={1.3} class="arrow" />
 		</a>
 	{:else}
 		<a class="next panel" href={href('/map/')}>
 			<span class="eyebrow">You have reached the end</span>
 			<span class="ntitle gold-text">Look back over the map</span>
 			<span class="nblurb">See how every idea in the book connects — and where to go next.</span>
-			<span class="arrow" aria-hidden="true">→</span>
+			<Icon icon={ArrowRightIcon} size={26} stroke={1.3} class="arrow" />
 		</a>
 	{/if}
 	<div class="row">
 		{#if nb.prev}
-			<a class="prev" href={chapterHref(nb.prev.id)}>← {nb.prev.num} {nb.prev.title}</a>
+			<a class="prev" href={chapterHref(nb.prev.id)}
+				><Icon icon={ArrowLeftIcon} size={15} /><span class="nums">{nb.prev.num}</span> {nb.prev.title}</a
+			>
 		{:else}
-			<a class="prev" href={href('/')}>← Home</a>
+			<a class="prev" href={href('/')}><Icon icon={ArrowLeftIcon} size={15} />Home</a>
 		{/if}
 		<a class="prev" href={href('/map/')}>Map of the journey</a>
 	</div>
@@ -39,7 +43,6 @@
 	.ch-foot {
 		max-width: var(--measure);
 		margin: 5rem auto 4rem;
-		padding: 0 1.25rem;
 	}
 	.ch-foot :global(.orn) {
 		margin: 0 auto 2.2rem;
@@ -79,16 +82,15 @@
 		font-size: 0.98rem;
 		line-height: 1.55;
 	}
-	.arrow {
+	.next :global(.arrow) {
 		position: absolute;
-		right: 1.4rem;
+		right: 1.3rem;
 		top: 50%;
 		transform: translateY(-50%);
-		font-size: 1.6rem;
 		color: var(--gold);
 		transition: transform 0.25s var(--ease);
 	}
-	.next:hover .arrow {
+	.next:hover :global(.arrow) {
 		transform: translate(4px, -50%);
 	}
 	.row {
@@ -99,6 +101,9 @@
 		font-size: 0.84rem;
 	}
 	.prev {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
 		color: var(--ink-faint);
 		text-decoration: none;
 	}

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { HintIcon, TapIcon } from '$lib/icons';
 
 	let {
-		size = 'normal',
 		num,
 		title = '',
 		hint = '',
@@ -10,8 +11,6 @@
 		caption,
 		children
 	}: {
-		/** normal = reading column; wide/full break out of it */
-		size?: 'normal' | 'wide' | 'full';
 		num?: string;
 		title?: string;
 		/** how to interact, e.g. "Drag to rotate · click edges to toggle" */
@@ -22,7 +21,9 @@
 	} = $props();
 </script>
 
-<figure class="figure {size === 'normal' ? '' : size}" {id}>
+<!-- Every plate in the book has the same width, --plate, centred on the
+     reading column and never wider than the main column (100cqi). -->
+<figure class="figure" {id}>
 	<div class="frame">
 		<span class="corner tl" aria-hidden="true"></span>
 		<span class="corner tr" aria-hidden="true"></span>
@@ -33,17 +34,9 @@
 				{#if title}<span class="f-title">{title}</span>{/if}
 				{#if hint}
 					<span class="f-hint">
-						<svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"
-							><path
-								d="M7 9V4.5a1.5 1.5 0 0 1 3 0V9m0-1.5a1.5 1.5 0 0 1 3 0V10m0-1a1.5 1.5 0 0 1 3 0v3.5A5.5 5.5 0 0 1 10.5 18h-.8a5 5 0 0 1-4-2l-2.2-3a1.5 1.5 0 0 1 2.3-1.9L7 12.5"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="1.3"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/></svg
-						>
-						{hint}
+						<Icon icon={HintIcon} size={14} class="pointer" />
+						<Icon icon={TapIcon} size={14} class="touch" />
+						<span>{hint}</span>
 					</span>
 				{/if}
 			</div>
@@ -62,18 +55,10 @@
 
 <style>
 	.figure {
-		margin: 2.4rem 0 2.6rem;
-	}
-	/* break out of the reading column, centred on it */
-	.figure.wide {
-		--w: min(var(--wide), var(--avail, calc(100vw - 2.5rem)));
+		--w: min(var(--plate), 100cqi);
 		width: var(--w);
-		margin-left: calc((100% - var(--w)) / 2);
-	}
-	.figure.full {
-		--w: min(var(--full), var(--avail, calc(100vw - 2rem)));
-		width: var(--w);
-		margin-left: calc((100% - var(--w)) / 2);
+		margin: 2.5rem 0 2.6rem calc((100% - var(--w)) / 2);
+		container: figure / inline-size;
 	}
 	.frame {
 		position: relative;
@@ -122,50 +107,78 @@
 		border-bottom-right-radius: 6px;
 	}
 	.f-top {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
-		padding: 0.75rem 1.2rem 0;
-		font-size: 0.74rem;
 		position: relative;
 		z-index: 2;
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.4rem 1.25rem;
+		padding: 0.8rem 1.25rem 0;
+		font-size: 0.74rem;
+		line-height: 1.45;
 	}
 	.f-title {
+		flex: none;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;
 		font-weight: 600;
 		color: var(--gold);
 	}
 	.f-hint {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.35rem;
+		display: flex;
+		align-items: baseline;
+		gap: 0.4rem;
+		min-width: 0;
 		color: var(--ink-faint);
-		margin-left: auto;
 		text-align: right;
+	}
+	.f-hint :global(.icon) {
+		align-self: center;
+		opacity: 0.8;
+	}
+	.f-hint :global(.touch) {
+		display: none;
+	}
+	@media (hover: none) {
+		.f-hint :global(.pointer) {
+			display: none;
+		}
+		.f-hint :global(.touch) {
+			display: inline-block;
+		}
+	}
+	/* narrow plates: the hint goes under the title, left-aligned */
+	@container figure (max-width: 38rem) {
+		.f-top {
+			flex-direction: column;
+			align-items: flex-start;
+			padding: 0.75rem 1rem 0;
+		}
+		.f-hint {
+			text-align: left;
+		}
 	}
 	.f-body {
 		position: relative;
 	}
 	figcaption {
+		max-width: var(--measure);
+		margin: 0 auto;
+		padding: 0.95rem 0.4rem 0;
 		font-size: 0.93rem;
 		line-height: 1.6;
 		color: var(--ink-dim);
-		padding: 0.9rem 0.4rem 0;
-		max-width: var(--measure);
-		margin: 0 auto;
 	}
 	.f-num {
+		margin-right: 0.6rem;
 		font-size: 0.7rem;
 		font-weight: 650;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;
 		color: var(--gold);
-		margin-right: 0.6rem;
 	}
 	figcaption :global(p) {
-		margin: 0 0 0.5em;
 		display: inline;
+		margin: 0 0 0.5em;
 	}
 </style>

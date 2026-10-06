@@ -210,7 +210,7 @@
 	broken in exactly one situation — when \(P\) happens and \(Q\) does not. In every other situation the promise is kept.
 </p>
 
-<Figure size="wide" title="Promises kept and broken" hint="Judge each situation · then compare the columns" num="0.2.1">
+<Figure title="Promises kept and broken" hint="Judge each situation · then compare the columns" num="0.2.1">
 	<PromiseCards />
 	{#snippet caption()}
 		The promise \(P\Rightarrow Q\) in four situations. Only the second card breaks it. The last two — no rain at all — keep it
@@ -285,7 +285,7 @@
 	out of mathematics. Try the next puzzle before reading its explanation.
 </p>
 
-<Figure size="wide" title="Which cards must you turn over?" hint="Tap the cards you would turn · then check" num="0.2.2">
+<Figure title="Which cards must you turn over?" hint="Tap the cards you would turn · then check" num="0.2.2">
 	<WasonCards />
 	{#snippet caption()}
 		A version of the psychologist Peter Wason’s selection task (1966). The rule is a promise \(P\Rightarrow Q\) with \(P\) =
@@ -381,7 +381,7 @@
 	statement is true exactly when you have a strategy that always wins.
 </p>
 
-<Figure size="wide" title="The quantifier duel" hint="Play several rounds · then swap the order of the quantifiers" num="0.2.3">
+<Figure title="The quantifier duel" hint="Play several rounds · then swap the order of the quantifiers" num="0.2.3">
 	<QuantifierDuel />
 	{#snippet caption()}
 		With \(\forall x\ \exists y\), the Skeptic chooses \(x\) first and you reply — and you can always win, with \(y=-x\). With
@@ -412,7 +412,7 @@
 	and the broken-promise rule \(\neg(P\Rightarrow Q)\equiv P\wedge\neg Q\).
 </p>
 
-<Figure size="wide" title="The negation machine" hint="Step through · choose another statement" num="0.2.4">
+<Figure title="The negation machine" hint="Step through · choose another statement" num="0.2.4">
 	<NegationMachine />
 	{#snippet caption()}
 		The \(\hole{\neg}\) moves inward one step at a time; each step uses one rule (lit up below), and what just changed is shown in
@@ -528,7 +528,7 @@
 	fall.
 </p>
 
-<Figure size="normal" title="Odd numbers make squares" hint="Slide n" num="0.2.5">
+<Figure title="Odd numbers make squares" hint="Slide n" num="0.2.5">
 	<InductionSquares />
 	{#snippet caption()}
 		Each odd number \(2n-1\) is an L-shaped layer that turns an \((n-1)\times(n-1)\) square into an \(n\times n\) square. That
@@ -568,7 +568,7 @@
 	book, with how to say them and where they are explained (the small § numbers).
 </p>
 
-<Figure size="wide" title="The symbol dictionary" hint="Filter by kind · the § number links to where each symbol is explained" num="0.2.6">
+<Figure title="The symbol dictionary" hint="Filter by kind · the § number links to where each symbol is explained" num="0.2.6">
 	<SymbolAtlas />
 	{#snippet caption()}
 		Read each symbol aloud as you meet it. Those under “Coming later” will mean little now; by the end of Part III they will be old
@@ -584,7 +584,7 @@
 	this book uses, with a common English pronunciation.
 </p>
 
-<Figure size="wide" title="Greek letters by role" num="0.2.7">
+<Figure title="Greek letters by role" num="0.2.7">
 	<SymbolAtlas mode="greek" />
 	{#snippet caption()}
 		Lowercase and (where used) capital forms. These are habits, not laws: a letter can be used for anything, but a writer who uses
@@ -621,7 +621,7 @@
 	very generous one.
 </p>
 
-<Figure size="wide" title="Levels of sameness" num="0.2.8">
+<Figure title="Levels of sameness" num="0.2.8">
 	<SamenessLadder />
 	{#snippet caption()}
 		From strict to loose: equal, isomorphic (for spaces, homeomorphic), homotopy equivalent. Each looser notion forgets more, so
@@ -655,7 +655,7 @@
 	</li>
 </ul>
 
-<Figure size="wide" title="Points forward, measurements back" hint="Switch direction · replay" num="0.2.9">
+<Figure title="Points forward, measurements back" hint="Switch direction · replay" num="0.2.9">
 	<PushPull />
 	{#snippet caption()}
 		The same map \(f\colon X\to Y\) carries points forward and measurements backward. Homology is built from things made of points
@@ -732,7 +732,7 @@
 	understand it yet — only to <em>read</em> it. Step through it, or hover over any symbol.
 </p>
 
-<Figure size="wide" title="The formula decoder" hint="Hover or tap a symbol · step through · try other formulas" num="0.2.10">
+<Figure title="The formula decoder" hint="Hover or tap a symbol · step through · try other formulas" num="0.2.10">
 	<FormulaDecoder />
 	{#snippet caption()}
 		“\(H\) sub \(n\) of \(X\) is the kernel of boundary \(n\), modulo the image of boundary \(n\) plus one.” Each piece names an idea

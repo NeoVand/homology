@@ -280,7 +280,7 @@
 	</p>
 </Example>
 
-<Figure num="4.7.1" size="wide" title="A cover and its nerve" hint="Drag the disks · change their range · add or remove sensors">
+<Figure num="4.7.1" title="A cover and its nerve" hint="Drag the disks · change their range · add or remove sensors">
 	<CoverNerve />
 	{#snippet caption()}
 		Each disk is a piece of the cover. The nerve is drawn on top: a gold dot for each disk, an edge for each overlap, and a
@@ -419,7 +419,7 @@
 	the least we could ask of honest data.
 </p>
 
-<Figure num="4.7.2" size="wide" title="Čech cohomology of the circle" hint="Use − and + to set the offsets · switch between three and two arcs">
+<Figure num="4.7.2" title="Čech cohomology of the circle" hint="Use − and + to set the offsets · switch between three and two arcs">
 	<CechCircle />
 	{#snippet caption()}
 		Three arcs cover the circle; the gold arcs are their overlaps, labelled with the offsets \(c_{ij}\). On the right, the
@@ -633,7 +633,7 @@
 	</li>
 </ul>
 
-<Figure num="4.7.4" size="wide" title="Bounded, versus bounded by 1" hint="Add pieces · switch the property">
+<Figure num="4.7.4" title="Bounded, versus bounded by 1" hint="Add pieces · switch the property">
 	<BoundedGluing />
 	{#snippet caption()}
 		The line is covered by overlapping intervals \(U_n\). Each piece of \(x\mapsto x\) is bounded, but the bound grows with
@@ -710,7 +710,7 @@
 	following a local solution around a loop and coming back to a different one — is called <dfn>monodromy</dfn>.
 </p>
 
-<Figure num="4.7.5" size="wide" title="Following a branch around the puncture" hint="Drag to rotate · slide or press Walk">
+<Figure num="4.7.5" title="Following a branch around the puncture" hint="Drag to rotate · slide or press Walk">
 	<BranchSurface />
 	{#snippet caption()}
 		The walker circles the origin in the plane below. Above it, its chosen value is followed continuously on the
@@ -760,7 +760,7 @@
 	<Term t="orientable">orientable</Term> exactly when its orientation sheaf has a global section.
 </p>
 
-<Figure num="4.7.6" size="wide" title="The orientation sheaf of the Möbius band" hint="Drag to rotate · flip patches · carry the arrow">
+<Figure num="4.7.6" title="The orientation sheaf of the Möbius band" hint="Drag to rotate · flip patches · carry the arrow">
 	<MobiusOrientation />
 	{#snippet caption()}
 		Three overlapping patches cover the band; each has its own consistent choice of normal arrow. On each overlap the two
@@ -808,7 +808,7 @@
 	\[ d_{12}\, d_{23}\, d_{31} = 1. \]
 </p>
 
-<Figure num="4.7.7" size="wide" title="Penrose's cocycle" hint="Pull the pieces apart · rescale them">
+<Figure num="4.7.7" title="Penrose's cocycle" hint="Pull the pieces apart · rescale them">
 	<TribarCocycle />
 	{#snippet caption()}
 		The impossible triangle is three overlapping pieces, each a genuine corner — pull them apart to check. Rescaling a piece
@@ -830,7 +830,7 @@
 	gap closes.
 </p>
 
-<Figure num="4.7.8" size="wide" title="Possible — from one eye only" hint="Step aside, or drag to look from elsewhere · zoom">
+<Figure num="4.7.8" title="Possible — from one eye only" hint="Step aside, or drag to look from elsewhere · zoom">
 	<TribarEye />
 	{#snippet caption()}
 		Three real beams. From the eye (where the view starts) they form a closed triangle; step aside and the gap opens. The rose
@@ -988,7 +988,7 @@
 	/>. The point of a sheaf is that the maps need not be identities.
 </p>
 
-<Figure num="4.7.9" size="wide" title="A sheaf of prices" hint="Change prices with − and + · let them settle · try both rate tables">
+<Figure num="4.7.9" title="A sheaf of prices" hint="Change prices with − and + · let them settle · try both rate tables">
 	<GraphSheaf />
 	{#snippet caption()}
 		Each vertex holds the price of the same coffee in its own currency; each edge converts one price into the other's

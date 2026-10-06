@@ -5,7 +5,7 @@
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
-	import Stepper from '../categories/Stepper.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import { group, tensorFG, torFG, homFG, extFG, groupTeX, cyclicTeX, gcd, isZero, type Group } from './abelian';
 
 	let rA = $state(0);

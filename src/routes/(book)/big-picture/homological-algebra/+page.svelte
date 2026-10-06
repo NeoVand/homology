@@ -229,7 +229,7 @@
 	where every group is \(\Z\) or \(\Z/m\) and you can check every step with arithmetic.
 </p>
 
-<Figure size="full" num="5.2.2" title="Chasing the snake" hint="Step through with ‹ › · change m, n and the starting element">
+<Figure num="5.2.2" title="Chasing the snake" hint="Step through with ‹ › · change m, n and the starting element">
 	<SnakeLemma />
 	{#snippet caption()}
 		The rows are the short exact sequence \(0\to\Z\xrightarrow{\times m}\Z\to\Z/m\to 0\) twice, and every vertical map multiplies by
@@ -499,7 +499,7 @@
 	</li>
 </ul>
 
-<Figure size="full" num="5.2.3" title="A calculator for ⊗, Tor, Hom and Ext" hint="Build A and G from ℤ and ℤ/n pieces · or try a preset">
+<Figure num="5.2.3" title="A calculator for ⊗, Tor, Hom and Ext" hint="Build A and G from ℤ and ℤ/n pieces · or try a preset">
 	<TorExtCalculator />
 	{#snippet caption()}
 		Each operation splits over the cyclic pieces of \(A\) and \(G\), and the cards show every piece. Below, the free resolution of \(A\):
@@ -588,7 +588,7 @@
 	</p>
 </Example>
 
-<Figure size="full" num="5.2.4" title="Universal coefficients" hint="Choose a space and a coefficient group">
+<Figure num="5.2.4" title="Universal coefficients" hint="Choose a space and a coefficient group">
 	<UCTExplorer />
 	{#snippet caption()}
 		Pick a space and coefficients. The table computes \(H_n(X;G)\) and \(H^n(X;G)\) from integral homology by the universal coefficient
@@ -652,7 +652,7 @@
 	\Z/2\) in \(H_3\). The figure lets you try products.
 </p>
 
-<Figure size="wide" num="5.2.5" title="Homology of a product" hint="Choose the two factors">
+<Figure num="5.2.5" title="Homology of a product" hint="Choose the two factors">
 	<KunnethGrid />
 	{#snippet caption()}
 		Cell \((i, j)\) holds \(H_i(X)\otimes H_j(Y)\); the cells along an anti-diagonal \(i+j = n\) (one colour) add up to \(H_n(X\times
@@ -699,7 +699,7 @@
 	</li>
 </ul>
 
-<Figure size="full" num="5.2.6" title="Turning the pages" hint="Choose a page · switch examples and coefficients">
+<Figure num="5.2.6" title="Turning the pages" hint="Choose a page · switch examples and coefficients">
 	<SpectralPages />
 	{#snippet caption()}
 		Each dot is a generator, placed at (stage, degree − stage). <em>Two disks on a segment:</em> on \(E^1\) two \(d^1\) arrows cancel
@@ -798,7 +798,7 @@
 	the claim that nothing else is needed. The figure computes the homology of every sphere using only the five axioms.
 </p>
 
-<Figure size="full" num="5.2.7" title="Spheres from the axioms" hint="Step through · the axioms used in each step light up">
+<Figure num="5.2.7" title="Spheres from the axioms" hint="Step through · the axioms used in each step light up">
 	<AxiomsProof />
 	{#snippet caption()}
 		The computation that drives the uniqueness theorem. A disk has the homology of a point; the long exact sequence of the pair

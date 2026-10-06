@@ -1,6 +1,9 @@
 <script lang="ts">
-	// Prev / next / play for step-by-step figures.
+	// Previous / play / next for step-by-step figures, with one dot per step.
 	import { onDestroy } from 'svelte';
+	import Icon from './Icon.svelte';
+	import { ChevronLeftIcon, ChevronRightIcon, PauseIcon, PlayIcon } from '$lib/icons';
+
 	let {
 		step = $bindable(0),
 		count,
@@ -30,91 +33,128 @@
 </script>
 
 <div class="steps ui">
-	<button class="b" aria-label="Previous step" disabled={step === 0} onclick={() => (stop(), step--)}>‹</button>
-	<button class="b play" aria-label={playing ? 'Pause' : 'Play'} onclick={play}>
-		{#if playing}
-			<svg viewBox="0 0 20 20" width="12" height="12"><path d="M6 4h3v12H6zM11 4h3v12h-3z" fill="currentColor" /></svg>
-		{:else}
-			<svg viewBox="0 0 20 20" width="12" height="12"><path d="M6 4l10 6-10 6z" fill="currentColor" /></svg>
-		{/if}
-	</button>
-	<button class="b" aria-label="Next step" disabled={step >= count - 1} onclick={() => (stop(), step++)}>›</button>
-	<div class="dots" role="tablist">
+	<div class="btns">
+		<button type="button" class="b" aria-label="Previous step" disabled={step === 0} onclick={() => (stop(), step--)}>
+			<Icon icon={ChevronLeftIcon} size={16} stroke={1.8} />
+		</button>
+		<button type="button" class="b play" class:on={playing} aria-label={playing ? 'Pause' : 'Play'} onclick={play}>
+			<Icon icon={playing ? PauseIcon : PlayIcon} size={15} stroke={1.8} />
+		</button>
+		<button type="button" class="b" aria-label="Next step" disabled={step >= count - 1} onclick={() => (stop(), step++)}>
+			<Icon icon={ChevronRightIcon} size={16} stroke={1.8} />
+		</button>
+	</div>
+	<div class="dots">
 		{#each Array(count) as _, i (i)}
 			<button
+				type="button"
 				class="dot"
 				class:on={i === step}
 				class:done={i < step}
-				role="tab"
-				aria-selected={i === step}
-				aria-label={labels[i] ?? `Step ${i + 1}`}
+				aria-label={labels[i] ? `Step ${i + 1}: ${labels[i]}` : `Step ${i + 1}`}
+				aria-current={i === step ? 'step' : undefined}
 				onclick={() => (stop(), (step = i))}
 			></button>
 		{/each}
 	</div>
 	{#if labels[step]}
-		<span class="lbl">{labels[step]}</span>
+		<span class="lbl" aria-live="polite">{labels[step]}</span>
 	{/if}
 </div>
 
 <style>
 	.steps {
 		display: flex;
-		align-items: center;
-		gap: 0.5rem;
 		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem 0.9rem;
+		min-height: 2rem;
+	}
+	.btns {
+		display: flex;
+		gap: 0.3rem;
 	}
 	.b {
 		display: grid;
 		place-items: center;
 		width: 2rem;
 		height: 2rem;
+		padding: 0;
 		border-radius: 50%;
-		border: 1px solid var(--line);
-		background: rgba(216, 178, 110, 0.05);
-		color: var(--gold-bright);
+		border: 1px solid rgba(216, 178, 110, 0.32);
+		background: transparent;
+		color: var(--gold-pale);
 		cursor: pointer;
-		font-size: 1.1rem;
-		line-height: 1;
-		transition: all 0.18s var(--ease);
+		transition:
+			background 0.15s var(--ease),
+			border-color 0.15s var(--ease);
 	}
 	.b:hover:not(:disabled) {
-		background: rgba(216, 178, 110, 0.15);
-		border-color: var(--gold);
+		background: rgba(216, 178, 110, 0.1);
+		border-color: rgba(216, 178, 110, 0.65);
 	}
 	.b:disabled {
-		opacity: 0.35;
+		opacity: 0.32;
 		cursor: default;
 	}
 	.play {
-		background: linear-gradient(180deg, #f6dca0, #d2a95f);
-		color: #1a1206;
-		border: 0;
+		border-color: rgba(216, 178, 110, 0.7);
+		color: var(--gold-bright);
+	}
+	.play.on {
+		background: rgba(216, 178, 110, 0.16);
 	}
 	.dots {
 		display: flex;
-		gap: 5px;
-		margin: 0 0.4rem;
+		align-items: center;
 	}
+	/* 8px dots in 20px hit areas */
 	.dot {
-		width: 8px;
-		height: 8px;
-		border-radius: 50%;
+		position: relative;
+		width: 1.25rem;
+		height: 1.25rem;
 		padding: 0;
-		border: 1px solid var(--gold-deep);
+		border: 0;
 		background: transparent;
 		cursor: pointer;
 	}
-	.dot.done {
-		background: var(--gold-deep);
+	.dot::after {
+		content: '';
+		position: absolute;
+		inset: 50% auto auto 50%;
+		width: 7px;
+		height: 7px;
+		margin: -3.5px 0 0 -3.5px;
+		border-radius: 50%;
+		border: 1px solid rgba(216, 178, 110, 0.55);
+		transition:
+			background 0.15s var(--ease),
+			transform 0.15s var(--ease);
 	}
-	.dot.on {
+	.dot:hover::after {
+		transform: scale(1.25);
+	}
+	.dot.done::after {
+		background: rgba(216, 178, 110, 0.55);
+		border-color: transparent;
+	}
+	.dot.on::after {
 		background: var(--gold-bright);
 		border-color: var(--gold-bright);
-		box-shadow: 0 0 8px var(--gold-glow);
+		transform: scale(1.2);
 	}
 	.lbl {
 		font-size: 0.8rem;
 		color: var(--ink-dim);
+	}
+	@media (pointer: coarse) {
+		.b {
+			width: 2.5rem;
+			height: 2.5rem;
+		}
+		.dot {
+			width: 1.6rem;
+			height: 1.6rem;
+		}
 	}
 </style>

@@ -3,6 +3,8 @@
 	import { parts, chapters, chapterById } from '$lib/content/toc';
 	import { chapterHref } from '$lib/util/paths';
 	import { progress } from '$lib/stores/progress.svelte';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { VisitedIcon } from '$lib/icons';
 
 	// ── layout: one row per part, snaking left→right then right→left ──────────
 	const W = 1000;
@@ -119,7 +121,7 @@
 	<div class="legend ui">
 		<span><i class="sw gold"></i> builds on (prerequisites)</span>
 		<span><i class="sw teal"></i> leads to</span>
-		<span><i class="sw seen">✦</i> visited</span>
+		<span><Icon icon={VisitedIcon} size={14} stroke={2} class="sw-seen" /> visited</span>
 	</div>
 
 	<div class="metro">
@@ -186,7 +188,7 @@
 							>
 						{/each}
 						{#if progress.visited[n.id]}
-							<text x={n.x + 19} y={n.y - 17} class="seen">✦</text>
+							<g class="seen" transform="translate({n.x + 11} {n.y - 29})"><Icon icon={VisitedIcon} size={15} stroke={2} /></g>
 						{/if}
 					</g>
 				</a>
@@ -220,7 +222,7 @@
 							<a href={chapterHref(c.id)}>
 								<span class="cn ui nums">{c.num}</span>
 								<span class="ct">{c.title}</span>
-								{#if progress.visited[c.id]}<span class="seen2">✦</span>{/if}
+								{#if progress.visited[c.id]}<Icon icon={VisitedIcon} size={14} stroke={2} class="seen2" label="visited" />{/if}
 							</a>
 							{#if c.prereqs.length}
 								<div class="pre ui">
@@ -285,11 +287,9 @@
 	.sw.teal {
 		background: var(--teal);
 	}
-	.sw.seen {
-		width: auto;
-		height: auto;
+	.legend :global(.sw-seen) {
+		margin-right: 0.3rem;
 		color: var(--gold);
-		font-style: normal;
 	}
 	.metro {
 		position: relative;
@@ -375,8 +375,7 @@
 		font-size: 13px;
 	}
 	.station .seen {
-		fill: var(--gold);
-		font-size: 12px;
+		color: var(--gold);
 	}
 	.station:hover .halo,
 	.station.focus .halo {
@@ -498,9 +497,10 @@
 		font-weight: 600;
 		font-size: 1.12rem;
 	}
-	.seen2 {
+	.list :global(.seen2) {
+		align-self: center;
 		color: var(--gold);
-		font-size: 0.7rem;
+		opacity: 0.7;
 	}
 	.pre {
 		font-size: 0.72rem;

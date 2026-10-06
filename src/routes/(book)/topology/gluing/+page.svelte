@@ -115,7 +115,7 @@
 	in every direction.
 </p>
 
-<Figure size="wide" num="2.2.1" title="Flight on a glued square" hint="Arrow keys or the buttons to steer · try all three gluings">
+<Figure num="2.2.1" title="Flight on a glued square" hint="Arrow keys or the buttons to steer · try all three gluings">
 	<FlatTorusGame />
 	{#snippet caption()}
 		The arrows on the edges say which edges are glued, and which way round. In torus mode, opposite edges are glued straight
@@ -175,7 +175,7 @@
 	Figure 2.2.2 shows the rule at work on the interval.
 </p>
 
-<Figure size="wide" num="2.2.2" title="Looking back before the glue" hint="Drag the slider to glue · compare the two sets">
+<Figure num="2.2.2" title="Looking back before the glue" hint="Drag the slider to glue · compare the two sets">
 	<IntervalCircle />
 	{#snippet caption()}
 		A little arc around the glued point is open, because before gluing it was \([0, \varepsilon) \cup (1 - \varepsilon, 1]\), two
@@ -313,7 +313,7 @@
 	arrows match.
 </p>
 
-<Figure size="full" num="2.2.4" title="The gluing workshop" hint="Pick a surface · press Glue or drag the slider · drag the picture to turn it">
+<Figure num="2.2.4" title="The gluing workshop" hint="Pick a surface · press Glue or drag the slider · drag the picture to turn it">
 	<GluingWorkshop />
 	{#snippet caption()}
 		Six surfaces from one square. Gold edges are called \(a\), teal edges \(b\); dashed ivory edges are free and become the
@@ -474,7 +474,7 @@
 	meet the road it crosses, although on a map the two lines intersect.
 </p>
 
-<Figure size="wide" num="2.2.5" title="Surfaces that must cross themselves" hint="Pick a surface · drag to turn it · try the fourth coordinate">
+<Figure num="2.2.5" title="Surfaces that must cross themselves" hint="Pick a surface · drag to turn it · try the fourth coordinate">
 	<Immersions />
 	{#snippet caption()}
 		Two pictures of the Klein bottle and two of the projective plane, each with its double curve in rose. Boy's surface is a
@@ -534,7 +534,7 @@
 	— our very first gluing. Figure 2.2.6 shows this and four more collapses.
 </p>
 
-<Figure size="wide" num="2.2.6" title="Collapsing a subspace" hint="Pick an example · press Collapse or drag the slider · drag to turn">
+<Figure num="2.2.6" title="Collapsing a subspace" hint="Pick an example · press Collapse or drag the slider · drag to turn">
 	<CollapseLab />
 	{#snippet caption()}
 		In each example the gold set \(A\) shrinks to a single point. Collapsing the rim of a disk gives a sphere. Collapsing the top
@@ -561,7 +561,7 @@
 	algebraic topology, though why this should be so is certainly not evident in advance.”
 </p>
 
-<Figure size="wide" num="2.2.7" title="Three constructions" hint="Pick a construction and a space · drag the slider">
+<Figure num="2.2.7" title="Three constructions" hint="Pick a construction and a space · drag the slider">
 	<Constructions />
 	{#snippet caption()}
 		A wedge sum glues two spaces at a single point. A cone collapses the top \(X \times \set{1}\) of the cylinder over \(X\); a
@@ -585,7 +585,7 @@
 	cut, and you have a surface with two handles: the genus-two surface \(\Sigma_2\).
 </p>
 
-<Figure size="wide" num="2.2.8" title="From an octagon to a two-holed doughnut" hint="Step through with the arrows, or press play">
+<Figure num="2.2.8" title="From an octagon to a two-holed doughnut" hint="Step through with the arrows, or press play">
 	<OctagonGenus2 />
 	{#snippet caption()}
 		The octagon \(a_1b_1a_1^{-1}b_1^{-1}a_2b_2a_2^{-1}b_2^{-1}\) is cut along the diagonal \(c\), each half is glued into a torus
