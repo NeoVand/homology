@@ -107,7 +107,8 @@
 					const { group, top } = fenceRibbon(path, col);
 					fenceObj = group;
 					scene.add(group);
-					const s0 = kind === 'beta' ? 0.62 : kind === 'alpha' ? 0.14 : 0.75;
+					// a spot on the fence that faces the default camera, away from the loops
+					const s0 = kind === 'beta' ? 0.04 : kind === 'alpha' ? 0.36 : 0.12;
 					const at = top[Math.floor(top.length * s0)];
 					const [u, v] = path(s0);
 					fenceLabel = label(at.clone().addScaledVector(outward(u, v), 0.16), tex(kind === 'alpha' ? '\\alpha' : kind === 'beta' ? '\\beta' : '\\delta g'), {

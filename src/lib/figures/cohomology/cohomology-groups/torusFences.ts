@@ -27,7 +27,7 @@ export function loopPathOf(kind: LoopKind): (t: number) => [number, number] {
 		case 'p2q1':
 			return (t) => [u1 + 2 * t, v1 + t];
 		case 'small':
-			return (t) => [0.78 + 0.06 * Math.cos(2 * Math.PI * t), 0.16 + 0.1 * Math.sin(2 * Math.PI * t)];
+			return (t) => [0.12 + 0.055 * Math.cos(2 * Math.PI * t), 0.16 + 0.1 * Math.sin(2 * Math.PI * t)];
 	}
 }
 
@@ -39,7 +39,7 @@ export function windings(kind: LoopKind): [number, number] {
 /** The fence as a path s ∈ [0,1] ↦ (u, v) (unwrapped). */
 const ALPHA_U = 0.3;
 const BETA_V = 0.24;
-const SMALL = { u: 0.6, v: 0.2, ru: 0.1, rv: 0.13 };
+const SMALL = { u: 0.22, v: 0.2, ru: 0.1, rv: 0.13 };
 
 export function fencePathOf(f: FenceSpec): (s: number) => [number, number] {
 	const m = 2;
