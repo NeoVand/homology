@@ -75,7 +75,7 @@
 	<Svg viewBox="0 0 600 350" maxHeight={420} label="A three-by-two grid of chain groups; a highlighted path zig-zags from the relative 2-chain to the boundary loop in A">
 		<!-- column headers -->
 		{#each ['A', 'X', '(X,A)'] as h, c (h)}
-			<SvgTeX x={colX[c]} y={18} tex={h} size={17} color="var(--ink-dim)" w={80} h={24} />
+			<SvgTeX x={colX[c]} y={18} tex={h} size={20} color="var(--ink-dim)" w={90} h={26} />
 		{/each}
 		<!-- horizontal maps -->
 		{#each rowY as y, r (r)}
@@ -109,7 +109,7 @@
 				{@const T = tri(x, y + 6)}
 				{@const active = !!(st.fill || st.loop || st.zero)}
 				<rect x={x - W / 2} y={y - H / 2} width={W} height={H} rx="12" class="cell" class:active />
-				<SvgTeX x={x} y={y - H / 2 + 14} tex={groupTeX[key]} size={12.5} color={active ? 'var(--gold-pale)' : 'var(--ink-faint)'} w={W} h={20} />
+				<SvgTeX x={x} y={y - H / 2 + 15} tex={groupTeX[key]} size={15} color={active ? 'var(--gold-pale)' : 'var(--ink-dim)'} w={W} h={22} />
 				<!-- the underlying complex, faint -->
 				{#if kind[c] !== 'A'}
 					<polygon points={pts(T)} class="tri-faint" class:xa={kind[c] === 'XA'} />
