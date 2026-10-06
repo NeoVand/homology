@@ -1,9 +1,11 @@
 <script lang="ts">
 	// A fixed, hand-drawn night sky behind the whole site. Drawn once into a
-	// canvas (and again on resize) — no per-frame cost.
+	// canvas (and again on resize), when the browser is idle after the page has
+	// loaded, then faded in: no per-frame cost and nothing in the way of loading.
 	import { onMount } from 'svelte';
 
 	let canvas: HTMLCanvasElement;
+	let drawn = $state(false);
 	let twinkles = $state<{ x: number; y: number; d: number; s: number; c: string }[]>([]);
 
 	function mulberry32(a: number) {
@@ -45,6 +47,24 @@
 			ctx.fillRect(0, 0, w, h);
 		}
 
+		// soft halos, one per tint, drawn once and stamped (a gradient per star is costly)
+		const halos = new Map<string, HTMLCanvasElement>();
+		const haloOf = (col: string) => {
+			let c = halos.get(col);
+			if (!c) {
+				c = document.createElement('canvas');
+				c.width = c.height = 64;
+				const hc = c.getContext('2d')!;
+				const g = hc.createRadialGradient(32, 32, 0, 32, 32, 32);
+				g.addColorStop(0, `rgba(${col},0.25)`);
+				g.addColorStop(1, `rgba(${col},0)`);
+				hc.fillStyle = g;
+				hc.fillRect(0, 0, 64, 64);
+				halos.set(col, c);
+			}
+			return c;
+		};
+
 		// stars
 		const count = Math.round((w * h) / 2600);
 		for (let i = 0; i < count; i++) {
@@ -62,12 +82,8 @@
 			ctx.fill();
 			if (m > 0.55) {
 				// a soft halo on the brightest
-				const g = ctx.createRadialGradient(x, y, 0, x, y, r * 6);
-				g.addColorStop(0, `rgba(${col},0.25)`);
-				g.addColorStop(1, `rgba(${col},0)`);
-				ctx.fillStyle = g;
 				ctx.globalAlpha = 1;
-				ctx.fillRect(x - r * 6, y - r * 6, r * 12, r * 12);
+				ctx.drawImage(haloOf(col), x - r * 6, y - r * 6, r * 12, r * 12);
 			}
 		}
 		ctx.globalAlpha = 1;
@@ -83,10 +99,13 @@
 			});
 		}
 		twinkles = tw;
+		drawn = true;
 	}
 
 	onMount(() => {
-		draw();
+		const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 200));
+		const cancelIdle = window.cancelIdleCallback ?? window.clearTimeout;
+		const first = idle(draw, { timeout: 1200 });
 		let t: ReturnType<typeof setTimeout>;
 		let lastW = window.innerWidth;
 		const onResize = () => {
@@ -98,13 +117,14 @@
 		};
 		window.addEventListener('resize', onResize);
 		return () => {
+			cancelIdle(first);
 			window.removeEventListener('resize', onResize);
 			clearTimeout(t);
 		};
 	});
 </script>
 
-<div class="sky" aria-hidden="true">
+<div class="sky" class:drawn aria-hidden="true">
 	<canvas bind:this={canvas}></canvas>
 	{#each twinkles as s, i (i)}
 		<span
@@ -127,6 +147,11 @@
 		inset: 0;
 		width: 100%;
 		height: 100%;
+		opacity: 0;
+		transition: opacity 0.8s var(--ease);
+	}
+	.drawn canvas {
+		opacity: 1;
 	}
 	.tw {
 		position: absolute;
@@ -139,6 +164,7 @@
 			0 0 14px 2px rgba(255, 240, 200, 0.25);
 		animation: twinkle ease-in-out infinite;
 		opacity: 0.2;
+		will-change: opacity, transform;
 	}
 	@keyframes twinkle {
 		0%,

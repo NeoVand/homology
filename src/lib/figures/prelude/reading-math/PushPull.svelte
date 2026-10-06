@@ -20,22 +20,25 @@
 	// positions in the wide layout
 	const cX: Pt = [150, 132];
 	const cY: Pt = [450, 132];
+	// six points of X, ordered from top to bottom, and five of Y: the map keeps
+	// that order (so no arrows cross) and sends the middle two points of X to
+	// the same point of Y
 	const xs: Pt[] = [
-		[112, 86],
-		[176, 74],
-		[132, 128],
-		[192, 140],
-		[116, 182],
-		[178, 192]
+		[118, 80],
+		[180, 96],
+		[126, 124],
+		[184, 150],
+		[120, 176],
+		[176, 196]
 	];
 	const ys: Pt[] = [
-		[424, 82],
-		[484, 102],
-		[446, 138],
-		[422, 186],
-		[486, 180]
+		[430, 84],
+		[480, 108],
+		[440, 146],
+		[478, 172],
+		[432, 196]
 	];
-	const f = [0, 1, 2, 2, 3, 4]; // x3 and x2 collide
+	const f = [0, 1, 2, 2, 3, 4];
 
 	const nX: Pt = [180, 104];
 	const nY: Pt = [180, 340];

@@ -3,7 +3,7 @@
 	// Look back before the glue: U is open exactly when q⁻¹(U) is open in [0,1].
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 
@@ -30,6 +30,14 @@
 
 	const P0 = $derived(pt(0, g));
 	const P1 = $derived(pt(1, g));
+	// the labels 0 and 1 sit off the outer side of the curve, nudged back along it,
+	// so they never land on the arc however far it is bent
+	function endLabel([x, y]: [number, number], side: -1 | 1, gg: number): [number, number] {
+		const a = gg * Math.PI;
+		return [x + 20 * side * Math.sin(a) - 9 * side * Math.cos(a), y + 20 * Math.cos(a) + 9 * Math.sin(a)];
+	}
+	const L0 = $derived(endLabel(P0, -1, g));
+	const L1 = $derived(endLabel(P1, 1, g));
 	const glued = $derived(g > 0.995);
 </script>
 
@@ -47,13 +55,13 @@
 		{:else}
 			<circle cx={P0[0]} cy={P0[1]} r="6.5" fill="var(--gold-bright)" stroke="#060912" stroke-width="1.5" />
 			<circle cx={P1[0]} cy={P1[1]} r="6.5" fill={which === 'bad' ? 'var(--rose)' : 'var(--gold-bright)'} stroke="#060912" stroke-width="1.5" />
-			<SvgTeX x={P0[0] - 14} y={P0[1] + 20} tex="0" size={15} w={20} h={20} />
-			<SvgTeX x={P1[0] + 14} y={P1[1] + 20} tex="1" size={15} w={20} h={20} />
+			<SvgTeX x={L0[0]} y={L0[1]} tex="0" size={15} w={20} h={20} />
+			<SvgTeX x={L1[0]} y={L1[1]} tex="1" size={15} w={20} h={20} />
 		{/if}
 	</Svg>
 	<div class="panel ui">
 		<div class="row">
-			<Slider bind:value={g} min={0} max={1} step={0.005} label="Glue the ends together" format={(v) => `${Math.round(v * 100)}%`} />
+			<Timeline bind:value={g} duration={2.4} from="interval" to="circle" label="Gluing the ends together" />
 			<Segmented
 				bind:value={which}
 				options={[

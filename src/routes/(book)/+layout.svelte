@@ -21,7 +21,8 @@
 		void id;
 		void ui.sidebarOpen;
 		if (!sidebarInner) return;
-		tick().then(() => {
+		// read layout in the next frame, not in the middle of hydration
+		requestAnimationFrame(() => {
 			const el = sidebarInner?.querySelector<HTMLElement>('a[aria-current="page"]');
 			if (!el || !sidebarInner) return;
 			const box = sidebarInner.getBoundingClientRect();
@@ -61,7 +62,7 @@
 				clone.querySelectorAll('.katex-mathml, .sec-num, .anchor').forEach((n) => n.remove());
 				return { id: h.id, html: clone.innerHTML };
 			});
-			update();
+			onScroll();
 			window.addEventListener('scroll', onScroll, { passive: true });
 			window.addEventListener('resize', onScroll, { passive: true });
 		});

@@ -528,7 +528,7 @@
 	fall.
 </p>
 
-<Figure title="Odd numbers make squares" hint="Slide n" num="0.2.5">
+<Figure title="Odd numbers make squares" hint="Change n with − and +" num="0.2.5">
 	<InductionSquares />
 	{#snippet caption()}
 		Each odd number \(2n-1\) is an L-shaped layer that turns an \((n-1)\times(n-1)\) square into an \(n\times n\) square. That

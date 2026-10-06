@@ -13,7 +13,7 @@
 
 import katex from 'katex';
 import { katexOptions } from './macros.js';
-import { labelKatex } from './a11y.js';
+import { attachPunctuation, labelKatex } from './a11y.js';
 
 const OPEN_INLINE = '\\(';
 const CLOSE_INLINE = '\\)';
@@ -152,6 +152,19 @@ function transform(src, filename) {
 			continue;
 		}
 
+		// A spaced em dash stays with the word before it: the space becomes a
+		// no-break space, so a line can end with "—" but never begin with it.
+		if (c === ' ' || c === '\n' || c === '\t') {
+			let j = i;
+			while (j < n && (src[j] === ' ' || src[j] === '\n' || src[j] === '\t')) j++;
+			const prev = out[out.length - 1] ?? '>';
+			if (src[j] === '—' && prev !== '>' && !/\s/.test(prev)) {
+				out += '\u00a0';
+				i = j;
+				continue;
+			}
+		}
+
 		const isInline = src.startsWith(OPEN_INLINE, i);
 		const isDisplay = !isInline && src.startsWith(OPEN_DISPLAY, i);
 		if ((isInline || isDisplay) && backslashesBefore(src, i) % 2 === 0) {
@@ -171,18 +184,16 @@ function transform(src, filename) {
 				const msg = e instanceof Error ? e.message : String(e);
 				throw new Error(`[katex] ${filename}:${lineOf(src, i)} — ${msg}\n    in: ${tex}`);
 			}
-			// Keep punctuation that directly follows inline math on the same line as
-			// the math, so a line never starts with a stray full stop or comma (the
-			// .math-nw style still lets the formula itself break after = or +).
+			// Punctuation that directly follows inline math goes inside the formula's
+			// last box, so a line never starts with a stray full stop or comma. (A
+			// nowrap wrapper is not enough: browsers allow a break after KaTeX's
+			// inline-block boxes whatever the wrapper says.) Breaks inside the
+			// formula, after = or +, are still allowed.
 			let k = end + 2;
 			if (isInline) while (k < n && TRAILING_PUNCT.test(src[k])) k++;
-			if (k > end + 2) {
-				out += `<span class="math-nw">{@html ${JSON.stringify(html)}}${src.slice(end + 2, k)}</span>`;
-				i = k;
-				continue;
-			}
+			if (k > end + 2) html = attachPunctuation(html, src.slice(end + 2, k));
 			out += `{@html ${JSON.stringify(html)}}`;
-			i = end + 2;
+			i = k;
 			continue;
 		}
 
@@ -200,10 +211,11 @@ export function katexPreprocess(options = {}) {
 	const include = options.include ?? /\.svelte$/;
 	return {
 		name: 'katex-math',
+		// (also keeps spaced em dashes with the word before them; see transform)
 		markup({ content, filename }) {
 			if (filename && !include.test(filename)) return;
 			if (filename && filename.includes('node_modules')) return;
-			if (!content.includes(OPEN_INLINE) && !content.includes(OPEN_DISPLAY)) return;
+			if (!content.includes(OPEN_INLINE) && !content.includes(OPEN_DISPLAY) && !/\s—/.test(content)) return;
 
 			// Mask <script> and <style> blocks so they are never touched.
 			/** @type {string[]} */

@@ -373,14 +373,12 @@ code {
 	text-rendering: auto;
 }
 
-/* the punctuation after inline math never starts a new line: breaking between
-   the formula and its full stop is governed by this wrapper, while breaks
-   inside the formula (after = or +) are still allowed */
-.math-nw {
-	white-space: nowrap;
-}
-.math-nw > .katex {
-	white-space: normal;
+/* punctuation that follows inline math is set inside the formula's last box
+   (so a line never starts with it), but in the prose typeface */
+.katex .mpunct {
+	font-family: var(--font-body);
+	font-size: calc(1em / 1.08);
+	font-style: inherit;
 }
 
 .math-block {

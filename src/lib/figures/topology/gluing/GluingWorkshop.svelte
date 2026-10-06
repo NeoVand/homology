@@ -1,13 +1,11 @@
 <script lang="ts">
 	// The gluing workshop: a square with arrows on the left, and on the right an
 	// iridescent sheet that bends — without tearing — into the glued surface.
-	import { onMount } from 'svelte';
 	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import GluingSquare from '$lib/components/svg/GluingSquare.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { glowPoint, setGlowColor } from '$lib/three/materials';
 	import { tex } from '$lib/katex/render';
@@ -17,11 +15,10 @@
 
 	let preset = $state<PresetId>('torus');
 	let t = $state(0);
-	let playing = $state(false);
-	let reduced = false;
-	let raf = 0;
 
 	const P = $derived(presets[preset]);
+	// the surface's name mid-sentence: proper names keep their capital
+	const noun = $derived(/^(Klein|Möbius)/.test(P.label) ? P.label : P.label[0].toLowerCase() + P.label.slice(1));
 	const classColors = ['#fbf6e8', '#f28db6', '#a493ff'];
 	const classColor3 = ['ivory', 'rose', 'violet'] as const;
 	const nClasses = $derived(new Set(P.corners).size);
@@ -156,58 +153,6 @@
 		api?.render(id, tt);
 	});
 
-	function stop() {
-		playing = false;
-		cancelAnimationFrame(raf);
-	}
-	function play() {
-		if (playing) return stop();
-		if (t >= 0.999) t = 0;
-		playing = true;
-		const start = performance.now();
-		const t0 = t;
-		const dur = 5200 * (1 - t0) + 400;
-		const step = (now: number) => {
-			if (!playing) return;
-			const k = Math.min(1, (now - start) / dur);
-			t = t0 + (1 - t0) * k;
-			if (k < 1) raf = requestAnimationFrame(step);
-			else playing = false;
-		};
-		raf = requestAnimationFrame(step);
-	}
-	function choose(id: PresetId) {
-		stop();
-		preset = id;
-		t = 0;
-		if (!reduced) setTimeout(play, 350);
-		else t = 1;
-	}
-
-	let root: HTMLDivElement;
-	onMount(() => {
-		reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		if (reduced) {
-			t = 1;
-			return;
-		}
-		let started = false;
-		const io = new IntersectionObserver(
-			([e]) => {
-				if (e.isIntersecting && !started) {
-					started = true;
-					setTimeout(play, 600);
-				}
-			},
-			{ threshold: 0.45 }
-		);
-		io.observe(root);
-		return () => {
-			io.disconnect();
-			stop();
-		};
-	});
-
 	const options = presetOrder.map((id) => ({ value: id, label: presets[id].label }));
 	// corner positions in the diagram (BL, BR, TR, TL)
 	const S0 = 46;
@@ -220,7 +165,7 @@
 	];
 </script>
 
-<div class="workshop" bind:this={root}>
+<div class="workshop">
 	<div class="panel2d">
 		<Svg viewBox="0 0 260 260" maxHeight={300} label="The square with arrows showing how its edges are glued for the {P.label}">
 			{#each [1, 2, 3, 4, 5, 6, 7] as k (k)}
@@ -263,11 +208,8 @@
 	</div>
 </div>
 <div class="bar ui">
-	<Segmented bind:value={preset} {options} label="Surface" onchange={(v) => choose(v)} />
-	<div class="row">
-		<Button variant="gold" onclick={play}>{playing ? 'Pause' : t >= 0.999 ? 'Replay' : 'Glue'}</Button>
-		<Slider bind:value={t} min={0} max={1} step={0.001} label="How far glued" format={(v) => `${Math.round(v * 100)}%`} oninput={() => stop()} />
-	</div>
+	<Segmented bind:value={preset} {options} label="Surface" />
+	<Timeline bind:value={t} duration={5.2} from="square" to={noun} label="Gluing the square into a {noun}" />
 </div>
 
 <style>
@@ -348,17 +290,11 @@
 		box-shadow: 0 0 6px rgba(255, 255, 255, 0.35);
 	}
 	.bar {
-		display: flex;
-		flex-direction: column;
+		display: grid;
 		gap: 0.7rem;
 		padding: 0.85rem 1.2rem 1rem;
 		border-top: 1px solid var(--line-faint);
 		background: rgba(5, 8, 16, 0.45);
-	}
-	.row {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
 	}
 	@media (max-width: 720px) {
 		.workshop {

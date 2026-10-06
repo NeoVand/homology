@@ -6,8 +6,7 @@
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import { iridescent, glowTube, glowPoint, disposeTree } from '$lib/three/materials';
 	import { tex } from '$lib/katex/render';
-	import Slider from '$lib/components/ui/Slider.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { fitCamera, isNarrow } from '../invariance/three-fit';
@@ -15,7 +14,6 @@
 	import type * as THREE_NS from 'three';
 
 	let t = $state(0.55);
-	let playing = $state(false);
 	let narrow = $state(false);
 	onMount(() => {
 		narrow = isNarrow();
@@ -42,7 +40,7 @@
 	}
 
 	function setup(ctx: SceneContext) {
-		const { scene, THREE, invalidate, label, onFrame, reducedMotion } = ctx;
+		const { scene, THREE, invalidate, label } = ctx;
 		const unfit = fitCamera(ctx, 1.5);
 
 		const pos = new Float32Array((NR + 1) * (NT + 1) * 3);
@@ -110,9 +108,9 @@
 			pole.scale.setScalar(Math.max(0.01, (s - 0.6) / 0.4));
 			lblDisk.position.copy(top).add(new THREE.Vector3(0, 0.35, 0));
 			lblDisk.show(s < 0.45);
-			lblRim.position.copy(rimPt).add(new THREE.Vector3(0.45, -0.1, 0));
+			lblRim.position.copy(rimPt).add(new THREE.Vector3(0.58, -0.1, 0));
 			lblRim.show(s < 0.85);
-			lblPt.position.set(0.55, rimPt.y - 0.35, 0);
+			lblPt.position.set(0.7, rimPt.y - 0.4, 0);
 			lblPt.show(s > 0.9);
 			lblS2.position.copy(top).add(new THREE.Vector3(0, 0.4, 0));
 			lblS2.show(s > 0.9);
@@ -121,21 +119,9 @@
 		setT(t);
 		api = { setT };
 
-		let clock = 0;
-		const stop = onFrame((_time, dt) => {
-			if (!playing) return;
-			clock += reducedMotion ? 10 : dt;
-			const u = Math.min(1, clock / 3);
-			t = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
-			if (u >= 1) {
-				playing = false;
-				clock = 0;
-			}
-		});
 		return {
 			dispose: () => {
 				unfit();
-				stop();
 				api = null;
 			}
 		};
@@ -157,14 +143,7 @@
 	label="A flat disk whose gold boundary circle shrinks to a single point; the disk curls up into a sphere"
 />
 <Controls>
-	<Slider bind:value={t} min={0} max={1} step={0.005} label="crush the rim" format={(v) => (v > 0.995 ? 'sphere' : v.toFixed(2))} />
-	<Button
-		variant="gold"
-		onclick={() => {
-			t = 0;
-			playing = true;
-		}}>Crush</Button
-	>
+	<Timeline bind:value={t} from="disk" to="sphere" label="Crushing the rim to a point" duration={3} />
 	<span class="eq"><TeX tex={String.raw`H_2(D^2,S^1)\cong \tilde H_2(D^2/S^1) = \tilde H_2(S^2)\cong\mathbb Z`} /></span>
 </Controls>
 

@@ -48,9 +48,9 @@
 	});
 	$effect(() => () => clearInterval(timer));
 
-	// geometry: landings placed around a rounded square
+	// geometry: landings placed around a square, with room for the step labels
 	const S = 300;
-	const C = 170;
+	const C = 196;
 	function landing(i: number): [number, number] {
 		const side = Math.floor(i / 3);
 		const k = (i % 3) / 3;
@@ -68,7 +68,7 @@
 </script>
 
 <div class="stairs">
-	<svg viewBox="0 0 540 340" role="img" aria-label="A square loop of twelve steps, each labelled with its height change, with a walker going round">
+	<svg viewBox="0 0 580 392" role="img" aria-label="A square loop of twelve steps, each labelled with its height change, with a walker going round">
 		<defs>
 			<marker id="st-arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto">
 				<path d="M0,1 L9,5 L0,9 L2.5,5 Z" fill="currentColor" />
@@ -92,7 +92,7 @@
 		<circle cx={walker[0]} cy={walker[1]} r="10" class="walker" />
 
 		<!-- altimeter -->
-		<g transform="translate(400 20)">
+		<g transform="translate(430 46)">
 			<rect x="0" y="0" width="36" height="300" rx="10" class="meter" />
 			<rect
 				x="4"
@@ -129,12 +129,12 @@
 
 <style>
 	.stairs {
-		padding: 1rem 1rem 0.4rem;
+		padding: 0.4rem 1.25rem 0.2rem;
 	}
 	svg {
 		display: block;
 		width: 100%;
-		max-width: 560px;
+		max-width: 600px;
 		height: auto;
 		margin: 0 auto;
 	}
@@ -159,7 +159,7 @@
 	}
 	.walker {
 		fill: #fff6df;
-		filter: drop-shadow(0 0 8px #f2d08f) drop-shadow(0 0 16px rgba(242, 208, 143, 0.6));
+		filter: url(#glow-strong);
 		transition:
 			cx 0.24s var(--ease),
 			cy 0.24s var(--ease);

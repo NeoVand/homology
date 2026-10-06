@@ -213,7 +213,7 @@
 	</p>
 </Example>
 
-<Figure num="3.6.3" title="Crushing the rim" hint="Drag the slider, or press Crush · drag to rotate">
+<Figure num="3.6.3" title="Crushing the rim" hint="Play or scrub the crush · drag to rotate">
 	<CrushDisk />
 	{#snippet caption()}
 		A disk \(D^2\) whose gold boundary circle \(A = S^1\) is squeezed to a single point. The disk curls up into a sphere, \(D^2/S^1\cong S^2\). The whole disk, a relative \(2\)-cycle of \((D^2,S^1)\), becomes the \(2\)-cycle that fills the sphere. Relative homology is homology after crushing: \(H_n(D^2,S^1)\cong\tilde H_n(S^2)\).
@@ -464,7 +464,7 @@
 </p>
 \[ \Phi_1\colon\Z\to\Z^2,\qquad 1\mapsto(2,\,-2). \]
 
-<Figure num="3.6.8" title="The boundary of a Möbius band goes around twice" hint="Drag to rotate · walk along the boundary">
+<Figure num="3.6.8" title="The boundary of a Möbius band goes around twice" hint="Play the walk, or drag the white bead · drag to rotate">
 	<MobiusDouble />
 	{#snippet caption()}
 		A bead walks once along the teal boundary of a Möbius band, which is a single closed curve. Its shadow on the gold core circle goes around <em>twice</em>. That factor \(2\) is the \(\Phi_1(1) = (2,-2)\) of the Klein bottle computation, and it is where the torsion \(\Z/2\) comes from.

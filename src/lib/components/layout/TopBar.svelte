@@ -12,21 +12,35 @@
 	/** chapter pages have a sidebar on wide screens; other pages use the drawer */
 	const book = $derived(page.route.id?.startsWith('/(book)') ?? false);
 
+	// Reading progress. The page height is measured only when the page actually
+	// changes size (a ResizeObserver reports after layout), never by forcing a
+	// layout from a scroll handler; scroll updates are batched per frame.
 	let scrolled = $state(false);
 	$effect(() => {
 		syncSidebar();
-		const onScroll = () => {
+		let raf = 0;
+		let range = 0;
+		const update = () => {
+			raf = 0;
 			scrolled = window.scrollY > 8;
-			const doc = document.documentElement;
-			const max = doc.scrollHeight - window.innerHeight;
-			ui.progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+			ui.progress = range > 0 ? Math.min(1, Math.max(0, window.scrollY / range)) : 0;
 		};
-		onScroll();
+		const onScroll = () => {
+			if (!raf) raf = requestAnimationFrame(update);
+		};
+		const measure = () => {
+			range = document.documentElement.scrollHeight - window.innerHeight;
+			onScroll();
+		};
+		const ro = new ResizeObserver(measure);
+		ro.observe(document.body);
 		window.addEventListener('scroll', onScroll, { passive: true });
-		window.addEventListener('resize', onScroll, { passive: true });
+		window.addEventListener('resize', measure, { passive: true });
 		return () => {
+			cancelAnimationFrame(raf);
+			ro.disconnect();
 			window.removeEventListener('scroll', onScroll);
-			window.removeEventListener('resize', onScroll);
+			window.removeEventListener('resize', measure);
 		};
 	});
 

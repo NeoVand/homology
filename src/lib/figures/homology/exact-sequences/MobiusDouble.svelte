@@ -1,13 +1,13 @@
 <script lang="ts">
 	// The boundary of a Möbius band is one circle that runs twice around the core.
-	// A bead walks along the boundary; its shadow on the core goes around twice.
+	// A bead walks along the boundary (play it, or drag the bead); its shadow on
+	// the core goes around twice.
 	import { onMount } from 'svelte';
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import { glassMesh, glowTube, glowPoint } from '$lib/three/materials';
 	import { mobius, surfaceGeometry, SurfaceCurve } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
-	import Slider from '$lib/components/ui/Slider.svelte';
-	import Toggle from '$lib/components/ui/Toggle.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { fitCamera, isNarrow } from '../invariance/three-fit';
@@ -15,7 +15,7 @@
 	import type * as THREE_NS from 'three';
 
 	let p = $state(0.3); // position along the boundary, 0 → 1 is the whole boundary
-	let run = $state(true);
+	let playing = $state(false);
 	let narrow = $state(false);
 	onMount(() => {
 		narrow = isNarrow();
@@ -28,7 +28,7 @@
 	const turns = $derived(2 * p);
 
 	function setup(ctx: SceneContext) {
-		const { scene, THREE, invalidate, label, onFrame, reducedMotion } = ctx;
+		const { scene, THREE, invalidate, label, canvas, controls, project } = ctx;
 		const unfit = fitCamera(ctx, 1.5);
 		const f = mobius(R, WIDTH);
 		scene.add(glassMesh(surfaceGeometry(f, 200, 16), { opacity: 0.5, grid: [40, 6], gridStrength: 0.22 }));
@@ -72,15 +72,81 @@
 		}
 		setP(p);
 		api = { setP };
-		const stop = onFrame((_t, dt) => {
-			if (!run || reducedMotion) return;
-			p = (p + dt / 12) % 1;
-		});
+
+		// ── drag the bead along the boundary ──
+		let dragging = false;
+		let controlsWere = true;
+		const near = new THREE.Vector3();
+		const at = (e: PointerEvent) => {
+			const r = canvas.getBoundingClientRect();
+			return [e.clientX - r.left, e.clientY - r.top];
+		};
+		const onBead = (e: PointerEvent) => {
+			const [x, y] = at(e);
+			const s = project(bead.position);
+			return !s.behind && Math.hypot(s.x - x, s.y - y) < 20;
+		};
+		// the canvas already shows a grab cursor for orbiting, so the bead also swells
+		let hot = false;
+		const heat = (on: boolean) => {
+			if (on === hot) return;
+			hot = on;
+			bead.scale.setScalar(on ? 1.45 : 1);
+			invalidate();
+		};
+		const onDown = (e: PointerEvent) => {
+			if (e.button !== 0 || playing || !onBead(e)) return;
+			dragging = true;
+			controlsWere = controls?.enabled ?? false;
+			if (controls) controls.enabled = false;
+			canvas.setPointerCapture(e.pointerId);
+			canvas.style.cursor = 'grabbing';
+			heat(true);
+		};
+		const onMove = (e: PointerEvent) => {
+			if (!dragging) {
+				if (e.pointerType !== 'mouse') return;
+				const over = !playing && onBead(e);
+				canvas.style.cursor = over ? 'grab' : '';
+				heat(over);
+				return;
+			}
+			// look only near the current position, so the bead never jumps to another
+			// stretch of the boundary that happens to cross it on screen
+			const [x, y] = at(e);
+			let best = p;
+			let bestD = Infinity;
+			for (let i = -60; i <= 60; i++) {
+				const t = Math.min(1, Math.max(0, p + i * 0.001));
+				const s = project(boundaryPoint(t, near));
+				const d = (s.x - x) ** 2 + (s.y - y) ** 2;
+				if (d < bestD) {
+					bestD = d;
+					best = t;
+				}
+			}
+			p = best;
+		};
+		const onUp = () => {
+			if (!dragging) return;
+			dragging = false;
+			if (controls) controls.enabled = controlsWere;
+			canvas.style.cursor = '';
+			heat(false);
+		};
+		// capture phase: runs before OrbitControls, which then finds itself disabled
+		canvas.addEventListener('pointerdown', onDown, { capture: true });
+		canvas.addEventListener('pointermove', onMove);
+		canvas.addEventListener('pointerup', onUp);
+		canvas.addEventListener('pointercancel', onUp);
 		return {
 			dispose: () => {
 				unfit();
-				stop();
 				api = null;
+				canvas.removeEventListener('pointerdown', onDown, { capture: true });
+				canvas.removeEventListener('pointermove', onMove);
+				canvas.removeEventListener('pointerup', onUp);
+				canvas.removeEventListener('pointercancel', onUp);
 			}
 		};
 	}
@@ -101,8 +167,7 @@
 	label="A Möbius band with its gold core circle and teal boundary; a bead on the boundary drags its shadow around the core twice"
 />
 <Controls>
-	<Slider bind:value={p} min={0} max={0.999} step={0.001} label="walk along the boundary" format={(v) => `${Math.round(v * 100)}%`} />
-	<Toggle bind:checked={run} label="Walk" />
+	<Timeline bind:value={p} bind:playing from="start" to="one lap" label="Walking once along the boundary" duration={9} />
 	<span class="eq"><TeX tex={`\\text{shadow on the core: } ${turns.toFixed(2)} \\text{ turns}`} /></span>
 </Controls>
 

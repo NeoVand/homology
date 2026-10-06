@@ -524,7 +524,7 @@
 	\(\varepsilon\) you were given. Play the game below.
 </p>
 
-<Figure num="2.1.5" title="The ε–δ game" hint="Choose ε, then find a δ that works · press “smaller ε!” to raise the stakes">
+<Figure num="2.1.5" title="The ε–δ game" hint="Drag the teal ε, then the violet δ · slide a along the axis · press “smaller ε!”">
 	<EpsilonDelta />
 	{#snippet caption()}
 		Teal: the band of outputs within \(\varepsilon\) of \(f(a)\). Violet: the window of inputs within \(\delta\) of \(a\). You win
@@ -677,7 +677,7 @@
 	never be pulled free, not by any stretching, because the hole it goes around is never destroyed.
 </p>
 
-<Figure num="2.1.7" title="From coffee mug to doughnut" hint="Press Deform or drag the slider · drag the picture to turn it">
+<Figure num="2.1.7" title="From coffee mug to doughnut" hint="Play or scrub the deformation · drag the picture to turn it">
 	<CupToDonut />
 	{#snippet caption()}
 		A solid mug becomes a solid doughnut (a <em>solid torus</em>) without tearing or gluing, so the two are homeomorphic. The

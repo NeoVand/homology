@@ -222,12 +222,12 @@
 	</li>
 </ul>
 
-<Figure num="4.6.2" title="Dual cells" hint="Point at any cell · slide between the two worlds">
+<Figure num="4.6.2" title="Dual cells" hint="Point at any cell · play or scrub between the two worlds">
 	<DualCells />
 	{#snippet caption()}
 		A triangulation (ivory) and its dual (violet). Point at a vertex, an edge or a triangle and its partner
-		lights up: a dual face, a dual edge crossing it, a dual vertex inside it. The slider decides which of
-		the two decompositions you are pointing at. In the plane the dual of the triangular grid is the
+		lights up: a dual face, a dual edge crossing it, a dual vertex inside it. The timeline fades one
+		decomposition into the other, and you point at whichever is in front. In the plane the dual of the triangular grid is the
 		honeycomb; on the torus every dual face is a (slanted) hexagon.
 	{/snippet}
 </Figure>
@@ -342,13 +342,13 @@
 	</p>
 </Definition>
 
-<Figure num="4.6.3" title="Loop and fence" hint="Drag to rotate · switch views · choose the curves">
+<Figure num="4.6.3" title="Loop and fence" hint="Drag γ to slide it · drag elsewhere to rotate · choose the curves">
 	<LoopFence />
 	{#snippet caption()}
 		The same curve \(C\), seen as a loop (gold, with beads showing its direction) or as a fence (teal, with
 		chevrons pointing from its left to its right). The fence measures the violet test loop \(\gamma\) by
-		counting signed crossings, and the answer is the intersection number \(\gamma\cdot C\), which depends only
-		on the classes of the two curves.
+		counting signed crossings. Drag \(\gamma\) across the surface: the crossings move, but the count is always
+		the intersection number \(\gamma\cdot C\), which depends only on the classes of the two curves.
 	{/snippet}
 </Figure>
 

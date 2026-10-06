@@ -1,10 +1,11 @@
 <script lang="ts">
 	// The dual cell decomposition: a dual vertex in each triangle, a dual edge
 	// across each edge, a dual face around each vertex. Point at anything to see
-	// its partner; the slider fades between the two decompositions.
+	// its partner; the timeline fades from one decomposition to the other, and
+	// the pointer picks cells in whichever is in front.
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import GluingSquare from '$lib/components/svg/GluingSquare.svelte';
 	import { squareModel, type FlatModel, type Pt } from '../cup-product/flat';
@@ -13,7 +14,7 @@
 
 	type Sel = { kind: 'v' | 'e' | 't'; i: number } | null;
 	let mode = $state<'patch' | 'torus'>('patch');
-	let t = $state(0.5);
+	let t = $state(0.3);
 	// one selection per triangulation, so switching never points into the wrong model
 	let svgEl = $state<SVGSVGElement>();
 
@@ -42,7 +43,7 @@
 	const isFull = (v: number) => mode === 'torus' || C.dualFace[v].length === 6;
 	const edgeFull = (e: number) => C.dualEdge[e].length === 2;
 
-	// pointer → nearest cell, in the world chosen by the slider
+	// pointer → nearest cell, in the world that is in front
 	function locate(ev: PointerEvent) {
 		if (!svgEl) return;
 		const r = svgEl.getBoundingClientRect();
@@ -204,7 +205,7 @@
 		</Svg>
 	</div>
 	<div class="ctl ui">
-		<Slider bind:value={t} min={0} max={1} step={0.01} label="original  ↔  dual" format={(v) => (v < 0.5 ? 'pointing at the original' : 'pointing at the dual')} />
+		<Timeline bind:value={t} from="original" to="dual" duration={2.4} label="Fading from the triangulation to its dual" />
 	</div>
 	<div class="read ui" aria-live="polite">
 		<div class="pair"><TeX tex={describe.tex} /></div>
@@ -284,6 +285,7 @@
 		stroke-linejoin: round;
 	}
 	.ctl {
+		display: flex;
 		padding: 0.5rem 0.4rem 0.2rem;
 	}
 	.read {

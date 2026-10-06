@@ -1,11 +1,9 @@
 <script lang="ts">
 	// X/A: squash a subspace A (in gold) down to a single point, and watch what
 	// space you get. Five examples, from the disk-to-sphere to the pinched torus.
-	import { onMount } from 'svelte';
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { glowPoint } from '$lib/three/materials';
 	import { ParamSheet, sheetMesh, DynamicTube, type P3 } from './sheet';
@@ -13,8 +11,6 @@
 
 	let which = $state<CollapseId>('disk');
 	let t = $state(0);
-	let playing = $state(false);
-	let raf = 0;
 	const C = $derived(collapses[which]);
 
 	let api: { render(id: CollapseId, t: number): void } | null = null;
@@ -43,16 +39,21 @@
 		api = {
 			render(id, tt) {
 				const c = collapses[id];
-				sheet.update((u, v, o) => c.f(u, v, tt, o));
-				mesh.setOutward(sheet.outward);
-				// framing: fix the scale per example (from its starting shape) so the collapse reads as a collapse
+				// framing: fix the scale per example, large enough for every stage of
+				// the morph, so the collapse reads as a collapse and nothing leaves the frame
 				if (fixedFor !== id) {
 					fixedFor = id;
-					const g = sheet.geometry.attributes.position.array as Float32Array;
 					let m = 0;
-					for (let i = 0; i < g.length; i += 3) m = Math.max(m, Math.hypot(g[i], g[i + 1], g[i + 2]));
+					for (const s of [0, 0.25, 0.5, 0.75, 1]) {
+						sheet.update((u, v, o) => c.f(u, v, s, o));
+						const g = sheet.geometry.attributes.position.array as Float32Array;
+						const { x, y, z } = sheet.center;
+						for (let i = 0; i < g.length; i += 3) m = Math.max(m, Math.hypot(g[i] - x, g[i + 1] - y, g[i + 2] - z));
+					}
 					scale = 1.75 / Math.max(m, 1e-3);
 				}
+				sheet.update((u, v, o) => c.f(u, v, tt, o));
+				mesh.setOutward(sheet.outward);
 				holder.scale.setScalar(scale);
 				holder.position.set(-sheet.center.x * scale, -sheet.center.y * scale, -sheet.center.z * scale);
 				const fade = Math.min(1, Math.max(0, (tt - 0.93) / 0.07));
@@ -93,38 +94,6 @@
 		const tt = t;
 		api?.render(id, tt);
 	});
-
-	function stop() {
-		playing = false;
-		cancelAnimationFrame(raf);
-	}
-	function play() {
-		if (playing) return stop();
-		if (t >= 0.999) t = 0;
-		playing = true;
-		const t0 = t;
-		const start = performance.now();
-		const dur = 3600 * (1 - t0) + 300;
-		const step = (now: number) => {
-			if (!playing) return;
-			const k = Math.min(1, (now - start) / dur);
-			t = t0 + (1 - t0) * k;
-			if (k < 1) raf = requestAnimationFrame(step);
-			else playing = false;
-		};
-		raf = requestAnimationFrame(step);
-	}
-	let reduced = false;
-	onMount(() => {
-		reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		return stop;
-	});
-	function choose(id: CollapseId) {
-		stop();
-		which = id;
-		t = 0;
-		if (!reduced) setTimeout(play, 300);
-	}
 </script>
 
 <div class="cl">
@@ -133,7 +102,7 @@
 		height={400}
 		camera={{ position: [0, 2.6, 6.6], fov: 38 }}
 		controls={{ autoRotate: false }}
-		label="A surface with a gold circle on it; as the slider moves, the gold circle shrinks to a single point and the surface becomes a new space"
+		label="A surface with a gold circle on it; as the collapse plays, the gold circle shrinks to a single point and the surface becomes a new space"
 	/>
 	<div class="res ui" aria-live="polite">
 		<span>Collapsing {C.what}:</span>
@@ -141,11 +110,8 @@
 	</div>
 </div>
 <div class="bar ui">
-	<Segmented bind:value={which} options={collapseOrder.map((k) => ({ value: k, label: collapses[k].label }))} label="Example" onchange={(v) => choose(v)} />
-	<div class="row">
-		<Button variant="gold" onclick={play}>{playing ? 'Pause' : t >= 0.999 ? 'Again' : 'Collapse'}</Button>
-		<Slider bind:value={t} min={0} max={1} step={0.002} label="Shrink the gold set to a point" format={(v) => `${Math.round(v * 100)}%`} oninput={() => stop()} />
-	</div>
+	<Segmented bind:value={which} options={collapseOrder.map((k) => ({ value: k, label: collapses[k].label }))} label="Example" />
+	<Timeline bind:value={t} duration={3.6} from="as is" to="collapsed" label="Shrinking the gold set to a point" />
 </div>
 
 <style>
@@ -176,16 +142,10 @@
 		color: var(--gold-bright);
 	}
 	.bar {
-		display: flex;
-		flex-direction: column;
+		display: grid;
 		gap: 0.7rem;
 		padding: 0.85rem 1.2rem 1rem;
 		border-top: 1px solid var(--line-faint);
 		background: rgba(5, 8, 16, 0.45);
-	}
-	.row {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
 	}
 </style>

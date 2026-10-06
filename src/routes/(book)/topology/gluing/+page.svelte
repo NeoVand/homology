@@ -175,7 +175,7 @@
 	Figure 2.2.2 shows the rule at work on the interval.
 </p>
 
-<Figure num="2.2.2" title="Looking back before the glue" hint="Drag the slider to glue · compare the two sets">
+<Figure num="2.2.2" title="Looking back before the glue" hint="Play or scrub the gluing · compare the two sets">
 	<IntervalCircle />
 	{#snippet caption()}
 		A little arc around the glued point is open, because before gluing it was \([0, \varepsilon) \cup (1 - \varepsilon, 1]\), two
@@ -313,7 +313,7 @@
 	arrows match.
 </p>
 
-<Figure num="2.2.4" title="The gluing workshop" hint="Pick a surface · press Glue or drag the slider · drag the picture to turn it">
+<Figure num="2.2.4" title="The gluing workshop" hint="Pick a surface · play or scrub the gluing · drag the picture to turn it">
 	<GluingWorkshop />
 	{#snippet caption()}
 		Six surfaces from one square. Gold edges are called \(a\), teal edges \(b\); dashed ivory edges are free and become the
@@ -534,7 +534,7 @@
 	— our very first gluing. Figure 2.2.6 shows this and four more collapses.
 </p>
 
-<Figure num="2.2.6" title="Collapsing a subspace" hint="Pick an example · press Collapse or drag the slider · drag to turn">
+<Figure num="2.2.6" title="Collapsing a subspace" hint="Pick an example · play or scrub the collapse · drag to turn">
 	<CollapseLab />
 	{#snippet caption()}
 		In each example the gold set \(A\) shrinks to a single point. Collapsing the rim of a disk gives a sphere. Collapsing the top
@@ -561,7 +561,7 @@
 	algebraic topology, though why this should be so is certainly not evident in advance.”
 </p>
 
-<Figure num="2.2.7" title="Three constructions" hint="Pick a construction and a space · drag the slider">
+<Figure num="2.2.7" title="Three constructions" hint="Pick a construction and a space · play or scrub the gluing">
 	<Constructions />
 	{#snippet caption()}
 		A wedge sum glues two spaces at a single point. A cone collapses the top \(X \times \set{1}\) of the cylinder over \(X\); a

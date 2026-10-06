@@ -3,7 +3,7 @@
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 
 	type Kind = 'wedge' | 'cone' | 'susp';
 	type XId = 's0' | 'i' | 's1';
@@ -11,8 +11,6 @@
 	let X = $state<XId>('s1');
 	let wedgeWith = $state<'circle' | 'sphere'>('circle');
 	let t = $state(0.75);
-
-	const e = $derived(t * t * (3 - 2 * t));
 	const top = 70;
 	const bot = 250;
 	const cx = 300;
@@ -21,8 +19,8 @@
 	const mix = (a: number, b: number, s: number) => a + (b - a) * s;
 
 	// how much the top (and, for the suspension, the bottom) has shrunk
-	const sTop = $derived(kind === 'wedge' ? 0 : e);
-	const sBot = $derived(kind === 'susp' ? e : 0);
+	const sTop = $derived(kind === 'wedge' ? 0 : t);
+	const sBot = $derived(kind === 'susp' ? t : 0);
 	const wTop = $derived(half * (1 - sTop));
 	const wBot = $derived(half * (1 - sBot));
 	// the suspension of a circle reads better with a rounded waist
@@ -37,7 +35,7 @@
 	});
 
 	// wedge: two shapes slide together until their base points meet
-	const gapW = $derived(mix(150, 0, e));
+	const gapW = $derived(mix(150, 0, t));
 	const R = 66;
 </script>
 
@@ -62,7 +60,7 @@
 			{/if}
 			<circle cx={lx + R} cy={165} r="7" fill="url(#vertex-fill)" stroke="#060912" filter="url(#glow)" />
 			<circle cx={rx - R} cy={165} r="7" fill="url(#vertex-fill)" stroke="#060912" filter="url(#glow)" />
-			{#if e < 0.98}
+			{#if t < 0.98}
 				<SvgTeX x={lx + R - 12} y={140} tex="x_0" size={15} w={30} h={20} color="var(--gold-bright)" />
 				<SvgTeX x={rx - R + 12} y={140} tex="y_0" size={15} w={30} h={20} color="var(--gold-bright)" />
 			{:else}
@@ -145,7 +143,13 @@
 				/>
 			{/if}
 		</div>
-		<Slider bind:value={t} min={0} max={1} step={0.005} label={kind === 'wedge' ? 'Bring the base points together' : 'Collapse the gold end(s) to a point'} format={(v) => `${Math.round(v * 100)}%`} />
+		<Timeline
+			bind:value={t}
+			duration={2.4}
+			from={kind === 'wedge' ? 'apart' : 'cylinder'}
+			to={kind === 'wedge' ? 'wedged' : kind === 'cone' ? 'cone' : 'suspension'}
+			label={kind === 'wedge' ? 'Bringing the base points together' : kind === 'cone' ? 'Collapsing the top to a point' : 'Collapsing the top and the bottom, each to a point'}
+		/>
 	</div>
 </div>
 
@@ -154,8 +158,7 @@
 		padding: 0.6rem 0.6rem 0;
 	}
 	.panel {
-		display: flex;
-		flex-direction: column;
+		display: grid;
 		gap: 0.7rem;
 		padding: 0.75rem 1rem 0.9rem;
 		border-top: 1px solid var(--line-faint);

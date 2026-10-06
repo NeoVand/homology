@@ -1,18 +1,13 @@
 <script lang="ts">
 	// The iconic homeomorphism: a (solid) coffee mug deforms into a (solid)
 	// doughnut. Ray-marched signed distance field; see cupShader.ts.
-	import { onMount } from 'svelte';
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import { cupVertex, cupFragment } from './cupShader';
 
 	let t = $state(0);
-	let playing = $state(false);
 	let showLoop = $state(true);
-	let reduced = false;
-	let raf = 0;
 
 	const stage = $derived(
 		t < 0.04
@@ -91,66 +86,9 @@
 		const loop = showLoop;
 		api?.set(tt, loop);
 	});
-
-	function stop() {
-		playing = false;
-		cancelAnimationFrame(raf);
-	}
-	function play() {
-		if (playing) return stop();
-		playing = true;
-		// there and back again, pausing at each end
-		const forward = t < 0.5;
-		const start = performance.now();
-		const t0 = t;
-		const step = (now: number) => {
-			if (!playing) return;
-			const dur = 4200;
-			const k = Math.min(1, (now - start) / dur);
-			const e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-			t = forward ? t0 + (1 - t0) * e : t0 * (1 - e);
-			if (k < 1) raf = requestAnimationFrame(step);
-			else {
-				playing = false;
-				if (!reduced && autoLoop) {
-					setTimeout(() => {
-						if (autoLoop) play();
-					}, 1600);
-				}
-			}
-		};
-		raf = requestAnimationFrame(step);
-	}
-	let autoLoop = false;
-
-	let root: HTMLDivElement;
-	onMount(() => {
-		reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		if (reduced) return;
-		const io = new IntersectionObserver(
-			([e]) => {
-				if (e.isIntersecting) {
-					if (!autoLoop) {
-						autoLoop = true;
-						setTimeout(() => autoLoop && !playing && play(), 900);
-					}
-				} else {
-					autoLoop = false;
-					stop();
-				}
-			},
-			{ threshold: 0.4 }
-		);
-		io.observe(root);
-		return () => {
-			io.disconnect();
-			autoLoop = false;
-			stop();
-		};
-	});
 </script>
 
-<div class="cup" bind:this={root}>
+<div class="cup">
 	<Scene3D
 		{setup}
 		height={430}
@@ -161,25 +99,7 @@
 	<div class="stage ui" aria-live="polite">{stage}</div>
 </div>
 <div class="bar ui">
-	<Button
-		variant="gold"
-		onclick={() => {
-			autoLoop = false;
-			play();
-		}}>{playing ? 'Pause' : t > 0.5 ? 'Back to the mug' : 'Deform'}</Button
-	>
-	<Slider
-		bind:value={t}
-		min={0}
-		max={1}
-		step={0.001}
-		label="Mug → doughnut"
-		format={(v) => `${Math.round(v * 100)}%`}
-		oninput={() => {
-			autoLoop = false;
-			stop();
-		}}
-	/>
+	<Timeline bind:value={t} duration={4.2} from="mug" to="doughnut" label="Deforming the mug into a doughnut" />
 	<Toggle bind:checked={showLoop} label="Show the loop through the hole" />
 </div>
 

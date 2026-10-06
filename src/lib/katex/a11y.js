@@ -31,3 +31,16 @@ function escapeAttr(s) {
 export function labelKatex(html, tex) {
 	return html.replace('<span class="katex">', `<span class="katex" role="math" aria-label="${escapeAttr(spokenTeX(tex))}">`);
 }
+
+/**
+ * Put text inside the last box of rendered inline KaTeX, styled as prose.
+ * @param {string} html
+ * @param {string} text
+ */
+export function attachPunctuation(html, text) {
+	// inline output ends with the closing tags of: the last .base, .katex-html, .katex
+	const tail = '</span></span></span>';
+	if (!html.endsWith(tail)) return html + text;
+	const esc = text.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+	return html.slice(0, -tail.length) + `<span class="mpunct">${esc}</span>` + tail;
+}

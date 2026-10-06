@@ -2,6 +2,8 @@
 	// Hover, tap or step through a formula symbol by symbol: how to say it,
 	// what it means, and where in the book it is explained.
 	import Controls from '$lib/components/ui/Controls.svelte';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { ArrowRightIcon } from '$lib/icons';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import StepControls from '$lib/components/ui/StepControls.svelte';
 	import { renderMathInText, tex } from '$lib/katex/render';
@@ -45,7 +47,7 @@
 			<div class="say ui"><span class="k">Say</span> “{tok.say.replace(/[.,]$/, '')}”</div>
 			<div class="mean">{@html renderMathInText(tok.mean)}</div>
 			{#if where}
-				<a class="where ui" href={chapterHref(where.id)}>Explained in §{where.num} {where.title} →</a>
+				<a class="where ui" href={chapterHref(where.id)}>Explained in §{where.num} {where.title}<Icon icon={ArrowRightIcon} size={13} stroke={1.8} /></a>
 			{/if}
 		</div>
 	</div>

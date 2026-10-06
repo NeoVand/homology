@@ -2,9 +2,10 @@
 	// Poincaré duality on the torus made visible: the same curve C, seen as a
 	// loop (a homology class) or as a fence (the cohomology class "count my
 	// crossings"). A test loop γ is measured by the fence: ⟨PD[C], γ⟩ = γ · C.
+	// Grab γ on the surface and drag it around: the crossings move, the count
+	// does not.
 	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { glassMesh, glowPoint, glowTube, disposeTree } from '$lib/three/materials';
 	import { surfaceGeometry, SurfaceCurve } from '$lib/three/surfaces';
@@ -16,21 +17,26 @@
 	let view = $state<'loop' | 'fence'>('loop');
 	let cls = $state<Cls>('0,1');
 	let tst = $state<Cls>('1,0');
-	let slide = $state(0.3);
+	// a point of the square that γ passes through
+	let base = $state<UV>([0.3, 0.93]);
 
 	const pq = (c: Cls): [number, number] => c.split(',').map(Number) as [number, number];
 	const curveC = (c: Cls) => {
 		const [p, q] = pq(c);
 		return (t: number): UV => [0.27 + 0.0013 + p * t, 0.7 + 0.0007 + q * t];
 	};
-	const curveG = (c: Cls, s: number) => {
+	const curveG = (c: Cls, b: UV) => {
 		const [p, q] = pq(c);
-		return (t: number): UV => [s + 0.0021 + p * t, 0.93 + 0.0011 + q * t];
+		return (t: number): UV => [b[0] + 0.0021 + p * t, b[1] + 0.0011 + q * t];
 	};
+	const frac = (x: number) => x - Math.floor(x);
+	function moveBase(dx: number, dy: number) {
+		base = [frac(base[0] + dx), frac(base[1] + dy)];
+	}
 
 	const sim = $derived.by(() => {
 		const C = curveC(cls);
-		const G = curveG(tst, slide);
+		const G = curveG(tst, base);
 		const F = wrapToSquare(samplePath(C, 400));
 		const Gw = wrapToSquare(samplePath(G, 400));
 		// signs det[τ_γ, τ_C]: the fence of C counts γ crossing C from C's left to its right
@@ -39,9 +45,10 @@
 		const [r, s] = pq(tst);
 		return { C, G, crossings, det: r * q - s * p, p, q, r, s };
 	});
+	const signedSum = $derived(sim.crossings.reduce((a, c) => a + c.sign, 0));
 	const readTeX = $derived.by(() => {
 		const terms = sim.crossings.map((c) => (c.sign > 0 ? '(+1)' : '(-1)'));
-		const sum = sim.crossings.reduce((a, c) => a + c.sign, 0);
+		const sum = signedSum;
 		const lhs = view === 'fence' ? `\\langle \\mathrm{PD}[C],\\gamma\\rangle` : `\\gamma\\cdot C`;
 		const mid = terms.length > 1 ? `${terms.join('+')} = ` : '';
 		return `${lhs} = ${mid}${sum > 0 ? '+' : ''}${sum}`;
@@ -55,7 +62,8 @@
 	function setup(ctx: SceneContext) {
 		const { scene, THREE } = ctx;
 		const f = orientedTorus(1.6, 0.62);
-		scene.add(glassMesh(surfaceGeometry(f, 180, 72), { opacity: 0.74, grid: [48, 18], gridStrength: 0.18, brightness: 0.85 }));
+		const glass = glassMesh(surfaceGeometry(f, 180, 72), { opacity: 0.74, grid: [48, 18], gridStrength: 0.18, brightness: 0.85 });
+		scene.add(glass);
 		const dyn = new THREE.Group();
 		scene.add(dyn);
 		let labels: LabelHandle[] = [];
@@ -118,11 +126,64 @@
 		});
 		api = { rebuild };
 		rebuild();
+
+		// ── grab γ and drag it across the surface ──
+		const { canvas, controls } = ctx;
+		const surface = glass.children[1];
+		const onSurface = (e: PointerEvent) => {
+			const hit = ctx.pick(e, [surface])[0];
+			return hit?.uv ? { uv: [hit.uv.x, hit.uv.y] as UV, point: hit.point } : null;
+		};
+		const nearGamma = (e: PointerEvent) => {
+			const h = onSurface(e);
+			if (!h) return null;
+			const [x, y] = sim.G(nearestParam(sim.G, h.uv, 200));
+			return liftPoint(f, x, y, 0).P.distanceTo(h.point) < 0.24 ? h.uv : null;
+		};
+		let grab: UV | null = null;
+		let controlsWere = true;
+		const onDown = (e: PointerEvent) => {
+			if (e.button !== 0) return;
+			const uv = nearGamma(e);
+			if (!uv) return;
+			grab = uv;
+			controlsWere = controls?.enabled ?? false;
+			if (controls) controls.enabled = false;
+			canvas.setPointerCapture(e.pointerId);
+			canvas.style.cursor = 'grabbing';
+		};
+		const onMove = (e: PointerEvent) => {
+			if (!grab) {
+				if (e.pointerType === 'mouse') canvas.style.cursor = nearGamma(e) ? 'grab' : '';
+				return;
+			}
+			const h = onSurface(e);
+			if (!h) return;
+			// the shortest way round from the last point, so crossing the seam is seamless
+			const d = (a: number, b: number) => a - b - Math.round(a - b);
+			moveBase(d(h.uv[0], grab[0]), d(h.uv[1], grab[1]));
+			grab = h.uv;
+		};
+		const onUp = () => {
+			if (!grab) return;
+			grab = null;
+			if (controls) controls.enabled = controlsWere;
+			canvas.style.cursor = '';
+		};
+		// capture phase: runs before OrbitControls, which then finds itself disabled
+		canvas.addEventListener('pointerdown', onDown, { capture: true });
+		canvas.addEventListener('pointermove', onMove);
+		canvas.addEventListener('pointerup', onUp);
+		canvas.addEventListener('pointercancel', onUp);
 		return {
 			dispose() {
 				off();
 				api = null;
 				for (const l of labels) l.remove();
+				canvas.removeEventListener('pointerdown', onDown, { capture: true });
+				canvas.removeEventListener('pointermove', onMove);
+				canvas.removeEventListener('pointerup', onUp);
+				canvas.removeEventListener('pointercancel', onUp);
 			}
 		};
 	}
@@ -132,6 +193,17 @@
 		void view;
 		api?.rebuild();
 	});
+
+	// arrow keys push γ sideways, across its own direction
+	function key(e: KeyboardEvent) {
+		const k = ({ ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 } as Record<string, number>)[e.key];
+		if (!k) return;
+		e.preventDefault();
+		const L = Math.hypot(sim.r, sim.s);
+		const step = (e.shiftKey ? 0.05 : 0.01) * k;
+		moveBase((-sim.s / L) * step, (sim.r / L) * step);
+	}
+	const offset = $derived(Math.round(frac(sim.r * base[1] - sim.s * base[0]) * 100));
 
 	const opts = [
 		{ value: '1,0' as Cls, label: '(1,0)' },
@@ -143,13 +215,27 @@
 </script>
 
 <div class="lf">
-	<Scene3D
-		{setup}
-		height={440}
-		animate
-		camera={{ position: [0.2, 3.4, 5.4], fov: 38 }}
-		label="A glassy torus carrying a curve C, drawn either as a gold loop with beads gliding along it, or as a teal fence band with chevrons, together with a violet test loop gamma. Their crossings glow rose with signs."
-	/>
+	<div class="stage">
+		<Scene3D
+			{setup}
+			height={440}
+			animate
+			camera={{ position: [0.2, 3.4, 5.4], fov: 38 }}
+			label="A glassy torus carrying a curve C, drawn either as a gold loop with beads gliding along it, or as a teal fence band with chevrons, together with a violet test loop gamma that can be dragged across the surface. Their crossings glow rose with signs."
+		/>
+		<!-- the keyboard way to move γ: focus the picture and use the arrow keys -->
+		<div
+			class="keys"
+			role="slider"
+			tabindex="0"
+			aria-label="Test loop γ: arrow keys slide it sideways across the torus"
+			aria-valuemin={0}
+			aria-valuemax={99}
+			aria-valuenow={offset}
+			aria-valuetext="γ crosses C {sim.crossings.length} {sim.crossings.length === 1 ? 'time' : 'times'}, signed count {signedSum}"
+			onkeydown={key}
+		></div>
+	</div>
 	<div class="read ui" aria-live="polite">
 		<div class="row"><span class="k">signed crossings</span><TeX tex={readTeX} /></div>
 		<div class="row"><span class="k">intersection number</span><TeX tex={detTeX} /></div>
@@ -171,7 +257,6 @@
 			<span class="lbl">class of γ</span>
 			<Segmented bind:value={tst} label="Class of the test loop" options={opts} />
 		</div>
-		<Slider bind:value={slide} min={0} max={0.999} step={0.001} label="slide γ around" format={(v) => v.toFixed(2)} />
 	</div>
 </div>
 
@@ -185,6 +270,19 @@
 		background: rgba(20, 8, 16, 0.72);
 		border: 1px solid rgba(242, 141, 182, 0.55);
 		text-shadow: none;
+	}
+	.stage {
+		position: relative;
+	}
+	.keys {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		outline: none;
+	}
+	.keys:focus-visible {
+		outline: 2px solid var(--gold-bright);
+		outline-offset: -4px;
 	}
 	.read {
 		display: grid;

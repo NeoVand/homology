@@ -1,7 +1,7 @@
 // Runtime KaTeX helpers (used by <TeX> and by build-time endpoints).
 import katex from 'katex';
 import { katexOptions } from './macros.js';
-import { labelKatex } from './a11y.js';
+import { attachPunctuation, labelKatex } from './a11y.js';
 
 const cache = new Map<string, string>();
 
@@ -54,8 +54,16 @@ export function renderMathInText(s: string): string {
 			break;
 		}
 		const body = s.slice(start + 2, end);
-		out += display ? `<span class="math-block">${tex(body, true)}</span>` : tex(body, false);
 		i = end + 2;
+		if (display) {
+			out += `<span class="math-block">${tex(body, true)}</span>`;
+		} else {
+			// punctuation right after inline math stays with it (see attachPunctuation)
+			let k = i;
+			while (k < s.length && /[.,;:!?)’”]/.test(s[k])) k++;
+			out += k > i ? attachPunctuation(tex(body, false), s.slice(i, k)) : tex(body, false);
+			i = k;
+		}
 	}
 	return out;
 }
