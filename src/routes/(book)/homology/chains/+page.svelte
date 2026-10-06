@@ -135,8 +135,9 @@
 
 <p>
 	A \(k\)-simplex \([v_0, \dots, v_k]\) has \(k + 1\) faces of one dimension less, obtained by deleting one vertex at a time. We call them its
-	<dfn>codimension-one faces</dfn>, or simply its <dfn>facets</dfn>. A triangle has three edges; a tetrahedron has four triangles; an edge has two endpoints.
-	The boundary of a simplex is the chain made of its facets.
+	<dfn>codimension-one faces</dfn>, or its \((k-1)\)-faces. A triangle has three edges; a tetrahedron has four triangles; an edge has two endpoints. (Some
+	books call these faces <em>facets</em>; in this book a <Term t="facet">facet</Term> is a maximal simplex of a complex, so we avoid the word here.) The
+	boundary of a simplex is the chain made of its codimension-one faces.
 </p>
 
 <Definition id="def-boundary-mod-2" title="The boundary operator, mod 2">
@@ -227,9 +228,9 @@
 	</p>
 	<p>
 		Every term of \(\partial\partial\sigma\) is a face \(\tau\) of \(\sigma\) of dimension \(k - 2\): it is \(\sigma\) with <em>two</em> vertices removed, say
-		\(v_i\) and \(v_j\). How many times does \(\tau\) occur? Once for each facet of \(\sigma\) that contains \(\tau\). A facet leaves out exactly one vertex of
-		\(\sigma\), and if it is to contain \(\tau\), the vertex it leaves out must be \(v_i\) or \(v_j\). So exactly two facets contain \(\tau\): the one without
-		\(v_i\) and the one without \(v_j\). Every \(\tau\) therefore occurs exactly twice in \(\partial\partial\sigma\), and \(\tau + \tau = 0\).
+		\(v_i\) and \(v_j\). How many times does \(\tau\) occur? Once for each codimension-one face of \(\sigma\) that contains \(\tau\). Such a face leaves out
+		exactly one vertex of \(\sigma\), and if it is to contain \(\tau\), the vertex it leaves out must be \(v_i\) or \(v_j\). So exactly two of them contain
+		\(\tau\): the one without \(v_i\) and the one without \(v_j\). Every \(\tau\) therefore occurs exactly twice in \(\partial\partial\sigma\), and \(\tau + \tau = 0\).
 	</p>
 </Proof>
 
@@ -298,10 +299,10 @@
 <h3>Oriented simplices</h3>
 
 <p>
-	To reverse things we first need a direction to reverse. An <dfn>orientation</dfn> of a simplex is a choice of the order of its vertices, where two orders
-	count as the same orientation if one can be turned into the other by an even number of swaps of two vertices (see <Ref
-		to="topology/simplicial-complexes"
-	/>). Every simplex with at least two vertices has exactly two orientations.
+	To reverse things we first need a direction to reverse, and <Ref to="topology/simplicial-complexes" hash="orientation" /> supplied one. Recall that an
+	<Term t="orientation-of-a-simplex">orientation</Term> of a simplex is a choice of the order of its vertices, where two orders count as the same
+	orientation if one can be turned into the other by an even number of swaps of two vertices. Every simplex with at least two vertices has exactly two
+	orientations.
 </p>
 
 <ul>
@@ -322,7 +323,8 @@
 
 <Notation title="Our standing convention">
 	<p>
-		Vertices are labelled by integers, and every simplex is written with its labels in <strong>increasing</strong> order, \([v_0, v_1, \dots, v_k]\) with
+		As in <Ref to="topology/simplicial-complexes" hash="orientation" />, vertices are labelled by integers, and every simplex is written with its labels in
+		<strong>increasing</strong> order, \([v_0, v_1, \dots, v_k]\) with
 		\(v_0 \lt  v_1 \lt  \dots \lt  v_k\). This choice orients every simplex once and for all: in pictures, every edge carries an arrow from its lower label to
 		its higher label. Anything written in another order is converted back with a sign; for instance \([2,0,1] = [0,1,2]\) (two swaps) and \([0,2,1] = -[0,1,2]\)
 		(one swap).
@@ -466,8 +468,9 @@
 </p>
 \[ \partial\big([0,1,2] - [1,2,3]\big) = [0,1] - [0,2] + [1,3] - [2,3], \]
 <p>
-	the loop \(0 \to 1 \to 3 \to 2 \to 0\) around the outside. Triangles that turn the same way are said to be <dfn>coherently oriented</dfn>, and for coherently
-	oriented triangles, inner edges cancel and only the outer rim survives — exactly what mod 2 gave us for free. Whether a whole surface can be oriented
+	the loop \(0 \to 1 \to 3 \to 2 \to 0\) around the outside. Triangles that turn the same way are
+	<Term t="coherent-orientation">coherently oriented</Term>, in the language of <Ref to="topology/simplicial-complexes" hash="orientation" />, and for
+	coherently oriented triangles, inner edges cancel and only the outer rim survives — exactly what mod 2 gave us for free. Whether a whole surface can be oriented
 	coherently is the question of orientability from <Ref to="topology/manifolds" />. On a Möbius band it cannot. In <Ref to="homology/computing" /> the same
 	failure, on closed surfaces such as the Klein bottle and the projective plane, surfaces as a coefficient \(2\) that refuses to cancel — and produces
 	torsion.
@@ -563,7 +566,7 @@
 	<p>
 		The <dfn>boundary matrix</dfn> of \(\partial_k\) has one <em>row</em> for each \((k-1)\)-simplex and one <em>column</em> for each \(k\)-simplex. Column
 		\(j\) lists the coefficients of the boundary of the \(j\)-th \(k\)-simplex: the entry in row \(i\) is the coefficient of the \(i\)-th \((k-1)\)-simplex in
-		it — that is, \(\pm 1\) if it is a facet, with the sign from the boundary formula, and \(0\) otherwise.
+		it — that is, \(\pm 1\) if it is a codimension-one face, with the sign from the boundary formula, and \(0\) otherwise.
 	</p>
 </Definition>
 
@@ -870,7 +873,7 @@
 <Recap>
 	<ul>
 		<li>A <strong>\(k\)-chain</strong> is an inventory of \(k\)-simplices: mod 2 a set of them, added by symmetric difference; over \(\Z\) a formal sum \(\sum a_\sigma \sigma\) of oriented simplices. They form \(C_k(K;\Z/2) \cong (\Z/2)^{n_k}\) and \(C_k(K) \cong \Z^{n_k}\).</li>
-		<li>The <strong>boundary</strong> of a simplex is the sum of its facets — mod 2 plainly, over \(\Z\) with alternating signs: \(\partial[v_0, \dots, v_k] = \sum_i (-1)^i [v_0, \dots, \hat v_i, \dots, v_k]\). It extends to chains by linearity.</li>
+		<li>The <strong>boundary</strong> of a simplex is the sum of its codimension-one faces — mod 2 plainly, over \(\Z\) with alternating signs: \(\partial[v_0, \dots, v_k] = \sum_i (-1)^i [v_0, \dots, \hat v_i, \dots, v_k]\). It extends to chains by linearity.</li>
 		<li>For edges, \(\partial\) is “head minus tail”; for 1-chains, \(\partial\) finds the loose ends; for 2-chains, the rim.</li>
 		<li><strong>\(\partial \circ \partial = 0\)</strong>: each face of a face is counted twice — mod 2 that cancels, and with signs the two copies have opposite signs. So every boundary is a cycle.</li>
 		<li>Reordering a simplex multiplies it, and its boundary, by the sign of the reordering. Coherently oriented neighbours cancel along shared edges.</li>

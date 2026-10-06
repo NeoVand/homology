@@ -56,19 +56,12 @@ export const entries: GlossaryEntry[] = [
 		anchor: 'def-cycle'
 	},
 	{
-		key: 'symmetric-difference',
-		term: 'Symmetric difference',
-		def: 'For sets \\(A\\) and \\(B\\), the set \\(A \\mathbin{\\triangle} B\\) of elements in exactly one of them. It is the addition of edge sets (and of chains) mod 2: whatever is shared cancels.',
-		chapter,
-		anchor: 'def-symmetric-difference'
-	},
-	{
 		key: 'cycle-space',
 		term: 'Cycle space',
 		def: 'The set of all cycles of a graph, added by symmetric difference. It is a vector space over \\(\\Z/2\\) whose dimension is \\(b_1 = E - V + c\\).',
 		chapter,
 		anchor: 'def-cycle-space',
-		see: ['cycle-rank']
+		see: ['symmetric-difference', 'cycle-rank']
 	},
 	{
 		key: 'tree',
