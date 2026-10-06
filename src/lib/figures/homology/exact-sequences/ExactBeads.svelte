@@ -211,7 +211,7 @@
 	}
 	.num {
 		font-family: var(--font-ui);
-		font-size: 11px;
+		font-size: 13px;
 		fill: var(--ink-faint) !important;
 	}
 	.dots {
@@ -226,7 +226,7 @@
 	}
 	.verdicts text {
 		font-family: var(--font-ui);
-		font-size: 12px;
+		font-size: 14px;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		font-weight: 650;

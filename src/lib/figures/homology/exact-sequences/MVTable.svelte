@@ -16,6 +16,7 @@
 <script lang="ts">
 	// The Mayer–Vietoris long exact sequence laid out as a table: one row per degree,
 	// read left to right, then down to the next row (the connecting map ∂).
+	// Column headers are shown once; each cell holds just the group.
 	import { tex as render } from '$lib/katex/render';
 
 	let {
@@ -32,30 +33,32 @@
 		/** highlight the connecting arrow leaving row n */
 		hlConnect?: number | null;
 	} = $props();
-
-	const sub = (s: string, n: number) => s.replaceAll('_n', `_{${n}}`);
 </script>
 
 <div class="mvt ui" role="table" aria-label="Mayer–Vietoris sequence">
+	<div class="row head" role="row">
+		<span class="deg" role="columnheader"></span>
+		{#each heads as h, j (j)}
+			<span class="h" role="columnheader">{@html render(h)}</span>
+			{#if j < 2}
+				<span class="arrow" aria-hidden="true"><span class="m">{@html render(maps[j])}</span></span>
+			{/if}
+		{/each}
+	</div>
 	{#each rows as row, r (row.n)}
 		<div class="row" role="row">
+			<span class="deg" role="rowheader">{@html render(`n=${row.n}`)}</span>
 			{#each row.cells as c, j (j)}
-				<div class="cell {c.hl ?? ''}" class:shown={c.shown} role="cell">
-					<span class="name">{@html render(sub(heads[j], row.n))}</span>
-					<span class="eq">{@html render('=')}</span>
-					<span class="val">{@html render(c.shown ? c.tex : '?')}</span>
-				</div>
+				<span class="cell {c.hl ?? ''}" class:shown={c.shown} role="cell">{@html render(c.shown ? c.tex : '?')}</span>
 				{#if j < 2}
-					<div class="arrow" aria-hidden="true">
-						<span class="m">{@html render(maps[j])}</span>
-						<span class="a">→</span>
-					</div>
+					<span class="arrow" aria-hidden="true">→</span>
 				{/if}
 			{/each}
 		</div>
 		{#if connecting && r < rows.length - 1}
 			<div class="conn" class:hot={hlConnect === row.n} aria-hidden="true">
-				<svg viewBox="0 0 400 26" preserveAspectRatio="none"><path d="M 392 2 C 392 14, 380 13, 200 13 C 20 13, 8 13, 8 24" /></svg>
+				<span class="spacer"></span>
+				<svg viewBox="0 0 400 22" preserveAspectRatio="none"><path d="M 392 1 C 392 11, 380 11, 200 11 C 20 11, 8 11, 8 21" /></svg>
 				<span class="lab">{@html render('\\partial')}</span>
 			</div>
 		{/if}
@@ -66,47 +69,56 @@
 	.mvt {
 		display: flex;
 		flex-direction: column;
-		gap: 0;
 		padding: 0.6rem 0.9rem 0.8rem;
-		font-size: 0.86rem;
-		overflow-x: auto;
+		font-size: 0.9rem;
+		max-width: 40rem;
+		margin: 0 auto;
+		width: 100%;
 	}
 	.row {
 		display: grid;
-		grid-template-columns: 1fr auto 1.25fr auto 1fr;
+		grid-template-columns: 2.6rem minmax(0, 1fr) 1.2rem minmax(0, 1.25fr) 1.2rem minmax(0, 1fr);
 		align-items: center;
-		gap: 0.3rem;
-		min-width: 33rem;
+		gap: 0.25rem;
+	}
+	.row.head {
+		margin-bottom: 0.25rem;
+		align-items: end;
+	}
+	.h {
+		text-align: center;
+		color: var(--ink-dim);
+		font-size: 0.85rem;
+		line-height: 1.3;
+	}
+	.deg {
+		color: var(--ink-faint);
+		font-size: 0.78rem;
+		text-align: right;
+		padding-right: 0.2rem;
 	}
 	.cell {
 		display: flex;
-		align-items: baseline;
+		align-items: center;
 		justify-content: center;
-		gap: 0.3rem;
-		padding: 0.42rem 0.5rem;
+		min-height: 2.1rem;
+		padding: 0.3rem 0.35rem;
 		border-radius: 8px;
 		border: 1px solid var(--line-faint);
 		background: rgba(255, 255, 255, 0.02);
-		color: var(--ink-dim);
+		color: var(--ink-faint);
 		white-space: nowrap;
 		transition:
 			background 0.35s var(--ease),
 			border-color 0.35s var(--ease),
 			color 0.35s;
 	}
-	.cell .val {
-		color: var(--ink-faint);
-		min-width: 1.4em;
-		text-align: left;
-	}
-	.cell.shown .val {
+	.cell.shown {
 		color: var(--ink-bright);
 	}
 	.cell.gold {
 		border-color: rgba(244, 215, 156, 0.7);
 		background: rgba(216, 178, 110, 0.12);
-	}
-	.cell.gold .val {
 		color: var(--gold-bright);
 	}
 	.cell.teal {
@@ -124,33 +136,27 @@
 	.cell.green {
 		border-color: rgba(132, 217, 162, 0.75);
 		background: rgba(132, 217, 162, 0.1);
-	}
-	.cell.green .val {
 		color: var(--green);
 	}
 	.arrow {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		line-height: 1;
+		text-align: center;
 		color: var(--ink-faint);
-		font-size: 0.8rem;
+		font-size: 0.95rem;
 	}
-	.arrow .a {
-		font-size: 1rem;
+	.arrow .m {
+		font-size: 0.8rem;
 	}
 	.conn {
 		position: relative;
-		height: 1.6rem;
-		min-width: 33rem;
+		height: 1.3rem;
+		display: grid;
+		grid-template-columns: 2.6rem 1fr;
 	}
 	.conn svg {
-		position: absolute;
-		left: 9%;
-		right: 9%;
-		top: 0;
-		width: 82%;
+		width: 100%;
 		height: 100%;
+		padding: 0 6%;
+		overflow: visible;
 	}
 	.conn path {
 		fill: none;
@@ -164,15 +170,32 @@
 	}
 	.conn .lab {
 		position: absolute;
-		left: 50%;
-		top: 0.15rem;
+		left: calc(50% + 1.3rem);
+		top: 0;
 		transform: translateX(-50%);
 		color: var(--ink-dim);
-		font-size: 0.8rem;
-		background: var(--bg-1);
+		font-size: 0.78rem;
+		background: #0b1120;
 		padding: 0 0.3rem;
+		line-height: 1.2;
 	}
 	.conn.hot .lab {
 		color: var(--gold-bright);
+	}
+	@media (max-width: 520px) {
+		.mvt {
+			font-size: 0.8rem;
+			padding: 0.5rem 0.5rem 0.7rem;
+		}
+		.row {
+			grid-template-columns: 2.1rem minmax(0, 1fr) 0.9rem minmax(0, 1.25fr) 0.9rem minmax(0, 1fr);
+			gap: 0.15rem;
+		}
+		.h {
+			font-size: 0.72rem;
+		}
+		.cell {
+			min-height: 1.9rem;
+		}
 	}
 </style>

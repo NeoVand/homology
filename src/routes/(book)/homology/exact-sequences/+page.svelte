@@ -78,6 +78,12 @@
 	</p>
 </Example>
 
+<Question>
+	<p>
+		Suppose \(0\to\Z\to G\to\Z/2\to0\) is exact. What can \(G\) be? Since \(G/\Z\cong\Z/2\), the group \(G\) is built from one copy of \(\Z\) and one “half step”. The two examples above show both possibilities: \(G\cong\Z\) (the half step is a new element whose double lies in the old \(\Z\)) or \(G\cong\Z\oplus\Z/2\) (the half step is an element of order two). These are the only two. Exactness narrows things down; it does not always decide.
+	</p>
+</Question>
+
 <p>
 	A chain complex \(\cdots\xrightarrow{\partial}C_{n+1}\xrightarrow{\partial}C_n\xrightarrow{\partial}C_{n-1}\to\cdots\) is a sequence with \(\im\partial\subseteq\ker\partial\) everywhere, because \(\partial\circ\partial = 0\). It is exact when the reverse inclusion holds too. The difference between the two is precisely the homology group \(\ker\partial/\im\partial\).
 </p>
@@ -107,11 +113,20 @@
 <h2 id="long-exact-sequence">From short to long: the zig-zag</h2>
 
 <p>
-	The engine of this chapter turns <em>short</em> exact sequences of chain complexes into <em>long</em> exact sequences of homology groups. Suppose we have three chain complexes and two <Term t="chain-map">chain maps</Term> between them (<Ref to="homology/invariance" />),
+	The engine of this chapter turns <em>short</em> exact sequences of chain complexes into <em>long</em> exact sequences of homology groups. Here is the input it needs.
 </p>
-\[ 0 \to A_\bullet \xrightarrow{\ i\ } B_\bullet \xrightarrow{\ j\ } C_\bullet \to 0, \]
+
+<Definition id="def-ses">
+	{#snippet head()}Short exact sequence of chain complexes{/snippet}
+	<p>
+		Three chain complexes and two <Term t="chain-map">chain maps</Term> between them (<Ref to="homology/invariance" />),
+	</p>
+	\[ 0 \to A_\bullet \xrightarrow{\ i\ } B_\bullet \xrightarrow{\ j\ } C_\bullet \to 0, \]
+	<p>such that in every degree \(n\) the sequence of groups \(0\to A_n\xrightarrow{i} B_n\xrightarrow{j} C_n\to 0\) is short exact.</p>
+</Definition>
+
 <p>
-	such that in every degree \(n\) the sequence \(0\to A_n\to B_n\to C_n\to 0\) is short exact. Picture three columns of groups, \(A\), \(B\) and \(C\), with the boundary maps running down each column and the maps \(i\) and \(j\) running across. Every square commutes, and every row is short exact.
+	Picture three columns of groups, \(A\), \(B\) and \(C\), with the boundary maps running down each column and the maps \(i\) and \(j\) running across. Every square commutes, because \(i\) and \(j\) are chain maps, and every row is short exact. The basic example is a space and a subspace: \(A_\bullet\) the chains of the subspace, \(B_\bullet\) the chains of the whole space, and \(C_\bullet\) the quotient (Section 3).
 </p>
 
 <Theorem id="thm-zigzag" label="Theorem (the zig-zag lemma)">
@@ -134,8 +149,15 @@
 	<li><strong>Pull back.</strong> So \(\partial b = i(a)\) for some \(a\in A_{n-1}\), and \(a\) is unique because \(i\) is injective.</li>
 </ol>
 <p>
-	Then \(a\) is a cycle: \(i(\partial a) = \partial(i a) = \partial\partial b = 0\), and \(i\) is injective, so \(\partial a = 0\). Define \(\partial_*[c] = [a]\). Different choices of the lift \(b\), or of the representative \(c\), change \(a\) only by a boundary, so the class \([a]\) is well defined.
+	Then \(a\) is a cycle: \(i(\partial a) = \partial(i a) = \partial\partial b = 0\), and \(i\) is injective, so \(\partial a = 0\). Define \(\partial_*[c] = [a]\).
 </p>
+
+<Proof>
+	{#snippet head()}The connecting map is well defined{/snippet}
+	<p>
+		We made two choices: the lift \(b\), and the cycle \(c\) representing the class. <em>Another lift</em> \(b'\) differs from \(b\) by something that \(j\) kills, so \(b' - b = i(a'')\) for some \(a''\in A_n\). Then \(\partial b' = \partial b + \partial i(a'') = i(a + \partial a'')\), so \(a\) is replaced by \(a + \partial a''\): the same homology class. <em>Another representative</em> \(c + \partial c''\) can be lifted by \(b + \partial b''\), where \(b''\) lifts \(c''\). Its boundary is still \(\partial b\), since \(\partial\partial b'' = 0\), so \(a\) does not change at all. Finally, \(\partial_*\) is a homomorphism because every step — lifting, taking boundaries, pulling back — can be done additively.
+	</p>
+</Proof>
 
 <Figure size="wide" num="3.6.2" title="The zig-zag, with real chains" hint="Step through, or press play">
 	<ZigZag />
@@ -198,10 +220,15 @@
 	{/snippet}
 </Figure>
 
-<Theorem id="thm-good-pairs" label="Theorem (good pairs)">
+<Definition id="def-good-pair">
+	{#snippet head()}Good pair{/snippet}
 	<p>
-		Call \((X,A)\) a <dfn>good pair</dfn> if \(A\) is a nonempty closed subspace that is a deformation retract of some neighbourhood of itself in \(X\). (For example, a subcomplex of a simplicial or cell complex.) Then crushing \(A\) to a point induces isomorphisms
+		A pair \((X,A)\) is <dfn>good</dfn> if \(A\) is a nonempty closed subspace of \(X\) that is a <Term t="deformation-retraction">deformation retract</Term> of some neighbourhood of itself in \(X\). Every subcomplex of a simplicial or cell complex qualifies: it can be thickened slightly, and the thickening shrinks back onto it.
 	</p>
+</Definition>
+
+<Theorem id="thm-good-pairs" label="Theorem (good pairs)">
+	<p>For a good pair \((X,A)\), crushing \(A\) to a point induces isomorphisms</p>
 	\[ H_n(X,A)\;\cong\;\tilde H_n(X/A)\quad\text{for all } n. \]
 </Theorem>
 
@@ -296,6 +323,12 @@
 	The zig-zag lemma makes it long. Then the subdivision argument behind excision shows that the “small” chains \(C_\bullet(U+V)\) have the same homology as all of \(C_\bullet(X)\). Again, that last step is a sketch; the full proof is in Hatcher §2.2.
 </p>
 
+<Warning>
+	<p>
+		The hypothesis that the interiors cover \(X\) is not decoration. Split the interval \(X = [0,1]\) as \(U = [0,\tfrac12]\) and \(V = (\tfrac12,1]\). Their union is \(X\) and their intersection is empty, so the sequence would read \(0\to H_0(U)\oplus H_0(V)\to H_0(X)\to 0\) and predict \(H_0(X)\cong\Z^2\): two pieces. But the interval is connected. What went wrong is that neither \(U\) nor \(V\) contains a neighbourhood of the point \(\tfrac12\), so nothing records how the two halves touch. Overlapping open sets, or subcomplexes of a simplicial complex, are always safe.
+	</p>
+</Warning>
+
 <Example title="The circle, from two arcs">
 	<p>
 		Cover the circle by an upper arc \(U\) and a lower arc \(V\), each a bit more than half the circle. Both arcs are contractible, and their overlap consists of two short arcs, one around a point \(p\) on the left and one around \(q\) on the right. So \(H_*(U)\) and \(H_*(V)\) are \(\Z\) in degree \(0\) and zero above, while \(H_0(U\cap V)\cong\Z^2\), generated by \([p]\) and \([q]\). The end of the sequence reads
@@ -316,6 +349,16 @@
 		The upper arc \(U\) (blue) and the lower arc \(V\) (violet) overlap in two short pieces (gold). The loop \(z\) splits as \(u + v\). The loose ends of \(u\) are the points \(p\) and \(q\), in different pieces of the overlap, and the connecting map sends \([z]\) to \([\partial u] = [p] - [q]\).
 	{/snippet}
 </Figure>
+
+<KeyIdea>
+	<p>
+		<strong>How to read a Mayer–Vietoris sequence.</strong> Exactness on both sides of \(H_n(X)\) pins it between two things you can compute from \(U\), \(V\) and \(U\cap V\) alone:
+	</p>
+	\[ 0\to\operatorname{coker}\Phi_n\xrightarrow{\ \Psi\ }H_n(X)\xrightarrow{\ \partial\ }\ker\Phi_{n-1}\to0, \]
+	<p>
+		where \(\Phi_n\) is the map \(H_n(U\cap V)\to H_n(U)\oplus H_n(V)\) and \(\operatorname{coker}\Phi_n = (H_n(U)\oplus H_n(V))/\im\Phi_n\). The cokernel holds the cycles that already live in \(U\) or \(V\), modulo those that the overlap identifies. The kernel holds the overlap cycles that become boundaries on both sides — the ones that get “closed up” into new cycles of \(X\) running through both pieces. So the recipe is: pick the pieces, work out \(\Phi\) geometrically (how does each cycle of the overlap sit in \(U\) and in \(V\)?), then take kernels and cokernels.
+	</p>
+</KeyIdea>
 
 <Remark title="The Euler characteristic, recovered">
 	<p>
@@ -360,6 +403,12 @@
 <p>
 	The geometry of the connecting map is worth a second look. The generator of \(H_2(S^2)\) is the whole sphere. Cut it along the overlap into a northern piece \(u\) and a southern piece \(v\). The boundary of the northern piece is the equator, which generates \(H_1\) of the band. Going up one dimension, a sphere is literally two disks glued along their boundary sphere, and the connecting map remembers the gluing.
 </p>
+
+<Remark title="The numerical shadow">
+	<p>
+		The Euler characteristic version of the same cut reads \(\chi(S^n) = \chi(D^n) + \chi(D^n) - \chi(S^{n-1}) = 2 - \chi(S^{n-1})\). Starting from \(\chi(S^0) = 2\), this gives \(\chi(S^n) = 1 + (-1)^n\): \(2\) for even spheres and \(0\) for odd ones, exactly as the homology groups predict. The same alternation will reappear in the hairy ball theorem's “only odd spheres can be combed”.
+	</p>
+</Remark>
 
 <Question>
 	<p>
@@ -468,8 +517,23 @@
 </Definition>
 
 <p>
-	This is Hatcher's “homology squared”: the chain groups are themselves homology groups, and the boundary maps are built from the long exact sequences of pairs. The punchline is that it gives the right answer.
+	This is Hatcher's “homology squared”: the chain groups are themselves homology groups, and the boundary maps are built from the long exact sequences of pairs. Before stating the punchline, let us watch the machine run once by hand.
 </p>
+
+<Example title="The torus, one skeleton at a time">
+	<p>
+		Give the torus its smallest cell structure: one vertex, two edges \(a\) and \(b\), and one face attached along \(aba^{-1}b^{-1}\). The \(1\)-skeleton \(X^1\) is the figure eight \(a\vee b\). The long exact sequence of the good pair \((T^2, X^1)\) contains the stretch
+	</p>
+	\[ \underbrace{H_2(X^1)}_{0}\to H_2(T^2)\to\underbrace{H_2(T^2,X^1)}_{\Z}\xrightarrow{\ \partial_*\ }\underbrace{H_1(X^1)}_{\Z^2}\to H_1(T^2)\to\underbrace{H_1(T^2,X^1)}_{0}. \]
+	<p>
+		The labels come from facts we already know. A graph has no \(H_2\). Crushing the figure eight leaves the face with its whole boundary pinched to a point, which is a sphere, so \(H_2(T^2,X^1)\cong\tilde H_2(S^2)\cong\Z\), generated by the face, and \(H_1(T^2,X^1)\cong\tilde H_1(S^2) = 0\).
+	</p>
+	<p>
+		The connecting map takes the face to its boundary: the loop \(aba^{-1}b^{-1}\), which in \(H_1(X^1)\) is \(a + b - a - b = 0\). So \(\partial_* = 0\), and the sequence falls apart into \(0\to H_2(T^2)\to\Z\to0\) and \(0\to\Z^2\to H_1(T^2)\to 0\). Hence \(H_2(T^2)\cong\Z\) and \(H_1(T^2)\cong\Z^2\). The connecting map was computed letter by letter, by adding up exponents: that is the cellular boundary \(d_2\).
+	</p>
+</Example>
+
+<p>The punchline is that this always works.</p>
 
 <Theorem id="thm-cellular" label="Theorem (cellular homology)">
 	<p>\(H_n^{\mathrm{CW}}(X)\cong H_n(X)\) for every CW complex \(X\) and every \(n\).</p>
