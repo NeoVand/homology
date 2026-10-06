@@ -75,10 +75,9 @@
 	];
 </script>
 
-<Epigraph author="Henri Poincaré" source="Analysis Situs (1895), transl. J. Stillwell"
-	>geometry is the art of reasoning well from badly drawn figures; however, these figures, if they are not to deceive us, must
-	satisfy certain conditions; the proportions may be grossly altered, but the relative positions of the different parts must not
-	be upset.</Epigraph
+<Epigraph author="Leo Moser" source="a limerick"
+	>A mathematician named Klein<br />Thought the Möbius band was divine.<br />Said he: ‘If you glue<br />The edges of two,<br />You’ll
+	get a weird bottle like mine.’</Epigraph
 >
 
 <p class="lead">
@@ -148,12 +147,11 @@
 	<Term t="equivalence-relation">equivalence relation</Term> \(\sim\) on a space \(X\): \(x \sim y\) means “\(x\) and \(y\) are to
 	become the same point”. The glued set is the <Term t="quotient-set">quotient set</Term> \(X/{\sim}\), whose elements are the
 	equivalence classes \([x]\) (read “the class of \(x\)”: the pile of all points glued to \(x\)). And there is the
-	<Term t="projection-map">projection map</Term>
+	<Term t="quotient-projection">projection</Term>
 </p>
-\[ \pi \colon X \to X/{\sim}, \qquad \pi(x) = [x], \]
+\[ q \colon X \to X/{\sim}, \qquad q(x) = [x], \]
 <p>
-	which sends every point to its pile. (The Greek letter \(\pi\), “pi”, here just stands for “projection”; it has nothing to do
-	with \(3.14159\ldots\).) Gluing the ends of the interval \(X = [0, 1]\) means declaring \(0 \sim 1\) and nothing else. Then the
+	which sends every point to its pile (\(q\) for “quotient”). Gluing the ends of the interval \(X = [0, 1]\) means declaring \(0 \sim 1\) and nothing else. Then the
 	class \([0] = [1] = \set{0, 1}\) has two points, every other class has just one, and \(X/{\sim}\) is a set that should be a
 	circle.
 </p>
@@ -167,7 +165,7 @@
 		Let \(X\) be a topological space and \(\sim\) an equivalence relation on it. The <dfn>quotient topology</dfn> on \(X/{\sim}\)
 		declares a set \(U \subseteq X/{\sim}\) open exactly when its preimage
 	</p>
-	\[ \pi^{-1}(U) = \setb{x \in X}{[x] \in U} \]
+	\[ q^{-1}(U) = \setb{x \in X}{[x] \in U} \]
 	<p>is open in \(X\). With this topology, \(X/{\sim}\) is called a <dfn>quotient space</dfn> of \(X\).</p>
 </Definition>
 
@@ -190,13 +188,13 @@
 
 <Proposition title="The projection is continuous" id="prop-projection">
 	<p>
-		With the quotient topology, \(\pi \colon X \to X/{\sim}\) is continuous. In fact the quotient topology is the largest
-		collection of open sets that makes \(\pi\) continuous.
+		With the quotient topology, \(q \colon X \to X/{\sim}\) is continuous. In fact the quotient topology is the largest
+		collection of open sets that makes \(q\) continuous.
 	</p>
 </Proposition>
 
 <p>
-	Continuity of \(\pi\) is immediate: preimages of open sets are open by definition. And we could not declare any more sets open
+	Continuity of \(q\) is immediate: preimages of open sets are open by definition. And we could not declare any more sets open
 	without some preimage failing to be open. Gluing should be continuous — continuous maps are allowed to glue, as we saw in
 	<Ref to="topology/spaces" /> — but beyond that, the glued space should have as many open sets as possible, so that it does
 	not get blurrier than it needs to be.
@@ -204,15 +202,15 @@
 
 <Proposition title="Maps out of a glued space" id="prop-descend">
 	<p>
-		A function \(g \colon X/{\sim} \to Y\) is continuous exactly when \(g \circ \pi \colon X \to Y\) is continuous.
+		A function \(g \colon X/{\sim} \to Y\) is continuous exactly when \(g \circ q \colon X \to Y\) is continuous.
 	</p>
 </Proposition>
 
 <Proof>
 	<p>
-		For an open \(V \subseteq Y\), the preimage \((g \circ \pi)^{-1}(V)\) equals \(\pi^{-1}(g^{-1}(V))\). By the definition of the
-		quotient topology, \(g^{-1}(V)\) is open in \(X/{\sim}\) exactly when \(\pi^{-1}(g^{-1}(V))\) is open in \(X\). So
-		“\(g^{-1}(V)\) is always open” and “\((g \circ \pi)^{-1}(V)\) is always open” say the same thing.
+		For an open \(V \subseteq Y\), the preimage \((g \circ q)^{-1}(V)\) equals \(q^{-1}(g^{-1}(V))\). By the definition of the
+		quotient topology, \(g^{-1}(V)\) is open in \(X/{\sim}\) exactly when \(q^{-1}(g^{-1}(V))\) is open in \(X\). So
+		“\(g^{-1}(V)\) is always open” and “\((g \circ q)^{-1}(V)\) is always open” say the same thing.
 	</p>
 </Proof>
 
@@ -238,7 +236,7 @@
 </Theorem>
 
 <p>
-	The quotient \([0,1]/{\sim}\) is compact (a continuous image of the compact interval, via \(\pi\)) and the circle is Hausdorff
+	The quotient \([0,1]/{\sim}\) is compact (a continuous image of the compact interval, via \(q\)) and the circle is Hausdorff
 	(it is a metric space), so \(g\) is a homeomorphism: \([0, 1]/(0 \sim 1) \cong S^1\). The same theorem, applied again and again,
 	tells us that the surfaces we glue in this chapter really are the surfaces we draw. The failure in Figure 2.1.6 came from the
 	half-open interval \([0, 1)\), which is not compact.
@@ -344,7 +342,8 @@
 <Remark title="Stretching allowed">
 	<p>
 		You cannot make a Möbius band from a <em>square</em> of real paper without crumpling it — the strip must be long and narrow.
-		In the workshop the sheet stretches as it rolls. Topology does not mind; Poincaré's “proportions may be grossly altered”.
+		In the workshop the sheet stretches as it rolls. Topology does not mind: in the words of Poincaré quoted at the start of
+		<Ref to="prelude/shape-of-a-question" />, “the proportions may be grossly altered”.
 	</p>
 </Remark>
 
@@ -603,10 +602,10 @@
 </p>
 \[ 1 - 2g + 1 = 2 - 2g. \]
 <p>
-	For the sphere (\(g = 0\)) that is \(2\), for the torus \(0\), for the pretzel \(-2\). Words with letters repeated the
-	<em>same</em> way, like \(aa\) (a two-sided polygon whose edges are glued with a twist, another picture of \(\RP^2\)) or
-	\(a_1a_1a_2a_2\), give the one-sided surfaces; the word \(aabb\) turns out to be another Klein bottle. A famous theorem,
-	the <em>classification of surfaces</em>, says that every closed surface is homeomorphic to exactly one of these: a sphere, a
+	For the sphere (\(g = 0\)) that is \(2\), for the torus \(0\), for the pretzel \(-2\). Words in which a letter appears twice
+	the <em>same</em> way round give the one-sided surfaces: \(aa\) (a two-sided polygon whose edges are glued with a twist,
+	another picture of \(\RP^2\)), or \(aabb\), which turns out to be another picture of the Klein bottle. A famous theorem,
+	the <em>classification of surfaces</em>, says that every connected closed surface is homeomorphic to exactly one of these: a sphere, a
 	surface \(\Sigma_g\) with \(g\) handles, or a one-sided surface built from projective planes. We will meet it properly in
 	<Ref to="topology/manifolds" />. For now, the remarkable fact is that a single word written around a single polygon is enough to
 	describe any of them.
@@ -614,7 +613,7 @@
 
 <KeyIdea>
 	<p>
-		To glue is to take a quotient: \(U\) is open in \(X/{\sim}\) exactly when \(\pi^{-1}(U)\) is open in \(X\). A polygon whose edges
+		To glue is to take a quotient: \(U\) is open in \(X/{\sim}\) exactly when \(q^{-1}(U)\) is open in \(X\). A polygon whose edges
 		carry letters and arrows is a complete recipe for a surface — and the word around its edges, with its \(a\)'s and
 		\(a^{-1}\)'s, is a first glimpse of the algebra that homology will make of it.
 	</p>
@@ -622,7 +621,7 @@
 
 <h2 id="exercises">Exercises</h2>
 
-<Exercise level={1} title="Count the corners">
+<Exercise level={1} title="Count the corners" id="ex-count-corners">
 	<p>
 		For each word, label the corners of the polygon and find which are glued together: (a) the torus \(aba^{-1}b^{-1}\); (b) the
 		projective plane \(abab\); (c) the hexagon \(abca^{-1}b^{-1}c^{-1}\). Then compute corners − edges + faces for each.
@@ -645,7 +644,7 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={1} title="Open or not, after gluing?">
+<Exercise level={1} title="Open or not, after gluing?" id="ex-open-after-gluing">
 	<p>
 		In the circle \([0, 1]/(0 \sim 1)\), which of these sets are open: (a) the image of \((\tfrac14, \tfrac12)\); (b) the image of
 		\([0, \tfrac14)\); (c) the image of \([0, \tfrac14) \cup (\tfrac34, 1]\)?
@@ -660,7 +659,7 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={2} title="Which surface?">
+<Exercise level={2} title="Which surface?" id="ex-which-surface">
 	<p>
 		Identify the space obtained from the square by: (a) gluing only the bottom edge to the top edge, with a flip, \((x, 0) \sim
 		(1 - x, 1)\); (b) collapsing the whole boundary of the square to a single point; (c) gluing the bottom edge to the top edge
@@ -676,7 +675,7 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={2} title="Cutting a Möbius band">
+<Exercise level={2} title="Cutting a Möbius band" id="ex-cut-mobius">
 	<p>
 		Use the square diagram \((0, y) \sim (1, 1 - y)\) to predict what happens when a Möbius band is cut along its centre line \(y =
 		\tfrac12\). How many pieces? How many boundary circles?
@@ -695,7 +694,7 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={1} title="Wedges and suspensions">
+<Exercise level={1} title="Wedges and suspensions" id="ex-wedges">
 	<p>
 		(a) Explain why the figure eight \(S^1 \vee S^1\) is not homeomorphic to the circle. (b) Draw the suspension \(\Sigma S^0\) of
 		two points and explain why it is a circle. (c) Why is the cone on a circle homeomorphic to a disk?
@@ -711,7 +710,7 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={2} title="Unglued corners">
+<Exercise level={2} title="Unglued corners" id="ex-unglued-corners">
 	<p>
 		Using the table in this chapter, show that no homeomorphism can turn the sphere's square into the torus's square <em>edge by
 		edge and corner by corner</em>. Then explain why this alone does not prove that the sphere and torus are different surfaces.
@@ -719,7 +718,7 @@
 	{#snippet solution()}
 		<p>
 			The sphere's diagram has three corner classes and the torus's has one, so no matching of diagrams sends corners to corners.
-			But a surface can be drawn by many different diagrams — the torus is also a hexagon with two corner classes (Exercise 1). Corner
+			But a surface can be drawn by many different diagrams — the torus is also a hexagon with two corner classes (<a href="#ex-count-corners">the first exercise</a>). Corner
 			counts belong to the diagram, not the surface. What <em>is</em> a property of the surface is the combination corners − edges +
 			faces (\(2\) versus \(0\)), but proving that this does not depend on the diagram is real work, done in
 			<Ref to="topology/euler-characteristic" /> and, more powerfully, by homology.
@@ -727,7 +726,7 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={3} title="A Klein bottle is two Möbius bands">
+<Exercise level={3} title="A Klein bottle is two Möbius bands" id="ex-two-mobius">
 	<p>
 		In the Klein bottle square, with \((x, 0) \sim (1 - x, 1)\) and \((0, y) \sim (1, y)\), cut along the vertical lines \(x =
 		\tfrac14\) and \(x = \tfrac34\). Show that each of the two resulting pieces is a Möbius band, and that the two bands are glued
@@ -743,7 +742,8 @@
 			strips \([0, \tfrac14]\) and \([\tfrac34, 1]\) are joined by \((0, y) \sim (1, y)\) into one strip; its bottom is glued to its top
 			by \(x \mapsto 1 - x\), which swaps the two parts — again with a flip, so another Möbius band. The cut lines \(x = \tfrac14\)
 			and \(x = \tfrac34\) are glued end to end (the top of one to the bottom of the other) into a single circle, which is the
-			boundary of both bands. So \(K\) is two Möbius bands sewn together along their edges.
+			boundary of both bands. So \(K\) is two Möbius bands sewn together along their edges — the “weird bottle” of the limerick
+			at the top of this chapter.
 		</p>
 	{/snippet}
 </Exercise>
@@ -754,7 +754,7 @@
 	<ul>
 		<li>
 			To <strong>glue</strong> is to pass to a quotient \(X/{\sim}\). Its topology looks back before the glue: \(U\) is open exactly
-			when \(\pi^{-1}(U)\) is open. Continuous functions on \(X/{\sim}\) are continuous functions on \(X\) that respect the glue.
+			when \(q^{-1}(U)\) is open. Continuous functions on \(X/{\sim}\) are continuous functions on \(X\) that respect the glue.
 		</li>
 		<li>
 			A <strong>gluing diagram</strong> labels edges with letters and arrows; its <strong>word</strong> reads them anticlockwise,

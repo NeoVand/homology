@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import { LineSegments2 } from 'three/addons/lines/LineSegments2.js';
 import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
-import { color, glowCore, glowHalo, type PaletteName } from '$lib/three/materials';
+import { color, glowCore, glowHalo, shaderColor, type PaletteName } from '$lib/three/materials';
 
 export interface P3 {
 	x: number;
@@ -327,12 +327,6 @@ export interface EdgeSpec {
 	marks?: 1 | 2;
 }
 
-/** Colours in shaders are written straight to the screen (as in materials.ts), so pass hex values through unchanged. */
-function rawColor(c: PaletteName | number | string): THREE.Color {
-	const col = color(c);
-	return new THREE.Color().setRGB(...(col.convertLinearToSRGB().toArray() as [number, number, number]), THREE.LinearSRGBColorSpace);
-}
-
 export interface SheetMaterialOptions {
 	opacity?: number;
 	grid?: [number, number];
@@ -350,17 +344,17 @@ export function sheetMaterial(o: SheetMaterialOptions = {}, side: THREE.Side = T
 			uOpacity: { value: o.opacity ?? 0.86 },
 			uGrid: { value: new THREE.Vector2(...(o.grid ?? [8, 8])) },
 			uGridStrength: { value: o.gridStrength ?? 0.3 },
-			uGridColor: { value: rawColor(0xbfe4ff) },
+			uGridColor: { value: shaderColor(0xbfe4ff) },
 			uFilm: { value: 1.1 },
 			uHue: { value: 0 },
 			uRim: { value: 0.6 },
 			uBrightness: { value: o.brightness ?? 1 },
 			uEdgeOn: { value: new THREE.Vector4(0, 0, 0, 0) },
 			uEdgeDir: { value: new THREE.Vector4(1, 1, 1, 1) },
-			uEdgeColL: { value: rawColor('teal') },
-			uEdgeColR: { value: rawColor('teal') },
-			uEdgeColB: { value: rawColor('gold') },
-			uEdgeColT: { value: rawColor('gold') },
+			uEdgeColL: { value: shaderColor('teal') },
+			uEdgeColR: { value: shaderColor('teal') },
+			uEdgeColB: { value: shaderColor('gold') },
+			uEdgeColT: { value: shaderColor('gold') },
 			uEdgeMarks: { value: new THREE.Vector4(1, 1, 1, 1) },
 			uEdgeW: { value: o.edgeWidth ?? 0.09 },
 			uEdgeGlow: { value: 1.15 },
@@ -395,10 +389,10 @@ export function sheetMesh(geometry: THREE.BufferGeometry, o: SheetMaterialOption
 				u.uEdgeOn.value.set(edges[0].on, edges[1].on, edges[2].on, edges[3].on);
 				u.uEdgeDir.value.set(edges[0].dir ?? 1, edges[1].dir ?? 1, edges[2].dir ?? 1, edges[3].dir ?? 1);
 				u.uEdgeMarks.value.set(edges[0].marks ?? 1, edges[1].marks ?? 1, edges[2].marks ?? 1, edges[3].marks ?? 1);
-				u.uEdgeColL.value.copy(rawColor(edges[0].color ?? 'teal'));
-				u.uEdgeColR.value.copy(rawColor(edges[1].color ?? 'teal'));
-				u.uEdgeColB.value.copy(rawColor(edges[2].color ?? 'gold'));
-				u.uEdgeColT.value.copy(rawColor(edges[3].color ?? 'gold'));
+				u.uEdgeColL.value.copy(shaderColor(edges[0].color ?? 'teal'));
+				u.uEdgeColR.value.copy(shaderColor(edges[1].color ?? 'teal'));
+				u.uEdgeColB.value.copy(shaderColor(edges[2].color ?? 'gold'));
+				u.uEdgeColT.value.copy(shaderColor(edges[3].color ?? 'gold'));
 			}
 		},
 		setTime(t: number) {
@@ -565,7 +559,8 @@ export function glowSegments(segments: ArrayLike<number>, o: { color?: PaletteNa
 	const dpr = o.dpr ?? 1;
 	const geo = new LineSegmentsGeometry();
 	geo.setPositions(Array.from(segments));
-	const c = rawColor(o.color ?? 'rose');
+	// LineMaterial converts to the output colour space itself, so it takes a plain colour.
+	const c = color(o.color ?? 'rose');
 	const core = new LineMaterial({ color: c, linewidth: (o.width ?? 2.6) * dpr, transparent: true, depthWrite: false });
 	const glow = new LineMaterial({
 		color: c,

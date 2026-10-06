@@ -80,8 +80,8 @@
 <Epigraph author="James Munkres" source="Topology, 2nd ed. (2000)">…a set can be open, or closed, or both, or neither!</Epigraph>
 
 <p class="lead">
-	A topologist, the old joke goes, is someone who cannot tell a coffee mug from a doughnut. The joke hides a real question. In
-	what sense are a mug and a doughnut “the same”? And if they are, how could we ever <em>prove</em> that two shapes are
+	The Prelude told the old joke that a topologist is someone who cannot tell a coffee cup from a doughnut. Behind the joke sits
+	a real question. In what sense are a cup and a doughnut “the same”? And if they are, how could we ever <em>prove</em> that two shapes are
 	<em>different</em>? This chapter builds the language that makes both questions precise.
 </p>
 
@@ -297,7 +297,7 @@
 <p>
 	Read the middle inequality, \(d_2 \le d_1\), as a statement about balls: anything within taxicab distance \(r\) of \(x\) is
 	also within straight-line distance \(r\), so the diamond of radius \(r\) sits inside the disk of radius \(r\). In the other
-	direction, \(d_1 \le \sqrt2\, d_2\) (you will prove this in Exercise 2), so anything within straight-line distance \(r/\sqrt2\)
+	direction, \(d_1 \le \sqrt2\, d_2\) (you will prove this in <a href="#ex-two-rulers">an exercise</a>), so anything within straight-line distance \(r/\sqrt2\)
 	is within taxicab distance \(r\): a smaller disk sits inside every diamond. Either way, <em>whenever a ball of one kind fits
 	around a point, a ball of the other kind fits too</em>.
 </p>
@@ -325,12 +325,14 @@
 <p>
 	The closed disk is closed because the part of the plane outside it is open: every point outside the disk has a little ball
 	around it that stays outside. Intuitively, a set is closed when it contains its whole boundary — every point it gets
-	arbitrarily close to. The closed interval \([0, 1]\) is closed; so is a single point; so is the set \(\Z\) of whole numbers.
+	arbitrarily close to. To say this precisely, call \(x\) a <dfn>limit point</dfn> of \(A\) if every ball around \(x\), however
+	small, contains a point of \(A\) other than \(x\) itself. Then a set is closed exactly when it contains all of its limit
+	points (<a href="#ex-limit-points">an exercise</a> asks you to see why). The closed interval \([0, 1]\) is closed; so is a single point; so is the set \(\Z\) of whole numbers.
 </p>
 <p>
 	The words “open” and “closed” come from these examples, and they are a little unfortunate, because in everyday language a
-	door that is not open is closed. Sets are not like doors. As James Munkres warns in his classic textbook, “a set can be open,
-	or closed, or both, or neither!” The half-open interval \([0, 1)\) is neither: it is not open (no room at \(0\)) and not
+	door that is not open is closed. Sets are not like doors: as the epigraph of this chapter warns, a set can be open, or closed,
+	or both, or neither. The half-open interval \([0, 1)\) is neither: it is not open (no room at \(0\)) and not
 	closed (it gets arbitrarily close to \(1\) without containing it). And the whole real line \(\R\) is both: it is open (every
 	point has all the room in the world) and closed (its complement is the empty set \(\varnothing\), which is open because it
 	has no points that could fail the test). Sets that are both are sometimes called <dfn>clopen</dfn>.
@@ -447,7 +449,7 @@
 	{/snippet}
 </Figure>
 
-<p>
+<p id="neighbourhoods">
 	A last piece of vocabulary. If \(x\) is a point of a topological space, an open set containing \(x\) is called a
 	<dfn>neighbourhood</dfn> of \(x\). In a metric space, “\(U\) is a neighbourhood of \(x\)” means “\(U\) is open and contains a
 	ball around \(x\)” — a region that gives \(x\) some room.
@@ -625,7 +627,7 @@
 
 <Definition title="Homeomorphism" id="def-homeomorphism">
 	<p>
-		A <dfn>homeomorphism</dfn> between spaces \(X\) and \(Y\) is a <Term t="bijection">bijection</Term> \(f \colon X \to Y\) such
+		A <dfn>homeomorphism</dfn> between spaces \(X\) and \(Y\) is a <Term t="bijective">bijection</Term> \(f \colon X \to Y\) such
 		that both \(f\) and its inverse \(f^{-1} \colon Y \to X\) are continuous. If such an \(f\) exists, \(X\) and \(Y\) are
 		<dfn>homeomorphic</dfn>, written \(X \cong Y\).
 	</p>
@@ -754,11 +756,17 @@
 	converse fails only for rather wild spaces (the standard example, the “topologist's sine curve”, wiggles infinitely fast), and
 	for every space we will meet in this book the two notions agree.
 </p>
+<p id="path-components">
+	A space that is not path-connected falls apart into <dfn>path components</dfn>: two points lie in the same path component when
+	some path joins them. (Being joined by a path is an equivalence relation — run one path and then the other — and the path
+	components are its classes.) A homeomorphism carries paths to paths, so it matches up the path components of the two spaces
+	one for one: the number of path components is an invariant too.
+</p>
 
 <Remark title="A preview">
 	<p>
-		The number of path components of a space will become the first homology group's size: \(H_0(X)\) has one generator for
-		each path component. Counting pieces is the simplest kind of hole-counting — counting the “gaps” between pieces.
+		The number of path components will reappear in Part III as the first number homology computes: the group \(H_0(X)\) has one
+		generator for each path component. Counting pieces is the simplest kind of hole-counting — counting the “gaps” between pieces.
 	</p>
 </Remark>
 
@@ -894,7 +902,7 @@
 
 <h2 id="exercises">Exercises</h2>
 
-<Exercise level={1} title="Open, closed, both or neither?">
+<Exercise level={1} title="Open, closed, both or neither?" id="ex-open-closed">
 	<p>
 		Classify each subset of \(\R\) as open, closed, both or neither: (a) \((0, 1)\); (b) \([0, 1]\); (c) \([0, 1)\); (d)
 		\(\varnothing\); (e) \(\R\); (f) \(\set{0}\); (g) \(\Z\); (h) the union of the intervals \((\tfrac1n, 1)\) for \(n = 2, 3,
@@ -913,7 +921,7 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={2} title="Two rulers, one topology">
+<Exercise level={2} title="Two rulers, one topology" id="ex-two-rulers">
 	<p>
 		Show that \(d_2(x, y) \le d_1(x, y) \le \sqrt 2\, d_2(x, y)\) for points of the plane. Deduce that every taxicab ball around
 		\(x\) contains a straight-line ball around \(x\), and vice versa, so the two metrics give the same open sets.
@@ -936,7 +944,33 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={1} title="Topology or not?">
+<Exercise level={2} title="Closed sets keep their limit points" id="ex-limit-points">
+	<p>
+		Let \(A\) be a subset of a metric space \(X\). Recall that \(x\) is a limit point of \(A\) if every ball around \(x\)
+		contains a point of \(A\) other than \(x\). Show that \(A\) is closed exactly when it contains all of its limit points.
+	</p>
+	{#snippet hint()}
+		<p>
+			Both directions are about a point \(x\) <em>outside</em> \(A\). If \(A\) is closed, its complement is open: what does
+			that say about the balls around \(x\)?
+		</p>
+	{/snippet}
+	{#snippet solution()}
+		<p>
+			Suppose \(A\) is closed and \(x \notin A\). The complement \(X \setminus A\) is open, so some ball \(B(x, r)\) lies
+			inside it. That ball contains no point of \(A\) at all, so \(x\) is not a limit point of \(A\). Hence every limit point
+			of \(A\) lies in \(A\).
+		</p>
+		<p>
+			Conversely, suppose \(A\) contains all of its limit points, and let \(x \notin A\). Then \(x\) is not a limit point, so
+			some ball \(B(x, r)\) contains no point of \(A\) other than \(x\); and \(x\) itself is not in \(A\), so the ball misses
+			\(A\) completely and lies inside \(X \setminus A\). Every point of the complement has room around it, so \(X \setminus
+			A\) is open, and \(A\) is closed.
+		</p>
+	{/snippet}
+</Exercise>
+
+<Exercise level={1} title="Topology or not?" id="ex-topology-or-not">
 	<p>
 		Let \(X = \set{a, b, c}\). Which of these collections are topologies on \(X\)? (a) \(\set{\varnothing, \set{a}, X}\); (b)
 		\(\set{\varnothing, \set{a}, \set{b}, X}\); (c) \(\set{\varnothing, \set{a}, \set{b}, \set{a, b}, X}\); (d)
@@ -950,7 +984,7 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={2} title="Continuity, two ways">
+<Exercise level={2} title="Continuity, two ways" id="ex-continuity">
 	<p>
 		(a) For \(f(x) = 2x + 1\), compute the preimage of an open interval \((c, d)\), and conclude that \(f\) is continuous. (b)
 		Find a \(\delta\) that works for a given \(\varepsilon\) in the ε–δ definition for the same \(f\). (c) Using preimages, show
@@ -968,7 +1002,7 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={2} title="An interval is as long as a line">
+<Exercise level={2} title="An interval is as long as a line" id="ex-interval-line">
 	<p>
 		Show that every open interval \((c, d)\) is homeomorphic to \(\R\). Then explain why this shows that “being bounded” is not
 		a topological invariant.
@@ -987,7 +1021,7 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={2} title="Snip and count">
+<Exercise level={2} title="Snip and count" id="ex-snip">
 	<p>
 		Using cut points, show that (a) the letters T and X (in our font) are not homeomorphic; (b) the circle \(S^1\) is not
 		homeomorphic to the figure-eight (two circles touching at one point). Then (c) explain why the letters E and T are
@@ -1010,7 +1044,7 @@
 	{/snippet}
 </Exercise>
 
-<Exercise level={3} title="Connectedness is an invariant">
+<Exercise level={3} title="Connectedness is an invariant" id="ex-connected">
 	<p>
 		Prove carefully: if \(f \colon X \to Y\) is continuous and \(X\) is connected, then the image \(f(X)\) is connected (with the
 		subspace topology from \(Y\)). Deduce that a connected space cannot be homeomorphic to a disconnected one.
