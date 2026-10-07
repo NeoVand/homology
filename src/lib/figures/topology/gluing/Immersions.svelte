@@ -130,7 +130,8 @@
 		bottom: 0.7rem;
 		transform: translateX(-50%);
 		width: max-content;
-		max-width: 88%;
+		/* clear of the reset-view button in the corner */
+		max-width: calc(100% - 7rem);
 		font-size: 0.76rem;
 		color: var(--ink-dim);
 		background: rgba(6, 10, 20, 0.7);
@@ -139,6 +140,16 @@
 		padding: 0.3rem 0.8rem;
 		text-align: center;
 		pointer-events: none;
+	}
+	@container figure (max-width: 520px) {
+		/* too narrow to float over the scene: sit under it instead */
+		.note {
+			position: static;
+			transform: none;
+			display: block;
+			max-width: calc(100% - 1.6rem);
+			margin: 0.2rem auto 0.7rem;
+		}
 	}
 	.legend {
 		position: absolute;

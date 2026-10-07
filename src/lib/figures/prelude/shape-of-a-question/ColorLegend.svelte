@@ -25,12 +25,12 @@
 		margin: 0;
 		padding: 1.2rem 1.4rem 1rem !important;
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-columns: 1fr 1fr;
 		gap: 0.7rem 1.6rem;
 	}
-	@media (min-width: 640px) {
+	@container figure (max-width: 36rem) {
 		.legend {
-			grid-template-columns: 1fr 1fr;
+			grid-template-columns: 1fr;
 		}
 	}
 	.legend li {

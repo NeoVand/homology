@@ -134,7 +134,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'lefschetz-duality',
 		term: 'Lefschetz duality',
-		def: 'Poincaré duality for a compact orientable \\(n\\)-manifold with boundary: \\(H^k(M, \\partial M) \\cong H_{n-k}(M)\\) and \\(H^k(M) \\cong H_{n-k}(M, \\partial M)\\). On an annulus, the core circle and a rung from rim to rim are dual to each other.',
+		def: 'Poincaré duality for a compact orientable \\(n\\)-manifold with boundary: \\(H^k(M, \\partial M) \\cong H_{n-k}(M)\\) and \\(H^k(M) \\cong H_{n-k}(M, \\partial M)\\). On an annulus it matches the core circle with the fence along it (a class that ignores the rim), and a rung from rim to rim with the fence along the rung.',
 		chapter,
 		anchor: 'lefschetz',
 		see: ['poincare-duality', 'relative-cohomology']
@@ -158,7 +158,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'seifert-surface',
 		term: 'Seifert surface',
-		def: 'An oriented surface in space whose boundary is a given knot. It is the fence of the cohomology class "linking number with the knot": the linking number of a loop is the signed number of times it pierces the surface. For the unknot it is a disk.',
+		def: 'An oriented surface in space whose boundary is a given knot. It is the fence of the cohomology class “linking number with the knot”: the linking number of a loop is the signed number of times it pierces the surface. For the unknot it is a disk.',
 		chapter,
 		anchor: 'alexander',
 		see: ['linking-number', 'fence']

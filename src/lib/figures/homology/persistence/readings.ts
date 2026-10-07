@@ -25,6 +25,14 @@ export const readings: Reading[] = [
 		kind: 'book'
 	},
 	{
+		title: 'Persistent homology — a survey',
+		author: 'Herbert Edelsbrunner & John Harer, Contemporary Mathematics 453 (2008)',
+		url: 'https://webhomes.maths.ed.ac.uk/~v1ranick/papers/edelhare.pdf',
+		note: 'Two of the founders on where persistence came from and how it works: the three independent discoveries, the algebra, the reduction algorithm and early applications to proteins and networks. A gentler start than their textbook.',
+		kind: 'paper',
+		free: true
+	},
+	{
 		title: 'A roadmap for the computation of persistent homology',
 		author: 'Nina Otter, Mason Porter, Ulrike Tillmann, Peter Grindrod & Heather Harrington, EPJ Data Science 6 (2017)',
 		url: 'https://arxiv.org/abs/1506.08903',
@@ -52,7 +60,7 @@ export const readings: Reading[] = [
 		title: 'What is … persistent homology?',
 		author: 'Shmuel Weinberger, Notices of the AMS 58 (2011) 36–39',
 		url: 'https://www.ams.org/notices/201101/rtx110100036p.pdf',
-		note: 'Two pages of intuition: Seurat, barcodes, the stability theorem and a glimpse of uses inside pure mathematics.',
+		note: 'Four pages of intuition from a pure mathematician: Seurat’s dots, barcodes, the stability theorem, and a glimpse of uses inside pure mathematics.',
 		kind: 'paper',
 		free: true
 	},
@@ -60,7 +68,7 @@ export const readings: Reading[] = [
 		title: 'Introduction to Persistent Homology (video)',
 		author: 'Matthew Wright (2016)',
 		url: 'https://www.youtube.com/watch?v=2PSqWBIrn90',
-		note: 'An animated introduction for viewers with no algebraic topology, drawing the growing complex and the barcode side by side — like Figure 6 in motion. Accompanies a short paper in the SoCG 2016 proceedings.',
+		note: 'An animated introduction for viewers with no algebraic topology, drawing the growing complex and the barcode side by side — like Figure 3.7.6 in motion. It accompanies a three-page paper in the SoCG 2016 proceedings.',
 		kind: 'video',
 		free: true
 	},

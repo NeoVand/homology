@@ -45,29 +45,38 @@
 			free: true
 		},
 		{
+			title: 'What is…Poincaré duality? Or: My face is 0-dimensional',
+			author: 'Daniel Tubbenhauer',
+			url: 'https://www.dtubbenhauer.com/slides/algebraic-topology/25-poincareduality.pdf',
+			note: 'Slides for a short video in his “What is…?” series on YouTube (index at dtubbenhauer.com/youtube.html). It opens with Kepler’s dual solids, then dual graphs, dual cells and palindromic Betti numbers; a companion video does Alexander duality.',
+			kind: 'notes' as const,
+			free: true
+		},
+		{
 			title: 'Differential Forms in Algebraic Topology',
 			author: 'Raoul Bott and Loring Tu (Springer GTM 82, 1982)',
-			url: 'https://books.google.com/books/about/Differential_Forms_in_Algebraic_Topology.html?id=COuPBAAAQBAJ',
-			note: 'Poincaré duality for smooth manifolds via forms: the pairing (α, β) ↦ ∫ α∧β, Poincaré duals of submanifolds as forms concentrated near them, and the Thom class.',
+			url: 'https://link.springer.com/book/10.1007/978-1-4757-3951-0',
+			note: 'Poincaré duality for smooth manifolds via forms: the pairing (α, β) ↦ ∫ α∧β, Poincaré duals of submanifolds as forms concentrated near them, and the Thom class. Graduate level.',
 			kind: 'book' as const
 		},
 		{
 			title: 'Characteristic Classes',
 			author: 'John Milnor and James Stasheff (Princeton, 1974)',
-			note: 'The classic source for the Thom isomorphism and the duality between submanifolds and cohomology classes that underlies the Euler class of §4.8. Graduate level, wonderfully written.',
+			url: 'https://doi.org/10.1515/9781400881826',
+			note: 'The classic source for the Thom isomorphism and the duality between submanifolds and cohomology classes that underlies the Euler class of §4.8. Graduate level, and a model of clear writing.',
 			kind: 'book' as const
 		},
 		{
-			title: 'Poincaré duality',
-			author: 'Wikipedia',
-			url: 'https://en.wikipedia.org/wiki/Poincar%C3%A9_duality',
-			note: 'A compact overview with the history — Poincaré’s 1895 statement, Heegaard’s criticism, the dual-triangulation proof — and the modern cap-product formulation.',
-			kind: 'web' as const,
+			title: 'Papers on Topology: Analysis Situs and Its Five Supplements',
+			author: 'Henri Poincaré, translated by John Stillwell (AMS, 2010)',
+			url: 'https://webhomes.maths.ed.ac.uk/~v1ranick/papers/poincare2009.pdf',
+			note: 'The source, in English, with a lucid introduction by the translator. Analysis Situs states the duality theorem; the first supplement (1899) answers Heegaard with the dual (“reciprocal”) cells of this chapter. The free PDF is the translator’s 2009 version.',
+			kind: 'book' as const,
 			free: true
 		},
 		{
 			title: 'The Essence of de Rham Cohomology',
-			author: 'Anton Petrov (2024)',
+			author: 'Alice Petrov (2024)',
 			url: 'https://arxiv.org/abs/2411.06296',
 			note: 'Student-level notes that reach Poincaré duality through differential forms; a good complement to the combinatorial route taken here.',
 			kind: 'paper' as const,
@@ -135,7 +144,7 @@
 	like a flat plane. The disk has \(1,0,0\) — it is a manifold, but it has a boundary, a rim where it stops.
 	And the <Term t="klein-bottle">Klein bottle</Term> has rational Betti numbers \(1,1,0\): it is a closed manifold, but it is not
 	<Term t="orientable">orientable</Term> — an ant walking around it can come back mirror-reversed
-	(<Ref to="topology/manifolds" />). Strikingly, the Klein bottle’s Betti numbers <em>mod 2</em> are
+	(<Ref to="topology/manifolds" />). Yet the Klein bottle’s Betti numbers <em>mod 2</em> are
 	\(1,2,1\), a palindrome again.
 </p>
 
@@ -242,9 +251,17 @@
 <p>
 	For the \(3\times 3\) torus that is \(18\) dual vertices, \(27\) dual edges and \(9\) hexagonal dual faces.
 	For an octahedron (\(6\) vertices, \(12\) edges, \(8\) faces) it is \(8, 12, 6\): the dual of the octahedron
-	is the cube. The seven-vertex torus has a dual with seven hexagons, famous in geometry as the Szilassi
+	is the cube. The seven-vertex torus has a dual with seven hexagons, known in geometry as the Szilassi
 	polyhedron. Since the alternating sum \(V-E+F\) on a surface reads the same in both directions, the Euler
 	characteristic does not notice the swap.
+</p>
+
+<p>
+	Pairing solids this way is far older than topology. In his <em>Harmonices Mundi</em> of 1619, Johannes Kepler
+	saw “two noteworthy weddings” among the Platonic solids, the cube with the octahedron and the dodecahedron with
+	the icosahedron, and one solid left over, the tetrahedron, “as it were bachelor or hermaphrodite … because it is
+	inscribed in itself” <Cite k="kepler1619" />. What marks the partners, he wrote, is “angles opposite planes”:
+	the corners of one solid sit where the faces of the other do — exactly the swap \(V^* = F\), \(F^* = V\).
 </p>
 
 <Definition id="def-dual-cells" title="Dual cell decomposition">
@@ -505,7 +522,7 @@
 </Definition>
 
 <p>
-	The crucial fact is that the intersection number depends only on the homology classes of the two curves.
+	The key fact is that the intersection number depends only on the homology classes of the two curves.
 	Slide one curve across the other and crossings are created or destroyed in pairs with opposite signs — you
 	saw this in the bent fence of Figure 4.5.4, which crossed three times with signs \(+1,-1,+1\). Two
 	consequences are immediate: \(C_2\cdot C_1 = -\,C_1\cdot C_2\) (swapping the order reverses every turn), and
@@ -597,13 +614,13 @@
 
 <Remark title="Why 4-manifolds care">
 	<p>
-		Two celebrated results of the early 1980s put the intersection form at the centre of four-dimensional
+		Two results of the early 1980s, each of which won its author a Fields Medal, put the intersection form at the centre of four-dimensional
 		topology. Michael Freedman showed in 1982 that a closed simply connected topological 4-manifold is
 		determined, up to homeomorphism, by its intersection form together with one extra mod-2 invariant, and that
 		every unimodular symmetric form occurs <Cite k="freedman1982" />. Simon Donaldson showed in 1983 that for
 		<em>smooth</em> such manifolds with a definite form (all eigenvalues of one sign), the form must be equivalent
 		to \(\pm\) the identity matrix <Cite k="donaldson1983" />.
-		Together they imply, for example, that the topological 4-manifold whose form is the famous
+		Together they imply, for example, that the topological 4-manifold whose form is the
 		eight-dimensional “\(E_8\) form” admits no smooth structure at all. We only glimpse this world; it lies far
 		beyond this book.
 	</p>
@@ -674,7 +691,7 @@
 
 <p>
 	Now take a shape \(K\) sitting inside a sphere \(S^n\) (think of \(S^3\) as ordinary space \(\R^3\) with one point
-	at infinity added) and ask about the space around it, the complement \(S^n\setminus K\). Remarkably, its
+	at infinity added) and ask about the space around it, the complement \(S^n\setminus K\). Its
 	homology is determined by the cohomology of \(K\) alone — no matter how \(K\) is tangled up inside.
 </p>
 
@@ -705,11 +722,12 @@
 <p>
 	A loop \(\gamma\) in the complement is therefore some multiple \(n\,[m]\) of the meridian class, and the number
 	\(n\) is the <dfn>linking number</dfn> of \(\gamma\) with \(K\): how many times \(\gamma\) winds around the knot. Gauss
-	found an integral formula for it in 1833, in a short note left among his papers <Cite k="ricca-nipoti2011" />, and
-	the figure computes that integral numerically. Dually,
+	wrote down an integral formula for it in a brief diary note dated 22 January 1833, which stayed unknown until
+	it was printed in his collected works in 1867 <Cite k="ricca-nipoti2011" />; the figure computes that integral
+	numerically. Dually,
 	\(H^1(S^3\setminus K)\cong\Z\) is generated by the measurement “linking number with \(K\)”, and that measurement has
 	a fence — now a surface, since we are in three dimensions: a <dfn>Seifert surface</dfn>, an oriented surface whose
-	boundary is the knot. Herbert Seifert showed in 1934 that every knot has one <Cite k="seifert1935" />. For the unknot it is simply a disk, and the linking number of a loop is the signed number
+	boundary is the knot. Herbert Seifert showed in 1935 that every knot has one <Cite k="seifert1935" />. For the unknot it is a disk, and the linking number of a loop is the signed number
 	of times it pierces the disk.
 </p>
 

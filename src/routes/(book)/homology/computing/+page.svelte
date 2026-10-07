@@ -17,6 +17,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import FlatComplex from '$lib/figures/homology/homology-groups/FlatComplex.svelte';
 	import TorusKleinPair from '$lib/figures/homology/homology-groups/TorusKleinPair.svelte';
@@ -45,7 +46,7 @@
 
 <p class="lead">The tool is the oldest one in the subject: matrices. We will see that computing homology is linear algebra, and that over a field it comes down to ranks. Over the integers, where we may not divide, something extra survives the computation. That extra, called <em>torsion</em>, is exactly what separates the Klein bottle from the torus.</p>
 
-<p>Along the way we turn homology into a completely mechanical procedure, the “powerful machine” of Atiyah’s devil. Then we build that machine into a calculator you can feed any complex you like. But we will also keep our souls: at every step we will ask what the algebra means geometrically. The answer for torsion is beautiful. It is the shadow of a surface that is <em>twisted onto itself</em>.</p>
+<p>Along the way we turn homology into a completely mechanical procedure, the “powerful machine” of Atiyah’s devil, and then into a calculator you can feed any complex you like. Atiyah’s own advice, a few lines further on, was to cheat the devil: pretend to sell your soul, and keep it <Cite k="atiyah2001" />. So at every step we will ask what the algebra means geometrically. For torsion the answer is a surface glued to itself with a flip, or, in Poincaré’s phrase, a space “so to speak twisted onto itself”.</p>
 
 <Ahead>
 	<p>Every computation of homology in practice runs on the matrices of this chapter. Persistent homology (<Ref to="homology/persistence" />) is the \(\Z/2\) column reduction you will see here, run on a growing complex. Cohomology (<Ref to="cohomology/cohomology-groups" />) uses the same boundary matrices, transposed. And the comparison of coefficients at the end of this chapter is a first look at the Universal Coefficient Theorem, which reappears in Parts IV and V.</p>
@@ -76,7 +77,7 @@
 
 <Figure num="3.4.2" title="Rank by row reduction" hint="Step through · switch number system">
 	<MatrixLab matrix="rp2" mode="Z2" modes={['Z2', 'Q']} matrices={['sphere', 'rp2', 'klein']} />
-	{#snippet caption()}Row-reducing \(\partial_2\). Each step chooses a pivot (gold) and clears the entries below it; changed rows are tinted blue; finished pivots stay gold. For the sphere the rank is \(3\) either way. For \(\RP^2\) and the Klein bottle the last pivot is a \(2\) (rose): over \(\Q\) it is a perfectly good pivot, but over \(\Z/2\) it is zero, so the rank drops by one.{/snippet}
+	{#snippet caption()}Row-reducing \(\partial_2\). Each step chooses a pivot (gold) and clears the entries below it; changed rows are tinted blue; finished pivots stay gold. For the sphere the rank is \(3\) either way. For \(\RP^2\) and the Klein bottle the last pivot over \(\Q\) is \(2\) or \(-2\) (rose): a perfectly good pivot there, but zero over \(\Z/2\), so the rank drops by one.{/snippet}
 </Figure>
 
 <p>Something remarkable happened. <em>The same matrix has rank \(9\) over \(\Z/2\) and rank \(10\) over \(\Q\).</em> Everything goes identically until the very end, when the last pivot turns out to be a \(2\). Over \(\Q\) we may divide by \(2\), so it is a pivot like any other. Over \(\Z/2\), \(2 = 0\), and the column simply vanishes. Feed the two ranks into the rank formula (with \(n_1 = 15\), \(n_2 = 10\) and \(\rank\partial_1 = 5\) in both cases):</p>
@@ -86,7 +87,7 @@
 <p>So which is right: does \(\RP^2\) have a non-bounding loop or not? Both answers are correct. They answer different questions, because “bounding” depends on what coefficients the filling chain may have. To see the whole truth at once we must work over the integers, and over the integers we may not divide at all.</p>
 
 <Question>
-	<p>For the hollow tetrahedron, \(\partial_2\) has rank \(3\) over both fields (try it in Figure 3.4.2). What does that tell you about its Betti numbers over \(\Z/2\) and over \(\Q\)? (They agree: \(1, 0, 1\). Disagreement between fields can only come from entries such as the \(2\) above.)</p>
+	<p>For the hollow tetrahedron, \(\partial_2\) has rank \(3\) over both fields (try it in Figure 3.4.2). What does that tell you about its Betti numbers over \(\Z/2\) and over \(\Q\)? (They agree: \(1, 0, 1\). Two fields can disagree only when a pivot like the \(2\) above turns up, and we are about to see that such a pivot means torsion.)</p>
 </Question>
 
 <h2 id="integers">When you cannot divide</h2>
@@ -129,7 +130,7 @@
 	<p>The numbers \(d_1, \dots, d_r\), the <dfn>invariant factors</dfn> of \(A\), do not depend on the operations chosen, and \(r = \rank A\) over \(\Q\).</p>
 </Theorem>
 
-<p>The algorithm behind the theorem is Euclid’s algorithm for greatest common divisors, played on a whole matrix. Move the smallest non-zero entry to the top-left corner. Divide every other entry of its row and column by it, with remainder, and subtract the corresponding multiples of its row and column; what remains are the remainders, which are smaller. Repeat until the corner entry divides everything in its row and column, clear them, and continue with the smaller matrix that is left. (A final tidying step makes each \(d_i\) divide the next; you met the details in <Ref to="foundations/linear-algebra" />.) Now the payoff.</p>
+<p>Henry Smith introduced this normal form in 1861, while studying systems of linear equations to be solved in whole numbers, decades before anyone thought of homology <Cite k="smith1861" />. The algorithm behind it is Euclid’s algorithm for greatest common divisors, played on a whole matrix. Move the smallest non-zero entry to the top-left corner. Divide every other entry of its row and column by it, with remainder, and subtract the corresponding multiples of its row and column; what remains are the remainders, which are smaller. Repeat until the corner entry divides everything in its row and column, clear them, and continue with the smaller matrix that is left. (A final tidying step makes each \(d_i\) divide the next; you met the details in <Ref to="foundations/linear-algebra" hash="smith-normal-form" />, and Munkres gives a careful textbook account <Cite k="munkres1984" loc="§11" />.) Now the payoff.</p>
 
 <Theorem id="thm-homology-snf" label="Theorem (homology from Smith normal forms)">
 	<p>Let \(r_j = \rank\partial_j\), and let \(d_1, \dots, d_{r_{k+1}}\) be the invariant factors of \(\partial_{k+1}\). Then</p>
@@ -139,12 +140,12 @@
 
 <Proof>
 	<p>Bring \(\partial_{k+1}\) to Smith normal form. In the new bases \(e_1, e_2, \dots\) of \(C_{k+1}\) and \(f_1, f_2, \dots\) of \(C_k\) it reads \(\partial e_i = d_i f_i\) for \(i \le r_{k+1}\), and \(\partial e_i = 0\) for the remaining basis vectors. So the boundaries are \(B_k = \Z d_1 f_1 \oplus \cdots \oplus \Z d_{r} f_{r}\), with \(r = r_{k+1}\).</p>
-	<p>Each \(f_i\) with \(i \le r\) is a cycle: \(d_i\,\partial f_i = \partial(d_i f_i) = \partial\partial e_i = 0\), and in \(C_{k-1}\), a free group, a non-zero element cannot become zero when multiplied by \(d_i \ge 1\); so \(\partial f_i = 0\). Moreover \(f_1, \dots, f_r\) can be extended by further cycles \(g_1, \dots, g_s\) to a basis of \(Z_k\) (this uses that \(Z_k\) contains every element that some non-zero multiple of puts into it, a property of kernels). Counting ranks, \(r + s = \rank Z_k = n_k - r_k\), so \(s = n_k - r_k - r_{k+1}\). Now take the quotient one basis direction at a time:</p>
+	<p>Each \(f_i\) with \(i \le r\) is a cycle: \(d_i\,\partial f_i = \partial(d_i f_i) = \partial\partial e_i = 0\), and in \(C_{k-1}\), a free group, a non-zero element cannot become zero when multiplied by \(d_i \ge 1\); so \(\partial f_i = 0\). Next, split \(Z_k\). Every cycle \(z\) can be written as \(z = (m_1 f_1 + \cdots + m_r f_r) + z'\), where \(z'\) is a combination of the remaining basis vectors \(f_{r+1}, f_{r+2}, \dots\); and \(z'\) is again a cycle, because \(z\) and the \(f_i\) are. So \(Z_k = \Z f_1 \oplus \cdots \oplus \Z f_r \oplus Z'\), where \(Z'\) is the group of cycles built from \(f_{r+1}, f_{r+2}, \dots\) alone. As a subgroup of a free abelian group, \(Z'\) is free (<Ref to="foundations/abelian-groups" />); call a basis \(g_1, \dots, g_s\). Counting ranks, \(r + s = \rank Z_k = n_k - r_k\), so \(s = n_k - r_k - r_{k+1}\). Now take the quotient one basis direction at a time:</p>
 	\[ H_k = \frac{Z_k}{B_k} = \frac{\Z f_1 \oplus \cdots \oplus \Z f_r \oplus \Z g_1 \oplus \cdots \oplus \Z g_s}{\Z d_1 f_1 \oplus \cdots \oplus \Z d_r f_r} \cong \Z/d_1 \oplus \cdots \oplus \Z/d_r \oplus \Z^{s}. \]
 	<p>Finally \(\Z/1 = 0\), so only the factors \(d_i > 1\) survive.</p>
 </Proof>
 
-<p>Two loose ends from the last chapter are now tied. The free rank of \(H_k(K)\) is \(n_k - r_k - r_{k+1}\) with ranks over \(\Q\), as promised there. And for the sphere and the torus, all invariant factors of every boundary matrix are \(1\) (check it in Figure 3.4.4 or in the calculator below), so their homology has no torsion. In particular \(B_1 = Z_1\) on the sphere: every loop on a sphere really does bound.</p>
+<p>Two loose ends from the last chapter are now tied. The free rank of \(H_k(K)\) is \(n_k - r_k - r_{k+1}\) with ranks over \(\Q\), as promised there. And for the sphere and the torus, all invariant factors of every boundary matrix are \(1\) (check the torus in Figure 3.4.4, and both in the calculator at the end of the chapter), so their homology has no torsion. In particular \(B_1 = Z_1\) on the sphere: every loop on a sphere really does bound.</p>
 
 <Figure num="3.4.4" title="The Smith normal form, step by step" hint="Step through the pivots">
 	<MatrixLab matrix="rp2" mode="Z" modes={['Z']} matrices={['rp2', 'klein', 'torus']} />
@@ -152,7 +153,7 @@
 </Figure>
 
 <Intuition title="Why the 2 cannot be removed">
-	<p>Integer row and column operations never change the greatest common divisor of all the entries of a matrix (an integer combination of multiples of \(g\) is a multiple of \(g\)). When only the last \(1\times1\) or \(6\times1\) block is left and all its entries are even, no sequence of allowed moves can ever produce an odd number there. Over \(\Q\) you would simply divide by \(2\). Over \(\Z\) the \(2\) is stuck, and it records a genuine feature of the space.</p>
+	<p>Integer row and column operations never change the greatest common divisor of all the entries of a matrix (an integer combination of multiples of \(g\) is a multiple of \(g\)). When only the last column is left (a \(6\times1\) block for \(\RP^2\), a \(10\times1\) block for the Klein bottle) and all its entries are even, no sequence of allowed moves can ever produce an odd number there. Over \(\Q\) you would simply divide by \(2\). Over \(\Z\) the \(2\) is stuck, and it records a genuine feature of the space.</p>
 </Intuition>
 
 <h2 id="klein-bottle">The Klein bottle, over the integers</h2>
@@ -170,9 +171,25 @@
 
 <p>Compare the torus: \(\Z\), \(\Z^2\), \(\Z\). The tie is broken twice over. The Klein bottle has an element of order two in \(H_1\), and it has no 2-cycles at all.</p>
 
+<h3 id="six-cells">Six cells, by hand</h3>
+
+<p>That took a \(27 \times 18\) matrix, which is a job for a machine. By hand you want fewer, bigger pieces, and <Ref to="homology/homology-groups" hash="computations" /> showed how: the torus from six cells, namely one vertex \(v\), three edges \(a, b, c\) and two triangles \(L\) and \(U\), the square cut along one diagonal. There every edge was a loop, so \(\partial_1 = 0\); both triangles had the same rim, \(\partial L = \partial U = a + b - c\); and dividing \(\Z^3\) by that single relation left \(H_1 \cong \Z^2\). Now reverse one arrow.</p>
+
+<Example title="The Klein bottle in six cells">
+	<p>Take the same square, but let the top edge point to the left, so that the top is glued to the bottom with a flip. This is the Klein bottle, the square with the word \(abab^{-1}\) of <Ref to="topology/gluing" />. All four corners are still one vertex, so every edge is still a loop and every 1-chain is a cycle: \(Z_1 = \Z^3\). Walk around each triangle counterclockwise. Around \(L\): along the bottom, up the right side, back down the diagonal. Around \(U\): up the diagonal, right to left along the top (which is now the way its arrow points), and down the left side, against its arrow:</p>
+	\[ \partial L = a + b - c, \qquad \partial U = c + a - b. \]
+	<p>The first relation says \(c \equiv a + b\) modulo boundaries. Substitute it into the second: \(c + a - b \equiv (a + b) + a - b = 2a\). So</p>
+	\[ H_1(K) \;\cong\; \frac{\Z a \oplus \Z b \oplus \Z c}{\langle\, a + b - c,\; c + a - b \,\rangle} \;\cong\; \frac{\Z a \oplus \Z b}{\langle 2a \rangle} \;\cong\; \Z \oplus \Z/2, \]
+	<p>with \([b]\) of infinite order and \([a]\) of order two. In degree 2, \(\partial(pL + qU) = (p + q)\,a + (p - q)\,b + (q - p)\,c\), which vanishes only when \(p = q = 0\); so \(H_2(K) = 0\). As a check, \(\partial_2\) has columns \((1, 1, -1)\) and \((1, -1, 1)\), and its Smith normal form is \(\operatorname{diag}(1, 2)\).</p>
+</Example>
+
+<p>The \(2\) has a picture. Both triangles, walked counterclockwise, add up to the whole square, and \(\partial(L + U) = 2a\): the diagonal cancels, the two sides \(b\) cancel, but the bottom and the top, glued with a flip, are now run in the <em>same</em> direction and pile up. On the torus the counterclockwise sum is \(L - U\), because there \(U\) walked with its arrows runs clockwise, and its boundary is \(0\).</p>
+
+<p>This is the promise made in <Ref to="topology/gluing" />: the twist in the word \(abab^{-1}\) has come back as a \(\Z/2\). Erase the diagonal and the computation shrinks to a single line, since the one square has boundary \(a + b + a - b = 2a\), read straight off the word. That shortcut is cellular homology, and <Ref to="homology/exact-sequences" hash="cellular-homology" /> proves it is legal. Daniel Tubbenhauer has a slogan for the division of labour: simplicial homology is computable for machines, cellular homology is computable for humans <Cite k="tubbenhauer2021cellular" />. The \(54\) simplices of the grid are for the machine; six cells, or one, are for us.</p>
+
 <h3>Where the 2 comes from</h3>
 
-<p>Here is the same conclusion seen directly. Orient all eighteen triangles counterclockwise in the square picture and add them up. Every edge inside the square is shared by two triangles that run along it in opposite directions, so it cancels. The left and right sides are glued straight; walking counterclockwise, the left side is traversed downwards and the right side upwards, so after gluing these two copies also cancel. But the top is glued to the bottom <em>reversed</em>. Walking counterclockwise, the bottom row is traversed left to right, \(0 \to 1 \to 2 \to 0\); the top row is traversed right to left along labels \(0, 1, 2, 0\), which reads \(0 \to 1 \to 2 \to 0\) again. The two copies of the seam run in the <em>same</em> direction and add up instead of cancelling:</p>
+<p>The grid tells the same story, one small triangle at a time. Orient all eighteen triangles counterclockwise in the square picture and add them up. Every edge inside the square is shared by two triangles that run along it in opposite directions, so it cancels. The left and right sides are glued straight; walking counterclockwise, the left side is traversed downwards and the right side upwards, so after gluing these two copies also cancel. But the top is glued to the bottom <em>reversed</em>. Walking counterclockwise, the bottom row is traversed left to right, \(0 \to 1 \to 2 \to 0\); the top row is traversed right to left along labels \(0, 1, 2, 0\), which reads \(0 \to 1 \to 2 \to 0\) again. The two copies of the seam run in the <em>same</em> direction and add up instead of cancelling:</p>
 
 \[ \partial\Big(\sum_{18 \text{ triangles}} \pm\, t\Big) = 2a, \qquad a = [0,1] + [1,2] - [0,2]. \]
 

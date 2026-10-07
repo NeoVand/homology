@@ -84,17 +84,23 @@
 		</radialGradient>
 	</defs>
 	{#each L.c as [x, y], k (k)}
+		<!-- in C_0 every chain is a cycle (∂_0 = 0), so Z_0 fills C_0 -->
+		{@const Zk = k === 2 ? { a: L.C.a - 7, b: L.C.b - 7 } : L.Z}
 		<ellipse cx={x} cy={y} rx={rx(L, L.C)} ry={ry(L, L.C)} fill="url(#ccd-c-{L.vertical ? 'v' : 'h'})" stroke="rgba(164,147,255,0.6)" stroke-width="2.2" />
-		<ellipse cx={x} cy={y} rx={rx(L, L.Z)} ry={ry(L, L.Z)} fill="rgba(242,141,182,0.17)" stroke="var(--gold-bright)" stroke-width="2.4" stroke-dasharray="7 5" />
+		<ellipse cx={x} cy={y} rx={rx(L, Zk)} ry={ry(L, Zk)} fill="rgba(242,141,182,0.17)" stroke="var(--gold-bright)" stroke-width="2.4" stroke-dasharray="7 5" />
 		<ellipse cx={x} cy={y} rx={rx(L, L.B)} ry={ry(L, L.B)} fill="rgba(95,214,207,0.3)" stroke="var(--teal)" stroke-width="2" />
 		{#if L.vertical}
 			<SvgTeX x={x + L.C.b + 30} y={y - L.C.a + 6} tex={`C_${names[k]}`} size={34} color="var(--violet)" w={80} />
-			<SvgTeX x={x - L.Z.b + 34} y={y} tex={`Z_${names[k]}`} size={27} color="var(--gold-bright)" w={60} />
+			{#if k === 2}
+				<SvgTeX x={x} y={y - Zk.a + 30} tex={'Z_0 = C_0'} size={25} color="var(--gold-bright)" w={140} />
+			{:else}
+				<SvgTeX x={x - Zk.b + 34} y={y} tex={`Z_${names[k]}`} size={27} color="var(--gold-bright)" w={60} />
+			{/if}
 			<SvgTeX x={x} y={y - 28} tex={`B_${names[k]}`} size={24} color="var(--teal)" w={60} />
 			<SvgTeX x={x + L.Z.b - 46} y={y + 2} tex={'\\text{holes}'} size={20} color="var(--rose)" w={90} />
 		{:else}
 			<SvgTeX x={x} y={y - L.C.b - 24} tex={`C_${names[k]}`} size={30} color="var(--violet)" w={80} />
-			<SvgTeX x={x} y={y - L.Z.b + 24} tex={`Z_${names[k]}`} size={23} color="var(--gold-bright)" w={60} />
+			<SvgTeX x={x} y={y - Zk.b + 24} tex={k === 2 ? 'Z_0 = C_0' : `Z_${names[k]}`} size={23} color="var(--gold-bright)" w={k === 2 ? 130 : 60} />
 			<SvgTeX x={x} y={y - 28} tex={`B_${names[k]}`} size={20} color="var(--teal)" w={60} />
 			<SvgTeX x={x} y={y + L.Z.b - 32} tex={'\\text{holes}'} size={17} color="var(--rose)" w={90} />
 		{/if}

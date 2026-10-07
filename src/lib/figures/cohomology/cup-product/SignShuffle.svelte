@@ -2,7 +2,7 @@
 	// Graded commutativity for forms: moving a q-form past a p-form takes p·q
 	// swaps of 1-forms, and every swap costs a factor −1.
 	import { flip } from 'svelte/animate';
-	import Segmented from '$lib/components/ui/Segmented.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import StepControls from '$lib/components/ui/StepControls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 
@@ -42,15 +42,13 @@
 		return out;
 	});
 	const sign = $derived(step % 2 === 0 ? '+' : '-');
-	const labels = $derived(Array.from({ length: total + 1 }, (_, k) => (k === 0 ? 'start: α ∧ β' : k === total ? `done: ${k} swaps` : `swap ${k}`)));
+	const labels = $derived(Array.from({ length: total + 1 }, (_, k) => (k === 0 ? 'start: α ∧ β' : k === total ? `done: ${k} ${k === 1 ? 'swap' : 'swaps'}` : `swap ${k}`)));
 </script>
 
 <div class="ss ui">
 	<div class="degs">
-		<span class="lbl">degree of α</span>
-		<Segmented bind:value={p} label="degree of alpha" options={[1, 2, 3].map((v) => ({ value: v, label: String(v) }))} />
-		<span class="lbl">degree of β</span>
-		<Segmented bind:value={q} label="degree of beta" options={[1, 2, 3].map((v) => ({ value: v, label: String(v) }))} />
+		<Stepper bind:value={p} min={1} max={3} label="degree p of α" />
+		<Stepper bind:value={q} min={1} max={3} label="degree q of β" color="var(--teal)" />
 	</div>
 	<div class="row" aria-live="polite">
 		<span class="sg" class:neg={sign === '-'}>{sign === '+' ? '+' : '−'}</span>
@@ -64,7 +62,7 @@
 	<StepControls bind:step count={total + 1} {labels} interval={900} />
 	<div class="res">
 		<TeX tex={`\\alpha\\wedge\\beta = (-1)^{${p}\\cdot ${q}}\\,\\beta\\wedge\\alpha = ${(p * q) % 2 ? '-' : '+'}\\,\\beta\\wedge\\alpha`} />
-		<span class="note">{p * q} swaps of neighbouring 1-forms, each one a factor −1</span>
+		<span class="note">{p * q} {p * q === 1 ? 'swap' : 'swaps'} of neighbouring 1-forms, each one a factor −1</span>
 	</div>
 </div>
 
@@ -80,11 +78,7 @@
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: center;
-		gap: 0.5rem 0.8rem;
-	}
-	.lbl {
-		font-size: 0.76rem;
-		color: var(--ink-dim);
+		gap: 0.5rem 1.6rem;
 	}
 	.row {
 		display: flex;

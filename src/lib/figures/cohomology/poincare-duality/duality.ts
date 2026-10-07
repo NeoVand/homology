@@ -122,16 +122,16 @@ export interface BettiEntry {
 
 export const bettiCatalogue: BettiEntry[] = [
 	{ id: 's2', name: 'Sphere', tex: 'S^2', n: 2, b: [1, 0, 1], closed: true, orientable: true, note: 'One component, no loops, one enclosed void.' },
-	{ id: 't2', name: 'Torus', tex: 'T^2', n: 2, b: [1, 2, 1], closed: true, orientable: true, note: 'The two loops are matched with each other — each is the other’s fence.' },
+	{ id: 't2', name: 'Torus', tex: 'T^2', n: 2, b: [1, 2, 1], closed: true, orientable: true, note: 'The middle number is matched with itself: the two loops cross once, so the fence of each one detects the other.' },
 	{ id: 'g2', name: 'Genus two', tex: '\\Sigma_2', n: 2, b: [1, 4, 1], closed: true, orientable: true, note: 'In general \\(\\Sigma_g\\) has \\(1, 2g, 1\\): the middle number is matched with itself.' },
 	{ id: 'rp2', name: 'Projective plane', tex: '\\RP^2', n: 2, b: [1, 0, 0], b2: [1, 1, 1], closed: true, orientable: false, note: 'Not orientable: over \\(\\Q\\) the mirror fails (\\(1,0,0\\)), but over \\(\\Z/2\\) it holds (\\(1,1,1\\)).' },
 	{ id: 'klein', name: 'Klein bottle', tex: 'K', n: 2, b: [1, 1, 0], b2: [1, 2, 1], closed: true, orientable: false, note: 'Over \\(\\Q\\): \\(1,1,0\\) — no mirror. Over \\(\\Z/2\\): \\(1,2,1\\), a perfect palindrome.' },
 	{ id: 's3', name: '3-sphere', tex: 'S^3', n: 3, b: [1, 0, 0, 1], closed: true, orientable: true, note: 'Odd dimension: the alternating sum \\(1-0+0-1\\) cancels in pairs.' },
 	{ id: 't3', name: '3-torus', tex: 'T^3', n: 3, b: [1, 3, 3, 1], closed: true, orientable: true, note: 'Three loops, three “walls”: \\(b_1 = b_2 = 3\\).' },
-	{ id: 's1s2', name: 'S¹ × S²', tex: 'S^1\\times S^2', n: 3, b: [1, 1, 1, 1], closed: true, orientable: true, note: 'The loop around \\(S^1\\) is dual to the sphere \\(\\{pt\\}\\times S^2\\).' },
+	{ id: 's1s2', name: 'S¹ × S²', tex: 'S^1\\times S^2', n: 3, b: [1, 1, 1, 1], closed: true, orientable: true, note: 'The loop \\(S^1\\times\\{pt\\}\\) meets the sphere \\(\\{pt\\}\\times S^2\\) once, so \\(b_1\\) and \\(b_2\\) detect each other.' },
 	{ id: 'rp3', name: 'Projective 3-space', tex: '\\RP^3', n: 3, b: [1, 0, 0, 1], b2: [1, 1, 1, 1], closed: true, orientable: true, note: 'Orientable, with torsion \\(H_1 = \\Z/2\\) hiding from the rational Betti numbers.' },
 	{ id: 'cp2', name: 'Complex projective plane', tex: '\\CP^2', n: 4, b: [1, 0, 1, 0, 1], closed: true, orientable: true, note: 'One cell in each even dimension. The middle class has self-intersection \\(1\\).' },
-	{ id: 's2s2', name: 'S² × S²', tex: 'S^2\\times S^2', n: 4, b: [1, 0, 2, 0, 1], closed: true, orientable: true, note: 'Two spheres meeting once: the middle numbers are matched with each other.' },
+	{ id: 's2s2', name: 'S² × S²', tex: 'S^2\\times S^2', n: 4, b: [1, 0, 2, 0, 1], closed: true, orientable: true, note: 'The spheres \\(S^2\\times\\{pt\\}\\) and \\(\\{pt\\}\\times S^2\\) meet once, and each can be pushed off itself: \\(b_2 = 2\\) is matched with itself.' },
 	{ id: 't4', name: '4-torus', tex: 'T^4', n: 4, b: [1, 4, 6, 4, 1], closed: true, orientable: true, note: 'Binomial coefficients \\(\\binom{4}{k}\\) — a row of Pascal’s triangle, symmetric by nature.' },
 	{ id: 'wedge', name: 'Two spheres touching', tex: 'S^2\\vee S^2', n: 2, b: [1, 0, 2], closed: false, orientable: true, note: 'Not a manifold (the touching point has no disk neighbourhood): \\(1,0,2\\) is no palindrome.' },
 	{ id: 'disk', name: 'Disk', tex: 'D^2', n: 2, b: [1, 0, 0], closed: false, orientable: true, note: 'A manifold with boundary: duality needs the boundary taken into account (Lefschetz duality, below).' }

@@ -18,6 +18,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import PotentialPainter from '$lib/figures/cohomology/cochains/PotentialPainter.svelte';
 	import FindPotential from '$lib/figures/cohomology/cochains/FindPotential.svelte';
 	import CurlTriangle from '$lib/figures/cohomology/cochains/CurlTriangle.svelte';
@@ -33,7 +34,7 @@
 			title: 'Algebraic Topology, Chapter 3 (“The Idea of Cohomology”, pp. 186–189)',
 			author: 'Allen Hatcher',
 			url: 'https://pi.math.cornell.edu/~hatcher/AT/AT.pdf',
-			note: 'The model for this chapter: trails on a mountain, voltages in a circuit, and the local and global obstructions — in four pages. The rest of the chapter is graduate level.',
+			note: 'The model for this chapter: trails on a mountain, voltages in a circuit, fences on surfaces, and the local and global obstructions, in four pages. The rest of the chapter is graduate level.',
 			kind: 'book' as const,
 			free: true
 		},
@@ -41,7 +42,7 @@
 			title: 'Hodge Laplacians on Graphs',
 			author: 'Lek-Heng Lim (SIAM Review 62, 2020)',
 			url: 'https://arxiv.org/abs/1507.05379',
-			note: 'Cohomology and Hodge theory using nothing but matrices and graphs. Section 2 (“cohomology on a bumper sticker”) is the best next read after this chapter.',
+			note: 'Cohomology and Hodge theory with nothing but matrices and graphs. Section 2, “Cohomology and Hodge theory for pedestrians”, opens with “cohomology on a bumper sticker” and is the best next read after this chapter; the rest is advanced undergraduate.',
 			kind: 'paper' as const,
 			free: true
 		},
@@ -49,7 +50,7 @@
 			title: 'Discrete Differential Geometry: An Applied Introduction',
 			author: 'Keenan Crane',
 			url: 'https://www.cs.cmu.edu/~kmcrane/Projects/DDG/paper.pdf',
-			note: 'Discrete differential forms as “integrated” measurements on meshes, the discrete exterior derivative, and a beautiful chapter on Hodge decomposition. Undergraduate level, wonderful pictures.',
+			note: 'Discrete differential forms as “integrated” measurements on meshes, the discrete exterior derivative, and a chapter (8) on Hodge decomposition of vector fields on surfaces. Undergraduate level, written for graphics programmers, with many pictures.',
 			kind: 'notes' as const,
 			free: true
 		},
@@ -57,7 +58,7 @@
 			title: 'Statistical ranking and combinatorial Hodge theory',
 			author: 'Xiaoye Jiang, Lek-Heng Lim, Yuan Yao, Yinyu Ye (Math. Programming 127, 2011)',
 			url: 'https://arxiv.org/abs/0811.1067',
-			note: 'HodgeRank: turning pairwise comparisons into a ranking (the gradient part) plus local and global inconsistencies (curl and harmonic parts).',
+			note: 'HodgeRank: turning pairwise comparisons into a ranking (the gradient part) plus local and global inconsistencies (curl and harmonic parts). Sections 1–2 are readable after this chapter; the statistics comes later.',
 			kind: 'paper' as const,
 			free: true
 		},
@@ -73,15 +74,15 @@
 			title: 'Impossible by Degrees: Cohomology & Bistable Visual Paradox',
 			author: 'Lewis Ghrist & Robert Ghrist (2026)',
 			url: 'https://arxiv.org/abs/2602.09313',
-			note: 'Gears, Necker cubes and tilings with ℤ/2 coefficients, with a companion playlist of animations. The source of our gear ring.',
+			note: 'Gears, Necker cubes and rhombic tilings with ℤ/2 coefficients, from H⁰ up to H², with a companion YouTube playlist of animations linked in the introduction. The source of our gear ring.',
 			kind: 'paper' as const,
 			free: true
 		},
 		{
 			title: 'On the cohomology of impossible figures',
-			author: 'Roger Penrose (Leonardo 25, 1992; first published 1991)',
+			author: 'Roger Penrose (Leonardo 25, 1992; first published in Structural Topology)',
 			url: 'https://doi.org/10.2307/1575844',
-			note: 'Penrose’s own short essay explaining the tribar as a cohomology class. For a gentle walk-through, read Phillips’s column below first.',
+			note: 'Penrose’s own three-page essay explaining the tribar as a cohomology class with coefficients in the positive reals. For a gentle walk-through, read Phillips’s column below first.',
 			kind: 'paper' as const
 		},
 		{
@@ -182,9 +183,9 @@
 <p>
 	Exactly the same arithmetic describes an electrical circuit. The vertices are the connection points, \(f(v)\) is the voltage (the
 	electric potential) at \(v\), and \((\delta f)(e)\) is the voltage across the component sitting on the edge \(e\) — the thing a
-	voltmeter clipped to its two ends would read. John Baez puts it in the language we are building:
-	“it’s good to think of \(V\) as a 1-cochain, which assigns to each edge the voltage across that edge.” The word <em>cochain</em> is
-	coming in a moment; for now, read it as “a number on every edge”.
+	voltmeter clipped to its two ends would read. John Baez puts it in the language we are building: “It’s good to think of \(V\) as a
+	1-cochain, which assigns to each edge the voltage across that edge” <Cite k="baez2010" />. The word <em>cochain</em> is coming in a
+	moment; for now, read it as “a number on every edge”.
 </p>
 
 <h3>Walking a path: the climbs telescope</h3>
@@ -261,10 +262,10 @@
 	\(r\) (the <em>root</em>) and give it height \(0\). Every other vertex \(v\) is joined to \(r\) by exactly one path, because a tree has
 	no loops to provide a second route. Walk that path and add up the numbers on its edges (with a minus sign for edges walked against
 	their arrows); call the result \(f(v)\). Then every edge is satisfied: if an edge goes from \(u\) to \(v\), the path to \(v\) is the
-	path to \(u\) followed by that edge, so \(f(v) = f(u) + \psi(e)\). Allen Hatcher, whose textbook this chapter follows, says it in one
-	breath: once a value is chosen at a base vertex \(v_0\) and the change across each edge is specified, “this uniquely determines the
-	value of \(\varphi\) at every other vertex \(v\) by induction along the unique path from \(v_0\) to \(v\) in the tree.” (Hatcher
-	writes \(\varphi\) for the potential where we write \(f\).)
+	path to \(u\) followed by that edge, so \(f(v) = f(u) + \psi(e)\). Allen Hatcher, whose four-page “Idea of Cohomology” this chapter
+	follows <Cite k="hatcher2002" loc="pp. 186–189" />, says it in one breath: once a value is chosen at a base vertex \(v_0\) and the
+	change across each edge is specified, “this uniquely determines the value of \(\varphi\) at every other vertex \(v\) by induction along
+	the unique path from \(v_0\) to \(v\) in the tree.” (Hatcher writes \(\varphi\) for the potential where we write \(f\).)
 </p>
 
 <h3>On a loop, the numbers must add up to zero</h3>
@@ -277,7 +278,7 @@
 <p>
 	The culprit is the loop. We showed in the last section that any gradient sums to \(0\) around every loop; here the sum is
 	\(1 + 1 + 1 + 1 = 4\). So a non-zero loop sum is a <em>certificate of impossibility</em>: one number that proves no potential can
-	exist. The remarkable thing is that the converse also holds.
+	exist. The surprise is that the converse holds too: if every loop sums to zero, a potential exists.
 </p>
 
 <Theorem id="gradient-test" label="Theorem (the gradient test)">
@@ -453,8 +454,8 @@
 	that is why no collection of triangle tests can reach it.
 </p>
 <p>
-	Hatcher describes this situation with two phrases that are worth memorising. The curl of \(\psi\) — in his notation \(\delta\psi\),
-	which we will justify shortly — is a <em>local</em> obstruction:
+	Hatcher describes this situation with two phrases worth memorising <Cite k="hatcher2002" loc="p. 188" />. The curl of \(\psi\) — in
+	his notation \(\delta\psi\), which we will justify shortly — is a <em>local</em> obstruction:
 </p>
 <blockquote>
 	We can think of \(\delta\psi\) as a local obstruction to solving \(\psi = \delta\varphi\) since it depends only on the values of \(\psi\)
@@ -514,10 +515,10 @@
 <h3>The staircase that climbs forever</h3>
 <p>
 	The <em>Penrose staircase</em> is a flight of stairs that goes around the four sides of a square courtyard, climbing at every step, and
-	arrives back where it started. Look at any short stretch and it is an ordinary staircase; look at the whole and it is impossible. It
-	comes from the work of the geneticist Lionel Penrose and his son, the mathematician Roger Penrose, on “impossible objects” in the late
-	1950s, and M. C. Escher made it famous with his 1960 lithograph <em>Ascending and Descending</em>, in which a column of monks trudges
-	around it for ever.
+	arrives back where it started. Look at any short stretch and it is an ordinary staircase; look at the whole and it is impossible. The
+	geneticist Lionel Penrose and his son, the mathematician Roger Penrose, published it in 1958 in a short note on “impossible objects”
+	<Cite k="penrose1958" />, and M. C. Escher made it famous with his 1960 lithograph <em>Ascending and Descending</em>, in which a column
+	of monks trudges around it for ever.
 </p>
 <p>
 	In our language the staircase is an edge labelling. Make a graph with one vertex per step and one edge from each step to the next; the
@@ -541,15 +542,17 @@
 	except the one that closes the loop, where it drops by \(N - 1\) — the cliff, hidden behind the camera angle. Compare that with the
 	impossible labelling \(\psi\) that is \(+1\) everywhere: the two differ only on the cliff edge, by exactly \(N\), the loop sum. You may
 	put the cliff wherever you like (that is adding a bump, changing \(f\)), but you cannot get rid of it, because the loop sum \(N\) does not
-	change. The cliff is the obstruction, made of stone.
+	change. The cliff is the obstruction, made of stone — or of plywood: between 1955 and 1959 the Penroses built small models of exactly
+	this kind, meant to be photographed from the one angle at which they look impossible, and London’s Science Museum keeps them
+	<Cite k="penrose-models" />.
 </p>
 
 <h3>The tribar</h3>
 <p>
 	The <em>Penrose triangle</em>, or tribar, is three square beams joined at right angles into a triangle. Each corner is a perfectly good
 	right-angled joint; the three together are impossible. (The Swedish artist Oscar Reutersvärd had drawn an impossible triangle made of
-	cubes as early as 1934; Lionel and Roger Penrose published theirs in 1958.) In 1991 Roger Penrose wrote a short paper titled
-	<em>On the cohomology of impossible figures</em>, explaining the tribar in exactly our terms. Cut the drawing into three overlapping
+	cubes as early as 1934; Lionel and Roger Penrose published theirs in 1958.) Decades later Roger Penrose wrote a short paper,
+	<em>On the cohomology of impossible figures</em>, explaining the tribar in exactly our terms <Cite k="penrose1992" />. Cut the drawing into three overlapping
 	pieces, each of which can be built. A drawing fixes each piece only up to its distance from your eye, so on each overlap the two pieces
 	must be rescaled to match, by some positive factor. The figure can be built exactly when these factors come from one scale per piece —
 	when they are “differences” — and that happens exactly when their product around the triangle is \(1\). For the tribar it is not.
@@ -559,11 +562,12 @@
 
 <History title="The paradox and the theory">
 	<p>
-		Escher learned of the Penroses’ impossible objects soon after their 1958 paper, and turned the staircase into
-		<em>Ascending and Descending</em> (1960) and the tribar into the endless aqueduct of <em>Waterfall</em> (1961). It took more than thirty
-		years for Roger Penrose to say out loud that the impossibility was a cohomology class. Today applied
-		topologists build whole galleries of such figures; Ghrist and Cooperband’s phrase for the common principle is “the obstruction to
-		globalizing locally consistent geometric relationships.”
+		The influence ran both ways. Roger Penrose drew his triangle in 1954, after seeing Escher’s work; the Penroses sent Escher a copy of
+		their 1958 paper, and he turned the staircase into <em>Ascending and Descending</em> (1960) and the tribar into the endless aqueduct
+		of <em>Waterfall</em> (1961) <Cite k="penrose-models" />. It took more than thirty years for Roger Penrose to say in print that the
+		impossibility was a cohomology class. Today applied topologists build whole galleries of such figures, on cylinders, Möbius bands
+		and Klein bottles; Ghrist and Cooperband’s phrase for the common principle is “the obstruction to globalizing locally consistent
+		geometric relationships” <Cite k="ghrist-cooperband2025" />.
 	</p>
 </History>
 
@@ -573,7 +577,7 @@
 	Lewis Ghrist and Robert Ghrist describe what happens:
 	“If \(n\) is even, alternating spins around the loop satisfies all opposition constraints, and the system spins freely. If \(n\) is odd,
 	no such alternation exists – the final gear must simultaneously agree and oppose its neighbor. The system locks: a mechanical paradox
-	that we will identify as a nontrivial \(H^1\) class.”
+	that we will identify as a nontrivial \(H^1\) class” <Cite k="ghrist-ghrist2026" loc="§2.2" />.
 </p>
 <p>
 	Let us identify it. Record the spin of each gear as an element of \(\Z/2 = \set{0, 1}\) — the integers mod 2, also written \(\mathbb F_2\) —
@@ -625,7 +629,8 @@
 </p>
 <p>
 	A trader who checks every three-currency triangle is running the local curl test. If all six pairs of currencies trade, every triangle is
-	filled, the complex has no holes, and the local test is enough: no triangular arbitrage means no arbitrage at all. But in our square
+	filled, every loop of trades is a boundary, and the local test is enough: no triangular arbitrage means no arbitrage at all (the last exercise
+	of this chapter asks you to prove it). But in our square
 	market there are no triangles to check, so a perfectly real arbitrage hides from every local inspection. Arbitrage can only hide in the
 	holes.
 </p>
@@ -643,7 +648,7 @@
 <h2 id="the-coboundary">The coboundary operator</h2>
 
 <p>
-	It is time to give our objects their proper names. Nothing new will happen mathematically; we will simply notice that the two
+	It is time to give our objects their proper names. Nothing new will happen mathematically; we only need to notice that the two
 	operations of this chapter — “differences of heights” and “circulation around a triangle” — are one operation, and that it is the
 	mirror image of the boundary operator of Part III.
 </p>
@@ -729,7 +734,7 @@
 	<Ref to="foundations/linear-algebra" />. That is not a coincidence of this example: the entry of \(\partial\) in row \(v\), column
 	\(e\) is the coefficient of \(v\) in \(\partial e\), and the entry of \(\delta\) in row \(e\), column \(v\) is the change in \(\delta f\) on
 	\(e\) when \(f\) is \(1\) at \(v\) and \(0\) elsewhere — which is the same coefficient. In every degree, \(\delta_k = \partial_{k+1}^{\mathsf T}\).
-	Keenan Crane, comparing the two theories in his notes on discrete geometry, sums it up: “the only difference is a matrix transpose!”
+	Keenan Crane, comparing the two theories in his notes on discrete geometry, sums it up: “the only difference is a matrix transpose!” <Cite k="crane-ddg" loc="p. 138" />
 	We will make full use of this in <Ref to="cohomology/cohomology-groups" />.
 </p>
 
@@ -745,7 +750,7 @@
 <h3>The new vocabulary</h3>
 <p>
 	Everything we have discovered now has a name, built by putting “co-” in front of a word from homology. (The prefix means “dual”; the
-	names are due to Hassler Whitney in the late 1930s, as we will see in the next chapter.)
+	names are due to Hassler Whitney in the late 1930s, as we will see in the next chapter <Cite k="whitney1938" />.)
 </p>
 
 <Definition id="def-cocycles" title="Cocycles and coboundaries">
@@ -778,7 +783,7 @@
 	them counted as the same when they differ by a coboundary. That is exactly the move we made when we decided that “adding a bump”
 	should not count as a change. For the annulus, the cocycles modulo coboundaries form a single copy of \(\R\) (or \(\Z\), with
 	whole-number labels), and the number that identifies a class is its loop sum around the hole. Lek-Heng Lim calls the general recipe —
-	two matrices \(A\) and \(B\) with \(AB = 0\), and the quotient \(\ker A / \im B\) — “cohomology on a bumper sticker”. The precise
+	two matrices \(A\) and \(B\) with \(AB = 0\), and the quotient \(\ker A / \im B\) — “cohomology on a bumper sticker” <Cite k="lim2020" loc="§2.1" />. The precise
 	definitions, and many computations, are the subject of <Ref to="cohomology/cohomology-groups" />.
 </p>
 
@@ -791,7 +796,7 @@
 	In practice the data is noisy and inconsistent: A beats B, B beats C, and C beats A. What is the best we can do?
 </p>
 <p>
-	The answer is one of the most beautiful facts in the subject. Every edge labelling \(X\) (call it a <em>flow</em> when you think of the
+	The answer sounds too good to be true. Every edge labelling \(X\) (call it a <em>flow</em> when you think of the
 	numbers as amounts flowing along the arrows) splits in exactly one way into three pieces,
 </p>
 \[ X \;=\; \underbrace{\delta f}_{\text{gradient}} \;+\; \underbrace{X_{\text{curl}}}_{\text{swirls around filled triangles}} \;+\; \underbrace{X_{\text{harm}}}_{\text{circulation around the holes}}, \]
@@ -833,10 +838,10 @@
 	pieces are perpendicular, their squared lengths add, just as for the sides of a right-angled triangle.
 </p>
 <p>
-	This is not a toy. In 2011 Xiaoye Jiang, Lek-Heng Lim, Yuan Yao and Yinyu Ye proposed <em>HodgeRank</em>, which ranks items from
+	This is not a toy. In a 2011 paper Xiaoye Jiang, Lek-Heng Lim, Yuan Yao and Yinyu Ye proposed <em>HodgeRank</em>, which ranks items from
 	pairwise comparisons — teams from match results, films from viewers’ preferences — in exactly this way: the gradient part is the
 	ranking, the curl part records local three-way inconsistencies, and the harmonic part records inconsistencies that are, in their
-	words, “globally cyclic but locally acyclic”. Those are the ones no amount of local checking will find.
+	words, “locally acyclic but globally cyclic” <Cite k="jiang2011" />. Those are the ones no amount of local checking will find.
 </p>
 
 <KeyIdea title="The harmonic part is the obstruction">

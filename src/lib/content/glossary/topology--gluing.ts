@@ -24,7 +24,7 @@ export const entries: GlossaryEntry[] = [
 		term: 'Gluing diagram',
 		def: 'A polygon whose edges carry letters and arrows; edges with the same letter are glued so that their arrows match. Unlabelled edges stay free and form the boundary.',
 		chapter,
-		anchor: 'def-quotient',
+		anchor: 'gluing-diagrams',
 		see: ['edge-word', 'corner-class']
 	},
 	{
@@ -101,7 +101,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'immersion',
 		term: 'Immersion',
-		def: 'A smooth map of a surface into space that is an embedding near each point but may pass through itself, along a double curve.',
+		def: 'A smooth map of a surface into space whose derivative is one-to-one at every point: near each point it is a faithful embedding, but different sheets may pass through each other along a double curve.',
 		chapter,
 		anchor: 'def-embedding',
 		see: ['embedding', 'double-curve']

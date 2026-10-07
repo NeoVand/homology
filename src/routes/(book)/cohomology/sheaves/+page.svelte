@@ -118,9 +118,11 @@
 	];
 </script>
 
-<Epigraph author="Robert Ghrist and Zoe Cooperband" source="Obstructions to Reality: Torsors &amp; Visual Paradox (2025)"
-	>Visual paradoxes like the Penrose staircase present a fundamental tension: locally coherent geometric relationships that
-	cannot be realized globally.</Epigraph
+<Epigraph
+	author="Jean Leray"
+	source="in M. Schmidt, Hommes de science (1990), p. 166, as quoted by Haynes Miller (2000); translated from the French"
+	>These notions were poorly received in America when they were published. It was too difficult. Mathematical Reviews asked,
+	‘What can this be used for?’ Henri Cartan and Jean-Pierre Serre showed what it is used for!</Epigraph
 >
 
 <p class="lead">
@@ -334,10 +336,11 @@
 </Theorem>
 
 <p>
-	(“Reasonable” has a precise meaning, <em>paracompact</em>, which every space in this book satisfies; Hatcher proves the
-	theorem in that generality <Cite k="hatcher2002" loc="Cor. 4G.3" />.) We will not prove it here; versions of it go back
-	to Jean Leray in the 1940s and to Karol Borsuk <Cite k="borsuk1948" />. But the idea is easy to believe.
-	If every piece and every overlap is a featureless blob, then the only way the space can have a hole is for the pieces to
+	“Reasonable” has a precise meaning, <em>paracompact</em>, and <Cite k="hatcher2002" loc="Cor. 4G.3" text /> proves
+	the theorem in that generality. We will not prove it here; versions of it go back to Jean Leray in the 1940s and to Karol Borsuk <Cite
+		k="borsuk1948"
+	/>. But the idea is easy to believe. If every piece and every overlap is a featureless blob, then the only way the
+	space can have a hole is for the pieces to
 	be arranged <em>around</em> it — and the arrangement is precisely what the nerve records. You already met the theorem in
 	<Ref to="homology/persistence" />: the Čech complex of a point cloud is the nerve of the disks around the points, and
 	disks are convex, so every intersection of disks is convex and therefore contractible.
@@ -937,7 +940,7 @@
 		If every finite intersection \(U_{i_0\cdots i_p}\) of the pieces of \(\mathcal U\) has no higher cohomology with
 		coefficients in \(F\) — that is, \(H^q(U_{i_0\cdots i_p}; F) = 0\) for all \(q\ge 1\) — then
 		\[ \check H^p(\mathcal U; F) \cong H^p(X;F) \quad \text{for every } p. \]
-		(For a proof see <Cite k="stacks-project" loc="Lemma 20.11.6, Tag 01ET" text />.)
+		For a proof, see the <Cite k="stacks-project" loc="Lemma 20.11.6, Tag 01ET" text />.
 	</p>
 </Theorem>
 

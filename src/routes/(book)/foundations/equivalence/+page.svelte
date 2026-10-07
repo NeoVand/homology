@@ -419,9 +419,9 @@
 
 <Question title="Is “is a sibling of” an equivalence relation?">
 	<p>
-		Think before you read on. Are you your own sibling? Most people would say no — so the relation is not reflexive. Even
-		transitivity can fail: if Ann and Ben are siblings, then (by symmetry) Ben and Ann are siblings, and transitivity would force
-		Ann to be her own sibling. Now consider instead “has the same two parents as.” This is a “same answer to a question” relation,
+		Think before you read on. Are you your own sibling? Most people would say no — so the relation is not reflexive.
+		Transitivity fails too, and half-siblings show it: Ann and Ben can share a mother, and Ben and Cara a father, while Ann
+		and Cara share no parent at all. Now consider instead “has the same two parents as.” This is a “same answer to a question” relation,
 		so it <em>is</em> an equivalence relation, and its piles are exactly the families of full siblings, each person included in
 		their own pile. Small changes of wording matter.
 	</p>
@@ -873,7 +873,7 @@
 	<p>
 		Strictly speaking, a quotient <em>set</em> is only a set: a bag of points with no sense of which points are near which. To say
 		that \(I/{\sim}\) is a circle <em>as a shape</em>, we need to carry over the idea of nearness from \(I\), which is exactly
-		what the <em>quotient topology</em> of <Ref to="topology/gluing" /> does. In this chapter, read “is a circle” as “has one point
+		what the <em>quotient topology</em> of <Ref to="topology/gluing" /> does <Cite k="munkres2000" loc="§22" />. In this chapter, read “is a circle” as “has one point
 		for every point of a circle, arranged the way the picture suggests.”
 	</p>
 </Remark>

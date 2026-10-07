@@ -398,6 +398,69 @@ export function annulus(): Example {
 }
 
 /**
+ * A big triangle with each side cut into 4 (15 vertices, 16 small triangles),
+ * with one interior up-triangle removed: the middle one of the three in the
+ * third row from the top. Lattice point (i, j), j = row from the bottom, has
+ * label (number of points in the rows below) + i.
+ * cycles: the outer rim (12 edges) and the 3-edge loop hugging the hole, both counterclockwise.
+ */
+export function holedTriangle(): Example & { hole: [number, number, number]; holeCentre: Pt } {
+	const lab = (i: number, j: number) => {
+		let n = 0;
+		for (let r = 0; r < j; r++) n += 5 - r;
+		return n + i;
+	};
+	const at = (i: number, j: number): DV => [lab(i, j), [i + j / 2 - 2, (j * SQ3) / 2 - (2 * SQ3) / 3]];
+	const hole: [number, number, number] = [lab(1, 1), lab(2, 1), lab(1, 2)];
+	const tris: [DV, DV, DV][] = [];
+	for (let j = 0; j < 4; j++)
+		for (let i = 0; i + j < 4; i++) {
+			if (!(i === 1 && j === 1)) tris.push([at(i, j), at(i + 1, j), at(i, j + 1)]);
+			if (i + j < 3) tris.push([at(i + 1, j), at(i + 1, j + 1), at(i, j + 1)]);
+		}
+	const K = new SimplicialComplex(tris.map((t) => t.map(([v]) => v)));
+	const L = buildFlat(K, { tris }, { scale: 104 });
+	const rim: number[] = [];
+	for (let i = 0; i < 4; i++) rim.push(lab(i, 0));
+	for (let j = 0; j < 4; j++) rim.push(lab(4 - j, j));
+	for (let j = 4; j > 0; j--) rim.push(lab(0, j));
+	const c = [at(1, 1), at(2, 1), at(1, 2)].map(([, p]) => p);
+	return {
+		id: 'holed-triangle',
+		name: 'Triangle with a hole',
+		space: 'S^1 \\times I',
+		K,
+		L,
+		hole,
+		holeCentre: [(c[0][0] + c[1][0] + c[2][0]) / 3, (c[0][1] + c[1][1] + c[2][1]) / 3],
+		cycles: [
+			{ name: 'rim', tex: '\\rho', k: 1, chain: loopChain(K, rim), color: 'gold' },
+			{ name: 'hug', tex: '\\eta', k: 1, chain: loopChain(K, hole), color: 'gold' }
+		]
+	};
+}
+
+/**
+ * Winding number of an integer 1-cycle around a point of the plane (layout
+ * coordinates), from the angles its edges subtend there. Every edge must miss the point.
+ */
+export function windingAround(L: FlatLayout, z: Chain, centre: Pt): number {
+	let total = 0;
+	const seen = new Set<number>();
+	for (const d of L.edges) {
+		if (!z[d.e] || seen.has(d.e)) continue;
+		seen.add(d.e);
+		const a = L.verts[d.a].q;
+		const b = L.verts[d.b].q;
+		let th = Math.atan2(b[1] - centre[1], b[0] - centre[0]) - Math.atan2(a[1] - centre[1], a[0] - centre[0]);
+		while (th > Math.PI) th -= 2 * Math.PI;
+		while (th <= -Math.PI) th += 2 * Math.PI;
+		total += z[d.e] * th;
+	}
+	return Math.round(total / (2 * Math.PI));
+}
+
+/**
  * Winding number of an integer 1-cycle on the annulus: signed number of times
  * it crosses a fixed ray from the centre (counterclockwise = +1). This is a
  * cocycle: it vanishes on the boundary of every triangle.

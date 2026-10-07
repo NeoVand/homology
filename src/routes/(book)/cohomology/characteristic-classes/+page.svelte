@@ -393,11 +393,9 @@
 
 <p>
 	(The same statement holds for closed manifolds of any dimension, with the index defined using spheres instead of
-	loops.) Henri Poincaré proved the theorem for surfaces in 1885 <Cite k="poincare1885" />, and Heinz Hopf proved it in
-	every dimension <Cite k="hopf1927" />; John Milnor’s slim classic is the place to read about it <Cite
-		k="milnor1965"
-		loc="§6"
-	/>. Check it against the figures:
+	loops.) Henri Poincaré proved the theorem for surfaces <Cite k="poincare1885" />, and Heinz Hopf proved it in
+	every dimension <Cite k="hopf1927" />; the place to read about it is <Cite k="milnor1965" loc="§6" text />, a slim
+	classic. Check it against the figures:
 </p>
 
 <ul>
@@ -526,7 +524,7 @@
 	<p>
 		For a smooth closed plane curve that never stops (its velocity is never zero), \(\oint \kappa\,ds = 2\pi k\), where the
 		<dfn>turning number</dfn> \(k\) is an integer. If the curve is simple (does not cross itself), then \(k = \pm 1\)
-		(Hopf’s <em>Umlaufsatz</em> <Cite k="hopf1935" />).
+		(the <em>Umlaufsatz</em> of <Cite k="hopf1935" text />).
 	</p>
 </Theorem>
 
@@ -578,7 +576,7 @@
 
 <blockquote>
 	“If a curved surface is developed upon any other surface whatever, the measure of curvature in each point remains
-	unchanged.” — Gauss, <em>General Investigations of Curved Surfaces</em> <Cite k="gauss1827" loc="art. 12" />
+	unchanged.” — <Cite k="gauss1827" loc="art. 12" text />
 </blockquote>
 
 <p>
@@ -641,8 +639,7 @@
 
 <p>
 	Now cover a whole closed surface with geodesic triangles and add up Gauss’s formula over all of them. The answer turns out
-	not to depend on the shape at all. (Tristan Needham’s book gives four different geometric proofs of this, each a
-	picture you can hold in your head <Cite k="needham2021" />.)
+	not to depend on the shape at all. <Cite k="needham2021" text /> gives four different geometric proofs of it.
 </p>
 
 <Theorem label="Theorem (Gauss–Bonnet)" id="thm-gauss-bonnet">
@@ -761,8 +758,11 @@
 		>Chern–Weil theory</dfn
 	>. In 1944 Shiing-Shen Chern gave an intrinsic proof of the Gauss–Bonnet formula for manifolds of every even dimension
 	<Cite k="chern1944" />, and in 1946 he introduced the characteristic classes of complex vector bundles that now bear his
-	name <Cite k="chern1946" />. Milnor and Stasheff’s appendix on connections and curvature is the standard short account
-	<Cite k="milnor-stasheff1974" loc="App. C" />.
+	name <Cite k="chern1946" />. The standard short account is the appendix on connections and curvature in <Cite
+		k="milnor-stasheff1974"
+		loc="App. C"
+		text
+	/>.
 </p>
 
 <h2 id="characteristic-classes">Characteristic classes</h2>
@@ -820,8 +820,8 @@
 </div>
 
 <p>
-	There are higher Stiefel–Whitney classes \(w_i\), higher Chern classes \(c_i\) and Pontryagin classes \(p_i\); Milnor
-	and Stasheff’s book is the classic guide <Cite k="milnor-stasheff1974" loc="§4, §9, §14, §15" />. We look more closely
+	There are higher Stiefel–Whitney classes \(w_i\), higher Chern classes \(c_i\) and Pontryagin classes \(p_i\);
+	<Cite k="milnor-stasheff1974" loc="§4, §9, §14, §15" text /> is the classic guide. We look more closely
 	at the one that physics needs most, \(c_1\).
 </p>
 
@@ -932,8 +932,7 @@
 	by the direction of the field. Barry Simon recognised in 1983, having seen Berry’s work before publication, that this
 	phase is the <em>holonomy</em> of a connection on a complex line bundle over the space of knob settings: the phase a
 	fibre picks up when it is carried around a loop <Cite k="simon1983" />. Its curvature, the <dfn>Berry curvature</dfn>,
-	integrates over a
-	closed surface of settings to \(2\pi\) times a Chern number. For the spin it is the field of a monopole of strength
+	integrates over a closed surface of settings to \(2\pi\) times a Chern number. For the spin it is the field of a monopole of strength
 	\(\frac12\) sitting at the setting where the field vanishes: Dirac’s monopole, reappearing in the space of parameters.
 </p>
 

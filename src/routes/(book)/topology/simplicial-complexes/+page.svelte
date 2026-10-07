@@ -17,6 +17,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import SimplexGallery from '$lib/figures/topology/simplicial-complexes/SimplexGallery.svelte';
 	import Barycentric from '$lib/figures/topology/simplicial-complexes/Barycentric.svelte';
 	import NonExamples from '$lib/figures/topology/simplicial-complexes/NonExamples.svelte';
@@ -45,6 +46,29 @@
 			url: 'https://doi.org/10.1017/CBO9780511779534',
 			note: 'The gentlest real textbook on this material: simplicial complexes, surfaces and their homology, with hundreds of exercises. Undergraduate level.',
 			kind: 'book' as const
+		},
+		{
+			title: 'Basic Topology, Chapter 6 (Triangulations)',
+			author: 'M. A. Armstrong',
+			url: 'https://doi.org/10.1007/978-1-4757-1793-8',
+			note: 'A classic undergraduate text. Its chapter on triangulations treats simplicial complexes, barycentric subdivision and simplicial approximation with full proofs; the next chapter uses them to classify surfaces.',
+			kind: 'book' as const
+		},
+		{
+			title: 'You Could Have Invented Homology, Part 2: Some Simple Spaces',
+			author: 'Boarbarktree (video)',
+			url: 'https://www.youtube.com/watch?v=JTTDmE_bBtM',
+			note: 'An animated build-up from segments and triangles, through convex combinations, to the standard simplices: our barycentric coordinates, reached through convex sets.',
+			kind: 'video' as const,
+			free: true
+		},
+		{
+			title: 'You Could Have Invented Homology, Part 3: Boundaries & The Big Idea',
+			author: 'Boarbarktree (video)',
+			url: 'https://www.youtube.com/watch?v=j9JJJoTjIpY',
+			note: 'Boundaries and interiors of simplices, why one builds with simplices rather than balls, and the first question of homology: can a loop be filled in? The series stops before the formal definition, which is where Part III of this book takes over.',
+			kind: 'video' as const,
+			free: true
 		},
 		{
 			title: 'Computational Topology: An Introduction',
@@ -96,9 +120,9 @@
 <p class="lead">
 	A sphere has infinitely many points. So do a doughnut, a coffee cup and the surface of the Earth. Yet if we want to <em>count</em>
 	things about a shape — how many pieces it has, how many loops, how many hollows — or ask a computer to do the counting for us,
-	infinitely many points is far too many. This chapter is about a beautiful way out: build every shape from a few of the simplest
-	possible pieces — points, line segments, triangles and their higher-dimensional cousins — glued together by two strict rules. The
-	whole shape then becomes a finite list you could write on a napkin, and questions about holes become questions about the list.
+	infinitely many points is far too many. The way out is to build every shape from a few of the simplest possible pieces — points,
+	line segments, triangles and their higher-dimensional cousins — glued together by two strict rules. The whole shape then becomes a
+	finite list you could write on a napkin, and questions about holes become questions about the list.
 </p>
 
 <Ahead>
@@ -231,8 +255,8 @@
 <p>
 	read “\(n+1\) choose \(k+1\)”. For the tetrahedron (\(n = 3\)) this gives \(\binom{4}{1} = 4\) vertices, \(\binom{4}{2} = 6\)
 	edges, \(\binom{4}{3} = 4\) triangles and \(\binom{4}{4} = 1\) tetrahedron. These binomial numbers are exactly the entries of
-	<em>Pascal’s triangle</em>, in which every number is the sum of the two above it: row \(n+1\) of Pascal’s triangle lists the faces
-	of the \(n\)-simplex, dimension by dimension. Try it in the figure.
+	<em>Pascal’s triangle</em>, in which every number is the sum of the two above it. Counting the single 1 at the top as row 0, row
+	\(n+1\) of Pascal’s triangle lists the faces of the \(n\)-simplex, dimension by dimension. Try it in the figure.
 </p>
 
 <Figure num="2.5.1" title="The simplices and their faces" hint="Drag to rotate · tap a count or an entry">
@@ -325,10 +349,26 @@
 <History title="A geometer’s weights">
 	<p>
 		Barycentric coordinates were introduced by August Ferdinand Möbius in his book <em>Der barycentrische Calcul</em> (“The
-		barycentric calculus”) of 1827 — the same Möbius whose one-sided band you met in <Ref to="topology/gluing" />, and, as we shall
-		see in a moment, the first person to describe the smallest triangulated torus.
+		barycentric calculus”) of 1827 <Cite k="mobius1827" />. His idea was the one we just used: describe a point by the weights
+		that, hung at the corners of a fixed triangle, would make it the balance point. It is the same Möbius whose one-sided band you met in
+		<Ref to="topology/gluing" />, and, as we shall see in a moment, the first person known to have written down the smallest
+		triangulated torus.
 	</p>
 </History>
+
+<Intuition title="Why simplices, and not balls?">
+	<p>
+		Up to homeomorphism a simplex is nothing new: it is a ball. Stand at the barycentre and slide every point along its ray from
+		there, stretching or shrinking each ray so that the boundary lands on a round sphere; the filled triangle becomes a disk, the
+		solid tetrahedron a solid ball. So why build with simplices at all? Look at the boundaries. The boundary of a ball is a sphere,
+		which is not a ball, and nothing about it says how to cut it into pieces. The boundary of an \(n\)-simplex comes already cut: it is
+		\(n+1\) simplices of dimension \(n-1\), one opposite each vertex, and their boundaries are cut in the same way, all the way down
+		to points. Simplices stay simplices when you take boundaries, and that is what will let a whole shape, boundaries and all, be
+		written down as a list. (Notice that the boundary of a simplex is <em>several</em> simplices, not one: the hollow tetrahedron is
+		a sphere, not a triangle in disguise. The third part of Boarbarktree’s video series <em>You Could Have Invented Homology</em>
+		also asks why simplices rather than balls.)
+	</p>
+</Intuition>
 
 <h2 id="simplicial-complexes">Gluing simplices: the two rules</h2>
 
@@ -378,8 +418,8 @@
 
 <p>
 	A little vocabulary, which we will use constantly. The <strong>dimension</strong> of a complex is the largest dimension of its
-	simplices: a complex made of edges and vertices is 1-dimensional (it is what §3.1 will call a <Term t="graph">graph</Term>); a
-	surface made of triangles is 2-dimensional. The number of \(k\)-simplices of \(K\) is written \(n_k\), and the list
+	simplices: a complex made of edges and vertices is 1-dimensional (a <Term t="graph">graph</Term>, the main character of
+	<Ref to="homology/cycles-and-boundaries" />); a surface made of triangles is 2-dimensional. The number of \(k\)-simplices of \(K\) is written \(n_k\), and the list
 	\[ (n_0, n_1, n_2, \dots) \]
 	is the <dfn>f-vector</dfn> of \(K\): the number of vertices, edges, triangles, and so on. The union of all the simplices — the actual
 	set of points in space — is the <dfn>underlying space</dfn> of \(K\), written \(\abs{K}\). A sub-collection that obeys the rules by
@@ -403,9 +443,10 @@
 
 <Question>
 	<p>
-		In the builder, start from “Corner on an edge” and repair it so that it obeys rule 2 without deleting anything. (One way: add the
-		offending corner as a new vertex <em>of</em> the long edge by deleting that edge and drawing two shorter edges and two triangles
-		in its place — or simply drag the corner away.)
+		In the builder, start from “Corner on an edge” and repair it so that it obeys rule 2. (The quick fix is to drag the corner away.
+		The fix that keeps the shape makes the corner a vertex <em>of</em> the long edge: erase that edge, which takes its triangle
+		with it, then draw two triangles that each use the corner and fill the gap. The big triangle has become two, as the warning
+		above describes.)
 	</p>
 </Question>
 
@@ -449,8 +490,8 @@
 </KeyIdea>
 
 <p>
-	This is the moment when, in Hermann Weyl’s image at the top of the chapter, the devil of algebra gets its foot in the door of
-	topology. A list can be counted, sorted, fed to a computer and turned into matrices — and that is exactly what Part III will do.
+	This is the moment when, in Hermann Weyl’s image at the top of the chapter <Cite k="weyl1939" loc="p. 500" />, the devil of
+	algebra gets its foot in the door of topology. A list can be counted, sorted, fed to a computer and turned into matrices — and that is exactly what Part III will do.
 	The angel need not worry: we will keep checking that every count means something you can see.
 </p>
 
@@ -474,8 +515,8 @@
 	of the simplex on \(\set{v_1, v_2, v_5}\) is \(t_1 e_1 + t_2 e_2 + t_5 e_5\), whose coordinates in \(\R^m\) are just
 	\((t_1, t_2, 0, 0, t_5, 0, \dots)\). So each point of the drawing remembers, in its coordinates, exactly which vertices it uses; two
 	simplices can only share points that use vertices common to both, which is to say points of a common face. The price is a lot of
-	dimensions — one for every vertex. Fewer are usually enough: a complex of dimension \(d\) can always be realised in
-	\(\R^{2d+1}\). For instance every graph (\(d = 1\)) can be drawn in ordinary space without crossings, even though some graphs cannot
+	dimensions — one for every vertex. Far fewer are enough: a complex of dimension \(d\) can always be realised in
+	\(\R^{2d+1}\) <Cite k="edelsbrunnerharer2010" loc="ch. III" />. For instance every graph (\(d = 1\)) can be drawn in ordinary space without crossings, even though some graphs cannot
 	be drawn in the plane without crossings — a fact we will prove in <Ref to="topology/euler-characteristic" />.
 </p>
 
@@ -565,8 +606,8 @@
 	Nine vertices is not the record. The torus can be triangulated with just <strong>seven</strong> vertices, \(21\) edges and \(14\)
 	triangles, using the triangles
 	\[ \set{i,\, i+1,\, i+3} \quad\text{and}\quad \set{i,\, i+2,\, i+3} \qquad\text{for } i = 0, 1, \dots, 6, \]
-	where the labels are read modulo 7 (on a 7-hour clock: \(5 + 3 = 1\), as in <Ref to="foundations/equivalence" />). It was described
-	by August Möbius in the nineteenth century. It has a remarkable property: <em>every</em> pair of its seven vertices is joined by an
+	where the labels are read modulo 7 (on a 7-hour clock: \(5 + 3 = 1\), as in <Ref to="foundations/equivalence" />). It is found in
+	the notes of August Möbius, published after his death <Cite k="lutz2008" />. It has a remarkable property: <em>every</em> pair of its seven vertices is joined by an
 	edge, since \(\binom{7}{2} = 21\). And seven is the minimum — you will prove that with the next chapter’s tools.
 </p>
 
@@ -588,11 +629,14 @@
 
 <p>
 	Can the seven-vertex torus be built in space from <em>flat</em> triangles and straight edges, without crossing itself? Yes: in 1949
-	the Hungarian mathematician Ákos Császár found coordinates for its seven vertices that do it, and the result is called
+	the Hungarian mathematician Ákos Császár found coordinates for its seven vertices that do it <Cite k="csaszar1949" />, and the
+	result is called
 	<dfn>Császár’s polyhedron</dfn> — a polyhedron with a hole through it and no diagonals at all, since every pair of corners is
-	already joined by an edge. (The coordinates in our figure are those listed by Frank Lutz, squashed vertically to fit the screen — a stretch
-	or squash cannot create crossings — and we checked by computer that no two triangles cross.) Its dual, discovered by Lajos Szilassi in 1977, has seven hexagonal faces, each
-	touching all six others — which is why a map drawn on a torus can need seven colours, not four.
+	already joined by an edge. (The coordinates in our figure are those listed by Frank Lutz <Cite k="lutz2008" />, squashed
+	vertically to fit the screen — a stretch or squash cannot create crossings — and we checked by computer that no two triangles
+	cross.) Its dual, found by Lajos Szilassi in 1977, has seven hexagonal faces, each touching all six others. Colour its faces so
+	that neighbours differ and you need seven colours: a map drawn on a torus can need seven colours, not the four that always
+	suffice on a sphere.
 </p>
 
 <h3 id="projective-plane">The projective plane in six vertices</h3>
@@ -616,16 +660,18 @@
 
 <p>
 	For the <Term t="klein-bottle">Klein bottle</Term>, seven vertices are not enough. A seven-vertex triangulation of it would also
-	have to join every pair of vertices (the next chapter’s counting shows why), and Philip Franklin proved in 1934 that the seven
-	points cannot all be joined to each other on a Klein bottle without crossings. Eight vertices is the minimum, and the \(3 \times
-	3\) grid with one pair of sides glued with a twist gives a simple nine-vertex triangulation.
+	have to join every pair of vertices (the next chapter’s counting shows why), and Philip Franklin proved in 1934 that seven
+	points cannot all be joined to each other on a Klein bottle without crossings <Cite k="franklin1934" />. Eight vertices is the
+	minimum <Cite k="lutz2008" />, and the \(3 \times 3\) grid with one pair of sides glued with a twist gives a simple nine-vertex
+	triangulation.
 </p>
 
 <Remark title="Can everything be triangulated?">
 	<p>
-		Every surface can (Tibor Radó proved it in 1925), and so can every shape in this book. But not every space: there are spaces —
-		even manifolds, in dimension four and higher — that admit no triangulation at all. This is one reason later chapters develop
-		homology for spaces that are not given to us in pieces.
+		Every surface can, as Tibor Radó proved in 1925 <Cite k="rado1925" />, and so can every shape in this book. But not every
+		space: there are manifolds, in every dimension from four up, that admit no triangulation at all — the last dimensions were
+		settled only in 2016 <Cite k="manolescu2016" />. This is one reason later chapters develop homology for spaces that are not
+		given to us in pieces.
 	</p>
 </Remark>
 
@@ -652,8 +698,9 @@
 <p>
 	There is a neat way to tell the two kinds of order apart without drawing anything. Starting from \([v_0, v_1, v_2]\), count how many
 	swaps of two neighbouring entries it takes to reach the order you have. Rotating, \([v_0, v_1, v_2] \to [v_1, v_0, v_2] \to [v_1,
-	v_2, v_0]\), takes two swaps; reversing a pair takes one. An even number of swaps keeps the orientation, an odd number reverses it —
-	and remarkably, however you choose to do the swaps, the parity (even or odd) of their number always comes out the same.
+	v_2, v_0]\), takes two swaps; reversing a pair takes one. An even number of swaps keeps the orientation, an odd number reverses it.
+	Different routes to the same order may use different numbers of swaps, but the parity (even or odd) always comes out the same —
+	the hint to the exercise “Same orientation or opposite?” below explains why.
 </p>
 
 <Definition id="def-orientation">
@@ -700,7 +747,8 @@
 <p>
 	Finally, orientations connect to <Term t="orientable">orientability</Term> from <Ref to="topology/manifolds" />. Orient every
 	triangle of a triangulated surface. The orientations are <dfn>coherent</dfn> if, wherever two triangles share an edge, they run along
-	it in opposite directions — like two neighbouring gears turning the same way, whose teeth move oppositely where they meet. A surface
+	it in opposite directions. Draw two triangles side by side on paper and orient both anticlockwise: along their shared edge one goes
+	up and the other comes down, automatically. Coherence asks for the same thing all over a surface that need not lie flat. A surface
 	can be coherently oriented exactly when it is orientable: the torus triangulations above can be, the projective plane cannot. On
 	\(\RP^2\), however you orient the ten triangles, somewhere two neighbours will run along their shared edge in the same direction.
 </p>
@@ -773,11 +821,13 @@
 <ul>
 	<li>It makes pieces as small as we like: each subdivision shrinks every simplex by a definite factor.</li>
 	<li>
-		It repairs looser gluings: subdividing a Δ-complex (next section) twice always produces an honest simplicial complex.
+		It repairs looser gluings: subdividing a Δ-complex (next section) twice always produces an honest simplicial complex
+		<Cite k="hatcher2002" loc="§2.1, Exercise 23" />.
 	</li>
 	<li>
 		It lets simplicial maps imitate any continuous map. The <em>simplicial approximation theorem</em> says that any continuous map
-		between triangulated spaces can be approximated by a simplicial map, provided the domain is subdivided finely enough.
+		between triangulated spaces can be deformed into a simplicial map, provided the domain is subdivided finely enough
+		<Cite k="hatcher2002" loc="Theorem 2C.1" />.
 	</li>
 </ul>
 
@@ -789,9 +839,9 @@
 <h2 id="delta-and-cw">Looser gluings: Δ-complexes and CW complexes</h2>
 
 <p>
-	Simplicial complexes are wonderfully concrete, but they are expensive. The smallest simplicial torus needs \(7\) vertices, \(21\)
-	edges and \(14\) triangles — \(42\) simplices — although the gluing square used one square. Relaxing the rules a little brings the
-	numbers down dramatically, and topologists use two relaxations all the time.
+	Simplicial complexes are concrete, but they are expensive. The smallest simplicial torus needs \(7\) vertices, \(21\) edges and
+	\(14\) triangles — \(42\) simplices — although the gluing square of <Ref to="topology/gluing" /> used a single square. Relax the
+	rules a little and the numbers collapse; topologists use two such relaxations all the time.
 </p>
 
 <h3 id="delta-complexes">Δ-complexes</h3>
@@ -813,8 +863,9 @@
 </Figure>
 
 <p>
-	The two-triangle torus has \(1\) vertex, \(3\) edges and \(2\) triangles. Hatcher’s standard textbook computes homology with exactly
-	these, and everything in Part III works for Δ-complexes as well as for simplicial complexes.
+	The two-triangle torus has \(1\) vertex, \(3\) edges and \(2\) triangles. Hatcher’s standard textbook computes the homology of the
+	torus with exactly these six pieces <Cite k="hatcher2002" loc="§2.1, Example 2.3" />, and everything in Part III works for
+	Δ-complexes as well as for simplicial complexes.
 </p>
 
 <h3 id="cw-complexes">CW complexes</h3>
@@ -837,7 +888,8 @@
 
 <p>
 	The result is a <dfn>CW complex</dfn>. (The letters stand for two technical conditions, “closure-finite” and “weak topology”,
-	introduced by J. H. C. Whitehead in 1949; for the finite complexes in this book they hold automatically.) The space built after the
+	from J. H. C. Whitehead’s original definition of 1949 <Cite k="whitehead1949" />; Hatcher explains them in an appendix
+	<Cite k="hatcher2002" loc="Appendix, p. 520" />. For the finite complexes in this book both hold automatically.) The space built after the
 	\(k\)-th stage is the <em>\(k\)-skeleton</em>, just as for simplicial complexes. Let us see how few cells our favourite shapes need.
 </p>
 
@@ -874,7 +926,7 @@
 		A simplicial complex must spell out every little triangle; a CW complex only records what is topologically essential — here a point,
 		two independent loops and one sheet of surface. Every simplicial complex and every Δ-complex is also a CW complex (its cells are
 		the open simplices), so nothing is lost by switching. Homology computed from cells, in <Ref to="homology/exact-sequences" />, is
-		the fastest method there is.
+		usually the quickest way to compute it by hand.
 	</p>
 </Intuition>
 
@@ -1003,10 +1055,12 @@
 	{#snippet solution()}
 		<p>
 			Vertices: one per face, \(4 + 6 + 4 + 1 = 15\). Edges: one per pair \(\sigma \subsetneq \tau\) of faces; a face with \(m\)
-			vertices has \(2^m - 2\) proper faces, so the count is \(6 \cdot 2 + 4 \cdot 6 + 1 \cdot 14 = 50\). Tetrahedra: one per full flag,
-			\(4 \times 3 \times 2 = 24\). Triangles: each triangle is a flag missing one step; counting them all gives \(60\) (the computer
-			agrees). So the f-vector is \((15, 50, 60, 24)\) and \(15 - 50 + 60 - 24 = 1\) — the same as for the tetrahedron itself, \(4 - 6
-			+ 4 - 1 = 1\).
+			vertices has \(2^m - 2\) proper faces, so the count is \(6 \cdot 2 + 4 \cdot 6 + 1 \cdot 14 = 50\). Tetrahedra: one per full flag
+			\(v \subset e \subset t \subset T\), so \(4 \times 3 \times 2 = 24\). Triangles: one per flag with one step missing. Missing
+			\(T\): \(v \subset e \subset t\), \(4 \cdot 3 \cdot 2 = 24\). Missing \(t\): \(v \subset e \subset T\), \(4 \cdot 3 = 12\).
+			Missing \(e\): \(v \subset t \subset T\), \(4 \cdot 3 = 12\). Missing \(v\): \(e \subset t \subset T\), \(6 \cdot 2 = 12\).
+			That is \(60\) in all. So the f-vector is \((15, 50, 60, 24)\) and \(15 - 50 + 60 - 24 = 1\) — the same as for the tetrahedron
+			itself, \(4 - 6 + 4 - 1 = 1\).
 		</p>
 	{/snippet}
 </Exercise>

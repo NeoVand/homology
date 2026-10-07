@@ -19,6 +19,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import CycleExplorer from '$lib/figures/homology/cycles-and-boundaries/CycleExplorer.svelte';
 	import SpanningTree from '$lib/figures/homology/cycles-and-boundaries/SpanningTree.svelte';
 	import FillIn from '$lib/figures/homology/cycles-and-boundaries/FillIn.svelte';
@@ -47,11 +48,28 @@
 <Ahead>
 	<p>
 		This chapter builds the central picture of homology with nothing but drawings and counting: <strong>cycles</strong> (closed loops),
-		<strong>boundaries</strong> (loops that are the edge of something filled in), and <strong>holes</strong> (cycles that are not boundaries). The next two
-		chapters turn the picture into algebra. <Ref to="homology/chains" /> makes “the edge of” into a precise operation, the boundary operator
-		\(\partial\); <Ref to="homology/homology-groups" /> defines the homology groups \(H_k\), which count holes exactly. Every definition there is a careful
-		restatement of something you will see and play with here — so time spent on these pictures is time saved later.
+		<strong>boundaries</strong> (loops that are the edge of something filled in), and <strong>holes</strong> (cycles that are not boundaries). Every
+		definition in the chapters that follow is a careful restatement of something you will see and play with here. If you ever feel lost in Part III, this is
+		the whole road in five steps:
 	</p>
+	<ol>
+		<li><strong>A hole is a cycle that bounds nothing.</strong> Pictures and counting, in this chapter.</li>
+		<li>
+			<strong>Cut the space into simplices.</strong> “The edge of” becomes an operator \(\partial\) on sums of simplices, with \(\partial\partial = 0\):
+			<Ref to="homology/chains" />.
+		</li>
+		<li>
+			<strong>Cycles modulo boundaries.</strong> This defines the homology groups \(H_k\); a circle gets \(H_1 = \Z\), a torus \(H_1 = \Z^2\):
+			<Ref to="homology/homology-groups" />.
+		</li>
+		<li>
+			<strong>Let the computer do it.</strong> Matrices, row reduction, and a new phenomenon, torsion, that tells a Klein bottle from a torus:
+			<Ref to="homology/computing" />.
+		</li>
+		<li>
+			<strong>Does the answer depend on how we cut?</strong> No: <Ref to="homology/invariance" />, which is what makes the numbers worth computing.
+		</li>
+	</ol>
 </Ahead>
 
 <h2 id="what-is-a-hole">What is a hole, really?</h2>
@@ -84,13 +102,14 @@
 
 <p>
 	Topologists side with the “one” camp, and they have a way to make the answer precise. Bernhard Riemann, in the 1850s, counted holes by <em>cutting</em>:
-	how many cuts can you make, each running from an edge to an edge, without the object falling into two pieces? Slit a straw from end to end and it opens
-	into a flat sheet, still in one piece; any second cut across the sheet splits it. One cut, so one hole. Richeson’s article puts the payoff memorably:
+	how many cuts can you make, each running from an edge to an edge, without the object falling into two pieces? <Cite k="riemann1857" /> Slit a straw from
+	end to end and it opens into a flat sheet, still in one piece; any second cut across the sheet splits it. One cut, so one hole. Richeson’s article puts the
+	payoff memorably:
 </p>
 
 <blockquote>
 	“If you want a mathematical justification that a T-shirt and a pair of pants are different, you should turn to a topologist, not a geometer. The
-	explanation: They have different numbers of holes.”
+	explanation: They have different numbers of holes.” <Cite k="richeson2021" />
 </blockquote>
 
 <p>
@@ -125,7 +144,7 @@
 	\to b \to c \to a\), which runs around the left triangle. Closed walks are the obvious candidates for “loops”. But a walk carries baggage we do not want:
 	a starting point, a direction, and the freedom to wander back and forth along the same edge. The walks \(a \to b \to c \to a\) and \(b \to c \to a \to b\)
 	trace exactly the same loop, starting at different places. Allen Hatcher’s textbook describes what happens when you stop caring about where a loop starts:
-	“Thus loops become cycles, without a chosen basepoint.”
+	“Thus loops become cycles, without a chosen basepoint.” <Cite k="hatcher2002" loc="p. 99" />
 </p>
 
 <p>
@@ -185,17 +204,19 @@
 
 <History title="The bridges of Königsberg">
 	<p>
-		The parity test is older than topology. In 1736 Leonhard Euler was asked whether one could stroll through Königsberg crossing each of its seven bridges
-		exactly once and return home. He replaced the city by four land masses joined by seven bridges and noticed that a round trip must enter and leave each
-		land mass equally often, so every land mass must touch an even number of bridges. In Königsberg the counts were \(5, 3, 3, 3\): all odd. No such stroll
-		exists. Euler’s paper is often called the first paper of graph theory, and its central idea is exactly our test for being a cycle.
+		The parity test is older than topology. In 1736 Leonhard Euler took up a puzzle from Königsberg: could anyone take a walk through the city crossing each
+		of its seven bridges exactly once? He replaced the city by four land masses joined by seven bridges and noticed that a walker who passes through a land
+		mass uses two of its bridges, one in and one out. So every land mass except the start and the finish must touch an even number of bridges, and a round
+		trip needs all of them even. In Königsberg the counts were \(5, 3, 3, 3\): all odd. No such walk exists, round trip or not <Cite k="euler1741" />.
+		Euler’s paper is often called the first paper of graph theory, and its central idea is exactly our test for being a cycle.
 	</p>
 </History>
 
 <p>
 	Is the parity test too generous? Could some set of edges pass the test without being made of closed loops? No. Euler claimed, and Carl Hierholzer proved
-	in 1873, that every connected set of edges in which all degrees are even can be traced as a single closed walk using each edge exactly once. So a cycle
-	in our sense is always a union of one or more closed walks with no edge repeated. The parity definition loses nothing.
+	(in a paper published in 1873, two years after his death), that every connected set of edges in which all degrees are even can be traced as a single
+	closed walk using each edge exactly once <Cite k="hierholzer1873" />; a modern proof takes half a page <Cite k="diestel2025" loc="Thm 1.8.1" />. So a
+	cycle in our sense is always a union of one or more closed walks with no edge repeated. The parity definition loses nothing.
 </p>
 
 <h2 id="adding-cycles">Adding cycles: the cycle space</h2>
@@ -286,7 +307,7 @@
 
 <p>
 	For the bow-tie we found a basis by looking at faces. But a graph need not be drawn in the plane, and then it has no faces to look at. Is there a way to
-	count independent cycles that works for every graph? There is, and it is a beautiful piece of nineteenth-century engineering.
+	count independent cycles that works for every graph? There is, and it was found by a physicist wiring up electrical circuits.
 </p>
 
 <Definition id="def-tree" title="Trees and spanning trees">
@@ -298,8 +319,9 @@
 
 <p>
 	Trees are the graphs with no holes at all. Two facts about them do all the work. First, <strong>a tree with \(V\) vertices has exactly \(V - 1\)
-		edges.</strong> (Grow the tree from a single vertex, adding one edge at a time so that it stays connected and acyclic: each new edge brings exactly one new
-	vertex with it.) Second, <strong>between any two vertices of a tree there is exactly one path.</strong> There is at least one because the tree is
+		edges.</strong> (Regrow the tree from a single vertex, each time adding one of its edges that reaches a new vertex; because the tree is connected, you
+	can keep going until every vertex is reached. Each edge brought exactly one new vertex with it, so you used \(V - 1\) edges, and none is left over: a
+	leftover edge, together with the path you grew between its two ends, would be a nonempty cycle.) Second, <strong>between any two vertices of a tree there is exactly one path.</strong> There is at least one because the tree is
 	connected, and there cannot be two different ones, because two different paths between the same vertices would combine into a nonempty cycle.
 </p>
 
@@ -346,15 +368,18 @@
 	</p>
 	<p>
 		<em>Counting.</em> There is one fundamental cycle per edge outside the tree, and the tree has \(V - 1\) edges, so there are \(E - (V - 1)\) of them. A
-		graph with \(c\) pieces has a spanning tree in each piece, with \(V - c\) edges in total, which gives \(E - V + c\).
+		graph with \(c\) pieces has a spanning tree in each piece, with \(V - c\) edges in total, which gives \(E - V + c\). (For the same theorem in a graph
+		theory textbook, see <Cite k="diestel2025" loc="Thm 1.9.5" text />.)
 	</p>
 </Proof>
 
 <p>
-	There is one step in the proof we took on trust: that a tree has no nonempty cycles. It deserves its own argument, because the argument is pretty. Take a
-	nonempty set of edges in which every degree is even, and walk along it without reusing an edge. Whenever you enter a vertex other than your starting
-	point, you have used an odd number of its edges, so at least one unused edge remains to leave by. You can therefore only get stuck back where you started:
-	the walk closes up into a loop. A tree contains no such loop, since that loop’s two halves would be two different paths between two of its vertices.
+	There is one step we took on trust: that the edges kept by the recipe for a spanning tree really form a tree, with no nonempty cycle among them. The
+	argument is pretty. Take a nonempty set of edges in which every degree is even, and walk along it without reusing an edge. Whenever you enter a vertex
+	other than your starting point, you have used an odd number of its edges, so at least one unused edge remains to leave by. You can therefore only get stuck
+	back where you started: the walk closes up into a loop. Now suppose all the loop’s edges were kept by the recipe, and look at the one it kept last. When
+	that edge was considered, the rest of the loop already joined its two ends, so the recipe would have thrown it away. The kept edges contain no nonempty
+	cycle.
 </p>
 
 <p>
@@ -370,7 +395,9 @@
 	<p>
 		In 1847 the young physicist Gustav Kirchhoff wanted to compute the currents in an electrical network. His voltage law gives one equation for every loop
 		of wires — but loops that are sums of other loops give equations that are sums of other equations, and so carry no new information. Kirchhoff needed a
-		set of independent loops, and he found it exactly as we did: choose a spanning tree, and let each remaining wire close up its own loop.
+		set of independent loops, and he found it exactly as we did: remove wires until no closed loop is left (what remains is a spanning tree), and let each
+		removed wire close up its own loop <Cite k="kirchhoff1847" />. He described the tree only through the wires he took away, and he never counted trees,
+		although the theorem that counts them is often given his name; a recent study untangles what he did and did not do <Cite k="kirby2016" />.
 	</p>
 </History>
 
@@ -413,7 +440,7 @@
 <KeyIdea title="The definition of a hole">
 	<p>
 		<strong>A hole is a cycle that is not a boundary.</strong> In Jeremy Kun’s words: “The holes are all those cycles (loops) which don’t arise as the
-		boundaries of higher-dimensional things.”
+		boundaries of higher-dimensional things.” <Cite k="kun2013" />
 	</p>
 </KeyIdea>
 
@@ -487,6 +514,16 @@
 	</li>
 </ul>
 
+<History title="Riemann’s lemma">
+	<p>
+		That last argument is older than the word “homology”. Riemann met it in 1857, while studying integrals along closed curves on a surface: such an integral
+		vanishes when the curves form the complete boundary of a region. To show that his count of independent curves did not depend on which curves he chose,
+		he needed a lemma. If curves \(A\) and \(B\) together bound one region, and \(A\) and \(C\) together bound another, then \(B\) and \(C\) together bound a
+		third: the two regions added, with their overlap thrown away <Cite k="riemann1857" />. Charles Weibel’s history of homological algebra points out that
+		this is, in modern terms, exactly addition of cycles mod 2 <Cite k="weibel1999" />.
+	</p>
+</History>
+
 <p>
 	So cycles fall into classes of mutually homologous cycles, and <strong>holes are counted by classes</strong>, not by individual loops. Two loops around the
 	same hole are one hole. A loop around two holes is not a third hole: it is homologous to the sum of the loops around each. This is the heart of what
@@ -509,6 +546,13 @@
 		If you can slide a loop across a surface into another loop, the slide sweeps out a band whose rim is the two loops, so they are homologous. That is a
 		good first picture. But homology is more generous than sliding: loops may also merge and split along the way. On a pair of trousers the waistband is
 		homologous to the sum of the two cuffs — the fabric of the trousers is a region whose rim is all three — although no single loop slides onto two.
+	</p>
+	<p>
+		The same generosity separates <em>bounding</em> from <em>shrinking</em>. Sliding a loop sweeps out a band; shrinking it to a point sweeps out a disk;
+		bounding allows any surface at all. Draw a loop around the waist of a surface with two handles, between the handles. It bounds either half, since each
+		half is a region whose whole rim is that loop, so homology counts it as zero. Yet it cannot be shrunk to a point: whichever way you pull it, a handle is
+		in the way. (André Henriques draws this surface on the blackboard in his Oxford lecture on chains and cycles, with one half hatched.) The section
+		<Ref to="homology/invariance" hash="hurewicz">“Homology versus homotopy”</Ref> of §3.5 makes the difference precise and lets you try both kinds of filling.
 	</p>
 </Intuition>
 
@@ -589,7 +633,7 @@
 <p>
 	Everything we have done generalises by raising the dimension of the pieces by one. A set of triangles can have <em>loose edges</em>: edges that are sides
 	of an odd number of its triangles. A single triangle has three loose edges; two triangles sharing a side have four. A set of triangles with no loose edges
-	is a closed surface — like the four faces of a hollow tetrahedron, or the eight faces of an octahedron.
+	closes up like a surface without an edge — the four faces of a hollow tetrahedron, say, or the eight faces of an octahedron.
 </p>
 
 <Definition id="def-k-cycle" title="Cycles, boundaries and holes in each dimension">
@@ -606,8 +650,16 @@
 <p>
 	The hollow sphere is a 2-cycle that is not a boundary, because the solid ball inside is not part of it: the sphere has one void, \(b_2 = 1\). Fill in the
 	ball and the void disappears, just as filling a triangle killed a loop’s hole. The surface of a torus also encloses a void — the air in an inner tube — so
-	\(b_2(T^2) = 1\) as well. A memorable way to say it, from a much-loved answer on Math StackExchange: \(b_2\) counts the separate plugs you would need to
-	inflate the object.
+	\(b_2(T^2) = 1\) as well. A much-loved answer on Math StackExchange puts it memorably: \(b_2\) counts the separate plugs you would need to inflate the
+	object <Cite k="mse40151" />.
+</p>
+
+<p>
+	Daniel Tubbenhauer’s video lecture pairs the plugs with a test for \(b_1\): the number of necklaces you can put the object on <Cite k="tubbenhauer2021" />.
+	A doughnut goes on one necklace, through its middle, and has no air inside: \(b_1 = 1\), \(b_2 = 0\). An inner tube needs one plug and goes on two
+	necklaces at once, one through the middle and one threaded <em>inside</em> the air chamber, all the way round the tube: \(b_1 = 2\), \(b_2 = 1\). Notice
+	that both tests count things in the space <em>around</em> the object, strings and pockets of air, rather than in the object itself. For shapes sitting in
+	ordinary space that is no coincidence: it is <Ref to="cohomology/poincare-duality" hash="alexander">Alexander duality</Ref>, which we reach in §4.6.
 </p>
 
 <p>
@@ -676,8 +728,8 @@
 <p>
 	<strong>The mug.</strong> The rim of the cup bounds the inside surface of the cup, so the cavity you pour coffee into is a dent, not a hole. A ring drawn
 	around the handle’s arm bounds a slice of solid ceramic. Only a loop going around the handle’s opening bounds nothing. One hole — exactly like a solid
-	doughnut, whose meridian bounds a slice of dough while its longitude bounds nothing. That is the precise content of the old joke that a topologist cannot
-	tell a coffee mug from a doughnut.
+	doughnut, whose meridian bounds a slice of dough while its longitude bounds nothing. That is the homology half of the old joke that a topologist cannot
+	tell a coffee mug from a doughnut. (The joke claims more: that one can be squashed into the other. Equal numbers of holes are evidence of that, not proof.)
 </p>
 
 <p>
@@ -885,21 +937,38 @@
 			title: 'Algebraic Topology, Chapter 2: “The Idea of Homology”',
 			author: 'Allen Hatcher (Cambridge, 2002)',
 			url: 'https://pi.math.cornell.edu/~hatcher/AT/AT.pdf',
-			note: 'Pages 97–100 tell this chapter’s story for a graph with two vertices and four edges, then attach a 2-cell. Graduate level, but the opening is readable now.',
+			note: 'Pages 98–102 tell this chapter’s story for a graph with two vertices and four edges, then glue in 2-cells and a 3-cell one at a time. Graduate level, but this opening is readable now.',
 			kind: 'book',
+			free: true
+		},
+		{
+			title: 'What is…homology intuitively? Or: What is a hole?',
+			author: 'Daniel Tubbenhauer (VisualMath, YouTube, 2021)',
+			url: 'https://www.youtube.com/watch?v=QanLUNiqZW0',
+			note: 'A short lecture over slides annotated live (the slides are free at dtubbenhauer.com/youtube.html): necklaces and plugs, chains on one triangle, and a loop around a hole in a subdivided triangle shrunk onto the hole one small triangle at a time. Pause on that slide.',
+			kind: 'video',
+			free: true
+		},
+		{
+			title: 'You Could Have Invented Homology, Part 3: Boundaries & The Big Idea',
+			author: 'Boarbarktree (David Farrell), YouTube, 2021',
+			url: 'https://www.youtube.com/watch?v=j9JJJoTjIpY',
+			note: 'Hand-animated and unhurried. The series stops before the formal definition, but this episode ends on the idea at the heart of this chapter: put the edge of a triangle into a space and ask whether it can be filled.',
+			kind: 'video',
 			free: true
 		},
 		{
 			title: 'Graphs, Surfaces and Homology (3rd edition)',
 			author: 'Peter Giblin (Cambridge, 2010)',
-			note: 'The classic undergraduate route from graphs to surfaces to homology, with a mod 2 chapter and hundreds of exercises.',
+			url: 'https://doi.org/10.1017/CBO9780511779534',
+			note: 'The classic undergraduate route from graphs (Chapter 1) to surfaces to homology, with a chapter on homology mod 2 and exercises throughout.',
 			kind: 'book'
 		},
 		{
 			title: 'Euler’s Formula and Graph Duality',
 			author: '3Blue1Brown (Grant Sanderson)',
 			url: 'https://www.3blue1brown.com/lessons/eulers-characteristic-formula',
-			note: 'A gorgeous animated proof of V − E + F = 2 using spanning trees — the same trees that gave us Kirchhoff’s count.',
+			note: 'An animated proof of V − E + F = 2 for drawings in the plane, built from a spanning tree and a second tree in the dual graph: the same trees that gave us Kirchhoff’s count.',
 			kind: 'video',
 			free: true
 		},

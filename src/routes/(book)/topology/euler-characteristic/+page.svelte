@@ -114,8 +114,8 @@
 <h2 id="a-curious-count">A curious count</h2>
 
 <p>
-	A <dfn>polyhedron</dfn> is a solid whose surface is made of flat polygons, the <em>faces</em>, joined along straight
-	<em>edges</em>, with the edges meeting at <em>vertices</em> (corners). The cube is one; so is a pyramid, a prism, a cut diamond.
+	A <dfn>polyhedron</dfn> is a solid whose surface is made of flat polygons (with no holes in them), the <em>faces</em>, joined
+	along straight <em>edges</em>, with the edges meeting at <em>vertices</em> (corners). The cube is one; so is a pyramid, a prism, a cut diamond.
 	For each polyhedron we count three numbers: \(V\), the number of vertices; \(E\), the number of edges; and \(F\), the number of
 	faces. Then we compute \(V - E + F\). Try it in the gallery below; the figure does the counting with you.
 </p>
@@ -128,7 +128,10 @@
 	{/snippet}
 </Figure>
 
-<p>Here are the five <dfn>Platonic solids</dfn> — the polyhedra whose faces are identical regular polygons, the same number meeting at every corner — in a table.</p>
+<p>
+	Here are the five <dfn>Platonic solids</dfn> — the convex polyhedra whose faces are identical regular polygons, the same number
+	meeting at every corner — in a table.
+</p>
 
 <div class="table-wrap">
 	<table>
@@ -182,15 +185,17 @@
 
 <History title="A lost notebook, a letter, and a theorem with a rocky childhood">
 	<p>
-		Leonhard Euler announced the formula in a letter to Christian Goldbach in November 1750 and published it in 1758 <Cite k="euler1758" />. His insight was
-		to ignore angles and lengths and look only at the <em>pattern</em> of a solid: how many corners, edges and faces it has, and how
-		they fit together — the first truly topological way of looking at a shape. René Descartes had come
-		close around 1630, in a notebook about polyhedra; after his death the notebook was shipped back to Paris, the boat sank in the
-		Seine, and the pages spent three days under water. Leibniz copied them in 1676; then both the original and the copy vanished,
-		until the copy turned up in Hanover around 1860. Euler’s own proof had gaps; Augustin-Louis Cauchy gave a better one in 1811 — the
-		one you will see next — and in 1813 Simon Lhuilier pointed out polyhedra for which the formula fails. The long argument about what
-		exactly the theorem says, and what counts as a polyhedron, is the subject of Imre Lakatos’s delightful book
-		<em>Proofs and Refutations</em> <Cite k="lakatos1976" />; the whole story is told in <Cite k="richeson2008" text />.
+		Leonhard Euler announced the formula in a letter to Christian Goldbach in November 1750 and published it, with an attempted
+		proof, in 1758 <Cite k="euler1758,euler1758b" />. His insight was to ignore angles and lengths and look only at the
+		<em>pattern</em> of a solid: how many corners, edges and faces it has, and how they fit together — the first truly topological
+		way of looking at a shape. René Descartes had come close around 1630, in a notebook about polyhedra. After his death in Stockholm
+		the notebook was shipped back to Paris, the boat sank in the Seine, and the pages spent three days under water. Leibniz copied
+		them in 1676; then both the original and the copy vanished, until the copy turned up in Hanover around 1860
+		<Cite k="federico1982" />. Euler’s own proof had gaps. Augustin-Louis Cauchy, aged 21, gave a better one in a memoir read in
+		1811 <Cite k="cauchy1813" /> — the one you will see next — and two years later Simon Lhuilier catalogued polyhedra for which the
+		formula fails <Cite k="lhuilier1813" />. The long argument about what exactly the theorem says, and what counts as a
+		polyhedron, is the subject of Imre Lakatos’s <em>Proofs and Refutations</em> <Cite k="lakatos1976" />, a dialogue in which a
+		teacher and a class of students argue over this very formula. The whole story is told in <Cite k="richeson2008" text />.
 	</p>
 </History>
 
@@ -199,7 +204,7 @@
 	polyhedron, the angles of the faces meeting there add up to less than a full turn of \(360°\) — otherwise the corner would be flat.
 	The shortfall is the <dfn>angle defect</dfn> at that corner. A cube has three right angles at each corner, so each defect is \(360°
 	- 270° = 90°\), and the eight corners together fall short by \(8 \times 90° = 720°\). Descartes found that the total defect of every
-	convex polyhedron is exactly \(720°\), two full turns — and two is the same 2 as in Euler’s formula. This is the first glimpse of a
+	convex polyhedron is exactly \(720°\), two full turns <Cite k="federico1982" /> — and two is the same 2 as in Euler’s formula. This is the first glimpse of a
 	deep link between counting and curvature that we will return to at the end of the chapter.
 </p>
 
@@ -263,10 +268,12 @@
 
 <Warning title="The order of removals matters">
 	<p>
-		Step 3 hides a subtlety that Cauchy did not address, and that Lakatos made famous. If you remove a triangle that touches the
-		outside along one edge but whose third corner <em>also</em> lies on the outside, the network splits into two pieces, and the
-		count is thrown off. The repair is to always remove a triangle that keeps the remaining network in one piece, with a single outer
-		boundary; such a triangle always exists, and the figure follows that rule. A proof is not finished until every step is justified!
+		Step 3 hides a trap that Cauchy passed over and Lakatos made famous. Suppose a triangle touches the outside along one edge, but
+		its third corner <em>also</em> lies on the outside. Removing it does not change the count, but what is left is pinched: two
+		pieces hanging together at a single corner. Carry on, and you can meet a triangle with two outer edges whose shared corner also
+		belongs to the other piece. That corner has to stay, so only \(E\) and \(F\) drop, by 2 and 1, and \(V - E + F\) goes
+		<em>up</em> by 1. The repair is to remove only triangles that leave the network in one piece with a single outer boundary. Such
+		a triangle always exists, and the figure follows that rule.
 	</p>
 </Warning>
 
@@ -292,7 +299,9 @@
 	contain no loop — a loop of paths would fence off some vertices from the others, but the teal tree connects everything. So the
 	unused edges form a tree on the \(F\) faces, with \(F - 1\) edges. Every edge is in exactly one of the two trees, so
 	\[ E = (V - 1) + (F - 1), \qquad\text{that is,}\qquad V - E + F = 2. \]
-	The 2 is \(1 + 1\): one for each tree.
+	The 2 is \(1 + 1\): one for each tree. This proof goes back to Karl von Staudt’s <em>Geometrie der Lage</em> of 1847
+	<Cite k="vonstaudt1847" />, and it is the favourite of David Eppstein, who has collected twenty-one different proofs of the
+	formula (see the reading list).
 </p>
 
 <Figure num="2.6.3" title="Two trees" hint="Hover a grey edge · try another tree">
@@ -374,11 +383,12 @@
 
 <Remark title="How honest is our evidence?">
 	<p>
-		The three moves show that refining a decomposition never changes \(\chi\). For surfaces one can also prove that any two
-		decompositions of the same surface have a common refinement, and that gives the theorem. But that route is long and fiddly, and in
-		higher dimensions it is even false that a common refinement always exists. The clean proof — valid in every dimension, for every
-		way of cutting up a space — comes from homology, in <Ref to="homology/homology-groups" />. Until then, treat the theorem as a
-		well-tested promise.
+		The three moves show that refining a decomposition never changes \(\chi\). To finish the proof this way we would need any two
+		decompositions of the same space to have refinements that match exactly. For surfaces they do — Tibor Radó proved it in 1925
+		<Cite k="rado1925" /> — but the argument is long and fiddly, and in higher dimensions it is false: John Milnor found two
+		triangulated spaces that are homeomorphic yet have no matching refinements at all <Cite k="milnor1961" />. The clean proof,
+		valid in every dimension and for every way of cutting up a space, comes from homology, in <Ref to="homology/homology-groups" />
+		<Cite k="hatcher2002" loc="Theorem 2.44" />. Until then, treat the theorem as a well-tested promise.
 	</p>
 </Remark>
 
@@ -388,14 +398,17 @@
 	hollow triangle: \(3 - 3 = 0\). The barycentric subdivisions of <Ref to="topology/simplicial-complexes" hash="barycentric-subdivision"
 		>the last chapter</Ref
 	> changed the f-vector of a triangle with an edge attached from \((4,4,1)\) to \((9,14,6)\) to \((29,64,36)\), and every time
-	\(\chi = 1\).
+	\(\chi = 1\). Hatcher’s textbook opens with a stranger example, the “house with two rooms”: a box divided by a floor into two
+	rooms, each reached only by a tunnel through the other. Cut into the obvious pieces it has \(29\) vertices, \(51\) edges and \(23\)
+	faces, and \(29 - 51 + 23 = 1\) — a hint that, against all appearances, this house too can be squashed to a point
+	<Cite k="hatcher2002" loc="Example 0.2" />.
 </p>
 
 <h2 id="tunnels">Polyhedra with tunnels</h2>
 
 <p>
-	In 1813 Simon Lhuilier pointed out a polyhedron for which Euler’s formula fails: a square <em>picture frame</em>. It has a square
-	hole through the middle. Its top and bottom are each made of four trapezoids, the outside of four rectangles, and the inside of the
+	In 1813 Simon Lhuilier pointed out polyhedra for which Euler’s formula fails: polyhedra with tunnels through them
+	<Cite k="lhuilier1813" />. Take a square <em>picture frame</em>, with a square hole through the middle. Its top and bottom are each made of four trapezoids, the outside of four rectangles, and the inside of the
 	tunnel of four more: \(16\) faces. There are \(16\) corners (eight around the top, eight around the bottom) and \(32\) edges. So
 	\[ V - E + F = 16 - 32 + 16 = 0. \]
 	Every face is a flat polygon, every edge is shared by two faces, nothing is weird — except that the surface is not a sphere in
@@ -418,7 +431,8 @@
 	the tube. The tube adds 4 new upright edges and 4 new faces, and we lost 2 faces. Total change:
 	\[ \Delta V - \Delta E + \Delta F = 0 - 4 + (4 - 2) = -2. \]
 	(This assumes the two little squares were already faces of the surface; you can always arrange that by subdividing first, which
-	does not change \(\chi\).)
+	does not change \(\chi\).) Lhuilier had already found the general rule: a polyhedron pierced by \(g\) separate tunnels has
+	\(V - E + F = 2 - 2g\).
 </p>
 
 <p>
@@ -432,11 +446,13 @@
 
 <Warning title="Faces must be disks">
 	<p>
-		Lhuilier found another kind of exception: put a small cube on top of a big one. The big cube’s top face is now a square with a square
-		hole in it — a ring. Counting naively, \(V = 16\), \(E = 24\), \(F = 11\), and \(V - E + F = 3\). Nothing is wrong with the surface
+		Lhuilier found a third kind of exception, subtler than the other two: put a small cube on top of a big one, in the middle of its
+		top face. The big cube’s top face is now a square with a square hole in it — a ring. (Lhuilier expected such solids to be common
+		in nature, and had seen clusters of crystals shaped like this in a friend’s mineral collection.) Counting naively, \(V = 16\), \(E = 24\), \(F = 11\), and \(V - E + F = 3\). Nothing is wrong with the surface
 		(it is still a sphere in disguise); the problem is the ring-shaped face. Add one edge across the ring, from an inner corner to an
 		outer corner, and the ring becomes a single disk-shaped face: now \(E = 25\), \(F\) is still \(11\), and \(V - E + F = 2\) again.
-		The Euler characteristic counts faces that are disks — or, in a CW complex, cells that are open disks.
+		The Euler characteristic counts faces that are disks — or, in a CW complex, cells that are open disks — which is why our
+		definition of a polyhedron asked for polygons with no holes.
 	</p>
 </Warning>
 
@@ -557,8 +573,9 @@
 <Example title="Surfaces with boundary">
 	<p>
 		The same counting works for surfaces with edges. A disk (one triangle) has \(\chi = 1\). A cylinder, the 3 × 3 grid with only one
-		pair of sides glued, has \(\chi = 0\), and so does the Möbius band: the 5-vertex Möbius band of the previous chapter has \(5 - 10
-		+ 5 = 0\). In general, cutting a hole out of a closed surface lowers \(\chi\) by 1 (one face is removed), so a sphere with \(b\)
+		pair of sides glued, has \(\chi = 0\), and so does the Möbius band. The smallest triangulated Möbius band has vertices \(0, \dots, 4\) and the five
+		triangles \(\set{i, i+1, i+2}\), labels read modulo 5; it has \(5\) vertices, \(10\) edges and \(5\) triangles, and
+		\(5 - 10 + 5 = 0\). In general, cutting a hole out of a closed surface lowers \(\chi\) by 1 (one face is removed), so a sphere with \(b\)
 		holes has \(\chi = 2 - b\): a disk has 1, a cylinder 0.
 	</p>
 </Example>
@@ -567,7 +584,8 @@
 
 <p>
 	In <Ref to="topology/manifolds" /> you met the classification of closed surfaces: every closed connected surface is a sphere, a
-	sphere with handles, or a connected sum of projective planes. Combine that with the formulas we just found.
+	sphere with handles, or a connected sum of projective planes <Cite k="armstrong1983" loc="ch. 7" />. Combine that with the
+	formulas we just found.
 </p>
 
 <Theorem id="thm-classification" title="Classification by χ and orientability">
@@ -579,9 +597,9 @@
 
 <p>
 	Indeed, among orientable surfaces \(\chi = 2 - 2g\) determines the number of handles \(g\), and among non-orientable ones \(\chi = 2
-	- k\) determines the number of projective planes \(k\). Neither number is enough alone: the torus and the Klein bottle both have
-	\(\chi = 0\) (one is orientable, the other not), and the sphere and the projective plane are both “made of one disk” but have
-	\(\chi = 2\) and \(\chi = 1\).
+	- k\) determines the number of projective planes \(k\). Neither test is enough alone: the torus and the Klein bottle both have
+	\(\chi = 0\), but one is orientable and the other is not; the sphere and the torus are both orientable, but have \(\chi = 2\) and
+	\(\chi = 0\).
 </p>
 
 <Figure num="2.6.6" title="Every closed surface has its own cell" hint="Hover or tap a surface">
@@ -600,7 +618,7 @@
 </KeyIdea>
 
 <p>
-	The formula \(E = 3(V - \chi)\) for triangulated surfaces (Exercise 4) also explains the small triangulations of the last chapter.
+	The formula \(E = 3(V - \chi)\) for triangulated surfaces (see the exercise “Counting a triangulated surface”) also explains the small triangulations of the last chapter.
 	A triangulated torus has \(E = 3V\), and since at most \(\binom{V}{2}\) edges are possible, \(3V \le V(V-1)/2\), which forces \(V \ge
 	7\). The seven-vertex torus meets this bound exactly, which is why every pair of its vertices is joined. The same argument gives \(V
 	\ge 6\) for the projective plane and \(V \ge 4\) for the sphere.
@@ -637,7 +655,7 @@
 
 <p>
 	For a connected graph this says that the number of independent loops is \(E - V + 1\), a formula found by Gustav Kirchhoff in 1847
-	while studying electrical circuits (it counts how many independent currents a circuit can carry). The words “independent loop” need
+	while studying electrical circuits <Cite k="kirchhoff1847" /> (it counts how many independent loop currents a circuit can carry). The words “independent loop” need
 	care — the graph \(K_4\) has seven different loops but only \(3\) independent ones — and <Ref to="homology/cycles-and-boundaries" />
 	will make them precise. In that chapter the number of pieces is called \(b_0\) and the number of independent loops \(b_1\).
 </p>
@@ -653,9 +671,10 @@
 
 <p>
 	The same is true one dimension up. For a closed surface, let \(b_0\) be the number of components, \(b_1\) the number of independent
-	loops that do not enclose anything, and \(b_2\) the number of enclosed hollows. For the sphere these are \(1, 0, 1\): one piece, no
-	loop that cannot be shrunk, one hollow inside. For the torus they are \(1, 2, 1\): the loop around the hole and the loop around the
-	tube, and the hollow inside the tube. And indeed
+	loops that do not fence off a piece of the surface, and \(b_2\) the number of enclosed hollows. For the sphere these are
+	\(1, 0, 1\): one piece; no such loop, since every loop on a sphere cuts it in two; one hollow inside. For the torus they are
+	\(1, 2, 1\): the loop around the hole and the loop around the tube, neither of which cuts the torus apart, and the hollow inside
+	the tube. And indeed
 	\[ \chi(S^2) = 1 - 0 + 1 = 2, \qquad \chi(T^2) = 1 - 2 + 1 = 0, \qquad \chi(\Sigma_g) = 1 - 2g + 1 = 2 - 2g. \]
 	This is the <em>Euler–Poincaré formula</em>,
 	\[ \chi \;=\; b_0 - b_1 + b_2 - b_3 + \cdots, \]
@@ -738,6 +757,25 @@
 	{/snippet}
 </Exercise>
 
+<Exercise title="Descartes’s defects" level={2}>
+	<p>
+		(a) A regular pentagon has angles of \(108°\). Find the angle defect at each corner of a regular tetrahedron, octahedron and
+		dodecahedron, and check that in each case the defects add up to \(720°\). (b) A corner can also have a negative defect. In
+		Lhuilier’s picture frame each outer corner meets two trapezoids, with angles of \(45°\) there, and two rectangles; each corner
+		around the tunnel meets two trapezoids, with angles of \(135°\), and two rectangles. Find the total defect, and compare it with
+		\(360° \times \chi\).
+	</p>
+	{#snippet solution()}
+		<p>
+			(a) Tetrahedron: three \(60°\) angles at each corner, defect \(360° - 180° = 180°\), and \(4 \times 180° = 720°\). Octahedron:
+			four \(60°\) angles, defect \(120°\), and \(6 \times 120° = 720°\). Dodecahedron: three \(108°\) angles, defect \(36°\), and
+			\(20 \times 36° = 720°\). (b) An outer corner has \(45° + 45° + 90° + 90° = 270°\), a defect of \(90°\); an inner corner has
+			\(135° + 135° + 90° + 90° = 450°\), a defect of \(-90°\). The total is \(8 \times 90° - 8 \times 90° = 0°\), which is
+			\(360° \times 0\), as it should be for a surface with \(\chi = 0\).
+		</p>
+	{/snippet}
+</Exercise>
+
 <Exercise title="Counting a triangulated surface" level={2}>
 	<p>
 		A closed surface is triangulated with \(V\) vertices, \(E\) edges and \(F\) triangles. Show that \(E = 3(V - \chi)\) and \(F = 2(V -
@@ -791,22 +829,6 @@
 			Gluing identifies the 3 vertices and 3 edges of one hole with those of the other: \(V = 7 + 7 - 3 = 11\) and \(E = 21 + 21 - 3 =
 			39\). So \(\chi = 11 - 39 + 26 = -2\). The result is orientable (each piece is), so by the classification it is the genus-2
 			surface, in agreement with \(\chi(A \mathbin{\#} B) = 0 + 0 - 2\).
-		</p>
-	{/snippet}
-</Exercise>
-
-<Exercise title="Lhuilier’s crested cube" level={2}>
-	<p>
-		A small cube sits in the middle of the top face of a larger cube, so that together they form one solid. Count its vertices, edges
-		and faces in the obvious way, counting the big cube’s top (a square with a square hole) as one face. What is \(V - E + F\)? Explain
-		why the answer is not \(2\), even though the surface is a sphere in disguise.
-	</p>
-	{#snippet solution()}
-		<p>
-			Vertices: \(8 + 8 = 16\). Edges: \(12 + 12 = 24\) (the bottom edges of the small cube lie on the big cube’s top). Faces: the big
-			cube has 6 faces (its top is now a ring), the small cube 5 (its bottom is glued away), so \(F = 11\). Then \(16 - 24 + 11 = 3\).
-			The culprit is the ring-shaped face: the Euler characteristic counts faces that are disks. Adding one edge across the ring turns it
-			into a disk without adding a face: \(16 - 25 + 11 = 2\).
 		</p>
 	{/snippet}
 </Exercise>

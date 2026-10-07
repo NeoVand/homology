@@ -87,9 +87,9 @@
 <Epigraph author="Keith Conrad" source="“Quotient Groups”">Subgroups are inside a group while quotient groups are a type of collapsing of a group, generalizing the way \(\R\) can be wrapped around to form the circle group <span class="nw">\(\R/2\pi\Z\).</span></Epigraph>
 
 <p class="lead">
-	In the last chapter you added hours on a clock without asking where clock arithmetic comes from. The answer is a
-	construction so important that homology itself is an instance of it: take a group, choose a subgroup, and declare
-	every element of that subgroup to be zero. What survives is a new group, called a <em>quotient</em>. This chapter is
+	You have met clock arithmetic twice now: as a set of classes in <Ref to="foundations/equivalence" />, and as a group in
+	<Ref to="foundations/groups" />. Behind it stands a construction so important that homology itself is an instance of
+	it: take a group, choose a subgroup, and declare every element of that subgroup to be zero. What survives is a new group, called a <em>quotient</em>. This chapter is
 	about that construction, and about a second one that is just as important to us: the group of <em>formal sums</em>,
 	the algebra of inventories. Put the two together and you can describe every abelian group homology will ever
 	produce.

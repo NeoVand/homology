@@ -34,7 +34,7 @@
 		{
 			title: 'The Shape of Space',
 			author: 'Jeffrey Weeks',
-			note: 'The friendliest book about surfaces and 3-manifolds ever written. Flatlanders explore tori, Klein bottles and projective planes from the inside — exactly the ant’s-eye view of this chapter. No prerequisites.',
+			note: 'A gentle, picture-filled book (3rd edition, CRC Press, 2020) in which Flatlanders explore tori, Klein bottles and projective planes from the inside — the ant’s-eye view of this chapter — before moving on to three-dimensional universes. No prerequisites.',
 			kind: 'book' as const
 		},
 		{
@@ -51,6 +51,14 @@
 			url: 'https://webhomes.maths.ed.ac.uk/~v1ranick/papers/francisweeks.pdf',
 			note: 'A short, picture-filled proof of the classification of surfaces (American Mathematical Monthly, 1999). Read it after this chapter.',
 			kind: 'paper' as const,
+			free: true
+		},
+		{
+			title: 'A Guide to the Classification Theorem for Compact Surfaces',
+			author: 'Jean Gallier and Dianna Xu',
+			url: 'https://www.cis.upenn.edu/~jean/surfclass-n.pdf',
+			note: 'A whole book on the theorem at the end of this chapter: a careful proof via triangulations and cut-and-paste, with the history from Möbius to Radó. The authors’ draft is free on Gallier’s page; the final version is published by Springer (2013).',
+			kind: 'book' as const,
 			free: true
 		},
 		{
@@ -79,7 +87,7 @@
 			title: 'This open problem taught me what topology is',
 			author: '3Blue1Brown (Grant Sanderson)',
 			url: 'https://www.3blue1brown.com/lessons/inscribed-rect-v2/',
-			note: 'A beautiful animated lesson in which a Möbius band, and the fact that it cannot sit in space in a certain way, solves a geometry puzzle.',
+			note: 'An animated lesson in which a Möbius band, and the fact that it cannot sit in space in a certain way, solves a geometry puzzle about rectangles inscribed in loops.',
 			kind: 'video' as const,
 			free: true
 		}
@@ -612,8 +620,8 @@
 	<p>
 		Let \(F\colon \R^3 \to \R\) be smooth and let \(c\) be a number. If the gradient
 		\(\nabla F = \bigl(\tfrac{\partial F}{\partial x}, \tfrac{\partial F}{\partial y}, \tfrac{\partial F}{\partial z}\bigr)\) is nonzero
-		at every point where \(F = c\), then the level set \(\setb{(x, y, z)}{F(x, y, z) = c}\) is a smooth surface. (The same holds one
-		dimension up: a level set in \(\R^{n+1}\) with nonzero gradient is a smooth \(n\)-manifold.)
+		at every point where \(F = c\), then the level set \(\setb{(x, y, z)}{F(x, y, z) = c}\) is a smooth surface. (The same holds in
+		any dimension: a level set in \(\R^{n+1}\) with nonzero gradient is a smooth \(n\)-manifold.) <Cite k="lee2013" loc="Ch. 5" />
 	</p>
 </Theorem>
 
@@ -631,8 +639,8 @@
 		The cone \(z = \sqrt{x^2 + y^2}\) is a topological manifold — vertical projection is a homeomorphism onto the plane — but as it sits
 		in \(\R^3\) it is not smooth at its tip, where there is no tangent plane. Smoothness is extra structure, not a topological property,
 		and it can behave strangely: some topological manifolds admit no smooth atlas at all, and in 1956 John Milnor discovered that the
-		seven-dimensional sphere carries several genuinely different smooth structures. Surfaces are tame: every surface admits a smooth
-		structure, and it is essentially unique.
+		seven-dimensional sphere carries several genuinely different smooth structures <Cite k="milnor1956" />. Surfaces are tame: every
+		surface admits a smooth structure, and it is essentially unique.
 	</p>
 </Warning>
 
@@ -657,7 +665,7 @@
 		The <dfn>tangent space</dfn> \(T_pM\) of a smooth surface \(M \subset \R^3\) at a point \(p\) is the set of all velocities
 		\(\gamma'(0)\) of smooth curves \(\gamma\) in \(M\) with \(\gamma(0) = p\). Its elements are <dfn>tangent vectors</dfn> at \(p\).
 		It is a 2-dimensional vector space, a plane through the origin of \(\R^3\); drawn with its origin moved to \(p\), it is the familiar
-		tangent plane.
+		tangent plane. <Cite k="lee2013" loc="Ch. 3" />
 	</p>
 </Definition>
 
@@ -764,7 +772,7 @@
 	that varies continuously as the point moves. For a topological surface, which has no tangent planes, one instead chooses a sense of
 	rotation on each small disk, consistently where the disks overlap. For a manifold given by an atlas, the same idea becomes an
 	<dfn>oriented atlas</dfn>: one whose transition maps all have positive Jacobian determinant (the determinant of their matrix of partial
-	derivatives), so that “anticlockwise” on one page of the atlas means “anticlockwise” on every other.
+	derivatives), so that “anticlockwise” on one page of the atlas means “anticlockwise” on every other <Cite k="lee2013" loc="Ch. 15" />.
 </p>
 
 <Definition title="Orientable" id="def-orientable">
@@ -870,12 +878,12 @@
 
 <p>
 	Its one-dimension-lower cousin, the Jordan curve theorem, appears in <Ref to="homology/invariance" />, and both can be proved with
-	homology. The consequence is striking: the Klein bottle and the projective plane cannot be built in ordinary space without passing
+	homology <Cite k="hatcher2002" loc="Cor. 3.45–3.46" />. The consequence is striking: the Klein bottle and the projective plane cannot be built in ordinary space without passing
 	through themselves. Every glass Klein bottle you have seen is an <Term t="immersion">immersion</Term>, with a circle along which the
 	surface crosses itself, and <Term t="boys-surface">Boy’s surface</Term> is an immersion of the projective plane. With a fourth
 	dimension to move in, the crossings can be avoided: the Klein bottle embeds in \(\R^4\). Hassler Whitney proved in 1944 that every
 	smooth \(n\)-manifold can be embedded in \(\R^{2n}\) — so every surface fits in \(\R^4\) — and immersed in \(\R^{2n-1}\) when
-	\(n \ge 2\). The definition of a manifold never needed a surrounding space; Whitney’s theorem says that one can always be found.
+	\(n \ge 2\) <Cite k="whitney1944a,whitney1944b" />. The definition of a manifold never needed a surrounding space; Whitney’s theorem says that one can always be found.
 </p>
 
 <h2 id="connected-sum">Connected sums: building surfaces like Lego</h2>
@@ -937,7 +945,7 @@
 <Theorem label="Theorem (Dyck, 1888)" id="thm-dyck">
 	<p>
 		\(T^2 \mathbin{\#} \RP^2 \cong \RP^2 \mathbin{\#} \RP^2 \mathbin{\#} \RP^2\). In the presence of a cross-cap, a handle can be
-		traded for two more cross-caps.
+		traded for two more cross-caps. <Cite k="dyck1888" />
 	</p>
 </Theorem>
 
@@ -973,7 +981,7 @@
 	</ul>
 	<p>
 		Equivalently, it is given by exactly one of the edge words \(aa^{-1}\), \(a_1b_1a_1^{-1}b_1^{-1} \cdots a_gb_ga_g^{-1}b_g^{-1}\) or
-		\(a_1a_1a_2a_2 \cdots a_ka_k\).
+		\(a_1a_1a_2a_2 \cdots a_ka_k\). <Cite k="lee2011" loc="Ch. 6" />
 	</p>
 </Theorem>
 
@@ -1033,21 +1041,25 @@
 		<li><strong>Read off the answer.</strong> The final word is one of the normal forms in the theorem.</li>
 	</ol>
 	<p>
-		John Conway found a slicker argument, the “ZIP proof”, in which a surface is assembled from disks joined by zips; the write-up by
-		Francis and Weeks in Further reading is short and full of pictures.
+		John Conway found a slicker argument, the “ZIP proof”, in which a surface is assembled from disks joined by zips. He asked that it
+		always be called by that name, “otherwise there’s a real danger that its origin would be lost, since everyone who hears it
+		immediately regards it as the obvious proof” <Cite k="francis-weeks1999" />. The write-up by Francis and Weeks is short and full
+		of pictures; <Cite k="gallier-xu2013" text /> give the classical proof in full.
 	</p>
 </Remark>
 
 <History title="From Riemann to Conway">
 	<p>
 		The word “manifold” comes from Bernhard Riemann’s <em>Mannigfaltigkeit</em>, in the lecture he gave at Göttingen on 10 June 1854 to
-		qualify as a university teacher. Riemann had offered three topics, and Carl Friedrich Gauss, who was in the audience, chose the one on
-		the foundations of geometry. The lecture was published only in 1868, two years after Riemann’s death; Hermann Weyl gave the first
-		modern, intrinsic definition — for surfaces, by neighbourhoods and coordinate charts — in 1913. Surfaces were classified long before the definition was settled. August Möbius
-		classified the closed orientable surfaces in 1863, and Camille Jordan did so independently in 1866; Walther von Dyck added the
-		non-orientable ones in 1888, proving the theorem that bears his name along the way. The first proof that meets modern standards
-		was given by Max Dehn and Poul Heegaard in 1907, for surfaces built from polygons, and Radó’s triangulation theorem closed the last gap
-		in 1925. Around 1992 John Conway found the ZIP proof — the name stands for “zero irrelevancy proof”.
+		qualify as a university teacher <Cite k="riemann1854" />. Riemann had offered three topics, and Carl Friedrich Gauss, who was in the
+		audience, chose the one on the foundations of geometry. The lecture was published only in 1868, two years after Riemann’s death.
+		Hermann Weyl gave the first modern, intrinsic definition — for surfaces, by neighbourhoods and coordinate charts — in 1913
+		<Cite k="weyl1913" />. Surfaces were classified long before the definition was settled. In the 1860s August Möbius and Camille
+		Jordan independently classified the closed orientable surfaces; Walther von Dyck added the non-orientable ones in 1888, proving the
+		theorem that bears his name along the way <Cite k="dyck1888" />. None of them had a definition of “surface” to work with. Max Dehn
+		and Poul Heegaard gave a far more careful proof in 1907, Henry Brahana the first fully rigorous one in 1921, for surfaces built from
+		polygons, and Radó’s triangulation theorem closed the last gap in 1925 <Cite k="gallier-xu2013" />. Around 1992 John Conway found
+		the ZIP proof — the name stands for “zero irrelevancy proof” <Cite k="francis-weeks1999" />.
 	</p>
 </History>
 
@@ -1055,10 +1067,11 @@
 	<p>
 		Closed curves are easy: every connected one is a circle. Closed surfaces are decided by two pieces of data. In dimension three the
 		story is far harder. In 1904 Henri Poincaré asked whether a closed 3-manifold in which every loop can be shrunk to a point
-		(<Term t="simply-connected">simply connected</Term>, <Ref to="topology/homotopy" />) must be the 3-sphere. The question became the
-		Poincaré conjecture, and it was settled only in 2003 by Grigori Perelman, as part of William Thurston’s programme for describing all
-		3-manifolds by geometry. In dimension four no complete list is possible, in a precise sense: in 1958 A. A. Markov proved that no
-		algorithm can decide whether two given 4-manifolds are homeomorphic. Algebraic topology was invented to bring order to this zoo, and
+		(<Term t="simply-connected">simply connected</Term>, <Ref to="topology/homotopy" />) must be the 3-sphere
+		<Cite k="poincare1904" />. The question became the Poincaré conjecture, and it was settled only in 2002–2003 by Grigori Perelman, as
+		part of William Thurston’s programme for describing all 3-manifolds by geometry <Cite k="perelman2002,perelman2003" />. In
+		dimension four no complete list is possible, in a precise sense: in 1958 A. A. Markov proved that no algorithm can decide whether
+		two given closed 4-manifolds are homeomorphic <Cite k="markov1958" />. Algebraic topology was invented to bring order to this zoo, and
 		homology is its first and most useful tool.
 	</p>
 </Remark>
@@ -1071,8 +1084,10 @@
 		1-manifolds with boundary, and which are neither?
 	</p>
 	{#snippet hint()}
-		Remove a point from a small neighbourhood and count the pieces. For an interior point of a curve you get 2 pieces; for an endpoint
-		(a boundary point) you get 1.
+		<p>
+			Remove a point from a small connected neighbourhood of it and count the pieces. For an interior point of a curve you get 2
+			pieces; for an endpoint (a boundary point) you get 1.
+		</p>
 	{/snippet}
 	{#snippet solution()}
 		<p>
@@ -1184,8 +1199,10 @@
 		to the other two. Is the six-chart atlas oriented as it stands? If not, how can you repair it?
 	</p>
 	{#snippet hint()}
-		Write \(w = \sqrt{1 - u^2 - v^2}\). The transition maps are \((u, v) \mapsto (v, w)\) and \((u, v) \mapsto (u, w)\), and
-		\(\partial w/\partial u = -u/w\), \(\partial w/\partial v = -v/w\).
+		<p>
+			Write \(w = \sqrt{1 - u^2 - v^2}\). The transition maps are \((u, v) \mapsto (v, w)\) and \((u, v) \mapsto (u, w)\), and
+			\(\partial w/\partial u = -u/w\), \(\partial w/\partial v = -v/w\).
+		</p>
 	{/snippet}
 	{#snippet solution()}
 		<p>

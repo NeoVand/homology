@@ -313,7 +313,7 @@
 		grid-template-columns: 1.15fr 1fr;
 		align-items: center;
 	}
-	@media (max-width: 760px) {
+	@container figure (max-width: 760px) {
 		.grid {
 			grid-template-columns: 1fr;
 		}

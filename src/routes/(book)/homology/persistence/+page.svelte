@@ -19,6 +19,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import TorusCloud from '$lib/figures/homology/persistence/TorusCloud.svelte';
 	import GrowingBalls from '$lib/figures/homology/persistence/GrowingBalls.svelte';
 	import CechVsRips from '$lib/figures/homology/persistence/CechVsRips.svelte';
@@ -46,9 +47,9 @@
 </p>
 
 <p>
-	This chapter shows how to ask homology about data at <em>every scale at once</em>, how to read its answer — a picture called a
-	<em>barcode</em> — why that answer can be trusted when the data are noisy, and how a computer finds it using nothing more than the column
-	operations you already met in <Ref to="homology/computing" />.
+	The way out is to ask homology about the data at <em>every scale at once</em>. Its answer is a picture called a <em>barcode</em>. The
+	answer can be trusted when the data are noisy, and a computer finds it with nothing more than the column operations you already met
+	in <Ref to="homology/computing" />.
 </p>
 
 <Ahead>
@@ -111,7 +112,7 @@
 <blockquote>
 	“The eye, or the brain, performs the marvelous task of taking the sense data of individual points and assembling them into a coherent
 	image of a continuum — it infers the continuous from the discrete.”
-	<br /><span class="ui cite">— S. Weinberger, “What is … persistent homology?”, Notices of the AMS (2011)</span>
+	<br /><span class="ui cite">— Shmuel Weinberger, “What is … persistent homology?” <Cite k="weinberger2011" loc="p. 36" /></span>
 </blockquote>
 
 <p>
@@ -125,7 +126,7 @@
 	by a machine. But ask it about the cloud <em>as it stands</em> and the answer is disappointing. A set of \(n\) separate points has
 	\(n\) components and nothing else: \(b_0 = n\), and every other <Term t="betti-number">Betti number</Term> is \(0\). As Otter and
 	colleagues put it in their survey of the subject, “from a topological point of view, finite metric spaces do not contain any interesting
-	information.” The shape is not <em>in</em> the points; it is in how the points sit relative to one another. We have to supply the glue.
+	information” <Cite k="otter2017" loc="§1" />. The shape is not <em>in</em> the points; it is in how the points sit relative to one another. We have to supply the glue.
 </p>
 
 <Remark title="A word about β">
@@ -193,11 +194,11 @@
 <blockquote>
 	“… it is a mistake to ask which value of ε is optimal. Nor does it suffice to know a simple ‘count’ of the number and types of holes
 	appearing at each parameter value ε. Betti numbers are not enough.”
-	<br /><span class="ui cite">— R. Ghrist, “Barcodes: The Persistent Topology of Data” (2008); his ε is a scale, like our \(r\)</span>
+	<br /><span class="ui cite">— Robert Ghrist, “Barcodes: the persistent topology of data” <Cite k="ghrist2008" loc="p. 65" />; his ε is a scale, like our \(r\)</span>
 </blockquote>
 <p>
 	Homology alone has no sense of proportion. In Ghrist’s words, “the standard topological constructs of homology and homotopy offer no
-	such slack in their strident rigidity: a hole is a hole no matter how fragile or fine.” The tiny accidental gap between three discs
+	such slack in their strident rigidity: a hole is a hole no matter how fragile or fine” <Cite k="ghrist2008" loc="p. 65" />. The tiny accidental gap between three discs
 	counts exactly as much as the big ring. Persistence is the missing sense of proportion.
 </p>
 
@@ -265,7 +266,7 @@
 	the circle through all three corners; for an obtuse one it is half the longest side.
 </p>
 
-<p>Why go to the trouble? Because of a classical theorem, which we state without proof.</p>
+<p>Why go to the trouble? Because of a classical theorem, which goes back to Karol Borsuk in 1948 and which we state without proof <Cite k="borsuk1948,hatcher2002" loc="Cor. 4G.3" />.</p>
 
 <Theorem id="thm-nerve" title="The nerve theorem">
 	<p>
@@ -282,8 +283,7 @@
 	a convex set is, since you can slide every point along a straight line to one fixed point. “The same homotopy type” (see
 	<Ref to="topology/homotopy" />) means that the two spaces are <Term t="homotopy-equivalence">homotopy equivalent</Term>: one can be deformed into the other, allowing collapses but no tearing; such spaces have
 	the same homology (<Ref to="homology/invariance" />). So the Čech complex, a finite list of simplices, has exactly the pieces, loops and
-	hollows of the union of balls. Ghrist describes it as an object that, “though an abstract simplicial complex of potentially high
-	dimension, behaves exactly like a subset of” Euclidean space.
+	hollows of the union of balls. Ghrist describes it as an object that, “though an abstract simplicial complex of potentially high dimension, behaves exactly like a subset of” Euclidean space <Cite k="ghrist2008" loc="p. 63" />.
 </p>
 
 <Warning title="The good-cover condition matters">
@@ -313,8 +313,7 @@
 
 <p>
 	Notice what this means. Once you know the edges, you know everything: a simplex is present precisely when all of its edges are. Such a
-	complex is called a <dfn>flag complex</dfn> (or clique complex). Ghrist again: for the Rips complex, “the combinatorics of the
-	1-skeleton completely determines the complex”. The two complexes have the same vertices and the same edges — in both, an edge appears
+	complex is called a <dfn>flag complex</dfn> (or clique complex). Ghrist again: for the Rips complex, “the combinatorics of the 1-skeleton completely determines the complex” <Cite k="ghrist2008" loc="p. 63" />. The two complexes have the same vertices and the same edges — in both, an edge appears
 	at the moment the two balls touch — but they can disagree about triangles and everything above.
 </p>
 
@@ -322,7 +321,7 @@
 	<p>
 		In this book \(r\) is always the <strong>radius</strong> of the balls, so a Rips edge appears when two points are at distance at most
 		\(2r\). Many books and programs instead use a “diameter” or “proximity” parameter \(\varepsilon = 2r\): an edge when the distance is
-		at most \(\varepsilon\). Ghrist and Chazal–Michel use that convention for Rips, and at least one survey uses both. Our numbers are
+		at most \(\varepsilon\). Ghrist and Chazal–Michel use that convention for Rips <Cite k="ghrist2008,chazal-michel2021" />, and at least one survey uses both. Our numbers are
 		half of theirs. Every readout in this chapter shows both \(r\) and \(2r\), and bars are half-open intervals \([b, d)\).
 	</p>
 </Notation>
@@ -357,8 +356,7 @@
 	<p>
 		The first inclusion is the triangle inequality. If the balls around some points share a point \(x\), then every two of them,
 		\(p\) and \(q\), satisfy \(\abs{p - q} \le \abs{p - x} + \abs{x - q} \le r + r = 2r\), so they span a Rips simplex. The second
-		inclusion says that points which are pairwise within \(2r\) always fit inside one ball of radius \(\sqrt 2\, r\); this is a classical
-		fact of Euclidean geometry (Jung’s theorem), whose sharpest form gives \(2r/\sqrt3\) in the plane — exactly the equilateral triangle
+		inclusion says that points which are pairwise within \(2r\) always fit inside one ball of radius \(\sqrt 2\, r\); this is a classical fact of Euclidean geometry, Jung’s theorem of 1901 <Cite k="jung1901" />, whose sharpest form gives \(2r/\sqrt3\) in the plane — exactly the equilateral triangle
 		we just met. We omit its proof.
 	</p>
 </Proof>
@@ -368,8 +366,7 @@
 	distances between pairs of points — no coordinates, no geometry. That makes Rips usable for data that is not naturally a set of points
 	in space at all, as long as you can say how far apart two items are: genomes, documents, people in a network. It is also cheap to store
 	(the edges determine everything) and quick to build in any dimension. The price is that Rips can disagree with the union of balls, and
-	occasionally it invents features that are not there. Ghrist warns that the Rips complex “is neither a subcomplex of” Euclidean space
-	“nor does it necessarily behave like an \(n\)-dimensional space at all”. The sandwich above is the reassurance: a feature that survives
+	occasionally it invents features that are not there. Ghrist warns that the Rips complex “is neither a subcomplex of” Euclidean space “nor does it necessarily behave like an \(n\)-dimensional space at all” <Cite k="ghrist2008" loc="p. 64" />. The sandwich above is the reassurance: a feature that survives
 	in Rips from \(r\) all the way to \(\sqrt2\, r\) is a genuine feature of the union of balls of radius \(\sqrt2\, r\), because the map
 	from \(\mathrm{VR}_r\) to \(\mathrm{VR}_{\sqrt2 r}\) passes through \(\check C_{\sqrt2 r}\).
 </p>
@@ -493,7 +490,7 @@
 </p>
 <blockquote>
 	“Elder Rule. At a juncture, the older of the two merging paths continues and the younger path ends.”
-	<br /><span class="ui cite">— H. Edelsbrunner &amp; J. Harer, Computational Topology (2010)</span>
+	<br /><span class="ui cite">— Herbert Edelsbrunner &amp; John Harer, <em>Computational Topology</em> <Cite k="edelsbrunnerharer2010" loc="§VII.1, p. 150" /></span>
 </blockquote>
 <p>
 	The cleanest place to watch it is not a point cloud but a landscape. Take a function \(f\) of one variable — the height of a mountain
@@ -529,8 +526,7 @@
 	<p>
 		Each finite \(H_0\) bar of a Rips filtration ends at an edge that joins two pieces, and the edges that do so are exactly the edges of
 		a <em>minimum spanning tree</em> of the points — the cheapest network of edges connecting all of them. So the \(H_0\) barcode lists
-		the lengths of the minimum spanning tree (halved, in our radius convention). Statisticians know this picture as single-linkage
-		hierarchical clustering. Persistence in dimension 0 is clustering at every scale.
+		the lengths of the minimum spanning tree (halved, in our radius convention). Statisticians know this picture as single-linkage hierarchical clustering <Cite k="gower-ross1969" />. Persistence in dimension 0 is clustering at every scale.
 	</p>
 </Remark>
 
@@ -564,9 +560,9 @@
 </Theorem>
 
 <p>
-	This was proved by Afra Zomorodian and Gunnar Carlsson in 2005. The algebra behind it is a structure theorem very much like the
+	This was proved by Afra Zomorodian and Gunnar Carlsson in 2005 <Cite k="zomorodian-carlsson2005" />. The algebra behind it is a structure theorem very much like the
 	classification of finitely generated abelian groups in <Ref to="foundations/abelian-groups" />, and the next section turns its proof
-	into an algorithm. Ghrist sums up the meaning: “A barcode is best thought of as the persistence analogue of a Betti number.” Here is
+	into an algorithm. Ghrist sums up the meaning: “A barcode is best thought of as the persistence analogue of a Betti number” <Cite k="ghrist2008" loc="p. 67" />. Here is
 	how to read one.
 </p>
 <ul>
@@ -631,10 +627,10 @@
 
 <p>
 	Reading the picture as “long bars are signal, short bars are noise” is the standard first step, and Ghrist states it plainly: features
-	“which persist over a significant parameter range are to be considered as signal with short-lived features as noise.” It is a good
+	“which persist over a significant parameter range are to be considered as signal with short-lived features as noise” <Cite k="ghrist2008" loc="p. 65" />. It is a good
 	rule of thumb, but only that. Edelsbrunner and Harer are more cautious: “noise is in the eye of the beholder, and even if we agreed on
-	the distinction, the de-noising effort would be made difficult by dependencies that frequently lead to unintended side-effects.” And
-	Otter and colleagues add that the interpretation, “while widespread, … is not correct in general”: in some applications the small,
+	the distinction, the de-noising effort would be made difficult by dependencies that frequently lead to unintended side-effects” <Cite k="edelsbrunner-harer2008" loc="p. 257" />. And
+	Otter and colleagues add that the interpretation, “while widespread, … is not correct in general” <Cite k="otter2017" loc="§1" />: in some applications the small,
 	short-lived rings are precisely the structure being studied. Persistence <em>measures</em>; deciding what matters is still your job.
 </p>
 
@@ -643,8 +639,7 @@
 
 <p>
 	You could compute the homology of every frame of the film separately, with the methods of <Ref to="homology/computing" />. The hard
-	part is matching classes between frames — deciding which hole at \(r = 0.4\) is “the same” as which hole at \(r = 0.5\). The standard
-	algorithm, due to Edelsbrunner, Letscher and Zomorodian (2002), does everything in a single left-to-right sweep through a single matrix.
+	part is matching classes between frames — deciding which hole at \(r = 0.4\) is “the same” as which hole at \(r = 0.5\). The standard algorithm, due to Edelsbrunner, Letscher and Zomorodian <Cite k="elz2002" />, does everything in a single left-to-right sweep through a single matrix.
 </p>
 
 <p>
@@ -709,8 +704,7 @@
 		\(\sigma_j\). If that boundary is zero, the chain is a new cycle: \(\sigma_j\) created a class. If it is not zero, its lowest entry
 		\(i\) tells you that this boundary — a cycle — was completed exactly when \(\sigma_i\) arrived, and was filled in exactly when
 		\(\sigma_j\) arrived. Because all the lows end up different, each death is assigned to the youngest class that could have died:
-		the elder rule is built into the word “lowest”. A theorem of Edelsbrunner and Harer guarantees that the pairs do not depend on the
-		order in which you perform the additions.
+		the elder rule is built into the word “lowest”. A theorem of Edelsbrunner and Harer, their Pairing Lemma, guarantees that the pairs do not depend on the order in which you perform the additions <Cite k="edelsbrunnerharer2010" loc="§VII.1" />.
 	</p>
 </Intuition>
 
@@ -733,8 +727,7 @@
 <p>
 	In practice it runs far faster, thanks to a series of tricks: <em>clearing</em> (a column known to become zero need not be reduced),
 	reducing the <em>coboundary</em> matrix instead, never storing the matrix at all but generating its columns on the fly, and spotting
-	pairs that need no work. Ulrich Bauer’s program <strong>Ripser</strong> combines them; in the 2017 benchmark of Otter and colleagues,
-	“ripser is the best-performing library currently available for the computation of PH with the Vietoris–Rips complex”, followed by
+	pairs that need no work. Ulrich Bauer’s program <strong>Ripser</strong> combines them <Cite k="bauer2021" />; in the 2017 benchmark of Otter and colleagues, “ripser is the best-performing library currently available for the computation of PH with the Vietoris–Rips complex” <Cite k="otter2017" />, followed by
 	<strong>GUDHI</strong> and DIPHA. Figure 3.7.6 uses the same strategy as Ripser on a small scale: it reduces the coboundary matrix (columns
 	are edges, rows are triangles) with clearing, and finds the whole barcode of 64 points — about forty thousand triangles — in a fraction
 	of a second, in your browser.
@@ -773,9 +766,7 @@
 </Theorem>
 
 <p>
-	For functions this is the theorem of David Cohen-Steiner, Herbert Edelsbrunner and John Harer (2007): if two functions differ by at
-	most \(\delta\) everywhere, their diagrams are within bottleneck distance \(\delta\). The version for point clouds follows from it and
-	from later work of Chazal, de Silva and Oudot. The reason it is true is easy to see. Moving each point by at most \(\delta\) changes
+	For functions this is the theorem of David Cohen-Steiner, Herbert Edelsbrunner and John Harer <Cite k="ceh2007" />: if two functions differ by at most \(\delta\) everywhere, their diagrams are within bottleneck distance \(\delta\). The version for point clouds follows from it and from later work of Frédéric Chazal, Vin de Silva and Steve Oudot <Cite k="chazal-desilva-oudot2014" />. The reason it is true is easy to see. Moving each point by at most \(\delta\) changes
 	every distance by at most \(2\delta\) (triangle inequality again), so it changes the entrance radius of every simplex by at most
 	\(\delta\). The film stays the same film; every event is merely re-timed by at most \(\delta\). The theorem says that re-timing by at
 	most \(\delta\) moves every feature by at most \(\delta\).
@@ -799,7 +790,7 @@
 	<li>A bar shorter than \(2\delta\) may vanish, and new bars shorter than \(2\delta\) may appear.</li>
 </ul>
 <p>
-	That is the precise sense in which “long bars are robust”. Weinberger suggests a thought experiment: compare the function \(x^2\) with
+	That is the precise sense in which “long bars are robust”. Weinberger suggests a thought experiment <Cite k="weinberger2011" loc="p. 37" />: compare the function \(x^2\) with
 	\(x^2 + \sin(10000x)\). They never differ by more than \(1\), so their diagrams are within distance \(\delta = 1\): the big valley is
 	still there, its floor moved by at most \(1\). But the second function wiggles about sixteen hundred times per unit of length, and almost
 	every wiggle makes a small valley of its own — a flood of new bars, each of length at most about \(2 = 2\delta\), exactly the
@@ -831,44 +822,43 @@
 
 <ul>
 	<li>
-		<strong>Sensor networks.</strong> Vin de Silva and Robert Ghrist (2007) considered sensors scattered over a region, each able to
+		<strong>Sensor networks.</strong> Vin de Silva and Robert Ghrist <Cite k="desilva-ghrist2007" /> considered sensors scattered over a region, each able to
 		detect what is near it and to hear nearby sensors, but with no idea where anything is. From the “who can hear whom” graph alone they
 		built Rips complexes and proved that, under suitable assumptions on the sensing and communication ranges, a homology computation —
 		relative to the sensors on the fence around the region — certifies that the sensing discs leave no gap.
 	</li>
 	<li>
-		<strong>Natural images.</strong> Gunnar Carlsson, Tigran Ishkhanov, Vin de Silva and Afra Zomorodian (2008) studied millions of
+		<strong>Natural images.</strong> Gunnar Carlsson, Tigran Ishkhanov, Vin de Silva and Afra Zomorodian <Cite k="carlsson2008" /> studied millions of
 		\(3 \times 3\) patches cut from photographs, normalised for brightness and contrast, and kept the densest ones. The \(H_1\) barcode
 		has one long bar: the patches crowd around a circle of “edge” patches, one for each angle of a straight light–dark edge. At finer
 		density settings three circles appear, and \(H_2\), computed with \(\Z/2\) and \(\Z/3\) coefficients, points to a Klein bottle
-		containing them. A curious by-product, in Ghrist’s words: “the axis of pixellation appears less relevant than the axis of gravity in
-		natural image data” — horizontal and vertical edges are special because of the world, not because of the camera.
+		containing them. A curious by-product, in Ghrist’s words: “the axis of pixellation appears less relevant than the axis of gravity in natural image data” <Cite k="ghrist2008" loc="p. 71" /> — horizontal and vertical edges are special because of the world, not because of the camera.
 	</li>
 	<li>
-		<strong>Evolution.</strong> Joseph Chan, Gunnar Carlsson and Raul Rabadán (2013) observed that pure descent draws a tree, and a tree
+		<strong>Evolution.</strong> Joseph Chan, Gunnar Carlsson and Raul Rabadán <Cite k="chan2013" /> observed that pure descent draws a tree, and a tree
 		has no loops. Loops in the persistent \(H_1\) of genetic-distance data therefore signal reassortment and recombination, where
 		lineages exchange genetic material.
 	</li>
 	<li>
-		<strong>Neuroscience.</strong> Chad Giusti, Eva Pastalkova, Carina Curto and Vladimir Itskov (2015) computed Betti curves of the
+		<strong>Neuroscience.</strong> Chad Giusti, Eva Pastalkova, Carina Curto and Vladimir Itskov <Cite k="giusti2015" /> computed Betti curves of the
 		clique complexes of neural correlation matrices, and could tell activity organised by an underlying geometry — such as hippocampal
 		place cells — from random structure.
 	</li>
 	<li>
-		<strong>Materials.</strong> Yasuaki Hiraoka and colleagues (2016) used persistence diagrams of atomic configurations to distinguish
+		<strong>Materials.</strong> Yasuaki Hiraoka and colleagues <Cite k="hiraoka2016" /> used persistence diagrams of atomic configurations to distinguish
 		liquid, glass and crystal, and to describe the hierarchy of rings formed by the atoms of amorphous solids.
 	</li>
 	<li>
-		<strong>Cosmology and biology.</strong> Pratyush Pranav and colleagues (2017) measured the “cosmic web” of galaxies — clusters,
-		filaments and voids — with persistent Betti numbers. Kelin Xia and Guo-Wei Wei (2014) analysed protein structure, flexibility and
-		folding with persistent homology. Other studies range from “political islands” in voting maps (Feng and Porter, 2021) to the shape of
+		<strong>Cosmology and biology.</strong> Pratyush Pranav and colleagues <Cite k="pranav2017" /> measured the “cosmic web” of galaxies — clusters,
+		filaments and voids — with persistent Betti numbers. Kelin Xia and Guo-Wei Wei <Cite k="xia-wei2014" /> analysed protein structure, flexibility and
+		folding with persistent homology. Other studies range from “political islands” in voting maps <Cite k="feng-porter2021" /> to the shape of
 		brain arteries and the flocking of animals.
 	</li>
 </ul>
 
 <Remark title="Not every topological data analysis is persistence">
 	<p>
-		A well-known result that identified a subgroup of breast cancers (Nicolau, Levine and Carlsson, 2011) used a different topological
+		A well-known result that identified a subgroup of breast cancers <Cite k="nicolau2011" /> used a different topological
 		tool called <em>Mapper</em>, which builds a graph summarising the data, not persistent homology. The field of topological data
 		analysis is broader than this chapter.
 	</p>
@@ -878,9 +868,13 @@
 	<p>
 		The idea of persistence emerged around the turn of the century in three places independently: with Patrizio Frosini, Massimo Ferri
 		and collaborators in Bologna, in the doctoral work of Vanessa Robins in Boulder, and in Herbert Edelsbrunner’s group at Duke. As
-		Edelsbrunner and Harer recall, “all three developments happened roughly simultaneously”. The complex itself is much older: Leopold
-		Vietoris used it in 1927, in the early days of homology theory; the name of Eliyahu Rips was attached later, after he used it in
-		geometric group theory.
+		Edelsbrunner and Harer recall, “all three developments happened roughly simultaneously” <Cite k="edelsbrunner-harer2008" loc="p. 257" />.
+	</p>
+	<p>
+		The complex itself is much older. Leopold Vietoris — the Vietoris of the Mayer–Vietoris sequence — introduced it in 1927
+		<Cite k="vietoris1927" />, and until the Second World War it was standard knowledge among topologists. Then it was forgotten.
+		Eliyahu Rips reinvented it around 1980 to study hyperbolic groups, Mikhail Gromov used it in his foundational work on such groups, and in 1995 Jean-Claude Hausmann,
+		noticing that the idea went back to Vietoris, gave it the double name it carries today <Cite k="hausmann1995,reitberger2002" />.
 	</p>
 </History>
 
@@ -909,8 +903,7 @@
 
 <p>
 	The data have no void; the union of discs has a hole in the middle instead, uncovered until \(r = 1\). The \(H_2\) bar
-	\([\sqrt3/2, 1)\) is an artefact of the Rips construction. This is not a curiosity of six points. Michał Adamaszek and Henry Adams proved
-	(2017) that the Rips complexes of a whole circle pass through the homotopy types of the spheres \(S^1, S^3, S^5, \dots\) as the scale
+	\([\sqrt3/2, 1)\) is an artefact of the Rips construction. This is not a curiosity of six points. Michał Adamaszek and Henry Adams proved <Cite k="adamaszek-adams2017" /> that the Rips complexes of a whole circle pass through the homotopy types of the spheres \(S^1, S^3, S^5, \dots\) as the scale
 	grows. The sandwich proposition limits the damage, but the moral stands: the Rips complex is a convenient approximation, not “the
 	shape of the data”.
 </p>

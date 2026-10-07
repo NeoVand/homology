@@ -15,6 +15,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import HodgeDecomp from '$lib/figures/big-picture/horizons/HodgeDecomp.svelte';
 	import HodgeRank from '$lib/figures/big-picture/horizons/HodgeRank.svelte';
 	import CircularCoords from '$lib/figures/big-picture/horizons/CircularCoords.svelte';
@@ -144,6 +145,85 @@
 		}
 	] as const;
 
+	// Companion videos, in the order of the chapters they go with. Every link
+	// was checked with YouTube's oEmbed endpoint (title and channel).
+	const companions = [
+		{
+			to: 'topology/spaces',
+			title: 'You Could Have Invented Homology, Part 1: Topology',
+			who: 'Boarbarktree',
+			url: 'https://www.youtube.com/watch?v=pSjahcOnJvU',
+			note: 'Why classifying spaces by listing them is hopeless, and why that leaves one tool: continuous maps. Hence the plan of the series, and of singular homology — probe a space by mapping simple shapes into it.'
+		},
+		{
+			to: 'topology/simplicial-complexes',
+			title: 'You Could Have Invented Homology, Part 2: Some Simple Spaces',
+			who: 'Boarbarktree',
+			url: 'https://www.youtube.com/watch?v=JTTDmE_bBtM',
+			note: 'Convex combinations, convex hulls and the standard simplices, built up slowly and animated with care.'
+		},
+		{
+			to: 'homology/cycles-and-boundaries',
+			title: 'You Could Have Invented Homology, Part 3: Boundaries & The Big Idea',
+			who: 'Boarbarktree',
+			url: 'https://www.youtube.com/watch?v=j9JJJoTjIpY',
+			note: 'Boundaries and interiors of simplices, then the big idea: place the boundary of a triangle in a space and ask whether the whole triangle can fill it. The series pauses there, just before the definition of homology.'
+		},
+		{
+			to: 'homology/cycles-and-boundaries',
+			title: 'What is…homology intuitively?',
+			who: 'VisualMath (Daniel Tubbenhauer)',
+			url: 'https://www.youtube.com/watch?v=QanLUNiqZW0',
+			note: 'Slides annotated live. A one-dimensional hole is “the number of necklaces you can put it on”, a two-dimensional one “the number of plugs needed to inflate it”; one slide pushes a big loop across triangles until it hugs a small hole.'
+		},
+		{
+			to: 'topology/homotopy',
+			title: 'Algebraic Topology: Algebraic Invariants of Spaces',
+			who: 'Oxford Mathematics (André Henriques)',
+			url: 'https://www.youtube.com/watch?v=YbjJ2wep8o0',
+			note: 'The first hour of a fourth-year Oxford course: the fundamental group as an invariant, and the properties any invariant should have, homotopy invariance above all.'
+		},
+		{
+			to: 'homology/homology-groups',
+			title: 'What is algebraic topology?',
+			who: 'Aleph 0',
+			url: 'https://www.youtube.com/watch?v=5xLe77iTHuQ',
+			note: 'Under fifteen minutes with marker pens: the first homology of the torus computed by hand from one vertex, three edges and two triangles, then the worry that leads to singular homology — does the answer depend on how you cut the space? The pinned comment fixes one slip: it is cycles, not chains, that are taken modulo boundaries.'
+		},
+		{
+			to: 'homology/homology-groups',
+			title: 'Algebraic Topology: Chains, Cycles, and Homology Classes',
+			who: 'Oxford Mathematics (André Henriques)',
+			url: 'https://www.youtube.com/watch?v=1f9D7cZSm74',
+			note: 'The second hour: homology at an intuitive level first, then chains, cycles and homology classes, with many examples drawn on surfaces at the blackboard.'
+		},
+		{
+			to: 'cohomology/cohomology-groups',
+			title: 'What, and why, is coHomology',
+			who: 'K-Theory',
+			url: 'https://www.youtube.com/watch?v=irv1qm_WMRY',
+			note: 'Algebra first: the (co)homology of the tiniest complexes — one group, two groups joined by a map, a short exact sequence — read as the failure of exactness, with topology only at the end. A companion to the opening of §5.2 as well.'
+		}
+	] as const;
+
+	// Daniel Tubbenhauer's playlist “What is…algebraic topology?”: each video
+	// comes with the slides it annotates.
+	const tubbSlides = 'https://www.dtubbenhauer.com/slides/algebraic-topology/';
+	const playlist = [
+		{ topic: 'simplicial and singular homology', or: 'Cycles modulo boundaries', to: ['homology/homology-groups', 'homology/invariance'], slides: ['12-simplicial-singular-homology'] },
+		{ topic: 'cellular homology', or: 'Winding around', to: ['homology/exact-sequences'], slides: ['13-cellular-homology'] },
+		{ topic: 'relative homology; the Mayer–Vietoris sequence', or: 'Calculations modulo subspaces; More than the sum of its parts!?', to: ['homology/exact-sequences'], slides: ['16-relative-homology', '18-mayervietoris'] },
+		{ topic: 'persistent homology', or: 'Applications 2 (topology in data analysis)', to: ['homology/persistence'], slides: ['35-applications2'] },
+		{ topic: 'cohomology', or: 'Reversing arrows', to: ['cohomology/cochains', 'cohomology/cohomology-groups'], slides: ['15-cohomology'] },
+		{ topic: 'the universal coefficient theorem', or: 'Working integrally rocks', to: ['cohomology/cohomology-groups', 'big-picture/homological-algebra'], slides: ['19-universalcoefficients'] },
+		{ topic: 'the cohomology ring (two videos)', or: 'Counting intersections; Polynomials, of course', to: ['cohomology/cup-product'], slides: ['20-cohomology-ring-1', '21-cohomology-ring-2'] },
+		{ topic: 'Poincaré duality; Alexander duality', or: 'My face is 0-dimensional; Horned spheres!?', to: ['cohomology/poincare-duality'], slides: ['25-poincareduality', '26-alexanderduality'] },
+		{ topic: 'a (co)homology theory', or: 'Shut up and calculate', to: ['big-picture/categories', 'big-picture/homological-algebra'], slides: ['17-abstract-homology'] },
+		{ topic: 'the Künneth formula', or: 'Multiplication vs. tensor product', to: ['big-picture/homological-algebra'], slides: ['22-kuenneth-formula'] },
+		{ topic: 'homotopy groups; Eilenberg–MacLane spaces; the Hurewicz theorem', or: 'Spheres in spaces; They are not spheres; Homotopy and homology', to: ['big-picture/horizons'], slides: ['28-homotopy', '32-eilenbergmaclane', '33-hurewicz'] },
+		{ topic: 'homology categorifying', or: 'Modules, polynomials and numbers', to: ['big-picture/horizons'], slides: ['14-categorification'] }
+	] as const;
+
 	const physics = [
 		{
 			title: 'Geometry, Topology and Physics',
@@ -209,8 +289,8 @@
 	represents the same class (<Ref
 		to="cohomology/cohomology-groups"
 	/>). In <Ref to="cohomology/cochains" /> you saw the staircase cochain that climbs around a loop; adding the gradient of any height
-	function gives another staircase with the same total climb. Is one of them <em>best</em>? Hodge theory says yes, and the answer is
-	beautifully concrete.
+	function gives another staircase with the same total climb. Is one of them <em>best</em>? Hodge theory says yes, and the best one
+	is something you can draw: the representative that spreads the climb as evenly as possible.
 </p>
 
 <h3 id="hodge-smooth">The smooth version</h3>
@@ -235,7 +315,8 @@
 	On the flat square torus, for example, the harmonic 1-forms are exactly the constant combinations \(a\,dx + b\,dy\): one harmonic
 	form for each element of \(H^1_{\dR}(T^2)\cong\R^2\). The cohomology class is an abstract equivalence class; the harmonic form is a
 	single, canonical object you can draw. We will not prove Hodge’s theorem in the smooth setting — it needs analysis (elliptic partial
-	differential equations) — but its discrete version is pure linear algebra, and you can prove it yourself.
+	differential equations), and Warner’s textbook gives a complete proof <Cite k="warner1983" loc="ch. 6" /> — but its discrete
+	version is pure linear algebra, and you can prove it yourself.
 </p>
 
 <h3 id="hodge-discrete">The discrete version is least squares</h3>
@@ -271,7 +352,8 @@
 
 <p>
 	This is the <Term t="hodge-decomposition">Hodge decomposition</Term> previewed in <Ref to="cohomology/cochains" />, now with its
-	third piece explained: the <Term t="harmonic-flow">harmonic flows</Term> are exactly the cohomology.
+	third piece explained: the <Term t="harmonic-flow">harmonic flows</Term> are exactly the cohomology. Lek-Heng Lim’s survey develops
+	the whole theory in this matrix language, for readers who know linear algebra and graphs <Cite k="lim2020" />.
 </p>
 
 <Question>
@@ -343,11 +425,11 @@
 
 <p>
 	<Term t="hodgerank">HodgeRank</Term>, introduced by Xiaoye Jiang, Lek-Heng Lim, Yuan Yao and Yinyu Ye, treats the margins as a flow on
-	the graph of games, with
-	every triangle of mutually played games filled in, and takes its Hodge decomposition. The gradient part is the best global ranking,
-	found by least squares. What is left over is inconsistency, and it comes in two kinds: a curl part made of “locally cyclic
-	inconsistencies” (rock–paper–scissors among three teams that all played each other), and a harmonic part of “globally cyclic but
-	locally acyclic inconsistencies” — cycles around longer loops of games, invisible to any check on three teams at a time.
+	the graph of games, with every triangle of mutually played games filled in, and takes its Hodge decomposition <Cite
+		k="jiang2011"
+	/>. The gradient part is the best global ranking, found by least squares. What is left over is inconsistency, and it comes in two
+	kinds. The curl part is “locally cyclic”: rock–paper–scissors among three teams that all played each other. The harmonic part is
+	“locally acyclic but globally cyclic”: cycles around longer loops of games, invisible to any check on three teams at a time.
 </p>
 
 <Figure num="5.3.2" title="HodgeRank: who is best?" hint="Change the score margins · switch what is drawn">
@@ -379,15 +461,16 @@
 
 <KeyIdea>
 	<p>
-		For reasonable spaces, an integer cohomology class in degree 1 is the same thing as a map to the circle, up to homotopy:
+		For reasonable spaces (cell complexes, say), an integer cohomology class in degree 1 is the same thing as a map to the circle, up
+		to homotopy <Cite k="hatcher2002" loc="Thm 4.57" />:
 		\[ H^1(X;\Z)\;\cong\;[X, S^1]. \]
 		Homology classes are things you can <em>put in</em> a space (loops); degree-1 cohomology classes are ways of <em>mapping the space
-		onto a circle</em> — angles.
+		to a circle</em> — angles.
 	</p>
 </KeyIdea>
 
 <p>
-	Vin de Silva, Dmitriy Morozov and Mikael Vejdemo-Johansson turned this into an algorithm. Build a <Term t="vietoris-rips-complex">Vietoris–Rips complex</Term> of the data at
+	Vin de Silva, Dmitriy Morozov and Mikael Vejdemo-Johansson turned this into an algorithm <Cite k="desilva2011" />. Build a <Term t="vietoris-rips-complex">Vietoris–Rips complex</Term> of the data at
 	a scale where a persistent loop is alive. Persistent cohomology hands you an integer cocycle \(\alpha\) representing it — typically a
 	“fence” of edges, each counting \(\pm1\) for crossing a cut, just like the staircase cochain. A fence gives a terrible coordinate: it
 	jumps by a whole turn across one set of edges and stays constant elsewhere. So smooth it, by exactly the least squares of the previous
@@ -434,29 +517,32 @@
 	A vector bundle over a space \(X\) is a family of vector spaces, one for each point, varying continuously — like the tangent planes
 	of a surface, or the Möbius band viewed as a family of lines over a circle (<Ref to="cohomology/characteristic-classes" />). Two
 	bundles can be added (put the fibres side by side), but not subtracted. Topological K-theory, created by Michael Atiyah and Friedrich
-	Hirzebruch around 1961 after Grothendieck’s algebraic version, does what we do to build the integers from the natural numbers: it
-	allows formal differences \([E]-[F]\) of
-	complex vector bundles, and declares bundles the same if they become isomorphic after adding a trivial bundle (“stable
-	equivalence”). The result is an abelian group \(K^0(X)\), and it extends to a whole cohomology theory \(K^n\).
+	Hirzebruch in 1959–61 after Grothendieck’s algebraic version <Cite k="atiyah-hirzebruch1961" />, does what we do to build the
+	integers from the natural numbers: it allows formal differences \([E]-[F]\) of complex vector bundles, and declares bundles the
+	same if they become isomorphic after adding a trivial bundle (“stable equivalence”). The result is an abelian group \(K^0(X)\), and
+	it extends to a whole cohomology theory \(K^n\) <Cite k="hatcher-vbkt2017" />.
 </p>
 
 <p>
-	K-theory violates the dimension axiom in a spectacular, regular way. Bott periodicity, proved by Raoul Bott in 1959, says that
-	complex K-theory repeats with period two: \(K^n(\mathrm{pt})\) is \(\Z\) for every even \(n\) and \(0\) for every odd \(n\). Among its
-	triumphs: a famously short proof, by Frank Adams and Michael Atiyah (1966), of the theorem that \(\R^n\) can be given a
-	multiplication with division (like the real numbers, complex numbers, quaternions and octonions) only when \(n = 1, 2, 4\) or \(8\)
-	— the first proofs, a few years earlier, had also rested on Bott periodicity; and the language of the
-	Atiyah–Singer index theorem, which computes analytic invariants of differential operators from topology.
+	K-theory violates the dimension axiom in a spectacular, regular way. Bott periodicity, proved by Raoul Bott in 1959 <Cite
+		k="bott1959"
+	/>, says that complex K-theory repeats with period two: \(K^n(\mathrm{pt})\) is \(\Z\) for every even \(n\) and \(0\) for every odd
+	\(n\). Among its triumphs is an eight-page proof, by Frank Adams and Michael Atiyah, of a theorem of Adams about the Hopf invariant
+	(next section) whose first proof, in 1960, had run to eighty-five pages <Cite k="adams-atiyah1966" />. Its most quotable
+	consequence, first proved in 1958 by Raoul Bott and John Milnor and by Michel Kervaire, also with Bott periodicity: \(\R^n\) carries
+	a bilinear multiplication without zero divisors, as the real numbers, complex numbers, quaternions and octonions do, only when \(n =
+	1, 2, 4\) or \(8\) <Cite k="hatcher2002" loc="§2.B" />. K-theory is also the language of the Atiyah–Singer index theorem, which
+	computes analytic invariants of differential operators from topology.
 </p>
 
 <h3 id="cobordism">Cobordism: homology made of manifolds</h3>
 
 <p>
 	When Poincaré invented homology, his cycles were pieces of manifolds, and two cycles were “homologous” when together they formed the
-	boundary of something (<Ref to="homology/cycles-and-boundaries" />). Cobordism takes that literally. Two closed \(n\)-manifolds \(M\)
+	boundary of something (<Ref to="homology/cycles-and-boundaries" />; <Cite k="poincare1895" text />). Cobordism takes that literally. Two closed \(n\)-manifolds \(M\)
 	and \(N\) are <dfn>cobordant</dfn> if together they are the boundary of a compact \((n+1)\)-manifold: \(\partial W = M\sqcup N\). The
-	cobordism classes form a group, and René Thom computed them in 1954 for unoriented manifolds — work for which he received the Fields
-	Medal. Every closed 1-manifold is a union of circles, and each circle bounds a disk, so in dimension 1 everything is cobordant to
+	cobordism classes form a group, and René Thom computed them in 1954 for unoriented manifolds <Cite k="thom1954" /> — work for which
+	he received the Fields Medal in 1958. Every closed 1-manifold is a union of circles, and each circle bounds a disk, so in dimension 1 everything is cobordant to
 	nothing. In dimension 2, a closed surface bounds a 3-manifold exactly when its Euler characteristic is even: the torus and the Klein
 	bottle bound, but the projective plane \(\RP^2\) (with \(\chi = 1\)) does not. So the cobordism group of a point in dimension 2 is
 	\(\Z/2\), generated by \(\RP^2\) — another failure of the dimension axiom.
@@ -465,18 +551,20 @@
 <h3 id="spectra">The unifying idea: representability and spectra</h3>
 
 <p>
-	Here is the deepest reason cohomology is contravariant. For any abelian group \(G\) and any \(n\ge1\) there is a space \(K(G,n)\),
+	Here is a deeper reason why cohomology is contravariant. For any abelian group \(G\) and any \(n\ge1\) there is a space \(K(G,n)\),
 	an <dfn>Eilenberg–MacLane space</dfn>, whose only nonzero homotopy group (next section) is \(\pi_n = G\), and for cell complexes \(X\)
 	\[ H^n(X;G)\;\cong\;[X, K(G,n)], \]
-	the set of homotopy classes of maps from \(X\) into \(K(G,n)\). The circle is \(K(\Z,1)\) — that was the circular-coordinates fact
+	the set of homotopy classes of maps from \(X\) into \(K(G,n)\) <Cite k="hatcher2002" loc="Thm 4.57" />. The circle is \(K(\Z,1)\) — that was the circular-coordinates fact
 	above — and infinite complex projective space \(\CP^\infty\) is \(K(\Z,2)\), which is why the first Chern class of <Ref
 		to="cohomology/characteristic-classes"
 	/> lives in \(H^2(X;\Z)\). A cohomology class <em>is</em> a map into a special space: maps pull back, so cohomology pulls back.
 </p>
 
 <p>
-	Edgar Brown proved in 1962 that every generalized cohomology theory is representable in the same way, by a sequence of spaces
-	\(E_0, E_1, E_2, \dots\), each the loop space of the next: a <dfn>spectrum</dfn>. Ordinary cohomology, K-theory and cobordism are each
+	Edgar Brown proved in 1962 that every generalized cohomology theory on cell complexes is representable in the same way <Cite
+		k="brown1962"
+	/>. The representing spaces come in a sequence \(E_0, E_1, E_2, \dots\), each equivalent to the loop space of the next: a
+	<dfn>spectrum</dfn> <Cite k="hatcher2002" loc="§4.E" />. Ordinary cohomology, K-theory and cobordism are each
 	represented by their own spectrum, and the study of spectra — stable homotopy theory — is one of the most active areas of modern
 	topology. We can only point at the door.
 </p>
@@ -494,8 +582,11 @@
 	For a first taste, compare spheres. Homology is simple: \(H_k(S^n)\) is \(\Z\) for \(k = 0, n\) and zero otherwise. Homotopy starts
 	the same way — \(\pi_k(S^n) = 0\) for \(k < n\), and \(\pi_n(S^n)\cong\Z\), detected by <Term t="degree">degree</Term> (<Ref
 		to="homology/invariance"
-	/>); indeed the <Term t="hurewicz-theorem">Hurewicz theorem</Term> says the first nonzero homotopy group of a simply connected space agrees with its first nonzero homology
-	group. But then the two part ways completely:
+	/>); indeed the <Term t="hurewicz-theorem">Hurewicz theorem</Term> says that for a simply connected space the first nonzero homotopy
+	group and the first nonzero homology group (in positive degree) occur in the same degree and are isomorphic <Cite
+		k="hatcher2002"
+		loc="Thm 4.32"
+	/>. But then the two part ways completely:
 </p>
 
 <div class="table-wrap">
@@ -511,10 +602,12 @@
 </div>
 
 <p>
-	The 2-sphere has no homology above degree 2, but it has nonzero homotopy groups in infinitely many degrees (a theorem of Jean-Pierre
-	Serre, proved with the spectral sequences of <Ref to="big-picture/homological-algebra" hash="spectral-sequences" />), and nobody knows
-	them all. The first surprise is \(\pi_3(S^2)\cong\Z\), discovered by Heinz Hopf in 1931. It is generated by a map from the 3-sphere to
-	the 2-sphere that you can actually see.
+	The 2-sphere has no homology above degree 2, but it has nonzero homotopy groups in infinitely many degrees. Jean-Pierre Serre proved
+	this in 1953, for every simply connected finite cell complex whose homology mod 2 is not that of a point, using the spectral sequences of <Ref
+		to="big-picture/homological-algebra"
+		hash="spectral-sequences"
+	/> <Cite k="serre1953b" />; nobody knows the groups of \(S^2\) in every degree. The first surprise is \(\pi_3(S^2)\cong\Z\). Its
+	generator is a map from the 3-sphere to the 2-sphere that you can actually see.
 </p>
 
 <History title="Hopf’s surprise">
@@ -522,7 +615,7 @@
 		Heinz Hopf found his map in 1931, four years before Witold Hurewicz defined the higher homotopy groups in general. Homology sees
 		nothing between \(S^3\) and \(S^2\) — \(H_3(S^2) = 0\) — so it would be reasonable to guess that every map from the 3-sphere to the
 		2-sphere can be squashed to a point. Hopf showed instead that there are infinitely many essentially different such maps, told
-		apart by an integer, his invariant. The tool he used was linking, an idea as old as Gauss.
+		apart by an integer, his invariant <Cite k="hopf1931" />. The tool he used was linking, an idea as old as Gauss.
 	</p>
 </History>
 
@@ -533,7 +626,7 @@
 	numbers together with a point at infinity. The <dfn>Hopf map</dfn> sends \((z_1, z_2)\) to the ratio \(z_1/z_2\). Multiplying both
 	\(z_1\) and \(z_2\) by the same unit complex number \(e^{it}\) does not change the ratio, so the points of \(S^3\) that map to any one
 	point of \(S^2\) form a whole circle — a <em>fibre</em>. The 3-sphere is a union of circles, one over each point of the 2-sphere,
-	none of them intersecting.
+	none of them intersecting <Cite k="hatcher2002" loc="Example 4.45" />.
 </p>
 
 <Figure num="5.3.4" title="The Hopf fibration" hint="Drag to rotate · scroll or pinch to zoom · change the number of circles">
@@ -562,7 +655,8 @@
 		what made the computations of Part III possible. Homotopy groups have no excision. A sphere can be built from two disks, each with
 		no homotopy at all, glued along their rims, yet \(\pi_3(S^2)\neq0\): the higher homotopy is created by the gluing in a way no local
 		bookkeeping can track. Even the homotopy groups of spheres are still not known in general; recent record computations of the
-		“stable” ones, by Daniel Isaksen, Guozhen Wang and Zhouli Xu, reach dimension 90 using spectral sequences and computer assistance.
+		“stable” ones, by Daniel Isaksen, Guozhen Wang and Zhouli Xu, reach dimension 90 using spectral sequences and computer assistance
+		<Cite k="isaksen-wang-xu2023" />.
 	</p>
 </Warning>
 
@@ -576,7 +670,9 @@
 
 <p>
 	The tools were those of the last two chapters. Jean-Pierre Serre’s 1955 paper “Faisceaux algébriques cohérents” brought sheaf
-	cohomology into algebraic geometry. Alexander Grothendieck’s Tôhoku paper of 1957 then did two things at once: it set out the axioms of
+	cohomology into algebraic geometry <Cite k="serre1955" />. Alexander Grothendieck’s Tôhoku paper of 1957 <Cite
+		k="grothendieck1957"
+	/> then did two things at once: it set out the axioms of
 	abelian categories (<Ref to="big-picture/categories" hash="abelian-categories" />) and defined sheaf cohomology as the derived functors (<Ref
 		to="big-picture/homological-algebra"
 		hash="tor-and-ext"
@@ -597,12 +693,15 @@
 </Example>
 
 <p>
-	Grothendieck and his school went on to build étale cohomology, a cohomology theory for shapes defined over finite fields, where
-	ordinary topology makes no sense. With it, Pierre Deligne proved the last of the Weil conjectures in 1974: the number of solutions of
-	polynomial equations over finite fields is governed by “Betti numbers”, exactly as a <Term t="lefschetz-fixed-point-theorem">Lefschetz fixed-point formula</Term> would predict. The
-	method was the one Grothendieck described with an image — not cracking a hard problem with a hammer, but surrounding it with theory
-	until it dissolves. In Colin McLarty’s translation, his first analogy for that approach was “immersing the nut in some softening
-	liquid, and why not simply water?”; the second became the epigraph of <Ref to="big-picture/homological-algebra" />: the rising sea.
+	Grothendieck and his school went on to build étale cohomology, a cohomology theory for shapes defined by polynomial equations over
+	any field, finite fields included, where ordinary topology makes no sense. With it, Pierre Deligne proved the last of the Weil
+	conjectures in 1974 <Cite k="deligne1974" />: the number of solutions of polynomial equations over finite fields is governed by
+	“Betti numbers”, exactly as a <Term t="lefschetz-fixed-point-theorem">Lefschetz fixed-point formula</Term> would predict. The method
+	was the one Grothendieck described with an image — not cracking a hard problem with a hammer, but surrounding it with theory until
+	it dissolves. In Colin McLarty’s translation, his first analogy for that approach was “immersing the nut in some softening liquid,
+	and why not simply water?”; the second became the epigraph of <Ref to="big-picture/homological-algebra" />: the rising sea <Cite
+		k="mclarty2007"
+	/>.
 </p>
 
 <h2 id="applications">Homology at work</h2>
@@ -616,34 +715,36 @@
 	<li>
 		<strong>Physics.</strong> The integer quantum Hall effect, in which the electrical conductance of a two-dimensional material comes
 		in exact integer steps, is explained by a Chern number — a characteristic class (<Ref to="cohomology/characteristic-classes" />)
-		— as shown by Thouless, Kohmoto, Nightingale and den Nijs in 1982. Topological insulators and superconductors are organised by
-		K-theory and Bott periodicity (Kitaev, 2009). Topological quantum field theories were axiomatised by Atiyah in 1988 as, in effect,
-		functors from a category of cobordisms to vector spaces; and physicists use cohomology and cobordism invariants to describe the
+		— as shown by Thouless, Kohmoto, Nightingale and den Nijs in 1982 <Cite k="tknn1982" />. Topological insulators and
+		superconductors are organised by K-theory and Bott periodicity <Cite k="kitaev2009" />. Topological quantum field theories were
+		axiomatised by Atiyah in 1988 as, in effect, functors from a category of cobordisms to vector spaces <Cite k="atiyah1988" />; and
+		physicists use cohomology and cobordism invariants to describe the
 		“anomalies” that can obstruct a quantum field theory from being consistently defined.
 	</li>
 	<li>
-		<strong>Data.</strong> Persistent homology (<Ref to="homology/persistence" />) finds shape in point clouds — loops in the space of
-		natural image patches, voids in materials, cycles in evolutionary histories. Sensors that only know which neighbours they can hear
-		can certify, with homology, that a region is fully covered (de Silva and Ghrist, 2007).
+		<strong>Data.</strong> Persistent homology (<Ref to="homology/persistence" />) finds shape in point clouds: a Klein bottle in the
+		space of small patches of natural images <Cite k="carlsson2008" />, rings and cavities in glass <Cite k="hiraoka2016" />, loops in
+		the family trees of viruses that swap genes <Cite k="chan2013" />. Sensors that only know which neighbours they can hear can
+		certify, with homology, that a region is fully covered <Cite k="desilva-ghrist2007" />.
 	</li>
 	<li>
 		<strong>Neuroscience.</strong> The topology of correlations between neurons can reveal geometric structure in their activity
-		(Giusti, Pastalkova, Curto and Itskov, 2015), and the <Term t="nerve-theorem">nerve theorem</Term> of <Ref
+		<Cite k="giusti2015" />, and the <Term t="nerve-theorem">nerve theorem</Term> of <Ref
 			to="cohomology/sheaves"
 		/> explains how overlapping
 		“place fields” of neurons could encode the shape of an environment.
 	</li>
 	<li>
 		<strong>Robotics.</strong> The positions of a robot form a configuration space. Michael Farber’s <em>topological complexity</em>
-		uses cohomology (its <Term t="cup-product">cup products</Term>, in fact) to bound from below how many separate continuous rules any motion planner must use;
-		a single continuous rule exists only when the configuration space is contractible.
+		uses cohomology (its <Term t="cup-product">cup products</Term>, in fact) to bound from below how many separate continuous rules any
+		motion planner must use; a single continuous rule exists only when the configuration space is contractible <Cite k="farber2003" />.
 	</li>
 	<li>
-		<strong>Knots.</strong> Khovanov homology (2000) assigns to each knot a family of homology groups whose graded Euler characteristic
+		<strong>Knots.</strong> Khovanov homology <Cite k="khovanov2000" /> assigns to each knot a family of homology groups whose graded Euler characteristic
 		is the Jones polynomial, a famous knot invariant — the polynomial is a “shadow” of the homology, as \(\chi\) is a shadow of the
 		Betti numbers. Promoting a number or polynomial to a homology theory in this way is called <dfn>categorification</dfn>, and the
 		extra information pays: Kronheimer and Mrowka showed in 2011 that Khovanov homology recognises the unknot, something not known for
-		the Jones polynomial itself.
+		the Jones polynomial itself <Cite k="kronheimer-mrowka2011" />.
 	</li>
 </ul>
 
@@ -750,6 +851,57 @@
 </p>
 <FurtherReading items={[...physics]} />
 
+<h3 id="companion-videos">Watch alongside: companion videos</h3>
+<p>
+	Some ideas land better when you watch someone draw them. The videos below make good companions to particular chapters. Watch each
+	one after reading its chapter rather than instead of it: videos skip steps that a book takes slowly, and that is part of their
+	charm. They are listed in the order of the book.
+</p>
+
+<ol class="companions">
+	{#each companions as c (c.url)}
+		<li>
+			<span class="where ui"><Ref to={c.to} /></span>
+			<span class="what">
+				<a href={c.url} target="_blank" rel="noopener noreferrer">{c.title}</a>
+				<span class="who">— {c.who}</span>
+			</span>
+			<span class="why">{c.note}</span>
+		</li>
+	{/each}
+</ol>
+
+<p>
+	For a second pass through the whole subject, Daniel Tubbenhauer’s playlist <a
+		href="https://www.youtube.com/playlist?list=PLuFcVFHMIfhJSSX-tlv8XxiAZSAbhv1DA"
+		target="_blank"
+		rel="noopener noreferrer"><em>What is…algebraic topology?</em></a
+	> runs from homotopy to applications in short episodes, each a set of slides annotated live; the slides are free on his
+	<a href="https://www.dtubbenhauer.com/youtube.html" target="_blank" rel="noopener noreferrer">website</a>. The episodes that match
+	this book:
+</p>
+
+<div class="table-wrap">
+	<table class="playlist">
+		<thead><tr><th>“What is…”</th><th>read with</th><th>slides</th></tr></thead>
+		<tbody>
+			{#each playlist as p (p.topic)}
+				<tr>
+					<td><span class="topic">{p.topic}</span><span class="or">Or: {p.or}</span></td>
+					<td>
+						{#each p.to as t, i (t)}{#if i > 0}<br />{/if}<Ref to={t} />{/each}
+					</td>
+					<td>
+						{#each p.slides as sl, i (sl)}{#if i > 0}, {/if}<a href="{tubbSlides}{sl}.pdf" target="_blank" rel="noopener noreferrer"
+								>PDF{p.slides.length > 1 ? ` ${i + 1}` : ''}</a
+							>{/each}
+					</td>
+				</tr>
+			{/each}
+		</tbody>
+	</table>
+</div>
+
 <h2 id="closing">The shape of a question, revisited</h2>
 
 <p>
@@ -818,5 +970,48 @@
 	}
 	.spheres tr.pi td {
 		color: var(--gold-bright);
+	}
+	.companions {
+		list-style: none;
+		padding: 0 !important;
+		margin: 1rem 0 1.5rem;
+		counter-reset: none;
+	}
+	.companions li {
+		display: grid;
+		gap: 0.15rem;
+		padding: 0.75rem 0;
+		border-bottom: 1px solid var(--line-faint);
+	}
+	.companions li::before {
+		display: none;
+	}
+	.where {
+		font-size: 0.78rem;
+		letter-spacing: 0.02em;
+	}
+	.what a {
+		font-style: italic;
+	}
+	.who {
+		color: var(--ink-dim);
+		font-size: 0.92em;
+	}
+	.why {
+		color: var(--ink-dim);
+		font-size: 0.95em;
+	}
+	.playlist td {
+		vertical-align: top;
+	}
+	.playlist .topic {
+		display: block;
+		color: var(--ink-bright);
+	}
+	.playlist .or {
+		display: block;
+		font-size: 0.85em;
+		color: var(--ink-dim);
+		font-style: italic;
 	}
 </style>

@@ -290,7 +290,7 @@
 		margin-right: 0.5rem;
 		color: var(--ink-faint);
 	}
-	@media (max-width: 560px) {
+	@container figure (max-width: 560px) {
 		.inset {
 			width: 100px;
 			height: 116px;

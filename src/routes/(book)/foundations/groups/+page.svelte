@@ -1140,7 +1140,7 @@
 <Remark title="Giving the same name to different things">
 	<p>
 		Poincaré’s motto from the epigraph of <Ref to="foundations/equivalence" /> — “mathematics is the art of giving the
-		same name to different things” <Cite k="poincare1908" /> — fits isomorphism perfectly. Isomorphism is that art
+		same name to different things” <Cite k="poincare1908" /> — could stand over this section: isomorphism is that art
 		made precise. When we write <span class="nw">\(G \cong H\),</span> we are saying that, as far as the group operation can tell,
 		\(G\) and \(H\) are the same thing with different labels. Most of the time we will happily treat isomorphic groups
 		as equal — homology groups are only ever determined “up to isomorphism” — but the symbol \(\cong\) is there to

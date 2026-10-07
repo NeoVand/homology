@@ -23,11 +23,13 @@
 		if (!bettiCatalogue.find((e) => e.id === id)!.b2) coeff = 'Q';
 	});
 
-	const W = 600;
+	// a narrower drawing in a narrow figure, so that labels stay legible on a phone
+	let cw = $state(640);
+	const W = $derived(cw < 520 ? 380 : 600);
 	const H = 300;
 	const base = 236;
 	const unit = $derived(Math.min(48, 168 / Math.max(1, ...b)));
-	const slot = $derived(Math.min(96, 480 / (n + 1)));
+	const slot = $derived(Math.min(96, (W - 120) / (n + 1)));
 	const x0 = $derived(W / 2 - (slot * (n + 1)) / 2);
 	const cx = (k: number) => x0 + slot * (k + 0.5);
 	const mirrorX = $derived(W / 2);
@@ -37,7 +39,7 @@
 	const seqTeX = $derived(`(${b.map((x, k) => `b_${k}`).join(',\\,')}) = (${b.join(',\\,')})`);
 </script>
 
-<div class="bm">
+<div class="bm" bind:clientWidth={cw}>
 	<div class="chips ui" role="radiogroup" aria-label="Choose a space">
 		{#each bettiCatalogue as e (e.id)}
 			<button class="chip" class:on={e.id === id} class:off={!e.closed} role="radio" aria-checked={e.id === id} onclick={() => (id = e.id)}>
@@ -152,7 +154,7 @@
 	}
 	.mlabel {
 		text-anchor: middle;
-		font-size: 11px;
+		font-size: 12px;
 		fill: var(--violet);
 	}
 	.bars {

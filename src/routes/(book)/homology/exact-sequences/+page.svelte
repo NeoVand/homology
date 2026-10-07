@@ -95,6 +95,18 @@
 	</p>
 </KeyIdea>
 
+<p>
+	Four tiny complexes make the slogan concrete; the video <em>What, and why, is coHomology</em> on the K-Theory channel builds the whole subject up from examples this small. In each, compute “killed by the next map” modulo “produced by the previous one” at every spot.
+</p>
+<ul>
+	<li>\(0\to G\to 0\). Nothing is produced and everything is killed, so the homology at \(G\) is all of \(G\).</li>
+	<li>\(0\to G\xrightarrow{\ \id\ }G\to 0\). Exact everywhere: the homology is \(0\) at both spots.</li>
+	<li>
+		\(0\to G\xrightarrow{\ f\ }H\to 0\). The homology is \(\ker f\) at \(G\) and \(H/\im f\) at \(H\): exactly how far \(f\) fails to be injective, and how far it fails to be surjective.
+	</li>
+	<li>\(G\xrightarrow{\ g\ }H\xrightarrow{\ h\ }K\) with \(h\circ g = 0\). The homology at \(H\) is \(\ker h/\im g\), which vanishes exactly when every element that \(h\) kills comes from \(G\).</li>
+</ul>
+
 <Figure num="3.6.1" title="Exactness, bead by bead" hint="Change m and k · hover a bead in the middle column">
 	<ExactBeads />
 	{#snippet caption()}
@@ -776,6 +788,14 @@
 			author: 'Pierre Albin, University of Illinois',
 			url: 'https://www.youtube.com/playlist?list=PLpRLWqLFLVTCL15U6N3o35g4uhMSBVA2b',
 			note: 'A graduate course that follows Hatcher closely. Lectures 13–15 do exact sequences, long exact sequences of pairs and excision, lecture 19 the homology of cell complexes, and lecture 20 Mayer–Vietoris.',
+			kind: 'video',
+			free: true
+		},
+		{
+			title: 'What, and why, is coHomology',
+			author: 'K-Theory (YouTube)',
+			url: 'https://www.youtube.com/watch?v=irv1qm_WMRY',
+			note: 'Exactness and (co)homology built up algebra first, from complexes with one, two and three terms, with topology arriving only at the end. A good second look at Section 1 for readers who think in algebra.',
 			kind: 'video',
 			free: true
 		},

@@ -70,6 +70,35 @@
 		const s = M.edgeSegs[e][0];
 		return s.a[1] === s.b[1] ? 'h' : s.a[0] === s.b[0] ? 'v' : 'd';
 	};
+	// drag a fence sideways (α) or up and down (β); it snaps to the middle of a column or row
+	let svg: SVGSVGElement | undefined = $state();
+	let held = $state<'a' | 'b' | null>(null);
+	function toUser(e: PointerEvent): [number, number] | null {
+		const m = svg?.getScreenCTM();
+		if (!m) return null;
+		const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+		return [p.x, p.y];
+	}
+	const clampCell = (k: number) => Math.max(0, Math.min(n - 1, k));
+	function grab(e: PointerEvent, which: 'a' | 'b') {
+		held = which;
+		(e.currentTarget as Element).setPointerCapture(e.pointerId);
+		e.preventDefault();
+	}
+	function slide(e: PointerEvent) {
+		const p = held && toUser(e);
+		if (!p) return;
+		if (held === 'a') col = clampCell(Math.floor(((p[0] - X) / S) * n));
+		else row = clampCell(Math.floor(((Y + S - p[1]) / S) * n));
+	}
+	function key(e: KeyboardEvent, which: 'a' | 'b') {
+		const d = which === 'a' ? (e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0) : e.key === 'ArrowUp' ? 1 : e.key === 'ArrowDown' ? -1 : 0;
+		if (!d) return;
+		e.preventDefault();
+		if (which === 'a') col = clampCell(col + d);
+		else row = clampCell(row + d);
+	}
+
 	$effect(() => {
 		// reset the manual selection when the configuration changes
 		void mode;
@@ -81,7 +110,7 @@
 
 <div class="gc">
 	<div class="pic">
-		<Svg viewBox="0 0 440 400" maxHeight={420} label="The torus as a square cut into 3 by 3 cells, each cell split into a lower triangle L and an upper triangle U. A gold vertical fence alpha and a teal horizontal fence beta cross in one cell; the cup product is nonzero only on one triangle there.">
+		<Svg bind:svg viewBox="0 0 440 400" maxHeight={420} label="The torus as a square cut into 3 by 3 cells, each cell split into a lower triangle L and an upper triangle U. A gold vertical fence alpha and a teal horizontal fence beta cross in one cell; the cup product is nonzero only on one triangle there.">
 <defs>
 				<filter id="gc-glow" filterUnits="userSpaceOnUse" x="-40" y="-40" width="520" height="480">
 					<feGaussianBlur stdDeviation="2.6" result="b" />
@@ -140,11 +169,49 @@
 			{/if}
 			<!-- fences -->
 			{#if showAlpha}
+				<g
+					class="grab"
+					class:held={held === 'a'}
+					role="slider"
+					tabindex="0"
+					aria-label="Fence α: drag it sideways, or use the left and right arrow keys"
+					aria-valuemin={1}
+					aria-valuemax={n}
+					aria-valuenow={col + 1}
+					aria-valuetext="column {col + 1}"
+					onpointerdown={(e) => grab(e, 'a')}
+					onpointermove={slide}
+					onpointerup={() => (held = null)}
+					onpointercancel={() => (held = null)}
+					onkeydown={(e) => key(e, 'a')}
+					style="cursor: ew-resize"
+				>
+					<path d={pathD(alphaArc, map)} class="hit" />
+				</g>
 				<path d={pathD(alphaArc, map)} class="fence fa" />
 				<path d={coChevrons(alphaArc, map, { spacing: 60, size: 6 })} class="chev fa" />
 				<SvgTeX x={map(alphaArc[1])[0] - 16} y={Y + 16} tex={'\\alpha'} color="var(--gold-bright)" size={19} w={30} h={24} />
 			{/if}
 			{#if showBeta}
+				<g
+					class="grab"
+					class:held={held === 'b'}
+					role="slider"
+					tabindex="0"
+					aria-label="Fence β: drag it up or down, or use the up and down arrow keys"
+					aria-valuemin={1}
+					aria-valuemax={n}
+					aria-valuenow={row + 1}
+					aria-valuetext="row {row + 1}"
+					onpointerdown={(e) => grab(e, 'b')}
+					onpointermove={slide}
+					onpointerup={() => (held = null)}
+					onpointercancel={() => (held = null)}
+					onkeydown={(e) => key(e, 'b')}
+					style="cursor: ns-resize"
+				>
+					<path d={pathD(betaArc, map)} class="hit" />
+				</g>
 				<path d={pathD(betaArc, map)} class="fence fb" />
 				<path d={coChevrons(betaArc, map, { spacing: 60, size: 6 })} class="chev fb" />
 				<SvgTeX x={X + 16} y={map(betaArc[0])[1] - 16} tex={'\\beta'} color="var(--teal)" size={19} w={30} h={24} />
@@ -167,14 +234,6 @@
 				{ value: 'bb', label: 'β ⌣ β' }
 			]}
 		/>
-		<div class="move">
-			<span class="lbl">α in column</span>
-			<Segmented bind:value={col} label="Column of the fence α" options={[0, 1, 2].map((v) => ({ value: v, label: String(v + 1) }))} />
-		</div>
-		<div class="move">
-			<span class="lbl">β in row</span>
-			<Segmented bind:value={row} label="Row of the fence β" options={[0, 1, 2].map((v) => ({ value: v, label: String(v + 1) }))} />
-		</div>
 		<div class="read">
 			<div class="k">selected triangle</div>
 			<TeX tex={selTeX} />
@@ -183,7 +242,8 @@
 		</div>
 		<p class="legend">
 			Gold edges cross α (value 1), teal edges cross β (value 1). Every lower triangle L runs
-			right then up; every upper triangle U runs up then right. Tap any triangle.
+			right then up; every upper triangle U runs up then right. Drag a fence to another column or
+			row, or tap any triangle.
 		</p>
 	</div>
 </div>
@@ -196,7 +256,7 @@
 		padding: 0.6rem 1.1rem 1rem;
 		align-items: center;
 	}
-	@media (max-width: 760px) {
+	@container figure (max-width: 760px) {
 		.gc {
 			grid-template-columns: minmax(0, 1fr);
 		}
@@ -250,6 +310,7 @@
 		stroke-dasharray: 9 5;
 		stroke-linecap: round;
 		filter: url(#gc-glow);
+		pointer-events: none;
 	}
 	.fence.fa,
 	.chev.fa {
@@ -261,6 +322,7 @@
 	}
 	.chev {
 		fill: none;
+		pointer-events: none;
 		stroke-width: 2.2;
 		stroke-linecap: round;
 		stroke-linejoin: round;
@@ -287,16 +349,20 @@
 		gap: 0.7rem;
 		align-content: center;
 	}
-	.move {
-		display: flex;
-		align-items: center;
-		gap: 0.6rem;
-		flex-wrap: wrap;
+	.grab {
+		outline: none;
+		touch-action: none;
 	}
-	.lbl {
-		font-size: 0.76rem;
-		color: var(--ink-dim);
-		min-width: 5.5rem;
+	.hit {
+		fill: none;
+		stroke: transparent;
+		stroke-width: 22;
+		pointer-events: stroke;
+	}
+	.grab:hover .hit,
+	.grab:focus-visible .hit,
+	.grab.held .hit {
+		stroke: rgba(255, 244, 218, 0.1);
 	}
 	.read {
 		display: grid;

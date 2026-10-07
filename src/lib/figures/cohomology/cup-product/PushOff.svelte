@@ -201,7 +201,7 @@
 		gap: 0.4rem 1rem;
 		padding: 0.6rem 1rem 0.2rem;
 	}
-	@media (max-width: 560px) {
+	@container figure (max-width: 560px) {
 		.panels {
 			grid-template-columns: minmax(0, 1fr);
 		}

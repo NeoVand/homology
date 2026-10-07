@@ -411,7 +411,7 @@
 <p>
 	Finally, reverse both: \((x, 0) \sim (1 - x, 1)\) and \((0, y) \sim (1, 1 - y)\), with word \(abab\). Notice what these rules
 	do: every point of the boundary is glued to the point <em>diametrically opposite</em> it, through the centre of the square. Round
-	the square off into a disk and the description becomes beautifully simple: <em>a disk with each point of its rim glued to the
+	the square off into a disk and the description shrinks to a single line: <em>a disk with each point of its rim glued to the
 	opposite point of the rim</em>. This is the <strong>real projective plane</strong> \(\RP^2\). Its corners form two classes.
 </p>
 <p>
@@ -777,6 +777,32 @@
 			and \(x = \tfrac34\) are glued end to end (the top of one to the bottom of the other) into a single circle, which is the
 			boundary of both bands. So \(K\) is two Möbius bands sewn together along their edges — the “weird bottle” of the limerick
 			at the top of this chapter.
+		</p>
+	{/snippet}
+</Exercise>
+
+<Exercise level={3} title="Cut and paste: two words, one bottle" id="ex-cut-paste">
+	<p>
+		Cut the Klein bottle square \(abab^{-1}\) along the diagonal \(c\) that runs from its bottom-left to its top-right corner. Turn
+		one of the two triangles over, and glue the triangles back together along their \(a\) edges. Show that the new square has the
+		word \(aabb\), after renaming its letters — so the two words describe the same surface.
+	</p>
+	{#snippet hint()}
+		<p>
+			Write each triangle’s word anticlockwise, as for the square. Gluing a polygon with word \(x\,P\) to one with word
+			\(x^{-1}Q\) along \(x\) gives a polygon with word \(P\,Q\). Turning a polygon over reverses its word: \(x\,y\,z\) becomes
+			\(z^{-1}y^{-1}x^{-1}\).
+		</p>
+	{/snippet}
+	{#snippet solution()}
+		<p>
+			With the arrows of Figure 2.2.4 (bottom \(a\) pointing right, top \(a\) pointing left, both \(b\)’s pointing up), the
+			lower triangle reads \(a\,b\,c^{-1}\) and the upper one \(c\,a\,b^{-1}\). Both contain \(a\) the same way round, so before
+			gluing we turn the upper triangle over: its word becomes \(b\,a^{-1}c^{-1}\), or, starting from \(a^{-1}\), \(a^{-1}c^{-1}b\).
+			Now glue \(a\,(b\,c^{-1})\) to \(a^{-1}(c^{-1}b)\) along \(a\): the new square reads \(b\,c^{-1}c^{-1}b\), which, starting
+			from the last letter, is \(b\,b\,c^{-1}c^{-1}\). Reverse the arrow on \(c\) and call it \(d\): the word is \(bbdd\), which is
+			\(aabb\) with the letters renamed. Cutting and regluing never changes the surface, only its picture — the same moves drive the
+			proof of the classification of surfaces in <Ref to="topology/manifolds" />.
 		</p>
 	{/snippet}
 </Exercise>

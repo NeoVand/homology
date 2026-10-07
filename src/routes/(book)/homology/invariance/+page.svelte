@@ -32,6 +32,7 @@
 	import HairyBall from '$lib/figures/homology/invariance/HairyBall.svelte';
 	import CommutatorTorus from '$lib/figures/homology/invariance/CommutatorTorus.svelte';
 	import JordanProbe from '$lib/figures/homology/invariance/JordanProbe.svelte';
+	import FillTest from '$lib/figures/homology/invariance/FillTest.svelte';
 </script>
 
 <Epigraph author="Allen Hatcher" source="Algebraic Topology (2002), Chapter 2"
@@ -238,6 +239,10 @@
 	<li>lets <em>every</em> continuous map induce homomorphisms, functorially;</li>
 	<li>agrees with everything we have already computed.</li>
 </ol>
+<p>
+	You could have invented it yourself. Faced with an arbitrary space, with no triangles in sight, the only thing we can do is map things into it. David Farrell’s video series <em>You Could Have Invented Homology</em> puts the whole programme on one slide: “Have: continuous functions. Study: continuous functions.” So probe the space with test shapes. The simplest test shapes are simplices, and a simplex comes with its faces built in. Let an \(n\)-chain be a formal sum of continuous maps \(\Delta^n\to X\) — crumpled simplices, as many as you like — and let the boundary be “restrict to the faces, with alternating signs”. That is the whole definition.
+</p>
+
 <p>Singular homology does all three. The price is that it is gigantic.</p>
 
 <p>
@@ -728,21 +733,36 @@
 </Example>
 
 <p>
-	The kernel of \(h\) is not just an algebraic curiosity; you can see it. Punch a hole in a torus. The punctured torus deformation retracts onto the figure eight \(a\vee b\), so its \(\pi_1\) is the free group on \(a\) and \(b\). The loop that runs around the edge of the gluing square, \(aba^{-1}b^{-1}\), is a commutator. It can be slid onto the rim of the hole. There it is the <em>boundary of the whole punctured torus</em>, so in \(H_1\) it is zero. But in \(\pi_1\) it is not the identity: the hole is in the way, and no amount of sliding will shrink it to a point.
+	What does the kernel of \(h\) look like? Here is the geometric difference between the two ways of killing a loop, in one sentence each.
 </p>
 
-<Figure num="3.5.10" title="A loop that bounds but cannot shrink" hint="Drag the teal loop · drag elsewhere to rotate">
+<KeyIdea title="Shrink versus fill">
+	<p>
+		A loop can be <strong>shrunk</strong> to a point exactly when it can be filled by a <strong>disk</strong>: a map of a whole triangle into the space whose edge is the loop. It is <strong>zero in \(H_1\)</strong> exactly when it can be filled by <strong>some surface</strong>: a compact, orientable surface, perhaps with handles, whose only edge is the loop. (A loop that is a product of \(g\) commutators needs \(g\) handles.) Homotopy asks for a disk; homology accepts any surface.
+	</p>
+</KeyIdea>
+
+<Figure num="3.5.10" title="Fill it if you can" hint="Choose a space and a test · play or scrub the filling · drag to rotate">
+	<FillTest />
+	{#snippet caption()}
+		The loop is drawn as the edge of a triangle: three sides and three corners. On the plane it bounds a disk, so it shrinks and it is a boundary. Around the cylinder it bounds nothing at all. Around the waist of a two-holed surface it bounds no disk, but it bounds the whole right half, a surface with one handle. The idea of testing a space by trying to fill the edge of a triangle is the “big idea” of David Farrell’s video series <em>You Could Have Invented Homology</em>; the two-holed surface with its waist is a picture André Henriques draws in his Oxford lectures.
+	{/snippet}
+</Figure>
+
+<p>
+	The extra freedom, any surface instead of a disk, makes homology coarser than homotopy, but also far more computable. For instance, the homotopy groups \(\pi_i(S^2)\) are nonzero for infinitely many \(i\), and nobody knows them all, while \(H_i(S^2) = 0\) for every \(i \gt 2\).
+</p>
+
+<p>
+	A punctured torus shows the same phenomenon with a loop you can move by hand. The punctured torus deformation retracts onto the figure eight \(a\vee b\), so its \(\pi_1\) is the free group on \(a\) and \(b\). The loop that runs around the edge of the gluing square, \(aba^{-1}b^{-1}\), is a commutator. It can be slid onto the rim of the hole. There it is the <em>boundary of the whole punctured torus</em>, a surface with one handle, so in \(H_1\) it is zero. But in \(\pi_1\) it is not the identity: the hole is in the way, and no amount of sliding will shrink it to a point.
+</p>
+
+<Figure num="3.5.11" title="A loop that bounds but cannot shrink" hint="Drag the teal loop · drag elsewhere to rotate">
 	<CommutatorTorus />
 	{#snippet caption()}
 		On a torus with a hole (rim in rose), the teal loop runs along \(a\), then \(b\), then \(a\) backwards, then \(b\) backwards — follow the white bead. Drag it towards the hole. At every stage it is the boundary of the shaded teal surface, so it is \(0\) in \(H_1\). Yet it is the commutator \(aba^{-1}b^{-1}\neq 1\) in \(\pi_1\): it hugs the hole and cannot be shrunk.
 	{/snippet}
 </Figure>
-
-<Intuition>
-	<p>
-		Homotopy lets a loop <strong>shrink</strong>; homology also lets it <strong>sweep across a surface and cancel</strong>. That extra freedom makes homology coarser, but also far more computable. For instance, the homotopy groups \(\pi_i(S^2)\) are nonzero for infinitely many \(i\), and nobody knows them all, while \(H_i(S^2) = 0\) for every \(i \gt 2\).
-	</p>
-</Intuition>
 
 <Warning>
 	<p>
@@ -916,6 +936,14 @@
 			author: 'Pierre Albin, University of Illinois',
 			url: 'https://www.youtube.com/playlist?list=PLpRLWqLFLVTCL15U6N3o35g4uhMSBVA2b',
 			note: 'A graduate course that follows Hatcher closely. Lectures 12–13 do singular homology and homotopy invariance, 17–18 degree, and 25–26 Hurewicz, the Jordan curve theorem, invariance of domain and Lefschetz.',
+			kind: 'video',
+			free: true
+		},
+		{
+			title: 'You Could Have Invented Homology, Parts 1–3',
+			author: 'David Farrell (Boarbarktree)',
+			url: 'https://www.youtube.com/watch?v=pSjahcOnJvU',
+			note: 'An animated series that motivates homology from scratch: study a space by mapping simple shapes into it, and ask whether the edge of a triangle can be filled. It stops at that “big idea” (Part 3), which is the test of Figure 3.5.10.',
 			kind: 'video',
 			free: true
 		},

@@ -47,6 +47,14 @@
 			free: true
 		},
 		{
+			title: 'What is…the cohomology ring intuitively? Or: Counting intersections',
+			author: 'Daniel Tubbenhauer',
+			url: 'https://www.dtubbenhauer.com/slides/algebraic-topology/20-cohomology-ring-1.pdf',
+			note: 'Slides for a short video in his “What is…?” series on YouTube (index at dtubbenhauer.com/youtube.html): two loops on a torus meeting in a point, codimensions adding, and why crossings must be transverse. A quick visual recap of the last section of this chapter.',
+			kind: 'notes' as const,
+			free: true
+		},
+		{
 			title: 'Differential Forms in Algebraic Topology',
 			author: 'Raoul Bott and Loring Tu (Springer GTM 82, 1982)',
 			url: 'https://link.springer.com/book/10.1007/978-1-4757-3951-0',
@@ -602,7 +610,7 @@
 	cross.</strong>
 </p>
 
-<Figure num="4.5.3" title="The torus, triangle by triangle" hint="Choose a product · move the fences · tap a triangle">
+<Figure num="4.5.3" title="The torus, triangle by triangle" hint="Choose a product · drag the fences · tap a triangle">
 	<GridCup />
 	{#snippet caption()}
 		The number in each triangle is the value of the chosen product there: left factor on the front face
@@ -859,7 +867,7 @@
 	The fence picture explains why. A fence for \(x\) is a “line”: a curve running from a point of the
 	boundary straight across to the opposite, glued point. To compute \(x\smile x\) we need a second copy of
 	the fence pushed slightly off the first — and any two such lines cross exactly once, because their four
-	end points on the boundary interleave. In projective geometry this is the famous rule that <em>any two
+	end points on the boundary interleave. In projective geometry this is the classical rule that <em>any two
 	lines in the projective plane meet in exactly one point</em>. Choose \(\RP^2\) in the explorer above to see
 	it.
 </p>
@@ -942,7 +950,7 @@
 	cohomology \(\Z\) in degrees \(0,2,4\) and nothing else. In \(\CP^2\), the square of the degree-2 generator
 	is the degree-4 generator; in \(S^2\vee S^4\), the degree-2 class lives on the \(S^2\), where there is no room
 	for a degree-4 class, so its square is \(0\). Different rings — so \(\CP^2\) and \(S^2\vee S^4\) are not
-	homotopy equivalent, even though neither has any loops at all. The ring of \(\RP^n\) also has famous
+	homotopy equivalent, even though neither has any loops at all. The ring of \(\RP^n\) also has striking
 	applications; one of them is a short proof of the Borsuk–Ulam theorem (every continuous map
 	\(S^n\to\R^n\) sends some pair of opposite points to the same place), which Hatcher sets as an
 	exercise <Cite k="hatcher2002" loc="§3.2, Exercise 3" />.
@@ -992,7 +1000,9 @@
 	cup product.” <Cite k="hutchings2011" /> In an \(n\)-dimensional manifold, a class of degree \(p\) can often be drawn as an
 	\((n-p)\)-dimensional “wall” (a fence is the case \(n=2\), \(p=1\)); the product of a degree-\(p\) and a
 	degree-\(q\) class is drawn by intersecting the walls, which leaves something of dimension
-	\(n-p-q\). Making this precise — saying exactly which wall belongs to which class — is the subject of the
+	\(n-p-q\). Codimensions add, just as degrees do — provided the walls cross cleanly, the way two lines cross in
+	an “×”. Two curves that merely touch, tangent to each other, give no honest count until one of them is nudged,
+	which is why the key idea above asks for fences “in general position”. Making this precise — saying exactly which wall belongs to which class — is the subject of the
 	next chapter, <Ref to="cohomology/poincare-duality" />.
 </p>
 
@@ -1007,7 +1017,7 @@
 
 <Warning title="A picture, not a definition">
 	<p>
-		Fences are a superb way to <em>think</em> about cup products on surfaces, but they are not how the cup
+		Fences are the best way we know to <em>think</em> about cup products on surfaces, but they are not how the cup
 		product is defined, and they do not always exist: on a space that is not a manifold (the wedge) the
 		“fences” degenerate into gates on circles, and with \(\Z\) coefficients a fence needs a consistent
 		crossing direction, which a one-sided curve — the core of a Möbius band — does not have. The definition is the front-face/back-face

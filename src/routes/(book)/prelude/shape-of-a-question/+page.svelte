@@ -12,6 +12,7 @@
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import StretchFigure from '$lib/figures/prelude/shape-of-a-question/StretchFigure.svelte';
 	import HoleGallery from '$lib/figures/prelude/shape-of-a-question/HoleGallery.svelte';
 	import EulerSolids from '$lib/figures/prelude/shape-of-a-question/EulerSolids.svelte';
@@ -23,8 +24,8 @@
 	import { href } from '$lib/util/paths';
 </script>
 
-<Epigraph author="Henri Poincaré" source="Analysis Situs (1895), trans. J. Stillwell"
-	>Geometry is the art of reasoning well from badly drawn figures; however, these figures, if they are not to
+<Epigraph author="Henri Poincaré" source="Analysis Situs (1895), trans. John Stillwell"
+	>… geometry is the art of reasoning well from badly drawn figures; however, these figures, if they are not to
 	deceive us, must satisfy certain conditions; the proportions may be grossly altered, but the relative positions
 	of the different parts must not be upset.</Epigraph
 >
@@ -37,26 +38,25 @@
 </p>
 
 <p>
-	There is a branch of mathematics, called <strong>topology</strong>, that studies exactly those features of a shape
-	that survive stretching, bending and squeezing — but not tearing or gluing. And inside topology there is a
-	remarkable machine, called <strong>homology</strong>, that turns the vague idea of a “hole” into precise numbers and
-	algebra, together with its mirror image, <strong>cohomology</strong>, which measures something just as
-	fundamental: the ways in which information that is perfectly consistent in every small region can fail to fit
-	together as a whole.
+	The branch of mathematics that studies such differences is called <strong>topology</strong>: it keeps track of
+	whatever survives stretching, bending and squeezing, and forgets everything else. Inside topology runs a machine
+	called <strong>homology</strong>, which turns the slippery idea of a “hole” into numbers you can calculate. Beside
+	it runs its mirror image, <strong>cohomology</strong>, which detects something subtler: information that makes
+	perfect sense in every small region and still cannot be fitted together into one consistent whole.
 </p>
 
 <p>
-	This first chapter is a tour. Nothing here needs to be fully understood yet; every idea will come back later,
-	slowly and carefully, with all the background you need. The goal for now is to see the landscape — to know what
-	questions we are trying to answer, why the answers are beautiful, and why they turn out to be useful in places as
-	far apart as data science, robotics and the physics of new materials.
+	This first chapter is a tour, and nothing in it has to be fully understood yet; every idea returns later, slowly,
+	with all the background it needs. On the way you will meet a drinking straw that starts arguments, a count of
+	corners that Euler noticed in 1750, a staircase that climbs for ever without getting anywhere, and a theorem which
+	promises that however you stir a cup of coffee, some point of it ends exactly where it began.
 </p>
 
 <Ahead>
 	<p>
-		By the end of this chapter you will know, informally, what topology studies, what a topological invariant is, what
-		homology counts, and what cohomology measures. You will also know how the book is organised, how its
-		interactive figures work, and what the colours in every picture mean.
+		By the end of the chapter you will know, informally, what topology studies, what a topological invariant is, what
+		homology counts and what cohomology measures. You will also know how the book is organised, how to use its
+		figures, and what the colours in every picture mean.
 	</p>
 </Ahead>
 
@@ -92,7 +92,11 @@
 <p>
 	Under these rules, a ball and a cube are the same (round off the corners), a sphere and the surface of a potato are
 	the same, and a doughnut and a coffee cup are the same. But a ball and a doughnut are <em>not</em> the same: to get
-	from one to the other you would have to punch a hole through the ball, and punching is a kind of tearing.
+	from one to the other you would have to punch a hole through the ball, and punching is a kind of tearing. (In one
+	way the rules are more generous than clay: a loop of string tied in a knot counts as the same shape as a plain
+	ring, because topology cares about a shape itself and not about how it sits in the room. <Ref
+		to="topology/spaces"
+	/> explains.)
 </p>
 
 <p>
@@ -120,10 +124,10 @@
 </p>
 
 <p>
-	A simple example: the <strong>number of pieces</strong>. A shape made of two separate blobs can never be stretched
-	into a shape made of one, because joining them would require gluing, and stretching never separates one piece into
-	two without tearing. So “number of pieces” is an invariant. It already tells apart the letter <em>i</em> (two
-	pieces: the dot and the stroke) from the letter <em>l</em> (one piece).
+	A simple example: the <strong>number of pieces</strong>. Two separate blobs can never be stretched into one,
+	because joining them would take gluing; one blob can never be stretched into two, because separating them would
+	take tearing. So “number of pieces” is an invariant. It already tells the letter <em>i</em> (two pieces: the dot and
+	the stroke) from the letter <em>l</em> (one piece).
 </p>
 
 <p>
@@ -135,8 +139,9 @@
 <Question>
 	<p>
 		How many holes does a drinking straw have? One, because you can see straight through it? Two, one at each end? Or
-		zero, because a straw is just a rolled-up sheet of paper, and a sheet has no holes at all? People argue about this
-		in earnest. The argument goes on because the everyday word “hole” is not precise enough to settle it.
+		zero, because a straw is only a rolled-up sheet of paper, and a sheet has no holes at all? People argue about
+		this in earnest <Cite k="richeson2021" />, and the argument never ends, because the everyday word “hole” is not
+		precise enough to settle it. (Topology’s verdict, by the end of this chapter: one.)
 	</p>
 </Question>
 
@@ -144,14 +149,15 @@
 	The trouble is that a hole is not a <em>thing</em>. It is a place where something is missing, and it is
 	surprisingly hard to point at an absence. Worse, holes come in different dimensions. A circle has a hole you can
 	loop a string around. A hollow ball has no such hole — every loop drawn on its surface can be slid off and shrunk
-	away — but it does enclose a hollow cavity, a different kind of hole. A doughnut, as we will see, has two
-	independent loop-holes <em>and</em> a cavity.
+	away — but it does enclose a hollow cavity, a different kind of hole. And the skin of a doughnut (think of an
+	inflatable swimming ring rather than a cake) has two independent loop-holes <em>and</em> a cavity.
 </p>
 
 <p>
 	Homology is the theory that sorts all of this out. It produces, for every shape and every dimension
 	\(n = 0, 1, 2, \dots\), a count of the essentially different \(n\)-dimensional holes. These counts are called the
-	<strong>Betti numbers</strong> of the shape, written \(b_0, b_1, b_2, \dots\) (pronounced “b-zero, b-one, b-two”):
+	<Term t="betti-number">Betti numbers</Term> of the shape, after the Italian mathematician Enrico Betti, and written
+	\(b_0, b_1, b_2, \dots\) (pronounced “b-zero, b-one, b-two”):
 </p>
 
 <ul>
@@ -179,11 +185,29 @@
 	</p>
 </Warning>
 
+<Intuition title="Necklaces and plugs">
+	<p>
+		Daniel Tubbenhauer offers two tests you can do at home <Cite k="tubbenhauer2021" />. For \(b_1\), count the
+		necklaces you could thread onto the shape so that none can be slipped off and none is just a combination of the
+		others; for \(b_2\), count the plugs you would need to inflate it. An inflatable swimming ring takes two necklaces —
+		one through the middle, and one running round inside the air chamber — and one plug: \(b_0, b_1, b_2 = 1, 2, 1\). A
+		doughnut from the bakery takes one necklace and no plug: \(1, 1, 0\). The two look alike but are different shapes,
+		because the ring is a hollow skin and the doughnut is solid. And a drinking straw takes exactly one necklace, which
+		settles the argument above: \(b_1 = 1\).
+	</p>
+	<p>
+		Notice that both tests count things <em>outside</em> the shape. That they still measure the shape itself is a
+		theorem in disguise, Alexander duality (<Ref to="cohomology/poincare-duality" hash="alexander" />), and it holds for
+		reasonable shapes sitting in ordinary space.
+	</p>
+</Intuition>
+
 <h2 id="eulers-clue">Euler’s clue</h2>
 
 <p>
 	The first hint that something like homology exists came from an innocent-looking observation about solids with flat
-	faces — polyhedra. Take any such solid: a cube, a pyramid, a soccer ball. Count its corners (mathematicians say
+	faces — polyhedra. Take any such solid: a cube, a pyramid, a football sewn from pentagons and hexagons. Count its
+	corners (mathematicians say
 	<em>vertices</em>), its edges, and its faces. Call these \(V\), \(E\) and \(F\). For a cube, \(V = 8\), \(E = 12\) and
 	\(F = 6\). Now compute
 </p>
@@ -192,9 +216,10 @@
 
 <p>
 	Try it for the other solids in the figure below. A tetrahedron (triangular pyramid): \(4 - 6 + 4 = 2\). An
-	icosahedron, with its twenty triangles: \(12 - 30 + 20 = 2\). Every time, the answer is 2. This is
-	<strong>Euler’s polyhedron formula</strong>, and it holds for every polyhedron that is, topologically, a ball — no
-	matter how many faces it has, how irregular they are, or how it is drawn.
+	icosahedron, with its twenty triangles: \(12 - 30 + 20 = 2\). The football, with 60 corners, 90 seams and 32
+	panels: \(60 - 90 + 32 = 2\). Every time, the answer is 2. This is <strong>Euler’s polyhedron formula</strong>
+	<Cite k="euler1758" />, and it holds for every polyhedron that is, topologically, a ball — however many faces it
+	has, however irregular they are.
 </p>
 
 <Figure title="Counting corners, edges and faces" hint="Choose a solid · drag to rotate" num="0.1.3">
@@ -223,19 +248,26 @@
 
 <History>
 	<p>
-		Leonhard Euler described the formula around 1750; René Descartes had found closely related facts in notes that
-		were lost and only rediscovered much later. In 1813 Simon Lhuilier pointed out polyhedra with tunnels where the
-		formula gives other values — the first glimpse of a topological invariant. A century later Henri Poincaré, in
-		his 1895 memoir <em>Analysis Situs</em> (“the analysis of position”), saw that Euler’s number is an alternating sum
-		of hole-counts, \(\chi = b_0 - b_1 + b_2\), and founded what we now call algebraic topology.
+		Leonhard Euler announced the formula in a letter to Christian Goldbach in November 1750 and published it in 1758.
+		René Descartes had found facts from which it follows at once, around 1630, but his notebook had a rough life. It
+		was found among his papers in Stockholm after his death in 1650, spent three days in the Seine when the boat
+		carrying it to Paris sank, was copied by Gottfried Leibniz in 1676, and then vanished; Leibniz’s copy turned up in
+		Hanover around 1860 <Cite k="federico1982" />. In 1813 Simon Lhuilier pointed out polyhedra with tunnels, where
+		the count comes out as \(2 - 2g\) for a solid with \(g\) tunnels <Cite k="lhuilier1813" />. Then, in his 1895
+		memoir <em>Analysis Situs</em> (“the analysis of position”), Henri Poincaré saw that Euler’s number is an
+		alternating sum of hole-counts, \(\chi = b_0 - b_1 + b_2\), and founded what we now call algebraic topology <Cite
+			k="poincare1895"
+			loc="§16"
+		/>.
 	</p>
 </History>
 
 <p>
-	For the cube: \(b_0 = 1\) piece, \(b_1 = 0\) loop-holes, \(b_2 = 1\) cavity, and \(1 - 0 + 1 = 2\). For the picture
-	frame, whose surface is a torus: \(1 - 2 + 1 = 0\). That Euler’s crude count equals this alternating sum of Betti
-	numbers is a genuine theorem — you will prove it in <Ref to="homology/homology-groups" />. It is our first clue that
-	the holes of a shape can be counted by finite, mechanical calculations.
+	Check it on the cube’s surface: \(b_0 = 1\) piece, \(b_1 = 0\) loop-holes, \(b_2 = 1\) cavity, and \(1 - 0 + 1 = 2\).
+	For the picture frame, whose surface is a torus: \(1 - 2 + 1 = 0\). That Euler’s crude count equals this alternating
+	sum of Betti numbers is a genuine theorem, and you will prove it in <Ref to="homology/homology-groups"
+		hash="euler-poincare"
+	/>. It is our first clue that the holes of a shape can be counted by finite, mechanical calculations.
 </p>
 
 <h2 id="loops-that-cannot-shrink">Loops that cannot shrink</h2>
@@ -243,12 +275,12 @@
 <p>
 	How do we detect a loop-hole precisely? Here is a physical test. Wrap a rubber band around a shape, keeping it on
 	the surface, and let it contract. On a sphere, every rubber band can slide over the surface and shrink to a point.
-	It never gets caught on anything. On a doughnut, some bands also shrink to a point; but a band that goes around the
+	It never gets caught on anything. On a torus, some bands also shrink to a point; but a band that goes around the
 	tube, or around the central hole, gets stuck. It can slide along the surface, but it can never become smaller than
 	the hole it surrounds.
 </p>
 
-<Figure title="Rubber bands" hint="Pull the bands tight · drag to rotate" num="0.1.4">
+<Figure title="Rubber bands" hint="Play or scrub to pull the bands tight · drag to rotate" num="0.1.4">
 	<RubberBands />
 	{#snippet caption()}
 		On the sphere, the band shrinks to a point, sweeping across the shaded cap — the region it <em>bounds</em>. On
@@ -258,10 +290,11 @@
 </Figure>
 
 <p>
-	Notice the shaded region on the sphere. The band shrinks because it is the edge — mathematicians say the
-	<strong>boundary</strong> — of a piece of the surface, the cap, and the band can slide across that cap. The stuck
-	band on the torus is not the boundary of any piece of the torus. And this, finally, is the idea that will become our
-	precise definition of a hole:
+	Look at the shaded region on the sphere. The band is the edge — mathematicians say the <strong>boundary</strong> —
+	of a piece of the surface, the cap, and as it shrinks it sweeps across that cap. On the sphere, bounding and
+	shrinking go together. The stuck band on the torus bounds no piece of the torus at all. Cut along it with scissors
+	and the torus does not fall apart into an inside and an outside; it opens into a single tube. That second
+	observation, bounding rather than shrinking, is the one that becomes our precise definition of a hole:
 </p>
 
 <KeyIdea>
@@ -272,9 +305,23 @@
 	</p>
 </KeyIdea>
 
+<Warning title="Two definitions of a hole">
+	<p>
+		Look up “hole” in Wolfram MathWorld and you will read that a hole is “a topological structure which prevents the
+		object from being continuously shrunk to a point” <Cite k="weisstein-hole" />. That is the rubber-band test, and
+		most popular accounts teach it. Homology uses the more generous test of bounding: a loop goes around a hole if it is
+		not the edge of any piece of the shape. On every shape in this chapter the two tests agree, but they are different
+		tests. On a surface with two handles, a band around the waist cannot shrink — there is a handle in the way on each
+		side — yet it is the edge of either half. Homology says it surrounds no hole. <Ref
+			to="homology/invariance"
+			hash="hurewicz"
+		/> draws a loop like this and explains why the generous test is the one we can compute.
+	</p>
+</Warning>
+
 <p>
-	The rubber band test is beautiful, but it is not yet mathematics: we cannot try every way of sliding a band. The
-	great insight of homology is to replace sliding with <em>bookkeeping</em>. We cut the shape into simple pieces —
+	The rubber-band test is vivid, but it is not yet mathematics: nobody can try every way of sliding a band. The great
+	insight of homology is to replace sliding with <em>bookkeeping</em>. We cut the shape into simple pieces —
 	triangles, say — and record loops and surfaces as lists of pieces. Then the question “is this loop a boundary?”
 	becomes a question about solving equations, which a computer (or a patient human) can always answer.
 </p>
@@ -282,12 +329,14 @@
 <h2 id="from-counting-to-algebra">From counting to algebra</h2>
 
 <p>
-	For about thirty years after Poincaré, mathematicians worked with Betti numbers as plain numbers. Then, in the
-	mid-1920s, Emmy Noether — one of the great algebraists of the century — pointed out to the topologists around her
-	that the loops and surfaces they were counting naturally form <em>groups</em>: you can add two loops (travel one and
-	then the other), subtract them (travel one backwards), and the numbers they had been computing were just sizes of
-	these groups. It sounds like a change of vocabulary. It was a revolution. Once holes form groups, the whole power of
-	algebra can be brought to bear on shape.
+	For thirty years after Poincaré, topologists treated Betti numbers as plain numbers, read off from large tables
+	recording which pieces of a shape touch which. Then, in 1925, Emmy Noether — one of the great algebraists of the
+	century — pointed out, in her Göttingen lectures and in a report fourteen lines long, that the loops and surfaces
+	they were counting naturally form <em>groups</em>: you can add two loops (travel one and then the other) and
+	subtract them (travel one backwards), and the numbers they had been computing were measurements of these groups.
+	It sounds like a change of vocabulary. But the young Heinz Hopf, visiting Göttingen that year, saw how useful it
+	was, and the word spread fast <Cite k="weibel1999" />: once holes form groups, the whole of algebra can be brought
+	to bear on shape.
 </p>
 
 <p>
@@ -329,8 +378,8 @@
 <p>
 	Here is the kind of question cohomology answers. Suppose someone hands you the altitude change along every trail
 	segment on a map. Can you recover an altitude for every crossing, consistent with all those changes? Locally, the
-	answer is always yes: near any one crossing you can just start from zero and add up the changes. Globally, the answer
-	can be no.
+	answer is always yes: near any one crossing, call its altitude zero and add up the changes as you walk outwards.
+	Globally, the answer can be no.
 </p>
 
 <Figure title="An impossible staircase" hint="Walk around the loop · then make the staircase possible" num="0.1.6">
@@ -343,11 +392,12 @@
 </Figure>
 
 <p>
-	This is the logic of the famous <em>impossible staircase</em> of Lionel and Roger Penrose, made immortal by M. C.
-	Escher’s lithograph <em>Ascending and Descending</em>, where monks climb forever around a square stairway. Every small
-	part of the picture is a perfectly good staircase. The impossibility lives only in the whole loop. It is, quite
-	literally, a nonzero cohomology class — and Roger Penrose later wrote a paper analysing impossible figures in exactly
-	these terms.
+	This is the logic of the <Term t="penrose-staircase">impossible staircase</Term> that the geneticist Lionel Penrose
+	and his son Roger, then a young mathematician, published in 1958 <Cite k="penrose1958" />, and that M. C. Escher
+	made famous two years later in his lithograph <em>Ascending and Descending</em>, where monks climb for ever around
+	a square stairway. Every small part of the picture is a perfectly good staircase. The impossibility lives only in
+	the whole loop. It is, quite literally, a nonzero cohomology class, and in 1992 Roger Penrose wrote a paper
+	analysing impossible figures in exactly these terms <Cite k="penrose1992" />.
 </p>
 
 <KeyIdea>
@@ -384,19 +434,25 @@
 	Here is a taste of the very first great application, which you will prove yourself in <Ref
 		to="homology/invariance"
 	/>. Stir a cup of coffee and let it settle. However you stirred — as long as the coffee did not slosh out of the cup
-	or splash apart — at least one point of the coffee is exactly where it started. This is <strong>Brouwer’s fixed
-		point theorem</strong>, proved by the Dutch mathematician L. E. J. Brouwer in the early 1910s. Its proof is a
-	two-line argument about holes: if there were no fixed point, you could use the stirring to push the disk onto its
-	boundary circle without tearing, and that would destroy the circle’s hole — which homology says is impossible.
+	or splash apart — at least one point of the coffee is exactly where it started. This is <Term
+		t="brouwer-fixed-point-theorem">Brouwer’s fixed point theorem</Term
+	>, proved in full generality by the Dutch mathematician L. E. J. Brouwer in 1911 <Cite k="brouwer1911" />. For a
+	flat disk of coffee, its proof is a two-line argument about holes: if no point stayed put, you could use the
+	stirring to push the whole disk onto its rim without tearing, and that would destroy the rim’s hole — which homology
+	says is impossible.
 </p>
 
 <p>
-	Brouwer’s theorem underlies the existence of equilibria in economics. Persistent homology (<Ref to="homology/persistence" />)
-	finds circles, voids and tunnels hidden in clouds of data points, from protein structures to the activity of
-	neurons. Homology detects gaps in the coverage of a sensor network using only which sensors can see each other.
-	Cohomology explains why the Hall conductance of certain thin materials comes in perfectly whole-number steps —
-	part of the work on topological phases of matter recognised by the 2016 Nobel Prize in Physics. And the
-	configuration spaces of robot arms are studied with exactly the tools of this book.
+	The same theorem and its relatives guarantee that equilibria exist in economics and in games: John Nash’s proof
+	that every finite game has an equilibrium is an application of it <Cite k="nash1951" />. Persistent homology (<Ref
+		to="homology/persistence"
+	/>) finds circles, voids and tunnels hidden in clouds of data points, from the shapes of proteins to the firing of
+	neurons <Cite k="xia-wei2014,giusti2015" />. Homology detects gaps in the coverage of a network of sensors using
+	only which sensors can hear each other <Cite k="desilva-ghrist2007" />. Cohomology explains why the Hall
+	conductance of certain thin materials comes in perfectly whole-number steps <Cite k="tknn1982" />, part of the work
+	on topological phases of matter recognised by the 2016 Nobel Prize in Physics <Cite k="nobel2016" />. And the
+	cohomology of the space of all positions of a robot arm sets a lower limit on how many separate rules a program
+	that plans its motions must switch between <Cite k="farber2003" />.
 </p>
 
 <h2 id="how-to-read-this-book">How to read this book</h2>
@@ -412,8 +468,8 @@
 		and logic. If symbols like \(\forall\), \(\in\) or \(\Rightarrow\) are unfamiliar, read it next.
 	</li>
 	<li>
-		<strong>Part I, Foundations.</strong> Sets and functions, equivalence and quotients, groups, and linear algebra —
-		exactly the algebra that homology needs, and no more.
+		<strong>Part I, Foundations.</strong> Sets and functions, equivalence and quotients, groups, abelian groups and
+		linear algebra — exactly the algebra that homology needs, and no more.
 	</li>
 	<li>
 		<strong>Part II, Shapes.</strong> Topological spaces, gluing, homotopy, manifolds, simplicial complexes and the
@@ -439,6 +495,11 @@
 		<strong>Dotted underlines are glossary terms.</strong> Hover over (or tap) a word like <Term t="invariant">invariant</Term>
 		to see its definition without losing your place. The full <a href={href('/glossary/')}>glossary</a> and a
 		<a href={href('/notation/')}>notation guide</a> are always one click away in the top bar.
+	</li>
+	<li>
+		<strong>Names and years in brackets are references,</strong> like <Cite k="euler1758" />: a book or paper where
+		you can check a fact or read a story in full. Hover over (or tap) one for the details. Each chapter ends with its
+		list of references and a short guide to further reading.
 	</li>
 	<li>
 		<strong>Boxes have meanings.</strong> Gold boxes are definitions, violet boxes are theorems, teal boxes give
@@ -475,8 +536,9 @@
 			Only D and O are topologically the same as O: each is just a closed loop. A, P and R have extra “legs”
 			attached to the loop. Removing the single point where a leg meets the loop cuts such a letter into two
 			pieces, whereas removing any one point from O leaves it in one piece — and no stretching can change how a shape
-			falls apart when a point is removed. (Q depends on the font: does its tail cross the loop or just touch it?)
-			This “cut point” invariant is made precise in <Ref to="topology/spaces" />.
+			falls apart when a point is removed. Q is never the same as O, whatever the font: its tail either touches the
+			loop, or crosses it, or floats free as a second piece, and each version falls apart differently. This “cut
+			point” invariant is made precise in <Ref to="topology/spaces" />.
 		</p>
 	{/snippet}
 </Exercise>
@@ -541,11 +603,13 @@
 	</p>
 	{#snippet solution()}
 		<p>
-			Yes. A T-shirt has four openings (the neck, the waist and two sleeves), so it is a sphere with four disks
+			No. A T-shirt has four openings (the neck, the waist and two sleeves), so it is a sphere with four disks
 			removed. A pair of trousers has three openings (the waist and two legs), so it is a sphere with three disks
 			removed. These are <em>not</em> the same: the number of boundary circles is a topological invariant, and
 			\(4 \neq 3\). (Stretching cannot create or remove an edge of the fabric.) So the topologist <em>can</em> tell a
-			T-shirt from a pair of trousers — though not, of course, a coffee cup from a doughnut.
+			T-shirt from a pair of trousers — though not, of course, a coffee cup from a doughnut. Topologists take this
+			garment seriously: a sphere with three holes is officially called a <em>pair of pants</em>, and surfaces are
+			routinely cut into pairs of pants to study them.
 		</p>
 	{/snippet}
 </Exercise>
@@ -563,9 +627,9 @@
 			change, such as the number of pieces or the Euler characteristic \(V - E + F\).
 		</li>
 		<li>
-			Homology turns “holes” into precise invariants. Its Betti numbers \(b_0, b_1, b_2, \dots\) count pieces, loops
-			that cannot be shrunk, and enclosed cavities. The precise idea is: <em>a hole is a cycle that is not a
-			boundary</em>.
+			Homology turns “holes” into precise invariants. Its Betti numbers \(b_0, b_1, b_2, \dots\) count pieces,
+			independent loops around tunnels, and enclosed cavities. The precise idea is: <em>a hole is a cycle that is not
+			a boundary</em>, a test of bounding that is more generous than the popular test of shrinking.
 		</li>
 		<li>
 			Cohomology measures obstructions: data that is consistent everywhere locally but not globally, like an
@@ -584,30 +648,55 @@
 	items={[
 		{
 			title: 'Topology 101: The Hole Truth',
-			author: 'David Richeson, Quanta Magazine (2021)',
+			author: 'David S. Richeson, Quanta Magazine (2021)',
 			url: 'https://www.quantamagazine.org/topology-101-how-mathematicians-study-holes-20210126/',
-			note: 'The straw debate, and why mathematicians needed a precise definition of a hole.',
+			note: 'The straw debate, Riemann’s idea of counting holes by cutting, and how homology settles the argument. A ten-minute read for anyone.',
 			kind: 'web',
 			free: true
 		},
 		{
-			title: 'Euler’s Gem',
-			author: 'David Richeson (Princeton, 2008)',
-			note: 'A popular history of V − E + F and the birth of topology.',
+			title: 'What is…homology intuitively?',
+			author: 'Daniel Tubbenhauer (VisualMath, YouTube)',
+			url: 'https://www.youtube.com/watch?v=QanLUNiqZW0',
+			note: 'A short video lecture in which he annotates his slides live: the swimming ring and the doughnut, the necklaces and plugs, and the shrinking definition of a hole quoted in this chapter. The slides are free at dtubbenhauer.com.',
+			kind: 'video',
+			free: true
+		},
+		{
+			title: 'What is algebraic topology?',
+			author: 'Aleph 0 (YouTube)',
+			url: 'https://www.youtube.com/watch?v=5xLe77iTHuQ',
+			note: 'Fifteen hand-drawn minutes covering the whole idea of Part III: cut a shape into cells, compute the circle and the torus by hand, then ask whether the answer depends on the cutting.',
+			kind: 'video',
+			free: true
+		},
+		{
+			title: 'Euler’s Gem: The Polyhedron Formula and the Birth of Topology',
+			author: 'David S. Richeson (Princeton, 2008)',
+			url: 'https://doi.org/10.1515/9781400838561',
+			note: 'A popular history of V − E + F, from Descartes’s waterlogged notebook to Poincaré and beyond. The best book-length companion to this chapter; no background needed.',
 			kind: 'book'
 		},
 		{
-			title: 'The Shape of Space',
-			author: 'Jeffrey Weeks',
+			title: 'The Shape of Space (and the free Torus Games)',
+			author: 'Jeffrey R. Weeks',
 			url: 'https://www.geometrygames.org/TorusGames/',
-			note: 'A wonderfully visual introduction to surfaces and three-dimensional spaces; try the free Torus Games.',
+			note: 'A wonderfully visual book on surfaces and three-dimensional spaces, written for readers with no background. The link goes to his free Torus Games, where you can play noughts and crosses, chess and pool on a torus.',
 			kind: 'book'
+		},
+		{
+			title: 'Elementary Applied Topology',
+			author: 'Robert Ghrist (2014)',
+			url: 'https://www2.math.upenn.edu/~ghrist/notes.html',
+			note: 'Homology and cohomology at work in data analysis, sensor networks, robot motion and more, told with a light touch and dense pictures; free PDF chapters for personal use. For browsing now and reading properly after Part III.',
+			kind: 'book',
+			free: true
 		},
 		{
 			title: 'Algebraic Topology, Chapter 0',
 			author: 'Allen Hatcher',
 			url: 'https://pi.math.cornell.edu/~hatcher/AT/ATch0.pdf',
-			note: 'The first chapter of the standard textbook — for later, when you want to see the destination in full.',
+			note: 'The first chapter of the standard graduate textbook, free online. For later, when you want to see the destination in full.',
 			kind: 'book',
 			free: true
 		}

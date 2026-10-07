@@ -112,26 +112,5 @@ export const works: Work[] = [
 		url: 'https://arxiv.org/abs/1808.01513',
 		free: true,
 		kind: 'paper'
-	},
-	{
-		key: 'ghrist-cooperband2025',
-		authors: ['Robert Ghrist', 'Zoe Cooperband'],
-		year: 2025,
-		title: 'Obstructions to reality: torsors & visual paradox',
-		venue: 'arXiv preprint',
-		arxiv: '2507.01226',
-		url: 'https://arxiv.org/abs/2507.01226',
-		free: true,
-		kind: 'paper'
-	},
-	{
-		key: 'rosiak2022',
-		authors: ['Daniel Rosiak'],
-		year: 2022,
-		title: 'Sheaf Theory through Examples',
-		venue: 'MIT Press (open access)',
-		doi: '10.7551/mitpress/12581.001.0001',
-		free: true,
-		kind: 'book'
 	}
 ];

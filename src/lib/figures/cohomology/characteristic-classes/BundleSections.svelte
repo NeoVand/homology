@@ -22,6 +22,8 @@
 	let vals = $state([0.55, 0.7, 0.45, 0.6, 0.75, 0.5]);
 	const twisted = $derived(kind === 'mobius');
 	const zeros = $derived(sectionZeros(vals, twisted));
+	// on a narrow screen the camera stands further back, so the whole band fits
+	let sceneW = $state(1000);
 
 	const TAU = Math.PI * 2;
 	const R = 1.55;
@@ -99,8 +101,11 @@
 	});
 
 	// the unrolled strip
-	const SX0 = 70;
-	const SX1 = 590;
+	// a narrow screen gets a shorter strip, so its labels are not shrunk to nothing
+	const narrow = $derived(sceneW < 560);
+	const VW = $derived(narrow ? 440 : 660);
+	const SX0 = $derived(narrow ? 52 : 70);
+	const SX1 = $derived(narrow ? 392 : 590);
 	const SY0 = 60; // t = +1
 	const SY1 = 220; // t = −1
 	const sx = (th: number) => SX0 + ((SX1 - SX0) * th) / TAU;
@@ -131,16 +136,18 @@
 	}
 </script>
 
+<div bind:clientWidth={sceneW}>
 <Scene3D
 	{setup}
 	height={380}
-	camera={{ position: [0.4, 2.7, 4.3], target: [0, -0.1, 0], fov: 40 }}
+	camera={{ position: sceneW < 640 ? [0.55, 3.65, 5.8] : [0.4, 2.7, 4.3], target: [0, -0.1, 0], fov: 40 }}
 	controls={{ autoRotate: false }}
 	label="A band around a circle made of short line segments (fibres): a cylinder, or a Möbius band whose fibres turn half a turn. A golden curve picks one point in each fibre; red dots mark where it crosses the middle (zero)."
 />
+</div>
 
 <div class="strip">
-	<Svg bind:svg={svgEl} viewBox="0 0 660 270" maxHeight={300} label="The band cut open along one fibre and laid flat, with the section drawn as a curve through draggable points." onpointermove={move} onpointerup={up} onpointerleave={up}>
+	<Svg bind:svg={svgEl} viewBox="0 0 {VW} 270" maxHeight={300} label="The band cut open along one fibre and laid flat, with the section drawn as a curve through draggable points." onpointermove={move} onpointerup={up} onpointerleave={up}>
 		<rect x={SX0} y={SY0} width={SX1 - SX0} height={SY1 - SY0} fill="rgba(116,169,255,0.07)" stroke="rgba(116,169,255,0.35)" />
 		<line x1={SX0} y1={sy(0)} x2={SX1} y2={sy(0)} stroke="rgba(251,246,232,0.45)" stroke-dasharray="5 5" />
 		<!-- gluing arrows on the two cut edges -->
@@ -150,11 +157,17 @@
 		{:else}
 			<line x1={SX1 + 14} y1={SY1 - 6} x2={SX1 + 14} y2={SY0 + 8} stroke="var(--violet)" stroke-width="2.4" marker-end="url(#arrow-violet)" />
 		{/if}
-		<SvgTeX x={SX0 - 40} y={sy(0)} tex={'0'} size={14} color="var(--ink-dim)" w={20} />
-		<SvgTeX x={sx(0)} y={SY1 + 22} tex={'\\theta = 0'} size={14} color="var(--ink-dim)" w={60} />
-		<SvgTeX x={sx(TAU)} y={SY1 + 22} tex={'\\theta = 2\\pi'} size={14} color="var(--ink-dim)" w={70} />
+		<SvgTeX x={SX0 - 34} y={sy(0)} tex={'0'} size={narrow ? 18 : 14} color="var(--ink-dim)" w={20} />
+		<SvgTeX x={sx(0)} y={SY1 + 22} tex={'\\theta = 0'} size={narrow ? 17 : 14} color="var(--ink-dim)" w={60} />
+		<SvgTeX x={sx(TAU)} y={SY1 + 22} tex={'\\theta = 2\\pi'} size={narrow ? 17 : 14} color="var(--ink-dim)" w={70} />
 		<text x={(SX0 + SX1) / 2} y={SY1 + 44} text-anchor="middle" class="t-ui">
-			{twisted ? 'THE RIGHT EDGE IS GLUED TO THE LEFT EDGE UPSIDE DOWN' : 'THE RIGHT EDGE IS GLUED TO THE LEFT EDGE AS IT IS'}
+			{twisted
+				? narrow
+					? 'RIGHT EDGE GLUED TO LEFT, UPSIDE DOWN'
+					: 'THE RIGHT EDGE IS GLUED TO THE LEFT EDGE UPSIDE DOWN'
+				: narrow
+					? 'RIGHT EDGE GLUED TO LEFT AS IT IS'
+					: 'THE RIGHT EDGE IS GLUED TO THE LEFT EDGE AS IT IS'}
 		</text>
 		{#if twisted}
 			<!-- where the curve must arrive: the left starting value, flipped -->

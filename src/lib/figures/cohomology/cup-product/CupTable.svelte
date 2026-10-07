@@ -231,7 +231,7 @@
 		gap: 0.6rem 1.4rem;
 		align-items: center;
 	}
-	@media (max-width: 760px) {
+	@container figure (max-width: 760px) {
 		.body {
 			grid-template-columns: minmax(0, 1fr);
 		}

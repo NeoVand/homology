@@ -105,8 +105,9 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'null-homotopic',
 		term: 'Null-homotopic',
-		def: 'Homotopic to a constant map. A loop is null-homotopic when it can be shrunk to its basepoint within the space.',
+		def: 'Homotopic to a constant map. A loop is null-homotopic when it can be shrunk to its basepoint within the space — equivalently, when it is the rim of a disk mapped into the space.',
 		chapter,
+		anchor: 'prop-shrink-fill',
 		see: ['loop', 'simply-connected']
 	},
 	{

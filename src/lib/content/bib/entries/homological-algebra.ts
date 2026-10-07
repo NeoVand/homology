@@ -65,7 +65,7 @@ export const works: Work[] = [
 	{
 		key: 'serre1953',
 		authors: ['Jean-Pierre Serre'],
-		year: 1953,
+		year: '1953a',
 		title: 'Groupes d’homotopie et classes de groupes abéliens',
 		venue: 'Annals of Mathematics 58(2), 258–294',
 		doi: '10.2307/1969789',

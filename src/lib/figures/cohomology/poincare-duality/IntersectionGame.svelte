@@ -7,6 +7,7 @@
 	import GluingSquare from '$lib/components/svg/GluingSquare.svelte';
 	import Handle from '$lib/components/svg/Handle.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import { untrack } from 'svelte';
 	import { arcCrossings, fenceCochain, squareModel, torusLine, type Pt } from '../cup-product/flat';
 	import { cup11, evaluate, orientTriangles } from '../cup-product/cup';
@@ -127,22 +128,8 @@
 		}
 		return out.join(' ');
 	}
-	function bump(which: 'p1' | 'q1' | 'p2' | 'q2', d: number) {
-		const clamp = (v: number) => Math.max(-3, Math.min(3, v + d));
-		if (which === 'p1') p1 = clamp(p1);
-		if (which === 'q1') q1 = clamp(q1);
-		if (which === 'p2') p2 = clamp(p2);
-		if (which === 'q2') q2 = clamp(q2);
-	}
-	const zero1 = $derived(!p1 && !q1);
-	const zero2 = $derived(!p2 && !q2);
-	const steppers = [
-		{ k: 'p1' as const, lbl: 'p_1', col: 'gold' },
-		{ k: 'q1' as const, lbl: 'q_1', col: 'gold' },
-		{ k: 'p2' as const, lbl: 'p_2', col: 'teal' },
-		{ k: 'q2' as const, lbl: 'q_2', col: 'teal' }
-	];
-	const val = (k: 'p1' | 'q1' | 'p2' | 'q2') => (k === 'p1' ? p1 : k === 'q1' ? q1 : k === 'p2' ? p2 : q2);
+	const zero1 = $derived(p1 === 0 && q1 === 0);
+	const zero2 = $derived(p2 === 0 && q2 === 0);
 	const fmt = (v: number) => (v < 0 ? `−${-v}` : `${v}`);
 	const detTeX = $derived(
 		`C_1\\cdot C_2 = \\det\\begin{pmatrix} ${p1} & ${q1}\\\\ ${p2} & ${q2}\\end{pmatrix} = ${p1}\\cdot${q2 < 0 ? `(${q2})` : q2} - ${p2}\\cdot${q1 < 0 ? `(${q1})` : q1} = ${det}`
@@ -207,14 +194,10 @@
 	</div>
 	<div class="side ui">
 		<div class="steppers">
-			{#each steppers as s (s.k)}
-				<div class="st {s.col}">
-					<span class="nm"><TeX tex={s.lbl} /></span>
-					<button aria-label="decrease {s.k}" onclick={() => bump(s.k, -1)}>−</button>
-					<span class="n nums">{fmt(val(s.k))}</span>
-					<button aria-label="increase {s.k}" onclick={() => bump(s.k, 1)}>+</button>
-				</div>
-			{/each}
+			<Stepper bind:value={p1} min={-3} max={3} label="p₁" />
+			<Stepper bind:value={q1} min={-3} max={3} label="q₁" />
+			<Stepper bind:value={p2} min={-3} max={3} label="p₂" color="var(--teal)" />
+			<Stepper bind:value={q2} min={-3} max={3} label="q₂" color="var(--teal)" />
 		</div>
 		<p class="lg">
 			<span class="gold">Gold</span> curve \(C_1\) goes \(p_1\) times around horizontally and \(q_1\) times vertically;
@@ -243,7 +226,7 @@
 		padding: 0.6rem 1.1rem 1rem;
 		align-items: center;
 	}
-	@media (max-width: 760px) {
+	@container figure (max-width: 760px) {
 		.ig {
 			grid-template-columns: minmax(0, 1fr);
 		}
@@ -306,42 +289,6 @@
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, max-content));
 		gap: 0.45rem 1rem;
-	}
-	.st {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.25rem;
-		border: 1px solid var(--line-faint);
-		border-radius: 10px;
-		padding: 0.15rem 0.25rem 0.15rem 0.6rem;
-	}
-	.st.gold .nm {
-		color: var(--gold-bright);
-	}
-	.st.teal .nm {
-		color: var(--teal);
-	}
-	.nm {
-		min-width: 1.6rem;
-	}
-	.st button {
-		width: 2rem;
-		height: 2rem;
-		border: 0;
-		border-radius: 8px;
-		background: rgba(216, 178, 110, 0.08);
-		color: var(--gold-bright);
-		cursor: pointer;
-		font-size: 1rem;
-	}
-	.st button:hover {
-		background: rgba(216, 178, 110, 0.2);
-	}
-	.n {
-		min-width: 1.7rem;
-		text-align: center;
-		font-weight: 650;
-		color: var(--ink-bright);
 	}
 	.lg {
 		margin: 0;

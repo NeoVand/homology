@@ -1,0 +1,64 @@
+// Works cited in §2.1 Spaces and Continuity. Each DOI was checked against
+// Crossref and each url opened.
+import type { Work } from '../index';
+
+export const works: Work[] = [
+	{
+		key: 'moore2008',
+		authors: ['Gregory H. Moore'],
+		year: 2008,
+		title: 'The emergence of open sets, closed sets, and limit points in analysis and topology',
+		venue: 'Historia Mathematica 35(3), 220–241',
+		doi: '10.1016/j.hm.2008.01.001',
+		kind: 'paper'
+	},
+	{
+		key: 'frechet1906',
+		authors: ['Maurice Fréchet'],
+		year: 1906,
+		title: 'Sur quelques points du calcul fonctionnel',
+		venue: 'Rendiconti del Circolo Matematico di Palermo 22, 1–72 (his doctoral thesis)',
+		doi: '10.1007/BF03018603',
+		kind: 'thesis'
+	},
+	{
+		key: 'vickers1989',
+		authors: ['Steven Vickers'],
+		year: 1989,
+		title: 'Topology via Logic',
+		venue: 'Cambridge University Press, Cambridge Tracts in Theoretical Computer Science 5',
+		kind: 'book'
+	},
+	{
+		key: 'lamb2017',
+		authors: ['Evelyn Lamb'],
+		year: 2017,
+		title: 'What does compactness really mean?',
+		venue: 'Roots of Unity, Scientific American blog, 25 May 2017',
+		url: 'https://www.scientificamerican.com/blog/roots-of-unity/what-does-compactness-really-mean/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'lopez2014',
+		authors: ['Rafael López'],
+		year: 2014,
+		title: 'How does a topologist classify the letters of the alphabet?',
+		venue: 'arXiv:1410.3364',
+		arxiv: '1410.3364',
+		url: 'https://arxiv.org/abs/1410.3364',
+		free: true,
+		kind: 'paper'
+	},
+	{
+		key: 'farrell2020',
+		authors: ['David Farrell'],
+		label: 'Boarbarktree',
+		year: 2020,
+		title: 'You Could Have Invented Homology, Part 1: Topology',
+		venue: 'Boarbarktree, YouTube video (16 December 2020); parts 2 and 3 followed in January and February 2021',
+		url: 'https://www.youtube.com/watch?v=pSjahcOnJvU',
+		free: true,
+		kind: 'video'
+	}
+];

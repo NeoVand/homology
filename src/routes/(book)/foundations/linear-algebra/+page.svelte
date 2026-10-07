@@ -17,6 +17,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import LightsOut from '$lib/figures/foundations/linear-algebra/LightsOut.svelte';
 	import VectorAdd from '$lib/figures/foundations/linear-algebra/VectorAdd.svelte';
 	import SwitchAdder from '$lib/figures/foundations/linear-algebra/SwitchAdder.svelte';
@@ -105,9 +106,9 @@
 </script>
 
 <div class="la">
-<Epigraph author="Michael Atiyah" source="Mathematics in the 20th century (2002)"
-	>Algebra is the offer made by the devil to the mathematician. The devil says: ‘I will give you this powerful machine, it will answer
-	any question you like. All you need to do is give me your soul: give up geometry and you will have this marvellous machine.’</Epigraph
+<Epigraph author="Irving Kaplansky" source="on himself and Paul Halmos, “Reminiscences” (1991)"
+	>We share a philosophy about linear algebra: we think basis-free, we write basis-free, but when the chips are down we close the
+	office door and compute with matrices like fury.</Epigraph
 >
 
 <p class="lead">
@@ -136,14 +137,17 @@
 <p>
 	This chapter answers all three questions: exactly a quarter of all boards can be solved; every solvable board has exactly four
 	solutions; and a board is solvable precisely when it passes two simple parity tests. It does so with a single tool,
-	<strong>linear algebra</strong>, the mathematics of things that can be added together and scaled. Linear algebra is arguably the
-	most useful subject in all of mathematics, and for this book it is the engine room: almost every computation in homology is a
-	computation in linear algebra.
+	<strong>linear algebra</strong>, the mathematics of things that can be added together and scaled. Engineers, statisticians and
+	physicists use it every day, and for this book it is the engine room: almost every computation in homology is a computation in
+	linear algebra.
 </p>
 
 <p>
-	Atiyah’s devil offers algebra as a machine that answers any question, at the price of giving up geometry. In this chapter we take
-	the machine but refuse the bargain. Every idea comes with a picture.
+	Kaplansky was owning up for himself and his friend Paul Halmos, whose 1942 book <em>Finite-Dimensional Vector Spaces</em> is the
+	classic of the coordinate-free style <Cite k="kaplansky1991" loc="p. 88" />. The confession describes the two halves of the
+	subject. One half is pictures and ideas: arrows, grids, shadows, things crushed and things reached. The other half is tables of
+	numbers, pushed around by rules until they give up their secrets. This chapter does both, in that order: every idea comes with a
+	picture, and then we close the door and compute.
 </p>
 
 <Ahead>
@@ -222,8 +226,8 @@
 </p>
 
 <p>
-	First we must say which numbers we may scale by. We want to add, subtract, multiply and, crucially, divide by anything except zero,
-	with all the familiar rules of arithmetic still true.
+	First we must say which numbers we may scale by. We want to add, subtract and multiply them, and above all to divide by anything
+	except zero, with all the familiar rules of arithmetic still true.
 </p>
 
 <Definition id="def-field" title="Field">
@@ -326,7 +330,7 @@
 
 <h2 id="span-and-basis">Span, independence, basis, dimension</h2>
 
-<p>Given a few vectors, what can you build from them? That question organizes the next four definitions.</p>
+<p>Given a few vectors, what can you build from them? That question organises the next four definitions.</p>
 
 <Definition id="def-span" title="Span">
 	<p>
@@ -404,9 +408,10 @@
 	\(a_1\mathbf v_1 + \dots + a_n\mathbf v_n\) in exactly <em>one</em> way. There is at least one way, because a basis spans; and if
 	there were two different ways, subtracting one from the other would give a combination equal to \(\mathbf 0\) with coefficients not
 	all zero, which independence forbids. The numbers \(a_1, \dots, a_n\) are the <dfn>coordinates</dfn> of the vector in that basis.
-	Second, every basis of a given space has the same number of vectors. This is a genuine theorem (it is often called the
-	<em>exchange lemma</em>), which we shall use without proof. It also shows that in a space of dimension \(n\), any \(n + 1\) vectors
-	are dependent. So “the dimension” is well defined: it counts the <em>degrees of freedom</em>, the number of independent numbers you
+	Second, every basis of a given space has the same number of vectors. This is a genuine theorem, which we shall use without proof:
+	an independent list is never longer than a spanning list, a fact often proved by an <em>exchange lemma</em> that swaps the vectors
+	of one list into the other one at a time <Cite k="axler2024" loc="2.22 and 2.34" />. It also shows that in a space of dimension
+	\(n\), any \(n + 1\) vectors are dependent. So “the dimension” is well defined: it counts the <em>degrees of freedom</em>, the number of independent numbers you
 	need to pin down a vector.
 </p>
 
@@ -511,7 +516,7 @@
 </Example>
 
 <p>
-	One number summarizes how a map of the plane changes areas. The unit square, spanned by \(\mathbf e_1\) and \(\mathbf e_2\), goes to
+	One number summarises how a map of the plane changes areas. The unit square, spanned by \(\mathbf e_1\) and \(\mathbf e_2\), goes to
 	the parallelogram spanned by the two columns. Its area, with a sign attached, is the <dfn>determinant</dfn>
 	\[ \det\begin{pmatrix} a & b \\ c & d \end{pmatrix} = ad - bc. \]
 	Every region’s area is multiplied by \(\abs{\det A}\). The sign is negative when the map flips the plane over, like a mirror. And
@@ -652,6 +657,7 @@
 	<p>
 		For a linear map \(A\colon V \to W\) with \(V\) finite-dimensional,
 		\[ \dim V \;=\; \rank A \;+\; \operatorname{nullity} A. \]
+		Axler calls it the <em>fundamental theorem of linear maps</em> <Cite k="axler2024" loc="3.21" />.
 	</p>
 </Theorem>
 
@@ -705,10 +711,13 @@
 
 <History>
 	<p>
-		The method is about two thousand years old. It appears in Chapter Eight, “Rectangular Arrays”, of the Chinese classic <em>The Nine
-		Chapters on the Mathematical Art</em>, parts of which go back to around 150 BCE, and it was commented on by Liu Hui in the third
-		century. Gauss devised a notation for systematic elimination in 1810, for least-squares problems, but the school method was named
-		after him only in the 1950s, through a confusion about its history.
+		The method is about two thousand years old. Chapter Eight of the Chinese classic <em>The Nine Chapters on the Mathematical
+		Art</em>, “Rectangular Arrays”, solves eighteen systems of equations by the same systematic elimination, and Liu Hui wrote a
+		commentary on it in the third century. Gauss did not invent it, and called it “common” elimination himself. In 1810 he devised a
+		compact notation for
+		eliminating in the least-squares problems of astronomy; professional human computers adopted his notation, his name stuck to the
+		method, and after the Second World War “Gaussian elimination” became the standard name for the ordinary school procedure
+		<Cite k="grcar2011" />.
 	</p>
 </History>
 
@@ -912,7 +921,8 @@
 	subtract:
 	\[ \dim V/W = \dim V - \dim W. \]
 	To see it, extend a basis \(\mathbf w_1, \dots, \mathbf w_m\) of \(W\) to a basis of \(V\) by adding vectors
-	\(\mathbf v_1, \dots, \mathbf v_r\); then the cosets \(\mathbf v_1 + W, \dots, \mathbf v_r + W\) form a basis of \(V/W\). Over
+	\(\mathbf v_1, \dots, \mathbf v_r\); then the cosets \(\mathbf v_1 + W, \dots, \mathbf v_r + W\) form a basis of \(V/W\)
+	<Cite k="axler2024" loc="3.105" />. Over
 	\(\Z/2\) you can even count: the cosets split \(V\) into pieces of \(2^{\dim W}\) vectors each, so \(V/W\) has
 	\(2^{\dim V}/2^{\dim W}\) elements. For instance, \((\Z/2)^3\) modulo \(\set{000, 111}\) has \(8/2 = 4\) elements.
 </p>
@@ -923,8 +933,8 @@
 	So the cosets of the kernel correspond exactly to the points of the image:
 	\[ V/\ker A \;\cong\; \im A, \]
 	where \(\cong\) is read “is <Term t="isomorphism">isomorphic</Term> to”: the two are the same vector space in different clothes.
-	This is the
-	<Term t="first-isomorphism-theorem">first isomorphism theorem</Term> of <Ref to="foundations/abelian-groups" />, for vector spaces. Take the dimensions of both sides and you get \(\dim V - \operatorname{nullity} A = \rank A\): rank–nullity again,
+	This is the <Term t="first-isomorphism-theorem">first isomorphism theorem</Term> of <Ref to="foundations/abelian-groups" />, for
+	vector spaces. Take the dimensions of both sides and you get \(\dim V - \operatorname{nullity} A = \rank A\): rank–nullity again,
 	seen from a new angle.
 </p>
 
@@ -1004,7 +1014,8 @@
 	Other sizes behave differently, and the figure lets you compare. On the \(3 \times 3\) board the matrix has rank 9 and nullity 0.
 	There are no quiet patterns, so every board is solvable, in exactly one way. On the \(4 \times 4\) board the nullity is 4: sixteen
 	quiet patterns, and only one board in sixteen is solvable. For \(n \times n\) boards with \(n = 1, 2, \dots, 9\) the nullities are
-	\(0, 0, 0, 4, 2, 0, 0, 0, 8\), and the sequence continues irregularly.
+	\(0, 0, 0, 4, 2, 0, 0, 0, 8\), and the sequence continues irregularly: \(0, 6, 0, 0, 4, 0, 8, 2, \dots\)
+	<Cite k="oeis-a159257" />.
 </p>
 
 <Remark title="An experiment">
@@ -1019,8 +1030,8 @@
 	<p>
 		<em>Lights Out</em> was released as an electronic toy by Tiger Electronics in 1995. Three years later, Marlow Anderson and Todd
 		Feil analysed it with linear algebra in <em>Mathematics Magazine</em>, in an article called “Turning Lights Out with Linear
-		Algebra”. They proved that not every board is solvable and that every solvable \(5 \times 5\) board has exactly four solutions:
-		the two facts we have just read off from rank 23 and nullity 2.
+		Algebra” <Cite k="anderson-feil1998" />. They proved that not every board is solvable and that every solvable \(5 \times 5\)
+		board has exactly four solutions: the two facts we have just read off from rank 23 and nullity 2.
 	</p>
 </History>
 
@@ -1154,7 +1165,7 @@
 <p>
 	Now we can state the theorem the Lights Out certificate was hinting at. If \(\mathbf b = A\mathbf x\) can be reached, then any
 	measurement \(\varphi\) that is blind to everything \(A\) produces, meaning \(\varphi \circ A = 0\), or \(A^{\mathsf T}\varphi =
-	0\), is also blind to \(\mathbf b\). The remarkable part is the converse: if no such measurement sees \(\mathbf b\), then
+	0\), is also blind to \(\mathbf b\). The surprise is the converse: if no such measurement sees \(\mathbf b\), then
 	\(\mathbf b\) can be reached. Whenever something is impossible, a certificate of its impossibility exists.
 </p>
 
@@ -1188,7 +1199,14 @@
 </p>
 
 <p>
-	For Lights Out the theorem becomes beautifully concrete, thanks to a symmetry: button \(i\) switches light \(j\) exactly when button
+	Over \(\R\) you may have met this theorem in another costume. Tip every row over into a column, and it says that the column space
+	of \(A\) and the null space of \(A^{\mathsf T}\) are perpendicular and together fill the codomain: half of what Gilbert Strang calls
+	the <em>fundamental theorem of linear algebra</em> <Cite k="strang1993" />. The version with measurements needs no angles, which
+	is why it also works over \(\Z/2\); <Cite k="axler2024" loc="3.128" text /> proves it in the same language.
+</p>
+
+<p>
+	For Lights Out the theorem becomes concrete, thanks to a symmetry: button \(i\) switches light \(j\) exactly when button
 	\(j\) switches light \(i\), since both say that the two cells are equal or neighbours. So the matrix equals its own transpose,
 	\(A^{\mathsf T} = A\), and the measurements that are blind to every button are exactly the measurements “add up the lights in a
 	quiet pattern”. Two quiet patterns span the kernel, so:
@@ -1288,7 +1306,8 @@
 </Theorem>
 
 <p>
-	This diagonal form is the <dfn>Smith normal form</dfn>, after Henry John Stephen Smith, who introduced it in 1861. We abbreviate a
+	This diagonal form is the <dfn>Smith normal form</dfn>, after the Oxford mathematician Henry John Stephen Smith, who introduced it
+	in 1861 while studying systems of linear equations to be solved in whole numbers <Cite k="smith1861" />. We abbreviate a
 	diagonal matrix by listing its diagonal, as in \(\operatorname{diag}(d_1, \dots, d_r)\); the symbol \(\oplus\) is the
 	<Term t="direct-sum">direct sum</Term> of <Ref to="foundations/abelian-groups" />, and \(\Z/1\) is the group with one element.
 	Reading off the answer is easy once the matrix is diagonal, because the map then does independent things to independent
@@ -1337,11 +1356,13 @@
 </p>
 
 <p>
-	It is also how homology finds torsion. In <Ref to="homology/computing" /> you will meet the Klein bottle built from one vertex, two
-	edges \(a, b\) and one face whose boundary is \(2a + 0b\). Its boundary matrix is the single column \((2, 0)\), already in Smith form
-	with \(d_1 = 2\). With only one vertex, every combination of edges is a cycle, so the first homology, cycles modulo boundaries, is
-	\(\Z^2/\im \partial_2 \cong \Z \oplus \Z/2\): one ordinary loop, and one loop that becomes a boundary when it is traversed twice. The real projective plane gives the \(1 \times 1\) matrix \((2)\) and the torsion
-	\(\Z/2\).
+	It is also how homology finds torsion. In <Ref to="topology/gluing" /> the Klein bottle is made from a square by gluing its sides
+	according to the word \(abab^{-1}\), and in <Ref to="homology/exact-sequences" hash="cellular-examples" /> it is rebuilt from one
+	vertex, two edges \(a, b\) and one face. Walking around the face’s rim reads \(a + b + a - b = 2a + 0b\), so the boundary matrix is
+	the single column \((2, 0)\), already in Smith form with \(d_1 = 2\). With only one vertex, every combination of edges is a cycle,
+	so the first homology, cycles modulo boundaries, is \(\Z^2/\im \partial_2 \cong \Z \oplus \Z/2\): one ordinary loop, and one loop
+	that becomes a boundary when it is traversed twice. The real projective plane, glued by the word \(aa\), gives the
+	\(1 \times 1\) matrix \((2)\) and the torsion \(\Z/2\).
 </p>
 
 <p>

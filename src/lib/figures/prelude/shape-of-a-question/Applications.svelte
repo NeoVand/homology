@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { chapterHref } from '$lib/util/paths';
+	import { chapterById } from '$lib/content/toc';
 
 	const apps = [
 		{
@@ -73,6 +74,7 @@
 			</svg>
 			<span class="t">{a.title}</span>
 			<span class="d">{a.text}</span>
+			<span class="where ui">§{chapterById.get(a.ch)?.num} {chapterById.get(a.ch)?.title}</span>
 		</a>
 	{/each}
 </div>
@@ -129,5 +131,12 @@
 		font-size: 0.9rem;
 		line-height: 1.5;
 		color: var(--ink-dim);
+		flex: 1;
+	}
+	.where {
+		margin-top: 0.3rem;
+		font-size: 0.72rem;
+		letter-spacing: 0.04em;
+		color: var(--gold);
 	}
 </style>

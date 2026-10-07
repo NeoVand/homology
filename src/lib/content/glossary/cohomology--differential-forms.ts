@@ -92,7 +92,7 @@ export const entries: GlossaryEntry[] = [
 	},
 	{
 		key: 'greens-theorem',
-		term: "Green's theorem",
+		term: 'Green’s theorem',
 		def: 'For a region \\(R\\) in the plane with counterclockwise boundary, \\(\\oint_{\\partial R} P\\,dx + Q\\,dy = \\iint_R (\\partial Q/\\partial x - \\partial P/\\partial y)\\,dA\\): circulation around the edge equals total curl inside.',
 		chapter,
 		anchor: 'thm-green',
@@ -162,14 +162,14 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'boundary-orientation',
 		term: 'Boundary orientation',
-		def: 'The orientation a boundary inherits from the region it bounds: "outward first". In the plane the boundary is walked counterclockwise, keeping the region on the left.',
+		def: 'The orientation a boundary inherits from the region it bounds: “outward first”. In the plane the boundary is walked with the region on the left, so the outer edge goes counterclockwise.',
 		chapter,
 		anchor: 'thm-stokes'
 	},
 	{
 		key: 'stokes-theorem',
-		term: "Stokes' theorem",
-		def: 'For a compact oriented manifold \\(M\\) with boundary and a form \\(\\omega\\) of one degree less, \\(\\int_{\\partial M}\\omega = \\int_M d\\omega\\). It contains the fundamental theorem of calculus, Green’s theorem, the classical Stokes theorem and the divergence theorem.',
+		term: 'Stokes’ theorem',
+		def: 'For a compact oriented manifold \\(M\\) with boundary and a form \\(\\omega\\) of one degree less, \\(\\int_{\\partial M}\\omega = \\int_M d\\omega\\). It contains the fundamental theorem of calculus, Green’s theorem, the Kelvin–Stokes theorem and the divergence theorem.',
 		chapter,
 		anchor: 'thm-stokes',
 		see: ['fundamental-theorem-of-calculus', 'greens-theorem', 'divergence-theorem']

@@ -70,7 +70,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'filtration',
 		term: 'Filtration',
-		def: 'A nested family of subcomplexes \\(K_r \\subseteq K_s\\) (for \\(r \\le s\\)) of a simplicial complex — a "film" of growing complexes, such as the Vietoris–Rips complexes of a point cloud as the radius grows.',
+		def: 'A nested family of subcomplexes \\(K_r \\subseteq K_s\\) (for \\(r \\le s\\)) of a simplicial complex — a “film” of growing complexes, such as the Vietoris–Rips complexes of a point cloud as the radius grows.',
 		chapter,
 		anchor: 'def-filtration',
 		see: ['entrance-time', 'persistent-homology']

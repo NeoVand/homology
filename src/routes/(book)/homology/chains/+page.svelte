@@ -19,6 +19,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import ChainPlayground from '$lib/figures/homology/chains/ChainPlayground.svelte';
 	import TriangleBoundary from '$lib/figures/homology/chains/TriangleBoundary.svelte';
 	import TetraCascade from '$lib/figures/homology/chains/TetraCascade.svelte';
@@ -122,12 +123,18 @@
 	</p>
 </Question>
 
-<Remark title="Why “chain”?">
+<Remark title="Why “chain”, and why sums?">
 	<p>
 		The name suggests simplices strung together like the links of a necklace, and in the simplest examples — a path of edges — that is exactly what a chain
 		looks like. But the meaning is more relaxed: any collection of simplices of one dimension, connected or not, is a chain. A chain is a <em>formal sum</em>
 		— one of the four ideas this book keeps returning to (with quotients, kernels and images, and reversed arrows). We add simplices without ever “computing”
 		the sum; the sum is the inventory.
+	</p>
+	<p>
+		Why allow sums at all? Not just for bookkeeping: the edge of one simplex is several simplices. The edge of a triangle is not a segment but three segments;
+		the skin of a tetrahedron is not a triangle but four triangles. If “take the edge” is to keep us inside our world, the world must contain sums of
+		simplices. (David Farrell’s video series <em>You Could Have Invented Homology</em> draws the skin of a tetrahedron beside a triangle with the verdict
+		\(\partial\Delta^3 \not\approx \Delta^2\): the boundary of a simplex is not a simplex <Cite k="farrell2021" />.)
 	</p>
 </Remark>
 
@@ -260,16 +267,19 @@
 <KeyIdea title="Every boundary is a cycle">
 	<p>
 		If \(b = \partial c\), then \(\partial b = \partial\partial c = 0\). So every boundary is a cycle: the rim of anything has no rim of its own. This is the
-		single fact that makes homology possible. In Kun’s phrase, which heads this chapter: “A boundary itself has no boundary.”
+		single fact that makes homology possible. In Kun’s phrase, which heads this chapter: “A boundary itself has no boundary.” <Cite k="kun2013" />
 	</p>
 </KeyIdea>
 
-<History title="Mod 2 came first">
+<History title="Dropping the signs, on purpose">
 	<p>
-		Homology with coefficients mod 2 first appeared in a 1908 paper of Heinrich Tietze, and Oswald Veblen and James Alexander used it in 1913 to prove a form
-		of Poincaré duality for every closed manifold, orientable or not. Alexander explained the choice in words quoted at the start of Jean-Claude Hausmann’s
-		modern textbook on mod 2 homology: “The theory of connectivity [homology] may be approached from two different angles depending on whether or not the
-		notion of sense [orientation] is developed and taken into consideration. We have adopted the second and somewhat simpler point of view…”
+		Homology was born with whole-number coefficients: Poincaré’s “homologies” of 1895 related integer combinations of oriented pieces of a space, and could
+		be added like ordinary equations <Cite k="poincare1895,weibel1999" />. Coefficients mod 2 came later, in a 1908 paper of Heinrich Tietze <Cite k="tietze1908" />, and soon earned their
+		keep. In 1913 Oswald Veblen and James Alexander used them to extend Poincaré duality to every closed manifold, orientable or not
+		<Cite k="veblen-alexander1913" />. Alexander explained the appeal in 1922, in the paper that introduced what we now call Alexander duality: “The theory
+		of connectivity may be approached from two different angles depending on whether or not the notion of sense is developed and taken into consideration.
+		We have adopted the second and somewhat simpler point of view…” <Cite k="alexander1922" />. “Connectivity” was his word for homology, and “sense” means
+		orientation. Jean-Claude Hausmann quotes the passage at the start of his modern textbook on homology mod 2 <Cite k="hausmann2014" />.
 	</p>
 </History>
 
@@ -292,9 +302,12 @@
 </p>
 
 <p>
-	There is also a reason from calculus, and historically it came first. Poincaré thought of chains as things you integrate over. If you integrate a quantity
-	along a path \(C\) and then along a path \(D\), the total is the integral along “\(C + D\)”; integrate along \(C\) twice and you get twice the answer; walk
-	\(C\) backwards and the answer changes sign. Paths that can be added, doubled and reversed are chains with integer coefficients.
+	There is also a reason from calculus. Think of a chain as something you integrate over. If you integrate a quantity along a path \(C\) and then along a
+	path \(D\), the total is the integral along “\(C + D\)”; integrate along \(C\) twice and you get twice the answer; walk \(C\) backwards and the answer
+	changes sign. Paths that can be added, doubled and reversed are chains with integer coefficients. (Integrals are where the subject began: Riemann started
+	counting curves that bound because integrals around such curves vanish, as the history box of <Ref to="homology/cycles-and-boundaries" hash="homologous"
+		>the last chapter</Ref
+	> recalls. Part IV makes the link exact.)
 </p>
 
 <h3>Oriented simplices</h3>
@@ -495,7 +508,7 @@
 \]
 <p>
 	Each vertex appears twice, once with each sign — exactly the pairing in Figure 3.2.2. The alternating signs are not decoration: they are precisely what makes
-	the two copies cancel. Here is the general argument.
+	the two copies cancel. Here is the general argument, which is also the one in Hatcher’s textbook <Cite k="hatcher2002" loc="Lemma 2.1" />.
 </p>
 
 <Theorem id="thm-dd">
@@ -562,7 +575,8 @@
 
 <p>
 	Because \(\partial_k\) respects sums, it is completely determined by what it does to each single \(k\)-simplex — and that can be written down as a table of
-	numbers. List the \(k\)-simplices in a fixed order (we always use alphabetical order of their labels), and likewise the \((k-1)\)-simplices.
+	numbers. List the \(k\)-simplices in a fixed order (we always use dictionary order of their labels, so \([0,1]\) before \([0,2]\) before \([1,2]\)), and
+	likewise the \((k-1)\)-simplices.
 </p>
 
 <Definition id="def-boundary-matrix" title="Boundary matrix">
@@ -608,6 +622,16 @@
 	products \(1 \cdot 1\), and \(1 + 1 = 0\).
 </p>
 
+<History title="Poincaré’s tables">
+	<p>
+		Boundary matrices are almost as old as homology. In 1898 the Danish mathematician Poul Heegaard found a gap in Poincaré’s first paper, and Poincaré’s
+		answer, the next year, was to cut his manifolds into simplices and record how they fit together in tables of \(+1\), \(-1\) and \(0\): one table for each
+		dimension, saying which simplices lie on the boundary of which, and with which orientation. On the page after he defines the tables he checks that
+		consecutive tables multiply to zero <Cite k="poincare1899,weibel1999" />. The name “chain complex” arrived thirty years later; the thing itself was
+		already there, as a stack of matrices.
+	</p>
+</History>
+
 <Question title="Reading the rows">
 	<p>
 		In \(\partial_2\) of Figure 3.2.6, the row of the diagonal \([1,2]\) has two nonzero entries, the rows of \([0,1], [0,2], [1,3], [2,3]\) have one each, and the
@@ -615,8 +639,8 @@
 	</p>
 	<p>
 		A nonzero entry in row \(e\) means “\(e\) is a side of this triangle”. So the diagonal is shared by both triangles; the four outer edges of the square lie on
-		exactly one triangle each — they form its rim; and the two edges of the empty triangle on top lie on no filled triangle at all. Rows of a boundary matrix
-		tell you how each face sits among the simplices above it.
+		exactly one triangle each — they form its rim; and the two slanting edges of the empty triangle on top lie on no filled triangle at all. Rows of a
+		boundary matrix tell you how each face sits among the simplices above it.
 	</p>
 </Question>
 
@@ -732,7 +756,8 @@
 		The same structure — groups in a row, maps between them, any two in a row composing to zero — turns up again and again in this book: for cochains, where
 		\(\delta\delta = 0\) (<Ref to="cohomology/cochains" />); for differential forms, where \(d\,d = 0\) (<Ref to="cohomology/differential-forms" />); and in
 		homological algebra, which studies chain complexes for their own sake (<Ref to="big-picture/homological-algebra" />). Treating chain complexes as objects in
-		their own right — an approach often traced to Walther Mayer around 1929 — means that everything we prove about them is proved for all of these at once.
+		their own right, as Walther Mayer did in 1929 <Cite k="mayer1929,weibel1999" />, means that everything we prove about them is proved for all of these
+		at once.
 	</p>
 </Remark>
 
@@ -920,10 +945,20 @@
 			kind: 'book'
 		},
 		{
+			title: 'Algebraic Topology: Chains, Cycles, and Homology Classes',
+			author: 'André Henriques (Oxford Mathematics, YouTube, 2025)',
+			url: 'https://www.youtube.com/watch?v=1f9D7cZSm74',
+			note: 'An hour of a real fourth-year lecture at the blackboard: homology at an intuitive level first, then slowly formalised into chains, cycles and homology classes, with many examples drawn on surfaces.',
+			kind: 'video',
+			free: true
+		},
+		{
 			title: 'Mod Two Homology and Cohomology',
 			author: 'Jean-Claude Hausmann (Springer Universitext, 2014)',
-			note: 'A whole book that never needs a sign: the case for doing homology mod 2 first. Graduate level; its introduction contains the Alexander quotation above.',
-			kind: 'book'
+			url: 'https://www.unige.ch/math/folks/hausmann/hausmannBook.pdf',
+			note: 'A whole book that never needs a sign: the case for doing homology mod 2 first. Graduate level; its introduction contains the Alexander quotation above. The author keeps a corrected 2022 version free on his web page.',
+			kind: 'book',
+			free: true
 		},
 		{
 			title: 'Computational Topology: An Introduction',
