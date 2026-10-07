@@ -65,8 +65,10 @@
 			<SvgTeX x={L.tx - (L.rx - 10)} y={L.ty - 14} tex="v" color="var(--gold-bright)" size={16} w={24} h={24} />
 			<SvgTeX x={L.tx + 4} y={L.ty + 64} tex="a" color="var(--gold-bright)" size={17} w={24} h={24} />
 			<SvgTeX x={L.tx - (L.rx + 14)} y={L.ty + 46} tex="b" color="var(--teal)" size={17} w={24} h={24} />
-			<circle cx={L.tx + 70} cy={L.ty - 30} r="6" class="p rose" />
-			<SvgTeX x={L.tx + 86} y={L.ty - 42} tex="p" color="var(--rose)" size={16} w={24} h={24} />
+			<!-- p sits on the left/right sides, which become the loop b -->
+			<circle cx={L.tx - 92.75} cy={L.ty + 44.75} r="6" class="p rose" />
+			<SvgTeX x={L.tx - 74} y={L.ty + 46} tex="p" color="var(--rose)" size={16} w={24} h={24} />
+			<!-- q sits on the bottom/top sides, which become the loop a -->
 			<rect x={L.tx + 34 - 5.5} y={L.ty + 46 - 5.5} width="11" height="11" class="p violet" transform="rotate(45 {L.tx + 34} {L.ty + 46})" />
 			<SvgTeX x={L.tx + 50} y={L.ty + 58} tex="q" color="var(--violet)" size={16} w={24} h={24} />
 		</g>

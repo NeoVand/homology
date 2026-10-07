@@ -37,7 +37,7 @@
 			title: 'Quotient Groups',
 			author: 'Keith Conrad',
 			url: 'https://kconrad.math.uconn.edu/blurbs/grouptheory/quotientgroups.pdf',
-			note: 'A careful, example-rich expository note. Its sections on quotients of ℤ and of abelian groups are exactly this chapter; it also explains what changes for non-abelian groups (normal subgroups).',
+			note: 'A careful, example-rich expository note at undergraduate level. It starts from ℤ/mℤ, explains why non-abelian groups need normal subgroups, and works through many examples, including the circle ℝ/2πℤ of our epigraph.',
 			kind: 'notes' as const,
 			free: true
 		},
@@ -61,7 +61,7 @@
 			title: 'Abstract Algebra: Theory and Applications',
 			author: 'Thomas W. Judson',
 			url: 'https://judsonbooks.org/abstract-algebra-theory-and-applications/',
-			note: 'Free textbook. Its chapters on cosets and Lagrange’s theorem, factor groups, homomorphisms and the structure of finite abelian groups are the standard next step.',
+			note: 'Free textbook. Chapters 6 (cosets and Lagrange’s theorem), 9.2 (direct products), 10 (factor groups), 11 (homomorphisms) and 13.1 (finite and finitely generated abelian groups) are the standard next step, including the non-abelian story.',
 			kind: 'book' as const,
 			free: true
 		},
@@ -204,7 +204,7 @@
 <p>
 	All cosets of \(H\) have the same size as <span class="nw">\(H\).</span> Indeed, the rule \(h \mapsto a + h\) matches the elements of \(H\)
 	one-for-one with the elements of <span class="nw">\(a + H\):</span> every element of \(a + H\) is hit, and no two elements of \(H\) are sent to
-	the same place (if \(a + h = a + h'\) then <span class="nw">\(h = h'\)).</span> For a finite group this has a striking consequence.
+	the same place (if \(a + h = a + h'\) then <span class="nw">\(h = h'\)).</span> For a finite group, that observation is already a theorem.
 </p>
 
 <Theorem title="Lagrange’s theorem">
@@ -320,30 +320,39 @@
 
 <p>
 	With \(G = \Z\) and <span class="nw">\(H = n\Z\),</span> the quotient \(\Z/n\Z\) is our clock arithmetic \(\Z/n\) (we will prove the two are
-	isomorphic in a moment, but you can already see it in Figure 1.4.1). Education researchers have found that learners
-	often hold one of three pictures of its elements, and that trouble comes from holding only one. All three are
-	correct, and you should be able to switch between them.
+	isomorphic in a moment, but you can already see it in Figure 1.4.1). Daniel Siebert and Steven Williams interviewed
+	students about \(\Z/n\) and found three different pictures of its elements in use; the students’ trouble came less
+	from any one picture than from being unable to move between them <Cite k="siebert-williams2003" />. All three are
+	correct, and you should be able to switch between them at will.
 </p>
 
 <ol>
 	<li>
-		<strong>An element is an infinite set.</strong> The element we call \(2\) in \(\Z/5\Z\) is the coset
-		<span class="nw">\(2 + 5\Z = \{\dots, -8, -3, 2, 7, 12, \dots\}\).</span>
+		<strong>An element is an infinite set.</strong> The element we call \(2\) in \(\Z/5\Z\) is
+		<span class="nw">\(\{\dots, -8, -3, 2, 7, 12, \dots\}\).</span> This picture explains <em>why</em> the addition rule is what it is: add
+		any member of one set to any member of another, and every sum lands in the same set.
 	</li>
 	<li>
-		<strong>An element is a single point of a new group.</strong> In Figure 1.4.1, after the collapse, that whole
-		infinite set is one dot. The new group has exactly five dots.
+		<strong>An element is a shifted copy of the subgroup.</strong> The same element is <span class="nw">\(2 + 5\Z\),</span> “the multiples
+		of five, moved two steps to the right”. This is the picture used in proofs: shift by \(a\), then by \(b\), and you
+		have shifted by <span class="nw">\(a + b\).</span>
 	</li>
 	<li>
-		<strong>An element is named by a representative.</strong> We write <span class="nw">“\(2\)”</span> as shorthand for the dot, and compute
-		with names: <span class="nw">\(3 + 4 = 7 = 2\).</span> This shortcut is safe <em>precisely because</em> addition of cosets is well
-		defined: any names give the same answer.
+		<strong>An element is named by a representative.</strong> We write <span class="nw">“\(2\)”</span> and compute with names:
+		<span class="nw">\(3 + 4 = 7 = 2\).</span> This is the picture for fast arithmetic, and it is safe <em>precisely because</em>
+		addition of cosets is well defined: any names give the same answer.
 	</li>
 </ol>
 
+<p>
+	In every picture the element is <em>one</em> thing. In Figure 1.4.1, after the collapse, the whole infinite set is a
+	single dot, and \(\Z/5\Z\) has exactly five of them.
+</p>
+
 <Warning title="A quotient is not a subgroup">
 	<p>
-		Keith Conrad puts it bluntly in his notes on quotient groups: “Don’t confuse quotient groups and subgroups!” The
+		Keith Conrad puts it bluntly in his notes on quotient groups: “Don’t confuse quotient groups and subgroups!”
+		<Cite k="conrad-quotients" loc="§3" /> The
 		names \(\{0, 1, \dots, n-1\}\) are integers, but \(\Z/n\Z\) does not sit inside <span class="nw">\(\Z\):</span> that set is not closed under
 		the addition of <span class="nw">\(\Z\),</span> and in \(\Z/n\Z\) every element has finite order while in \(\Z\) no nonzero element does. A
 		subgroup is a <em>part</em> of a group; a quotient is the <em>whole</em> group, collapsed.
@@ -446,6 +455,7 @@
 		\[ \bar\varphi(a + \ker\varphi) = \varphi(a) \]
 		is a well-defined isomorphism \(\bar\varphi\colon G/\ker\varphi \to \im\varphi\). In short,
 		\[ G/\ker\varphi \;\cong\; \im\varphi . \]
+		<Cite k="judson2025" loc="Thm 11.2.1" />
 	</p>
 </Theorem>
 
@@ -578,6 +588,7 @@
 <Theorem title="When ℤ/m ⊕ ℤ/n is cyclic">
 	<p>
 		\(\Z/m \oplus \Z/n \cong \Z/mn\) if and only if <span class="nw">\(\gcd(m, n) = 1\).</span>
+		<Cite k="judson2025" loc="Thm 9.2.9" />
 	</p>
 </Theorem>
 
@@ -603,10 +614,12 @@
 
 <History title="The Chinese remainder theorem">
 	<p>
-		The theorem is named after a puzzle in the Chinese text <em>Sunzi Suanjing</em> (“Master Sun’s Mathematical
-		Manual”, written between the third and fifth centuries): find a number that leaves remainder 2 when divided by 3,
-		remainder 3 when divided by 5, and remainder 2 when divided by 7. In our language, the puzzle asks for the element of
-		\(\Z/105\) that corresponds to \((2, 3, 2)\) in <span class="nw">\(\Z/3 \oplus \Z/5 \oplus \Z/7\).</span> One answer is 23.
+		The theorem on cyclic direct sums is a form of the <em>Chinese remainder theorem</em>, named after a puzzle in the
+		<em>Sunzi suanjing</em> (“Master Sun’s Mathematical Manual”, written some time between the third and fifth centuries).
+		Problem 26 of its third chapter asks for a number of things that leave 2 over when counted in threes, 3 over when
+		counted in fives, and 2 over when counted in sevens <Cite k="lam-ang2004" />. In our language, the puzzle asks for the
+		element of \(\Z/105\) that corresponds to \((2, 3, 2)\) in <span class="nw">\(\Z/3 \oplus \Z/5 \oplus \Z/7\).</span> Master
+		Sun’s answer is 23, and since \(3\), \(5\) and \(7\) share no factors, it is the only answer below <span class="nw">\(105\).</span>
 	</p>
 </History>
 
@@ -809,8 +822,9 @@
 
 <p>
 	Using these operations, every integer matrix can be brought to a diagonal form in which each diagonal entry divides the
-	next, called its <Term t="smith-normal-form">Smith normal form</Term> (after Henry John Stephen Smith, who studied it
-	in 1861; the general algorithm is in <Ref to="foundations/linear-algebra" />). For our matrix: swap the two columns; subtract twice the
+	next, called its <Term t="smith-normal-form">Smith normal form</Term>, after Henry John Stephen Smith, who studied it
+	in 1861 <Cite k="smith1861" />; the general algorithm is in <Ref to="foundations/linear-algebra" hash="smith-normal-form"
+	/>. For our matrix: swap the two columns; subtract twice the
 	first row from the second; subtract twice the first column from the second; multiply the second row by <span class="nw">\(-1\):</span>
 	\[
 		\begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix} \to
@@ -821,8 +835,9 @@
 	\]
 	A diagonal matrix is easy to read: the new generators \(a', b'\) are subject only to \(1\cdot a' = 0\) and <span class="nw">\(3 b' =
 	0\).</span> The first relation kills \(a'\) entirely, and the second makes \(b'\) a 3-hour clock: the group is <span class="nw">\(0 \oplus
-	\Z/3 = \Z/3\).</span> In general, a diagonal entry \(d\) contributes a factor \(\Z/d\) (nothing at all when <span class="nw">\(d = 1\)),</span> and
-	every generator with no diagonal entry left over contributes a free <span class="nw">\(\Z\).</span>
+	\Z/3 = \Z/3\).</span> In general, a diagonal entry \(d \ge 1\) contributes a factor \(\Z/d\) (nothing at all when
+	<span class="nw">\(d = 1\)),</span> while a diagonal entry \(0\), or a generator with no diagonal entry at all, contributes a free
+	<span class="nw">\(\Z\).</span>
 </p>
 
 <Figure num="1.4.7" title="From relations to a group" hint="Edit the matrix · step through · try the presets">
@@ -841,8 +856,8 @@
 <p>
 	A group is <dfn>finitely generated</dfn> if some finite set of its elements generates it. Every finite group is,
 	\(\Z^r\) is, and so is every homology group of a shape built from finitely many pieces. Such groups always have a
-	finite presentation, and the Smith normal form then turns that presentation into a standard name. The result is one
-	of the most satisfying theorems in algebra.
+	finite presentation, and the Smith normal form then turns that presentation into a standard name. The result is a
+	complete catalogue: every such group appears in it exactly once.
 </p>
 
 <Theorem id="thm-classification" title="Classification of finitely generated abelian groups">
@@ -858,7 +873,12 @@
 	<em>Why it is true.</em> Existence is what you just watched: present \(G\) by generators and relations (a finite list
 	suffices, by the fact about subgroups of \(\Z^m\) quoted earlier), and diagonalise the relation matrix. Uniqueness —
 	that two different lists can never give isomorphic groups — needs a separate argument, by counting how many elements
-	of each order the group has; we will not prove it here.
+	of each order the group has; we will not prove it here. A complete proof is in <Cite
+		k="judson2025"
+		loc="Thm 13.1.10"
+		text
+	/>, which lists the clocks by prime powers instead (as \(\Z/4 \oplus \Z/3\) rather than <span class="nw">\(\Z/12\));</span> the theorem on
+	\(\Z/m \oplus \Z/n\) above converts one list into the other.
 </p>
 
 <p>
@@ -938,22 +958,26 @@
 <p>
 	The rank will be called the <em>Betti number</em> <span class="nw">\(b_1\):</span> it counts independent loops that bound nothing. The
 	torsion is subtler. On the Klein bottle there is a loop that does not bound anything, but which, <em>travelled
-	twice</em>, does: an element of order two. That is the <span class="nw">\(\Z/2\),</span> and it is exactly what distinguishes the Klein bottle
-	from the torus in <Ref to="homology/computing" />.
+	twice</em>, does: an element of order two. That is the <span class="nw">\(\Z/2\),</span> the homological trace of the bottle’s
+	one-sidedness, and <Ref to="homology/computing" /> finds it by exactly the matrix steps of Figure 1.4.7.
 </p>
 
 <History title="Why “torsion”?">
 	<p>
-		The word comes from topology, not algebra. Poincaré, who discovered torsion in 1900, chose the name because, as his
-		translator John Stillwell explains, it occurs only in shapes “such as the Möbius band, that are non-orientable and
-		hence ‘twisted onto themselves’ in some way”. (For closed surfaces this is exactly right: a surface has torsion in its
-		first homology precisely when it cannot be oriented. In higher dimensions torsion can also appear in orientable
-		shapes.) Stillwell continues: “When Emmy Noether built the Betti numbers and
-		torsion numbers into the homology groups in 1926, the word ‘torsion’ took up residence in algebra, much to the
-		mystification of group theory students who were not informed of its origin in topology.” Before Noether, Betti and
-		torsion numbers were read off from tables of incidence numbers; after her, they were invariants of groups. In the
-		preface of their 1935 textbook, Pavel Alexandroff and Heinz Hopf wrote that this strong algebraisation of
-		topology on a group-theoretic basis “goes back entirely to Emmy Noether” (our translation).
+		The word comes from topology, not algebra. Poincaré discovered torsion in 1900 <Cite k="poincare1900" /> and chose
+		the name because, as his translator John Stillwell explains, it occurs only in shapes “such as the Möbius band, that
+		are non-orientable and hence ‘twisted onto themselves’ in some way”. (For closed surfaces this is exactly right: a
+		surface has torsion in its first homology precisely when it cannot be oriented. In higher dimensions torsion can
+		also appear in orientable shapes.) Stillwell continues: “When Emmy Noether built the Betti numbers and torsion
+		numbers into the homology groups in 1926, the word ‘torsion’ took up residence in algebra, much to the
+		mystification of group theory students who were not informed of its origin in topology” <Cite
+			k="stillwell-intro2010"
+		/>. Before Noether, Betti numbers and torsion coefficients were read off from tables of incidence numbers; after
+		her, they were invariants of groups. As Hatcher puts it, “It is a curious historical fact that homology was not
+		thought of originally as a sequence of groups, but rather as Betti numbers and torsion coefficients” <Cite
+			k="hatcher2002"
+			loc="p. 130"
+		/>.
 	</p>
 </History>
 

@@ -220,7 +220,7 @@
 	<p>
 		An <dfn>open cover</dfn> of a space \(X\) is a family \(\mathcal U = \{U_i\}_{i \in I}\) of open subsets of \(X\)
 		whose union is all of \(X\): every point lies in at least one \(U_i\). The sets \(U_i\) are the <em>pieces</em> of the
-		cover; \(I\) is just a set of labels, usually \(\{0, 1, \dots, n\}\).
+		cover; \(I\) is a set of labels, usually \(\{0, 1, \dots, n\}\).
 	</p>
 </Definition>
 
@@ -627,9 +627,9 @@
 </Definition>
 
 <p>
-	Continuous functions form a sheaf. Locality is clear: functions that agree on every piece agree everywhere. For gluing,
+	Continuous functions form a sheaf. Locality holds because every point lies in some piece, so functions that agree on every piece agree everywhere. For gluing,
 	define \(s(x) = s_i(x)\) for any \(i\) with \(x\in U_i\); this does not depend on the choice of \(i\), because the
-	pieces agree on overlaps, and \(s\) is continuous because continuity can be checked near each point, where \(s\) is just
+	pieces agree on overlaps, and \(s\) is continuous because continuity can be checked near each point, where \(s\) agrees with
 	one of the continuous \(s_i\). The same argument works for smooth functions and for solutions of a differential equation,
 	because <em>being a solution</em> is also checked point by point. The square roots form a sheaf too, and so do the locally
 	constant functions.

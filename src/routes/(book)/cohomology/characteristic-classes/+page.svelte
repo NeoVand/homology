@@ -33,7 +33,7 @@
 			title: 'Visual Differential Geometry and Forms',
 			author: 'Tristan Needham (Princeton University Press, 2021)',
 			url: 'https://doi.org/10.1515/9780691219899',
-			note: 'A gloriously geometric, picture-first account of curvature, the Theorema Egregium, geodesic triangles and Gauss–Bonnet, written for readers who want to see why. Undergraduate level.',
+			note: 'A picture-first account of curvature, the Theorema Egregium, geodesic triangles and Gauss–Bonnet, written for readers who want to see why. Undergraduate level.',
 			kind: 'book' as const
 		},
 		{
@@ -45,11 +45,26 @@
 			free: true
 		},
 		{
+			title: 'Topology from the Differentiable Viewpoint',
+			author: 'John Milnor (1965; Princeton Landmarks, 1997)',
+			url: 'https://press.princeton.edu/books/paperback/9780691048338/topology-from-the-differentiable-viewpoint',
+			note: 'Sixty-odd pages of perfect exposition: degree, the index of a zero and the Poincaré–Hopf theorem (§6). Advanced undergraduate level.',
+			kind: 'book' as const
+		},
+		{
 			title: 'Discrete Differential Geometry: An Applied Introduction',
-			author: 'Keenan Crane (lecture notes)',
+			author: 'Keenan Crane (lecture notes, CMU)',
 			url: 'https://www.cs.cmu.edu/~kmcrane/Projects/DDG/paper.pdf',
-			note: 'Curvature on triangle meshes, angle defects and the discrete Gauss–Bonnet theorem — the mathematics behind the sculptor figure — with beautiful illustrations.',
+			note: 'Curvature on triangle meshes, angle defects and the discrete Gauss–Bonnet theorem (§5.5) — the mathematics behind the sculptor figure — with many illustrations and coding exercises.',
 			kind: 'notes' as const,
+			free: true
+		},
+		{
+			title: 'Vector Bundles and K-Theory',
+			author: 'Allen Hatcher (online book, version 2.2, 2017)',
+			url: 'https://pi.math.cornell.edu/~hatcher/VBKT/VBpage.html',
+			note: 'Vector bundles from the ground up, with Stiefel–Whitney, Chern and Euler classes and the classification of line bundles. Graduate level, free, and in the same friendly voice as Hatcher’s Algebraic Topology.',
+			kind: 'book' as const,
 			free: true
 		},
 		{
@@ -96,25 +111,19 @@
 			kind: 'paper' as const
 		},
 		{
-			title: 'Concept of nonintegrable phase factors and global formulation of gauge fields',
-			author: 'Tai Tsun Wu and Chen Ning Yang (Phys. Rev. D 12, 1975)',
-			url: 'https://doi.org/10.1103/PhysRevD.12.3845',
-			note: 'The two-patch description of the monopole, and the dictionary between gauge fields and bundles.',
-			kind: 'paper' as const
-		},
-		{
-			title: 'Quantized Hall Conductance in a Two-Dimensional Periodic Potential',
-			author: 'D. J. Thouless, M. Kohmoto, M. P. Nightingale, M. den Nijs (Phys. Rev. Lett. 49, 1982)',
-			url: 'https://doi.org/10.1103/PhysRevLett.49.405',
-			note: 'The “TKNN” paper: the integers of the quantum Hall effect computed as topological invariants of electron bands.',
-			kind: 'paper' as const
-		},
-		{
 			title: 'Holonomy, the Quantum Adiabatic Theorem, and Berry’s Phase',
 			author: 'Barry Simon (Phys. Rev. Lett. 51, 1983)',
 			url: 'https://doi.org/10.1103/PhysRevLett.51.2167',
-			note: 'A short classic identifying Berry’s phase as holonomy and the TKNN integers as Chern numbers.',
+			note: 'Four pages that identify Berry’s phase as holonomy and the TKNN integers as Chern numbers. Research level, but short.',
 			kind: 'paper' as const
+		},
+		{
+			title: 'Colloquium: Topological insulators',
+			author: 'M. Zahid Hasan and Charles L. Kane (Rev. Mod. Phys. 82, 2010)',
+			url: 'https://arxiv.org/abs/1002.3895',
+			note: 'The standard review of the Z/2 cousins of the Chern number and the materials that carry them, written for physicists outside the field.',
+			kind: 'paper' as const,
+			free: true
 		}
 	];
 </script>
@@ -872,8 +881,10 @@
 	\(\operatorname{curl}\mathbf A = \mathbf B\): the potential is what shifts the phase of a charged particle’s
 	wavefunction. But no such \(\mathbf A\) can exist on a whole sphere around the monopole. If it did, Stokes’ theorem would
 	give \(\iint_{S^2}\mathbf B\cdot d\mathbf S = \iint_{S^2}\operatorname{curl}\mathbf A\cdot d\mathbf S = 0\) (a closed
-	surface has no boundary), contradicting the flux \(4\pi g\). In 1931 Paul Dirac found a way around this. In 1975 Tai Tsun
-	Wu and Chen Ning Yang gave it its cleanest form, with two patches: use one potential \(\mathbf A_N\) on the northern patch
+	surface has no boundary), contradicting the flux \(4\pi g\). In 1931 Paul Dirac found a way around this <Cite
+		k="dirac1931"
+	/>. In 1975 Tai Tsun Wu and Chen Ning Yang gave it its cleanest form <Cite k="wu-yang1975" />, with two patches: use
+	one potential \(\mathbf A_N\) on the northern patch
 	and another, \(\mathbf A_S\), on the southern patch. On the overlap, the two describe the same field, so they differ by a
 	gradient,
 	\[ \mathbf A_N - \mathbf A_S = \nabla\chi, \qquad \chi = 2g\varphi, \]
@@ -896,10 +907,11 @@
 	come back to itself after one turn around the equator. That forces
 	\[ \frac{2qg}{\hbar} = n \in \Z. \]
 	This is <dfn>Dirac’s quantisation condition</dfn>, and it is exactly the statement that the transition function is a
-	map of winding number \(n\): the monopole is a complex line bundle over the sphere with Chern number \(n\). Its
-	consequence is remarkable. If a single magnetic monopole exists anywhere in the universe, every electric charge \(q\)
+	map of winding number \(n\): the monopole is a complex line bundle over the sphere with Chern number \(n\). Now
+	follow the consequence. If a single magnetic monopole exists anywhere in the universe, every electric charge \(q\)
 	must be a whole multiple of \(\hbar/2g\): <em>electric charge is quantised</em>, as it is observed to be. No monopole has
-	ever been found; the argument remains one of the most beautiful explanations of why charges come in whole units.
+	ever been found, so the explanation stays conditional, and physicists still hunt for monopoles in cosmic rays and in
+	particle colliders.
 </p>
 
 <Warning title="Simplifications">
@@ -916,10 +928,11 @@
 	Take a quantum system that depends on some external knobs — a spin sitting in a magnetic field whose direction you can
 	turn. Turn the knobs slowly around a loop and back. The system ends where it started, except for a phase, and in 1984
 	Michael Berry showed that part of this phase is <em>geometric</em>: it depends only on the loop of knob settings, not on
-	how fast you went around. For a spin-\(\frac12\) particle it is half the solid angle swept out by the direction of the
-	field. Barry Simon recognised in 1983, having seen Berry’s work before publication, that this phase is the holonomy of a
-	connection on a complex line bundle over the space of knob settings — the phase picked up by going around a loop,
-	exactly like the transition function of the monopole. Its curvature, the <dfn>Berry curvature</dfn>, integrates over a
+	how fast you went around <Cite k="berry1984" />. For a spin-\(\frac12\) particle it is half the solid angle swept out
+	by the direction of the field. Barry Simon recognised in 1983, having seen Berry’s work before publication, that this
+	phase is the <em>holonomy</em> of a connection on a complex line bundle over the space of knob settings: the phase a
+	fibre picks up when it is carried around a loop <Cite k="simon1983" />. Its curvature, the <dfn>Berry curvature</dfn>,
+	integrates over a
 	closed surface of settings to \(2\pi\) times a Chern number. For the spin it is the field of a monopole of strength
 	\(\frac12\) sitting at the setting where the field vanishes: Dirac’s monopole, reappearing in the space of parameters.
 </p>
@@ -928,11 +941,13 @@
 
 <p>
 	In 1980 Klaus von Klitzing measured the Hall resistance of a thin layer of electrons in a strong magnetic field at very
-	low temperature and found plateaus at the values \(h/(\nu e^2)\), with \(\nu\) a whole number, so precisely
-	reproducible that the effect now serves as the international standard of electrical resistance. In 1982 David Thouless,
-	Mahito Kohmoto, Peter Nightingale and Marcel den Nijs (TKNN) explained the integers: the possible momenta of an electron
-	in a crystal form a torus (the <em>Brillouin zone</em>), each filled band of electron states is a complex line bundle over
-	that torus, and the Hall conductance is
+	low temperature and found plateaus at the values \(h/(\nu e^2)\), with \(\nu\) a whole number <Cite
+		k="klitzing1980"
+	/>, so precisely reproducible that the effect now serves as the international standard of electrical resistance. In
+	1982 David Thouless, Mahito Kohmoto, Peter Nightingale and Marcel den Nijs (TKNN) explained the integers for electrons
+	in a crystal <Cite k="tknn1982" />, and the following year Simon recognised their formula as a Chern number. The
+	possible momenta of an electron in a crystal form a torus (the <em>Brillouin zone</em>), each filled band of electron
+	states is a complex line bundle over that torus, and the Hall conductance is
 	\[ \sigma_{xy} = \frac{e^2}{h}\sum_{\text{filled bands}} C_n, \]
 	where \(C_n\) is the Chern number of the \(n\)-th band (signs depend on conventions). In units of \(e^2/h\), a number
 	read off a laboratory instrument is a sum of characteristic numbers.
@@ -940,11 +955,12 @@
 
 <p>
 	In 1988 Duncan Haldane showed that a suitably designed crystal could have bands with nonzero Chern number even without
-	an overall magnetic field — a <em>Chern insulator</em>. Since about 2005, related invariants (not Chern numbers, but
-	\(\Z/2\)-valued cousins suited to materials with time-reversal symmetry) have been found and observed in the materials
-	called <dfn>topological insulators</dfn>, which insulate in their interior but conduct along their surfaces. In 2016 the
-	Nobel Prize in Physics went to Thouless, Haldane and J. Michael Kosterlitz for theoretical discoveries of topological
-	phase transitions and topological phases of matter.
+	an overall magnetic field — a <em>Chern insulator</em> <Cite k="haldane1988" />. Since about 2005, related invariants
+	(not Chern numbers, but \(\Z/2\)-valued cousins suited to materials with time-reversal symmetry) have been found and
+	observed in the materials called <dfn>topological insulators</dfn>, which insulate in their interior but conduct along
+	their surfaces <Cite k="hasan-kane2010" />. In 2016 the Nobel Prize in Physics went to Thouless, Haldane and J.
+	Michael Kosterlitz “for theoretical discoveries of topological phase transitions and topological phases of matter”
+	<Cite k="nobel2016" />.
 </p>
 
 <KeyIdea title="Why physicists care">
@@ -1034,9 +1050,10 @@
 	</p>
 	{#snippet solution()}
 		<p>
-			Cut the circle open and write the section as a function \(s\) on \([0, 2\pi]\) with \(s(0)\ne 0\). Each zero is a
-			change of sign, so the number of zeros is even exactly when \(s(2\pi)\) has the same sign as \(s(0)\). On the
-			cylinder \(s(2\pi) = s(0)\): even. On the Möbius band \(s(2\pi) = -s(0)\): odd — in particular, never zero.
+			Transversal zeros are isolated, so there are finitely many of them; cut the circle open at a point where the section
+			is not zero, and write the section as a function \(s\) on \([0, 2\pi]\) with \(s(0)\ne 0\). Each zero is a change
+			of sign, so the number of zeros is even exactly when \(s(2\pi)\) has the same sign as \(s(0)\). On the cylinder
+			\(s(2\pi) = s(0)\): even. On the Möbius band \(s(2\pi) = -s(0)\): odd — in particular, never zero.
 		</p>
 	{/snippet}
 </Exercise>

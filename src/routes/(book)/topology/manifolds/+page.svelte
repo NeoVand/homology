@@ -108,7 +108,7 @@
 
 <Ahead>
 	<p>
-		Manifolds are where the theory in this book is at its most beautiful. The boundary operator \(\partial\) of homology (<Ref
+		Much of the rest of this book happens on manifolds. The boundary operator \(\partial\) of homology (<Ref
 			to="homology/chains"
 		/>) is a combinatorial shadow of the boundary of a manifold, and its basic law \(\partial\partial = 0\) echoes this chapter’s slogan
 		“a boundary has no boundary”. Orientation decides whether the top homology group of a closed surface is \(\Z\) or \(0\) (<Ref

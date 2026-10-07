@@ -8,11 +8,15 @@
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { absorb2, absorb3 } from './cech';
 
 	type Mode = 'three' | 'two';
 	let mode = $state<Mode>('three');
+	// on a narrow screen the circle and the nerve are drawn one above the other
+	let width = $state(800);
+	const narrow = $derived(width < 560);
 
 	// three arcs: corrections on U01, U12, U02 (the 1-cochain c)
 	let c01 = $state(2);
@@ -85,21 +89,14 @@
 	};
 </script>
 
-{#snippet stepper(label: string, value: number, set: (v: number) => void)}
-	<div class="step">
-		<span class="lbl"><TeX tex={label} /></span>
-		<button aria-label="decrease {label}" onclick={() => set(Math.max(-9, value - 1))}>−</button>
-		<span class="val nums">{value < 0 ? '−' + Math.abs(value) : value}</span>
-		<button aria-label="increase {label}" onclick={() => set(Math.min(9, value + 1))}>+</button>
-	</div>
-{/snippet}
+{#snippet l01()}<TeX tex={'c_{01}'} />{/snippet}
+{#snippet l12()}<TeX tex={'c_{12}'} />{/snippet}
+{#snippet l02()}<TeX tex={'c_{02}'} />{/snippet}
+{#snippet lw1()}<TeX tex={'c_{W_1}'} />{/snippet}
+{#snippet lw2()}<TeX tex={'c_{W_2}'} />{/snippet}
 
-<div class="wrap">
-	<Svg
-		viewBox="0 0 640 360"
-		maxHeight={420}
-		label="A circle covered by open arcs, with numbers on the overlaps, and beside it the nerve of the cover."
-	>
+{#snippet circlePanel()}
+	<g>
 		<!-- the loop itself: glows rose when a nontrivial class survives, green when the data glue -->
 		<circle
 			cx={CX}
@@ -155,8 +152,11 @@
 			<SvgTeX x={CX} y={CY} tex={'S^1'} size={20} color="var(--ink-dim)" w={50} />
 		{/if}
 
-		<!-- right: the nerve -->
-		<line x1="352" y1="24" x2="352" y2="336" stroke="rgba(216,178,110,0.18)" />
+	</g>
+{/snippet}
+
+{#snippet nervePanel()}
+	<g>
 		{#if mode === 'three'}
 			<text x="478" y="30" text-anchor="middle" class="t-ui">THE NERVE</text>
 			{@const e = [
@@ -215,7 +215,28 @@
 				<text x="584" y="326" text-anchor="middle" class="t-ui">ONE EDGE ≄ CIRCLE</text>
 			</g>
 		{/if}
-	</Svg>
+	</g>
+{/snippet}
+
+<div class="wrap" bind:clientWidth={width}>
+	{#if narrow}
+		<Svg viewBox="-12 4 366 356" maxHeight={420} label="A circle covered by open arcs, with numbers on the overlaps.">
+			{@render circlePanel()}
+		</Svg>
+		<Svg viewBox="330 8 310 340" maxHeight={340} label="The nerve of the cover, with the numbers on its vertices and edges.">
+			{@render nervePanel()}
+		</Svg>
+	{:else}
+		<Svg
+			viewBox="0 0 640 360"
+			maxHeight={420}
+			label="A circle covered by open arcs, with numbers on the overlaps, and beside it the nerve of the cover."
+		>
+			{@render circlePanel()}
+			<line x1="352" y1="24" x2="352" y2="336" stroke="rgba(216,178,110,0.18)" />
+			{@render nervePanel()}
+		</Svg>
+	{/if}
 
 	<div class="readout ui" aria-live="polite">
 		{#if mode === 'three'}
@@ -251,12 +272,12 @@
 			label="Cover"
 		/>
 		{#if mode === 'three'}
-			{@render stepper('c_{01}', c01, (v) => (c01 = v))}
-			{@render stepper('c_{12}', c12, (v) => (c12 = v))}
-			{@render stepper('c_{02}', c02, (v) => (c02 = v))}
+			<Stepper bind:value={c01} label="c₀₁" labelSnippet={l01} />
+			<Stepper bind:value={c12} label="c₁₂" labelSnippet={l12} />
+			<Stepper bind:value={c02} label="c₀₂" labelSnippet={l02} />
 		{:else}
-			{@render stepper('c_{W_1}', w1, (v) => (w1 = v))}
-			{@render stepper('c_{W_2}', w2, (v) => (w2 = v))}
+			<Stepper bind:value={w1} label="c on W₁" labelSnippet={lw1} />
+			<Stepper bind:value={w2} label="c on W₂" labelSnippet={lw2} />
 		{/if}
 		<Button onclick={makeConsistent}>Make it glue</Button>
 		<Button onclick={staircase}>Staircase</Button>
@@ -301,36 +322,5 @@
 	}
 	.verdict.ok {
 		color: var(--green);
-	}
-	.step {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.35rem;
-		font-size: 0.85rem;
-	}
-	.step .lbl {
-		color: var(--gold-bright);
-		min-width: 2.4rem;
-	}
-	.step button {
-		width: 2rem;
-		height: 2rem;
-		border-radius: 50%;
-		border: 1px solid var(--line);
-		background: rgba(216, 178, 110, 0.06);
-		color: var(--gold-bright);
-		cursor: pointer;
-		font-size: 1rem;
-		line-height: 1;
-	}
-	.step button:hover {
-		background: rgba(216, 178, 110, 0.16);
-		border-color: var(--gold);
-	}
-	.step .val {
-		min-width: 1.8rem;
-		text-align: center;
-		color: var(--ink-bright);
-		font-weight: 600;
 	}
 </style>

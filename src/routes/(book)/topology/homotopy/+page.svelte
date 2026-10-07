@@ -182,8 +182,8 @@
 <p>
 	Here is the question that drives the chapter. In the plane with a hole punched in it, take two paths from a point \(x_0\) to a point
 	\(x_1\). <em>Can one path be continuously slid onto the other, keeping its ends pinned down, without ever passing through the
-	hole?</em> Try it below: the gold path \(\gamma_0\) stays put; drag the teal bead to reshape \(\gamma_1\), then play the movie that
-	slides one onto the other.
+	hole?</em> Try it below: the gold path \(\gamma_0\) stays put; drag the teal bead to reshape \(\gamma_1\), then drag the white bead
+	along its track to run the movie that slides one onto the other.
 </p>
 
 <Figure num="2.3.1" title="Paths around a hole" hint="Drag the teal bead to reshape γ₁ · drag the white bead to run the movie">
@@ -302,7 +302,7 @@
 
 <p>
 	What exactly is the relationship between a fat letter \(X\) and its thin skeleton \(A\)? There are two natural maps between them. One is
-	the <dfn>inclusion</dfn> \(i\colon A \to X\), which just regards each point of the thin letter as a point of the fat one. The other is the
+	the <dfn>inclusion</dfn> \(i\colon A \to X\), which regards each point of the thin letter as a point of the fat one. The other is the
 	<dfn>squash</dfn> \(r\colon X \to A\), which sends every point of the fat letter to where it ends up after the shrinking. Neither is a
 	homeomorphism. But each undoes the other <em>up to homotopy</em>:
 </p>
@@ -418,7 +418,7 @@
 		<li>
 			<strong>The punctured torus onto a figure eight.</strong> Draw the torus as a square with opposite sides glued, as in
 			<Ref to="topology/gluing" />, and put the puncture in the middle. Push every point straight away from the puncture until it hits the
-			edge of the square. The edges of the square, after gluing, are just two circles meeting at a point — the corner — which is the
+			edge of the square. The edges of the square, after gluing, form two circles meeting at a point — the corner — which is the
 			<Term t="wedge-sum">wedge</Term> \(S^1 \vee S^1\), the figure eight.
 		</li>
 	</ul>
@@ -753,7 +753,7 @@
 
 <Example title="The torus: two independent windings">
 	<p>
-		The torus is a product of two circles, \(T^2 = S^1 \times S^1\), and a loop in a product is just a pair of loops, one in each factor.
+		The torus is a product of two circles, \(T^2 = S^1 \times S^1\), and a loop in a product is the same thing as a pair of loops, one in each factor.
 		So a loop on the torus has two winding numbers — how many times it goes round the hole (the teal direction) and how many times round
 		the tube (the gold direction) — and \(\pi_1(T^2) \cong \Z \times \Z = \Z^2\) <Cite k="hatcher2002" loc="Prop. 1.12" />. In particular, the order of trips does not matter on the
 		torus: if \(a\) goes round the tube and \(b\) round the hole, then \(ab \simeq ba\). You can see why in the gluing square: the loop
@@ -773,7 +773,7 @@
 	Let \(X = S^1 \vee S^1\) be two circles joined at one point, which we take as the basepoint \(x_0\). Let \(a\) be the loop once round
 	the left circle and \(b\) once round the right one, both counter-clockwise, and write \(a^{-1}, b^{-1}\) for their reverses. Any loop
 	can be pulled tight into a sequence of these four moves, recorded as a <dfn>word</dfn> such as \(a\,b\,a^{-1}\,b^{-1}\) or \(a^3 b^{-2}
-	a\) (read left to right: first \(a\) three times, and so on). Some words obviously describe the same loop: \(a\,a^{-1}\) goes round and
+	a\) (read left to right: first \(a\) three times, and so on). Some words visibly describe the same loop: \(a\,a^{-1}\) goes round and
 	straight back, and shrinks to nothing. Cancelling every such adjacent pair until none is left produces a <dfn>reduced word</dfn>.
 </p>
 

@@ -12,6 +12,7 @@
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { nerveOf, holesOf, type Disk } from './nerve';
 	import { svgPoint, clamp } from './svgutil';
+	import { PlusIcon, MinusIcon } from '$lib/icons';
 
 	const W = 640;
 	const H = 420;
@@ -240,8 +241,8 @@
 			onchange={(v) => load(v)}
 		/>
 		<Slider bind:value={radius} min={30} max={110} step={1} label="Sensor range" format={(v) => `${v}`} />
-		<Button onclick={addDisk}>+ Sensor</Button>
-		<Button onclick={removeDisk} disabled={pts.length <= 1}>− Sensor</Button>
+		<Button icon={PlusIcon} onclick={addDisk}>Add sensor</Button>
+		<Button icon={MinusIcon} onclick={removeDisk} disabled={pts.length <= 1}>Remove sensor</Button>
 		<Toggle bind:checked={showDisks} label="Disks" />
 		<Toggle bind:checked={showNerve} label="Nerve" />
 	</Controls>

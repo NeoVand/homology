@@ -68,12 +68,12 @@ export const entries: GlossaryEntry[] = [
 		see: ['cayley-table']
 	},
 	{
-		key: 'integers-mod-n',
-		term: 'Integers mod n (ℤ/n)',
-		def: 'The group of “clock arithmetic” with \\(n\\) hours: the elements \\(0, 1, \\dots, n-1\\), added by adding and then wrapping around past \\(n\\). Never written \\(\\Z_n\\) in this book; \\(\\Z/2\\) is also written \\(\\mathbb F_2\\).',
+		key: 'clock-arithmetic',
+		term: 'Clock arithmetic (the group ℤ/n)',
+		def: 'The group \\(\\Z/n\\) of an \\(n\\)-hour clock: the elements \\(0, 1, \\dots, n-1\\), added by adding and then wrapping around past \\(n\\). Never written \\(\\Z_n\\) in this book; \\(\\Z/2\\) is also written \\(\\mathbb F_2\\).',
 		chapter,
-		anchor: 'clock',
-		see: ['cyclic-group', 'group']
+		anchor: 'def-zn',
+		see: ['integers-mod-n', 'cyclic-group', 'group']
 	},
 	{
 		key: 'dihedral-group',

@@ -105,9 +105,15 @@
 	const readout = $derived.by(() => {
 		if (sel !== null) {
 			const cl = classes[sel];
-			return String.raw`This class has ${cl.length} member${cl.length === 1 ? '' : 's'}: each quarter turn carries one to the next${cl.length < 4 ? `, and after ${cl.length === 1 ? 'one turn' : 'two turns'} you are back where you started` : ''}. As an element of the quotient, the whole class is a single necklace.`;
+			const how =
+				cl.length === 1
+					? 'This class has 1 member: a quarter turn leaves it unchanged.'
+					: cl.length === 2
+						? 'This class has 2 members: a quarter turn swaps them.'
+						: 'This class has 4 members: each quarter turn carries one to the next.';
+			return `${how} As an element of the quotient, the whole class is a single necklace.`;
 		}
-		if (stage === 0) return String.raw`Each corner is gold or violet: \(2\times2\times2\times2 = 16\) colourings. Declare two colourings the same when a rotation turns one into the other.`;
+		if (stage === 0) return String.raw`Each corner is gold or violet: two choices at each of four corners make \(2^4 = 16\) colourings. Declare two colourings the same when a rotation turns one into the other.`;
 		if (stage === 1) return String.raw`Sorted into classes (piles): \(1+4+4+2+4+1 = 16\). Six piles.`;
 		return String.raw`The quotient set has 6 elements: there are exactly 6 different necklaces with 4 beads in 2 colours.`;
 	});

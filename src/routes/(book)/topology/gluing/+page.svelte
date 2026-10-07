@@ -351,7 +351,7 @@
 <p>
 	Now glue them with a twist: \((0, y) \sim (1, 1 - y)\), so the arrow on the right points down. To match the arrows, the sheet
 	must turn over before its ends meet — try it with a strip of paper, giving one end half a turn before taping. The result is the
-	<strong>Möbius band</strong>. Something remarkable has happened to the free edges: the top edge runs into the bottom edge, and the
+	<strong>Möbius band</strong>. Now watch the free edges: the top edge runs into the bottom edge, and the
 	two together form a <em>single</em> boundary circle. A Möbius band has one edge — and, if you run a finger along its surface,
 	only one side. (One-sidedness has an intrinsic cousin, <em>non-orientability</em>, which a creature living inside the band could
 	detect without ever leaving it; it is studied properly in <Ref to="topology/manifolds" />.) The corners make two classes in both
@@ -640,8 +640,8 @@
 	<Cite k="hatcher2002" loc="pp. 51–52" />. A famous theorem, the <em>classification of surfaces</em>, says that every connected
 	closed surface is homeomorphic to exactly one of these: a sphere, a surface \(\Sigma_g\) with \(g\) handles, or a one-sided
 	surface built from projective planes. We will meet it properly in
-	<Ref to="topology/manifolds" />. For now, the remarkable fact is that a single word written around a single polygon is enough to
-	describe any of them.
+	<Ref to="topology/manifolds" />. For now, savour the fact that a single word written around a single polygon is enough to describe
+	any of them.
 </p>
 
 <KeyIdea>

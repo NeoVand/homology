@@ -103,7 +103,8 @@ export const entries: GlossaryEntry[] = [
 		term: 'Integers modulo n (ℤ/n)',
 		def: 'The quotient of \\(\\Z\\) by congruence modulo \\(n\\): the \\(n\\)-element set \\(\\Z/n = \\{[0],[1],\\dots,[n-1]\\}\\), pictured as the positions of a clock hand. Its arithmetic comes in §1.3.',
 		chapter,
-		see: ['congruence-mod-n', 'quotient-set']
+		anchor: 'quotient',
+		see: ['congruence-mod-n', 'quotient-set', 'clock-arithmetic']
 	},
 	{
 		key: 'parity',

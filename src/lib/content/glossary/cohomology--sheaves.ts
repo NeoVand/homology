@@ -30,7 +30,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'nerve-theorem',
 		term: 'Nerve theorem',
-		def: 'For a good cover of a reasonable space, the nerve is homotopy equivalent to the space, so it has the same homology and cohomology.',
+		def: 'For a good cover of a reasonable (paracompact) space — any manifold, simplicial complex or subset of \\(\\R^n\\) — the nerve is homotopy equivalent to the space, so it has the same homology and cohomology.',
 		chapter,
 		anchor: 'thm-nerve',
 		see: ['nerve', 'good-cover']

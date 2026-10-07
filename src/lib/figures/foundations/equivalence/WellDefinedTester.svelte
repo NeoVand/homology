@@ -103,7 +103,7 @@
 	}
 	.rows {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(min(21rem, 100%), 1fr));
 		gap: 0.4rem 1.2rem;
 		padding: 0.4rem 1.2rem 0.2rem;
 	}

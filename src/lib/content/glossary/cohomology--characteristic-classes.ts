@@ -192,7 +192,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'quantum-hall-effect',
 		term: 'Quantum Hall effect',
-		def: 'Hall conductance quantised in whole multiples of \\(e^2/h\\). TKNN (1982) showed the integer is a sum of Chern numbers of the filled electron bands.',
+		def: 'Hall conductance quantised in whole multiples of \\(e^2/h\\), discovered by von Klitzing in 1980. TKNN (1982) explained the integers as topological invariants of the filled electron bands, which Simon (1983) recognised as Chern numbers.',
 		chapter
 	},
 	{

@@ -19,6 +19,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import ExactBeads from '$lib/figures/homology/exact-sequences/ExactBeads.svelte';
 	import ZigZag from '$lib/figures/homology/exact-sequences/ZigZag.svelte';
 	import CrushDisk from '$lib/figures/homology/exact-sequences/CrushDisk.svelte';
@@ -35,7 +36,7 @@
 >
 
 <p class="lead">
-	Nobody computes the homology of a space by writing down every simplex. A torus triangulated finely enough to look smooth has thousands of triangles, and singular homology has uncountably many singular simplices. Instead, mathematicians compute the way engineers build bridges: cut the problem into pieces small enough to understand, then keep careful track of how the pieces are joined.
+	Nobody computes the homology of a space by writing down every simplex. A torus triangulated finely enough to look smooth has thousands of triangles, and singular homology has uncountably many singular simplices. Instead, mathematicians compute the way cartographers map a large country: one region at a time, keeping careful track of where neighbouring maps overlap.
 </p>
 
 <p>
@@ -80,7 +81,7 @@
 
 <Question>
 	<p>
-		Suppose \(0\to\Z\to G\to\Z/2\to0\) is exact. What can \(G\) be? Since \(G/\Z\cong\Z/2\), the group \(G\) is built from one copy of \(\Z\) and one “half step”. The two examples above show both possibilities: \(G\cong\Z\) (the half step is a new element whose double lies in the old \(\Z\)) or \(G\cong\Z\oplus\Z/2\) (the half step is an element of order two). These are the only two. Exactness narrows things down; it does not always decide.
+		Suppose \(0\to\Z\to G\to\Z/2\to0\) is exact. What can \(G\) be? Since \(G/\Z\cong\Z/2\), the group \(G\) is built from one copy of \(\Z\) and one “half step”. The two examples above show both possibilities. Either \(G\cong\Z\), and the half step is a new element whose double is the generator of the old \(\Z\) (the old \(\Z\) sits inside the new one as the even numbers); or \(G\cong\Z\oplus\Z/2\), and the half step is an element of order two. These are the only two. Exactness narrows things down; it does not always decide.
 	</p>
 </Question>
 
@@ -169,7 +170,7 @@
 <Proof>
 	{#snippet head()}Exactness at \(H_n(B)\), as a sample{/snippet}
 	<p>
-		<em>Image inside kernel:</em> \(j_*\circ i_* = (j\circ i)_* = 0\), because \(j\circ i = 0\) already on chains. <em>Kernel inside image:</em> suppose \(j_*[b] = 0\), so \(j(b) = \partial c'\) for some \(c'\in C_{n+1}\). Lift \(c' = j(b')\) and look at \(b - \partial b'\). Then \(j(b - \partial b') = \partial c' - \partial j(b') = 0\), so \(b-\partial b' = i(a)\) for some \(a\). This \(a\) is a cycle, and \(i_*[a] = [b - \partial b'] = [b]\). Exactness at the other two spots is proved by similar chases. Hatcher (Theorem 2.16) gives all of them, and <Ref to="big-picture/homological-algebra" /> revisits the argument as the snake lemma.
+		<em>Image inside kernel:</em> \(j_*\circ i_* = (j\circ i)_* = 0\), because \(j\circ i = 0\) already on chains. <em>Kernel inside image:</em> suppose \(j_*[b] = 0\), so \(j(b) = \partial c'\) for some \(c'\in C_{n+1}\). Lift \(c' = j(b')\) and look at \(b - \partial b'\). Then \(j(b - \partial b') = \partial c' - \partial j(b') = 0\), so \(b-\partial b' = i(a)\) for some \(a\). This \(a\) is a cycle, and \(i_*[a] = [b - \partial b'] = [b]\). Exactness at the other two spots is proved by similar chases, all written out by Hatcher <Cite k="hatcher2002" loc="Thm 2.16" />, and <Ref to="big-picture/homological-algebra" /> revisits the argument as the snake lemma.
 	</p>
 </Proof>
 
@@ -187,7 +188,7 @@
 <h2 id="relative-homology">Relative homology: homology after crushing</h2>
 
 <p>
-	Sometimes we want homology to ignore part of a space: to focus on what happens near one point, or to study \(X\) with a subspace \(A\) squashed flat. The algebra for this is a quotient, the first of the book’s recurring ideas.
+	Sometimes we want homology to ignore part of a space: to focus on what happens near one point, or to study \(X\) with a subspace \(A\) squashed flat. The algebra for this is a quotient — the first of the book’s four recurring ideas, back again.
 </p>
 
 <Definition id="def-relative">
@@ -233,7 +234,7 @@
 </Theorem>
 
 <p>
-	The neighbourhood condition is a technicality that rules out pathological subspaces. The relative groups behave as if \(A\) had been crushed, and, as we will see in a moment, also as if a small neighbourhood of \(A\) had been thrown away. That is Hatcher’s Proposition 2.22, and it rests on excision.
+	The neighbourhood condition is a technicality that rules out pathological subspaces. The relative groups behave as if \(A\) had been crushed <Cite k="hatcher2002" loc="Prop. 2.22" />, and the proof rests on excision, which we meet in a moment.
 </p>
 
 <h3>The long exact sequence of a pair</h3>
@@ -243,7 +244,7 @@
 </p>
 \[ \cdots\to H_n(A)\to H_n(X)\to H_n(X,A)\xrightarrow{\ \partial_*\ }H_{n-1}(A)\to H_{n-1}(X)\to\cdots\to H_0(X,A)\to0. \]
 <p>
-	Here the connecting map is as concrete as it could be. A relative cycle has its boundary in \(A\), and \(\partial_*\) <em>takes that boundary</em>, which is a cycle in \(A\). The same sequence holds with reduced homology in place of \(H_n(A)\) and \(H_n(X)\), which is often tidier.
+	Here the connecting map is as concrete as it could be. A relative cycle has its boundary in \(A\), and \(\partial_*\) <em>takes that boundary</em>, which is a cycle in \(A\). When \(A\) is nonempty, the same sequence holds with reduced homology in place of \(H_n(A)\) and \(H_n(X)\), which is often tidier.
 </p>
 
 <Example title="Disks relative to their boundary spheres">
@@ -279,7 +280,7 @@
 </Figure>
 
 <p>
-	Intuitively this is almost a tautology. Relative chains already count anything inside \(A\) as zero, so whatever happens deep inside \(A\) is invisible. The proof has one genuine idea. A singular simplex may be large, straddling both \(Z\) and the outside of \(A\). But it can be chopped by repeated barycentric subdivision into simplices so small that each one lies either inside \(A\) or outside \(Z\), and chopping does not change homology classes. That is <em>an honest sketch</em>; the details take a few pages in Hatcher (Theorem 2.20).
+	Intuitively this is almost a tautology. Relative chains already count anything inside \(A\) as zero, so whatever happens deep inside \(A\) is invisible. The proof has one genuine idea. A singular simplex may be large, straddling both \(Z\) and the outside of \(A\). But it can be chopped by repeated barycentric subdivision into simplices so small that each one lies either inside \(A\) or outside \(Z\), and chopping does not change homology classes. That is an honest sketch; the details take a few pages <Cite k="hatcher2002" loc="Thm 2.20" />.
 </p>
 
 <Warning>
@@ -320,7 +321,7 @@
 </p>
 \[ 0\to C_\bullet(U\cap V)\xrightarrow{\ x\mapsto(x,-x)\ }C_\bullet(U)\oplus C_\bullet(V)\xrightarrow{\ (u,v)\mapsto u+v\ }C_\bullet(U+V)\to0. \]
 <p>
-	The zig-zag lemma makes it long. Then the subdivision argument behind excision shows that the “small” chains \(C_\bullet(U+V)\) have the same homology as all of \(C_\bullet(X)\). Again, that last step is a sketch; the full proof is in Hatcher §2.2.
+	The zig-zag lemma makes it long. Then the subdivision argument behind excision shows that the “small” chains \(C_\bullet(U+V)\) have the same homology as all of \(C_\bullet(X)\). Again, that last step is a sketch; the full proof is in <Cite k="hatcher2002" loc="§2.2" text />.
 </p>
 
 <Warning>
@@ -339,7 +340,7 @@
 	</p>
 	\[ H_1(S^1)\;\cong\;\ker\Phi\;\cong\;\Z. \]
 	<p>
-		The generator is the loop \(z\) that runs up through \(U\) and back down through \(V\): cutting it as \(z = u + v\) gives \(\partial u = p - q\). The circle’s hole is detected as “the two overlap pieces, which are not connected inside the overlap, are joined around the other side”.
+		The generator is the loop \(z\) that runs up through \(U\) and back down through \(V\): cutting it as \(z = u + v\) gives \(\partial u = p - q\). So the circle’s hole is detected as a mismatch: the two pieces of the overlap are joined to each other through \(U\), and again through \(V\), but not inside the overlap itself.
 	</p>
 </Example>
 
@@ -368,7 +369,10 @@
 
 <History>
 	<p>
-		The sequence is named after Walther Mayer and Leopold Vietoris, who developed the method of computing homology from a decomposition in 1929–1930. That was only a few years after Emmy Noether had persuaded topologists to treat Betti numbers and torsion as properties of <em>groups</em>, and the new language made such sequences possible. Hatcher calls Mayer–Vietoris “the analog for homology of van Kampen’s theorem” for the fundamental group.
+		In 1925 Emmy Noether pointed out, in her Göttingen lectures and in a report fourteen lines long, that the Betti numbers and torsion coefficients of a space are shadows of something better: abelian <em>groups</em> <Cite k="weibel1999" />. Two Austrian mathematicians took the hint. Leopold Vietoris — who had finished his doctoral thesis as an Italian prisoner of war in 1919, and who lived to within two months of his 111th birthday — told his colleague Walther Mayer about a problem on the homology of a union, the answer he expected, and a way to prove it. Mayer solved it for Betti numbers in 1929 <Cite k="mayer1929" />, and Vietoris finished the job for the full homology groups in 1930 <Cite k="vietoris1930,reitberger2002" />. By then Mayer, who as a Jew had little hope of a career in Vienna, had become Albert Einstein’s mathematical assistant in Berlin; in 1933 he escaped with the Einsteins to Princeton <Cite k="lessel2023" />.
+	</p>
+	<p>
+		Neither of them wrote down an exact sequence. The word “exact” was coined in 1947 by John Kelley and Everett Pitcher, who also proved the zig-zag lemma of Section 2 <Cite k="kelley-pitcher1947" />, and the Mayer–Vietoris sequence took its modern form in Eilenberg and Steenrod’s <em>Foundations of Algebraic Topology</em> <Cite k="eilenberg-steenrod1952,weibel1999" />. Hatcher calls it “the analog for homology of van Kampen’s theorem” for the fundamental group <Cite k="hatcher2002" loc="Ch. 2 introduction" />.
 	</p>
 </History>
 
@@ -376,7 +380,7 @@
 <h2 id="spheres">Spheres, one dimension at a time</h2>
 
 <p>
-	Here is the cleanest application, and the promised recomputation of the homology of spheres. Cover \(S^n\) by two caps: \(U\), everything north of a latitude a little below the equator, and \(V\), everything south of a latitude a little above it. Each cap is a disk, hence contractible. Their overlap is a band around the equator, which deformation retracts onto the equator, an \(S^{n-1}\).
+	Here is the cleanest application, and the promised recomputation of the homology of spheres <Cite k="hatcher2002" loc="Ex. 2.46" />. Cover \(S^n\) by two caps: \(U\), everything north of a latitude a little below the equator, and \(V\), everything south of a latitude a little above it. Each cap is a disk, hence contractible. Their overlap is a band around the equator, which deformation retracts onto the equator, an \(S^{n-1}\).
 </p>
 
 <p>
@@ -406,7 +410,7 @@
 
 <Remark title="The numerical shadow">
 	<p>
-		The Euler characteristic version of the same cut reads \(\chi(S^n) = \chi(D^n) + \chi(D^n) - \chi(S^{n-1}) = 2 - \chi(S^{n-1})\). Starting from \(\chi(S^0) = 2\), this gives \(\chi(S^n) = 1 + (-1)^n\): \(2\) for even spheres and \(0\) for odd ones, exactly as the homology groups predict. The same alternation will reappear in the hairy ball theorem’s “only odd spheres can be combed”.
+		The Euler characteristic version of the same cut reads \(\chi(S^n) = \chi(D^n) + \chi(D^n) - \chi(S^{n-1}) = 2 - \chi(S^{n-1})\). Starting from \(\chi(S^0) = 2\), this gives \(\chi(S^n) = 1 + (-1)^n\): \(2\) for even spheres and \(0\) for odd ones, exactly as the homology groups predict. It is the same even–odd alternation that decided <Ref to="homology/invariance" hash="hairy-ball">the hairy ball theorem</Ref>: only the odd spheres can be combed.
 	</p>
 </Remark>
 
@@ -481,7 +485,7 @@
 </p>
 \[ H_1(K)\;\cong\;\Z/2\oplus\Z, \]
 <p>
-	in agreement with the Smith normal form computation of <Ref to="homology/computing" />. We have <em>seen</em> the torsion: the element of order two is “once around the core”, whose double is homologous to the boundary circle of a Möbius band.
+	in agreement with the Smith normal form computation of <Ref to="homology/computing" /> and with Hatcher’s version of the same cut <Cite k="hatcher2002" loc="Ex. 2.47" />. We have <em>seen</em> the torsion. Twice the core of \(U\) and twice the core of \(V\) are both homologous to the overlap circle, so the difference of the two cores, “once around \(U\)’s core and back around \(V\)’s”, is a loop that is not a boundary but whose double is. That is the element of order two.
 </p>
 
 <Remark title="These computations were checked by machine">
@@ -494,7 +498,7 @@
 <h2 id="cellular-homology">Cellular homology: homology squared</h2>
 
 <p>
-	Mayer–Vietoris is flexible, but for spaces built from cells there is something faster still. Recall the <Term t="cw-complex">CW complexes</Term> of <Ref to="topology/simplicial-complexes" />: start with points, attach edges by their endpoints, attach disks by maps of their boundary circles, attach balls by maps of their boundary spheres, and so on. The \(n\)-skeleton \(X^n\) is everything built after the \(n\)-dimensional cells have been attached. A torus needs only one vertex, two edges and one face; a triangulation needs at least \(7 + 21 + 14\) simplices.
+	Mayer–Vietoris is flexible, but for spaces built from cells there is something faster still. Recall the <Term t="cw-complex">CW complexes</Term> of <Ref to="topology/simplicial-complexes" />, introduced by J. H. C. Whitehead in 1949 <Cite k="whitehead1949" />: start with points, attach edges by their endpoints, attach disks by maps of their boundary circles, attach balls by maps of their boundary spheres, and so on. The \(n\)-skeleton \(X^n\) is everything built after the \(n\)-dimensional cells have been attached. A torus needs only one vertex, two edges and one face; a triangulation needs at least \(7 + 21 + 14\) simplices.
 </p>
 
 <p>The theory of this chapter gives two facts about skeleta:</p>
@@ -539,12 +543,14 @@
 	<p>\(H_n^{\mathrm{CW}}(X)\cong H_n(X)\) for every CW complex \(X\) and every \(n\).</p>
 </Theorem>
 
+<p>The proof is a diagram chase through the long exact sequences of the skeleta <Cite k="hatcher2002" loc="Thm 2.35" />; the example above is that chase in miniature.</p>
+
 <p>
 	To use it, we need to compute \(d_n\) on each cell. The answer is a degree, in the sense of <Ref to="homology/invariance" hash="degree" />. The <dfn>cellular boundary formula</dfn> says
 </p>
 \[ d_n(e^n_\alpha) = \sum_\beta d_{\alpha\beta}\,e^{n-1}_\beta, \]
 <p>
-	where \(d_{\alpha\beta}\) is the degree of the map \(S^{n-1}\to S^{n-1}\) obtained by first attaching the boundary of \(e_\alpha\) to \(X^{n-1}\), and then collapsing everything except the cell \(e_\beta\) to a point. In words: <strong>how many times, counted with signs, the boundary of \(e_\alpha\) runs over \(e_\beta\)</strong>.
+	where \(d_{\alpha\beta}\) is the degree of the map \(S^{n-1}\to S^{n-1}\) obtained by first attaching the boundary of \(e_\alpha\) to \(X^{n-1}\), and then collapsing everything except the cell \(e_\beta\) to a point. In words: <strong>how many times, counted with signs, the boundary of \(e_\alpha\) runs over \(e_\beta\)</strong> <Cite k="hatcher2002" loc="§2.2, Cellular Boundary Formula" />.
 </p>
 
 <p>In low dimensions this needs no topology at all.</p>
@@ -608,7 +614,7 @@
 	The real projective space \(\RP^n\) is the sphere \(S^n\) with each pair of opposite points identified, or equivalently the set of lines through the origin in \(\R^{n+1}\). We met \(\RP^2\) in <Ref to="topology/gluing" />. Building it up one dimension at a time gives a cell structure with exactly one cell in each dimension \(0,1,\dots,n\). The \(k\)-cell is attached by the map \(S^{k-1}\to\RP^{k-1}\) that identifies opposite points.
 </p>
 <p>
-	To find \(d_k\), apply the cellular boundary formula. After collapsing \(\RP^{k-2}\), the attaching map covers the \(k-1\) sphere twice: once by its northern hemisphere, which is the identity, and once by its southern hemisphere, which differs from the northern one by the antipodal map of \(S^{k-1}\), of degree \((-1)^k\). So
+	To find \(d_k\), apply the cellular boundary formula <Cite k="hatcher2002" loc="Ex. 2.42" />. After collapsing \(\RP^{k-2}\), the attaching map covers the \(k-1\) sphere twice: once by its northern hemisphere, which is the identity, and once by its southern hemisphere, which differs from the northern one by the antipodal map of \(S^{k-1}\), of degree \((-1)^k\). So
 </p>
 \[ d_k = 1 + (-1)^k = \begin{cases} 2 & k \text{ even},\\ 0 & k\text{ odd}.\end{cases} \]
 <p>The cellular chain complex alternates between \(\times2\) and \(0\):</p>
@@ -683,7 +689,7 @@
 	</p>
 	{#snippet solution()}
 		<p>
-			Both words have a single letter, and all corners are identified to one vertex, so \(d_1 = 0\). (a) The exponent sum is \(1 + 1 - 1 = 1\), so \(d_2 = 1\): it is an isomorphism \(\Z\to\Z\). Hence \(H_1 = \Z/1 = 0\) and \(H_2 = \ker d_2 = 0\): the dunce cap has the homology of a point (in fact it is contractible, although it cannot be collapsed onto a point face by face). (b) The exponent sum is \(3\), so \(H_1\cong\Z/3\) and \(H_2 = 0\). This space is a “mod 3 projective plane”: a loop that must be traversed three times before it bounds.
+			Both words have a single letter, and all corners are identified to one vertex, so \(d_1 = 0\). (a) The exponent sum is \(1 + 1 - 1 = 1\), so \(d_2 = 1\): it is an isomorphism \(\Z\to\Z\). Hence \(H_1 = \Z/1 = 0\) and \(H_2 = \ker d_2 = 0\): the dunce cap has the homology of a point. In fact it is contractible, although no triangulation of it can be collapsed onto a point one face at a time <Cite k="zeeman1963" />. (b) The exponent sum is \(3\), so \(H_1\cong\Z/3\) and \(H_2 = 0\). This space is a “mod 3 projective plane”: a loop that must be traversed three times before it bounds.
 		</p>
 	{/snippet}
 </Exercise>
@@ -692,7 +698,7 @@
 	<p>Write down the cellular chain complex of \(\RP^3\), with integer and with \(\Z/2\) coefficients, and compute both homologies. Which tells you that \(\RP^3\) is orientable?</p>
 	{#snippet solution()}
 		<p>
-			With integers: \(0\to\Z\xrightarrow{d_3 = 0}\Z\xrightarrow{d_2 = \times2}\Z\xrightarrow{d_1 = 0}\Z\to0\). So \(H_0 = \Z\), \(H_1 = \Z/2\), \(H_2 = \ker(\times2)/\im 0 = 0\) and \(H_3 = \ker d_3 = \Z\). Mod \(2\) every map becomes \(0\), so all four groups are \(\Z/2\). The integral top group \(H_3\cong\Z\) is the sign of orientability, as \(H_2\cong\Z\) was for closed surfaces. Mod \(2\) the top group is \(\Z/2\) for every closed manifold, orientable or not, so it cannot tell.
+			With integers: \(0\to\Z\xrightarrow{d_3 = 0}\Z\xrightarrow{d_2 = \times2}\Z\xrightarrow{d_1 = 0}\Z\to0\). So \(H_0 = \Z\), \(H_1 = \Z/2\), \(H_2 = \ker(\times2)/\im 0 = 0\) and \(H_3 = \ker d_3 = \Z\). Mod \(2\) every map becomes \(0\), so all four groups are \(\Z/2\). The integral top group \(H_3\cong\Z\) is the sign of orientability, as \(H_2\cong\Z\) was for closed surfaces. Mod \(2\) the top group is \(\Z/2\) for every connected closed manifold, orientable or not, so it cannot tell.
 		</p>
 	{/snippet}
 </Exercise>
@@ -766,11 +772,19 @@
 			kind: 'book'
 		},
 		{
-			title: 'Algebraic Topology I (lectures)',
-			author: 'Pierre Albin',
-			url: 'https://www.youtube.com/playlist?list=PLjuyMEhIbRmBixjg0ZeRvWBQx_KMGC5Tv',
-			note: 'A graduate course that follows Hatcher closely; the lectures on Mayer–Vietoris and on the homology of cell complexes are a rigorous companion to this chapter.',
+			title: 'Algebraic Topology (recorded lectures)',
+			author: 'Pierre Albin, University of Illinois',
+			url: 'https://www.youtube.com/playlist?list=PLpRLWqLFLVTCL15U6N3o35g4uhMSBVA2b',
+			note: 'A graduate course that follows Hatcher closely. Lectures 13–15 do exact sequences, long exact sequences of pairs and excision, lecture 19 the homology of cell complexes, and lecture 20 Mayer–Vietoris.',
 			kind: 'video',
+			free: true
+		},
+		{
+			title: 'Leopold Vietoris (1891–2002)',
+			author: 'Heinrich Reitberger, Notices of the AMS 49 (2002)',
+			url: 'https://www.ams.org/notices/200210/fea-vietoris.pdf',
+			note: 'Five pages on the life of the man in the name: a thesis finished in a prisoner-of-war camp, the birth of the Mayer–Vietoris sequence in his and Mayer’s own words, the Vietoris complex of the next chapter, and a research paper written at 103.',
+			kind: 'paper',
 			free: true
 		}
 	]}

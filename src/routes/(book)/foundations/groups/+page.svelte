@@ -454,8 +454,9 @@
 	For a finite group we can write down the whole operation as a table, like the one you filled in for the triangle: the
 	entry in row \(g\) and column \(h\) is <span class="nw">\(gh\).</span> Such a table is called a <dfn>Cayley table</dfn>. In both of our tables
 	you may have noticed that <em>every element appears exactly once in every row and exactly once in every column</em>,
-	like the digits of a Sudoku. Cayley noticed this in 1854: “each line as each column of the square will contain all
-	the symbols” <Cite k="cayley1854" />. It is not a coincidence.
+	like the digits of a Sudoku. It is no coincidence. Cayley, in the 1854 paper that introduced such tables, already
+	observed that “each line as each column of the square will contain all the symbols” <Cite k="cayley1854" />. Here
+	is why.
 </p>
 
 <Proposition title="The cancellation law">

@@ -492,7 +492,7 @@
 <p>
 	Two things deserve to be said at once. First, the answer does not depend on which resolution you choose: any two free resolutions of
 	\(A\) are chain homotopy equivalent (once more, a chain homotopy saves the day), so they give isomorphic \(\Tor\) and \(\Ext\). We
-	shall take this on trust. Second, the definitions are not a trick: they are exactly “the homology of the complex you get by applying
+	shall take this on trust; Hatcher proves it in a page <Cite k="hatcher2002" loc="Lemma 3.1" />. Second, the definitions are not a trick: they are exactly “the homology of the complex you get by applying
 	the functor to a resolution”, which is how all derived functors are defined.
 </p>
 
@@ -541,7 +541,8 @@
 	equivalence) correspond exactly to the elements of \(\Ext(C,A)\), with the split extension \(B = A\oplus C\) corresponding to \(0\).
 	Take \(A = C = \Z/2\): there are two ways to build a group of order 4 from two copies of \(\Z/2\), namely \(\Z/2\oplus\Z/2\) and
 	\(\Z/4\) (in which the subgroup \(\{0,2\}\cong\Z/2\) has quotient \(\Z/2\)). Correspondingly, \(\Ext(\Z/2,\Z/2)\cong\Z/2\) has two
-	elements.
+	elements. (The count is of extensions, not of groups. \(\Ext(\Z/3,\Z/3)\) has three elements, but only two middle groups occur,
+	\(\Z/3\oplus\Z/3\) and \(\Z/9\): the two non-split extensions both use \(\Z/9\), glued to the quotient by different maps.)
 </p>
 
 <Remark id="derived-functors" title="Derived functors, in one paragraph">
@@ -573,8 +574,12 @@
 <p>
 	The second formula is the one stated in <Ref to="cohomology/cohomology-groups" />; now you can see where its \(\Ext\) comes from. In
 	both formulas the correction term is built from the degree <em>below</em>. The proof is a well-chosen short exact sequence of chain
-	complexes and the long exact sequence it produces — homological algebra feeding on itself. We will not write it out; Hatcher’s §3.1
-	and §3.A do so in a few pages each.
+	complexes and the long exact sequence it produces — homological algebra feeding on itself. We will not write it out; Hatcher does so
+	in a few pages for each version <Cite k="hatcher2002" loc="Thm 3.2, Thm 3A.3" />. The cohomology version is the coincidence that
+	Eilenberg and Mac Lane set out to explain in 1942, inventing functors along the way (<Ref
+		to="big-picture/categories"
+		hash="naturality"
+	/>).
 </p>
 
 <Example head={rp2Head}>
@@ -582,7 +587,7 @@
 	<ul>
 		<li>
 			<strong>Homology mod 2.</strong> \(H_0(\RP^2;\Z/2) = \Z\otimes\Z/2 = \Z/2\); \(H_1 = \Z/2\otimes\Z/2 = \Z/2\); and \(H_2 = 0\otimes
-			\Z/2\oplus\Tor(\Z/2,\Z/2) = \Z/2\). That last group is the “phantom” \(H_2\) you met in <Ref to="homology/computing" />: mod 2, the
+			\Z/2\oplus\Tor(\Z/2,\Z/2) = \Z/2\). That last group is the extra \(H_2\) you met in <Ref to="homology/computing" />: mod 2, the
 			sum of all triangles is a cycle, because its boundary \(2c\) is zero. The UCT says it comes from the torsion one degree down.
 		</li>
 		<li>
@@ -601,8 +606,8 @@
 <Example title="The Klein bottle, and an old cliffhanger">
 	<p>
 		With \(H_0 = \Z\), \(H_1 = \Z\oplus\Z/2\), \(H_2 = 0\): mod 2 the UCT gives \(\Z/2\), \((\Z/2)^2\), \(\Z/2\) — the same as the torus
-		mod 2, which was the cliffhanger at the end of <Ref to="homology/homology-groups" />. Mod 2 the torsion \(\Z/2\) is seen twice, once
-		as an extra \(\Z/2\) in \(H_1\) and once as a phantom \(H_2\), and the result happens to match the torus. With integer coefficients
+		mod 2, which was the cliffhanger of <Ref to="homology/homology-groups" hash="cliffhanger" />. Mod 2 the torsion \(\Z/2\) is seen
+		twice, once as an extra \(\Z/2\) in \(H_1\) and once as an extra \(H_2\), and the result happens to match the torus. With integer coefficients
 		the difference is plain: \(\Z\oplus\Z/2\) versus \(\Z^2\).
 	</p>
 </Example>
@@ -619,17 +624,22 @@
 
 <Warning title="Split, but not naturally">
 	<p>
-		The exact sequences in the theorem are natural — a map of spaces gives a map between them. The splittings are not: there is no way
-		to choose the isomorphism \(H^n(X;G)\cong\Hom(H_n(X),G)\oplus\Ext(H_{n-1}(X),G)\) so that it commutes with every map (Hatcher gives
-		an example). This is the “isomorphic but not naturally isomorphic” phenomenon of <Ref to="big-picture/categories" hash="naturality" />
-		in the wild. In practice: the theorem tells you what the groups <em>are</em>, but to compute an induced map you should use the exact
+		The exact sequences in the theorem are natural — a map of spaces gives a map between them. The splittings are not. Collapse the
+		“equator” \(\RP^1\) of \(\RP^2\) to a point: the result is a sphere, and the quotient map \(q\colon\RP^2\to S^2\) induces zero on
+		integral homology in degrees 1 and 2 (the groups are \(\Z/2\to 0\) and \(0\to\Z\)). A natural splitting of \(H_2(-;\Z/2)\) into
+		a \(\otimes\) part and a \(\Tor\) part would force \(q_*\) to be zero on \(H_2(-;\Z/2)\) too. But mod 2, \(q\) carries the sum of
+		all the triangles of \(\RP^2\) onto the sphere, and \(q_*\colon\Z/2\to\Z/2\) is an isomorphism <Cite
+			k="hatcher2002"
+			loc="Example 2.51, §3.A"
+		/>. This is the “isomorphic but not naturally isomorphic” phenomenon of <Ref to="big-picture/categories" hash="naturality" /> in
+		the wild. In practice: the theorem tells you what the groups <em>are</em>, but to compute an induced map you should use the exact
 		sequence, not the splitting.
 	</p>
 </Warning>
 
 <p>
-	Two consequences are worth stating plainly. With coefficients in \(\Q\) (or \(\R\)) all torsion disappears: \(H_n(X;\Q)\cong\Q^{b_n}\),
-	and cohomology has the same dimensions as homology. With coefficients in \(\Z/p\) for a prime \(p\), torsion of order prime to \(p\)
+	Two consequences get used constantly. With coefficients in \(\Q\) (or \(\R\)) all torsion disappears: when the homology is finitely
+	generated, \(H_n(X;\Q)\cong\Q^{b_n}\), and cohomology has the same dimensions as homology. With coefficients in \(\Z/p\) for a prime \(p\), torsion of order prime to \(p\)
 	disappears, while each summand \(\Z/p^k\) of \(H_n\) is seen twice, as a \(\Z/p\) in degree \(n\) and another in degree \(n+1\).
 	That is why the mod-2 Betti numbers of
 	\(\RP^2\) are \(1, 1, 1\) although its rational Betti numbers are \(1, 0, 0\).
@@ -659,6 +669,7 @@
 </Theorem>
 
 <p>
+	Hatcher proves it, for any principal ideal domain of coefficients, in his §3.B <Cite k="hatcher2002" loc="Thm 3B.6" />.
 	For the torus: \(H_0 = \Z\otimes\Z = \Z\); \(H_1 = (H_0\otimes H_1)\oplus(H_1\otimes H_0) = \Z^2\); \(H_2 = H_1\otimes H_1 = \Z\). No
 	torsion, no \(\Tor\) terms. A pleasant way to remember torsion-free cases: multiply the <em>Poincaré polynomials</em> \(\sum_n b_n t^n\).
 	The circle has \(1 + t\), so the torus has \((1+t)^2 = 1 + 2t + t^2\), and the \(k\)-dimensional torus has \((1+t)^k\), with binomial
@@ -741,10 +752,11 @@
 
 <Remark title="You are in good company">
 	<p>
-		Spectral sequences have a fearsome reputation, mostly because of their indices. Ravi Vakil opens his notes on them with a joke worth
-		repeating: “It has been suggested that the name ‘spectral’ was given because, like spectres, spectral sequences are terrifying,
-		evil, and dangerous. I have heard no one disagree with this interpretation, which is perhaps not surprising since I just made it
-		up.” The ideas are the ones above: approximate, correct, correct the correction, and read off the answer along the diagonals.
+		Spectral sequences have a fearsome reputation, mostly because of their indices. Ravi Vakil opens his notes on them with a joke:
+		“It has been suggested that the name ‘spectral’ was given because, like spectres, spectral sequences are terrifying, evil, and
+		dangerous. I have heard no one disagree with this interpretation, which is perhaps not surprising since I just made it up”
+		<Cite k="vakil2008" />. The ideas are the ones above: approximate, correct, correct the correction, and read off the answer along
+		the diagonals. Timothy Chow’s five-page article shows how you could have invented them yourself <Cite k="chow2006" />.
 	</p>
 </Remark>
 
@@ -753,8 +765,9 @@
 	fibration of <Ref to="big-picture/horizons" hash="homotopy-groups" />, where \(S^3\) is fibred over \(S^2\) by circles — the
 	<dfn>Serre spectral sequence</dfn> has \(E^2_{p,q} = H_p(B; H_q(F))\) (when \(B\) is simply connected) and converges to
 	\(H_{p+q}(E)\). Its \(E^2\) page is a Künneth
-	grid, and the differentials measure how far \(E\) is from being the product \(B\times F\). In the early 1950s Jean-Pierre Serre used
-	it to prove that the homotopy groups of spheres are finitely generated, and that almost all of them are finite.
+	grid, and the differentials measure how far \(E\) is from being the product \(B\times F\). Jean-Pierre Serre built it in his 1951
+	thesis and used it to prove that the homotopy groups of spheres are finitely generated <Cite k="serre1951" />; two years later he
+	showed that almost all of them are finite <Cite k="serre1953" />.
 </p>
 
 <Warning title="Over the integers, the last page is not quite the answer">
@@ -767,11 +780,13 @@
 
 <History title="A topologist in a prison camp">
 	<p>
-		Jean Leray was a prisoner of war from 1940 to 1945. According to his MacTutor biography, “Not wishing the Germans to know that he was
-		an expert in hydrodynamics, since he feared that if they found out he would be forced to undertake war work for them, Leray claimed
-		to be a topologist.” He organised a university in the camp, taught algebraic topology, and emerged in 1945 with sheaves, sheaf
-		cohomology and spectral sequences, published in 1946. Jean-Louis Koszul gave them their algebraic form in 1947, using a filtered
-		complex as Henri Cartan suggested, and Serre’s 1951 thesis showed what they could do.
+		Jean Leray spent 1940 to 1945 as a prisoner of war in Oflag XVII-A, an officers’ camp in Austria. According to his MacTutor
+		biography, “Not wishing the Germans to know that he was an expert in hydrodynamics, since he feared that if they found out he
+		would be forced to undertake war work for them, Leray claimed to be a topologist” <Cite k="oconnor-robertson-leray" />. The
+		prisoners ran a “university in captivity”, with Leray as its rector; he taught algebraic topology there and came home with the
+		ideas of sheaves, sheaf cohomology and spectral sequences, published in 1946 <Cite k="miller2000" />. Jean-Louis Koszul gave
+		spectral sequences their algebraic form in 1947, using a filtered complex as Henri Cartan suggested, and Serre’s 1951 thesis
+		showed what they could do <Cite k="weibel1999" />.
 	</p>
 </History>
 
@@ -781,7 +796,7 @@
 	This book has met several homology theories: simplicial homology of simplicial complexes, singular homology of all spaces, cellular
 	homology of cell complexes, and (in <Ref to="cohomology/sheaves" />) Čech cohomology. Why do they agree whenever they can be compared?
 	In 1945 Samuel Eilenberg and Norman Steenrod answered: because they all satisfy the same short list of properties, and those
-	properties alone determine homology. Notice that the list is phrased entirely in the language of <Ref to="big-picture/categories" />:
+	properties alone determine homology <Cite k="eilenberg-steenrod1945" />. Notice that the list is phrased entirely in the language of <Ref to="big-picture/categories" />:
 	functors, natural transformations, exactness.
 </p>
 
@@ -813,7 +828,8 @@
 <p>
 	Each axiom is a theorem you have seen for singular homology: homotopy invariance (<Ref to="homology/invariance" />), the long exact
 	sequence of a pair and excision (<Ref to="homology/exact-sequences" />), the homology of a point (<Ref to="homology/homology-groups" />),
-	and additivity, which for finitely many pieces is automatic and was added for infinite unions by John Milnor in 1962. What is new is
+	and additivity, which for finitely many pieces follows from the others and was added for infinite unions by John Milnor in 1962
+	<Cite k="milnor1962" />. What is new is
 	the claim that nothing else is needed. The figure computes the homology of every sphere using only the five axioms.
 </p>
 
@@ -840,7 +856,8 @@
 	\((D^n, S^{n-1})\), whose homology the axioms pin down; the long exact sequence and the five lemma (a cousin of the snake lemma) carry
 	the isomorphism from one stage of the construction to the next. In fact the argument shows more: any theory satisfying the axioms can
 	be computed by the cellular chain complex. So simplicial, singular and cellular homology agree on complexes — they all satisfy the
-	axioms with coefficient group \(\Z\).
+	axioms with coefficient group \(\Z\). Hatcher states the uniqueness theorem in his §2.3 and proves it, for all CW pairs, in
+	Chapter 4 <Cite k="hatcher2002" loc="§2.3, Thm 4.59" />.
 </p>
 
 <KeyIdea>
@@ -864,11 +881,13 @@
 
 <History title="From the axioms to the book">
 	<p>
-		Eilenberg and Steenrod announced their axioms in a short note, “Axiomatic approach to homology theory”, in the Proceedings of
-		the National Academy of Sciences in 1945, and developed them in <em>Foundations of Algebraic Topology</em> (1952). The note pointed
-		out at once that singular and Čech homology both satisfy the axioms, and so must agree on all finite complexes. Weibel’s history of
-		the subject records that the generalized theories that came later “are characterized by the Eilenberg–Steenrod axioms with the
-		dimension axiom replaced by Milnor’s wedge axiom”.
+		Eilenberg and Steenrod announced their axioms in a four-page note in the Proceedings of the National Academy of Sciences in 1945,
+		and developed them into <em>Foundations of Algebraic Topology</em> (1952) <Cite k="eilenberg-steenrod1952" />. The note pointed
+		out at once that singular and Čech homology both satisfy the axioms, and so must agree on all finite complexes <Cite
+			k="weibel1999"
+		/>. The dimension axiom went in because every homology theory then known obeyed it; within a few years topologists were studying
+		<em>bordism</em>, whose groups of a point are nonzero in infinitely many dimensions <Cite k="hatcher2002" loc="§2.3" />. The
+		generalized theories of today keep the other axioms and add Milnor’s axiom for infinite unions in place of the dimension axiom.
 	</p>
 </History>
 
