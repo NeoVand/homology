@@ -19,6 +19,11 @@
 	let note = $state('');
 	let draw = $state(1); // 0 → 1 while the composite arrow draws itself
 	let cancel: (() => void) | null = null;
+	// On a narrow plate the drawing is scaled down; scale the labels up (k ≥ 1)
+	// so that they stay readable (k ≈ 1.6 on a phone).
+	let width = $state(660);
+	const k = $derived(Math.min(1.7, Math.max(1, 560 / (width || 660))));
+	const ko = $derived(Math.min(k, 1.3)); // object names live inside fixed discs
 
 	const objById = $derived(new Map(cat.objects.map((o) => [o.id, o])));
 	const rank = { comp: 0, id: 1, gen: 2 } as const;
@@ -28,8 +33,13 @@
 	function geom(a: CatArrow) {
 		const s = objById.get(a.src)!;
 		const t = objById.get(a.tgt)!;
-		if (a.src === a.tgt) return loop([s.x, s.y], a.bend ?? -Math.PI / 2, a.loopR ?? 16, 0.55, presetId === 'rotations' ? 26 : 19);
-		return arrow([s.x, s.y], [t.x, t.y], a.bend ?? 0, 24, 26, 15);
+		if (a.src === a.tgt) {
+			const g = loop([s.x, s.y], a.bend ?? -Math.PI / 2, a.loopR ?? 16, 0.55, presetId === 'rotations' ? 26 : 19);
+			const ang = a.bend ?? -Math.PI / 2;
+			const push = (k - 1) * 12; // a larger label sits a little further out
+			return { ...g, label: [g.label[0] + push * Math.cos(ang), g.label[1] + push * Math.sin(ang)] as [number, number] };
+		}
+		return arrow([s.x, s.y], [t.x, t.y], a.bend ?? 0, 24, 26, 15 * Math.min(k, 1.45));
 	}
 
 	function fold(p: string[]): string | null {
@@ -129,16 +139,22 @@
 	});
 
 	const selIndex = (id: string) => path.indexOf(id);
-	const viewBoxes: Record<PresetId, string> = {
-		path: '0 18 660 262',
-		divisors: '0 22 660 368',
-		rotations: '0 52 660 316'
+	const viewBoxes: Record<PresetId, [number, number, number, number]> = {
+		path: [0, 18, 660, 262],
+		divisors: [0, 22, 660, 368],
+		rotations: [0, 52, 660, 316]
 	};
+	// room for the larger labels on a narrow plate
+	const viewBox = $derived.by(() => {
+		const [x, y, w, h] = viewBoxes[presetId];
+		const pad = (k - 1) * 22;
+		return `${x} ${y - pad} ${w} ${h + 2 * pad}`;
+	});
 	const rotAngle = $derived(presetId === 'rotations' && result ? Number(result.slice(1)) * 120 : presetId === 'rotations' && path.length === 1 ? Number(path[0].slice(1)) * 120 : 0);
 </script>
 
-<div class="explorer">
-	<Svg viewBox={viewBoxes[presetId]} maxHeight={430} label="A small category drawn as dots and arrows; click arrows to compose them">
+<div class="explorer" bind:clientWidth={width}>
+	<Svg {viewBox} maxHeight={430} label="A small category drawn as dots and arrows; click arrows to compose them">
 		<!-- faint backdrop -->
 		<defs>
 			<radialGradient id="ce-node" cx="40%" cy="35%" r="70%">
@@ -170,7 +186,7 @@
 					<path d={g.d} class="comet" pathLength="1" stroke-dasharray="0.12 1" stroke-dashoffset={-(draw * 0.9)} />
 				{/if}
 				{#if !hidden || isResult}
-					<SvgTeX x={g.label[0]} y={g.label[1]} tex={a.tex} size={a.kind === 'id' ? 12 : 15} color={isResult ? 'var(--gold-bright)' : k >= 0 ? 'var(--violet)' : a.kind === 'id' ? 'var(--ink-faint)' : a.kind === 'comp' ? 'var(--blue)' : 'var(--ink)'} w={110} h={26} />
+					<SvgTeX x={g.label[0]} y={g.label[1]} tex={a.tex} size={(a.kind === 'id' ? 12 : 15) * k} color={isResult ? 'var(--gold-bright)' : k >= 0 ? 'var(--violet)' : a.kind === 'id' ? 'var(--ink-faint)' : a.kind === 'comp' ? 'var(--blue)' : 'var(--ink)'} w={110 * k} h={26 * k} />
 				{/if}
 				{#if k >= 0}
 					<g transform="translate({g.mid[0]} {g.mid[1]})">

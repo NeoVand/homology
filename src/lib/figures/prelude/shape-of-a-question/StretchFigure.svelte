@@ -12,6 +12,7 @@
 	import { tex } from '$lib/katex/render';
 	import { PauseIcon, PlayIcon } from '$lib/icons';
 	import type * as THREE_NS from 'three';
+	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 
 	const AMOUNT = 0.55;
 	let kneading = $state(true);
@@ -21,7 +22,10 @@
 		api?.wake();
 	});
 
-	function setup({ THREE, scene, label, onFrame, canvas, controls, pick, reducedMotion }: SceneContext) {
+	function setup(ctx: SceneContext) {
+		const { THREE, scene, label, onFrame, canvas, controls, pick, reducedMotion } = ctx;
+		// on narrow canvases pull the camera back so both shapes and their labels stay in frame
+		const unfit = fitCamera(ctx, 1.9, 0.7);
 		const s = glassMesh(surfaceGeometry(sphere(1.35), 96, 64), { opacity: 0.9, grid: [36, 18], gridStrength: 0.2, hue: 0.05, wobble: true });
 		const t = glassMesh(surfaceGeometry(torus(1.35, 0.55), 128, 56), { opacity: 0.9, grid: [48, 18], gridStrength: 0.2, hue: 0.55, wobble: true });
 		s.position.set(-2.35, 0, 0);
@@ -114,6 +118,7 @@
 
 		return {
 			dispose() {
+				unfit();
 				off?.();
 				api = null;
 				canvas.removeEventListener('pointerdown', onDown, { capture: true });

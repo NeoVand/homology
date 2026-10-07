@@ -8,11 +8,15 @@
 	import { glassMesh, glowTube, disposeTree, faceMaterial } from '$lib/three/materials';
 	import { sphere, torus, surfaceGeometry, SurfaceCurve } from '$lib/three/surfaces';
 	import * as THREE from 'three';
+	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 
 	let pull = $state(0);
 	let api: { set(p: number): void } | null = null;
 
-	function setup({ scene, label, invalidate }: SceneContext) {
+	function setup(ctx: SceneContext) {
+		const { scene, label, invalidate } = ctx;
+		// on narrow canvases pull the camera back so both shapes stay in frame
+		const unfit = fitCamera(ctx, 1.9, 0.7);
 		const R = 1.3;
 		const sf = sphere(R);
 		const sGroup = new THREE.Group();
@@ -87,7 +91,12 @@
 		};
 		set(pull);
 		api = { set };
-		return { dispose: () => (api = null) };
+		return {
+			dispose: () => {
+				unfit();
+				api = null;
+			}
+		};
 	}
 
 	$effect(() => {

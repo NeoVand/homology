@@ -7,6 +7,14 @@
 	import { glassMesh, glowPoint, glowTube, setGlowColor, dotTexture, shaderColor } from '$lib/three/materials';
 	import { sphere, torus, surfaceGeometry, SurfaceCurve, loopPath } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
+	import { isNarrow } from '$lib/figures/homology/invariance/three-fit';
+	import { onMount } from 'svelte';
+
+	// on phones the four shapes sit in a 2 × 2 grid instead of one row
+	let narrow = $state(false);
+	onMount(() => {
+		narrow = isNarrow();
+	});
 
 	type Mode = 'b0' | 'b1' | 'b2';
 	let mode = $state<Mode>('b1');
@@ -21,16 +29,17 @@
 	let api: { set(m: Mode): void } | null = null;
 
 	function setup({ THREE, scene, label, invalidate }: SceneContext) {
-		const X = [-5.1, -1.75, 1.7, 5.15];
+		const X = narrow ? [-1.6, 1.6, -1.6, 1.6] : [-5.1, -1.75, 1.7, 5.15];
+		const Y = narrow ? [2.85, 2.85, -1.35, -1.35] : [0, 0, 0, 0];
 
 		// point
-		const pt = glowPoint([X[0], 0, 0], { color: 'ivory', size: 0.09, halo: 8 });
+		const pt = glowPoint([X[0], Y[0], 0], { color: 'ivory', size: 0.09, halo: 8 });
 		scene.add(pt);
 
 		// circle
 		const circleCurve = new THREE.EllipseCurve(0, 0, 1.15, 1.15, 0, Math.PI * 2, false, 0);
 		const c3 = new THREE.CatmullRomCurve3(
-			circleCurve.getPoints(96).map((p) => new THREE.Vector3(X[1] + p.x, p.y * 0.42, p.y * 0.9)),
+			circleCurve.getPoints(96).map((p) => new THREE.Vector3(X[1] + p.x, Y[1] + p.y * 0.42, p.y * 0.9)),
 			true
 		);
 		const circle = glowTube(c3, { color: 'blue', radius: 0.035, closed: true, segments: 160, intensity: 0.8 });
@@ -38,20 +47,20 @@
 
 		// sphere
 		const sph = glassMesh(surfaceGeometry(sphere(1.2), 96, 64), { opacity: 0.78, grid: [28, 14], gridStrength: 0.18 });
-		sph.position.set(X[2], 0, 0);
+		sph.position.set(X[2], Y[2], 0);
 		scene.add(sph);
 		const sphGlow = new THREE.Sprite(
 			new THREE.SpriteMaterial({ map: dotTexture(), color: 0xf28db6, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0 })
 		);
 		sphGlow.scale.set(2.6, 2.6, 1);
-		sphGlow.position.set(X[2], 0, 0);
+		sphGlow.position.set(X[2], Y[2], 0);
 		scene.add(sphGlow);
 
 		// torus with its two loops and an inner glow for its cavity
 		const tf = torus(1.05, 0.42);
 		const tor = glassMesh(surfaceGeometry(tf, 140, 60), { opacity: 0.8, grid: [40, 16], gridStrength: 0.18, hue: 0.5 });
 		const torGroup = new THREE.Group();
-		torGroup.position.set(X[3], 0, 0);
+		torGroup.position.set(X[3], Y[3], 0);
 		torGroup.rotation.x = 1.05;
 		torGroup.add(tor);
 		const longi = glowTube(new SurfaceCurve(tf, loopPath(1, 0, 0, 0.25), 0.02), { color: 'gold', radius: 0.03, closed: true, segments: 220 });
@@ -65,8 +74,8 @@
 		scene.add(torGroup);
 
 		// labels: name + Betti numbers
-		const nameLabels = shapes.map((s, i) => label([X[i], -1.95, 0], s.name, { className: 'tag small' }));
-		const bettiLabels: LabelHandle[] = shapes.map((s, i) => label([X[i], -2.55, 0], '', { className: 'small' }));
+		const nameLabels = shapes.map((s, i) => label([X[i], Y[i] - 1.95, 0], s.name, { className: 'tag small' }));
+		const bettiLabels: LabelHandle[] = shapes.map((s, i) => label([X[i], Y[i] - 2.55, 0], '', { className: 'small' }));
 
 		const set = (m: Mode) => {
 			const k = m === 'b0' ? 0 : m === 'b1' ? 1 : 2;
@@ -115,8 +124,8 @@
 
 <Scene3D
 	{setup}
-	height={360}
-	camera={{ position: [0, 0.5, 10.6], fov: 36 }}
+	height={narrow ? 520 : 360}
+	camera={narrow ? { position: [0, 0.5, 14], fov: 36 } : { position: [0, 0.5, 10.6], fov: 36 }}
 	controls={false}
 	label="A point, a circle, a sphere and a torus, with their holes of each dimension highlighted"
 />
