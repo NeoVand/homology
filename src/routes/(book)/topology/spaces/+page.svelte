@@ -83,15 +83,15 @@
 <p class="lead">
 	The Prelude told the old joke that a topologist is someone who cannot tell a coffee cup from a doughnut. Behind the joke sits
 	a real question. In what sense are a cup and a doughnut “the same”? And if they are, how could we ever <em>prove</em> that two shapes are
-	<em>different</em>? This chapter builds the language that makes both questions precise.
+	<em>different</em>?
 </p>
 
 <p>
-	In <Ref to="prelude/shape-of-a-question" /> we met the idea informally: topology studies the properties of a shape that survive
-	stretching, bending and squeezing, but not tearing or gluing. That slogan is a good start, but it is not yet mathematics. What,
-	exactly, is a “shape”? What does it mean to stretch one without tearing it? Over the next pages we will answer both questions
-	with two short definitions — <em>topological space</em> and <em>continuous map</em> — and we will get there by small steps,
-	starting from something everyone already understands: distance.
+	<Ref to="prelude/shape-of-a-question" /> gave a slogan: topology studies the properties of a shape that survive stretching,
+	bending and squeezing, but not tearing or gluing. A slogan is not yet mathematics. To use it we need to say what a “shape” is
+	and what it means to stretch one without tearing it. Two short definitions will do both — <em>topological space</em> and
+	<em>continuous map</em> — and we will reach them by small steps, starting from something everyone already understands:
+	distance.
 </p>
 
 <Ahead>
@@ -416,7 +416,7 @@
 </ul>
 <p>
 	This “observable properties” picture comes from computer science, where topology describes what a program can find out in
-	finite time <Cite k="vickers1989" />. It is worth keeping alongside the wiggle-room picture: both will help later.
+	finite time <Cite k="vickers1989" />. Keep it alongside the wiggle-room picture; both will help later.
 </p>
 
 <h3>Examples, from blurry to sharp</h3>
@@ -626,6 +626,12 @@
 
 <h2 id="homeomorphism">Homeomorphisms: the same space, up to stretching</h2>
 
+<p>
+	Film yourself stretching a rubber sheet, then play the film backwards: you see another perfectly good stretching, which puts
+	every point back where it started. The wrapping of the line around the circle has no such reverse film: each point of the
+	circle would have to go back to infinitely many places at once. Reversibility is exactly what “same shape” needs.
+</p>
+
 <Definition title="Homeomorphism" id="def-homeomorphism">
 	<p>
 		A <dfn>homeomorphism</dfn> between spaces \(X\) and \(Y\) is a <Term t="bijective">bijection</Term> \(f \colon X \to Y\) such
@@ -724,8 +730,8 @@
 	The clever idea is the <dfn>topological invariant</dfn>: a property of spaces (or a number computed from them) that
 	homeomorphic spaces always share. If \(X\) has the property and \(Y\) does not, then \(X\) and \(Y\) cannot be homeomorphic. This
 	is the <Term t="contrapositive">contrapositive</Term> at work, as in <Ref to="prelude/reading-math" />: “homeomorphic ⇒ same
-	invariant” is equivalent to “different invariant ⇒ not homeomorphic”. Here are the first few invariants. Each comes with a
-	precise definition and a picture.
+	invariant” is equivalent to “different invariant ⇒ not homeomorphic”. Here are the first few invariants. Keep a scorecard as
+	you read: at the end of the chapter we will set all of them on a sphere and a torus, and see which can tell the two apart.
 </p>
 
 <h3>Connectedness</h3>
@@ -886,11 +892,7 @@
 </p>
 <p>
 	The difference is a hole. On the torus there is a loop — the gold loop of Figure 2.1.7 — that cannot be shrunk away or
-	pulled free, because it goes around the hole. On the sphere every loop can be shrunk to a point. Turning this observation
-	into a rigorous, computable invariant is what the rest of this book is about. In <Ref to="topology/gluing" /> we will learn
-	to build tori, spheres and stranger surfaces from simple pieces; in <Ref to="topology/homotopy" /> we will make
-	“shrinking a loop” precise; and in Part III, homology will count holes of every dimension, with numbers that no homeomorphism
-	can change.
+	pulled free, because it goes around the hole. On the sphere every loop can be shrunk to a point.
 </p>
 <p>
 	Here is a way to hunt for holes with nothing but this chapter’s tools. We cannot list all spaces, but we can map simple shapes into
@@ -898,8 +900,14 @@
 	can be joined. A map from a circle is a loop. And a map from the edge of a triangle asks the sharpest question: does it extend to
 	the whole triangle? Can the loop be filled in? In the plane every such loop can be filled; on the torus the gold loop of
 	Figure 2.1.7 cannot. David Farrell’s video series <em>You Could Have Invented Homology</em> builds up to exactly this test, drawing
-	a triangle’s three-coloured edge in the plane and wrapped around a cylinder <Cite k="farrell2021" />. Part III turns the test into
-	homology.
+	a triangle’s three-coloured edge in the plane and wrapped around a cylinder <Cite k="farrell2021" />.
+</p>
+<p>
+	Turning the test into a rigorous, computable invariant is what the rest of this book is about. In <Ref to="topology/gluing" /> we
+	will learn to build tori, spheres and stranger surfaces from simple pieces; in <Ref to="topology/homotopy" /> we will make
+	“shrinking a loop” precise. In Part III, homology will relax the test a little, accepting any surface whose only edge is the loop
+	rather than insisting on a filled triangle (<Ref to="homology/invariance" /> shows a loop that passes the relaxed test and fails
+	the strict one), and it will count holes of every dimension, with numbers that no homeomorphism can change.
 </p>
 
 <KeyIdea>

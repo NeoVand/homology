@@ -135,19 +135,19 @@
 </p>
 
 <p>
-	This chapter answers all three questions: exactly a quarter of all boards can be solved; every solvable board has exactly four
-	solutions; and a board is solvable precisely when it passes two simple parity tests. It does so with a single tool,
-	<strong>linear algebra</strong>, the mathematics of things that can be added together and scaled. Engineers, statisticians and
-	physicists use it every day, and for this book it is the engine room: almost every computation in homology is a computation in
-	linear algebra.
+	The answers turn out to be startlingly crisp. Exactly a quarter of all boards can be solved. Every solvable board has exactly
+	four solutions. And two parity tests, each checkable in ten seconds, tell the solvable boards from the rest. All three answers
+	come from one tool, <strong>linear algebra</strong>, the mathematics of things that can be added together and scaled. Engineers,
+	statisticians and physicists use it every day, and for this book it is the engine room: almost every computation in homology is
+	a computation in linear algebra.
 </p>
 
 <p>
 	Kaplansky was owning up for himself and his friend Paul Halmos, whose 1942 book <em>Finite-Dimensional Vector Spaces</em> is the
 	classic of the coordinate-free style <Cite k="kaplansky1991" loc="p. 88" />. The confession describes the two halves of the
 	subject. One half is pictures and ideas: arrows, grids, shadows, things crushed and things reached. The other half is tables of
-	numbers, pushed around by rules until they give up their secrets. This chapter does both, in that order: every idea comes with a
-	picture, and then we close the door and compute.
+	numbers, pushed around by rules until they give up their secrets. Each idea below gets its picture first; then we close the
+	office door and compute.
 </p>
 
 <Ahead>
@@ -169,8 +169,8 @@
 <h2 id="vectors">Vectors: arrows, lists and switches</h2>
 
 <p>
-	The word <em>vector</em> has three everyday meanings in mathematics. They look different, and the first job of this chapter is to
-	convince you that they are one idea.
+	The word <em>vector</em> has three everyday meanings in mathematics: an arrow, a list of numbers and, less obviously, a row of
+	switches. They look different, and the first job of this chapter is to convince you that they are one idea.
 </p>
 
 <p>
@@ -264,8 +264,8 @@
 
 <p>
 	Read slowly, the definition says only this: you can add vectors and scale them, and none of the usual algebra goes wrong.
-	\(\R^n\) is a vector space over \(\R\), and \(\Q^n\), lists of fractions, is one over \(\Q\). A non-example is worth meeting early:
-	the grid points \(\Z^2\), pairs of integers, can be added and form an abelian group (the
+	\(\R^n\) is a vector space over \(\R\), and \(\Q^n\), lists of fractions, is one over \(\Q\). Meet one non-example now, because it
+	will matter later: the grid points \(\Z^2\), pairs of integers, can be added and form an abelian group (the
 	<Term t="free-abelian-group">free abelian group</Term> of <Ref to="foundations/abelian-groups" />), but scaling by \(\tfrac12\)
 	knocks \((1, 0)\) off the grid. So \(\Z^2\) is not a vector space over \(\Q\) or \(\R\).
 </p>
@@ -443,8 +443,9 @@
 <h2 id="linear-maps">Linear maps: transformations that keep the grid</h2>
 
 <p>
-	Now that we have vector spaces, we want the functions between them that respect their structure. Picture the plane covered by a
-	square grid, and imagine moving every point of the plane somewhere else. Most ways of doing this crumple the grid. The
+	A vector space on its own just sits there. The action is in the functions between spaces, and the ones that matter here are
+	those that respect adding and scaling. Picture the plane covered by a square grid, and imagine moving every point of the plane
+	somewhere else. Most ways of doing this crumple the grid. The
 	<em>linear</em> ones keep it a grid: lines stay straight, parallel lines stay parallel, evenly spaced lines stay evenly spaced, and
 	the origin stays where it is. Such a map may rotate, stretch, shear, reflect or even flatten the plane, but it never bends anything.
 </p>
@@ -497,8 +498,8 @@
 	For example,
 	\[ \begin{aligned} \begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}\begin{pmatrix} 3 \\ -1 \end{pmatrix} &= 3\begin{pmatrix} 1 \\ 2 \end{pmatrix} - 1\begin{pmatrix} 2 \\ 4 \end{pmatrix} \\ &= \begin{pmatrix} 1 \\ 2 \end{pmatrix}. \end{aligned} \]
 	The same answer comes out row by row: entry \(i\) of \(A\mathbf x\) is \(a_{i1}x_1 + \dots + a_{in}x_n\), the
-	<em>dot product</em> of row \(i\) with \(\mathbf x\). Here \(1\cdot 3 + 2\cdot(-1) = 1\) and \(2 \cdot 3 + 4\cdot(-1) = 2\). Both
-	ways of computing are worth knowing, but the column way is the one that explains things.
+	<em>dot product</em> of row \(i\) with \(\mathbf x\). Here \(1\cdot 3 + 2\cdot(-1) = 1\) and \(2 \cdot 3 + 4\cdot(-1) = 2\). The
+	row way is how most people compute by hand; the column way is the one that explains things.
 </p>
 
 <Example title="A small zoo of maps of the plane">
@@ -553,6 +554,20 @@
 	\[ RS = \begin{pmatrix} 0 & -1 \\ 1 & 1 \end{pmatrix} \neq \begin{pmatrix} 1 & -1 \\ 1 & 0 \end{pmatrix} = SR: \]
 	shearing and then rotating is not the same as rotating and then shearing. The matrix that does nothing, with 1s down the diagonal and
 	0s elsewhere, is the <dfn>identity matrix</dfn> \(I\).
+</p>
+
+<h3>Same dimension, same space</h3>
+
+<p>
+	A linear map that is also a bijection is called an <dfn>isomorphism</dfn>. It pairs off the vectors of two spaces one for one and
+	respects adding and scaling, so the two spaces are really one space with its vectors renamed. Coordinates hand us an isomorphism
+	for free. If \(\mathbf v_1, \dots, \mathbf v_n\) is a basis of a space \(V\) over a field \(F\), the map
+	\(F^n \to V\), \((a_1, \dots, a_n) \mapsto a_1\mathbf v_1 + \dots + a_n\mathbf v_n\), is linear, and it is a bijection because
+	every vector has exactly one list of coordinates. So <strong>every vector space of dimension \(n\) is a copy of \(F^n\)</strong>.
+	Two spaces over the same field are isomorphic exactly when they have the same dimension (an isomorphism carries a basis to a
+	basis, so it cannot change the count). The polynomials \(a + bx\), the pairs \((a, b)\) and the arrows in the plane are one space
+	in three costumes. For homology this is excellent news: over a field, each homology group will be pinned down completely by a
+	single number, its dimension (<Ref to="homology/computing" />).
 </p>
 
 <Remark title="Looking ahead">
@@ -932,7 +947,8 @@
 	squashes each of them to a single point of the floor. Different lines land on different points, and every point of the floor is hit.
 	So the cosets of the kernel correspond exactly to the points of the image:
 	\[ V/\ker A \;\cong\; \im A, \]
-	where \(\cong\) is read “is <Term t="isomorphism">isomorphic</Term> to”: the two are the same vector space in different clothes.
+	where \(\cong\) is read “is <Term t="isomorphism">isomorphic</Term> to”: sending each coset \(\mathbf v + \ker A\) to \(A\mathbf v\) is a
+	linear bijection.
 	This is the <Term t="first-isomorphism-theorem">first isomorphism theorem</Term> of <Ref to="foundations/abelian-groups" />, for
 	vector spaces. Take the dimensions of both sides and you get \(\dim V - \operatorname{nullity} A = \rank A\): rank–nullity again,
 	seen from a new angle.

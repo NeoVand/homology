@@ -74,9 +74,12 @@
 <Epigraph author="David Hilbert" source="as reported by Otto Blumenthal (1935), translated from the German">One must always be able to say, instead of ‘points, straight lines, and planes’, ‘tables, chairs, and beer mugs’.</Epigraph>
 
 <p class="lead">
-	Every object in this book — a triangle, a doughnut, a family of loops, a group of symmetries — is a <em>set</em> with some
-	extra structure, and every way of comparing two objects is a <em>function</em>. This chapter teaches those two words slowly
-	and carefully, with pictures, because every later chapter is written in them.
+	How would you convince someone over the phone that a doughnut has a hole and a ball does not? There is no picture to point at.
+	You have to say what a doughnut <em>is</em> — which points belong to it — and what it would mean to deform one shape into
+	another: where each point goes. Those are the two words of this chapter. A <em>set</em> says what belongs; a <em>function</em>
+	says where everything goes. Every object in this book — a triangle, a doughnut, a family of loops, a group of symmetries — is a
+	set with some extra structure, and every comparison between two objects is a function. The words are easy. Using them with
+	care is what will let us count the holes in shapes that nobody can draw.
 </p>
 
 <Ahead>
@@ -94,8 +97,8 @@
 <h2 id="sets">Sets: collections of things</h2>
 
 <p>
-	A <em>set</em> is a collection of things. The things in it are called its <em>elements</em> (or <em>members</em>). That is
-	really all there is to it — but the word “collection” hides two important decisions, so let us make them explicit:
+	A <em>set</em> is a collection of things, called its <em>elements</em> (or <em>members</em>). That sounds like the whole story,
+	but the word “collection” hides two decisions:
 </p>
 
 <ul>
@@ -211,7 +214,9 @@
 <h3 id="subsets">Subsets</h3>
 
 <p>
-	The most basic relationship between two sets is that one is contained in the other.
+	Shapes sit inside shapes. The rim of a disk is a circle inside the disk; the equator is a circle inside the sphere. The central
+	question of homology will be about exactly this situation: given a loop sitting inside a shape, is it the rim of some piece of
+	that shape? So the first relationship we need between two sets is “inside”.
 </p>
 
 <Definition title="Subset" id="def-subset">
@@ -253,8 +258,11 @@
 <h2 id="operations">Union, intersection, difference, complement</h2>
 
 <p>
-	Just as numbers can be added and multiplied, sets can be combined to make new sets. There are four basic operations. In each
-	definition, read the set-builder notation aloud; the symbols are shorthand for ordinary words.
+	A complicated shape is easier to study in pieces. Cut a circle into two overlapping arcs. The circle is everything that lies in
+	one arc <em>or</em> the other; the overlap, everything in one arc <em>and</em> the other, is two short arcs, one at each end.
+	In <Ref to="homology/exact-sequences" hash="mayer-vietoris" /> we will compute the holes of a shape from exactly this kind of
+	information: the pieces and how they overlap. Cutting and combining are done with four operations on sets. In each definition,
+	read the set-builder notation aloud; the symbols are shorthand for ordinary words.
 </p>
 
 <Definition title="Union, intersection, difference, complement" id="def-set-operations">
@@ -294,7 +302,7 @@
 \[ (A\cup B)^c = A^c\cap B^c, \qquad (A\cap B)^c = A^c\cup B^c. \]
 <p>
 	In words: not being in either set is the same as being outside both; not being in both is the same as being outside at least
-	one. If you have read <Ref to="prelude/reading-math" />, you will recognize these as the rules for negating “or” and “and.”
+	one. If you have read <Ref to="prelude/reading-math" />, you will recognise these as the rules for negating “or” and “and.”
 	That is no coincidence: \(x\in A\cup B\) <em>is</em> the statement “\(x\in A\) or \(x\in B\),” so set operations are logical
 	connectives in disguise.
 </p>
@@ -599,7 +607,7 @@
 <p>
 	Images go forward, from subsets of \(X\) to subsets of \(Y\). Preimages go backward, from subsets of \(Y\) to subsets of \(X\).
 	The notation \(f^{-1}\) suggests an inverse function, but no inverse is needed: as Hammack puts it in <em>Book of Proof</em>,
-	\(f^{-1}(B)\) “has a meaning even if \(f\) is not invertible.” To compute it, you never undo \(f\); you simply go through the
+	\(f^{-1}(B)\) “has a meaning even if \(f\) is not invertible.” To compute it, you never undo \(f\); you go through the
 	elements of \(X\) one at a time and ask each one, “do you land in \(B\)?”
 </p>
 
@@ -777,8 +785,9 @@
 <h2 id="diagrams">Dots and arrows: commutative diagrams</h2>
 
 <p>
-	When several sets and functions are in play at once, mathematicians draw them as a <em>diagram</em>: a dot (or a letter) for
-	each set, an arrow for each function. A path of arrows stands for the composite of its functions.
+	Later chapters juggle many maps at once: a shape, its pieces, the groups that record their holes, and maps between all of them.
+	Keeping track in sentences is hopeless, so mathematicians draw a <em>diagram</em>: a dot (or a letter) for each set, an arrow
+	for each function. A path of arrows stands for the composite of its functions.
 </p>
 
 <Definition title="Commutative diagram" id="def-commutative-diagram">
@@ -798,8 +807,8 @@
 
 <p>
 	“Commutes” here has nothing to do with \(a+b = b+a\). It means “all roads lead to the same place”: start with any element of
-	the top-left set, follow either path, and you arrive at the same element of the bottom-right set. And “any element” is the
-	crucial part.
+	the top-left set, follow either path, and you arrive at the same element of the bottom-right set — whichever element you
+	started with. Two roads that agree for one traveller can still disagree for the next, as the figure shows.
 </p>
 
 <Figure title="All roads lead to the same place" hint="Pick x · change the bottom map · press the gold button" num="1.1.8">
@@ -811,7 +820,7 @@
 </Figure>
 
 <p>
-	It is worth knowing the vocabulary that grows out of these pictures, because you will meet it again. Sets are the
+	These pictures come with a vocabulary that you will meet again. Sets are the
 	<em>objects</em>, functions are the <em>arrows</em>, arrows can be composed when they meet end to end, composition is
 	associative, and every object has an identity arrow. A collection of objects and arrows with these properties is called a
 	<em>category</em>; sets and functions form the most basic one. In <Ref to="big-picture/categories" /> we will make this precise,
