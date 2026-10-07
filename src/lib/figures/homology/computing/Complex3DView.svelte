@@ -75,7 +75,7 @@
 	});
 	const camera = $derived(
 		view === 'klein'
-			? { position: [-0.17, 0.5, 6.1] as [number, number, number], target: [-0.17, -0.2, 0] as [number, number, number] }
+			? { position: [-0.17, 0.7, 6.3] as [number, number, number], target: [-0.17, 0, 0] as [number, number, number] }
 			: view === 'rp2'
 				? { position: [0, 0.6, 4.4] as [number, number, number], target: [0, -0.45, 0] as [number, number, number] }
 				: view === 'mobius'

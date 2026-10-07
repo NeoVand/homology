@@ -95,7 +95,7 @@
 				height={330}
 				animate
 				controls={{ autoRotate: true, autoRotateSpeed: 0.5 }}
-				camera={{ position: [-0.17, 0.6, 6.4], target: [-0.17, -0.2, 0] }}
+				camera={{ position: [-0.17, 0.8, 6.6], target: [-0.17, 0, 0] }}
 				label="A triangulated Klein bottle, immersed in space with a self-intersection, with loops a and b"
 			/>
 			<div class="name ui">Klein bottle <TeX tex="K" /> · non-orientable</div>

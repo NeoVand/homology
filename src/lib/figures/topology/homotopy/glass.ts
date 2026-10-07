@@ -2,12 +2,12 @@
 // cooler inner side, so that holes cut in a surface read as holes and the inside
 // of a tube reads as the inside.
 import * as THREE from 'three';
-import { glassMesh, type IridescentOptions } from '$lib/three/materials';
+import { glassMesh, type GlassOptions } from '$lib/three/materials';
 
 export function glass(
 	geometry: THREE.BufferGeometry,
-	o: IridescentOptions = {},
-	back: { brightness?: number; tint?: IridescentOptions['tint']; tintMix?: number } = {}
+	o: GlassOptions = {},
+	back: { brightness?: number; tint?: GlassOptions['tint']; tintMix?: number } = {}
 ): THREE.Group {
 	const g = glassMesh(geometry, {
 		...o,

@@ -120,8 +120,8 @@ export const rp2Delta: CellComplex = {
 };
 
 /**
- * Klein bottle: one vertex; a: bottom and top, left to right; b: left upward = right downward; c: diagonal (0,0)→(1,1).
- * L = [(0,0),(1,1),(1,0)], ∂L = −a + b + c;  U = [(0,0),(0,1),(1,1)], ∂U = a + b − c.
+ * Klein bottle, with the conventions of §2.2, §3.3 and §3.4: one vertex; a along the bottom (left to right) is
+ * glued to the top reversed; b up both sides; c the diagonal. ∂L = a + b − c, ∂U = c + a − b, so ∂(L + U) = 2a.
  */
 export const kleinDelta: CellComplex = {
 	name: 'Klein bottle',
@@ -129,9 +129,9 @@ export const kleinDelta: CellComplex = {
 	d: {
 		1: [[0, 0, 0]],
 		2: [
-			[-1, 1],
 			[1, 1],
-			[1, -1]
+			[1, -1],
+			[-1, 1]
 		]
 	}
 };

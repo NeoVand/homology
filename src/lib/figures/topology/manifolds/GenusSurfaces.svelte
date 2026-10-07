@@ -128,7 +128,13 @@
 		function buildParam(which: 'rp2' | 'klein'): Built {
 			const f = which === 'rp2' ? boy(1.35) : kleinBottle(0.27);
 			const geo = surfaceGeometry(f, which === 'rp2' ? 160 : 140, which === 'rp2' ? 80 : 72);
-			const gl = glass(geo, { opacity: 0.8, grid: which === 'rp2' ? [36, 10] : [36, 20], gridStrength: 0.32 });
+			// one-sided surfaces: no "inner side" (one colour on both faces, so no dark band where the
+			// side flips), and the Klein bottle shows its neck passing through the body
+			const gl = glass(
+				geo,
+				{ opacity: which === 'klein' ? 0.62 : 0.8, grid: which === 'rp2' ? [36, 10] : [36, 20], gridStrength: 0.32, layers: which === 'klein' ? 'all' : 'nearest' },
+				{ brightness: 1, tintMix: 0 }
+			);
 			const group = new THREE.Group();
 			group.add(gl);
 			if (which === 'klein') group.rotation.z = 0;

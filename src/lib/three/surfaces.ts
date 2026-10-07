@@ -86,8 +86,9 @@ export function kleinBottle(scale = 0.2): SurfaceFn {
 			z = -8 * Math.sin(U);
 		}
 		const y = -2 * (1 - Math.cos(U) / 2) * Math.sin(V);
-		// stand it upright: bottle axis along +y
-		t.set(x * scale, -(z + 2) * scale, y * scale);
+		// stand it upright like a bottle: the wide body below, the neck rising and
+		// curving back down into it (the pose of the bottle in NeoVand/swarm3d)
+		t.set(x * scale, (z + 1) * scale, y * scale);
 	};
 }
 

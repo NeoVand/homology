@@ -607,9 +607,9 @@
 <h3>The Klein bottle</h3>
 <p>
 	The Klein bottle \(K\) — a square with one pair of sides glued straight and the other with a flip — has
-	\(H_0 = \Z\), \(H_1 = \Z \oplus \Z/2\), \(H_2 = 0\) (<Ref to="homology/computing" />). The same computation as for the torus, with the
-	twisted boundary formulas \(\partial L = -a + b + c\) and \(\partial U = a + b - c\), gives cocycles with \(\varphi(b) = 0\) and
-	\(\varphi(c) = \varphi(a)\):
+	\(H_0 = \Z\), \(H_1 = \Z \oplus \Z/2\), \(H_2 = 0\) (<Ref to="homology/computing" hash="six-cells" />). The same computation as for the
+	torus, with the twisted boundary formulas \(\partial L = a + b - c\) and \(\partial U = c + a - b\) of that section, gives cocycles with
+	\(\varphi(a) = 0\) and \(\varphi(c) = \varphi(b)\):
 </p>
 \[ H^0(K;\Z) \cong \Z, \qquad H^1(K;\Z) \cong \Z, \qquad H^2(K;\Z) \cong \Z/2. \]
 <p>
@@ -748,15 +748,15 @@
 
 <Exercise level={2} title="The Klein bottle by hand">
 	<p>
-		Using \(\partial L = -a + b + c\) and \(\partial U = a + b - c\) (one vertex, so \(\delta_0 = 0\)), find all integer 1-cocycles of the
-		Klein bottle and show \(H^1(K;\Z) \cong \Z\). Explain why every integer cocycle vanishes on \(b\), using \(\partial(L + U)\).
+		Using \(\partial L = a + b - c\) and \(\partial U = c + a - b\) (one vertex, so \(\delta_0 = 0\)), find all integer 1-cocycles of the
+		Klein bottle and show \(H^1(K;\Z) \cong \Z\). Explain why every integer cocycle vanishes on \(a\), using \(\partial(L + U)\).
 	</p>
 	{#snippet solution()}
 		<p>
-			The cocycle conditions are \(-x + y + z = 0\) and \(x + y - z = 0\) for \((x, y, z) = (\varphi(a), \varphi(b), \varphi(c))\). Adding gives
-			\(2y = 0\), so \(y = 0\), and then \(z = x\): the cocycles are the multiples of \((1, 0, 1)\), and since \(B^1 = 0\),
-			\(H^1 \cong \Z\). Directly: \(\partial(L + U) = 2b\), so for a cocycle \(2\varphi(b) = \varphi(\partial(L + U)) = (\delta\varphi)(L + U) = 0\),
-			and in \(\Z\) that forces \(\varphi(b) = 0\). The loop \(b\) has order 2 in homology; integer measurements cannot see it.
+			The cocycle conditions are \(x + y - z = 0\) and \(x - y + z = 0\) for \((x, y, z) = (\varphi(a), \varphi(b), \varphi(c))\). Adding gives
+			\(2x = 0\), so \(x = 0\), and then \(z = y\): the cocycles are the multiples of \((0, 1, 1)\), and since \(B^1 = 0\),
+			\(H^1 \cong \Z\). Directly: \(\partial(L + U) = 2a\), so for a cocycle \(2\varphi(a) = \varphi(\partial(L + U)) = (\delta\varphi)(L + U) = 0\),
+			and in \(\Z\) that forces \(\varphi(a) = 0\). The loop \(a\) has order 2 in homology; integer measurements cannot see it.
 		</p>
 	{/snippet}
 </Exercise>

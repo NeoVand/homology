@@ -162,10 +162,10 @@ describe('the Klein bottle Δ-complex', () => {
 		expect(names(cellCohomology(kleinDelta, 'Z2'), 'Z2')).toEqual(['ℤ/2', '(ℤ/2)²', 'ℤ/2']);
 		expect(names(cellCohomology(kleinDelta, 'Q'), 'Q')).toEqual(['ℚ', 'ℚ', '0']);
 	});
-	it('the integer cocycles are the multiples of (1, 0, 1)', () => {
+	it('the integer cocycles are the multiples of (0, 1, 1)', () => {
 		const d1 = cobd(kleinDelta, 1);
-		expect(apply(d1, [1, 0, 1])).toEqual([0, 0]);
-		expect(apply(d1, [0, 1, 0])).toEqual([1, 1]);
+		expect(apply(d1, [0, 1, 1])).toEqual([0, 0]);
+		expect(apply(d1, [1, 0, 0])).toEqual([1, 1]);
 	});
 });
 
