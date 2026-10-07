@@ -1,9 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { authorLabel, bibliography, citedKeys, shortCite, workLink } from './index';
+import { authorLabel, bibliography, citedKeys, conflicts, shortCite, workLink } from './index';
 
 const pages = import.meta.glob<string>('/src/routes/**/+page.svelte', { query: '?raw', import: 'default', eager: true });
 
 describe('the bibliography', () => {
+	it('defines each key once', () => {
+		expect(conflicts).toEqual([]);
+	});
+
 	it('has well-formed entries', () => {
 		expect(bibliography.size).toBeGreaterThan(30);
 		for (const w of bibliography.values()) {

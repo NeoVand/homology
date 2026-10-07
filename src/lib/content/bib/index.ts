@@ -29,17 +29,23 @@ export interface Work {
 
 const modules = import.meta.glob<{ works: Work[] }>('./entries/*.ts', { eager: true });
 
+/** keys defined more than once, differently (the tests require this to be empty) */
+export const conflicts: string[] = [];
+
 function merge(): Map<string, Work> {
 	const map = new Map<string, Work>();
 	for (const [file, mod] of Object.entries(modules)) {
 		for (const w of mod.works) {
 			const prev = map.get(w.key);
 			if (prev && JSON.stringify(prev) !== JSON.stringify(w)) {
-				throw new Error(`[bib] "${w.key}" is defined twice, differently (second time in ${file})`);
+				// keep the fuller entry rather than break every page while files are edited
+				conflicts.push(`${w.key} (again in ${file})`);
+				if (Object.keys(w).length <= Object.keys(prev).length) continue;
 			}
 			map.set(w.key, w);
 		}
 	}
+	if (conflicts.length) console.warn('[bib] defined twice, differently:', conflicts.join(', '));
 	return map;
 }
 
