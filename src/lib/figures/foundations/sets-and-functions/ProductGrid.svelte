@@ -45,7 +45,7 @@
 		const flipped = String.raw`\((${rowName(j)},\,${colName(i)})\)`;
 		return {
 			main: count,
-			sub: `This dot is the ordered pair ${pair}: first coordinate ${String.raw`\(${colName(i)}\in ${first}\)`}, second ${String.raw`\(${rowName(j)}\in ${second}\)`}. Order matters: ${flipped} is a different pair${swapped ? ', living in A × B instead' : ', living in B × A'}.`
+			sub: `This dot is the ordered pair ${pair}: first coordinate ${String.raw`\(${colName(i)}\in ${first}\)`}, second ${String.raw`\(${rowName(j)}\in ${second}\)`}. Order matters: ${flipped} is a different pair${swapped ? ', living in A\u00a0×\u00a0B instead' : ', living in B\u00a0×\u00a0A'}.`
 		};
 	});
 </script>
