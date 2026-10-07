@@ -31,10 +31,11 @@
 >
 
 <p class="lead">
-	Take a lump of clay and roll it into a ball. Now squash it, stretch it, twist it into a lumpy potato. Has anything
-	about it really changed? Its shape, certainly — but something deeper has stayed exactly the same. Now push your
-	thumb all the way through it, making a ring. <em>That</em> change feels different in kind. This book is about the
-	difference.
+	Take a lump of clay and roll it into a ball. Squash it, stretch it, twist it into a lumpy potato. Its shape has
+	changed completely, and yet in another sense nothing has happened: it is still one lump, and you still cannot see
+	through it. Now push your thumb right through the middle and make a ring. <em>That</em> feels like a different kind
+	of change. No amount of squashing will close the hole again, unless you glue the clay back together. This book is
+	about that difference, and about the century of ideas it took to say precisely what it is.
 </p>
 
 <p>
@@ -141,7 +142,7 @@
 		How many holes does a drinking straw have? One, because you can see straight through it? Two, one at each end? Or
 		zero, because a straw is only a rolled-up sheet of paper, and a sheet has no holes at all? People argue about
 		this in earnest <Cite k="richeson2021" />, and the argument never ends, because the everyday word “hole” is not
-		precise enough to settle it. (Topology’s verdict, by the end of this chapter: one.)
+		precise enough to settle it. Make your guess now: topology delivers a verdict before this section is over.
 	</p>
 </Question>
 
@@ -176,15 +177,6 @@
 	{/snippet}
 </Figure>
 
-<Warning title="Holes are scaffolding, not the definition">
-	<p>
-		The word “hole” is a helpful picture, but it will not survive close inspection unchanged. A surface with \(g\)
-		handles — a doughnut with \(g\) holes — has \(b_1 = 2g\), not \(g\), because each handle carries two independent
-		loops. The precise definition of homology replaces holes with something you can calculate with:
-		<em>cycles that are not boundaries</em>. We will get there step by step.
-	</p>
-</Warning>
-
 <Intuition title="Necklaces and plugs">
 	<p>
 		Daniel Tubbenhauer offers two tests you can do at home <Cite k="tubbenhauer2021" />. For \(b_1\), count the
@@ -201,6 +193,16 @@
 		reasonable shapes sitting in ordinary space.
 	</p>
 </Intuition>
+
+<Warning title="Holes are scaffolding, not the definition">
+	<p>
+		The word “hole” is a helpful picture, but it will not survive close inspection unchanged. The swimming ring has
+		one hole you can point at, yet it takes two necklaces. In the same way, the skin of a doughnut with \(g\) holes has
+		\(b_1 = 2g\), not \(g\), because each handle carries two independent loops. The precise definition of homology
+		replaces holes with something you can calculate with: <em>cycles that are not boundaries</em>. We will get there
+		step by step.
+	</p>
+</Warning>
 
 <h2 id="eulers-clue">Euler’s clue</h2>
 
@@ -231,7 +233,7 @@
 </Figure>
 
 <p>
-	Why should such a crude count be so stable? Here is the key. Suppose you add a new edge across one of the faces,
+	Why should such a crude count be so stable? Try to break it. Suppose you add a new edge across one of the faces,
 	splitting it in two. You have added one edge and one face, so \(V - E + F\) changes by \(0 - 1 + 1 = 0\). Suppose
 	you add a new vertex in the middle of an edge, splitting it in two: one more vertex and one more edge, change
 	\(1 - 1 + 0 = 0\). Refining the picture never changes the answer. So \(V - E + F\) is not really a property of the
@@ -293,8 +295,8 @@
 	Look at the shaded region on the sphere. The band is the edge — mathematicians say the <strong>boundary</strong> —
 	of a piece of the surface, the cap, and as it shrinks it sweeps across that cap. On the sphere, bounding and
 	shrinking go together. The stuck band on the torus bounds no piece of the torus at all. Cut along it with scissors
-	and the torus does not fall apart into an inside and an outside; it opens into a single tube. That second
-	observation, bounding rather than shrinking, is the one that becomes our precise definition of a hole:
+	and the torus does not fall apart into an inside and an outside; it opens into a single tube. Of the two ideas,
+	shrinking and bounding, it is bounding that becomes our precise definition of a hole:
 </p>
 
 <KeyIdea>
@@ -320,9 +322,10 @@
 </Warning>
 
 <p>
-	The rubber-band test is vivid, but it is not yet mathematics: nobody can try every way of sliding a band. The great
-	insight of homology is to replace sliding with <em>bookkeeping</em>. We cut the shape into simple pieces —
-	triangles, say — and record loops and surfaces as lists of pieces. Then the question “is this loop a boundary?”
+	Bounding is the test we will use, but as it stands it is not yet mathematics: nobody can try every piece of
+	surface that a loop might be the edge of. The great insight of homology is to replace searching with
+	<em>bookkeeping</em>. We cut the shape into simple pieces — triangles, say — and record loops and surfaces as
+	lists of pieces. Then the question “is this loop a boundary?”
 	becomes a question about solving equations, which a computer (or a patient human) can always answer.
 </p>
 
@@ -330,13 +333,12 @@
 
 <p>
 	For thirty years after Poincaré, topologists treated Betti numbers as plain numbers, read off from large tables
-	recording which pieces of a shape touch which. Then, in 1925, Emmy Noether — one of the great algebraists of the
-	century — pointed out, in her Göttingen lectures and in a report fourteen lines long, that the loops and surfaces
-	they were counting naturally form <em>groups</em>: you can add two loops (travel one and then the other) and
-	subtract them (travel one backwards), and the numbers they had been computing were measurements of these groups.
-	It sounds like a change of vocabulary. But the young Heinz Hopf, visiting Göttingen that year, saw how useful it
-	was, and the word spread fast <Cite k="weibel1999" />: once holes form groups, the whole of algebra can be brought
-	to bear on shape.
+	that record which pieces of a shape touch which. Then, in 1925, Emmy Noether, one of the great algebraists of the
+	century, made an observation in her Göttingen lectures and in a report fourteen lines long. The loops and surfaces
+	being counted are not a loose heap: they form <em>groups</em>. You can add two loops (travel one, then the other)
+	and subtract them (travel one backwards), and the Betti numbers had been measuring these groups all along. It sounds like a change of vocabulary. But the young Heinz Hopf, visiting Göttingen that year, saw how much
+	it bought, and the idea spread fast <Cite k="weibel1999" />: once holes form groups, the whole of algebra can be
+	brought to bear on shape.
 </p>
 
 <p>
@@ -369,15 +371,16 @@
 <h2 id="measuring-instead-of-counting">Measuring instead of counting</h2>
 
 <p>
-	Homology counts holes by looking at loops and surfaces <em>inside</em> a shape. Cohomology looks at the same shape
-	from the opposite direction: instead of collecting pieces, it attaches <em>measurements</em> to them. A measurement
-	might be the change in altitude along each edge of a hiking map, the voltage across each wire of a circuit, the
-	exchange rate between two currencies, or the ratio of depths between neighbouring parts of a drawing.
+	Homology counts holes by collecting loops and surfaces <em>inside</em> a shape. Cohomology looks at the same shape
+	from the opposite direction. Instead of collecting pieces, it writes a <em>measurement</em> on each one: the climb
+	along each trail of a hiking map, the voltage across each wire of a circuit, the exchange rate between two
+	currencies, the ratio of depths where two parts of a drawing meet. Then it asks whether the measurements hang
+	together.
 </p>
 
 <p>
-	Here is the kind of question cohomology answers. Suppose someone hands you the altitude change along every trail
-	segment on a map. Can you recover an altitude for every crossing, consistent with all those changes? Locally, the
+	Take the hiking map. Suppose someone hands you the altitude change along every trail segment, and nothing else.
+	Can you recover an altitude for every crossing, consistent with all those changes? Locally, the
 	answer is always yes: near any one crossing, call its altitude zero and add up the changes as you walk outwards.
 	Globally, the answer can be no.
 </p>
@@ -419,8 +422,8 @@
 <h2 id="why-it-matters">Why it matters</h2>
 
 <p>
-	Counting holes may sound like a game. It is also one of the most useful ideas of twentieth-century mathematics, and
-	it has found a remarkable second life in science and technology in the twenty-first.
+	Counting holes may sound like a parlour game. It became one of the most useful ideas of twentieth-century
+	mathematics, and in the twenty-first it has found a second career in science and engineering.
 </p>
 
 <Figure title="Where homology turns up" num="0.1.7">

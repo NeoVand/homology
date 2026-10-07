@@ -81,10 +81,10 @@
 <Epigraph author="Paul Halmos" source="I Want to Be a Mathematician (1985)">Don’t just read it; fight it! Ask your own questions, look for your own examples, discover your own proofs.</Epigraph>
 
 <p class="lead">
-	Mathematics is written in a language of its own: a few hundred symbols, a few dozen stock phrases, and a very precise logic.
-	None of it is hard, but it is dense. A single line such as \(H_n(X) = \ker\partial_n/\im\partial_{n+1}\) — the formula this
-	whole book is travelling towards — packs in a paragraph of meaning. This chapter is your phrasebook and survival guide. You do
-	not need to memorize it; come back whenever a symbol or a sentence stops you.
+	Mathematics is written in a language of its own, with a few hundred symbols, a few dozen stock phrases and a logic stricter
+	than any lawyer’s. None of it is hard, but it is dense: \(H_n(X) = \ker\partial_n/\im\partial_{n+1}\), the formula this
+	whole book is travelling towards, packs a paragraph of meaning into a single line. This chapter is your
+	phrasebook. Nobody learns a phrasebook by heart: read it once, then come back whenever a symbol or a sentence stops you.
 </p>
 
 <Ahead>
@@ -123,7 +123,7 @@
 </div>
 
 <p>
-	The words “theorem,” “proposition” and “lemma” describe the <em>importance</em> of a result, not its kind: all three are true
+	The words “theorem”, “proposition” and “lemma” describe the <em>importance</em> of a result, not its kind: all three are true
 	statements with proofs. In this book each block lives in its own coloured box, so you can always see what kind of sentence you
 	are reading.
 </p>
@@ -141,23 +141,25 @@
 </Definition>
 
 <p>
-	Run some objects through the test. Is \(6\) even? Yes: \(6 = 2\cdot 3\), and \(3\) is an integer. Is \(7\)? No integer \(k\)
-	has \(2k = 7\) (the only solution, \(3.5\), is not an integer). Is \(0\) even? Yes, \(0 = 2\cdot0\) — something people often
-	doubt, but the definition settles it. Is \(-4\) even? Yes, \(-4 = 2\cdot(-2)\). The most instructive cases are the
-	<em>non-examples</em> that almost qualify: they show you what each clause is for.
+	Run some objects through the test. Is \(6\) even? Yes: \(6 = 2\cdot 3\), and \(3\) is an integer. Is \(0\) even? Yes,
+	\(0 = 2\cdot0\) — something people often doubt, but the definition settles it. Is \(-4\) even? Yes, \(-4 = 2\cdot(-2)\). Is
+	\(7\)? Here the test gets interesting. The equation \(7 = 2k\) does have a solution, \(k = 3.5\), but \(3.5\) is not an
+	integer, so \(7\) fails. It fails on a single clause, “for some <em>integer</em>”, and that shows you what the clause is for:
+	without it, every number would be even. <em>Non-examples</em> that almost qualify are the quickest way to see what each part
+	of a definition is doing.
 </p>
 
 <p>
 	There is one convention you must know. Read literally, “\(n\) is even <em>if</em> \(n = 2k\)” only says that numbers of the
 	form \(2k\) are even; it does not seem to say that every even number has this form. But it is meant both ways. As Richard
 	Hammack puts it in <em>Book of Proof</em>, “it is an almost-universal convention that definitions are phrased in the conditional
-	form, even though they are interpreted as being in the biconditional form.” In a definition, “if” means “if and only if.”
+	form, even though they are interpreted as being in the biconditional form.” In a definition, “if” means “if and only if”.
 </p>
 
 <h3>Theorems have hypotheses and a conclusion</h3>
 
 <p>
-	Most theorems have the shape “<em>if</em> [hypotheses], <em>then</em> [conclusion].” The hypotheses are what you are allowed to
+	Most theorems have the shape “<em>if</em> [hypotheses], <em>then</em> [conclusion]”. The hypotheses are what you are allowed to
 	assume; the conclusion is what you get. You can take a theorem apart this way even when you do not understand its words. For
 	example, a theorem from topology says:
 </p>
@@ -168,7 +170,7 @@
 
 <p>
 	You do not yet know what “continuous” or “compact” mean (that is <Ref to="topology/spaces" />), yet you can already say: there
-	are two hypotheses, “\(f\) is continuous” and “\(X\) is compact,” and one conclusion, “\(f(X)\) is compact.” Before you can use a
+	are two hypotheses, “\(f\) is continuous” and “\(X\) is compact”, and one conclusion, “\(f(X)\) is compact”. Before you can use a
 	theorem, you must check <em>all</em> of its hypotheses. Halmos’s questions are worth asking every time: is each hypothesis
 	really necessary, and where does the proof use it?
 </p>
@@ -176,38 +178,44 @@
 <h2 id="logic">The logic of mathematical sentences</h2>
 
 <p>
-	A <dfn>statement</dfn> is a sentence that is definitely true or definitely false. “\(7\) is a prime number” is a true statement;
+	Everyday language lets its small words wobble. A parent who says “if you don’t finish your vegetables, there is no
+	pudding” is heard by every child as a promise of pudding if they do, although, strictly, nothing of the kind was said. A
+	proof cannot afford that wobble, so mathematics gives each small word one exact meaning.
+</p>
+
+<p>
+	First, the raw material. A <dfn>statement</dfn> is a sentence that is definitely true or definitely false. “\(7\) is a prime number” is a true statement;
 	“\(2+2=5\)” is a false one. “\(x>3\)” is not yet a statement — its truth depends on \(x\) — but it becomes one as soon as \(x\)
 	is known, or as soon as we say “for every \(x\)” or “for some \(x\)” in front of it (the subject of the next section).
-	Statements are combined with a few small words, and mathematics gives each of them an exact meaning.
+	Statements are combined using a handful of small words, and those are what we pin down next.
 </p>
 
 <h3>And, or, not</h3>
 
 <ul>
 	<li>
-		“\(P\) <strong>and</strong> \(Q\),” written \(P\wedge Q\), is true when both \(P\) and \(Q\) are true. (The symbol \(\wedge\)
-		looks like an A, for “and.”)
+		“\(P\) <strong>and</strong> \(Q\)”, written \(P\wedge Q\), is true when both \(P\) and \(Q\) are true. (The symbol \(\wedge\)
+		looks like an A, for “and”.)
 	</li>
 	<li>
-		“\(P\) <strong>or</strong> \(Q\),” written \(P\vee Q\), is true when at least one of them is true — <em>including</em> when both
+		“\(P\) <strong>or</strong> \(Q\)”, written \(P\vee Q\), is true when at least one of them is true — <em>including</em> when both
 		are. This is the <em>inclusive</em> or. In everyday speech, “tea or coffee?” usually means one or the other, not both; in
 		mathematics “or” always allows both.
 	</li>
-	<li>“<strong>not</strong> \(P\),” written \(\neg P\), is true exactly when \(P\) is false.</li>
+	<li>“<strong>not</strong> \(P\)”, written \(\neg P\), is true exactly when \(P\) is false.</li>
 </ul>
 
 <p>
 	Negating “and” and “or” follows two rules called De Morgan’s laws: “not (\(P\) and \(Q\))” means “not \(P\), or not \(Q\)” — at
 	least one fails — and “not (\(P\) or \(Q\))” means “not \(P\), and not \(Q\)” — both fail. If someone says “it is not true that I
-	speak French and German,” they might speak neither, or only one.
+	speak French and German”, they might speak neither, or only one.
 </p>
 
 <h3>If … then: an implication is a promise</h3>
 
 <p>
-	The most important little word in mathematics is “if.” The statement “if \(P\) then \(Q\),” written \(P\Rightarrow Q\) and read
-	“\(P\) implies \(Q\),” is best understood as a <em>promise</em>: whenever \(P\) happens, \(Q\) will happen too. A promise is
+	The most important little word in mathematics is “if”. The statement “if \(P\) then \(Q\)”, written \(P\Rightarrow Q\) and read
+	“\(P\) implies \(Q\)”, is best understood as a <em>promise</em>: whenever \(P\) happens, \(Q\) will happen too. A promise is
 	broken in exactly one situation — when \(P\) happens and \(Q\) does not. In every other situation the promise is kept.
 </p>
 
@@ -228,10 +236,10 @@
 </p>
 
 <p>
-	This convention is not a trick; it is exactly what mathematics needs. Consider “every element of the empty set is purple.” Is it
+	This convention is not a trick; it is exactly what mathematics needs. Consider “every element of the empty set is purple”. Is it
 	true? It says: for every \(x\), if \(x\) is in the empty set, then \(x\) is purple. Since nothing is in the empty set, the “if”
 	is never satisfied, and the promise is never broken. So the statement is (vacuously) true — and so is every statement of the
-	form “every element of the empty set has property such-and-such.” This will matter: the empty set, and the empty shape, have
+	form “every element of the empty set has property such-and-such”. This will matter: the empty set, and the empty shape, have
 	all properties of this kind.
 </p>
 
@@ -245,7 +253,8 @@
 
 <p>
 	“\(P\) only if \(Q\)” trips everyone up at first: it means that \(P\) cannot happen without \(Q\), which is the same promise as
-	\(P\Rightarrow Q\).
+	\(P\Rightarrow Q\). “You may board only if you have a ticket” rules out boarding without a ticket; it does not promise that a
+	ticket gets you on board.
 </p>
 
 <h3>Converse and contrapositive</h3>
@@ -272,7 +281,7 @@
 
 <Question title="Check yourself: which says the same thing?">
 	<p>
-		Take the statement “every square is a rectangle” — that is, “if a shape is a square, then it is a rectangle.” Which of these
+		Take the statement “every square is a rectangle” — that is, “if a shape is a square, then it is a rectangle”. Which of these
 		says the same thing? (a) Every rectangle is a square. (b) Anything that is not a rectangle is not a square. (c) Anything that is
 		not a square is not a rectangle. Only (b), the contrapositive. Statement (a) is the converse, and (c) is the contrapositive of the
 		converse; both are false (think of a long thin rectangle).
@@ -283,7 +292,9 @@
 	An implication and its contrapositive are always both true or both false: “every \(P\) is a \(Q\)” and “anything that is not a
 	\(Q\) is not a \(P\)” are the same promise, seen from opposite ends. The converse is a different promise altogether, and it can
 	fail even when the original holds. Confusing a statement with its converse is one of the commonest errors in reasoning, in and
-	out of mathematics. Try the next puzzle before reading its explanation.
+	out of mathematics. The child with the vegetables made it: “finish and you get pudding” is the contrapositive of “no
+	pudding means you didn’t finish”, which is the <em>converse</em> of what the parent said. Now try the next puzzle before
+	reading its explanation. Most people get it wrong the first time.
 </p>
 
 <Figure title="Which cards must you turn over?" hint="Tap the cards you would turn · then check" num="0.2.2">
@@ -298,9 +309,9 @@
 <KeyIdea>
 	<p>
 		<strong>The contrapositive is how <Term t="invariant">invariants</Term> work.</strong> Much of this book proves theorems of the shape “if two spaces are the
-		same shape, then they have the same number of holes (of each dimension).” Its contrapositive is the useful part: “if two spaces
-		have different numbers of holes, then they are not the same shape.” That is how we will prove, beyond doubt, that a sphere is not
-		a doughnut. But beware the converse, “same holes ⇒ same shape,” which is false: a single point and a solid disk have no holes of
+		same shape, then they have the same number of holes (of each dimension)”. Its contrapositive is the useful part: “if two spaces
+		have different numbers of holes, then they are not the same shape”. That is how we will prove, beyond doubt, that a sphere is not
+		a doughnut. But beware the converse, “same holes ⇒ same shape”, which is false: a single point and a solid disk have no holes of
 		any kind, yet a point is not a disk.
 	</p>
 </KeyIdea>
@@ -309,8 +320,8 @@
 
 <p>
 	When a promise holds in both directions — \(P\Rightarrow Q\) and \(Q\Rightarrow P\) — we write \(P\iff Q\) and say “\(P\) if and
-	only if \(Q\),” often shortened to “\(P\) iff \(Q\).” It means \(P\) and \(Q\) are true in exactly the same situations: they are
-	<em>equivalent</em>, and each is both necessary and sufficient for the other. To prove an “iff,” you prove two implications, one
+	only if \(Q\)”, often shortened to “\(P\) iff \(Q\)”. It means \(P\) and \(Q\) are true in exactly the same situations: they are
+	<em>equivalent</em>, and each is both necessary and sufficient for the other. To prove an “iff”, you prove two implications, one
 	in each direction; proofs often label them (\(\Rightarrow\)) and (\(\Leftarrow\)).
 </p>
 
@@ -330,7 +341,7 @@
 		4\)” says some integer has square \(4\). True: \(x=2\) works (so does \(-2\)). “There exists” means <em>at least one</em>.
 	</li>
 	<li>
-		\(\exists!\), read “there exists exactly one.” “\(\exists! x\in\R,\ x^3 = 8\)” is true (only \(x=2\)), but “\(\exists!
+		\(\exists!\), read “there exists exactly one”. “\(\exists! x\in\R,\ x^3 = 8\)” is true (only \(x=2\)), but “\(\exists!
 		x\in\R,\ x^2=4\)” is false: there are two.
 	</li>
 </ul>
@@ -356,7 +367,7 @@
 
 <Question title="Check yourself: quantifiers over nothing">
 	<p>
-		Is “for every \(x\) in the empty set, \(x\neq x\)” true? It is the promise “if \(x\) is in the empty set, then \(x\neq x\),”
+		Is “for every \(x\) in the empty set, \(x\neq x\)” true? It is the promise “if \(x\) is in the empty set, then \(x\neq x\)”,
 		and nothing is ever in the empty set, so the promise is never broken: true, vacuously. And “there exists \(x\) in the empty set
 		with \(x=x\)” is false, because there is nothing to exhibit. Over the empty set every “for all” statement is true and every
 		“there exists” statement is false.
@@ -367,7 +378,7 @@
 
 <p>
 	When a sentence has several quantifiers, their order changes its meaning completely. Compare: “everyone has a mother” and “there is
-	someone who is everyone’s mother.” In symbols, with \(x\) and \(y\) ranging over people:
+	someone who is everyone’s mother”. In symbols, with \(x\) and \(y\) ranging over people:
 </p>
 \[ \forall x\ \exists y:\ y \text{ is the mother of } x \qquad\text{versus}\qquad \exists y\ \forall x:\ y\text{ is the mother of } x. \]
 <p>
@@ -408,8 +419,8 @@
 </p>
 \[ \neg\,\forall x\,P(x)\ \equiv\ \exists x\,\neg P(x), \qquad \neg\,\exists x\,P(x)\ \equiv\ \forall x\,\neg P(x). \]
 <p>
-	(The symbol \(\equiv\) here means “says the same thing as.”) “Not everyone passed” means “someone did not pass”; “nobody passed” —
-	“there is no one who passed” — means “everyone failed.” When “not” passes “and,” “or,” or “if … then,” it uses De Morgan’s laws
+	(The symbol \(\equiv\) here means “says the same thing as”.) “Not everyone passed” means “someone did not pass”; “nobody passed” —
+	“there is no one who passed” — means “everyone failed”. When “not” passes “and”, “or” or “if … then”, it uses De Morgan’s laws
 	and the broken-promise rule \(\neg(P\Rightarrow Q)\equiv P\wedge\neg Q\).
 </p>
 
@@ -425,24 +436,24 @@
 <Warning title="Three classic mistakes">
 	<ul>
 		<li>
-			The negation of “every loop can be shrunk” is “<em>some</em> loop cannot be shrunk,” not “no loop can be shrunk.” The second
+			The negation of “every loop can be shrunk” is “<em>some</em> loop cannot be shrunk”, not “no loop can be shrunk”. The second
 			is much stronger.
 		</li>
 		<li>
 			The negation of “if \(P\) then \(Q\)” is “\(P\) and not \(Q\)” — the promise was made and broken — not “if \(P\) then not
-			\(Q\).”
+			\(Q\)”.
 		</li>
-		<li>The negation of “\(x\) and \(y\) are both positive” is “at least one of them is not positive,” not “both are negative.”</li>
+		<li>The negation of “\(x\) and \(y\) are both positive” is “at least one of them is not positive”, not “both are negative”.</li>
 	</ul>
 </Warning>
 
 <h2 id="proofs">The shapes of proofs</h2>
 
 <p>
-	A proof is an argument that would convince a careful, skeptical reader, in which every step follows from definitions, from results
+	A proof is an argument that would convince a careful, sceptical reader, in which every step follows from definitions, from results
 	already proved, or from logic. Henri Poincaré put the division of labour in a single line: “it is by logic one demonstrates, by
 	intuition one invents” <Cite k="poincare1908" loc="Book II, ch. 2" />. Finding a proof is an act of imagination; writing it down is an act of logic. Most proofs you will meet in this book
-	have one of six shapes, and recognizing the shape is half of understanding the proof.
+	have one of six shapes, and recognising the shape is half of understanding the proof.
 </p>
 
 <h3>Direct proof</h3>
@@ -510,6 +521,12 @@
 	</p>
 </Proof>
 
+<p>
+	This argument is more than two thousand years old. Aristotle already uses it as his example of a proof “through the
+	impossible”: if the side and the diagonal of a square could both be measured in whole numbers of some common unit, he says,
+	odd numbers would equal even ones.<Cite k="aristotle-prior-analytics" loc="I.23, 41a" /> Look back at the proof and you will find that clash of odd and even at its heart.
+</p>
+
 <h3>Double inclusion</h3>
 
 <p>
@@ -556,7 +573,9 @@
 	The last shape is not a proof of a theorem but a check on a definition. Sometimes we try to define something by a rule that seems
 	to depend on a choice. The rule is <dfn>well-defined</dfn> if it gives one and the same answer whatever choice is made. For
 	example, “the numerator of a fraction” is <em>not</em> well-defined: \(\tfrac12\) and \(\tfrac24\) are the same number, but
-	their numerators are \(1\) and \(2\). Such checks are everywhere once we start “declaring things the same” in <Ref
+	their numerators are \(1\) and \(2\). Yet “double the numerator” <em>is</em> well-defined, although it looks at the
+	numerator too: \(\tfrac12\) becomes \(\tfrac22\) and \(\tfrac24\) becomes \(\tfrac44\), and both answers are \(1\). Using a
+	choice is allowed; the answer must not depend on it. Such checks are everywhere once we start “declaring things the same” in <Ref
 		to="foundations/equivalence"
 	/>, and every map between homology groups must pass one.
 </p>
@@ -607,7 +626,7 @@
 			<tr><td>\(\partial\)</td><td>the boundary map of homology; the boundary of a shape; a partial derivative</td></tr>
 			<tr><td>\(\wedge\)</td><td>“and” in logic; the wedge product of differential forms</td></tr>
 			<tr><td>\(/\)</td><td>division; a quotient (“modulo”), as in \(\Z/n\) or \(X/{\sim}\)</td></tr>
-			<tr><td>\(\mid\)</td><td>“such that” inside braces; “divides,” as in \(3\mid 12\)</td></tr>
+			<tr><td>\(\mid\)</td><td>“such that” inside braces; “divides”, as in \(3\mid 12\)</td></tr>
 			<tr><td>\((a,b)\)</td><td>an ordered pair; an open interval of real numbers</td></tr>
 			<tr><td>\(x_1,\ x^2\)</td><td>subscripts are labels (“\(x\) one”); superscripts are often powers (“\(x\) squared”) — but in \(H^n\) a superscript is a label too</td></tr>
 		</tbody>
@@ -743,8 +762,8 @@
 </Figure>
 
 <p>
-	Read in words, the formula says: <em>the holes of a shape are the cycles that have no boundary, where two cycles count as the same
-	if they differ by a boundary.</em> Every word in that sentence will be given an exact meaning, a picture, and a set of examples
+	Read in words, the formula says: <em>the holes of a shape are its cycles (pieces with no loose ends), where two cycles count as
+	the same if they differ by a boundary, and a cycle that is itself a boundary counts as no hole at all.</em> Every word in that sentence will be given an exact meaning, a picture, and a set of examples
 	you can play with. By the end of Part III, \(H_n(X) = \ker\partial_n/\im\partial_{n+1}\) will read as naturally as \(2+2=4\).
 </p>
 
