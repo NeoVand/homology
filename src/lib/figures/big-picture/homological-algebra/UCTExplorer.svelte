@@ -95,7 +95,7 @@
 							<div class="parts">
 								<TeX tex={`${groupTeX(t.main)}`} /><span class="op">⊕</span><span class="tor"><TeX tex={`${groupTeX(t.shifted)}`} /></span>
 							</div>
-							{#if !isZero(t.shifted)}<div class="from ui">↖ Tor of <TeX tex={`H_{${n - 1}}`} /></div>{/if}
+							{#if !isZero(t.shifted)}<div class="from ui">from Tor of <TeX tex={`H_{${n - 1}}`} /></div>{/if}
 						</td>
 					{/each}
 				</tr>
@@ -107,7 +107,7 @@
 							<div class="parts">
 								<TeX tex={`${groupTeX(t.main)}`} /><span class="op">⊕</span><span class="tor"><TeX tex={`${groupTeX(t.shifted)}`} /></span>
 							</div>
-							{#if !isZero(t.shifted)}<div class="from ui">↖ Ext of <TeX tex={`H_{${n - 1}}`} /></div>{/if}
+							{#if !isZero(t.shifted)}<div class="from ui">from Ext of <TeX tex={`H_{${n - 1}}`} /></div>{/if}
 						</td>
 					{/each}
 				</tr>

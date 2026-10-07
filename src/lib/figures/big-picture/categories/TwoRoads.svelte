@@ -59,7 +59,7 @@
 		{#if t >= 2}
 			<g transform="translate({BR[0]} {BR[1] - 56})">
 				<rect x="-74" y="-15" width="148" height="30" rx="15" class="res" class:bad={!commutes} />
-				<SvgTeX x={0} y={0} tex={commutes ? `${fmt(routeA)} = ${fmt(routeB)}\\ \\checkmark` : `${fmt(routeA)} \\neq ${fmt(routeB)}`} size={14} color="#0b1122" w={146} h={24} />
+				<SvgTeX x={0} y={0} tex={commutes ? `${fmt(routeA)} = ${fmt(routeB)}` : `${fmt(routeA)} \\neq ${fmt(routeB)}`} size={14} color="#0b1122" w={146} h={24} />
 			</g>
 		{/if}
 

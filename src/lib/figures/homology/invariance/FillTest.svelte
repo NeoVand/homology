@@ -17,6 +17,7 @@
 	import type * as THREE_NS from 'three';
 	import { onMount } from 'svelte';
 	import { fitCamera, isNarrow } from './three-fit';
+	import { FnCurve } from './curves';
 
 	type Space = 'plane' | 'cylinder' | 'genus2';
 	type Test = 'disk' | 'surface';
@@ -63,12 +64,7 @@
 			const cols = ['amber', 'violet', 'blue'] as const;
 			for (let k = 0; k < 3; k++) {
 				const a = (k * TAU) / 3;
-				const curve = new (class extends THREE.Curve<THREE_NS.Vector3> {
-					override getPoint(s: number, out = v3()) {
-						gamma(a + (s * TAU) / 3, out);
-						return out;
-					}
-				})();
+				const curve = new FnCurve((s, out) => gamma(a + (s * TAU) / 3, out));
 				g.add(glowTube(curve, { color: cols[k], radius, segments: 90, intensity: 1.15 }));
 				const p = v3();
 				gamma(a, p);
@@ -165,11 +161,7 @@
 			out.set(1.008 * Math.cos(th), y, 1.008 * Math.sin(th));
 		};
 		const rim = glowTube(
-			new (class extends THREE.Curve<THREE_NS.Vector3> {
-				override getPoint(s: number, out = v3()) {
-					return out.set(1.02 * Math.cos(TAU * s), BOTTOM, 1.02 * Math.sin(TAU * s));
-				}
-			})(),
+			new FnCurve((s, out) => out.set(1.02 * Math.cos(TAU * s), BOTTOM, 1.02 * Math.sin(TAU * s))),
 			{ color: 'rose', closed: true, radius: 0.026, segments: 120, intensity: 1.2 }
 		);
 		cyl.add(rim);

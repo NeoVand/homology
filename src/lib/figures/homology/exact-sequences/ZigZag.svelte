@@ -128,7 +128,7 @@
 					{/each}
 				{/if}
 				{#if st.zero}
-					<SvgTeX x={x} y={y + 10} tex={'0\\ \\checkmark'} size={22} color="var(--green)" w={80} h={34} />
+					<SvgTeX x={x} y={y + 10} tex={'0'} size={22} color="var(--green)" w={80} h={34} />
 				{/if}
 				{#if kind[c] !== 'XA' || !st.zero}
 					{#each T as p, v (v)}
