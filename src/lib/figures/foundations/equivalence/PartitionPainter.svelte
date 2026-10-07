@@ -111,7 +111,7 @@
 						{ x: 185, y: 52, tex: String.raw`X=\Z\ \ (\text{a window of it})` },
 						{ x: 494, y: 40, tex: String.raw`X/{\sim}\;=\;\Z/${n}` }
 					];
-			return { W, H, els, classes, heads, tokenR: 19, elR: 13, ring: { c, R } };
+			return { W, H, els, classes, heads, tokenR: 19, elR: narrow ? 15 : 13, ring: { c, R } };
 		}
 		if (mode === 'colour') {
 			const W = narrow ? 360 : 640;
@@ -582,5 +582,12 @@
 	.sub {
 		color: var(--ink-dim);
 		font-size: 0.9rem;
+	}
+	/* phones: the integers are drawn at about 70%, so their numbers grow */
+	@container figure (max-width: 34rem) {
+		.num {
+			font-size: 14px !important;
+			transform: translateY(1px);
+		}
 	}
 </style>

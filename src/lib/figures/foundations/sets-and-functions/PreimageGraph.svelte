@@ -318,7 +318,7 @@
 	/* phones: the graph shrinks, so its tick labels grow */
 	@container figure (max-width: 34rem) {
 		.tk {
-			font-size: 15px !important;
+			font-size: 19px !important;
 		}
 	}
 </style>

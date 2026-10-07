@@ -248,4 +248,13 @@
 		opacity: 0.22;
 		cursor: not-allowed;
 	}
+	/* phones: the drawing is at about 80%, so its numbers grow */
+	@container figure (max-width: 34rem) {
+		.num {
+			font-size: 15.5px !important;
+		}
+		.rowlbl {
+			font-size: 14px !important;
+		}
+	}
 </style>

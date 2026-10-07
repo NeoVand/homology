@@ -945,7 +945,7 @@
 	<SquareToTorus />
 	{#snippet caption()}
 		Gluing the sides marked \(a\) to each other and the sides marked \(b\) to each other, matching the arrows. Points with the
-		same symbol become one point: the two \(p\)’s, the two \(q\)’s, and all four corners, which become the single point \(v\) of
+		same symbol become one point: the two \(p\text{’s}\), the two \(q\text{’s}\), and all four corners, which become the single point \(v\) of
 		the torus where the loops \(a\) and \(b\) cross. (A preview of <Ref to="topology/gluing" />.)
 	{/snippet}
 </Figure>

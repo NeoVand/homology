@@ -17,23 +17,34 @@
 		const sweep = b > a ? 1 : 0;
 		return `M ${xOf(a)} ${Y - 12} A ${rx} ${ry} 0 0 ${sweep} ${xOf(b)} ${Y - 12}`;
 	}
+	// on phones the strip is drawn at about 80%: the key goes on two lines, in larger type
+	let cw = $state(800);
+	const narrow = $derived(cw < 520);
 </script>
 
-<Svg viewBox="0 0 420 228" maxHeight={300} label="The integers listed in the order 0, 1, minus 1, 2, minus 2, and so on, by hops along the number line">
-	<line x1="12" y1={Y} x2="408" y2={Y} class="line" />
-	<text x="14" y={Y + 5} class="dots">…</text>
-	<text x="406" y={Y + 5} class="dots end">…</text>
-	{#each steps as [a, b], k (k)}
-		<path d={hop(a, b)} class="hop" style="opacity:{1 - k * 0.075}" marker-end="url(#arrow-gold)" />
-	{/each}
-	{#each Array.from({ length: N }, (_, k) => zigzag(k)) as z, k (z)}
-		<circle cx={xOf(z)} cy={Y} r="11.5" class="badge" />
-		<text x={xOf(z)} y={Y + 4} class="bl">{k}</text>
-		<text x={xOf(z)} y={Y + 32} class="zl">{z < 0 ? '−' + -z : z}</text>
-	{/each}
-	<SvgTeX x={210} y={18} tex={String.raw`\text{gold: position in the list}\qquad\text{below: the integer}`} size={13} color="var(--ink-dim)" w={400} h={24} />
-	<SvgTeX x={210} y={212} tex={String.raw`0\mapsto 0,\ \ 1\mapsto 1,\ \ 2\mapsto -1,\ \ 3\mapsto 2,\ \ 4\mapsto -2,\ \ \dots`} size={14} color="var(--gold-bright)" w={400} h={24} />
-</Svg>
+<div bind:clientWidth={cw}>
+
+	<Svg viewBox="0 0 420 228" maxHeight={300} label="The integers listed in the order 0, 1, minus 1, 2, minus 2, and so on, by hops along the number line">
+		<line x1="12" y1={Y} x2="408" y2={Y} class="line" />
+		<text x="14" y={Y + 5} class="dots">…</text>
+		<text x="406" y={Y + 5} class="dots end">…</text>
+		{#each steps as [a, b], k (k)}
+			<path d={hop(a, b)} class="hop" style="opacity:{1 - k * 0.075}" marker-end="url(#arrow-gold)" />
+		{/each}
+		{#each Array.from({ length: N }, (_, k) => zigzag(k)) as z, k (z)}
+			<circle cx={xOf(z)} cy={Y} r="11.5" class="badge" />
+			<text x={xOf(z)} y={Y + 4} class="bl">{k}</text>
+			<text x={xOf(z)} y={Y + 32} class="zl">{z < 0 ? '−' + -z : z}</text>
+		{/each}
+		{#if narrow}
+			<SvgTeX x={210} y={14} tex={String.raw`\text{gold: position in the list}`} size={16} color="var(--ink-dim)" w={400} h={24} />
+			<SvgTeX x={210} y={36} tex={String.raw`\text{below: the integer}`} size={16} color="var(--ink-dim)" w={400} h={24} />
+		{:else}
+			<SvgTeX x={210} y={18} tex={String.raw`\text{gold: position in the list}\qquad\text{below: the integer}`} size={13} color="var(--ink-dim)" w={400} h={24} />
+		{/if}
+		<SvgTeX x={210} y={212} tex={String.raw`0\mapsto 0,\ \ 1\mapsto 1,\ \ 2\mapsto -1,\ \ 3\mapsto 2,\ \ 4\mapsto -2,\ \ \dots`} size={narrow ? 17 : 14} color="var(--gold-bright)" w={410} h={24} />
+	</Svg>
+</div>
 
 <style>
 	.line {

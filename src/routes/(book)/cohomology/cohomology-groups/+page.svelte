@@ -62,6 +62,14 @@
 			free: true
 		},
 		{
+			title: 'What is…cohomology? Or: Reversing arrows',
+			author: 'Daniel Tubbenhauer',
+			url: 'https://www.dtubbenhauer.com/slides/algebraic-topology/15-cohomology.pdf',
+			note: 'Slides for a short video in his “What is…?” series on YouTube (index at dtubbenhauer.com/youtube.html): homology and cohomology as two ladders of arrows pointing opposite ways, and the solid tetrahedron worked mod 2 in both directions. The source of this chapter’s tetrahedron.',
+			kind: 'notes' as const,
+			free: true
+		},
+		{
 			title: 'History of Homological Algebra',
 			author: 'Charles Weibel',
 			url: 'https://metaphor.ethz.ch/x/2025/hs/401-3132-00L/ex/historyweibel.pdf',
@@ -99,9 +107,10 @@
 	and their quotient — and for good reason: it is homology run through a mirror.
 </p>
 <p class="lead">
-	Mirrors reverse things, and two reversals will surprise us. Maps between spaces will act on cohomology <em>backwards</em>. And the
-	twisted, finite part of homology — the torsion that made the projective plane strange in Part III — will reappear in cohomology one floor
-	higher than you would expect.
+	If the reflection were perfect, there would be little reason to build it. It is not, and the flaws are the reward. Maps between spaces
+	will act on cohomology <em>backwards</em>. The twisted, finite part of homology — the torsion that made the projective plane strange in
+	Part III — will reappear one floor higher than you would expect. And measurements, unlike places, can be multiplied, which later in this
+	part lets cohomology tell apart spaces whose homology is identical.
 </p>
 
 <Ahead>
@@ -118,7 +127,9 @@
 <h2 id="cochain-groups">Cochain groups: measurements as homomorphisms</h2>
 
 <p>
-	Recall the chains of <Ref to="homology/chains" />. For a simplicial complex \(K\), the group \(C_k(K)\) consists of formal sums
+	A cochain is still what it was in the last chapter: a number on every simplex. This section only dresses that idea in the formal
+	clothes the rest of Part IV expects, starting from the chains of <Ref to="homology/chains" />. For a simplicial complex \(K\), the
+	group \(C_k(K)\) consists of formal sums
 	\(c = \sum_i c_i\, \sigma_i\) of oriented \(k\)-simplices with integer coefficients — inventories of places, with multiplicities. Its
 	elements add coefficient by coefficient, and the \(k\)-simplices themselves form a basis: \(C_k(K)\) is a
 	<Term t="free-abelian-group">free abelian group</Term>, with one copy of \(\Z\) for each \(k\)-simplex.
@@ -132,8 +143,8 @@
 \[ \varphi\Big(\sum_i c_i\, \sigma_i\Big) \;=\; \sum_i c_i\, \varphi(\sigma_i). \]
 <p>
 	(Here \(c_i\, \varphi(\sigma_i)\) means \(\varphi(\sigma_i)\) added to itself \(c_i\) times, or subtracted if \(c_i\) is negative; that
-	makes sense in any abelian group.) A function from \(C_k(K)\) to \(G\) that respects addition, \(\varphi(c + c') = \varphi(c) + \varphi(c')\),
-	is a <Term t="homomorphism">homomorphism</Term>. Conversely, because the simplices form a basis, a homomorphism out of \(C_k(K)\) can take
+	makes sense in any abelian group.) This rule respects addition, \(\varphi(c + c') = \varphi(c) + \varphi(c')\), and a function between
+	groups that respects addition is a <Term t="homomorphism">homomorphism</Term>. Conversely, because the simplices form a basis, a homomorphism out of \(C_k(K)\) can take
 	<em>any</em> values on the simplices, and those values determine it. So “a value on every \(k\)-simplex” and “a homomorphism
 	\(C_k(K) \to G\)” are two descriptions of the same thing.
 </p>
@@ -195,7 +206,10 @@
 	\[ \delta\varphi \;=\; \varphi \circ \partial_{k+1}, \qquad\text{that is,}\qquad (\delta\varphi)(\sigma) = \varphi(\partial\sigma). \]
 	<p>For a \((k+1)\)-simplex \(\sigma = [v_0, \dots, v_{k+1}]\) this reads</p>
 	\[ (\delta\varphi)\big([v_0, \dots, v_{k+1}]\big) \;=\; \sum_{i=0}^{k+1} (-1)^i\, \varphi\big([v_0, \dots, \hat v_i, \dots, v_{k+1}]\big), \]
-	<p>where the hat over \(v_i\) means “leave \(v_i\) out”.</p>
+	<p>
+		where the hat over \(v_i\) means “leave \(v_i\) out”. On an edge \([v_0, v_1]\) this is \(\varphi(v_1) - \varphi(v_0)\), the “head
+		minus tail” of the last chapter; on a triangle it is the circulation \(\varphi([v_1,v_2]) - \varphi([v_0,v_2]) + \varphi([v_0,v_1])\).
+	</p>
 </Definition>
 
 <Warning title="Other sign conventions">
@@ -225,9 +239,16 @@
 	Read the formula both ways. A column of \(\partial\) answers “what are the faces of this simplex?”. The same numbers, read as a row of
 	\(\delta\), answer “which values does \(\delta\varphi\) on this simplex look at?”. And a column of \(\delta\) — the coboundary of an
 	indicator \(\mathbf 1_\tau\) — answers “which simplices have \(\tau\) as a face?”: \(\delta\mathbf 1_\tau\) is \(\pm 1\) on the simplices one
-	dimension up that contain \(\tau\), its <em>cofaces</em>. The boundary looks down to faces; the coboundary looks up to cofaces. That is the
-	reason for the name.
+	dimension up that contain \(\tau\), its <em>cofaces</em>. The boundary looks down to faces; the coboundary looks up to cofaces.
 </p>
+<p>
+	Daniel Tubbenhauer, in his video <em>What is…cohomology? Or: Reversing arrows</em>, watches this happen on the solid tetrahedron with
+	vertices \(0, 1, 2, 3\), working mod 2 so that every sign disappears. Going down, the tetrahedron has four triangles as its boundary, a
+	triangle has three edges and an edge has two ends. Going up, a vertex reaches the three edges that leave it, an edge the two
+	triangles that contain it, and a triangle the one solid it bounds:
+</p>
+\[ \delta\mathbf 1_{[0]} = \mathbf 1_{[0,1]} + \mathbf 1_{[0,2]} + \mathbf 1_{[0,3]}, \qquad \delta\mathbf 1_{[0,1]} = \mathbf 1_{[0,1,2]} + \mathbf 1_{[0,1,3]}, \qquad \delta\mathbf 1_{[0,1,2]} = \mathbf 1_{[0,1,2,3]}. \]
+<p>His slogan fits on one line: “Homology goes down, cohomology goes up.”</p>
 
 <Figure num="4.2.2" title="One matrix, read two ways" hint="Hover a matrix entry · tap a vertex or edge">
 	<MatrixDuality />
@@ -246,11 +267,20 @@
 	<Ref to="foundations/linear-algebra" />: \(\delta_{k+1}\delta_k = \partial_{k+2}^{\mathsf T}\partial_{k+1}^{\mathsf T} = (\partial_{k+1}\partial_{k+2})^{\mathsf T} = 0\),
 	because the transpose of a product is the product of the transposes in the opposite order.
 </p>
+<p>
+	The tetrahedron shows the same thing without matrices. Climb twice from the vertex \(0\): first to its three edges, then from each
+	edge to its two triangles. Every triangle at \(0\) contains exactly two edges at \(0\), so it is reached twice — \([0,1,2]\) by way of
+	\([0,1]\) and by way of \([0,2]\) — and mod 2 the two arrivals cancel. (With integers they arrive with opposite signs.) A coface of a
+	coface is always reached along two routes, which is \(\partial\partial = 0\) read upside down.
+</p>
 <p>The cochain groups and coboundary maps form a sequence in which each map raises the degree:</p>
 \[ 0 \lra C^0(K;G) \xto{\delta_0} C^1(K;G) \xto{\delta_1} C^2(K;G) \xto{\delta_2} \cdots, \qquad \delta_{k+1}\circ\delta_k = 0. \]
 <p>
 	Such a sequence is a <dfn>cochain complex</dfn>. Compare the <Term t="chain-complex">chain complex</Term> of Part III,
-	\(\cdots \to C_2 \to C_1 \to C_0 \to 0\), whose maps lower the degree: same groups, arrows reversed.
+	\(\cdots \to C_2 \to C_1 \to C_0 \to 0\), whose maps lower the degree: same groups, arrows reversed. Why did homology point its
+	arrows downwards in the first place? “For no good reason,” says Tubbenhauer: as a bare sequence of groups and maps, a cochain complex
+	is a chain complex numbered the other way. The surprises of this chapter come from somewhere else, from the fact that its groups
+	<em>measure</em> chains.
 </p>
 
 <!-- ═══════════════════════════════════════════════════════════════════════ -->
@@ -377,8 +407,11 @@
 	sums vanish and the gradient test of <Ref to="cohomology/cochains" /> makes it a gradient. Hence \(H^1 = 0\). In degree 2 every cochain is
 	a cocycle (there are no 3-simplices). Let \([S^2] = \partial[0,1,2,3]\) be the 2-cycle made of all four triangles with their signs. The map
 	\(\varphi \mapsto \ip{\varphi}{[S^2]}\) kills every coboundary, by Stokes: \(\ip{\delta\psi}{[S^2]} = \ip{\psi}{\partial [S^2]} = 0\). It
-	takes the value \(\pm 1\) on each triangle indicator, and its kernel is exactly the coboundaries (the computer confirms that
-	\(\delta_1\) has rank 3 and no torsion). So
+	takes the value \(\pm 1\) on each triangle indicator, so it hits every integer. Its kernel is exactly the coboundaries, and you can
+	see why by pushing weight around. Any two triangles of the tetrahedron share an edge, and adding a multiple of the coboundary of that
+	edge’s indicator moves weight between those two triangles and touches no others (the exercise “Two triangles of the sphere” makes one
+	such move). Three moves pile all of a cochain’s weight onto a single triangle without changing its value on \([S^2]\). If that value
+	was \(0\), nothing is left on the pile, so the cochain was a coboundary all along. So
 </p>
 \[ H^0(S^2) \cong \Z, \qquad H^1(S^2) = 0, \qquad H^2(S^2) \cong \Z, \]
 <p>
@@ -397,7 +430,7 @@
 	With integer coefficients the curves get a direction, and crossings count with signs.
 </p>
 <p>
-	Call such curves a <dfn>fence</dfn>. Then the value of the cocycle on a closed loop is simply the number of times the loop crosses the
+	Call such curves a <dfn>fence</dfn>. Then the value of the cocycle on a closed loop is the number of times the loop crosses the
 	fence, counted with sign. And if \(\psi = \delta f\), Hatcher notes, the curves are “something like level curves for a function \(\varphi\)
 	with \(\delta\varphi = \psi\)”: \(f\) jumps by one every time you step across the fence, so a fence coming from a function must separate
 	the surface into regions at different heights.
@@ -467,8 +500,11 @@
 	\(f_*\colon H_k(X) \to H_k(Y)\). Places travel in the direction of the map.
 </p>
 <p>
-	Measurements travel the other way. If \(\varphi\) measures chains of \(Y\), we can measure a chain \(c\) of \(X\) by first pushing it into
-	\(Y\) and then measuring there. That defines a cochain on \(X\),
+	Measurements travel the other way. Your drive to work is a map from the half-hour of the journey into the country; a weather map is a
+	measurement on the country. The weather map gives you a temperature for every minute of the drive — read it off wherever you happen
+	to be — but no record of the drive will ever produce a weather map. A map \(X \to Y\) carries measurements on \(Y\) back to
+	\(X\), and not the other way. In symbols: if \(\varphi\) measures chains of \(Y\), we can measure a chain \(c\) of \(X\) by first
+	pushing it into \(Y\) and then measuring there. That defines a cochain on \(X\),
 </p>
 \[ f^*\varphi \;=\; \varphi \circ f_\sharp, \qquad (f^*\varphi)(c) = \varphi\big(f_\sharp(c)\big), \]
 <p>

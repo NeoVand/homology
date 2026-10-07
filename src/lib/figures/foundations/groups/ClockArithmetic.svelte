@@ -201,6 +201,14 @@
 		.long {
 			display: none;
 		}
+		/* the 12 × 12 table: cells are about 25px, room for 10.5px numbers */
+		.grid .h,
+		.grid .c {
+			font-size: 0.66rem;
+		}
+		.grid {
+			gap: 1.5px;
+		}
 	}
 	.num {
 		font-family: var(--font-ui);

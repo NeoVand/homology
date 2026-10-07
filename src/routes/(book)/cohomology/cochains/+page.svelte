@@ -109,15 +109,19 @@
 >
 
 <p class="lead">
-	Everything in Part III was about <em>places</em>. A chain was an inventory of pieces of a shape — these edges, those triangles, each
-	with a multiplicity — and homology asked which inventories go around holes. This chapter turns the telescope around. Instead of
-	adding pieces up, we will <em>measure</em> them: write a number on every vertex, or on every edge, the way a hiker writes elevations
-	on a trail map or an engineer writes voltages on a circuit diagram.
+	On the roof of M. C. Escher’s <em>Ascending and Descending</em>, monks walk a staircase on which every step goes up, yet one lap of the
+	courtyard brings them back to where they started. Inspect any flight and it is an honest flight of stairs. So where is the mistake? Not
+	on any step. It lives in the loop, in the courtyard the stairs go round — and finding mistakes of that kind, which are invisible
+	everywhere you look and fatal as a whole, is what cohomology is for.
 </p>
 <p class="lead">
-	A single, innocent question will then lead us straight back to the holes: when do numbers written on the edges come from numbers
-	written on the vertices? The answer — “exactly when every loop adds up to zero” — sounds like accounting. It is the beginning of
-	cohomology, and it explains impossible staircases, jammed gears and free money on the currency markets along the way.
+	Part III was about <em>places</em>. A chain was an inventory of pieces of a shape — these edges, those triangles, each with a
+	multiplicity — and homology asked which inventories go around holes. Now we turn the telescope around and <em>measure</em> the pieces
+	instead: write a number on every vertex, or on every edge, the way a hiker writes elevations on a trail map or an engineer writes
+	voltages on a circuit diagram. Then we ask one innocent question: when do numbers on the edges come from numbers on the vertices? The
+	answer, “exactly when every loop adds up to zero”, sounds like accounting. It unmasks the staircase, explains why a ring of gears can
+	jam and finds free money on the currency markets. And it leads straight back to the holes: homology counted them, and cohomology tells
+	you what each one forbids.
 </p>
 
 <Ahead>
@@ -126,7 +130,8 @@
 		(and numbers on edges into numbers on triangles) is the <em>coboundary</em> \(\delta\). In <Ref to="cohomology/cohomology-groups" /> they
 		become a machine exactly parallel to homology, with groups \(H^k\). Everything else in Part IV grows from this chapter: differential
 		forms (<Ref to="cohomology/differential-forms" />) are cochains for smooth spaces, de Rham cohomology is the calculus version of the
-		staircase puzzle, the cup product multiplies measurements, and sheaves (<Ref to="cohomology/sheaves" />) are the general theory of
+		staircase puzzle, the cup product multiplies measurements (places cannot be multiplied) and so tells apart spaces that homology
+		confuses, and sheaves (<Ref to="cohomology/sheaves" />) are the general theory of
 		“locally fine, globally impossible”.
 	</p>
 </Ahead>
@@ -262,10 +267,10 @@
 	\(r\) (the <em>root</em>) and give it height \(0\). Every other vertex \(v\) is joined to \(r\) by exactly one path, because a tree has
 	no loops to provide a second route. Walk that path and add up the numbers on its edges (with a minus sign for edges walked against
 	their arrows); call the result \(f(v)\). Then every edge is satisfied: if an edge goes from \(u\) to \(v\), the path to \(v\) is the
-	path to \(u\) followed by that edge, so \(f(v) = f(u) + \psi(e)\). Allen Hatcher, whose four-page “Idea of Cohomology” this chapter
-	follows <Cite k="hatcher2002" loc="pp. 186–189" />, says it in one breath: once a value is chosen at a base vertex \(v_0\) and the
-	change across each edge is specified, “this uniquely determines the value of \(\varphi\) at every other vertex \(v\) by induction along
-	the unique path from \(v_0\) to \(v\) in the tree.” (Hatcher writes \(\varphi\) for the potential where we write \(f\).)
+	path to \(u\) followed by that edge, so \(f(v) = f(u) + \psi(e)\). This recipe, like much of this chapter, comes from the four pages
+	Allen Hatcher calls “The Idea of Cohomology” <Cite k="hatcher2002" loc="pp. 186–189" />. There the root is a base vertex \(v_0\), and
+	each value is fixed “by induction along the unique path from \(v_0\) to \(v\) in the tree.” (Hatcher writes \(\varphi\) for the
+	potential where we write \(f\).)
 </p>
 
 <h3>On a loop, the numbers must add up to zero</h3>
@@ -517,8 +522,8 @@
 	The <em>Penrose staircase</em> is a flight of stairs that goes around the four sides of a square courtyard, climbing at every step, and
 	arrives back where it started. Look at any short stretch and it is an ordinary staircase; look at the whole and it is impossible. The
 	geneticist Lionel Penrose and his son, the mathematician Roger Penrose, published it in 1958 in a short note on “impossible objects”
-	<Cite k="penrose1958" />, and M. C. Escher made it famous with his 1960 lithograph <em>Ascending and Descending</em>, in which a column
-	of monks trudges around it for ever.
+	<Cite k="penrose1958" />, and two years later M. C. Escher put it on the roof of <em>Ascending and Descending</em>, the lithograph this
+	chapter opened with.
 </p>
 <p>
 	In our language the staircase is an edge labelling. Make a graph with one vertex per step and one edge from each step to the next; the
@@ -704,8 +709,8 @@
 	In words: <em>measuring the change of \(\varphi\) over a region is the same as measuring \(\varphi\) on the region’s edge.</em> In degree
 	\(0\) this is telescoping: \(\ip{\delta f}{\text{path}} = f(\text{end}) - f(\text{start})\), because the boundary of a path is its end
 	minus its start. In degree \(1\) it is the argument we used for the disk: the sum of the curls over a region equals the loop sum around
-	its boundary. In calculus the same statement is called Stokes’ theorem, and it is no accident that it holds here by definition: the
-	coboundary is <em>defined</em> to make Stokes’ theorem true.
+	its boundary. In calculus the same statement is Stokes’ theorem, and there it takes real work. Here it costs nothing, because we
+	<em>defined</em> the coboundary to make it true.
 </p>
 
 <h3>The coboundary of a coboundary is zero</h3>

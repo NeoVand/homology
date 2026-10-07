@@ -10,7 +10,7 @@
 	let g = $state(0);
 	// on narrow plates the drawing shrinks to about half size, so its labels grow
 	let cw = $state(800);
-	const k = $derived(cw < 520 ? 1.6 : 1);
+	const k = $derived(cw < 520 ? 1.85 : 1);
 
 	const W = 600;
 	const H = 300;
@@ -60,7 +60,8 @@
 </script>
 
 <div class="ic" bind:clientWidth={cw}>
-	<Svg viewBox="0 0 {W} {H}" maxHeight={340} label="The interval from 0 to 1 bends until its two ends meet and it becomes a circle">
+	<!-- on narrow plates, room above the circle for the larger "0 ∼ 1" -->
+	<Svg viewBox={k > 1 ? `0 -44 ${W} ${H + 44}` : `0 0 ${W} ${H}`} maxHeight={340} label="The interval from 0 to 1 bends until its two ends meet and it becomes a circle">
 		<defs>
 			<linearGradient id="ic-grad" x1="0" y1="0" x2="1" y2="0">
 				<stop offset="0" stop-color="#5fd6cf" />
