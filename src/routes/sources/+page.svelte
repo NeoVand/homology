@@ -2,6 +2,20 @@
 	import Ornament from '$lib/components/layout/Ornament.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import { sources } from '$lib/content/sources';
+	import { authorList, bibliography, workLink, type Work } from '$lib/content/bib';
+	import { chapterById } from '$lib/content/toc';
+	import { chapterHref } from '$lib/util/paths';
+
+	let { data } = $props();
+
+	// every work the chapters cite, alphabetically by the first author's family name
+	const sortName = (w: Work) => (w.label ?? w.authors[0]?.split(/\s+/).pop() ?? w.title).toLocaleLowerCase('en');
+	const cited = $derived(
+		[...bibliography.values()]
+			.filter((w) => data.citedIn[w.key])
+			.sort((a, b) => sortName(a).localeCompare(sortName(b), 'en') || String(a.year).localeCompare(String(b.year)))
+	);
+	const linkLabel = (w: Work) => (w.free ? 'free online' : w.url ? 'publisher' : w.doi ? 'doi' : 'arXiv');
 </script>
 
 <svelte:head>
@@ -21,6 +35,7 @@
 		{#each sources as g, i (g.title)}
 			<a href="#s-{i}">{g.title}</a>
 		{/each}
+		{#if cited.length}<a href="#works-cited">Works cited</a>{/if}
 	</nav>
 
 	{#each sources as g, i (g.title)}
@@ -30,6 +45,31 @@
 			<FurtherReading items={g.items} />
 		</section>
 	{/each}
+
+	{#if cited.length}
+		<section id="works-cited" class="group">
+			<h2>Works cited</h2>
+			<p class="intro">Every work the chapters cite, with the chapters that cite it.</p>
+			<ol class="bib">
+				{#each cited as w (w.key)}
+					{@const link = workLink(w)}
+					<li id="ref-{w.key}">
+						<span class="who">{authorList(w)}</span>
+						<span>({w.year}).</span>
+						<cite>{w.title}.</cite>
+						{#if w.venue}<span>{w.venue}.</span>{/if}
+						{#if link}<a class="out ui" href={link} target="_blank" rel="noopener noreferrer">{linkLabel(w)}</a>{/if}
+						<span class="where ui">
+							{#each data.citedIn[w.key] as id (id)}
+								{@const ch = chapterById.get(id)}
+								{#if ch}<a href={chapterHref(id, 'references')}>{ch.num}</a>{/if}
+							{/each}
+						</span>
+					</li>
+				{/each}
+			</ol>
+		</section>
+	{/if}
 
 	<section class="group colophon">
 		<h2>Colophon</h2>
@@ -107,6 +147,55 @@
 	}
 	.group :global(a) {
 		color: var(--gold-bright);
+	}
+	.bib {
+		list-style: none;
+		margin: 1rem 0 0;
+		padding: 0;
+		font-size: 0.92rem;
+		line-height: 1.55;
+		color: var(--ink-dim);
+	}
+	.bib li {
+		padding: 0.55rem 0 0.55rem 1.4rem;
+		text-indent: -1.4rem;
+		border-bottom: 1px solid var(--line-faint);
+		scroll-margin-top: calc(var(--topbar-h) + 1rem);
+		text-wrap: pretty;
+	}
+	.bib li:target {
+		color: var(--ink);
+	}
+	.bib .who {
+		color: var(--ink);
+	}
+	.bib cite {
+		font-style: italic;
+		color: var(--ink-bright);
+	}
+	.bib .out {
+		font-size: 0.72rem;
+		letter-spacing: 0.04em;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+	.where {
+		display: inline-flex;
+		gap: 0.35rem;
+		margin-left: 0.4rem;
+		text-indent: 0;
+	}
+	.where a {
+		font-size: 0.7rem;
+		padding: 0.05rem 0.45rem;
+		border-radius: 999px;
+		border: 1px solid var(--line-faint);
+		color: var(--ink-dim) !important;
+		text-decoration: none;
+	}
+	.where a:hover {
+		color: var(--gold-bright) !important;
+		border-color: var(--line);
 	}
 	.colophon p {
 		color: var(--ink-dim);
