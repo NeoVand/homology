@@ -106,6 +106,7 @@
 		<Svg viewBox="0 0 360 296" maxHeight={330} label="The torus as a square with opposite sides glued, cut by its diagonal c into a lower triangle L and an upper triangle U. All four corners are the single vertex v.">
 			<GluingSquare preset="torus" x={x0} y={y0} size={S} fill={false} />
 			<!-- the two triangles -->
+			<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 			<polygon
 				points={pts(BL, BR, TR)}
 				class="tri"
@@ -117,6 +118,7 @@
 				onclick={() => step === 2 && (lit = 'L')}
 				onkeydown={(e) => step === 2 && (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), (lit = 'L'))}
 			/>
+			<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 			<polygon
 				points={pts(BL, TL, TR)}
 				class="tri"

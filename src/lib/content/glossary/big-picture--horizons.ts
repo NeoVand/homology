@@ -54,7 +54,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'k-theory',
 		term: 'K-theory',
-		def: 'A generalized cohomology theory built from vector bundles: \\(K^0(X)\\) consists of formal differences \\([E]-[F]\\) of complex vector bundles over \\(X\\), up to stable equivalence. Created by Atiyah and Hirzebruch around 1961, after Grothendieck’s algebraic version.',
+		def: 'A generalized cohomology theory built from vector bundles: \\(K^0(X)\\) consists of formal differences \\([E]-[F]\\) of complex vector bundles over \\(X\\), up to stable equivalence. Created by Atiyah and Hirzebruch in 1959–61, after Grothendieck’s algebraic version.',
 		chapter,
 		anchor: 'k-theory',
 		see: ['bott-periodicity', 'generalized-cohomology-theory']
