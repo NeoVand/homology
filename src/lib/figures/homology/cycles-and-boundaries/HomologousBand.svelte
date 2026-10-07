@@ -1,10 +1,10 @@
 <script lang="ts">
 	// Figure 3.1.5 — two loops around a straw. Neither bounds on its own, but
 	// together they are the rim of the teal band between them: they are
-	// homologous. Slide (and wiggle) the second loop; the band follows.
+	// homologous. Play or scrub the second loop along the straw (and wiggle it); the band follows.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { glassMesh, glowTube } from '$lib/three/materials';
@@ -18,8 +18,10 @@
 	const RAD = 0.78;
 
 	let vB = $state(0.62);
-	let wiggle = $state(0.05);
-	let auto = $state(true);
+	let wiggly = $state(true);
+	const wiggle = $derived(wiggly ? 0.05 : 0);
+	// loop B is moved by the timeline below; the figure's own sweep stays off
+	const auto = false;
 	let showBand = $state(true);
 
 	const atTop = $derived(vB > 0.955 && wiggle < 0.001);
@@ -145,17 +147,8 @@
 	</div>
 
 	<Controls>
-		<Slider
-			bind:value={vB}
-			min={0.14}
-			max={0.97}
-			step={0.01}
-			label="Height of loop B"
-			oninput={() => (auto = false)}
-			format={(v) => `${Math.round(((v - VA) / (1 - VA)) * 100)}%`}
-		/>
-		<Slider bind:value={wiggle} min={0} max={0.06} step={0.002} label="Wiggle B" format={(v) => (v === 0 ? 'none' : v.toFixed(3))} />
-		<Toggle bind:checked={auto} label="Sweep" />
+		<Timeline bind:value={vB} min={0.14} max={0.97} loop duration={4} from="near A" to="the top" label="Sliding loop B along the straw" />
+		<Toggle bind:checked={wiggly} label="Wiggle B" />
 		<Toggle bind:checked={showBand} label="Shade the band" />
 	</Controls>
 </div>

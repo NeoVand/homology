@@ -286,13 +286,11 @@
 	.note {
 		color: var(--ink-dim);
 	}
+	/* phones: the same three columns, tighter, so each value stays on its row */
 	@media (max-width: 520px) {
 		.row {
-			grid-template-columns: 5.2rem 1fr;
-		}
-		.dv {
-			grid-column: 1 / -1;
-			text-align: left;
+			grid-template-columns: 4.4rem minmax(4rem, 1fr) 5.6rem;
+			gap: 0.4rem;
 		}
 	}
 </style>

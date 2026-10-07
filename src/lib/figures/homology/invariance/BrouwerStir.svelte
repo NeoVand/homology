@@ -3,7 +3,9 @@
 	// Colour = direction of the displacement f(p) − p; fixed points are where every
 	// colour meets. The "retraction" view shows the ray from f(p) through p.
 	import { onMount } from 'svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
+	import Segmented from '$lib/components/ui/Segmented.svelte';
+	import { ResetIcon } from '$lib/icons';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
@@ -283,11 +285,20 @@
 		</div>
 	</div>
 	<Controls>
-		<Slider bind:value={twist} min={-12} max={12} step={0.1} label="stir (twist at the centre)" format={(v) => v.toFixed(1) + ' rad'} />
-		<Slider bind:value={scale} min={0.3} max={0.95} step={0.01} label="squeeze" format={(v) => v.toFixed(2)} />
+		<Timeline bind:value={twist} min={0} max={12} duration={5} from="still" to="stirred" label="Stirring the disk" readout={(v) => `${v.toFixed(1)} rad`} />
+		<Segmented
+			bind:value={scale}
+			label="Squeeze"
+			options={[
+				{ value: 0.9, label: 'light squeeze' },
+				{ value: 0.65, label: 'medium' },
+				{ value: 0.4, label: 'strong' }
+			]}
+		/>
 		<Toggle bind:checked={rays} label="Try to retract (rays from f(x) through x)" />
 		<Button
 			variant="subtle"
+			icon={ResetIcon}
 			onclick={() => {
 				twist = 9;
 				scale = 0.9;

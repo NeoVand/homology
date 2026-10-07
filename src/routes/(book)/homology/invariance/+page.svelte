@@ -441,7 +441,7 @@
 	<p>So \(r\) is a retraction of \(D^n\) onto \(S^{n-1}\), which the previous theorem says cannot exist. Therefore \(f\) has a fixed point.</p>
 </Proof>
 
-<Figure num="3.5.5" title="Stirring a disk" hint="Drag the gold handle · move the sliders · try the retraction view">
+<Figure num="3.5.5" title="Stirring a disk" hint="Drag the gold handle · play the stirring · try the retraction view">
 	<BrouwerStir />
 	{#snippet caption()}
 		A “stirring” map of the disk: swirl it, squeeze it, and slide its centre to the gold handle. Each point is coloured by the <em>direction</em> it moves (arrows), and darkened where it barely moves. Going once around the rim, the colours run once through the whole wheel, so somewhere inside they must all meet — at a fixed point (glowing). With strong stirring several fixed points appear, but their indices always add up to \(1\). Turn on the retraction view: the rays from \(f(x)\) through \(x\) push the disk onto its rim, and near a fixed point they spin in every direction. That is where the would-be retraction tears.

@@ -75,12 +75,11 @@
 		};
 		return {
 			update(_t: number, dt: number) {
-				if (Math.abs(current - target) > 1e-3) {
-					current += (target - current) * Math.min(1, dt * 4);
-					for (const m of mats) m.uniforms.uOpacity.value = current;
-					surface.visible = current > 0.01;
-					invalidate();
-				}
+				if (Math.abs(current - target) <= 1e-3) return false;
+				current += (target - current) * Math.min(1, dt * 4);
+				for (const m of mats) m.uniforms.uOpacity.value = current;
+				surface.visible = current > 0.01;
+				return true;
 			},
 			dispose: () => (api = null)
 		};

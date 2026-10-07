@@ -9,7 +9,8 @@
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
-	import Slider from '$lib/components/ui/Slider.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
+	import { ResetIcon } from '$lib/icons';
 	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import type * as THREE_NS from 'three';
@@ -17,10 +18,13 @@
 
 	type Mode = 'sphere' | 'torus';
 	let mode = $state<Mode>('sphere');
-	let strength = $state(1);
-	let waves = $state(0.06);
-	let squash = $state(1);
-	let twist = $state(0);
+	// one deformation, played like a film: bumps grow, ripples spread, the
+	// surface squashes one way and the other and twists — the total stays put
+	let deform = $state(0);
+	const strength = $derived(1 + 0.5 * deform);
+	const waves = $derived(0.06 + 0.14 * deform);
+	const squash = $derived(1 - 0.45 * Math.sin(2 * Math.PI * deform));
+	const twist = $derived(1.3 * deform);
 	let clickMode = $state<'pull' | 'push'>('pull');
 	let wobble = $state(false);
 	let clicks = $state<Bump[]>([]);
@@ -276,10 +280,7 @@
 	}
 	function reset() {
 		clicks = [];
-		strength = 1;
-		waves = 0.06;
-		squash = 1;
-		twist = 0;
+		deform = 0;
 	}
 	onMount(() => () => (api = null));
 
@@ -329,10 +330,7 @@
 		label="Surface"
 		onchange={(v) => setMode(v)}
 	/>
-	<Slider bind:value={strength} min={-1} max={1.6} step={0.01} label="Bumps" format={(v) => v.toFixed(2)} />
-	<Slider bind:value={waves} min={0} max={0.22} step={0.005} label="Ripples" format={(v) => v.toFixed(2)} />
-	<Slider bind:value={squash} min={0.45} max={1.7} step={0.01} label="Squash" format={(v) => v.toFixed(2)} />
-	<Slider bind:value={twist} min={0} max={1.4} step={0.01} label="Twist" format={(v) => v.toFixed(2)} />
+	<Timeline bind:value={deform} loop duration={6} from="round" to="sculpted" label="Deforming the surface" />
 	<Segmented
 		bind:value={clickMode}
 		options={[
@@ -342,7 +340,7 @@
 		label="Click to sculpt"
 	/>
 	<Button onclick={() => (wobble = !wobble)} active={wobble}>{wobble ? 'Stop' : 'Wobble'}</Button>
-	<Button onclick={reset}>Reset</Button>
+	<Button onclick={reset} icon={ResetIcon}>Reset</Button>
 </Controls>
 
 <style>

@@ -177,7 +177,7 @@
 		<canvas
 			bind:this={canvas}
 			style="width:{cw}px; height:{ch}px; cursor:{cursor}"
-			aria-label="Editable point cloud with discs of radius r around each point and the Vietoris–Rips complex at that radius. Use the data set buttons and the radius slider to explore without a pointer."
+			aria-label="Editable point cloud with discs of radius r around each point and the Vietoris–Rips complex at that radius. Use the data set buttons and the radius timeline to explore without a pointer."
 			onpointerdown={onDown}
 			onpointermove={onMove}
 			onpointerup={onUp}
@@ -248,7 +248,7 @@
 
 	<div class="controls ui">
 		<div class="slider">
-			<Timeline bind:value={r} min={0} max={xmax} duration={7} label="Growing the balls" readout={(v) => `r = ${v.toFixed(2)}`} />
+			<Timeline bind:value={r} min={0} max={xmax} duration={7} label="Growing the balls" />
 		</div>
 		<div class="toggles">
 			<Toggle bind:checked={showBalls} label="Balls" />
@@ -285,20 +285,14 @@
 		display: block;
 		touch-action: none;
 	}
+	/* under the picture, not over it, so it never hides points */
 	.tools {
-		position: absolute;
-		left: 0.5rem;
-		bottom: 0.5rem;
 		display: flex;
 		align-items: center;
 		gap: 0.6rem;
 		flex-wrap: wrap;
-		pointer-events: none;
-	}
-	.tools :global(.seg) {
-		pointer-events: auto;
-		background: rgba(6, 9, 18, 0.75);
-		backdrop-filter: blur(4px);
+		padding: 0.5rem;
+		border-top: 1px solid var(--line-faint);
 	}
 	.count {
 		font-size: 0.7rem;

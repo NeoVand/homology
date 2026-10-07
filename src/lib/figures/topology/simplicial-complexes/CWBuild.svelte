@@ -281,10 +281,13 @@
 					setDraw(tubes.b, ease(cur.b));
 					updatePatch(ease(cur.s));
 				}
-				if (cur.s > 0.999 && tgt.run > 0) clock += dt;
+				const running = cur.s > 0.999 && tgt.run > 0;
+				if (running) clock += dt;
 				else clock = 0;
 				updateRunner(clock);
 				void t;
+				// the runner circling the finished torus is ambient motion
+				return moved ? true : running ? undefined : false;
 			},
 			dispose() {
 				offFit();

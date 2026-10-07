@@ -495,12 +495,12 @@
 
 <p>Here is the same idea in three dimensions, on the most famous object in the hole debate.</p>
 
-<Figure num="3.1.4" title="Homologous loops on a straw" hint="Drag to rotate · move and wiggle loop B">
+<Figure num="3.1.4" title="Homologous loops on a straw" hint="Drag to rotate · play or scrub loop B · wiggle it">
 	<HomologousBand />
 	{#snippet caption()}
 		Loops \(\cyc{A}\) and \(\cyc{B}\) both go once around a straw. Neither is the rim of anything on the straw, but together they are the rim of the teal band
-		between them, so \(A \sim B\). Wiggle \(B\) or slide it: the band follows. Slide it all the way to the top and the two <em>ends</em> of the straw turn
-		out to be homologous — one hole, seen from two ends.
+		between them, so \(A \sim B\). Wiggle \(B\) or slide it: the band follows. Straighten it and slide it all the way to the top, and the two
+		<em>ends</em> of the straw turn out to be homologous — one hole, seen from two ends.
 	{/snippet}
 </Figure>
 

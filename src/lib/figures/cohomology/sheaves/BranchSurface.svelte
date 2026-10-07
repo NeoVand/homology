@@ -14,6 +14,7 @@
 	import { surfaceGeometry, type SurfaceFn } from '$lib/three/surfaces';
 	import type * as THREE_NS from 'three';
 	import { fmt } from './svgutil';
+	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 
 	type Mode = 'sqrt' | 'log';
 	let mode = $state<Mode>('sqrt');
@@ -34,7 +35,10 @@
 
 	let api: { update(): void } | null = null;
 
-	function setup({ scene, THREE, invalidate, label, canvas, camera, controls, project }: SceneContext) {
+	function setup(ctx: SceneContext) {
+		const { scene, THREE, invalidate, label, canvas, camera, controls, project } = ctx;
+		// phones: pull the camera back so both sheets stay in the frame
+		const unfit = fitCamera(ctx, 1.6);
 		const groupSqrt = new THREE.Group();
 		const groupLog = new THREE.Group();
 		scene.add(groupSqrt, groupLog);
@@ -222,6 +226,7 @@
 		return {
 			dispose() {
 				api = null;
+				unfit();
 				canvas.removeEventListener('pointerdown', onDown, { capture: true });
 				canvas.removeEventListener('pointermove', onMove);
 				canvas.removeEventListener('pointerup', onUp);

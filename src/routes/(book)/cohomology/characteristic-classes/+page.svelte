@@ -693,7 +693,7 @@
 	triangles get finer the sum of defects becomes the integral \(\iint K\,dA\). Now play.
 </p>
 
-<Figure num="4.8.7" title="The Gauss–Bonnet sculptor" hint="Sliders reshape · click the surface to push or pull it · drag to rotate">
+<Figure num="4.8.7" title="The Gauss–Bonnet sculptor" hint="Play the deformation · click the surface to push or pull it · drag to rotate">
 	<GaussBonnetSculptor />
 	{#snippet caption()}
 		A sphere made of 20,480 flat triangles (or a torus of 28,800), coloured by curvature — angle defect per unit area:
@@ -706,7 +706,7 @@
 <p>
 	Watch the two bars under the figure. Pulling out a bump adds positive curvature at its tip and creates a ring of negative
 	curvature around its base; the two changes cancel exactly, to the last decimal place. Only a change of topology — which
-	no slider can make — could change the total.
+	no amount of pushing, pulling or twisting can make — could change the total.
 </p>
 
 <Remark title="With a boundary">

@@ -93,7 +93,7 @@
 		<circle cx={X(r)} cy={2 * rowH + 10} r="4" class="knob" />
 	</svg>
 	<div class="controls ui">
-		<Timeline bind:value={r} min={0} max={RMAX} duration={7} label="Growing every disc" readout={(v) => `r = ${v.toFixed(2)}`} />
+		<Timeline bind:value={r} min={0} max={RMAX} duration={7} label="Growing every disc" />
 	</div>
 </div>
 

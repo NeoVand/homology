@@ -150,7 +150,7 @@
 		<Barcode {bars} xmax={1} now={t} height={130} dims={[0]} axis="t" label="Barcode of the lakes" onscrub={(v) => (t = Math.max(0.05, v))} />
 	</div>
 	<div class="controls ui">
-		<Timeline bind:value={t} min={0.05} max={1} duration={7} from="dry" to="flooded" label="Raising the water level" readout={(v) => `t = ${v.toFixed(2)}`} />
+		<Timeline bind:value={t} min={0.05} max={1} duration={7} from="dry" to="flooded" label="Raising the water level" />
 	</div>
 </div>
 

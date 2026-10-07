@@ -24,8 +24,9 @@
 		/** request one render (for scenes that only change on input) */
 		invalidate(): void;
 		/** run a callback every frame while visible; returns an unsubscribe. The
-		 *  callback may return false to say nothing changed this frame, so the
-		 *  scene is not redrawn (unless something else asked for it). */
+		 *  callback returns true when it changed the picture, false when it did
+		 *  not. Returning nothing counts as ambient motion: drawn while the reader
+		 *  is engaged, paused once the figure has been left alone for a while. */
 		onFrame(cb: (t: number, dt: number) => boolean | void): () => void;
 		/** an HTML label (may contain KaTeX HTML) pinned to a 3D point */
 		label(
@@ -40,7 +41,8 @@
 	}
 
 	export interface SceneHandle {
-		update?(t: number, dt: number): void;
+		/** called every frame while visible; same return convention as onFrame */
+		update?(t: number, dt: number): boolean | void;
 		dispose?(): void;
 	}
 
@@ -176,6 +178,25 @@
 			};
 
 			let needs = true;
+			// Ambient motion (auto-rotation, the glass shimmer) plays while the reader
+			// looks; after AMBIENT_REST seconds on screen with nothing touched, the scene
+			// settles and stops redrawing until it is touched or scrolled back to.
+			// A figure's own animations (frame callbacks) are not affected.
+			// (tests shorten the rest with window.__ambientRest)
+			const AMBIENT_REST = (window as unknown as { __ambientRest?: number }).__ambientRest ?? 15;
+			const autoRotateWanted = controls?.autoRotate ?? false;
+			let idle = 0;
+			let ambientT = 0;
+			const stir = () => {
+				idle = 0;
+				if (controls && autoRotateWanted) controls.autoRotate = true;
+			};
+			// any use of the figure (its canvas, buttons, steppers, keys) counts
+			const fig: HTMLElement = container.closest('figure') ?? container;
+			fig.addEventListener('pointerdown', stir);
+			fig.addEventListener('keydown', stir);
+			canvas.addEventListener('wheel', stir, { passive: true });
+			canvas.addEventListener('pointermove', stir, { passive: true });
 			const frameCbs = new Set<(t: number, dt: number) => boolean | void>();
 			const labels = new Set<LabelHandle>();
 			const raycaster = new THREE.Raycaster();
@@ -201,6 +222,7 @@
 				reducedMotion,
 				invalidate: () => {
 					needs = true;
+					idle = 0;
 					wake();
 				},
 				onFrame(cb) {
@@ -290,21 +312,34 @@
 			}
 			// test hook: performance and rendering checks read scenes from here
 			const dbg = (window as unknown as { __h3d?: unknown[] }).__h3d;
-			if (dbg) dbg.push({ label, scene, renderer, frameCbs });
+			if (dbg) dbg.push({ label, scene, renderer, frameCbs, state: () => ({ idle, needs, autoRotate: controls?.autoRotate }) });
 
 			let elapsed = 0;
+			let lastFrameAt = 0;
 			live = {
 				visible,
 				lastVisible: performance.now(),
 				frame: (_t, dt) => {
 					elapsed += dt;
+					// back on screen after a while: ambient motion resumes
+					const now = performance.now();
+					if (now - lastFrameAt > 500) stir();
+					lastFrameAt = now;
+					idle += dt;
+					const resting = idle > AMBIENT_REST;
+					if (resting && controls?.autoRotate) controls.autoRotate = false;
 					const moved = controls ? controls.update(dt) : false;
-					let draw = needs || moved || animate || !!handle?.update;
-					for (const cb of frameCbs) if (cb(elapsed, dt) !== false) draw = true;
+					const ambient = animate && !resting;
+					let draw = needs || moved || ambient;
+					// true: changed, draw; false: nothing changed; nothing: ambient motion
+					const said = (r: boolean | void) => {
+						if (r === true || (r === undefined && !resting)) draw = true;
+					};
+					if (handle?.update) said(handle.update(elapsed, dt));
+					for (const cb of frameCbs) said(cb(elapsed, dt));
 					if (!draw) return;
 					needs = false;
-					handle?.update?.(elapsed, dt);
-					if (animate) tickMaterials(scene, elapsed);
+					if (ambient) tickMaterials(scene, (ambientT += dt));
 					renderer.render(scene, cam);
 					if (!shown) shown = true;
 					placeLabels();
@@ -314,6 +349,10 @@
 
 			const destroy = () => {
 				ro.disconnect();
+				fig.removeEventListener('pointerdown', stir);
+				fig.removeEventListener('keydown', stir);
+				canvas.removeEventListener('wheel', stir);
+				canvas.removeEventListener('pointermove', stir);
 				try {
 					handle?.dispose?.();
 				} catch (e) {
