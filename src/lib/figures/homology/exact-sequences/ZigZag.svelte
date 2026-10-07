@@ -20,6 +20,9 @@
 		String.raw`\partial_*[c] = [a]:\quad H_2(X,A) \xrightarrow{\ \cong\ } H_1(A) \cong \mathbb Z.`
 	];
 
+	// On a narrow plate the grid is scaled down; scale its labels up (k ≥ 1) so they stay readable.
+	let width = $state(600);
+	const k = $derived(Math.min(1.5, Math.max(1, (0.85 * 600) / (width || 600))));
 	const colX = [100, 300, 500];
 	const rowY = [92, 252];
 	const W = 156;
@@ -71,23 +74,23 @@
 	}
 </script>
 
-<div class="zig">
-	<Svg viewBox="0 0 600 350" maxHeight={420} label="A three-by-two grid of chain groups; a highlighted path zig-zags from the relative 2-chain to the boundary loop in A">
+<div class="zig" bind:clientWidth={width}>
+	<Svg viewBox="0 {-6 * (k - 1)} 600 {350 + 6 * (k - 1)}" maxHeight={420} label="A three-by-two grid of chain groups; a highlighted path zig-zags from the relative 2-chain to the boundary loop in A">
 		<!-- column headers -->
 		{#each ['A', 'X', '(X,A)'] as h, c (h)}
-			<SvgTeX x={colX[c]} y={18} tex={h} size={20} color="var(--ink-dim)" w={90} h={26} />
+			<SvgTeX x={colX[c]} y={18 - 4 * (k - 1)} tex={h} size={20 * k} color="var(--ink-dim)" w={90 * k} h={26 * k} />
 		{/each}
 		<!-- horizontal maps -->
 		{#each rowY as y, r (r)}
 			<line x1={colX[0] + W / 2 + 4} y1={y} x2={colX[1] - W / 2 - 4} y2={y} class="arr" marker-end="url(#arrow-ivory)" />
 			<line x1={colX[1] + W / 2 + 4} y1={y} x2={colX[2] - W / 2 - 4} y2={y} class="arr" marker-end="url(#arrow-ivory)" />
-			<SvgTeX x={(colX[0] + colX[1]) / 2} y={y - 10} tex={'i'} size={14} color="var(--ink-dim)" w={20} h={20} />
-			<SvgTeX x={(colX[1] + colX[2]) / 2} y={y - 10} tex={'j'} size={14} color="var(--ink-dim)" w={20} h={20} />
+			<SvgTeX x={(colX[0] + colX[1]) / 2} y={y - 10 - 4 * (k - 1)} tex={'i'} size={14 * k} color="var(--ink-dim)" w={20 * k} h={20 * k} />
+			<SvgTeX x={(colX[1] + colX[2]) / 2} y={y - 10 - 4 * (k - 1)} tex={'j'} size={14 * k} color="var(--ink-dim)" w={20 * k} h={20 * k} />
 		{/each}
 		<!-- vertical boundary maps -->
 		{#each colX as x, c (c)}
 			<line x1={x} y1={rowY[0] + H / 2 + 4} x2={x} y2={rowY[1] - H / 2 - 4} class="arr" marker-end="url(#arrow-ivory)" />
-			<SvgTeX x={x + 14} y={(rowY[0] + rowY[1]) / 2} tex={'\\partial'} size={14} color="var(--ink-dim)" w={20} h={20} />
+			<SvgTeX x={x + 14 * k} y={(rowY[0] + rowY[1]) / 2} tex={'\\partial'} size={14 * k} color="var(--ink-dim)" w={20 * k} h={20 * k} />
 		{/each}
 
 		<!-- the zig-zag path -->
@@ -109,7 +112,7 @@
 				{@const T = tri(x, y + 6)}
 				{@const active = !!(st.fill || st.loop || st.zero)}
 				<rect x={x - W / 2} y={y - H / 2} width={W} height={H} rx="12" class="cell" class:active />
-				<SvgTeX x={x} y={y - H / 2 + 15} tex={groupTeX[key]} size={15} color={active ? 'var(--gold-pale)' : 'var(--ink-dim)'} w={W} h={22} />
+				<SvgTeX x={x} y={y - H / 2 + 15 + 2 * (k - 1)} tex={groupTeX[key]} size={15 * k} color={active ? 'var(--gold-pale)' : 'var(--ink-dim)'} w={W} h={22 * k} />
 				<!-- the underlying complex, faint -->
 				{#if kind[c] !== 'A'}
 					<polygon points={pts(T)} class="tri-faint" class:xa={kind[c] === 'XA'} />

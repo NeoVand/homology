@@ -42,7 +42,10 @@
 				p.y += up;
 				return p;
 			};
-			const lA = label(which === 0 ? at(1, 0.2).multiplyScalar(1.08) : at(1, -0.28), tex('a'), { className: 'gold' });
+			const aAt = which === 0 ? at(1, 0.2).multiplyScalar(1.08) : at(1, -0.28);
+			const lA = label(aAt, tex('a'), { className: 'gold' });
+			// the long ℤ-lens label hangs off to the right of the bottle, not across it
+			const aLongAt = aAt.clone().add({ x: 0.62, y: -0.05, z: 0 } as THREE.Vector3);
 			const lB = label(which === 0 ? at(3, 0.3) : at(6, 0.0).add({ x: 0.28, y: 0, z: 0 } as THREE.Vector3), tex('b'), { className: 'rose' });
 			const eps = counterclockwise(ex.L);
 			apis[which] = {
@@ -53,6 +56,7 @@
 					seam.visible = which === 1 && l === 'Z';
 					loopA.visible = !(which === 1 && l === 'Z');
 					lA.set(tex(which === 1 && l === 'Z' ? '2a = \\partial(\\textstyle\\sum \\pm t)' : 'a'));
+					lA.position.copy(which === 1 && l === 'Z' ? aLongAt : aAt);
 					lA.el.className = 'lbl3d ' + (which === 1 && l === 'Z' ? 'rose' : 'gold');
 					lA.show(true);
 					lB.show(true);

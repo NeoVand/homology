@@ -14,9 +14,15 @@
 	// start and end corners of the routes inside square i
 	const S = (i: number) => [xs[i] + 30, yTop + 24];
 	const E = (i: number) => [xs[i + 1] - 26, yBot - 24];
+
+	// On a narrow plate the ladder is scaled down; scale the smaller labels up (k ≥ 1).
+	let width = $state(480);
+	const k = $derived(Math.min(1.4, Math.max(1, (0.9 * 480) / (width || 480))));
 </script>
 
-<Svg viewBox="0 0 480 262" maxHeight={300} label="A ladder of two chain complexes joined by the chain map; each square commutes">
+<div bind:clientWidth={width}>
+
+<Svg viewBox="0 0 480 {262 + 6 * (k - 1)}" maxHeight={300} label="A ladder of two chain complexes joined by the chain map; each square commutes">
 	{#each [0, 1, 2] as i (i)}
 		{@const on = sq === i}
 		{@const s = S(i)}
@@ -48,17 +54,18 @@
 		<SvgTeX {x} y={yBot} tex={botLab[i]} size={19} color="var(--ink-bright)" w={90} h={34} />
 		{#if i > 0}
 			<line x1={x} y1={yTop + 20} x2={x} y2={yBot - 22} class="arr" marker-end="url(#arrow-violet)" />
-			<SvgTeX x={x + 22} y={(yTop + yBot) / 2} tex={'f_\\#'} size={16} color="var(--violet)" w={40} h={28} />
+			<SvgTeX x={x + 22 * k} y={(yTop + yBot) / 2} tex={'f_\\#'} size={16 * k} color="var(--violet)" w={40 * k} h={28 * k} />
 		{/if}
 		{#if i < xs.length - 1}
 			<line x1={x + (i === 0 ? 16 : 40)} y1={yTop} x2={xs[i + 1] - 40} y2={yTop} class="arr" marker-end="url(#arrow-ivory)" />
 			<line x1={x + (i === 0 ? 16 : 40)} y1={yBot} x2={xs[i + 1] - 40} y2={yBot} class="arr" marker-end="url(#arrow-ivory)" />
-			<SvgTeX x={(x + xs[i + 1]) / 2 + 4} y={yTop - 15} tex={dLab[i]} size={15} color="var(--ink-dim)" w={44} h={24} />
-			<SvgTeX x={(x + xs[i + 1]) / 2 + 4} y={yBot + 15} tex={dLab[i]} size={15} color="var(--ink-dim)" w={44} h={24} />
+			<SvgTeX x={(x + xs[i + 1]) / 2 + 4} y={yTop - 15} tex={dLab[i]} size={15 * k} color="var(--ink-dim)" w={44 * k} h={24 * k} />
+			<SvgTeX x={(x + xs[i + 1]) / 2 + 4} y={yBot + 15} tex={dLab[i]} size={15 * k} color="var(--ink-dim)" w={44 * k} h={24 * k} />
 		{/if}
 	{/each}
-	<SvgTeX x={240} y={246} tex={`\\textcolor{#f4d79c}{f_\\#\\circ\\partial_{${3 - sq}}} \\;=\\; \\textcolor{#5fd6cf}{\\partial_{${3 - sq}}\\circ f_\\#}`} size={16} color="var(--ink-bright)" w={300} h={28} />
+	<SvgTeX x={240} y={246} tex={`\\textcolor{#f4d79c}{f_\\#\\circ\\partial_{${3 - sq}}} \\;=\\; \\textcolor{#5fd6cf}{\\partial_{${3 - sq}}\\circ f_\\#}`} size={16 * k} color="var(--ink-bright)" w={300 * k} h={28 * k} />
 </Svg>
+</div>
 
 <style>
 	.arr {

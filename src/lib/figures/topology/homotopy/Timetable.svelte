@@ -117,10 +117,13 @@
 	onMount(() => stop);
 
 	const speed = (a: number, b: number) => (1 / (b - a)).toFixed(1);
+	// on narrow plates the flower of loops moves below the square, so both can be drawn larger
+	let cw = $state(800);
+	const narrow = $derived(cw < 520);
 </script>
 
-<div class="wrap">
-	<Svg viewBox="0 0 680 330" maxHeight={430} label="A homotopy drawn as a square next to a flower of three loops; a point of the square is the traveller's position on the flower">
+<div class="wrap" bind:clientWidth={cw}>
+	<Svg viewBox={narrow ? '0 0 310 650' : '0 0 680 330'} maxHeight={narrow ? 720 : 430} label="A homotopy drawn as a square next to a flower of three loops; a point of the square is the traveller's position on the flower">
 		<!-- ── the square ─────────────────────────────────────────── -->
 		{#if mode === 'assoc'}
 			<path d="M{sx(0)} {ty(0)} L{sx(0.25)} {ty(0)} L{sx(0.5)} {ty(1)} L{sx(0)} {ty(1)} Z" fill="rgba(242,208,143,0.16)" />
@@ -156,10 +159,10 @@
 			<SvgTeX x={sx(0.5)} y={ty(1) - 18} tex={String.raw`\text{the constant loop}`} size={13} w={150} h={22} />
 		{/if}
 		<rect x={X0} y={Y0} width={SZ} height={SZ} fill="none" stroke="rgba(216,178,110,0.4)" />
-		<SvgTeX x={X0 - 30} y={ty(0)} tex="t=0" size={12} w={50} h={18} color="var(--ink-faint)" />
-		<SvgTeX x={X0 - 30} y={ty(1)} tex="t=1" size={12} w={50} h={18} color="var(--ink-faint)" />
-		<SvgTeX x={sx(0)} y={ty(0) + 40} tex="s=0" size={12} w={40} h={18} color="var(--ink-faint)" />
-		<SvgTeX x={sx(1)} y={ty(0) + 40} tex="s=1" size={12} w={40} h={18} color="var(--ink-faint)" />
+		<SvgTeX x={X0 - 30} y={ty(0)} tex="t=0" size={narrow ? 14 : 12} w={56} h={20} color="var(--ink-faint)" />
+		<SvgTeX x={X0 - 30} y={ty(1)} tex="t=1" size={narrow ? 14 : 12} w={56} h={20} color="var(--ink-faint)" />
+		<SvgTeX x={sx(0)} y={ty(0) + 40} tex="s=0" size={narrow ? 14 : 12} w={46} h={20} color="var(--ink-faint)" />
+		<SvgTeX x={sx(1)} y={ty(0) + 40} tex="s=1" size={narrow ? 14 : 12} w={46} h={20} color="var(--ink-faint)" />
 
 		<!-- the stage-t path, and the moment s -->
 		<line x1={sx(0)} x2={sx(1)} y1={ty(t)} y2={ty(t)} stroke="#fbf6e8" stroke-width="1.6" stroke-opacity="0.8" />
@@ -206,52 +209,54 @@
 			}}
 		/>
 
-		<!-- ── the space X: a flower of loops at x0 ───────────────── -->
-		{#if mode === 'assoc'}
-			<!-- the timetable of the stage-t trip -->
-			<g transform="translate(372 22)">
-				{#each segs as [a, b], k (k)}
-					<rect
-						x={a * 268 + 1}
-						y="0"
-						width={(b - a) * 268 - 2}
-						height="24"
-						rx="5"
-						fill={loops[k].color}
-						fill-opacity={where.k === k ? 0.32 : 0.14}
-						stroke={loops[k].color}
-						stroke-opacity={where.k === k ? 0.9 : 0.45}
-					/>
-					<SvgTeX x={((a + b) / 2) * 268} y={12} tex={loops[k].name} size={15} w={30} h={22} />
-					<SvgTeX x={((a + b) / 2) * 268} y={38} tex={String.raw`\times ${speed(a, b)}`} size={11.5} w={60} h={18} color="var(--ink-faint)" />
-				{/each}
-				<line x1={s * 268} x2={s * 268} y1="-4" y2="28" stroke="#fbf6e8" stroke-width="1.6" />
-			</g>
-		{/if}
-
-		{#each loops as l, k (k)}
-			{@const dim = mode === 'inverse' && k > 0}
-			<path
-				d={pathD(loopPts[k], true)}
-				fill="none"
-				stroke={l.color}
-				stroke-width="2"
-				stroke-opacity={dim ? 0.14 : mode === 'inverse' ? 0.35 : where.k === k ? 0.55 : 0.4}
-				stroke-dasharray={mode === 'inverse' && !dim ? '5 5' : undefined}
-			/>
-			{#if !dim}
-				<SvgTeX x={tip(k)[0]} y={tip(k)[1]} tex={l.name} size={17} color={l.color} w={30} h={26} />
+		<g transform={narrow ? 'translate(-350 320)' : undefined}>
+			<!-- ── the space X: a flower of loops at x0 ───────────────── -->
+			{#if mode === 'assoc'}
+				<!-- the timetable of the stage-t trip -->
+				<g transform="translate(372 22)">
+					{#each segs as [a, b], k (k)}
+						<rect
+							x={a * 268 + 1}
+							y="0"
+							width={(b - a) * 268 - 2}
+							height="24"
+							rx="5"
+							fill={loops[k].color}
+							fill-opacity={where.k === k ? 0.32 : 0.14}
+							stroke={loops[k].color}
+							stroke-opacity={where.k === k ? 0.9 : 0.45}
+						/>
+						<SvgTeX x={((a + b) / 2) * 268} y={12} tex={loops[k].name} size={15} w={30} h={22} />
+						<SvgTeX x={((a + b) / 2) * 268} y={38} tex={String.raw`\times ${speed(a, b)}`} size={narrow ? 13.5 : 11.5} w={60} h={18} color="var(--ink-faint)" />
+					{/each}
+					<line x1={s * 268} x2={s * 268} y1="-4" y2="28" stroke="#fbf6e8" stroke-width="1.6" />
+				</g>
 			{/if}
-		{/each}
-		{#if mode === 'inverse' && t < 0.995}
-			<path d={pathD(reachPts)} fill="none" stroke="var(--gold-bright)" stroke-width="2.4" stroke-opacity="0.55" stroke-linecap="round" />
-			{@const turn = petal(loops[0].dir, 1 - t)}
-			<circle cx={turn[0]} cy={turn[1]} r="3.5" fill="var(--rose)" />
-		{/if}
-		<path d={pathD(trail)} fill="none" stroke={loops[where.k].color} stroke-width="3.2" stroke-linecap="round" filter="url(#glow)" />
-		<circle cx={C[0]} cy={C[1]} r="6" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.4" />
-		<SvgTeX x={C[0] + 18} y={C[1] + 16} tex="x_0" size={15} w={30} h={22} anchor="start" />
-		<circle cx={bead[0]} cy={bead[1]} r="6.5" fill="#fbf6e8" stroke="#060912" stroke-width="1.5" filter="url(#glow)" />
+
+			{#each loops as l, k (k)}
+				{@const dim = mode === 'inverse' && k > 0}
+				<path
+					d={pathD(loopPts[k], true)}
+					fill="none"
+					stroke={l.color}
+					stroke-width="2"
+					stroke-opacity={dim ? 0.14 : mode === 'inverse' ? 0.35 : where.k === k ? 0.55 : 0.4}
+					stroke-dasharray={mode === 'inverse' && !dim ? '5 5' : undefined}
+				/>
+				{#if !dim}
+					<SvgTeX x={tip(k)[0]} y={tip(k)[1]} tex={l.name} size={17} color={l.color} w={30} h={26} />
+				{/if}
+			{/each}
+			{#if mode === 'inverse' && t < 0.995}
+				<path d={pathD(reachPts)} fill="none" stroke="var(--gold-bright)" stroke-width="2.4" stroke-opacity="0.55" stroke-linecap="round" />
+				{@const turn = petal(loops[0].dir, 1 - t)}
+				<circle cx={turn[0]} cy={turn[1]} r="3.5" fill="var(--rose)" />
+			{/if}
+			<path d={pathD(trail)} fill="none" stroke={loops[where.k].color} stroke-width="3.2" stroke-linecap="round" filter="url(#glow)" />
+			<circle cx={C[0]} cy={C[1]} r="6" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.4" />
+			<SvgTeX x={C[0] + 18} y={C[1] + 16} tex="x_0" size={15} w={30} h={22} anchor="start" />
+			<circle cx={bead[0]} cy={bead[1]} r="6.5" fill="#fbf6e8" stroke="#060912" stroke-width="1.5" filter="url(#glow)" />
+		</g>
 	</Svg>
 
 	<p class="readout ui" aria-live="polite">

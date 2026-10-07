@@ -88,7 +88,8 @@
 			<circle cx={p[0]} cy={p[1]} r="9" class="landing" style="opacity:{glow(i)}" />
 		{/each}
 		<circle cx={pts[0][0]} cy={pts[0][1]} r="15" class="start" />
-		<text x={pts[0][0] - 8} y={pts[0][1] - 22} class="lbl">start</text>
+		<!-- inside the square, clear of the first step's label -->
+		<text x={pts[0][0] + 20} y={pts[0][1] + 36} class="lbl">start</text>
 		<circle cx={walker[0]} cy={walker[1]} r="10" class="walker" />
 
 		<!-- altimeter -->
@@ -104,9 +105,13 @@
 				class:bad={!consistent && climbed > 0 && pos === 0}
 			/>
 			<line x1="-6" x2="42" y1={296 - (12 / 36) * 292} y2={296 - (12 / 36) * 292} class="zero" />
-			<text x="50" y={300 - (12 / 36) * 292} class="lbl">start height</text>
+			<text x="50" y={300 - (12 / 36) * 292} class="lbl wide">start height</text>
+			<text x="50" y={300 - (12 / 36) * 292} class="lbl narrow"
+				><tspan x="50" dy="-10">start</tspan><tspan x="50" dy="22">height</tspan></text
+			>
 			<text x="50" y="22" class="big nums">{climbed > 0 ? '+' : ''}{climbed}</text>
-			<text x="50" y="42" class="lbl">height gained</text>
+			<text x="50" y="42" class="lbl wide">height gained</text>
+			<text x="50" y="48" class="lbl narrow"><tspan x="50">height</tspan><tspan x="50" dy="22">gained</tspan></text>
 		</g>
 	</svg>
 	<div class="status ui">
@@ -193,6 +198,31 @@
 	.zero {
 		stroke: var(--ink-faint);
 		stroke-dasharray: 4 3;
+	}
+	.lbl.narrow {
+		display: none;
+	}
+	/* phones: the drawing shrinks to about half size, so its lettering grows */
+	@container figure (max-width: 520px) {
+		.stairs {
+			padding: 0.4rem 0.4rem 0.2rem;
+		}
+		.step text {
+			font-size: 26px;
+		}
+		.lbl {
+			font-size: 21px;
+			letter-spacing: 0.02em;
+		}
+		.lbl.wide {
+			display: none;
+		}
+		.lbl.narrow {
+			display: inline;
+		}
+		.big {
+			font-size: 28px;
+		}
 	}
 	.status {
 		display: flex;

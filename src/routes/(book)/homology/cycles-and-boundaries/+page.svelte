@@ -648,8 +648,8 @@
 <Figure num="3.1.7" title="Holes in dimensions 0, 1 and 2">
 	<HolesByDimension />
 	{#snippet caption()}
-		Left: \(p\) and \(q\) lie in different pieces, so no path has them as its ends — \(b_0\) counts the pieces. Middle: a loop around an empty disk.
-		Right: a closed surface around an empty ball. In each dimension a hole is detected by a cycle (gold) that is not the rim of anything in the space.
+		Dimension 0: \(p\) and \(q\) lie in different pieces, so no path has them as its ends — \(b_0\) counts the pieces. Dimension 1: a loop
+		around an empty disk. Dimension 2: a closed surface around an empty ball. In each dimension a hole is detected by a cycle (gold) that is not the rim of anything in the space.
 	{/snippet}
 </Figure>
 

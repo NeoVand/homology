@@ -15,6 +15,9 @@
 	let py = $state(150);
 	let svg = $state<SVGSVGElement>();
 	let dragging = false;
+	// on narrow plates the drawing is at about half size, so the label of x grows
+	let cw = $state(800);
+	const lk = $derived(cw < 520 ? 1.7 : 1);
 
 	const U = 100; // pixels per unit
 	const CX = 300;
@@ -183,7 +186,7 @@
 	const metricNames: Record<MetricId, string> = { euclid: 'straight-line', taxi: 'taxicab', max: 'max' };
 </script>
 
-<div class="wig">
+<div class="wig" bind:clientWidth={cw}>
 	<Svg bind:svg viewBox="0 0 600 380" maxHeight={420} label="A region of the plane with a draggable point and the largest ball around it that stays inside the region" onpointermove={move} onpointerup={up} onpointerleave={up}>
 		<defs>
 			<pattern id="wig-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
@@ -236,7 +239,7 @@
 			<circle cx={px} cy={py} r="18" fill="transparent" />
 			<circle cx={px} cy={py} r="7" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.5" filter="url(#glow)" />
 		</g>
-		<SvgTeX x={px + 16} y={py - 16} tex="x" color="var(--gold-bright)" size={17} w={20} h={22} anchor="start" />
+		<SvgTeX x={px + 14 * lk} y={py - 14 * lk} tex="x" color="var(--gold-bright)" size={17 * lk} w={20 * lk} h={22 * lk} anchor="start" />
 	</Svg>
 
 	<div class="panel ui">

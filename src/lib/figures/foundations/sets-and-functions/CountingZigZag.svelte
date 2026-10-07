@@ -72,4 +72,14 @@
 		fill: var(--ink) !important;
 		text-anchor: middle;
 	}
+	/* phones: the strip shrinks, so its numbers grow */
+	@container figure (max-width: 34rem) {
+		.bl {
+			font-size: 13.5px !important;
+			transform: translateY(0.6px);
+		}
+		.zl {
+			font-size: 14.5px !important;
+		}
+	}
 </style>

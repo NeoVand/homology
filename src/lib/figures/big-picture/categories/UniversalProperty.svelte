@@ -12,6 +12,14 @@
 
 	let tab = $state<'set' | 'gcd' | 'ker'>('set');
 
+	// On a narrow plate the drawings are scaled down: crop the poset to its nodes, and scale
+	// the labels up (k ≥ 1) so they stay readable.
+	let width = $state(640);
+	const narrow = $derived(width > 0 && width < 520);
+	const k = $derived(Math.min(1.7, Math.max(1, (0.9 * 640) / (width || 640))));
+	const ke = $derived(Math.min(k, 1.4)); // labels inside the element dots
+	const kp = $derived(Math.min(1.5, Math.max(1, (0.9 * 440) / (width || 640)))); // the cropped poset
+
 	// ── 1. product of sets ────────────────────────────────────────────────
 	const Xs = ['u', 'v', 'w'];
 	const As = ['1', '2', '3'];
@@ -99,24 +107,24 @@
 	};
 </script>
 
-<div class="up">
+<div class="up" bind:clientWidth={width}>
 	{#if tab === 'set'}
 		<Svg viewBox="20 0 640 410" maxHeight={440} label="The product of two finite sets and the unique map into it">
 			<!-- boxes -->
 			<rect x="214" y="34" width="220" height="56" rx="16" class="box" />
-			<SvgTeX x={194} y={62} tex="X" size={18} color="var(--ink)" w={30} h={26} />
+			<SvgTeX x={194 - 6 * (k - 1)} y={62} tex="X" size={18 * k} color="var(--ink)" w={30 * k} h={26 * k} />
 			<rect x="70" y="172" width="56" height="180" rx="16" class="box" />
-			<SvgTeX x={98} y={372} tex="A" size={18} w={30} h={26} />
+			<SvgTeX x={98} y={372 + 5 * (k - 1)} tex="A" size={18 * k} w={30 * k} h={26 * k} />
 			<rect x="530" y="232" width="76" height="136" rx="16" class="box" />
-			<SvgTeX x={568} y={388} tex="B" size={18} w={30} h={26} />
+			<SvgTeX x={568} y={388 + 5 * (k - 1)} tex="B" size={18 * k} w={30 * k} h={26 * k} />
 			<rect x="206" y="170" width="242" height="186" rx="18" class="box prod" />
-			<SvgTeX x={327} y={378} tex={'A\\times B'} size={18} color="var(--violet)" w={80} h={26} />
+			<SvgTeX x={327} y={378 + 5 * (k - 1)} tex={'A\\times B'} size={18 * k} color="var(--violet)" w={80 * k} h={26 * k} />
 
 			<!-- projections: p₁ reads the gold entry, p₂ the teal one -->
 			<path d="M 204 300 L 130 300" class="proj" marker-end="url(#arrow-dim)" />
 			<path d="M 450 300 L 526 300" class="proj" marker-end="url(#arrow-dim)" />
-			<SvgTeX x={166} y={316} tex="p_1" size={14} color="var(--ink-faint)" w={30} h={20} />
-			<SvgTeX x={488} y={316} tex="p_2" size={14} color="var(--ink-faint)" w={30} h={20} />
+			<SvgTeX x={166} y={316 + 4 * (k - 1)} tex="p_1" size={14 * k} color="var(--ink-faint)" w={30 * k} h={20 * k} />
+			<SvgTeX x={488} y={316 + 4 * (k - 1)} tex="p_2" size={14 * k} color="var(--ink-faint)" w={30 * k} h={20 * k} />
 
 			<!-- maps from X -->
 			{#each Xs as _, i (i)}
@@ -133,19 +141,19 @@
 			{#each Xs as x, i (i)}
 				{@const [px, py] = XP(i)}
 				<g class="el" class:act={active === i} role="button" tabindex="0" aria-label="element {x}" onclick={() => (active = i)} onkeydown={(e) => e.key === 'Enter' && (active = i)}>
-					<circle cx={px} cy={py} r="14" class="dotX" />
-					<SvgTeX x={px} y={py} tex={x} size={15} color="#1a1206" w={20} h={20} />
+					<circle cx={px} cy={py} r={14 * ke} class="dotX" />
+					<SvgTeX x={px} y={py} tex={x} size={15 * ke} color="#1a1206" w={20 * ke} h={20 * ke} />
 				</g>
 			{/each}
 			{#each As as a, i (i)}
 				{@const [px, py] = AP(i)}
-				<circle cx={px} cy={py} r="13" class="dotA" />
-				<SvgTeX x={px} y={py} tex={a} size={14} color="#1a1206" w={20} h={20} />
+				<circle cx={px} cy={py} r={13 * ke} class="dotA" />
+				<SvgTeX x={px} y={py} tex={a} size={14 * ke} color="#1a1206" w={20 * ke} h={20 * ke} />
 			{/each}
 			{#each Bs as b, j (j)}
 				{@const [px, py] = BP(j)}
-				<circle cx={px} cy={py} r="13" class="dotB" />
-				<SvgTeX x={px} y={py} tex={b} size={14} color="#06201e" w={20} h={20} />
+				<circle cx={px} cy={py} r={13 * ke} class="dotB" />
+				<SvgTeX x={px} y={py} tex={b} size={14 * ke} color="#06201e" w={20 * ke} h={20 * ke} />
 			{/each}
 			{#each As as a, i (i)}
 				{#each Bs as b, j (j)}
@@ -153,7 +161,7 @@
 					{@const hit = h[active][0] === i && h[active][1] === j}
 					<g class="cell" role="button" tabindex="0" aria-label="pair ({a}, {b})" onclick={() => (h[active] = [i, j])} onkeydown={(e) => e.key === 'Enter' && (h[active] = [i, j])}>
 						<rect x={px - 44} y={py - 17} width="88" height="34" rx="10" class="pair" class:hit />
-						<SvgTeX x={px} y={py} tex={`(\\cyc{${a}},\\bdy{${b}})`} size={14} color="var(--ink)" w={80} h={22} />
+						<SvgTeX x={px} y={py} tex={`(\\cyc{${a}},\\bdy{${b}})`} size={14 * k} color="var(--ink)" w={80 * k} h={22 * k} />
 					</g>
 				{/each}
 			{/each}
@@ -180,7 +188,7 @@
 			{/each}
 		</div>
 	{:else if tab === 'gcd'}
-		<Svg viewBox="0 0 640 420" maxHeight={440} label="The divisors of 36 ordered by divisibility; the gcd is a product and the lcm a coproduct">
+		<Svg viewBox={narrow ? '100 0 440 420' : '0 0 640 420'} maxHeight={440} label="The divisors of 36 ordered by divisibility; the gcd is a product and the lcm a coproduct">
 			{#each divs as d (d.n)}
 				{@const [x, y] = DP(d.i, d.j)}
 				{#if d.i < 2}
@@ -205,10 +213,10 @@
 				{@const isSel = d.n === pa || d.n === pb}
 				<g class="dv" role="button" tabindex="0" aria-label="choose {d.n}" onclick={() => pickDiv(d.n)} onkeydown={(e) => e.key === 'Enter' && pickDiv(d.n)}>
 					<circle cx={x} cy={y} r={isBest ? 22 : 19} class="dnode" class:cone={inCone} class:best={isBest} class:sel={isSel} />
-					<SvgTeX x={x} y={y} tex={String(d.n)} size={15} color={isBest ? '#1a1206' : isSel ? 'var(--teal)' : 'var(--ink)'} w={36} h={22} />
+					<SvgTeX x={x} y={y} tex={String(d.n)} size={15 * kp} color={isBest ? '#1a1206' : isSel ? 'var(--teal)' : 'var(--ink)'} w={36} h={22} />
 				</g>
 			{/each}
-			<text x="20" y="30" class="t-ui">ARROW a → b MEANS a DIVIDES b</text>
+			<text x={narrow ? 104 : 20} y="30" class="t-ui" style="font-size:{11 * kp}px">ARROW a → b MEANS a DIVIDES b</text>
 		</Svg>
 		<div class="readout ui">
 			{#if !co}
@@ -449,9 +457,20 @@
 		gap: 0.6rem;
 		padding: 0 0.8rem;
 	}
-	@media (max-width: 640px) {
+	@container figure (max-width: 40rem) {
 		.kgrid {
 			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+	/* a phone: keep each row of the table on one line */
+	@container figure (max-width: 30rem) {
+		.table {
+			padding: 0 0.4rem 0.8rem;
+		}
+		.row {
+			flex-wrap: nowrap;
+			gap: 0.3rem 0.4rem;
+			padding: 0.2rem 0.3rem;
 		}
 	}
 	.bg {

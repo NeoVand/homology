@@ -53,7 +53,8 @@
 				{/each}
 				{#each T as p, i (i)}
 					<circle cx={p[0]} cy={p[1]} r="5.5" class="v" />
-					<SvgTeX x={p[0] + (i === 0 ? -10 : i === 1 ? 10 : 0)} y={p[1] + (i === 2 ? -15 : 15)} tex={String(i)} size={14} w={24} h={22} />
+					<!-- straight below (or above) its corner: an outward nudge would set the first triangle's 1 against the second's 0 -->
+					<SvgTeX x={p[0]} y={p[1] + (i === 2 ? -15 : 17)} tex={String(i)} size={14} w={24} h={22} />
 				{/each}
 			{/each}
 		</Svg>

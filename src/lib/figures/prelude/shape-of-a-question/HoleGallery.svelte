@@ -29,8 +29,8 @@
 	let api: { set(m: Mode): void } | null = null;
 
 	function setup({ THREE, scene, label, invalidate }: SceneContext) {
-		const X = narrow ? [-1.6, 1.6, -1.6, 1.6] : [-5.1, -1.75, 1.7, 5.15];
-		const Y = narrow ? [2.85, 2.85, -1.35, -1.35] : [0, 0, 0, 0];
+		const X = narrow ? [-1.5, 1.5, -1.5, 1.5] : [-5.1, -1.75, 1.7, 5.15];
+		const Y = narrow ? [3.25, 3.25, -1.55, -1.55] : [0, 0, 0, 0];
 
 		// point
 		const pt = glowPoint([X[0], Y[0], 0], { color: 'ivory', size: 0.09, halo: 8 });
@@ -125,7 +125,7 @@
 <Scene3D
 	{setup}
 	height={narrow ? 520 : 360}
-	camera={narrow ? { position: [0, 0.5, 14], fov: 36 } : { position: [0, 0.5, 10.6], fov: 36 }}
+	camera={narrow ? { position: [0, 0.5, 15], fov: 36 } : { position: [0, 0.5, 10.6], fov: 36 }}
 	controls={false}
 	label="A point, a circle, a sphere and a torus, with their holes of each dimension highlighted"
 />

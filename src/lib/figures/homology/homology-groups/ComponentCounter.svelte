@@ -91,9 +91,11 @@
 			else selected = [...selected, v];
 		}
 	}
+	// on phones the graph is drawn small, so its vertex numbers grow
+	let cw = $state(800);
 </script>
 
-<div class="cc">
+<div class="cc" bind:clientWidth={cw}>
 	<div class="pic">
 		<Svg viewBox={L.viewBox} maxHeight={330} label="A graph with ten vertices. Present edges are solid; dashed edges can be added by clicking. Each connected piece has its own colour.">
 			<FlatComplex
@@ -107,6 +109,7 @@
 				interactive={['edge', 'vertex']}
 				onpick={pick}
 				ariaName="graph"
+				labelSize={cw < 520 ? 1.6 : 1}
 			/>
 			{#each selected as v (v)}
 				{@const d = L.verts.find((x) => x.v === v)!}

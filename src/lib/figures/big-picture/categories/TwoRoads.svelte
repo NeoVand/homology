@@ -32,34 +32,39 @@
 	const along = (a: Pt, b: Pt, c2: Pt, s: number) => (s <= 1 ? lerp(a, b, s) : lerp(b, c2, s - 1));
 	const tokA = $derived(along(TL, TR, BR, t));
 	const tokB = $derived(along(TL, BL, BR, t));
+
+	// On a narrow plate the drawing is scaled down; scale the labels up (k ≥ 1) so they stay readable.
+	let width = $state(600);
+	const k = $derived(Math.min(1.7, Math.max(1, 570 / (width || 600))));
 </script>
 
-<div class="roads">
-	<Svg viewBox="0 0 600 360" maxHeight={380} label="A square of temperature conversions; both routes from the top left to the bottom right give the same answer">
+<div class="roads" bind:clientWidth={width}>
+	<Svg viewBox="0 {-8 * (k - 1)} 600 {360 + 16 * (k - 1)}" maxHeight={380} label="A square of temperature conversions; both routes from the top left to the bottom right give the same answer">
 		<!-- arrows -->
 		<path d="M 196 80 L 400 80" class="ar a" marker-end="url(#arrow-gold)" />
 		<path d="M 470 104 L 470 254" class="ar a" marker-end="url(#arrow-gold)" />
 		<path d="M 130 104 L 130 254" class="ar b" marker-end="url(#arrow-teal)" />
 		<path d="M 196 280 L 400 280" class="ar b" marker-end="url(#arrow-teal)" />
-		<SvgTeX x={300} y={60} tex={'x \\mapsto \\tfrac95 x + 32'} size={14} color="var(--gold-bright)" w={170} h={26} />
-		<SvgTeX x={300} y={302} tex={'x \\mapsto \\tfrac95 x + 32'} size={14} color="var(--teal)" w={170} h={26} />
-		<SvgTeX x={70} y={180} tex={'+10\\,^\\circ\\mathrm{C}'} size={15} color="var(--teal)" w={90} h={24} />
-		<SvgTeX x={534} y={180} tex={`+${warm}\\,^\\circ\\mathrm{F}`} size={15} color={commutes ? 'var(--gold-bright)' : 'var(--rose)'} w={90} h={24} />
+		<SvgTeX x={300} y={60 - 6 * (k - 1)} tex={'x \\mapsto \\tfrac95 x + 32'} size={14 * k} color="var(--gold-bright)" w={170 * k} h={26 * k} />
+		<SvgTeX x={300} y={302 + 6 * (k - 1)} tex={'x \\mapsto \\tfrac95 x + 32'} size={14 * k} color="var(--teal)" w={170 * k} h={26 * k} />
+		<SvgTeX x={66} y={180} tex={'+10\\,^\\circ\\mathrm{C}'} size={15 * k} color="var(--teal)" w={90 * k} h={24 * k} />
+		<SvgTeX x={534} y={180} tex={`+${warm}\\,^\\circ\\mathrm{F}`} size={15 * k} color={commutes ? 'var(--gold-bright)' : 'var(--rose)'} w={90 * k} h={24 * k} />
 
 		<!-- corners -->
-		{#each [[TL, `${fmt(c)}\\,^\\circ\\mathrm{C}`, 'Celsius'], [TR, `${fmt(F(c))}\\,^\\circ\\mathrm{F}`, 'Fahrenheit'], [BL, `${fmt(c + 10)}\\,^\\circ\\mathrm{C}`, 'Celsius'], [BR, '?', 'Fahrenheit']] as [P, tx, cap], k (k)}
+		{#each [[TL, `${fmt(c)}\\,^\\circ\\mathrm{C}`, 'Celsius'], [TR, `${fmt(F(c))}\\,^\\circ\\mathrm{F}`, 'Fahrenheit'], [BL, `${fmt(c + 10)}\\,^\\circ\\mathrm{C}`, 'Celsius'], [BR, '?', 'Fahrenheit']] as [P, tx, cap], i (i)}
 			<g transform="translate({(P as Pt)[0]} {(P as Pt)[1]})">
-				<rect x="-62" y="-24" width="124" height="48" rx="14" class="node" class:goal={k === 3} />
-				<SvgTeX x={0} y={-1} tex={String(tx)} size={16} color={k === 3 ? 'var(--ink-faint)' : 'var(--ink-bright)'} w={120} h={26} />
-				<text y="40" text-anchor="middle" class="t-ui">{cap}</text>
+				<rect x="-62" y="-24" width="124" height="48" rx="14" class="node" class:goal={i === 3} />
+				<SvgTeX x={0} y={-1} tex={String(tx)} size={16 * Math.min(k, 1.45)} color={i === 3 ? 'var(--ink-faint)' : 'var(--ink-bright)'} w={120} h={26 * k} />
+				<!-- captions on the outer side of the square, clear of the vertical arrows -->
+				<text y={i < 2 ? -32 - 4 * (k - 1) : 40 + 10 * (k - 1)} text-anchor="middle" class="t-ui" style="font-size:{11 * k}px">{cap}</text>
 			</g>
 		{/each}
 
 		<!-- results at the corner -->
 		{#if t >= 2}
 			<g transform="translate({BR[0]} {BR[1] - 56})">
-				<rect x="-74" y="-15" width="148" height="30" rx="15" class="res" class:bad={!commutes} />
-				<SvgTeX x={0} y={0} tex={commutes ? `${fmt(routeA)} = ${fmt(routeB)}` : `${fmt(routeA)} \\neq ${fmt(routeB)}`} size={14} color="#0b1122" w={146} h={24} />
+				<rect x={-74 * Math.min(k, 1.3)} y={-15 * Math.min(k, 1.3)} width={148 * Math.min(k, 1.3)} height={30 * Math.min(k, 1.3)} rx={15 * Math.min(k, 1.3)} class="res" class:bad={!commutes} />
+				<SvgTeX x={0} y={0} tex={commutes ? `${fmt(routeA)} = ${fmt(routeB)}` : `${fmt(routeA)} \\neq ${fmt(routeB)}`} size={14 * Math.min(k, 1.3)} color="#0b1122" w={146 * Math.min(k, 1.3)} h={24 * k} />
 			</g>
 		{/if}
 

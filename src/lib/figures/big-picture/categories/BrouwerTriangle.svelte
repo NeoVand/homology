@@ -49,13 +49,17 @@
 		const uy = dy / L;
 		return `M ${a[0] + ux * gap} ${a[1] + uy * gap} L ${b[0] - ux * gap} ${b[1] - uy * gap}`;
 	}
+	// On a narrow plate the drawing is scaled down; scale the labels up (k ≥ 1) so they stay readable.
+	let width = $state(640);
+	const k = $derived(Math.min(1.7, Math.max(1, (0.9 * 640) / (width || 640))));
+
 	const pushArrows = Array.from({ length: 8 }, (_, k) => {
 		const a = (k / 8) * 2 * Math.PI + 0.2;
 		return { x1: SD[0] + 12 * Math.cos(a), y1: SD[1] + 12 * Math.sin(a), x2: SD[0] + 34 * Math.cos(a), y2: SD[1] + 34 * Math.sin(a) };
 	});
 </script>
 
-<div class="brouwer">
+<div class="brouwer" bind:clientWidth={width}>
 	<Svg viewBox="0 0 640 520" maxHeight={560} label="The triangle of spaces S¹ to D² to S¹, and its image under H₁: ℤ to 0 to ℤ">
 		<defs>
 			<radialGradient id="bt-disk" cx="45%" cy="40%" r="65%">
@@ -63,16 +67,16 @@
 				<stop offset="1" stop-color="#5fd6cf" stop-opacity="0.08" />
 			</radialGradient>
 		</defs>
-		<text x="16" y="26" class="t-ui">SPACES</text>
-		{#if step >= 3}<text x="16" y="282" class="t-ui">GROUPS · AFTER APPLYING H₁</text>{/if}
+		<text x="16" y="26" class="t-ui" style="font-size:{11 * k}px">SPACES</text>
+		{#if step >= 3}<text x="16" y="282" class="t-ui" style="font-size:{11 * k}px">GROUPS · AFTER APPLYING H₁</text>{/if}
 
 		<!-- ── spaces ── -->
 		<circle cx={SL[0]} cy={SL[1]} r="30" class="ring" />
-		<SvgTeX x={SL[0]} y={SL[1] + 50} tex="S^1" size={17} w={40} h={24} />
+		<SvgTeX x={SL[0]} y={SL[1] + 50 + 8 * (k - 1)} tex="S^1" size={17 * k} w={40 * k} h={24 * k} />
 		<circle cx={SD[0]} cy={SD[1]} r="42" fill="url(#bt-disk)" class="disk" />
-		<SvgTeX x={SD[0] + 62} y={SD[1] - 26} tex="D^2" size={17} w={40} h={24} />
+		<SvgTeX x={SD[0] + 62 + 6 * (k - 1)} y={SD[1] - 26} tex="D^2" size={17 * k} w={40 * k} h={24 * k} />
 		<circle cx={SR[0]} cy={SR[1]} r="30" class="ring" />
-		<SvgTeX x={SR[0]} y={SR[1] + 50} tex="S^1" size={17} w={40} h={24} />
+		<SvgTeX x={SR[0]} y={SR[1] + 50 + 8 * (k - 1)} tex="S^1" size={17 * k} w={40 * k} h={24 * k} />
 
 		{#if step === 1 || step === 2}
 			{#each pushArrows as a, k (k)}
@@ -82,11 +86,11 @@
 		{/if}
 
 		<path d={seg(SL, SD, 40)} class="map" marker-end="url(#arrow-ivory)" />
-		<SvgTeX x={(SL[0] + SD[0]) / 2 - 18} y={(SL[1] + SD[1]) / 2 - 14} tex="i" size={16} w={30} h={24} />
+		<SvgTeX x={(SL[0] + SD[0]) / 2 - 18 * k} y={(SL[1] + SD[1]) / 2 - 14 * k} tex="i" size={16 * k} w={30 * k} h={24 * k} />
 
 		{#if step >= 1}
 			<path d={seg(SD, SR, 40)} class="map retr" class:dead={step >= 5} marker-end="url(#arrow-rose)" />
-			<SvgTeX x={(SR[0] + SD[0]) / 2 + 18} y={(SR[1] + SD[1]) / 2 - 14} tex="r" size={16} color="var(--rose)" w={30} h={24} />
+			<SvgTeX x={(SR[0] + SD[0]) / 2 + 18 * k} y={(SR[1] + SD[1]) / 2 - 14 * k} tex="r" size={16 * k} color="var(--rose)" w={30 * k} h={24 * k} />
 			{#if step >= 5}
 				<g transform="translate({(SR[0] + SD[0]) / 2} {(SR[1] + SD[1]) / 2})" class="cross">
 					<line x1="-12" y1="-12" x2="12" y2="12" />
@@ -96,10 +100,10 @@
 		{/if}
 		{#if step >= 2}
 			<path d={seg(SL, SR, 36)} class="map idm" marker-end="url(#arrow-gold)" />
-			<SvgTeX x={320} y={SL[1] + 18} tex={'\\id_{S^1}'} size={15} color="var(--gold-bright)" w={70} h={24} />
+			<SvgTeX x={320} y={SL[1] + 18 + 5 * (k - 1)} tex={'\\id_{S^1}'} size={15 * k} color="var(--gold-bright)" w={70 * k} h={24 * k} />
 			{#if step === 2}
 				<path d="M {SL[0] + 40} {SL[1] - 14} Q 320 120 {SR[0] - 40} {SR[1] - 14}" class="commute" />
-				<text x="320" y="164" text-anchor="middle" class="t-ui">commutes</text>
+				<text x="320" y="164" text-anchor="middle" class="t-ui" style="font-size:{11 * k}px">commutes</text>
 			{/if}
 		{/if}
 
@@ -107,42 +111,45 @@
 		{#if step >= 3}
 			<g class="beam-g">
 				<path d="M 600 120 L 600 380" class="beam" marker-end="url(#arrow-gold)" />
-				<rect x="582" y="236" width="36" height="26" rx="13" class="pill" />
-				<SvgTeX x={600} y={249} tex="H_1" size={15} color="var(--gold-bright)" w={36} h={24} />
+				<rect x={600 - 18 * k} y={249 - 13 * k} width={36 * k} height={26 * k} rx={13 * k} class="pill" />
+				<SvgTeX x={600} y={249} tex="H_1" size={15 * k} color="var(--gold-bright)" w={36 * k} h={24 * k} />
 			</g>
 
 			<!-- ── groups ── -->
-			{#each [[GL, '\\Z'], [GD, '0'], [GR, '\\Z']] as [P, t], k (k)}
+			{#each [[GL, '\\Z'], [GD, '0'], [GR, '\\Z']] as [P, t], i (i)}
 				<g transform="translate({(P as Pt)[0]} {(P as Pt)[1]})">
-					<rect x="-28" y="-20" width="56" height="40" rx="12" class="gnode" class:zero={k === 1} />
-					<SvgTeX x={0} y={0} tex={String(t)} size={19} color={k === 1 ? 'var(--rose)' : 'var(--ink-bright)'} w={50} h={28} />
+					<rect x="-28" y="-20" width="56" height="40" rx="12" class="gnode" class:zero={i === 1} />
+					<SvgTeX x={0} y={0} tex={String(t)} size={19 * Math.min(k, 1.3)} color={i === 1 ? 'var(--rose)' : 'var(--ink-bright)'} w={50} h={28 * k} />
 				</g>
 			{/each}
-			<SvgTeX x={GL[0] - 64} y={GL[1]} tex={'H_1(S^1)'} size={13} color="var(--ink-faint)" w={80} h={20} />
-			<SvgTeX x={GD[0] + 72} y={GD[1] - 22} tex={'H_1(D^2)'} size={13} color="var(--ink-faint)" w={80} h={20} />
-			<SvgTeX x={GR[0] + 66} y={GR[1]} tex={'H_1(S^1)'} size={13} color="var(--ink-faint)" w={80} h={20} />
+			<SvgTeX x={GL[0] - 64 - 20 * (k - 1)} y={GL[1]} tex={'H_1(S^1)'} size={13 * k} color="var(--ink-faint)" w={80 * k} h={20 * k} />
+			<SvgTeX x={GD[0] + 72 + 24 * (k - 1)} y={GD[1] - 22} tex={'H_1(D^2)'} size={13 * k} color="var(--ink-faint)" w={80 * k} h={20 * k} />
+			<SvgTeX x={GR[0] + 66 + 20 * (k - 1)} y={GR[1]} tex={'H_1(S^1)'} size={13 * k} color="var(--ink-faint)" w={80 * k} h={20 * k} />
 
 			<path d={seg(GL, GD, 34)} class="map" marker-end="url(#arrow-ivory)" />
-			<SvgTeX x={(GL[0] + GD[0]) / 2 - 22} y={(GL[1] + GD[1]) / 2 - 12} tex="i_*" size={15} w={36} h={24} />
+			<SvgTeX x={(GL[0] + GD[0]) / 2 - 22 * k} y={(GL[1] + GD[1]) / 2 - 12 * k} tex="i_*" size={15 * k} w={36 * k} h={24 * k} />
 			<path d={seg(GD, GR, 34)} class="map" marker-end="url(#arrow-rose)" />
-			<SvgTeX x={(GR[0] + GD[0]) / 2 + 22} y={(GR[1] + GD[1]) / 2 - 12} tex="r_*" size={15} color="var(--rose)" w={36} h={24} />
+			<SvgTeX x={(GR[0] + GD[0]) / 2 + 22 * k} y={(GR[1] + GD[1]) / 2 - 12 * k} tex="r_*" size={15 * k} color="var(--rose)" w={36 * k} h={24 * k} />
 			<path d={seg(GL, GR, 36)} class="map idm" marker-end="url(#arrow-gold)" />
-			<SvgTeX x={320} y={GL[1] + 18} tex={'\\id_{\\Z}'} size={15} color="var(--gold-bright)" w={60} h={24} />
+			<SvgTeX x={320} y={GL[1] + 18 + 5 * (k - 1)} tex={'\\id_{\\Z}'} size={15 * k} color="var(--gold-bright)" w={60 * k} h={24 * k} />
 		{/if}
 
 		{#if step >= 4}
-			<g transform="translate({tokA[0]} {tokA[1] - 26})">
-				<circle r="13" class="token" class:crushed={tokAValue === '0'} />
-				<text text-anchor="middle" dy="5" class="tok-t">{tokAValue}</text>
+			{@const kt = Math.min(k, 1.4)}
+			<g transform="translate({tokA[0]} {tokA[1] - 26 - 6 * (k - 1)})">
+				<circle r={13 * kt} class="token" class:crushed={tokAValue === '0'} />
+				<text text-anchor="middle" dy={5 * kt} class="tok-t" style="font-size:{14 * kt}px">{tokAValue}</text>
 			</g>
-			<g transform="translate({tokB[0]} {tokB[1] + 34})">
-				<circle r="13" class="token" />
-				<text text-anchor="middle" dy="5" class="tok-t">1</text>
+			<g transform="translate({tokB[0]} {tokB[1] + 34 + 6 * (k - 1)})">
+				<circle r={13 * kt} class="token" />
+				<text text-anchor="middle" dy={5 * kt} class="tok-t" style="font-size:{14 * kt}px">1</text>
 			</g>
 			{#if tok >= 2}
-				<g transform="translate({GR[0]} {GR[1] - 58})">
-					<rect x="-46" y="-15" width="92" height="30" rx="15" class="clash" />
-					<SvgTeX x={0} y={0} tex={'0 \\neq 1'} size={16} color="#fff" w={90} h={26} />
+				<!-- on a phone the larger labels leave no room beside r_*: the pill moves up, into the gap below the H₁ pill -->
+				{@const kc = Math.min(k, 1.25)}
+				<g transform={k > 1.2 ? 'translate(535 305)' : `translate(${GR[0]} ${GR[1] - 58})`}>
+					<rect x={-46 * kc} y={-15 * kc} width={92 * kc} height={30 * kc} rx={15 * kc} class="clash" />
+					<SvgTeX x={0} y={0} tex={'0 \\neq 1'} size={16 * kc} color="#fff" w={90 * kc} h={26 * kc} />
 				</g>
 			{/if}
 		{/if}
@@ -238,7 +245,7 @@
 	.tok-t {
 		font-family: var(--font-ui);
 		font-weight: 700;
-		font-size: 14px !important;
+		font-size: 14px;
 		fill: #1a1206 !important;
 	}
 	.clash {

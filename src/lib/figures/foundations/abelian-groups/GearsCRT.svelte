@@ -229,4 +229,10 @@
 		opacity: 0.35;
 		cursor: default;
 	}
+	/* phones: the drawing shrinks, so its numbers grow */
+	@container figure (max-width: 34rem) {
+		.num {
+			font-size: 14px !important;
+		}
+	}
 </style>

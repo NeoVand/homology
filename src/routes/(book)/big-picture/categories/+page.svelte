@@ -347,7 +347,7 @@
 	> had when they first appeared in <Ref to="foundations/sets-and-functions" />; now we will use them constantly.
 </p>
 
-<Figure num="5.1.2" title="All roads agree" hint="Drag the temperature · press “Follow both roads”">
+<Figure num="5.1.2" title="All roads agree" hint="Set the starting temperature with the slider · press “Follow both roads”">
 	<TwoRoads />
 	{#snippet caption()}
 		A commutative square from everyday life. Converting Celsius to Fahrenheit and then warming by \(18^\circ\mathrm F\) gives the

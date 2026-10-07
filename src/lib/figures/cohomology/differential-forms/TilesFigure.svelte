@@ -4,6 +4,7 @@
 	// interior edges cancel and only the outer boundary survives.
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
+	import TeX from '$lib/components/prose/TeX.svelte';
 	import StepControls from '$lib/components/ui/StepControls.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 
@@ -48,6 +49,9 @@
 	];
 
 	const L = $derived(layouts[step]);
+	// On a narrow plate the picture is cropped to the tiles and the formula moves below it.
+	let width = $state(640);
+	const narrow = $derived(width > 0 && width < 520);
 
 	// oriented edges of every cell, counterclockwise on screen (y down → walk: bottom → right → top → left)
 	const edges = $derived.by(() => {
@@ -118,8 +122,8 @@
 	})();
 </script>
 
-<div class="tiles">
-	<Svg viewBox="0 0 640 360" maxHeight={430} label="Squares tiling a region: the circulations of neighbouring squares cancel along shared edges.">
+<div class="tiles" bind:clientWidth={width}>
+	<Svg viewBox={narrow ? '100 30 440 270' : '0 0 640 360'} maxHeight={430} label="Squares tiling a region: the circulations of neighbouring squares cancel along shared edges.">
 		{#key step}
 			<g class="stage">
 				{#each L.cells as [i, j] (i + ',' + j)}
@@ -150,12 +154,17 @@
 					<path d={smoothBoundary} class="smooth" />
 				{/if}
 				{#if step === 1}
-					<text x="320" y={L.oy - 14} text-anchor="middle" class="t-ui cancel">CANCELS</text>
+					<text x="320" y={L.oy - 14} text-anchor="middle" class="t-ui cancel" class:big={narrow}>CANCELS</text>
 				{/if}
 			</g>
 		{/key}
-		<SvgTeX x={320} y={334} tex={caption} color="var(--ink-bright)" size={17} w={600} h={36} />
+		{#if !narrow}
+			<SvgTeX x={320} y={334} tex={caption} color="var(--ink-bright)" size={17} w={600} h={36} />
+		{/if}
 	</Svg>
+	{#if narrow}
+		<div class="capnote"><TeX tex={caption} /></div>
+	{/if}
 	<Controls>
 		<StepControls bind:step count={4} {labels} interval={2200} />
 	</Controls>
@@ -219,5 +228,15 @@
 		fill: var(--violet);
 		font-size: 10px;
 		letter-spacing: 0.2em;
+	}
+	.cancel.big {
+		font-size: 14px !important;
+		letter-spacing: 0.12em;
+	}
+	.capnote {
+		text-align: center;
+		color: var(--ink-bright);
+		padding: 0.2rem 1rem 0.4rem;
+		min-height: 2.6rem;
 	}
 </style>

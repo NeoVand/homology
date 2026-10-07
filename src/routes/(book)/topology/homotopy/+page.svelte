@@ -551,7 +551,7 @@
 <Figure num="2.3.4" title="Timetables" hint="Drag the point in the square · run the trip">
 	<Timetable />
 	{#snippet caption()}
-		Left: the square of a homotopy \(H\), with trip time \(s\) running across and movie time \(t\) running up. Right: the space, three
+		The square of a homotopy \(H\), with trip time \(s\) running across and movie time \(t\) running up, and the space, three
 		loops at \(x_0\). Each point \((s,t)\) of the square is a position \(H(s,t)\) in the space: the white bead. Sliding the two
 		breakpoints from \(\tfrac14, \tfrac12\) to \(\tfrac12, \tfrac34\) turns \((\alpha\cdot\beta)\cdot\gamma\) into
 		\(\alpha\cdot(\beta\cdot\gamma)\). Choose “Inverses” to see \(\alpha\cdot\bar\alpha\) shrink to the constant loop by turning back
@@ -709,7 +709,7 @@
 	<WindingNumber />
 	{#snippet caption()}
 		As the probe runs round the loop, the dashed ray from the puncture turns; the teal spiral records the total angle so far, and the
-		graph on the right plots it in turns. This graph is the loop <em>lifted</em> to the real line. It always ends on a whole number — the
+		graph plots it in turns. This graph is the loop <em>lifted</em> to the real line. It always ends on a whole number — the
 		winding number. Deform the loop however you like: the end value cannot change unless you drag the loop across the puncture, where it
 		jumps.
 	{/snippet}
@@ -810,8 +810,8 @@
 <Figure num="2.3.7" title="Loops on the figure eight" hint="Build a word from the letter keys · tap a letter to remove it · pull it tight">
 	<LoopWords />
 	{#snippet caption()}
-		Left: the loop, one petal per letter, numbered in order (dashed petals cancel). Middle: the same trip as a walk on an infinite tree,
-		one direction per letter — this tree is the “staircase” of the figure eight, and the walk’s end point is the reduced word. Right: the
+		First the loop, one petal per letter, numbered in order (dashed petals cancel). Then the same trip as a walk on an infinite tree,
+		one direction per letter — this tree is the “staircase” of the figure eight, and the walk’s end point is the reduced word. Last, the
 		walk on the grid \(\Z^2\), which only remembers how many steps went each way. Compare \(ab\) with \(ba\): different ends on the tree,
 		the same end on the grid.
 	{/snippet}

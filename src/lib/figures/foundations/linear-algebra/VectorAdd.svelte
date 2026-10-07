@@ -12,6 +12,9 @@
 	let u = $state<V2>([3, 1]);
 	let v = $state<V2>([-1, 2]);
 	let c = $state(1.5);
+	// on narrow plates the drawing shrinks, so its labels grow
+	let cw = $state(800);
+	const lk = $derived(cw < 460 ? 1.35 : 1);
 
 	const s = $derived(add(u, v));
 	const cu = $derived(mul(c, u));
@@ -54,12 +57,12 @@
 	const paren = (x: number) => (x < 0 ? `(${tfmt(x)})` : tfmt(x));
 	const off = (p: V2, d: V2): V2 => {
 		const L = len(d) || 1;
-		return add(p, mul(0.55 / L, d));
+		return add(p, mul((0.55 * lk) / L, d));
 	};
 </script>
 
 <div class="va">
-	<div class="canvas">
+	<div class="canvas" bind:clientWidth={cw}>
 		<Svg
 			viewBox="0 0 {view.w} {view.h}"
 			maxHeight={420}
@@ -89,11 +92,11 @@
 
 			{#if len(s) > 0.4}
 				{@const p = off(s, s)}
-				<SvgTeX x={view.X(p[0])} y={view.Y(p[1])} tex={'\\mathbf u+\\mathbf v'} color={C.gold} size={16} w={80} />
+				<SvgTeX x={view.X(p[0])} y={view.Y(p[1])} tex={'\\mathbf u+\\mathbf v'} color={C.gold} size={16 * lk} w={80 * lk} />
 			{/if}
 			{#if len(cu) > 0.4 && Math.abs(c - 1) > 0.01}
 				{@const p = off(cu, [-u[1], u[0]])}
-				<SvgTeX x={view.X(p[0])} y={view.Y(p[1])} tex={`${tfmt(c)}\\,\\mathbf u`} color={C.green} size={14} w={70} />
+				<SvgTeX x={view.X(p[0])} y={view.Y(p[1])} tex={`${tfmt(c)}\\,\\mathbf u`} color={C.green} size={14 * lk} w={70 * lk} />
 			{/if}
 			<circle cx={view.X(0)} cy={view.Y(0)} r="4" class="origin" />
 
@@ -105,8 +108,8 @@
 			{/if}
 			{@const pu = off(u, [u[0] - v[0], u[1] - v[1]])}
 			{@const pv = off(v, [v[0] - u[0], v[1] - u[1]])}
-			<SvgTeX x={view.X(pu[0])} y={view.Y(pu[1])} tex={'\\mathbf u'} color={C.violet} size={17} w={30} />
-			<SvgTeX x={view.X(pv[0])} y={view.Y(pv[1])} tex={'\\mathbf v'} color={C.blue} size={17} w={30} />
+			<SvgTeX x={view.X(pu[0])} y={view.Y(pu[1])} tex={'\\mathbf u'} color={C.violet} size={17 * lk} w={30 * lk} />
+			<SvgTeX x={view.X(pv[0])} y={view.Y(pv[1])} tex={'\\mathbf v'} color={C.blue} size={17 * lk} w={30 * lk} />
 		</Svg>
 	</div>
 	<div class="side ui">

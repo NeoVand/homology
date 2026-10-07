@@ -10,10 +10,15 @@
 	type Lens = 'Z' | 'Q' | 'Z2';
 	let lens = $state<Lens>('Z');
 
-	const W = 760;
+	// on narrow plates the number lines are drawn tighter, so the drawing (and its numbers) shrink less
+	let cw = $state(800);
+	const narrow = $derived(cw < 560);
+	const W = $derived(narrow ? 440 : 760);
 	const y0 = 70;
 	const y1 = 215;
-	const xs = (v: number) => W / 2 + v * 52;
+	const xs = (v: number) => W / 2 + v * (narrow ? 30 : 52);
+	// ℤ/2 mode: the two dots on each side
+	const z2 = $derived(narrow ? { l: W / 2 - 150, d: 90, r: W / 2 + 60, lab: W / 2 - 95 } : { l: W / 2 - 170, d: 120, r: W / 2 + 110, lab: W / 2 - 110 });
 	const dom: Record<Lens, number[]> = {
 		Z: [-3, -2, -1, 0, 1, 2, 3],
 		Q: [-3, -2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3],
@@ -39,7 +44,7 @@
 	};
 </script>
 
-<div class="t2">
+<div class="t2" bind:clientWidth={cw}>
 	<div class="ctl ui">
 		<Segmented
 			bind:value={lens}
@@ -74,14 +79,14 @@
 		{:else}
 			<!-- ℤ/2: a two-hour clock -->
 			{#each [0, 1] as v (v)}
-				{@const cx = W / 2 - 170 + v * 120}
+				{@const cx = z2.l + v * z2.d}
 				<circle cx={cx} cy={y0 + 30} r="9" class="dot" />
 				<text x={cx} y={y0 + 2} class="num">{v}</text>
-				<circle cx={W / 2 + 110 + v * 120} cy={y1 - 20} r="9" class="tgt" class:hit={v === 0} class:miss={v !== 0} />
-				<text x={W / 2 + 110 + v * 120} y={y1 + 14} class="num" class:missn={v !== 0}>{v}</text>
-				<path d="M {cx + 10} {y0 + 36} Q {W / 2} {y0 + 70} {W / 2 + 100} {y1 - 24}" class="arr" marker-end="url(#arrow-violet)" />
+				<circle cx={z2.r + v * z2.d} cy={y1 - 20} r="9" class="tgt" class:hit={v === 0} class:miss={v !== 0} />
+				<text x={z2.r + v * z2.d} y={y1 + 14} class="num" class:missn={v !== 0}>{v}</text>
+				<path d="M {cx + 10} {y0 + 36} Q {W / 2} {y0 + 70} {z2.r - 10} {y1 - 24}" class="arr" marker-end="url(#arrow-violet)" />
 			{/each}
-			<SvgTeX x={W / 2 - 110} y={y1 + 6} tex={'0 \\mapsto 0,\\quad 1 \\mapsto 2 = 0'} size={20} color="var(--ink)" w={260} />
+			<SvgTeX x={z2.lab} y={y1 + 6} tex={'0 \\mapsto 0,\\quad 1 \\mapsto 2 = 0'} size={20} color="var(--ink)" w={260} />
 		{/if}
 	</Svg>
 	<div class="read">
@@ -149,5 +154,10 @@
 		max-width: 36rem;
 		font-size: 0.95rem;
 		color: var(--ink-dim);
+	}
+	@container figure (max-width: 560px) {
+		.num {
+			font-size: 17px;
+		}
 	}
 </style>

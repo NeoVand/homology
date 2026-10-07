@@ -149,9 +149,10 @@
 
 			<!-- triangle names -->
 			{#if step !== 3}
-				<SvgTeX x={x0 + S * 0.74} y={y0 + S * 0.7} tex="L" size={19} color={step === 4 || (step === 2 && lit === 'L') ? 'var(--violet)' : 'var(--ink-dim)'} w={30} h={28} />
+				<!-- in step 5 the spin arrows sit at the centroids, so the names move out towards the far corners -->
+				<SvgTeX x={x0 + S * (step === 4 ? 0.86 : 0.74)} y={y0 + S * (step === 4 ? 0.85 : 0.7)} tex="L" size={19} color={step === 4 || (step === 2 && lit === 'L') ? 'var(--violet)' : 'var(--ink-dim)'} w={30} h={28} />
 			{/if}
-			<SvgTeX x={x0 + S * 0.26} y={y0 + S * 0.3} tex={step === 4 ? '-U' : 'U'} size={19} color={step === 4 || (step === 2 && lit === 'U') ? 'var(--violet)' : 'var(--ink-dim)'} w={40} h={28} />
+			<SvgTeX x={x0 + S * (step === 4 ? 0.15 : 0.26)} y={y0 + S * (step === 4 ? 0.15 : 0.3)} tex={step === 4 ? '-U' : 'U'} size={19} color={step === 4 || (step === 2 && lit === 'U') ? 'var(--violet)' : 'var(--ink-dim)'} w={40} h={28} />
 
 			<!-- step 5: L − U, both triangles turning counterclockwise -->
 			{#if step === 4}
@@ -213,7 +214,12 @@
 				Cut the square along its diagonal \(c\) and glue opposite sides. What is left is six cells: one vertex \(v\) (all four corners are glued
 				into one point), three edges \(a, b, c\) and two triangles \(L\) and \(U\).
 			</p>
-			<p class="eq">\(C_0 = \Z\langle v\rangle, \quad C_1 = \Z\langle a, b, c\rangle, \quad C_2 = \Z\langle L, U\rangle.\)</p>
+			<!-- one unbreakable piece per group, so a narrow plate wraps between them -->
+			<p class="eq">
+				<span class="nw">\(C_0 = \Z\langle v\rangle,\)</span>
+				<span class="nw">\(C_1 = \Z\langle a, b, c\rangle,\)</span>
+				<span class="nw">\(C_2 = \Z\langle L, U\rangle.\)</span>
+			</p>
 			<p>As a check, \(\chi = 1 - 3 + 2 = 0\), the same as the 3×3 grid’s \(9 - 27 + 18\).</p>
 		{:else if step === 1}
 			<p>
@@ -420,5 +426,9 @@
 	.vdot.glow {
 		fill: var(--gold-bright);
 		filter: drop-shadow(0 0 6px rgba(242, 208, 143, 0.9));
+	}
+	.eq .nw {
+		white-space: nowrap;
+		margin: 0 0.5em;
 	}
 </style>

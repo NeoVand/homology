@@ -25,9 +25,13 @@
 	const readout = $derived(
 		String.raw`\(${sum} = ${n * n} = ${n}^2\)` +
 			(n > 1
-				? String.raw` — the newest layer has \(2\cdot${n}-1 = ${2 * n - 1}\) squares, and adds exactly enough to turn a \(${n - 1}\times${n - 1}\) square into an \(${n}\times${n}\) one.`
+				? String.raw` — the newest layer has \(2\cdot${n}-1 = ${2 * n - 1}\) squares, and adds exactly enough to turn ${art(n - 1)} \(${n - 1}\times${n - 1}\) square into ${art(n)} \(${n}\times${n}\) one.`
 				: String.raw` — the base case: one square.`)
 	);
+	// "an 8 × 8", "an 11 × 11", but "a 4 × 4"
+	function art(k: number) {
+		return k === 8 || k === 11 || k === 18 || (k >= 80 && k < 90) ? 'an' : 'a';
+	}
 </script>
 
 <div class="ind">

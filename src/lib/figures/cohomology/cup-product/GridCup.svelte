@@ -106,10 +106,14 @@
 		void row;
 		picked = null;
 	});
+
+	// On a narrow plate the square is scaled down; its small labels grow (--k ≥ 1).
+	let width = $state(440);
+	const k = $derived(Math.min(1.5, Math.max(1, (1.1 * 440) / (width || 440))));
 </script>
 
 <div class="gc">
-	<div class="pic">
+	<div class="pic" bind:clientWidth={width} style="--k:{k}">
 		<Svg bind:svg viewBox="0 0 440 400" maxHeight={420} label="The torus as a square cut into 3 by 3 cells, each cell split into a lower triangle L and an upper triangle U. A gold vertical fence alpha and a teal horizontal fence beta cross in one cell; the cup product is nonzero only on one triangle there.">
 <defs>
 				<filter id="gc-glow" filterUnits="userSpaceOnUse" x="-40" y="-40" width="520" height="480">
@@ -330,7 +334,7 @@
 	.val {
 		text-anchor: middle;
 		font-family: var(--font-ui);
-		font-size: 13px;
+		font-size: calc(13px * var(--k, 1));
 		fill: var(--ink-ghost);
 		pointer-events: none;
 	}
@@ -340,7 +344,7 @@
 		font-weight: 700;
 	}
 	.vl {
-		font-size: 13px;
+		font-size: calc(13px * var(--k, 1)) !important;
 		fill: var(--ink-bright);
 		pointer-events: none;
 	}

@@ -92,6 +92,10 @@
 	});
 	const count = $derived(lakes.length);
 
+	// On a narrow plate the landscape is scaled down; scale its labels up (k ≥ 1).
+	let width = $state(600);
+	const k = $derived(Math.min(1.7, Math.max(1, (0.9 * W) / (width || W))));
+
 	let svgEl: SVGSVGElement | undefined = $state();
 	let dragging = false;
 	function setFrom(e: PointerEvent) {
@@ -103,6 +107,7 @@
 </script>
 
 <div class="wl">
+	<div bind:clientWidth={width}>
 	<svg
 		bind:this={svgEl}
 		viewBox="0 0 {W} {H}"
@@ -136,12 +141,13 @@
 		<path d={ridge} fill="none" stroke="rgba(235, 229, 213, 0.75)" stroke-width="1.8" />
 		<!-- water level line -->
 		<line x1={padL} x2={W - padR} y1={Y(t)} y2={Y(t)} class="level" />
-		<SvgTeX x={padL - 14} y={Y(t)} tex="t" size={15} color="var(--gold-bright)" w={20} h={20} />
+		<SvgTeX x={padL - 14 - 2 * (k - 1)} y={Y(t)} tex="t" size={15 * k} color="var(--gold-bright)" w={20 * k} h={20 * k} />
 		<!-- valley labels -->
 		{#each minima as m (m)}
-			<SvgTeX x={X(xs[m])} y={Y(f[m]) + 13} tex={letter(m)} size={13} color={colorOf.get(m) ?? 'var(--ink)'} w={20} h={18} />
+			<SvgTeX x={X(xs[m])} y={Y(f[m]) + 13 * k} tex={letter(m)} size={13 * k} color={colorOf.get(m) ?? 'var(--ink)'} w={20 * k} h={18 * k} />
 		{/each}
 	</svg>
+	</div>
 	<div class="readout ui">
 		<span class="chip"><TeX tex={`t = ${t.toFixed(2)}`} /></span>
 		<span class="chip teal"><span class="k">lakes</span> <TeX tex={`b_0 = ${count}`} /></span>

@@ -4,6 +4,7 @@
 	// The angles add up to more than 180°, and the excess equals the area
 	// divided by R² — the total curvature enclosed.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
+	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
@@ -33,7 +34,10 @@
 
 	let api: { update(): void } | null = null;
 
-	function setup({ scene, THREE, invalidate, canvas, controls, pick, label }: SceneContext) {
+	function setup(ctx: SceneContext) {
+		const { scene, THREE, invalidate, canvas, controls, pick, label } = ctx;
+		// on a narrow (portrait) canvas, step back so the whole sphere stays in frame
+		const unfit = fitCamera(ctx, 1.5);
 		const ball = glassMesh(surfaceGeometry(sphereFn(R), 128, 64), { opacity: 0.5, grid: [24, 12], gridStrength: 0.22, tint: 'blue', tintMix: 0.35 });
 		scene.add(ball);
 		const pickBall = new THREE.Mesh(new THREE.SphereGeometry(R, 64, 32), new THREE.MeshBasicMaterial({ visible: false }));
@@ -82,7 +86,8 @@
 					const c = 1 - a - b;
 					const p: V3 = [a * A[0] + b * B[0] + c * C[0], a * A[1] + b * B[1] + c * C[1], a * A[2] + b * B[2] + c * C[2]];
 					const l = Math.hypot(...p) || 1;
-					positions.push((p[0] / l) * R * 1.002, (p[1] / l) * R * 1.002, (p[2] / l) * R * 1.002);
+					// lifted 0.6% off the sphere: at 0.2% the glass's depth pre-pass hid patches of a large triangle
+					positions.push((p[0] / l) * R * 1.006, (p[1] / l) * R * 1.006, (p[2] / l) * R * 1.006);
 				}
 			for (let i = 0; i < N; i++)
 				for (let j = 0; j < N - i; j++) {
@@ -161,6 +166,7 @@
 		canvas.addEventListener('pointerup', onUp);
 		return {
 			dispose() {
+				unfit();
 				api = null;
 				fillMat.dispose();
 				canvas.removeEventListener('pointerdown', onDown, { capture: true });

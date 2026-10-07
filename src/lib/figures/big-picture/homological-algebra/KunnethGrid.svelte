@@ -47,7 +47,7 @@
 						<span class="deg ui">n = {i + j}</span>
 						<TeX tex={groupTeX(g)} />
 						{#if !isZero(t)}
-							<span class="tor"><TeX tex={`\\Tor = ${groupTeX(t)}`} /> → n = {i + j + 1}</span>
+							<span class="tor"><TeX tex={`\\Tor = ${groupTeX(t)}`} /> <span class="nw">→ n = {i + j + 1}</span></span>
 						{/if}
 					</div>
 				{/each}
@@ -71,10 +71,8 @@
 		<span class:ok class:bad={!ok}><Mark {ok} /> {ok ? 'Agrees with the homology of the product cell complex.' : 'Does not match the product cell complex.'}</span>
 	</p>
 	<Controls>
-		<span class="lbl ui"><TeX tex="X =" /></span>
-		<Segmented bind:value={xId} label="Space X" options={opts} />
-		<span class="lbl ui"><TeX tex="Y =" /></span>
-		<Segmented bind:value={yId} label="Space Y" options={opts} />
+		<span class="pick"><span class="lbl ui"><TeX tex="X =" /></span><Segmented bind:value={xId} label="Space X" options={opts} /></span>
+		<span class="pick"><span class="lbl ui"><TeX tex="Y =" /></span><Segmented bind:value={yId} label="Space Y" options={opts} /></span>
 	</Controls>
 </div>
 
@@ -184,5 +182,44 @@
 	}
 	.lbl {
 		font-size: 0.85rem;
+	}
+	.pick {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.6rem;
+	}
+	/* a phone: narrower columns, so that the whole grid fits without scrolling */
+	@container figure (max-width: 30rem) {
+		.wrap {
+			padding: 0 0.5rem;
+		}
+		.grid {
+			grid-template-columns: auto repeat(var(--cols), minmax(4.2rem, 1fr));
+			gap: 0.25rem;
+			/* fit the plate: the columns share its width and a Tor note wraps inside its cell */
+			min-width: 0;
+		}
+		.corner {
+			font-size: 0.66rem;
+		}
+		.hx,
+		.hy {
+			font-size: 0.74rem;
+			padding: 0.2rem 0.1rem;
+		}
+		.deg {
+			font-size: 0.64rem;
+		}
+		.cell {
+			padding-top: 0.95rem;
+		}
+		.nw {
+			white-space: nowrap;
+		}
+		.tor {
+			font-size: 0.62rem;
+			line-height: 1.25;
+			text-align: center;
+		}
 	}
 </style>

@@ -187,6 +187,16 @@
 		stroke: #070b15;
 		stroke-width: 4px;
 	}
+	/* phones: the grid shrinks, so its lettering grows */
+	@container figure (max-width: 34rem) {
+		.tlbl {
+			font-size: 14px !important;
+			transform: translateY(1px);
+		}
+		.plbl {
+			font-size: 15px !important;
+		}
+	}
 	.readout {
 		padding: 0.5rem 1.2rem 0.8rem;
 		text-align: center;

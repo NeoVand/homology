@@ -31,10 +31,12 @@
 		const SR = 1.3;
 		const fS = sphere(SR);
 		const fT = torus(1.2, 0.5);
-		const sphereAt = narrow ? new THREE.Vector3(0, 1.75, 0) : new THREE.Vector3(-2.35, 0, 0);
-		const torusAt = narrow ? new THREE.Vector3(0, -1.65, 0) : new THREE.Vector3(2.35, 0, 0);
+		// narrow plates stack the sphere above the torus (in a taller canvas), with room
+		// for the sphere's label between them and the torus's label clear of the corner buttons
+		const sphereAt = narrow ? new THREE.Vector3(0, 1.95, 0) : new THREE.Vector3(-2.35, 0, 0);
+		const torusAt = narrow ? new THREE.Vector3(0, -1.75, 0) : new THREE.Vector3(2.35, 0, 0);
 		if (narrow) {
-			ctx.camera.position.set(0, 2.2, 9.4);
+			ctx.camera.position.set(0, 1.0, 10.8);
 			ctx.camera.lookAt(0, 0, 0);
 		}
 
@@ -56,8 +58,8 @@
 		const loopB = new DynTube(N, { color: 'teal', closed: true, radius: 0.03 });
 		gT.add(loopA.group, loopB.group);
 
-		const lblS = ctx.label(sphereAt.clone().add(new THREE.Vector3(0, -SR - 0.55, 0)), '', { className: 'small' });
-		const lblT = ctx.label(torusAt.clone().add(new THREE.Vector3(0, -SR - 0.55, 0)), '', { className: 'small' });
+		const lblS = ctx.label(sphereAt.clone().add(new THREE.Vector3(0, -SR - (narrow ? 0.45 : 0.55), 0)), '', { className: 'small' });
+		const lblT = ctx.label(torusAt.clone().add(new THREE.Vector3(narrow ? -0.9 : 0, -SR - (narrow ? 0.65 : 0.55), 0)), '', { className: 'small' });
 		const p = new THREE.Vector3();
 		const n = new THREE.Vector3();
 		const TAU = Math.PI * 2;
@@ -143,12 +145,13 @@
 		raf = requestAnimationFrame(tick);
 	}
 	onMount(() => () => cancelAnimationFrame(raf));
+	let ww = $state(800);
 </script>
 
-<div class="wrap">
+<div class="wrap" bind:clientWidth={ww}>
 	<Scene3D
 		{setup}
-		height={430}
+		height={ww < 620 ? 540 : 430}
 		camera={{ position: [0, 2.0, 8.6], fov: 40 }}
 		controls={{ autoRotate: false }}
 		label="Left: a sphere with a wiggly gold loop that slides up and shrinks to a point. Right: a torus with a gold loop around the tube and a teal loop around the hole, which tighten but cannot shrink."

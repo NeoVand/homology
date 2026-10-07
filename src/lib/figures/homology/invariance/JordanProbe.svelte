@@ -18,6 +18,9 @@
 	const crossings = $derived(rayCrossings(poly, probe));
 	const w = $derived(windingNumber(poly, probe));
 	const inside = $derived(w !== 0);
+	// On a narrow plate the drawing is scaled down; scale the crossing numbers up (k ≥ 1).
+	let width = $state(600);
+	const k = $derived(Math.min(1.4, Math.max(1, (0.85 * 600) / (width || 600))));
 
 	function toLocal(e: PointerEvent): Pt {
 		if (!svg) return probe;
@@ -49,7 +52,7 @@
 	}
 </script>
 
-<div class="jordan">
+<div class="jordan" bind:clientWidth={width}>
 	<Svg
 		bind:svg
 		viewBox="0 0 600 400"
@@ -74,7 +77,8 @@
 		<line x1={probe[0]} y1={probe[1]} x2="600" y2={probe[1]} class="ray" />
 		{#each crossings as c, i (i)}
 			<circle cx={c[0]} cy={c[1]} r="6" class="cross" />
-			<text x={c[0]} y={c[1] - 11} text-anchor="middle" class="num">{i + 1}</text>
+			<!-- up and to the right of the crossing, clear of the (vertical) wall it sits on -->
+			<text x={c[0] + 8} y={c[1] - 10 - 3 * (k - 1)} text-anchor="start" class="num" style="font-size:{15 * k}px">{i + 1}</text>
 		{/each}
 		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 		<g class="probe" role="slider" tabindex="0" aria-label="probe point; drag it or use the arrow keys" aria-valuenow={crossings.length} onpointerdown={down} onkeydown={key}>
@@ -124,7 +128,6 @@
 	}
 	.num {
 		font-family: var(--font-ui);
-		font-size: 11px;
 		fill: var(--violet) !important;
 		font-weight: 700;
 		pointer-events: none;

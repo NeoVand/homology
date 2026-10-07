@@ -165,4 +165,17 @@
 	td.faded {
 		opacity: 0.45;
 	}
+	/* phones: ten columns must fit without a sideways scroll */
+	@container figure (max-width: 30rem) {
+		th {
+			padding: 0.2rem 0.15rem !important;
+		}
+		th :global(.katex) {
+			font-size: 0.8em;
+		}
+		td {
+			min-width: 1.5rem;
+			padding: 0.26rem 0.1rem !important;
+		}
+	}
 </style>

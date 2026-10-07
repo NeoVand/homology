@@ -72,16 +72,27 @@
 		};
 	}
 	const hole = { x: 300, y: 175 };
+
+	// On a narrow plate the graph is scaled down; scale its labels up (k ≥ 1) and break the
+	// two notes into two lines, so that they stay readable.
+	let width = $state(450);
+	const k = $derived(Math.min(1.5, Math.max(1, (0.92 * 450) / (width || 450))));
+	const note = $derived(k > 1.1 ? 9.5 * k * k : 9.5);
 </script>
 
 <div class="hr">
 	<div class="cols">
-		<div>
+		<div bind:clientWidth={width}>
 			<Svg viewBox="40 10 450 330" maxHeight={360} label="Five teams and the six games between them; arrows point towards the team that did better">
 				<!-- the filled triangle A, B, C -->
 				<polygon points="{teams[0].x},{teams[0].y} {teams[1].x},{teams[1].y} {teams[2].x},{teams[2].y}" class="tri" />
-				<text x={(teams[0].x + teams[1].x + teams[2].x) / 3} y={(teams[0].y + teams[1].y + teams[2].y) / 3 + 4} text-anchor="middle" class="t-ui tri-t">all three played</text>
-				<text x={hole.x} y={hole.y} text-anchor="middle" class="t-ui hole-t">no triangle here</text>
+				{#if note > 9.5}
+					<text x={(teams[0].x + teams[1].x + teams[2].x) / 3} y={(teams[0].y + teams[1].y + teams[2].y) / 3 - 2} text-anchor="middle" class="t-ui tri-t" style="font-size:{note}px"><tspan>all three</tspan><tspan x={(teams[0].x + teams[1].x + teams[2].x) / 3} dy="1.15em">played</tspan></text>
+					<text x={hole.x + 6} y={hole.y - 4} text-anchor="middle" class="t-ui hole-t" style="font-size:{note}px"><tspan>no triangle</tspan><tspan x={hole.x + 6} dy="1.15em">here</tspan></text>
+				{:else}
+					<text x={(teams[0].x + teams[1].x + teams[2].x) / 3} y={(teams[0].y + teams[1].y + teams[2].y) / 3 + 4} text-anchor="middle" class="t-ui tri-t">all three played</text>
+					<text x={hole.x} y={hole.y} text-anchor="middle" class="t-ui hole-t">no triangle here</text>
+				{/if}
 				{#each edges as e, i (e.join(','))}
 					<line x1={teams[e[0]].x} y1={teams[e[0]].y} x2={teams[e[1]].x} y2={teams[e[1]].y} class="edge" />
 				{/each}
@@ -91,7 +102,7 @@
 						<line x1={A.x1} y1={A.y1} x2={A.x2} y2={A.y2} stroke={colors[view]} stroke-width={A.w + 6} stroke-linecap="round" opacity="0.15" />
 						<line x1={A.x1} y1={A.y1} x2={A.x2} y2={A.y2} stroke={colors[view]} stroke-width={A.w} stroke-linecap="round" marker-end="url(#arrowmid-{markers[view]})" />
 					{/if}
-					<SvgTeX x={A.mx + (e[0] === 0 && e[1] === 1 ? -12 : 14)} y={A.my - 12} tex={Math.abs(shown[i]) < 0.005 ? '0' : Math.abs(shown[i]).toFixed(view === 'flow' ? 0 : 2)} size={12} color={colors[view]} w={50} h={18} />
+					<SvgTeX x={A.mx + (e[0] === 0 && e[1] === 1 ? -12 : 14)} y={A.my - 12} tex={Math.abs(shown[i]) < 0.005 ? '0' : Math.abs(shown[i]).toFixed(view === 'flow' ? 0 : 2)} size={12 * k} color={colors[view]} w={50 * k} h={18 * k} />
 				{/each}
 				{#each teams as t, i (t.short)}
 					{@const rr = R.ratings[i] / rMax}
@@ -179,7 +190,7 @@
 	}
 	.tri-t,
 	.hole-t {
-		font-size: 9.5px !important;
+		font-size: 9.5px;
 		fill: rgba(164, 147, 255, 0.8) !important;
 	}
 	.hole-t {

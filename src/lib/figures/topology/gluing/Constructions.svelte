@@ -16,6 +16,9 @@
 	const cx = 300;
 	const half = 82;
 	const ry = 20;
+	// on narrow plates the drawing shrinks to about half size, so its labels grow
+	let cw = $state(800);
+	const k = $derived(cw < 520 ? 1.55 : 1);
 	const mix = (a: number, b: number, s: number) => a + (b - a) * s;
 
 	// how much the top (and, for the suspension, the bottom) has shrunk
@@ -44,7 +47,7 @@
 	const R = 66;
 </script>
 
-<div class="cons">
+<div class="cons" bind:clientWidth={cw}>
 	<Svg viewBox="0 0 600 320" maxHeight={340} label="Building new spaces: a cylinder over a space whose top (and bottom) shrink to points, or two spaces sliding together until two chosen points touch">
 		{#if kind === 'wedge'}
 			{@const lx = cx - R - gapW / 2}
@@ -66,10 +69,10 @@
 			<circle cx={lx + R} cy={165} r="7" fill="url(#vertex-fill)" stroke="#060912" filter="url(#glow)" />
 			<circle cx={rx - R} cy={165} r="7" fill="url(#vertex-fill)" stroke="#060912" filter="url(#glow)" />
 			{#if t < 0.98}
-				<SvgTeX x={lx + R - 12} y={140} tex="x_0" size={15} w={30} h={20} color="var(--gold-bright)" />
-				<SvgTeX x={rx - R + 12} y={140} tex="y_0" size={15} w={30} h={20} color="var(--gold-bright)" />
+				<SvgTeX x={lx + R - 12} y={140} tex="x_0" size={15 * k} w={30 * k} h={20 * k} color="var(--gold-bright)" />
+				<SvgTeX x={rx - R + 12} y={140} tex="y_0" size={15 * k} w={30 * k} h={20 * k} color="var(--gold-bright)" />
 			{:else}
-				<SvgTeX x={cx} y={140} tex={'x_0=y_0'} size={15} w={70} h={20} color="var(--gold-bright)" />
+				<SvgTeX x={cx} y={140} tex={'x_0=y_0'} size={15 * k} w={70 * k} h={20 * k} color="var(--gold-bright)" />
 			{/if}
 		{:else if X === 's0'}
 			<!-- two points × I: two segments; their tops (and bottoms) are pulled together -->
@@ -121,10 +124,10 @@
 			{#if sBot > 0.97}
 				<circle cx={cx} cy={yBot} r="8" fill="url(#vertex-fill)" stroke="#060912" filter="url(#glow-strong)" />
 			{/if}
-			<SvgTeX x={cx + half + 52} y={yTop} tex={'X\\times\\{1\\}'} size={14} w={90} h={22} color="var(--gold-bright)" />
-			<SvgTeX x={cx + half + 52} y={yBot} tex={'X\\times\\{0\\}'} size={14} w={90} h={22} color={kind === 'susp' ? 'var(--gold-bright)' : 'var(--ink-dim)'} />
+			<SvgTeX x={cx + half + 52 * k} y={yTop} tex={'X\\times\\{1\\}'} size={14 * k} w={90 * k} h={22 * k} color="var(--gold-bright)" />
+			<SvgTeX x={cx + half + 52 * k} y={yBot} tex={'X\\times\\{0\\}'} size={14 * k} w={90 * k} h={22 * k} color={kind === 'susp' ? 'var(--gold-bright)' : 'var(--ink-dim)'} />
 		{/if}
-		<SvgTeX x={cx} y={298} tex={resultTeX} size={18} w={420} h={30} color="var(--ink-bright)" />
+		<SvgTeX x={cx} y={298} tex={resultTeX} size={18 * k} w={420 * k} h={30 * k} color="var(--ink-bright)" />
 	</Svg>
 </div>
 <div class="bar ui">

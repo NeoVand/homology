@@ -57,7 +57,8 @@
 					return [cx + w * Math.cos(th), cs.r * Math.sin(ph), w * Math.sin(th)];
 				}
 			};
-			const centre: [number, number, number] = [-sgn * cs.facing, 0, 0];
+			// the point of this torus that faces the other one: (∓facing, 0, 0) for the left/right torus
+			const centre: [number, number, number] = [sgn * cs.facing, 0, 0];
 			for (const l of linkOfPatch(patch, centre, cutR, 160, 160))
 				rims.add(
 					glowTube(new THREE.CatmullRomCurve3(l.points.map((p) => new THREE.Vector3(...p)), l.closed), {
@@ -88,8 +89,9 @@
 				anim = null;
 				if (target === shown || ctx.reducedMotion) {
 					shown = target;
-					showOnly(target);
+					// (setFade also shows the group it fades, so it must come before showOnly)
 					stages.forEach((s) => s.setFade(1));
+					showOnly(target);
 					ctx.invalidate();
 					return;
 				}
@@ -105,8 +107,8 @@
 					to.setFade(e);
 					if (t >= 1) {
 						shown = target;
-						showOnly(target);
 						from.setFade(1);
+						showOnly(target);
 						anim?.();
 						anim = null;
 					}

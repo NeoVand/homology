@@ -126,8 +126,8 @@
 		<!-- the projected points -->
 		{#if visible(tN)}
 			<circle cx={sx(tN)} cy={sy(0)} r="6" class="dot gold" />
-			<!-- above the line, on the side away from the ray coming down from N -->
-			<SvgTeX x={sx(tN) + (tN >= 0 ? 30 : -30)} y={sy(0) - 22} tex={'\\varphi_N(P)'} size={13} color="var(--gold-bright)" w={70} h={20} />
+			<!-- above the line, on the side away from the ray coming down from N (kept inside the frame) -->
+			<SvgTeX x={Math.min(XMAX - 14, Math.max(XMIN + 14, sx(tN) + (tN >= 0 ? 30 : -30)))} y={sy(0) - 22} tex={'\\varphi_N(P)'} size={narrow ? 16 : 13} color="var(--gold-bright)" w={70} h={20} />
 		{:else if !atN}
 			<SvgTeX
 				x={rN.off < 0 ? XMIN + 46 : XMAX - 46}
@@ -142,7 +142,7 @@
 		{#if visible(tS)}
 			<circle cx={sx(tS)} cy={sy(0)} r="6" class="dot teal" />
 			<!-- below the line, on the side away from the ray coming up from S -->
-			<SvgTeX x={sx(tS) + (tS >= 0 ? 30 : -30)} y={sy(0) + 38} tex={'\\varphi_S(P)'} size={13} color="var(--teal)" w={70} h={20} />
+			<SvgTeX x={Math.min(XMAX - 14, Math.max(XMIN + 14, sx(tS) + (tS >= 0 ? 30 : -30)))} y={sy(0) + 38} tex={'\\varphi_S(P)'} size={narrow ? 16 : 13} color="var(--teal)" w={70} h={20} />
 		{:else if !atS}
 			<SvgTeX
 				x={rS.off < 0 ? XMIN + 46 : XMAX - 46}

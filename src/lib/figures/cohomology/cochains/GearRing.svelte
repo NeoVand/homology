@@ -93,9 +93,12 @@
 		`\\underbrace{1 + 1 + \\cdots + 1}_{${n}\\ \\text{meshes}} = ${n} \\equiv ${n % 2} \\pmod 2`
 	);
 	const spinOf = (i: number) => G.spin[i];
+	// On a narrow plate the ring is scaled down; the ℤ/2 labels grow (k ≥ 1) to stay readable.
+	let width = $state(420);
+	const k = $derived(Math.min(1.6, Math.max(1, (11 * 420) / (12 * (width || 420)))));
 </script>
 
-<div class="gears" bind:this={host}>
+<div class="gears" bind:this={host} bind:clientWidth={width}>
 	<Svg viewBox="20 6 420 392" maxHeight={430} label="A ring of gears; an even ring turns, an odd ring locks">
 		<defs>
 			<linearGradient id="gear-gold" x1="0" y1="0" x2="1" y2="1">
@@ -145,8 +148,8 @@
 				<circle cx={x} cy={y} r="13" class="jam" />
 			{/if}
 			{#if showZ2}
-				<foreignObject x={x - 14} y={y - 12} width="28" height="24" style="overflow:visible;pointer-events:none">
-					<div class="z2" class:jam>1</div>
+				<foreignObject x={x - 14 * k} y={y - 12 * k} width={28 * k} height={24 * k} style="overflow:visible;pointer-events:none">
+					<div class="z2" class:jam style:font-size={k > 1 ? `${12 * k}px` : null}>1</div>
 				</foreignObject>
 			{/if}
 		{/each}

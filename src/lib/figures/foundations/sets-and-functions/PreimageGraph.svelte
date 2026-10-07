@@ -315,4 +315,10 @@
 		font-size: 0.76rem;
 		color: var(--ink-faint);
 	}
+	/* phones: the graph shrinks, so its tick labels grow */
+	@container figure (max-width: 34rem) {
+		.tk {
+			font-size: 15px !important;
+		}
+	}
 </style>

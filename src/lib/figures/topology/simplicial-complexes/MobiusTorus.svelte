@@ -217,7 +217,8 @@
 
 <div class="two">
 	<div class="flat" bind:clientWidth={cw}>
-		<Svg viewBox="40 30 440 340" maxHeight={380} label="The triangulated plane with each vertex labelled by a number from 0 to 6; the labels repeat periodically">
+		<!-- on phones, crop the empty margins round the hexagon so the numbered vertices are drawn larger -->
+		<Svg viewBox={cw < 400 ? '92 40 336 300' : '40 30 440 340'} maxHeight={380} label="The triangulated plane with each vertex labelled by a number from 0 to 6; the labels repeat periodically">
 			{#each homeTris as t, i (i)}
 				<polygon points={t.map((p) => `${X(p)},${Y(p)}`).join(' ')} class="home" />
 			{/each}

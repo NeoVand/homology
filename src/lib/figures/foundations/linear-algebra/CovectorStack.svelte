@@ -36,6 +36,9 @@
 
 	type MapKey = 'shear' | 'stretch' | 'rotate' | 'flatten';
 	let mapKey = $state<MapKey>('shear');
+	// on narrow plates the drawings shrink, so their labels grow
+	let cw = $state(800);
+	const lk = $derived(cw < 460 ? 1.35 : 1);
 	// matrices by rows [[p, q], [r, s]]
 	const maps: Record<MapKey, { label: string; M: [[number, number], [number, number]] }> = {
 		shear: { label: 'shear', M: [[1, 1], [0, 1]] },
@@ -147,7 +150,7 @@
 {/snippet}
 
 {#if mode === 'measure'}
-	<div class="cs">
+	<div class="cs" bind:clientWidth={cw}>
 		<Svg viewBox="0 0 {viewM.w} {viewM.h}" maxHeight={380} bind:svg={svgW} label="A family of parallel blue lines, numbered 0, 1, 2 and so on, drawn evenly across the plane: the level lines of a measurement. A violet arrow v can be dragged; gold dots mark where it crosses the lines, and their count is the value of the measurement on v.">
 			{@render gridLines(gridM)}
 			{@render stackLines(viewM, stackM)}
@@ -158,12 +161,14 @@
 			<circle cx={viewM.X(0)} cy={viewM.Y(0)} r="3.5" class="origin" />
 			<Handle view={viewM} svg={svgW} pos={v} color={C.violet} label="tip of the vector v" onmove={(w) => setV(w, viewM)} />
 			<Handle view={viewM} svg={svgW} pos={h} color={C.blue} r={6} label="the measurement: drag the line marked 1" onmove={(w) => setH(w, viewM)} step={0.1} />
-			<SvgTeX x={viewM.X(v[0]) + 18} y={viewM.Y(v[1]) - 16} tex={'\\mathbf v'} color={C.violet} size={17} w={24} />
+			<SvgTeX x={viewM.X(v[0]) + 18 * lk} y={viewM.Y(v[1]) - 16 * lk} tex={'\\mathbf v'} color={C.violet} size={17 * lk} w={24 * lk} />
 		</Svg>
 	</div>
 	<div class="read ui">
 		<div class="eqs">
-			<TeX tex={`\\varphi = ${rowTeX(phi)},\\qquad \\varphi(\\mathbf v) = ${tfmt(phi[0])}\\cdot ${paren(v[0])} + ${tfmt(phi[1])}\\cdot ${paren(v[1])} = \\textcolor{${C.gold}}{${tfmt(valueW)}}`} />
+			<!-- two unbreakable pieces, so a narrow plate wraps between them rather than before the result -->
+			<span class="nw"><TeX tex={`\\varphi = ${rowTeX(phi)},`} /></span>
+			<span class="nw"><TeX tex={`\\varphi(\\mathbf v) = ${tfmt(phi[0])}\\cdot ${paren(v[0])} + ${tfmt(phi[1])}\\cdot ${paren(v[1])} = \\textcolor{${C.gold}}{${tfmt(valueW)}}`} /></span>
 		</div>
 		<p>
 			The arrow crosses <strong class="g">{Math.floor(Math.abs(valueW) + 1e-9)}</strong> whole line{Math.floor(Math.abs(valueW) + 1e-9) === 1 ? '' : 's'}
@@ -178,7 +183,7 @@
 		<Button variant="subtle" onclick={() => (v = [-v[1], v[0]])}>Turn v by 90°</Button>
 	</Controls>
 {:else}
-	<div class="pb">
+	<div class="pb" bind:clientWidth={cw}>
 		<div class="pane">
 			<div class="ttl ui">V, with the pulled-back measurement <TeX tex={'A^{\\mathsf T}\\varphi'} /></div>
 			<Svg viewBox="0 0 {viewP.w} {viewP.h}" maxHeight={330} bind:svg={svgV} label="The space V, with a draggable violet vector v and the level lines of the pulled-back measurement A-transpose phi.">
@@ -190,7 +195,7 @@
 				{/each}
 				<circle cx={viewP.X(0)} cy={viewP.Y(0)} r="3" class="origin" />
 				<Handle view={viewP} svg={svgV} pos={v} color={C.violet} label="the vector v" onmove={(w) => setV(w, viewP)} />
-				<SvgTeX x={viewP.X(v[0]) + 16} y={viewP.Y(v[1]) - 14} tex={'\\mathbf v'} color={C.violet} size={16} w={24} />
+				<SvgTeX x={viewP.X(v[0]) + 16 * lk} y={viewP.Y(v[1]) - 14 * lk} tex={'\\mathbf v'} color={C.violet} size={16 * lk} w={24 * lk} />
 			</Svg>
 		</div>
 		<div class="mid ui" aria-hidden="true">
@@ -208,7 +213,7 @@
 				{/each}
 				<circle cx={viewP.X(0)} cy={viewP.Y(0)} r="3" class="origin" />
 				<Handle view={viewP} svg={svgW} pos={h} color={C.blue} r={6} step={0.1} label="the measurement phi: drag the line marked 1" onmove={(w) => setH(w, viewP)} />
-				<SvgTeX x={viewP.X(Av[0]) + 18} y={viewP.Y(Av[1]) - 14} tex={'A\\mathbf v'} color={C.violet} size={15} w={36} />
+				<SvgTeX x={viewP.X(Av[0]) + 18 * lk} y={viewP.Y(Av[1]) - 14 * lk} tex={'A\\mathbf v'} color={C.violet} size={15 * lk} w={36 * lk} />
 			</Svg>
 		</div>
 	</div>
@@ -221,10 +226,10 @@
 		</div>
 		<p>
 			Same number on both sides: measuring <TeX tex={'A\\mathbf v'} /> with <TeX tex={'\\varphi'} /> is the same as measuring
-			<TeX tex={'\\mathbf v'} /> with the pulled-back <TeX tex={'A^{\\mathsf T}\\varphi'} />. Its lines on the left are exactly the
-			points that <TeX tex={'A'} /> sends onto the lines on the right.
+			<TeX tex={'\\mathbf v'} /> with the pulled-back <TeX tex={'A^{\\mathsf T}\\varphi'} />. Its lines in <TeX tex={'V'} /> are exactly the
+			points that <TeX tex={'A'} /> sends onto the lines in <TeX tex={'W'} />.
 			{#if len(pull) < 1e-9}<strong class="r">Here <TeX tex={'A^{\\mathsf T}\\varphi = 0'} />:</strong> <TeX tex={'\\varphi'} />
-				vanishes on everything <TeX tex={'A'} /> can reach, so nothing is left to measure on the left.{/if}
+				vanishes on everything <TeX tex={'A'} /> can reach, so nothing is left to measure in <TeX tex={'V'} />.{/if}
 		</p>
 	</div>
 	<Controls>
@@ -357,6 +362,10 @@
 		color: var(--ink-dim);
 		line-height: 1.55;
 	}
+	.eqs .nw {
+		white-space: nowrap;
+		margin: 0 0.6em;
+	}
 	.eqs {
 		text-align: center;
 		color: var(--ink);
@@ -372,5 +381,12 @@
 	}
 	.r {
 		color: var(--rose);
+	}
+	/* phones: the drawings shrink, so their level numbers grow */
+	@container figure (max-width: 34rem) {
+		.cs text.ktag,
+		.pane text.ktag {
+			font-size: 15px;
+		}
 	}
 </style>

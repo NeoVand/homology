@@ -253,6 +253,30 @@
 	td.shift {
 		background: rgba(242, 141, 182, 0.07);
 	}
+	/* a phone: narrow row headings (their captions wrap) so that every degree fits */
+	@container figure (max-width: 30rem) {
+		.tw {
+			margin: 0.4rem 0.5rem;
+		}
+		th,
+		td {
+			padding: 0.45rem 0.3rem !important;
+		}
+		tbody th {
+			white-space: normal;
+			width: 5.6rem;
+		}
+		.sub {
+			font-size: 0.6rem;
+			letter-spacing: 0.03em;
+			line-height: 1.25;
+			margin-top: 0.15rem;
+		}
+		.from {
+			font-size: 0.6rem;
+			line-height: 1.2;
+		}
+	}
 	.legend {
 		display: grid;
 		gap: 0.2rem;

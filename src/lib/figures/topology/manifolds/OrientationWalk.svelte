@@ -11,6 +11,7 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import { glass } from '../homotopy/glass';
+	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 
 	type Band = 'cylinder' | 'mobius';
 	let band = $state<Band>('mobius');
@@ -37,6 +38,8 @@
 		ctx.camera.near = 0.5;
 		ctx.camera.far = 60;
 		ctx.camera.updateProjectionMatrix();
+		// on narrow canvases pull the camera back so the whole band stays in frame
+		const unfit = fitCamera(ctx, 1.6, 0.6);
 		const bands: Record<Band, InstanceType<typeof THREE.Group>> = { cylinder: new THREE.Group(), mobius: new THREE.Group() };
 		for (const b of ['cylinder', 'mobius'] as Band[]) {
 			const geo = surfaceGeometry((u, v, t) => t.set(...X(b, TAU * u, (v - 0.5) * W)), 200, 16);
@@ -185,6 +188,7 @@
 		canvas.addEventListener('pointercancel', onUp);
 		return {
 			dispose() {
+				unfit();
 				api = null;
 				floor.geometry.dispose();
 				floor.material.dispose();

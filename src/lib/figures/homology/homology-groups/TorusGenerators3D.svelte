@@ -11,6 +11,7 @@
 	import { counterclockwise, type Pt } from './flat';
 	import { buildFlat3D, mappedLoop, torusMap, glassUnderlay } from './surface3d';
 	import type * as THREE from 'three';
+	import { fitCamera } from '../invariance/three-fit';
 
 	type Mode = 'a' | 'b' | 'both' | 'slide' | 'shell';
 	let mode = $state<Mode>('both');
@@ -29,7 +30,10 @@
 
 	let api: { set(m: Mode): void } | null = null;
 
-	function setup({ scene, label }: SceneContext) {
+	function setup(ctx: SceneContext) {
+		const { scene, label } = ctx;
+		// on narrow canvases pull the camera back so the whole torus stays in frame
+		const unfit = fitCamera(ctx, 1.5, 0.75);
 		const map = torusMap(1.6, 0.62);
 		scene.add(glassUnderlay(surfaceGeometry(map.fn, 160, 64), { opacity: 0.55, grid: [0, 0], brightness: 0.95 }));
 		const cx = buildFlat3D(T.L, map, { edgeRadius: 0.0095, lift: 0.012 });
@@ -65,7 +69,12 @@
 			}
 		};
 		api.set(mode);
-		return { dispose: () => (api = null) };
+		return {
+			dispose: () => {
+				unfit();
+				api = null;
+			}
+		};
 	}
 	// read `mode` before touching `api`: with `api?.set(mode)` the argument is never
 	// evaluated while api is null, so the effect would never subscribe to mode

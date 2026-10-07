@@ -131,10 +131,16 @@
 				const anchor = (name: string): [number, number] | null =>
 					s.bottom.label === name ? [0.5, 0] : s.left.label === name ? [0, 0.5] : s.top.label === name ? [0.5, 1] : null;
 				const pa = anchor('a');
-				const pb = anchor('b');
+				let pb = anchor('b');
+				// On the finished Klein bottle the middle of b lands right beside the small
+				// a-circle, so the two labels would crowd each other: slide b's label along its
+				// edge to the top of the bottle's loop as the bottle forms.
+				// The a-edge closes up into a small circle beside a corner's glow; push its label further out.
+				const kGrow = id === 'klein' ? Math.min(1, Math.max(0, (tt - 0.4) / 0.6)) : 0;
+				if (id === 'klein' && pb) pb = [pb[0], 0.5 + 0.25 * kGrow];
 				labA.show(!!pa);
 				labB.show(!!pb);
-				if (pa) place(labA, pa[0], pa[1], pr.f, tt, 0.34);
+				if (pa) place(labA, pa[0], pa[1], pr.f, tt, 0.34 + 0.36 * kGrow);
 				if (pb) place(labB, pb[0], pb[1], pr.f, tt, 0.34);
 				invalidate();
 			}
@@ -158,6 +164,8 @@
 	// corner positions in the diagram (BL, BR, TR, TL)
 	const S0 = 46;
 	const SZ = 168;
+	// on narrow plates the little square is drawn with less margin, so its labels stay legible
+	let ww = $state(800);
 	const cornerXY: [number, number][] = [
 		[S0, S0 + SZ],
 		[S0 + SZ, S0 + SZ],
@@ -166,9 +174,9 @@
 	];
 </script>
 
-<div class="workshop">
+<div class="workshop" bind:clientWidth={ww}>
 	<div class="panel2d">
-		<Svg viewBox="0 0 260 260" maxHeight={300} label="The square with arrows showing how its edges are glued for the {P.label}">
+		<Svg viewBox={ww < 520 ? '12 12 236 236' : '0 0 260 260'} maxHeight={300} label="The square with arrows showing how its edges are glued for the {P.label}">
 			{#each [1, 2, 3, 4, 5, 6, 7] as k (k)}
 				<line x1={S0 + (k * SZ) / 8} y1={S0} x2={S0 + (k * SZ) / 8} y2={S0 + SZ} class="grid" />
 				<line x1={S0} y1={S0 + (k * SZ) / 8} x2={S0 + SZ} y2={S0 + (k * SZ) / 8} class="grid" />
@@ -320,6 +328,10 @@
 		}
 	}
 	@container figure (max-width: 520px) {
+		.panel2d {
+			grid-template-columns: 160px 1fr;
+			padding: 0 0.2rem;
+		}
 		.facts div {
 			grid-template-columns: 1fr;
 			gap: 0;

@@ -45,6 +45,31 @@
 				]
 	);
 
+	// Split a note into prose (its \text{…} groups) and math, so that the prose can wrap
+	// on a narrow plate (KaTeX never breaks inside \text).
+	function pieces(src: string): { math: boolean; s: string }[] {
+		const out: { math: boolean; s: string }[] = [];
+		let math = '';
+		let i = 0;
+		while (i < src.length) {
+			if (src.startsWith('\\text{', i)) {
+				if (math.trim()) out.push({ math: true, s: math });
+				math = '';
+				let depth = 1;
+				let j = i + 6;
+				while (j < src.length && depth) {
+					if (src[j] === '{') depth++;
+					else if (src[j] === '}') depth--;
+					j++;
+				}
+				out.push({ math: false, s: src.slice(i + 6, j - 1).replace(/\\"o/g, 'ö') });
+				i = j;
+			} else math += src[i++];
+		}
+		if (math.trim()) out.push({ math: true, s: math });
+		return out;
+	}
+
 	const rows = $derived<MVRow[]>(
 		K
 			? [
@@ -152,7 +177,7 @@
 		</div>
 	</div>
 	<MVTable {rows} heads={['H_n(U\\cap V)', 'H_n(U)\\oplus H_n(V)', K ? 'H_n(K)' : 'H_n(T^2)']} maps={['\\Phi', '\\Psi']} hlConnect={step >= 6 && !K ? 1 : null} />
-	<div class="note"><TeX tex={notes[step]} /></div>
+	<div class="note">{#each pieces(notes[step]) as p, i (i)}{#if p.math}<TeX tex={p.s} />{:else}<span class="prose">{p.s}</span>{/if}{/each}</div>
 	<Controls>
 		<Segmented
 			bind:value={kind}
@@ -281,5 +306,9 @@
 		font-size: 0.95rem;
 		color: var(--ink-bright);
 		overflow-x: auto;
+	}
+	.prose {
+		font-family: var(--font-body);
+		white-space: pre-wrap;
 	}
 </style>

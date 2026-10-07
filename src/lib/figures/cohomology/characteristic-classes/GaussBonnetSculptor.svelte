@@ -7,6 +7,7 @@
 	// exactly 2π·χ: 4π for the sphere, 0 for the torus.
 	import { onMount } from 'svelte';
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
+	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Timeline from '$lib/components/ui/Timeline.svelte';
@@ -103,7 +104,10 @@
 	let wobbleApi: ((on: boolean) => void) | null = null;
 	let wobblePhase = 0;
 
-	function setup({ scene, THREE, invalidate, canvas, pick, onFrame }: SceneContext) {
+	function setup(ctx: SceneContext) {
+		const { scene, THREE, invalidate, canvas, pick, onFrame } = ctx;
+		// on a narrow (portrait) canvas, step back so the sculpted surface stays in frame
+		const unfit = fitCamera(ctx, 1.5);
 		const material = new THREE.ShaderMaterial({
 			vertexShader: vert,
 			fragmentShader: frag,
@@ -249,6 +253,7 @@
 
 		return {
 			dispose() {
+				unfit();
 				api = null;
 				offFrame?.();
 				wobbleApi = null;
@@ -284,7 +289,8 @@
 	}
 	onMount(() => () => (api = null));
 
-	const fmt = (v: number) => (v < 0 ? '−' : '') + Math.abs(v).toFixed(3);
+	// no "−0.000": a value that rounds to zero is shown without a sign
+	const fmt = (v: number) => (v < -0.0005 ? '−' : '') + Math.abs(v).toFixed(3);
 	const chi = $derived(mode === 'sphere' ? 2 : 0);
 	const barMax = $derived(Math.max(1, stats.pos, -stats.neg));
 </script>

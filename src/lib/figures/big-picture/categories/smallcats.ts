@@ -99,12 +99,14 @@ export function divisorCategory(): SmallCategory {
 	const ds = [1, 2, 3, 4, 6, 12];
 	const objects: CatObject[] = ds.map((d) => ({ id: String(d), tex: String(d), x: pos[d][0], y: pos[d][1] }));
 	const hasse = new Set(['1|2', '1|3', '2|4', '2|6', '3|6', '4|12', '6|12']);
+	// identity loops point away from the arrows at each number, so their labels stay clear
+	const idLoop: Record<number, number> = { 1: Math.PI / 2, 2: Math.PI * 0.75, 3: 0, 4: Math.PI };
 	const arrows: CatArrow[] = [];
 	for (const a of ds)
 		for (const b of ds)
 			if (b % a === 0) {
 				const id = `${a}|${b}`;
-				if (a === b) arrows.push({ id, tex: `${a}\\mid ${a}`, src: String(a), tgt: String(b), kind: 'id', bend: a === 1 ? Math.PI / 2 : -Math.PI / 2, loopR: 12 });
+				if (a === b) arrows.push({ id, tex: `${a}\\mid ${a}`, src: String(a), tgt: String(b), kind: 'id', bend: idLoop[a] ?? -Math.PI / 2, loopR: 12 });
 				else
 					arrows.push({
 						id,

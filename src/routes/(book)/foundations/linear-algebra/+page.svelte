@@ -353,10 +353,10 @@
 <Figure num="1.5.4" title="Three spans">
 	<SpanTriptych />
 	{#snippet caption()}
-		The span is everything you can reach with linear combinations. Left: the multiples of one vector fill a line. Middle: two vectors
+		The span is everything you can reach with linear combinations. One vector: its multiples fill a line. Two independent vectors
 		pointing in different directions reach every point of the plane. The gold point is \(1.5\,\mathbf v + \mathbf w\): go one and a
 		half steps along \(\mathbf v\), then one step along \(\mathbf w\). The grey dots are the combinations \(a\mathbf v + b\mathbf w\)
-		with whole numbers \(a, b\), and fractions fill in everything between them. Right: \(\mathbf w\) is a multiple of \(\mathbf v\),
+		with whole numbers \(a, b\), and fractions fill in everything between them. Two dependent vectors: \(\mathbf w\) is a multiple of \(\mathbf v\),
 		so it brings nothing new.
 	{/snippet}
 </Figure>
@@ -850,8 +850,8 @@
 <Figure num="1.5.8" title="Solutions form a shifted copy of the kernel" hint="Drag b and x">
 	<SolveByCoset />
 	{#snippet caption()}
-		This \(A\) flattens the plane onto its image, the <span class="tx-gold">gold line</span> on the right. Put \(\mathbf b\) on that
-		line and the solutions appear on the left: a gold line parallel to the <span class="tx-teal">teal kernel</span>. Drag
+		This \(A\) flattens the plane onto its image, the <span class="tx-gold">gold line</span> in the output space. Put \(\mathbf b\) on that
+		line and the solutions appear in the input space: a gold line parallel to the <span class="tx-teal">teal kernel</span>. Drag
 		\(\mathbf x\) along it and \(A\mathbf x\) stays on \(\mathbf b\). Move \(\mathbf b\) off the line and there is no solution; a
 		<span class="tx-rose">rose measurement</span> appears that proves it, a hint of the duality section to come.
 	{/snippet}
@@ -1144,8 +1144,8 @@
 	<CovectorStack mode="pullback" />
 	{#snippet caption()}
 		\(A\) carries \(\mathbf v\) forward to \(A\mathbf v\); the transpose carries the measurement \(\varphi\) back to
-		\(A^{\mathsf T}\varphi = \varphi\circ A\). Its lines, on the left, are exactly the points that \(A\) sends onto \(\varphi\)’s
-		lines on the right, so both sides always count the same crossings: \((A^{\mathsf T}\varphi)(\mathbf v) = \varphi(A\mathbf v)\).
+		\(A^{\mathsf T}\varphi = \varphi\circ A\). Its lines in \(V\) are exactly the points that \(A\) sends onto \(\varphi\)’s
+		lines in \(W\), so both sides always count the same crossings: \((A^{\mathsf T}\varphi)(\mathbf v) = \varphi(A\mathbf v)\).
 		With the rank-1 map, make \(\varphi\) vanish on the image, and the pulled-back measurement becomes zero.
 	{/snippet}
 </Figure>

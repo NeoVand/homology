@@ -14,7 +14,12 @@
 	let mode = $state<Mode>('bounded');
 	let M = $state(3);
 
-	const W = 820;
+	// On a narrow plate the line is drawn shorter (the picture is then scaled down less) and
+	// the labels larger (k).
+	let width = $state(820);
+	const narrow = $derived(width > 0 && width < 520);
+	const W = $derived(narrow ? 460 : 820);
+	const k = $derived(narrow ? 1.35 : 1);
 	const H = 372;
 	const XMIN = -7.4;
 	const XMAX = 7.4;
@@ -40,14 +45,14 @@
 	const sup = $derived(mode === 'bounded' ? M + 1 : 1);
 </script>
 
-<div class="wrap">
+<div class="wrap" bind:clientWidth={width}>
 	<Svg viewBox="0 0 {W} {H}" maxHeight={420} label="The line covered by overlapping intervals; on each interval a bounded function; the pieces agree on overlaps and glue to one function on the union.">
 		<!-- axes -->
 		<line x1={sx(XMIN)} y1={AXIS} x2={sx(XMAX)} y2={AXIS} stroke="rgba(235,229,213,0.3)" />
 		<line x1={sx(0)} y1={22} x2={sx(0)} y2={318} stroke="rgba(235,229,213,0.18)" />
 		{#each [-6, -4, -2, 2, 4, 6] as t (t)}
 			<line x1={sx(t)} y1={AXIS - 4} x2={sx(t)} y2={AXIS + 4} stroke="rgba(235,229,213,0.3)" />
-			<text x={sx(t)} y={AXIS + 18} text-anchor="middle" class="t-ui">{t}</text>
+			<text x={sx(t)} y={AXIS + 18 + 3 * (k - 1)} text-anchor="middle" class="t-ui" style:font-size={narrow ? '14px' : null}>{t}</text>
 		{/each}
 
 		<!-- the bounds each piece satisfies -->
@@ -72,12 +77,12 @@
 			<circle cx={sx(n - 1) + 3} cy={y} r="4" fill="#0b1020" stroke={colours[(n + 30) % 3]} stroke-width="1.5" />
 			<circle cx={sx(n + 1) - 3} cy={y} r="4" fill="#0b1020" stroke={colours[(n + 30) % 3]} stroke-width="1.5" />
 		{/each}
-		<SvgTeX x={sx(XMIN) + 14} y={322} tex={'U_n'} size={16} color="var(--ink-dim)" w={40} />
+		<SvgTeX x={sx(XMIN) + 14} y={322} tex={'U_n'} size={16 * k} color="var(--ink-dim)" w={40 * k} h={40 * k} />
 
 		{#if mode === 'bounded'}
-			<SvgTeX x={sx(XMAX) - 70} y={36} tex={`\\sup |f| = ${sup}`} size={17} color="var(--rose)" w={140} />
+			<SvgTeX x={sx(XMAX) - 70 * k} y={36} tex={`\\sup |f| = ${sup}`} size={17 * k} color="var(--rose)" w={140 * k} h={40 * k} />
 		{:else}
-			<SvgTeX x={sx(XMAX) - 70} y={36} tex={'|f| \\le 1 \\text{ everywhere}'} size={16} color="var(--green)" w={170} />
+			<SvgTeX x={sx(XMAX) - 85 * k} y={36} tex={'|f| \\le 1 \\text{ everywhere}'} size={16 * k} color="var(--green)" w={170 * k} h={40 * k} />
 		{/if}
 	</Svg>
 

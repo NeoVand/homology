@@ -91,7 +91,8 @@
 				stroke="#0b1020"
 				stroke-width="1"
 			/>
-			<text x={xs[x] + 15} y={yB - 13} text-anchor="middle" class="num mid">{x}</text>
+			<!-- up and to the right of the dot, clear of its ring -->
+			<text x={xs[x] + 17} y={yB - 15} text-anchor="middle" class="num mid">{x}</text>
 		{/each}
 	</Svg>
 	<div class="read ui">
@@ -230,5 +231,14 @@
 	.kb:disabled {
 		opacity: 0.2;
 		cursor: not-allowed;
+	}
+	/* phones: the drawing is scaled down, so its labels grow */
+	@container figure (max-width: 34rem) {
+		.num {
+			font-size: 13px !important;
+		}
+		.maplbl {
+			font-size: 13px !important;
+		}
 	}
 </style>

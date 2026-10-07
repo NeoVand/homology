@@ -19,6 +19,9 @@
 
 	const W = 680;
 	const H = 330;
+	// on narrow plates the drawing shrinks to about half size, so its labels grow
+	let cw = $state(800);
+	const lk = $derived(cw < 520 ? 2 : 1);
 	const X0: Pt = [96, 172];
 	const X1: Pt = [584, 172];
 	// off the midline, so the time bead never sits on top of the puncture
@@ -105,10 +108,10 @@
 	}
 
 	const g1Color = $derived(through ? 'var(--rose)' : 'var(--teal)');
-	const g1Label = $derived<Pt>([handle[0] + 26, handle[1] + (handle[1] > HOLE[1] ? 6 : -6)]);
+	const g1Label = $derived<Pt>([handle[0] + 26 * lk, handle[1] + (handle[1] > HOLE[1] ? 6 : -6)]);
 </script>
 
-<div class="wrap">
+<div class="wrap" bind:clientWidth={cw}>
 	<Svg viewBox="0 0 {W} {H}" maxHeight={420} label="Two paths from x0 to x1 in a plane with a puncture, and the straight-line homotopy between them">
 		<defs>
 			<pattern id="ph-dots" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -154,16 +157,16 @@
 		<!-- the puncture -->
 		<circle cx={HOLE[0]} cy={HOLE[1]} r={HOLE_R + 7} fill="none" stroke="var(--rose)" stroke-opacity={frameHits || through ? 0.5 : 0.16} stroke-width="5" />
 		<circle cx={HOLE[0]} cy={HOLE[1]} r={HOLE_R} fill="url(#ph-hole)" stroke="var(--rose)" stroke-width="1.5" />
-		<SvgTeX x={HOLE[0] - HOLE_R - 10} y={HOLE[1] - 14} tex={String.raw`\text{puncture}`} size={12.5} color="var(--rose)" w={80} h={20} anchor="end" />
+		<SvgTeX x={HOLE[0] - HOLE_R - 10} y={HOLE[1] - 14 * lk} tex={String.raw`\text{puncture}`} size={12.5 * lk} color="var(--rose)" w={80 * lk} h={20 * lk} anchor="end" />
 
 		<!-- endpoints and names -->
 		<circle cx={X0[0]} cy={X0[1]} r="6.5" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.4" />
 		<circle cx={X1[0]} cy={X1[1]} r="6.5" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.4" />
-		<SvgTeX x={X0[0] - 2} y={X0[1] + 24} tex="x_0" size={17} w={40} h={26} />
-		<SvgTeX x={X1[0] + 2} y={X1[1] + 24} tex="x_1" size={17} w={40} h={26} />
-		<SvgTeX x={g0[MID][0]} y={g0[MID][1] - 20} tex={String.raw`\gamma_0`} size={18} color="var(--gold-bright)" w={44} h={26} />
-		<SvgTeX x={g1Label[0]} y={g1Label[1]} tex={String.raw`\gamma_1`} size={18} color={g1Color} w={44} h={26} anchor="start" />
-		<SvgTeX x={bead[0] + 16} y={bead[1] - 12} tex={`t = ${t.toFixed(2)}`} size={13} color="#fbf6e8" w={80} h={20} anchor="start" />
+		<SvgTeX x={X0[0] - 2} y={X0[1] + 24 * lk} tex="x_0" size={17 * lk} w={40 * lk} h={26 * lk} />
+		<SvgTeX x={X1[0] + 2} y={X1[1] + 24 * lk} tex="x_1" size={17 * lk} w={40 * lk} h={26 * lk} />
+		<SvgTeX x={g0[MID][0]} y={g0[MID][1] - 20 * lk} tex={String.raw`\gamma_0`} size={18 * lk} color="var(--gold-bright)" w={44 * lk} h={26 * lk} />
+		<SvgTeX x={g1Label[0]} y={g1Label[1]} tex={String.raw`\gamma_1`} size={18 * lk} color={g1Color} w={44 * lk} h={26 * lk} anchor="start" />
+		<SvgTeX x={bead[0] + 16} y={bead[1] - 12 * lk} tex={`t = ${t.toFixed(2)}`} size={13 * lk} color="#fbf6e8" w={80 * lk} h={20 * lk} anchor="start" />
 
 		<Handle
 			x={bead[0]}

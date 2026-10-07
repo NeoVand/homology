@@ -3,6 +3,7 @@
 	// disk → point, annulus → circle, Möbius band → core circle,
 	// punctured torus → figure eight (the rim of the puncture becomes aba⁻¹b⁻¹).
 	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
+	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 	import { glowTube, glowPoint } from '$lib/three/materials';
 	import { glass as glassGroup } from './glass';
 	import { SurfaceCurve, surfaceNormal } from '$lib/three/surfaces';
@@ -34,6 +35,8 @@
 		ctx.camera.near = 0.5;
 		ctx.camera.far = 60;
 		ctx.camera.updateProjectionMatrix();
+		// on narrow canvases pull the camera back so the whole torus stays in frame
+		const unfit = fitCamera(ctx, 1.5, 0.75);
 		const groups: Record<Mode, InstanceType<typeof THREE.Group>> = {
 			disk: new THREE.Group(),
 			annulus: new THREE.Group(),
@@ -161,6 +164,7 @@
 		api.set(mode, t);
 		return {
 			dispose: () => {
+				unfit();
 				api = null;
 			}
 		};

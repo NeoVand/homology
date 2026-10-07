@@ -127,6 +127,22 @@
 		font-size: 0.98rem;
 		line-height: 1.6;
 	}
+	/* phones: keep the formula on one line instead of breaking at the slash */
+	@container figure (max-width: 28rem) {
+		.decoder {
+			padding: 1.4rem 0.6rem 1rem;
+		}
+		.formula {
+			font-size: 1.3rem;
+			gap: 0.1rem;
+		}
+		.piece {
+			padding: 0.15rem 0.3rem;
+		}
+		.e-title {
+			text-wrap: balance;
+		}
+	}
 	.e-where {
 		font-size: 0.72rem;
 		letter-spacing: 0.12em;

@@ -142,4 +142,22 @@
 		font-size: 0.95rem;
 		color: var(--ink-dim);
 	}
+	/* phones: all five columns on screen at once */
+	@container figure (max-width: 30rem) {
+		.cl {
+			padding: 0.8rem 0.4rem 0.9rem;
+		}
+		.lt {
+			min-width: 0;
+			font-size: 0.92rem !important;
+		}
+		.lt th,
+		.lt td {
+			padding: 0.5em 0.4em !important;
+		}
+		.sub {
+			letter-spacing: 0.04em;
+			font-size: 0.6rem;
+		}
+	}
 </style>

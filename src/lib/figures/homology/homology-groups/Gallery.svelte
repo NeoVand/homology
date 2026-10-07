@@ -13,14 +13,17 @@
 		ex,
 		H: homology(ex.K, 'Z')
 	}));
+	// on phones the cards are narrow: draw the pictures taller and their labels larger
+	let cw = $state(800);
+	const narrow = $derived(cw < 520);
 </script>
 
-<div class="gal">
+<div class="gal" bind:clientWidth={cw}>
 	{#each items as { ex, H } (ex.id)}
 		<div class="card">
 			<div class="pic">
-				<Svg viewBox={paddedViewBox(ex.L, 250, 236)} maxHeight={118} label={ex.name}>
-					<FlatComplex L={ex.L} triFill={() => 'var(--blue)'} triOpacity={() => 0.16} labelSize={1.55} />
+				<Svg viewBox={paddedViewBox(ex.L, 250, 236)} maxHeight={narrow ? 150 : 118} label={ex.name}>
+					<FlatComplex L={ex.L} triFill={() => 'var(--blue)'} triOpacity={() => 0.16} labelSize={narrow ? 1.9 : 1.55} />
 				</Svg>
 			</div>
 			<div class="nm ui">{ex.name}</div>
@@ -89,5 +92,10 @@
 		font-size: 0.82rem;
 		color: var(--ink);
 		text-align: center;
+	}
+	@container figure (max-width: 520px) {
+		.pic {
+			height: 154px;
+		}
 	}
 </style>

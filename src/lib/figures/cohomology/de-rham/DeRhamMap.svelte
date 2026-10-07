@@ -105,13 +105,17 @@
 		const s = 6;
 		return `M ${mx - ux * s - uy * s} ${my - uy * s + ux * s} L ${mx + ux * s * 0.6} ${my + uy * s * 0.6} L ${mx - ux * s + uy * s} ${my - uy * s - ux * s}`;
 	}
+	// On a narrow plate the drawing is scaled down; the edge values grow a little (kz ≥ 1).
+	let width = $state(420);
+	const kz = $derived(Math.min(1.4, Math.max(1, (1.2 * 420) / (width || 420))));
+
 	function pickTri(k: number) {
 		const t = annulusTris[k];
 		selected = { kind: 'tri', path: [t[0], t[1], t[2]], label: `the triangle [${t.map((v) => names[v].replace('_', '')).join(', ')}]` };
 	}
 </script>
 
-<div class="derham">
+<div class="derham" bind:clientWidth={width}>
 	<Svg viewBox="110 76 420 364" maxHeight={500} label="A triangulated annulus around a missing point; each edge is labelled with the integral of a 1-form along it.">
 		{#each annulusTris as t, k (k)}
 			<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
@@ -137,7 +141,7 @@
 			{/if}
 			<line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} class="edge" class:on />
 			<path d={arrowMid(i, j)} class="arrowhead" class:on />
-			<SvgTeX x={m[0]} y={m[1]} tex={valueTeX(cochain[k])} color={on ? 'var(--gold-bright)' : 'var(--gold-pale)'} size={on ? 17 : 15} w={64} h={28} />
+			<SvgTeX x={m[0]} y={m[1]} tex={valueTeX(cochain[k])} color={on ? 'var(--gold-bright)' : 'var(--gold-pale)'} size={(on ? 17 : 15) * kz} w={64 * kz} h={28 * kz} />
 		{/each}
 		{#each annulusPos as p, v (v)}
 			{@const q = px(p)}

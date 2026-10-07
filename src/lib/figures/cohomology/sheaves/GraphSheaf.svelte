@@ -30,6 +30,23 @@
 		[62, -6],
 		[0, -42]
 	];
+	// On a narrow plate the drawing is scaled down to about half: the cards, the nodes and
+	// their text are drawn larger, so that they stay readable (sizes in user units, set
+	// inline because the plate's default text size would otherwise win).
+	let width = $state(640);
+	const narrow = $derived(width > 0 && width < 520);
+	const tagOffN: [number, number][] = [
+		[-80, -4],
+		[0, 0],
+		[80, -4],
+		[0, -42]
+	];
+	const Z = $derived(
+		narrow
+			? { cw: 190, ch: 86, r: 42, rate: 20, cmp: 22, cur: 17, big: 22, price: 24, dy: [-20, 8, 30], ny: [-9, 19] }
+			: { cw: 124, ch: 60, r: 34, rate: 12.5, cmp: 14, cur: 10.5, big: 15, price: 17, dy: [-12, 8, 23], ny: [-6, 15] }
+	);
+	const fs = (n: number) => (n ? `${n}px` : null);
 	// rates[e] = units of v's currency for one unit of u's currency
 	type RateSet = 'honest' | 'arbitrage';
 	let rateSet = $state<RateSet>('honest');
@@ -98,30 +115,30 @@
 	const sym = (i: number) => (names[i] === 'CHF' ? 'CHF\\,' : names[i] === '€' ? '\\text{€}' : names[i] === '£' ? '\\pounds' : '\\$');
 </script>
 
-<div class="wrap">
-	<Svg viewBox="0 0 640 360" maxHeight={400} label="Four currencies joined by exchange rates. Each node holds the price of a coffee in its currency; each edge checks whether the two prices agree after conversion.">
+<div class="wrap" bind:clientWidth={width}>
+	<Svg viewBox={narrow ? '0 0 640 404' : '0 0 640 360'} maxHeight={400} label="Four currencies joined by exchange rates. Each node holds the price of a coffee in its currency; each edge checks whether the two prices agree after conversion.">
 		<!-- edges -->
 		{#each edgeList as [u, v], i (i)}
 			{@const a = pos[u]}
 			{@const b = pos[v]}
 			{@const ok = Math.abs(mism[i]) < 0.005}
-			{@const mx = (a[0] + b[0]) / 2 + tagOff[i][0]}
-			{@const my = (a[1] + b[1]) / 2 + tagOff[i][1]}
+			{@const mx = (a[0] + b[0]) / 2 + (narrow ? tagOffN : tagOff)[i][0]}
+			{@const my = (a[1] + b[1]) / 2 + (narrow ? tagOffN : tagOff)[i][1]}
 			<line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} class="edge" class:ok />
 			<g class="tag" class:ok>
-				<rect x={mx - 62} y={my - 30} width="124" height="60" rx="12" />
-				<text x={mx} y={my - 12} text-anchor="middle" class="rate">1 {names[u]} = {rates[i].toFixed(2)} {names[v]}</text>
-				<text x={mx} y={my + 8} text-anchor="middle" class="cmp">{money(prices[u])} vs {money(prices[v] / rates[i])}</text>
-				<text x={mx} y={my + 23} text-anchor="middle" class="cur">(in {names[u]})</text>
+				<rect x={mx - Z.cw / 2} y={my - Z.ch / 2} width={Z.cw} height={Z.ch} rx="12" />
+				<text x={mx} y={my + Z.dy[0]} text-anchor="middle" class="rate" style:font-size={fs(Z.rate)}>1 {names[u]} = {rates[i].toFixed(2)} {names[v]}</text>
+				<text x={mx} y={my + Z.dy[1]} text-anchor="middle" class="cmp" style:font-size={fs(Z.cmp)}>{money(prices[u])} vs {money(prices[v] / rates[i])}</text>
+				<text x={mx} y={my + Z.dy[2]} text-anchor="middle" class="cur" style:font-size={fs(Z.cur)}>(in {names[u]})</text>
 			</g>
 		{/each}
 		<!-- vertices -->
 		{#each pos as p, i (i)}
-			<circle cx={p[0]} cy={p[1]} r="34" class="node" />
-			<text x={p[0]} y={p[1] - 6} text-anchor="middle" class="cur-big">{names[i]}</text>
-			<text x={p[0]} y={p[1] + 15} text-anchor="middle" class="price">{money(prices[i])}</text>
+			<circle cx={p[0]} cy={p[1]} r={Z.r} class="node" />
+			<text x={p[0]} y={p[1] + Z.ny[0]} text-anchor="middle" class="cur-big" style:font-size={fs(Z.big)}>{names[i]}</text>
+			<text x={p[0]} y={p[1] + Z.ny[1]} text-anchor="middle" class="price" style:font-size={fs(Z.price)}>{money(prices[i])}</text>
 		{/each}
-		<SvgTeX x={560} y={226} tex={isSection ? '\\text{a global section}' : '\\text{not a global section}'} size={16} color={isSection ? 'var(--green)' : 'var(--rose)'} w={200} />
+		<SvgTeX x={narrow ? 470 : 560} y={narrow ? 384 : 226} tex={isSection ? '\\text{a global section}' : '\\text{not a global section}'} size={narrow ? 24 : 16} color={isSection ? 'var(--green)' : 'var(--rose)'} w={narrow ? 320 : 200} h={narrow ? 36 : 40} />
 	</Svg>
 
 	<div class="readout ui">

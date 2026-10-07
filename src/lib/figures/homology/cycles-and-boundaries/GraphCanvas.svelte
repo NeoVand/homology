@@ -47,6 +47,7 @@
 	// Draws a graph or a 2-dimensional complex in the plane with per-element
 	// looks. Indices are positions in the `edges` / `tris` arrays passed in.
 	import { tex as renderTeX } from '$lib/katex/render';
+	import { onMount } from 'svelte';
 
 	type Pt = [number, number];
 	let {
@@ -101,6 +102,15 @@
 	}
 	const isHot = (kind: Kind, i: number) => hover?.kind === kind && hover.i === i;
 	const centroid = (t: number[]): Pt => [t.reduce((s, v) => s + pos[v][0], 0) / t.length, t.reduce((s, v) => s + pos[v][1], 0) / t.length];
+	// edge labels are drawn larger on phones (see the @media rule below), so they sit further from their edge
+	let labelGap = $state(19);
+	onMount(() => {
+		const mq = window.matchMedia('(max-width: 640px)');
+		const set = () => (labelGap = mq.matches ? 24 : 19);
+		set();
+		mq.addEventListener('change', set);
+		return () => mq.removeEventListener('change', set);
+	});
 </script>
 
 <g class="gc">
@@ -174,7 +184,9 @@
 			{@const side = L.labelSide ?? 1}
 			{@const nx = (-(b[1] - a[1]) / len) * side}
 			{@const ny = ((b[0] - a[0]) / len) * side}
-			<foreignObject x={(a[0] + b[0]) / 2 + nx * 17 - 50} y={(a[1] + b[1]) / 2 + ny * 17 - 14} width="100" height="28" class="fo">
+			<!-- a label beside a slanted edge needs more room: its box reaches back towards the edge at a corner -->
+			{@const gap = labelGap * (1 + 0.7 * Math.abs(nx * ny))}
+			<foreignObject x={(a[0] + b[0]) / 2 + nx * gap - 50} y={(a[1] + b[1]) / 2 + ny * gap - 14} width="100" height="28" class="fo">
 				<div class="lbl" style="color:{L.labelColor ?? 'var(--gold-pale)'}">{@html renderTeX(L.label)}</div>
 			</foreignObject>
 		{/if}

@@ -160,7 +160,7 @@
 		<SvgTeX x={SX0 - 34} y={sy(0)} tex={'0'} size={narrow ? 18 : 14} color="var(--ink-dim)" w={20} />
 		<SvgTeX x={sx(0)} y={SY1 + 22} tex={'\\theta = 0'} size={narrow ? 17 : 14} color="var(--ink-dim)" w={60} />
 		<SvgTeX x={sx(TAU)} y={SY1 + 22} tex={'\\theta = 2\\pi'} size={narrow ? 17 : 14} color="var(--ink-dim)" w={70} />
-		<text x={(SX0 + SX1) / 2} y={SY1 + 44} text-anchor="middle" class="t-ui">
+		<text x={(SX0 + SX1) / 2} y={SY1 + 44} text-anchor="middle" class="t-ui" style={narrow ? 'font-size: 13.5px; letter-spacing: 0.04em' : undefined}>
 			{twisted
 				? narrow
 					? 'RIGHT EDGE GLUED TO LEFT, UPSIDE DOWN'

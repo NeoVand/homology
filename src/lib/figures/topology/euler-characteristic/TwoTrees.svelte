@@ -105,11 +105,13 @@
 	</Svg>
 	<div class="readout ui" aria-live="polite">
 		<div class="eq">
-			<span class="teal">{treeCount} tree edges</span> + <span class="violet">{cubeEdges.length - treeCount} dual-tree edges</span> =
-			{cubeEdges.length} edges
+			<span class="teal">{treeCount} tree edges</span> + <span class="violet">{cubeEdges.length - treeCount} dual-tree edges</span>
+			<span class="nw">= {cubeEdges.length} edges</span>
 		</div>
 		<div class="eq2">
-			<TeX tex={`E = (V - 1) + (F - 1) \\;\\Longrightarrow\\; V - E + F = 2`} />
+			<!-- two unbreakable halves, so a narrow plate wraps at the arrow -->
+			<span class="nw"><TeX tex={`E = (V - 1) + (F - 1)`} /></span>
+			<span class="nw"><TeX tex={`\\Longrightarrow\\; V - E + F = 2`} /></span>
 		</div>
 		<p class="msg">
 			{#if hover !== null && !g.inTree[hover]}
@@ -225,5 +227,8 @@
 		padding: 0.75rem 1.2rem 0.9rem;
 		border-top: 1px solid var(--line-faint);
 		background: rgba(5, 8, 16, 0.45);
+	}
+	.nw {
+		white-space: nowrap;
 	}
 </style>

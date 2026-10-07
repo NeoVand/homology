@@ -34,10 +34,16 @@
 		if (xi >= d) xi = d - 1;
 	});
 
-	// layout
-	const X = { A: 230, B: 400, C: 570 };
+	// layout. On a narrow plate the columns move closer together and the snake hugs them
+	// (a narrower drawing is scaled down less), and the labels grow (k ≥ 1).
+	let width = $state(700);
+	const narrow = $derived(width > 0 && width < 520);
+	const k = $derived(narrow ? Math.min(1.45, Math.max(1, (0.9 * 540) / width)) : 1);
+	const kb = $derived(Math.min(k, 1.25)); // node boxes
+	const X = $derived(narrow ? { A: 150, B: 290, C: 430 } : { A: 230, B: 400, C: 570 });
 	const Y = { ker: 66, top: 186, bot: 346, cok: 466 };
-	const P = {
+	const bulge = $derived(narrow ? 150 : 160); // how far the snake swings out beside the columns
+	const P = $derived({
 		kerA: [X.A, Y.ker],
 		kerB: [X.B, Y.ker],
 		kerC: [X.C, Y.ker],
@@ -50,17 +56,18 @@
 		cokA: [X.A, Y.cok],
 		cokB: [X.B, Y.cok],
 		cokC: [X.C, Y.cok]
-	} as Record<string, Pt>;
+	} as Record<string, Pt>);
 
 	// the chase: which node the token sits on after each step
 	const route: string[] = ['kerC', 'kerC', 'C', 'B', 'B2', 'A2', 'cokA', 'cokA'];
-	let tokPos = $state<Pt>([X.C, Y.ker]);
+	let tokPos = $state<Pt>([570, Y.ker]);
 	let trail = $state(0); // how many trail segments are lit (0..5)
 	let cancel: (() => void) | null = null;
 	let prevStep = 0;
 	$effect(() => {
 		const s = step;
 		cancel?.();
+		// (reading P here also re-places the token when the layout changes)
 		const from = P[route[Math.min(prevStep, route.length - 1)]];
 		const to = P[route[Math.min(s, route.length - 1)]];
 		const goal = Math.max(0, Math.min(5, s - 1));
@@ -147,37 +154,36 @@
 	const hl = (k: string) => route[Math.min(step, route.length - 1)] === k && step > 0;
 </script>
 
-<div class="snake">
-	<Svg viewBox="40 20 700 500" maxHeight={560} label="The snake lemma diagram: two exact rows, vertical maps, kernels above and cokernels below, and the connecting map winding from the top right to the bottom left">
+<div class="snake" bind:clientWidth={width}>
+	<Svg viewBox={narrow ? `20 ${20 - 12 * (k - 1)} 540 ${500 + 24 * (k - 1)}` : '40 20 700 500'} maxHeight={560} label="The snake lemma diagram: two exact rows, vertical maps, kernels above and cokernels below, and the connecting map winding from the top right to the bottom left">
 		<!-- the classic snake: from ker c, round the right, across the middle, to coker a -->
 		<path
-			d="M 606 {Y.ker} C 730 {Y.ker}, 730 266, 610 266 L 190 266 C 70 266, 70 {Y.cok}, 194 {Y.cok}"
+			d="M {X.C + 36 + 12 * (kb - 1)} {Y.ker} C {X.C + bulge} {Y.ker}, {X.C + bulge} 266, {X.C + 40} 266 L {X.A - 40} 266 C {X.A - bulge} 266, {X.A - bulge} {Y.cok}, {X.A - 36 - 12 * (kb - 1)} {Y.cok}"
 			class="snake-path"
 			class:lit={step >= 5}
 			marker-end={step >= 5 ? 'url(#arrow-gold)' : undefined}
 		/>
 		{#if step >= 5}
-			<SvgTeX x={700} y={170} tex={'\\delta'} size={18} color="var(--gold-bright)" w={30} h={26} />
+			<SvgTeX x={narrow ? X.C + 96 : 700} y={narrow ? 232 : 170} tex={'\\delta'} size={18 * k} color="var(--gold-bright)" w={30 * k} h={26 * k} />
 		{/if}
 
 		<!-- horizontal arrows -->
-		<path d={seg(P.kerA, P.kerB, 38, 38)} class="ar faint" marker-end="url(#arrow-dim)" />
-		<path d={seg(P.kerB, P.kerC, 38, 38)} class="ar faint" marker-end="url(#arrow-dim)" />
+		<path d={seg(P.kerA, P.kerB, 38 + 12 * (kb - 1), 38 + 12 * (kb - 1))} class="ar faint" marker-end="url(#arrow-dim)" />
+		<path d={seg(P.kerB, P.kerC, 38 + 12 * (kb - 1), 38 + 12 * (kb - 1))} class="ar faint" marker-end="url(#arrow-dim)" />
 		<path d={seg(P.A, P.B, 30, 30)} class="ar" marker-end="url(#arrow-ivory)" />
 		<path d={seg(P.B, P.C, 30, 34)} class="ar" marker-end="url(#arrow-ivory)" />
-		<path d="M 604 {Y.top} L 662 {Y.top}" class="ar" marker-end="url(#arrow-ivory)" />
-		<SvgTeX x={684} y={Y.top} tex="0" size={16} w={20} h={22} />
-		<SvgTeX x={110} y={Y.bot} tex="0" size={16} w={20} h={22} />
-		<path d="M 124 {Y.bot} L 196 {Y.bot}" class="ar" marker-end="url(#arrow-ivory)" />
+		<path d="M {X.C + 34} {Y.top} L {X.C + (narrow ? 62 : 92)} {Y.top}" class="ar" marker-end="url(#arrow-ivory)" />
+		<SvgTeX x={X.C + (narrow ? 78 : 114)} y={Y.top} tex="0" size={16 * k} w={20 * k} h={22 * k} />
+		<SvgTeX x={X.A - (narrow ? 78 : 120)} y={Y.bot} tex="0" size={16 * k} w={20 * k} h={22 * k} />
+		<path d="M {X.A - (narrow ? 66 : 106)} {Y.bot} L {X.A - 34} {Y.bot}" class="ar" marker-end="url(#arrow-ivory)" />
 		<path d={seg(P.A2, P.B2, 30, 30)} class="ar" marker-end="url(#arrow-ivory)" />
 		<path d={seg(P.B2, P.C2, 30, 34)} class="ar" marker-end="url(#arrow-ivory)" />
-		<path d={seg(P.cokA, P.cokB, 40, 40)} class="ar faint" marker-end="url(#arrow-dim)" />
-		<path d={seg(P.cokB, P.cokC, 40, 40)} class="ar faint" marker-end="url(#arrow-dim)" />
+		<path d={seg(P.cokA, P.cokB, 40 + 12 * (kb - 1), 40 + 12 * (kb - 1))} class="ar faint" marker-end="url(#arrow-dim)" />
+		<path d={seg(P.cokB, P.cokC, 40 + 12 * (kb - 1), 40 + 12 * (kb - 1))} class="ar faint" marker-end="url(#arrow-dim)" />
 
-		<SvgTeX x={315} y={Y.top - 16} tex={`i = \\times ${m}`} size={13} color="var(--ink-dim)" w={90} h={20} />
-		<SvgTeX x={485} y={Y.top - 16} tex={`p = \\text{mod }${m}`} size={13} color="var(--ink-dim)" w={100} h={20} />
-		<SvgTeX x={315} y={Y.bot + 18} tex={`i' = \\times ${m}`} size={13} color="var(--ink-dim)" w={90} h={20} />
-		<SvgTeX x={485} y={Y.bot + 18} tex={`p' = \\text{mod }${m}`} size={13} color="var(--ink-dim)" w={100} h={20} />
+		{#each [[X.A, X.B, Y.top - (narrow ? 38 : 16), `i = \\times ${m}`], [X.B, X.C, Y.top - (narrow ? 38 : 16), `p = \\text{mod }${m}`], [X.A, X.B, Y.bot + (narrow ? 38 : 18), `i' = \\times ${m}`], [X.B, X.C, Y.bot + (narrow ? 38 : 18), `p' = \\text{mod }${m}`]] as [x0, x1, yy, t], i (i)}
+			<SvgTeX x={(Number(x0) + Number(x1)) / 2} y={Number(yy)} tex={String(t)} size={13 * k} color="var(--ink-dim)" w={100 * k} h={20 * k} />
+		{/each}
 
 		<!-- vertical arrows -->
 		{#each ['A', 'B', 'C'] as c (c)}
@@ -185,44 +191,51 @@
 			<path d="M {xx} {Y.ker + 20} L {xx} {Y.top - 24}" class="ar faint" marker-end="url(#arrow-dim)" />
 			<path d="M {xx} {Y.top + 24} L {xx} {Y.bot - 24}" class="ar vert" marker-end="url(#arrow-blue)" />
 			<path d="M {xx} {Y.bot + 24} L {xx} {Y.cok - 22}" class="ar faint" marker-end="url(#arrow-dim)" />
-			<SvgTeX x={xx + 34} y={(Y.top + Y.bot) / 2 - 22} tex={`${c.toLowerCase()} = \\times ${n}`} size={13} color="var(--blue)" w={80} h={20} />
+			<SvgTeX x={xx + 34 + 8 * (k - 1)} y={(Y.top + Y.bot) / 2 - 22} tex={`${c.toLowerCase()} = \\times ${n}`} size={13 * k} color="var(--blue)" w={80 * k} h={20 * k} />
 		{/each}
 
 		<!-- the chase trail -->
-		{#each trailPts as s, k (k)}
+		{#each trailPts as s, i (i)}
 			<line x1={s.a[0]} y1={s.a[1]} x2={s.b[0]} y2={s.b[1]} class="trail-halo" />
 			<line x1={s.a[0]} y1={s.a[1]} x2={s.b[0]} y2={s.b[1]} class="trail" />
 		{/each}
 
 		<!-- nodes -->
-		{#each [['kerA', '0'], ['kerB', '0'], ['kerC', `\\ker c\\cong\\Z/${d}`], ['A', '\\Z'], ['B', '\\Z'], ['C', `\\Z/${m}`], ['A2', '\\Z'], ['B2', '\\Z'], ['C2', `\\Z/${m}`], ['cokA', `\\Z/${n}`], ['cokB', `\\Z/${n}`], ['cokC', `\\Z/${d}`]] as [k, t] (k)}
-			{@const p = P[k]}
-			{@const small = k.startsWith('ker') || k.startsWith('cok')}
+		{#each [['kerA', '0'], ['kerB', '0'], ['kerC', `\\ker c\\cong\\Z/${d}`], ['A', '\\Z'], ['B', '\\Z'], ['C', `\\Z/${m}`], ['A2', '\\Z'], ['B2', '\\Z'], ['C2', `\\Z/${m}`], ['cokA', `\\Z/${n}`], ['cokB', `\\Z/${n}`], ['cokC', `\\Z/${d}`]] as [key, t] (key)}
+			{@const p = P[key]}
+			{@const small = key.startsWith('ker') || key.startsWith('cok')}
+			{@const hw = (small ? 44 : 30) * kb}
 			<g transform="translate({p[0]} {p[1]})">
-				<rect x={small ? -44 : -30} y="-18" width={small ? 88 : 60} height="36" rx="11" class="node" class:small class:hl={hl(k)} />
-				<SvgTeX x={0} y={0} tex={t} size={small ? 13 : 16} color={small ? 'var(--ink-dim)' : 'var(--ink-bright)'} w={small ? 86 : 58} h={30} />
+				<rect x={-hw} y={-18 * kb} width={2 * hw} height={36 * kb} rx="11" class="node" class:small class:hl={hl(key)} />
+				<SvgTeX x={0} y={0} tex={t} size={(small ? 13 : 16) * k} color={small ? 'var(--ink-dim)' : 'var(--ink-bright)'} w={2 * hw - 2} h={30 * k} />
 			</g>
 		{/each}
-		<SvgTeX x={X.A - 66} y={Y.ker} tex={'\\ker a'} size={12} color="var(--ink-faint)" w={50} h={18} />
-		<SvgTeX x={X.A - 70} y={Y.cok} tex={'\\coker a'} size={12} color="var(--ink-faint)" w={60} h={18} />
-		<SvgTeX x={X.A - 52} y={Y.top} tex="A" size={13} color="var(--ink-faint)" w={20} h={18} />
-		<SvgTeX x={X.A - 52} y={Y.bot - 22} tex="A'" size={13} color="var(--ink-faint)" w={20} h={18} />
-		<SvgTeX x={X.B + 40} y={Y.top - 26} tex="B" size={13} color="var(--ink-faint)" w={20} h={18} />
-		<SvgTeX x={X.B + 40} y={Y.bot + 26} tex="B'" size={13} color="var(--ink-faint)" w={20} h={18} />
-		<SvgTeX x={X.C + 46} y={Y.top - 26} tex="C" size={13} color="var(--ink-faint)" w={20} h={18} />
-		<SvgTeX x={X.C + 46} y={Y.bot + 26} tex="C'" size={13} color="var(--ink-faint)" w={20} h={18} />
+		<!-- coker a sits below its node: the snake arrives from the left -->
+		{#if narrow}
+			<SvgTeX x={X.A} y={Y.ker - 34} tex={'\\ker a'} size={12 * k} color="var(--ink-faint)" w={60 * k} h={18 * k} />
+		{:else}
+			<SvgTeX x={X.A - 66} y={Y.ker} tex={'\\ker a'} size={12} color="var(--ink-faint)" w={50} h={18} />
+		{/if}
+		<SvgTeX x={X.A} y={Y.cok + 32 + 2 * (k - 1)} tex={'\\coker a'} size={12 * k} color="var(--ink-faint)" w={70 * k} h={18 * k} />
+		<SvgTeX x={X.A - 52 - 6 * (k - 1)} y={Y.top} tex="A" size={13 * k} color="var(--ink-faint)" w={20 * k} h={18 * k} />
+		<SvgTeX x={X.A - 52 - 6 * (k - 1)} y={Y.bot - 22} tex="A'" size={13 * k} color="var(--ink-faint)" w={20 * k} h={18 * k} />
+		<!-- B, B' sit between the rows, clear of the labels on the horizontal arrows -->
+		<SvgTeX x={X.B + 40} y={Y.top + 28} tex="B" size={13 * k} color="var(--ink-faint)" w={20 * k} h={18 * k} />
+		<SvgTeX x={X.B + 40} y={Y.bot - 28} tex="B'" size={13 * k} color="var(--ink-faint)" w={20 * k} h={18 * k} />
+		<SvgTeX x={X.C + 46} y={Y.top - 26} tex="C" size={13 * k} color="var(--ink-faint)" w={20 * k} h={18 * k} />
+		<SvgTeX x={X.C + 46} y={Y.bot + 26} tex="C'" size={13 * k} color="var(--ink-faint)" w={20 * k} h={18 * k} />
 
-		<!-- the token -->
+		<!-- the token (above its node on a phone, where the arrow labels are wider) -->
 		{#if step >= 1}
-			<g transform="translate({tokPos[0] + 30} {tokPos[1] - 24})">
-				<rect x={-6 - tokenValue.length * 4} y="-12" width={12 + tokenValue.length * 8} height="24" rx="12" class="token" />
-				<text text-anchor="middle" dy="5" class="tok-t">{tokenValue}</text>
+			<g transform={narrow ? `translate(${tokPos[0]} ${tokPos[1] - 36})` : `translate(${tokPos[0] + 30} ${tokPos[1] - 24})`}>
+				<rect x={(-6 - tokenValue.length * 4) * k} y={-12 * k} width={(12 + tokenValue.length * 8) * k} height={24 * k} rx={12 * k} class="token" />
+				<text text-anchor="middle" dy={5 * k} class="tok-t" style="font-size:{13 * k}px">{tokenValue}</text>
 			</g>
 		{/if}
 		{#if step >= 6}
-			<g transform="translate({P.A2[0] - 34} {P.A2[1] + 26})">
-				<rect x={-6 - String(z2).length * 4} y="-12" width={12 + String(z2).length * 8} height="24" rx="12" class="token alt" />
-				<text text-anchor="middle" dy="5" class="tok-t">{z2}</text>
+			<g transform="translate({P.A2[0] - 34 - 6 * (k - 1)} {P.A2[1] + 26 + 4 * (k - 1)})">
+				<rect x={(-6 - String(z2).length * 4) * k} y={-12 * k} width={(12 + String(z2).length * 8) * k} height={24 * k} rx={12 * k} class="token alt" />
+				<text text-anchor="middle" dy={5 * k} class="tok-t" style="font-size:{13 * k}px">{z2}</text>
 			</g>
 		{/if}
 	</Svg>
@@ -311,7 +324,7 @@
 	.tok-t {
 		font-family: var(--font-ui);
 		font-weight: 700;
-		font-size: 13px !important;
+		font-size: 13px;
 		fill: #1a1206 !important;
 	}
 	.explain {

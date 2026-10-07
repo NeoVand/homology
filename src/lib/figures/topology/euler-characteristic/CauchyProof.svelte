@@ -87,7 +87,7 @@
 	];
 	const message = $derived.by(() => {
 		if (step === 0)
-			return 'A cube has 8 vertices, 12 edges and 6 faces. We will show that V − E + F = 2 by changing the picture in steps that never change V − E + F.';
+			return 'A cube has 8 vertices, 12 edges and 6 faces. We will show that V\u00a0−\u00a0E\u00a0+\u00a0F\u00a0=\u00a02 by changing the picture in steps that never change V\u00a0−\u00a0E\u00a0+\u00a0F.';
 		if (step === 1)
 			return 'Remove the front face and stretch what is left out flat, as if looking through the hole from very close. Nothing else changes, so now V − E + F = 2 − 1 = 1. The missing face has become the outside.';
 		if (step === 2)

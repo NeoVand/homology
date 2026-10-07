@@ -30,6 +30,9 @@
 	const isTorsion = (t: string) => t === '\\Z/2' && !mod2;
 	const cols = [150, 245, 340];
 	const rowY = [62, 162];
+	// On a narrow plate the table is scaled down; its small labels grow (kl ≥ 1).
+	let lw = $state(400);
+	const kl = $derived(Math.min(1.4, Math.max(1, 400 / (lw || 400))));
 </script>
 
 <div class="ts">
@@ -62,16 +65,16 @@
 			<SvgTeX x={TL[0] - 16} y={TL[1] - 12} tex="w" size={15} color="var(--teal)" w={24} h={22} />
 		</Svg>
 	</div>
-	<div class="ladder">
+	<div class="ladder" bind:clientWidth={lw}>
 		<Svg viewBox="0 0 400 220" maxHeight={230} label="Homology and cohomology groups of the projective plane in degrees 0, 1, 2">
 			{#each cols as x, k (k)}
-				<SvgTeX {x} y={20} tex={`k = ${k}`} size={13} color="var(--ink-faint)" w={60} h={22} />
+				<SvgTeX {x} y={20} tex={`k = ${k}`} size={13 * kl} color="var(--ink-faint)" w={60 * kl} h={22 * kl} />
 			{/each}
 			<SvgTeX x={52} y={rowY[0]} tex={mod2 ? 'H_k(\\,\\cdot\\,;\\Z/2)' : 'H_k'} size={17} color="var(--violet)" w={100} h={30} />
 			<SvgTeX x={52} y={rowY[1]} tex={mod2 ? 'H^k(\\,\\cdot\\,;\\Z/2)' : 'H^k'} size={17} color="var(--gold-bright)" w={100} h={30} />
 			{#if step >= 4 && !mod2}
 				<path d="M {cols[1] + 22} {rowY[0] + 20} C {cols[1] + 60} {rowY[0] + 70}, {cols[2] - 50} {rowY[1] - 70}, {cols[2] - 20} {rowY[1] - 22}" class="shift" marker-end="url(#arrow-rose)" />
-				<SvgTeX x={(cols[1] + cols[2]) / 2 + 30} y={(rowY[0] + rowY[1]) / 2 - 4} tex={'\\text{torsion moves up}'} size={12} color="var(--rose)" w={140} h={22} />
+				<SvgTeX x={(cols[1] + cols[2]) / 2 + 30} y={(rowY[0] + rowY[1]) / 2 - 4} tex={'\\text{torsion moves up}'} size={12 * kl} color="var(--rose)" w={140 * kl} h={22 * kl} />
 			{/if}
 			{#each [0, 1, 2] as k (k)}
 				<rect x={cols[k] - 34} y={rowY[0] - 20} width="68" height="40" rx="10" class="cell" class:tor={isTorsion(hom[k])} />

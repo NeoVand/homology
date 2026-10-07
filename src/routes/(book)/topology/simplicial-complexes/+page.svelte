@@ -578,8 +578,8 @@
 <Figure num="2.5.5" title="The square torus, cut into triangles" hint="Hover or tap a label · switch grids">
 	<TorusGrid />
 	{#snippet caption()}
-		Left: the square with its sides glued as the arrows show; a label appears twice (or four times, at the corners) when the gluing
-		makes those points one. Right: the same triangles drawn on a torus, where every label appears once. With a \(3 \times 3\) grid
+		The square with its sides glued as the arrows show; a label appears twice (or four times, at the corners) when the gluing
+		makes those points one. In 3D: the same triangles drawn on a torus, where every label appears once. With a \(3 \times 3\) grid
 		this is a simplicial complex. Switch to \(2 \times 2\): two <em>different</em> edges (rose and violet) join the same two
 		vertices.
 	{/snippet}
@@ -621,8 +621,8 @@
 <Figure num="2.5.6" title="Seven vertices, every pair joined" hint="Tap a vertex · drag to rotate">
 	<MobiusTorus />
 	{#snippet caption()}
-		Left: the labelled triangular tiling; the 14 shaded triangles form one complete copy of the torus. Tap a vertex: each of its
-		copies is joined to the six others. Right: the same seven vertices on a torus in space — or as Császár’s polyhedron, built from
+		The labelled triangular tiling; the 14 shaded triangles form one complete copy of the torus. Tap a vertex: each of its
+		copies is joined to the six others. In 3D: the same seven vertices on a torus in space — or as Császár’s polyhedron, built from
 		14 flat triangles with no self-crossings. The counter shows that all 21 pairs are edges.
 	{/snippet}
 </Figure>

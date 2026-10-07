@@ -214,7 +214,7 @@
 	}
 	.cap {
 		font-family: var(--font-ui);
-		font-size: 9px;
+		font-size: 10.5px;
 		fill: var(--ink-faint);
 		letter-spacing: 0.05em;
 	}

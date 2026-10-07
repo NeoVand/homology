@@ -605,7 +605,7 @@
 <Figure num="2.6.6" title="Every closed surface has its own cell" hint="Hover or tap a surface">
 	<SurfaceChart />
 	{#snippet caption()}
-		Columns: the Euler characteristic. Rows: orientable or not. Every closed connected surface occupies exactly one cell, and no cell
+		One direction: the Euler characteristic. The other: orientable or not. Every closed connected surface occupies exactly one cell, and no cell
 		holds two. Orientable surfaces only have even \(\chi\), since \(2 - 2g\) is always even.
 	{/snippet}
 </Figure>

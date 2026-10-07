@@ -12,6 +12,7 @@
 	import { glassMesh, glowTube, glowPoint, disposeTree, color } from '$lib/three/materials';
 	import { torus, surfaceGeometry, SurfaceCurve, surfaceNormal } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
+	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 	import { crossings, fencePathOf, loopPathOf, windings, MAX_WIGGLE, type FenceKind, type LoopKind } from './torusFences';
 
 	let fence = $state<FenceKind>('alpha');
@@ -33,6 +34,8 @@
 	let api = $state.raw<Api | null>(null);
 
 	function setup(ctx: SceneContext) {
+		// on a narrow (portrait) canvas, step back so the whole torus stays in frame
+		const unfit = fitCamera(ctx, 1.5);
 		const { THREE, scene, invalidate, label } = ctx;
 		const F = torus(1.6, 0.62);
 		scene.add(glassMesh(surfaceGeometry(F, 180, 72), { opacity: 0.6, grid: [32, 12], gridStrength: 0.2, film: 1.2 }));
@@ -143,6 +146,7 @@
 		};
 		return {
 			dispose: () => {
+				unfit();
 				api = null;
 			}
 		};

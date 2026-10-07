@@ -66,6 +66,7 @@
 			edgeLabelSide={(e) => (e === 4 ? -1 : 1)}
 			vertexText={(v) => currencySymbols[v]}
 			vertexName={(v) => currencies[v]}
+			autoPlace
 		/>
 	</Svg>
 </div>

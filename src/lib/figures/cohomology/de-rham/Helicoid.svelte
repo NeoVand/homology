@@ -5,6 +5,7 @@
 	// loop onto the staircase: around the hole you climb one storey per lap;
 	// beside it, you come back to where you started.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
+	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 	import type { Object3D, Vector3 } from 'three';
 	import { disposeTree, glassMesh, glowPoint, glowTube, setGlowColor } from '$lib/three/materials';
 	import { surfaceGeometry } from '$lib/three/surfaces';
@@ -53,6 +54,8 @@
 	let api: { set(m: Mode, laps: number): void } | null = null;
 
 	function setup(ctx: SceneContext) {
+		// on a narrow (portrait) canvas, step back so the whole staircase stays in frame
+		const unfit = fitCamera(ctx, 1.4);
 		const { THREE, scene, label, invalidate } = ctx;
 		const toV = (X: number, Y: number, y: number) => new THREE.Vector3(X, y, -Y);
 
@@ -156,7 +159,12 @@
 		}
 		api = { set: build };
 		build(mode, laps);
-		return { dispose: () => (api = null) };
+		return {
+			dispose: () => {
+				unfit();
+				api = null;
+			}
+		};
 	}
 
 	$effect(() => {

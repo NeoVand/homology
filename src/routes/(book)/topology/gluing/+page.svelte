@@ -18,9 +18,6 @@
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import Cite from '$lib/components/prose/Cite.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
-	import Svg from '$lib/components/svg/Svg.svelte';
-	import GluingSquare from '$lib/components/svg/GluingSquare.svelte';
-	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import GluingWorkshop from '$lib/figures/topology/gluing/GluingWorkshop.svelte';
 	import FlatTorusGame from '$lib/figures/topology/gluing/FlatTorusGame.svelte';
 	import IntervalCircle from '$lib/figures/topology/gluing/IntervalCircle.svelte';
@@ -28,6 +25,7 @@
 	import CollapseLab from '$lib/figures/topology/gluing/CollapseLab.svelte';
 	import Constructions from '$lib/figures/topology/gluing/Constructions.svelte';
 	import OctagonGenus2 from '$lib/figures/topology/gluing/OctagonGenus2.svelte';
+	import TorusSquareRules from '$lib/figures/topology/gluing/TorusSquareRules.svelte';
 
 	const reading = [
 		{
@@ -295,13 +293,7 @@
 </p>
 
 <Figure num="2.2.3" title="The torus as a square">
-	<Svg viewBox="0 0 520 250" maxHeight={250} label="A square with both horizontal edges labelled a pointing right, and both vertical edges labelled b pointing up; all four corners marked as the same point">
-		<GluingSquare preset="torus" x={70} y={30} size={170} corners />
-		<text x={320} y={72} class="t-ui">BOTTOM TO TOP</text>
-		<SvgTeX x={320} y={98} anchor="start" tex={'(x, 0) \\sim (x, 1)'} size={17} w={180} h={28} color="var(--gold-bright)" />
-		<text x={320} y={150} class="t-ui">LEFT TO RIGHT</text>
-		<SvgTeX x={320} y={176} anchor="start" tex={'(0, y) \\sim (1, y)'} size={17} w={180} h={28} color="var(--teal)" />
-	</Svg>
+	<TorusSquareRules />
 	{#snippet caption()}
 		The square is \([0,1] \times [0,1]\), with \((x, y)\) meaning “\(x\) across, \(y\) up”. The arrows say: glue \((x, 0)\) to
 		\((x, 1)\) and \((0, y)\) to \((1, y)\). These are exactly the flight rules of torus mode in Figure 2.2.1.

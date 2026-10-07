@@ -246,7 +246,7 @@
 		/>
 	</div>
 	<div class="maps">
-		<svg viewBox="0 0 420 300" role="img" aria-label="The six flat chart maps, each showing the point's coordinates if the point lies in that chart">
+		<svg viewBox="0 -6 420 306" role="img" aria-label="The six flat chart maps, each showing the point's coordinates if the point lies in that chart">
 			{#each cells as { c, cx, cy } (c.id)}
 				{@const on = containing.includes(c)}
 				{@const sel = activeChart === c}
@@ -277,7 +277,7 @@
 							<div class="coord off">not in this chart</div>
 						</foreignObject>
 					{/if}
-					<foreignObject x={-D} y={-D - 24} width={2 * D} height="20">
+					<foreignObject x={-D} y={-D - 28} width={2 * D} height="20">
 						<div class="ctitle" style="color:{c.color}">{@html tex(c.tex)}</div>
 					</foreignObject>
 				</g>
@@ -354,6 +354,18 @@
 	.ctitle {
 		text-align: center;
 		font-size: 13px;
+	}
+	/* phones: the six maps are drawn at about 80%, so their lettering grows */
+	@container figure (max-width: 30rem) {
+		.coord {
+			font-size: 13.5px;
+		}
+		.coord.off {
+			font-size: 12px;
+		}
+		.ctitle {
+			font-size: 15px;
+		}
 	}
 	.readout {
 		padding: 0.3rem 1.2rem 0.6rem;

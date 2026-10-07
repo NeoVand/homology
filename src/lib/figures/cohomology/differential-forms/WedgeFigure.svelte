@@ -13,6 +13,11 @@
 	const H = 380;
 	const S = 80;
 	const O: Vec2 = [250, 250];
+	// On a narrow plate the drawing is scaled down: its labels and handles grow (k ≥ 1), and
+	// the orientation note moves below the picture.
+	let width = $state(640);
+	const k = $derived(Math.min(1.7, Math.max(1, (0.9 * W) / (width || W))));
+	const narrow = $derived(k > 1.2);
 	const px = (p: Vec2): Vec2 => [O[0] + p[0] * S, O[1] - p[1] * S];
 	const wx = (x: number, y: number): Vec2 => [(x - O[0]) / S, (O[1] - y) / S];
 	const snap = (v: number) => Math.round(v * 4) / 4;
@@ -81,9 +86,17 @@
 		return d;
 	})();
 	const n = (x: number) => fmtTeX(x, 2).replace(/\.?0+$/, '') || '0';
+	const signTeX = $derived(
+		sign > 0
+			? String.raw`\text{positive: } \mathbf v \text{ is counterclockwise from } \mathbf u`
+			: sign < 0
+				? String.raw`\text{negative: } \mathbf v \text{ is clockwise from } \mathbf u`
+				: String.raw`\text{flat: no area at all}`
+	);
+	const signColor = $derived(sign > 0 ? 'var(--gold-bright)' : sign < 0 ? 'var(--rose)' : 'var(--ink-dim)');
 </script>
 
-<div class="wedge">
+<div class="wedge" bind:clientWidth={width}>
 	<Svg bind:svg viewBox="0 0 {W} {H}" maxHeight={460} label="Two draggable vectors u and v and the parallelogram they span, shaded by its signed area.">
 		<defs>
 			<pattern id="wedge-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
@@ -96,7 +109,7 @@
 		<line x1={O[0]} y1="0" x2={O[0]} y2={H} class="axis" />
 		<!-- unit square -->
 		<rect x={O[0]} y={O[1] - S} width={S} height={S} class="unit" />
-		<SvgTeX x={O[0] + S / 2} y={O[1] - S / 2} tex={'1'} color="var(--ink-faint)" size={14} w={20} h={20} />
+		<SvgTeX x={O[0] + S / 2} y={O[1] - S / 2} tex={'1'} color="var(--ink-faint)" size={14 * k} w={20 * k} h={20 * k} />
 
 		<polygon points={polyStr} class="para" class:neg={sign < 0} />
 		{#if arc.show}
@@ -121,21 +134,26 @@
 				onpointercancel={() => (drag = null)}
 				onkeydown={(e) => key(e, vec.w)}
 			>
-				<circle r="18" class="hit" />
-				<circle r="11" style="stroke:{vec.c}" class="knob" />
-				<SvgTeX x={14} y={-16} tex={String.raw`\mathbf ${vec.w}`} color={vec.c} size={18} w={30} h={26} />
+				<circle r={18 * k} class="hit" />
+				<circle r={11 * Math.min(k, 1.4)} style="stroke:{vec.c}" class="knob" />
+				<SvgTeX x={14 * k} y={-16 * k} tex={String.raw`\mathbf ${vec.w}`} color={vec.c} size={18 * k} w={30 * k} h={26 * k} />
 			</g>
 		{/each}
-		<SvgTeX
-			x={W - 120}
-			y={36}
-			tex={sign > 0 ? String.raw`\text{positive: } \mathbf v \text{ is counterclockwise from } \mathbf u` : sign < 0 ? String.raw`\text{negative: } \mathbf v \text{ is clockwise from } \mathbf u` : String.raw`\text{flat: no area at all}`}
-			color={sign > 0 ? 'var(--gold-bright)' : sign < 0 ? 'var(--rose)' : 'var(--ink-dim)'}
-			size={14}
-			w={230}
-			h={24}
-		/>
+		{#if !narrow}
+			<SvgTeX
+				x={W - 120}
+				y={36}
+				tex={signTeX}
+				color={signColor}
+				size={14}
+				w={230}
+				h={24}
+			/>
+		{/if}
 	</Svg>
+	{#if narrow}
+		<div class="signnote" style:color={signColor}><TeX tex={signTeX} /></div>
+	{/if}
 	<Controls>
 		<Button variant="subtle" onclick={() => ([u, v] = [v, u])}>Swap u and v</Button>
 		<Button variant="subtle" onclick={() => (v = [u[0] * 0.5, u[1] * 0.5])}>Make v parallel to u</Button>
@@ -208,5 +226,10 @@
 		padding: 0.2rem 1rem 0.6rem;
 		border-top: 1px solid var(--line-faint);
 		overflow-x: auto;
+	}
+	.signnote {
+		text-align: center;
+		font-size: 0.9rem;
+		padding: 0.3rem 1rem 0;
 	}
 </style>

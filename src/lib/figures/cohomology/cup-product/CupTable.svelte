@@ -15,12 +15,14 @@
 	let cell = $state<[number, number]>([0, 1]);
 	const S = $derived(spaces.find((s) => s.id === id)!);
 
-	$effect(() => {
-		// pick an interesting default cell for each space
-		const s = spaces.find((x) => x.id === id)!;
+	// pick an interesting default cell for each space. This runs in the same event as the
+	// change of space (an effect would run after a render with the old cell, which can be
+	// out of range for a space with fewer classes).
+	function pickSpace(v: string) {
+		const s = spaces.find((x) => x.id === v)!;
 		const k = s.classes.length;
 		cell = s.id === 'rp2' ? [0, 0] : s.id === 'klein' ? [1, 1] : k > 1 ? [0, 1] : [0, 0];
-	});
+	}
 
 	const X = 80;
 	const Y = 52;
@@ -81,6 +83,7 @@
 	<div class="top ui">
 		<Segmented
 			bind:value={id}
+			onchange={pickSpace}
 			label="Choose a space"
 			options={spaces.map((s) => ({
 				value: s.id,

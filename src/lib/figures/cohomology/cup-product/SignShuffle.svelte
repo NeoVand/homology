@@ -128,6 +128,33 @@
 	.wedge {
 		color: var(--ink-faint);
 	}
+	/* a phone: smaller tiles, so that all six fit on one line */
+	@container figure (max-width: 30rem) {
+		.ss {
+			padding: 1rem 0.5rem;
+		}
+		.row {
+			gap: 0.18rem;
+			flex-wrap: nowrap;
+		}
+		.cell {
+			gap: 0.18rem;
+		}
+		.sg {
+			width: 1.1rem;
+			font-size: 1.4rem;
+		}
+		.tok {
+			min-width: 2.15rem;
+			height: 2.3rem;
+			padding: 0 0.22rem;
+			font-size: 0.95rem;
+			border-radius: 8px;
+		}
+		.wedge {
+			font-size: 0.85rem;
+		}
+	}
 	.wedge.hide {
 		visibility: hidden;
 		width: 0;

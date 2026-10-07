@@ -17,6 +17,12 @@
 	const CX = 300;
 	const CY = 168;
 	const R = 118;
+	// on narrow plates the drawing shrinks to about half size, so its labels grow
+	let cw = $state(800);
+	const lk = $derived(cw < 520 ? 1.75 : 1);
+	const kw = $derived(Math.min(lk, 1.3)); // the long words at the bottom must still fit
+	// labels beside a loop move out a little further when they are drawn larger
+	const away = (d: number) => d * (1 + (lk - 1) * 0.6);
 	const V = Array.from({ length: 8 }, (_, k) => {
 		const a = ((112.5 - 45 * k) * Math.PI) / 180;
 		return [CX + R * Math.cos(a), CY + R * Math.sin(a)] as [number, number];
@@ -57,7 +63,8 @@
 		const mx = (x1 + x2) / 2;
 		const my = (y1 + y2) / 2;
 		const d = Math.hypot(mx - CX, my - CY);
-		return [mx + ((mx - CX) / d) * 22, my + ((my - CY) / d) * 22];
+		const off = 22 * (1 + (lk - 1) * 0.55);
+		return [mx + ((mx - CX) / d) * off, my + ((my - CY) / d) * off];
 	}
 	const half1 = [0, 1, 2, 3]; // pentagon V0..V4
 	const half2 = [4, 5, 6, 7]; // pentagon V4..V7, V0
@@ -89,8 +96,8 @@
 	const T2 = punctured(422, 222, -1);
 </script>
 
-<div class="oct">
-	<Svg viewBox="0 0 600 352" maxHeight={390} label="An octagon with edges a1, b1, a1 inverse, b1 inverse, a2, b2, a2 inverse, b2 inverse, cut into two halves, each glued into a torus with a hole, and finally glued into a surface with two holes">
+<div class="oct" bind:clientWidth={cw}>
+	<Svg viewBox={lk > 1 ? '0 0 600 368' : '0 0 600 352'} maxHeight={390} label="An octagon with edges a1, b1, a1 inverse, b1 inverse, a2, b2, a2 inverse, b2 inverse, cut into two halves, each glued into a torus with a hole, and finally glued into a surface with two holes">
 		<!-- polygon stage -->
 		<g class="fade" style="opacity:{showPoly ? 1 : 0}">
 			<g class="move" style="transform: translate({-34 * shift}px, {-18 * shift}px)">
@@ -99,7 +106,7 @@
 					<line x1={V[k][0]} y1={V[k][1]} x2={V[(k + 1) % 8][0]} y2={V[(k + 1) % 8][1]} stroke={edges[k].col} stroke-width="2.8" stroke-linecap="round" />
 					{#each chev(k) as d, i (i)}<path {d} fill="none" stroke={edges[k].col} stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />{/each}
 					{@const lp = labelPos(k)}
-					<SvgTeX x={lp[0]} y={lp[1]} tex={edges[k].tex} color={edges[k].col} size={16} w={36} h={24} />
+					<SvgTeX x={lp[0]} y={lp[1]} tex={edges[k].tex} color={edges[k].col} size={16 * lk} w={36 * lk} h={24 * lk} />
 				{/each}
 				{#each [4, 5, 6, 7, 0] as k (k)}<circle cx={V[k][0]} cy={V[k][1]} r="5" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.2" />{/each}
 			</g>
@@ -109,7 +116,7 @@
 					<line x1={V[k][0]} y1={V[k][1]} x2={V[(k + 1) % 8][0]} y2={V[(k + 1) % 8][1]} stroke={edges[k].col} stroke-width="2.8" stroke-linecap="round" />
 					{#each chev(k) as d, i (i)}<path {d} fill="none" stroke={edges[k].col} stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />{/each}
 					{@const lp = labelPos(k)}
-					<SvgTeX x={lp[0]} y={lp[1]} tex={edges[k].tex} color={edges[k].col} size={16} w={36} h={24} />
+					<SvgTeX x={lp[0]} y={lp[1]} tex={edges[k].tex} color={edges[k].col} size={16 * lk} w={36 * lk} h={24 * lk} />
 				{/each}
 				{#each [0, 1, 2, 3, 4] as k (k)}<circle cx={V[k][0]} cy={V[k][1]} r="5" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.2" />{/each}
 			</g>
@@ -120,7 +127,7 @@
 						<line x1={V[0][0]} y1={V[0][1]} x2={V[4][0]} y2={V[4][1]} stroke="var(--blue)" stroke-width="2.4" stroke-dasharray="7 6" />
 					</g>
 				{/each}
-				<SvgTeX x={(V[0][0] + V[4][0]) / 2 + 14} y={(V[0][1] + V[4][1]) / 2 + 10} tex="c" color="var(--blue)" size={17} w={24} h={24} />
+				<SvgTeX x={(V[0][0] + V[4][0]) / 2 + 14} y={(V[0][1] + V[4][1]) / 2 + 10} tex="c" color="var(--blue)" size={17 * lk} w={24 * lk} h={24 * lk} />
 			{/if}
 
 		</g>
@@ -137,12 +144,12 @@
 				<path d="M {s.T.bLoop.cx - s.T.bLoop.rx} {s.T.bLoop.cy} A {s.T.bLoop.rx} {s.T.bLoop.ry} 0 0 0 {s.T.bLoop.cx + s.T.bLoop.rx} {s.T.bLoop.cy}" fill="none" stroke={s.ca} stroke-width="2.6" />
 				<path d="M {s.T.bLoop.cx - s.T.bLoop.rx} {s.T.bLoop.cy} A {s.T.bLoop.rx} {s.T.bLoop.ry} 0 0 1 {s.T.bLoop.cx + s.T.bLoop.rx} {s.T.bLoop.cy}" fill="none" stroke={s.ca} stroke-width="2" stroke-dasharray="4 4" />
 			{/each}
-			<SvgTeX x={T1.aLoop.cx} y={T1.aLoop.cy - 38} tex="b_1" color={cols.b1} size={16} w={30} h={22} />
-			<SvgTeX x={T1.bLoop.cx - 12} y={T1.bLoop.cy + 26} tex="a_1" color={cols.a1} size={16} w={30} h={22} />
-			<SvgTeX x={T2.aLoop.cx} y={T2.aLoop.cy + 40} tex="b_2" color={cols.b2} size={16} w={30} h={22} />
-			<SvgTeX x={T2.bLoop.cx + 12} y={T2.bLoop.cy - 24} tex="a_2" color={cols.a2} size={16} w={30} h={22} />
-			<SvgTeX x={T1.c.cx + 26} y={T1.c.cy - 36} tex="c" color="var(--blue)" size={16} w={20} h={22} />
-			<SvgTeX x={T2.c.cx - 26} y={T2.c.cy + 36} tex="c" color="var(--blue)" size={16} w={20} h={22} />
+			<SvgTeX x={T1.aLoop.cx} y={T1.aLoop.cy - away(38)} tex="b_1" color={cols.b1} size={16 * lk} w={30 * lk} h={22 * lk} />
+			<SvgTeX x={T1.bLoop.cx - away(12)} y={T1.bLoop.cy + away(26)} tex="a_1" color={cols.a1} size={16 * lk} w={30 * lk} h={22 * lk} />
+			<SvgTeX x={T2.aLoop.cx} y={T2.aLoop.cy + away(40)} tex="b_2" color={cols.b2} size={16 * lk} w={30 * lk} h={22 * lk} />
+			<SvgTeX x={T2.bLoop.cx + away(12)} y={T2.bLoop.cy - away(24)} tex="a_2" color={cols.a2} size={16 * lk} w={30 * lk} h={22 * lk} />
+			<SvgTeX x={T1.c.cx + away(26)} y={T1.c.cy - away(36)} tex="c" color="var(--blue)" size={16 * lk} w={20 * lk} h={22 * lk} />
+			<SvgTeX x={T2.c.cx - away(26)} y={T2.c.cy + away(36)} tex="c" color="var(--blue)" size={16 * lk} w={20 * lk} h={22 * lk} />
 		</g>
 
 		<!-- final stage: genus two -->
@@ -165,18 +172,18 @@
 			{/each}
 			<path d="M 300 135 A 9 35 0 0 0 300 205" fill="none" stroke="var(--blue)" stroke-width="2.2" />
 			<path d="M 300 135 A 9 35 0 0 1 300 205" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-dasharray="4 4" />
-			<SvgTeX x={196} y={124} tex="b_1" color={cols.b1} size={16} w={30} h={22} />
-			<SvgTeX x={404} y={124} tex="b_2" color={cols.b2} size={16} w={30} h={22} />
-			<SvgTeX x={128} y={196} tex="a_1" color={cols.a1} size={16} w={30} h={22} />
-			<SvgTeX x={472} y={196} tex="a_2" color={cols.a2} size={16} w={30} h={22} />
-			<SvgTeX x={300} y={226} tex="c" color="var(--blue)" size={16} w={20} h={22} />
-			<SvgTeX x={300} y={290} tex={'\\Sigma_2'} color="var(--ink-bright)" size={20} w={60} h={30} />
+			<SvgTeX x={196} y={124} tex="b_1" color={cols.b1} size={16 * lk} w={30 * lk} h={22 * lk} />
+			<SvgTeX x={404} y={124} tex="b_2" color={cols.b2} size={16 * lk} w={30 * lk} h={22 * lk} />
+			<SvgTeX x={128} y={196} tex="a_1" color={cols.a1} size={16 * lk} w={30 * lk} h={22 * lk} />
+			<SvgTeX x={472} y={196} tex="a_2" color={cols.a2} size={16 * lk} w={30 * lk} h={22 * lk} />
+			<SvgTeX x={300} y={226} tex="c" color="var(--blue)" size={16 * lk} w={20 * lk} h={22 * lk} />
+			<SvgTeX x={300} y={290} tex={'\\Sigma_2'} color="var(--ink-bright)" size={20 * lk} w={60 * lk} h={30 * lk} />
 		</g>
 
 		{#if step <= 2}
-			<SvgTeX x={CX} y={330} tex={'a_1b_1a_1^{-1}b_1^{-1}\\,a_2b_2a_2^{-1}b_2^{-1}'} size={18} w={360} h={30} color="var(--ink-bright)" />
+			<SvgTeX x={CX} y={lk > 1 ? 348 : 330} tex={'a_1b_1a_1^{-1}b_1^{-1}\\,a_2b_2a_2^{-1}b_2^{-1}'} size={18 * kw} w={360 * kw} h={30 * kw} color="var(--ink-bright)" />
 		{:else if step === 3}
-			<SvgTeX x={CX} y={330} tex={'a_1b_1a_1^{-1}b_1^{-1}c^{-1}\\quad\\text{and}\\quad c\\,a_2b_2a_2^{-1}b_2^{-1}'} size={16} w={440} h={30} color="var(--ink-bright)" />
+			<SvgTeX x={CX} y={lk > 1 ? 348 : 330} tex={'a_1b_1a_1^{-1}b_1^{-1}c^{-1}\\quad\\text{and}\\quad c\\,a_2b_2a_2^{-1}b_2^{-1}'} size={16 * kw} w={440 * kw} h={30 * kw} color="var(--ink-bright)" />
 		{/if}
 	</Svg>
 	<div class="ctl ui">

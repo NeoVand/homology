@@ -33,7 +33,26 @@
 
 	let api: { home(): void; aside(): void; ghost(on: boolean): void } | null = null;
 
-	function setup({ scene, THREE, camera, controls, invalidate, onFrame, label }: SceneContext) {
+	function setup({ scene, THREE, camera, controls, invalidate, onFrame, label, container }: SceneContext) {
+		// On a narrow (portrait) canvas, widen the field of view so the whole triangle stays in
+		// frame. The eye must not move (the illusion only works from that one point), so this
+		// changes the lens, not the camera's position.
+		const baseFov = camera.fov;
+		const designAspect = 1.6;
+		const fitLens = () => {
+			const r = container.getBoundingClientRect();
+			if (!r.width || !r.height) return;
+			const a = r.width / r.height;
+			const half = (baseFov * Math.PI) / 360;
+			const f = a < designAspect ? (360 / Math.PI) * Math.atan((Math.tan(half) * designAspect) / a) : baseFov;
+			if (Math.abs(f - camera.fov) < 0.01) return;
+			camera.fov = f;
+			camera.updateProjectionMatrix();
+			invalidate();
+		};
+		fitLens();
+		const lensObserver = new ResizeObserver(fitLens);
+		lensObserver.observe(container);
 		const world = new THREE.Group();
 		scene.add(world);
 		const toV = (p: Vec3) => new THREE.Vector3(...toScene(p));
@@ -144,6 +163,7 @@
 		api.ghost(showGhost);
 		return {
 			dispose() {
+				lensObserver.disconnect();
 				api = null;
 				Object.values(shade).forEach((m) => m.dispose());
 				edgeMat.dispose();

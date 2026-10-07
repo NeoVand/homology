@@ -73,9 +73,12 @@
 		if (which === 'u') u = nw;
 		else v = nw;
 	}
+	// on narrow plates the drawing shrinks, so the labels of u and v grow
+	let cw = $state(800);
+	const lk = $derived(cw < 460 ? 1.5 : 1);
 </script>
 
-<div class="wrap">
+<div class="wrap" bind:clientWidth={cw}>
 	<Svg
 		bind:svg
 		viewBox="0 0 420 316"
@@ -97,8 +100,8 @@
 		{/if}
 		<line x1={X(0)} y1={Y(0)} x2={X(u[0])} y2={Y(u[1])} class="vec gold" marker-end="url(#arrow-gold)" />
 		<line x1={X(0)} y1={Y(0)} x2={X(v[0])} y2={Y(v[1])} class="vec teal" marker-end="url(#arrow-teal)" />
-		<SvgTeX x={X(u[0] * 1.13) + 10} y={Y(u[1] * 1.13) - 4} tex="u" size={16} color="var(--gold-bright)" w={20} h={22} />
-		<SvgTeX x={X(v[0] * 1.13) + 10} y={Y(v[1] * 1.13) - 4} tex="v" size={16} color="var(--teal)" w={20} h={22} />
+		<SvgTeX x={X(u[0] * 1.13) + 10 * lk} y={Y(u[1] * 1.13) - 4} tex="u" size={16 * lk} color="var(--gold-bright)" w={20 * lk} h={22 * lk} />
+		<SvgTeX x={X(v[0] * 1.13) + 10 * lk} y={Y(v[1] * 1.13) - 4} tex="v" size={16 * lk} color="var(--teal)" w={20 * lk} h={22 * lk} />
 		{#each handles as h (h.name)}
 			<circle
 				cx={X(h.w[0])}

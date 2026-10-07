@@ -17,11 +17,14 @@
 	const b = $derived(bettiAt(bars, r, 1));
 
 	// Betti curves: step functions of r
-	const W = 560;
+	// On a narrow plate the strip is drawn narrower (so it is scaled down less) with larger text.
+	let stripW = $state(560);
+	const narrow = $derived(stripW > 0 && stripW < 480);
+	const W = $derived(narrow ? 380 : 560);
 	const rowH = 46;
 	const padL = 46;
 	const padR = 14;
-	const plotW = W - padL - padR;
+	const plotW = $derived(W - padL - padR);
 	const X = (v: number) => padL + (v / RMAX) * plotW;
 	const samples = Array.from({ length: 521 }, (_, i) => (i / 520) * RMAX);
 	const curve0 = samples.map((v) => bettiAt(bars, v, 1)[0]);
@@ -37,8 +40,8 @@
 		});
 		return d;
 	}
-	const path0 = stepPath(curve0, max0, 0);
-	const path1 = stepPath(curve1, max1, rowH + 8);
+	const path0 = $derived(stepPath(curve0, max0, 0));
+	const path1 = $derived(stepPath(curve1, max1, rowH + 8));
 	const ticks = [0, 0.25, 0.5, 0.75, 1, 1.25];
 
 	let stripEl: SVGSVGElement | undefined = $state();
@@ -62,6 +65,7 @@
 		<span class="chip gold"><span class="k">holes</span> <TeX tex={`b_1 = ${b[1]}`} /></span>
 		<span class="mood">{mood}</span>
 	</div>
+	<div bind:clientWidth={stripW}>
 	<svg
 		bind:this={stripEl}
 		class="strip"
@@ -79,12 +83,12 @@
 	>
 		{#each ticks as t (t)}
 			<line x1={X(t)} x2={X(t)} y1="2" y2={2 * rowH + 10} class="grid" />
-			<text x={X(t)} y={2 * rowH + 24} class="tick">{t}</text>
+			<text x={X(t)} y={2 * rowH + 24} class="tick" style:font-size={narrow ? '12.5px' : null}>{t}</text>
 		{/each}
 		<SvgTeX x={padL - 18} y={rowH / 2} tex="b_0" size={15} color="var(--teal)" w={30} h={22} />
 		<SvgTeX x={padL - 18} y={rowH + 8 + rowH / 2} tex="b_1" size={15} color="var(--gold-bright)" w={30} h={22} />
-		<text x={padL + plotW} y="12" class="maxv">max {max0}</text>
-		<text x={padL + plotW} y={rowH + 20} class="maxv">max {max1}</text>
+		<text x={padL + plotW} y="12" class="maxv" style:font-size={narrow ? '11.5px' : null}>max {max0}</text>
+		<text x={padL + plotW} y={rowH + 20} class="maxv" style:font-size={narrow ? '11.5px' : null}>max {max1}</text>
 		<line x1={padL} x2={padL + plotW} y1={rowH - 6} y2={rowH - 6} class="base" />
 		<line x1={padL} x2={padL + plotW} y1={2 * rowH + 2} y2={2 * rowH + 2} class="base" />
 		<path d={path0} class="curve teal" />
@@ -92,6 +96,7 @@
 		<line x1={X(r)} x2={X(r)} y1="0" y2={2 * rowH + 10} class="now" />
 		<circle cx={X(r)} cy={2 * rowH + 10} r="4" class="knob" />
 	</svg>
+	</div>
 	<div class="controls ui">
 		<Timeline bind:value={r} min={0} max={RMAX} duration={7} label="Growing every disc" />
 	</div>

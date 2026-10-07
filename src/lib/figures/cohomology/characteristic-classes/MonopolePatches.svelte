@@ -6,6 +6,7 @@
 	// phase e^{inφ}, drawn as a ribbon around the equator that twists n times.
 	// If n is not a whole number the ribbon cannot close up.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
+	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Slider from '$lib/components/ui/Slider.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
@@ -24,7 +25,10 @@
 	const deg = Math.PI / 180;
 
 	let api: { update(): void } | null = null;
-	function setup({ scene, THREE, invalidate, onFrame, reducedMotion, label }: SceneContext) {
+	function setup(ctx: SceneContext) {
+		const { scene, THREE, invalidate, onFrame, reducedMotion, label } = ctx;
+		// on a narrow (portrait) canvas, step back so the sphere and its band stay in frame
+		const unfit = fitCamera(ctx, 1.5);
 		// the two patches
 		const cap = (t0: number, t1: number): SurfaceFn => (u, v, t) => {
 			const th = t0 + (t1 - t0) * v;
@@ -150,6 +154,7 @@
 		if (!reducedMotion) onFrame((t) => place(t));
 		return {
 			dispose() {
+				unfit();
 				api = null;
 			}
 		};

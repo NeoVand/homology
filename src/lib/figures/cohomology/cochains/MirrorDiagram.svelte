@@ -5,15 +5,20 @@
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 
-	const xs = [110, 300, 490];
+	// On a narrow plate the columns move closer together (a narrower drawing is scaled down
+	// less) and the formula gets a line of its own.
+	let width = $state(600);
+	const narrow = $derived(width > 0 && width < 520);
+	const xs = $derived(narrow ? [64, 200, 336] : [110, 300, 490]);
 	const yTop = 92;
 	const yBot = 262;
 </script>
 
-<Svg viewBox="0 0 600 340" maxHeight={360} label="Chains with boundary maps pointing down in degree, cochains with coboundary maps pointing up, joined column by column by the pairing">
+<div bind:clientWidth={width}>
+<Svg viewBox={narrow ? '0 0 400 372' : '0 0 600 340'} maxHeight={narrow ? 400 : 360} label="Chains with boundary maps pointing down in degree, cochains with coboundary maps pointing up, joined column by column by the pairing">
 	<!-- row captions -->
-	<text x="20" y="28" class="t-ui cap">PLACES · CHAINS</text>
-	<text x="20" y="322" class="t-ui cap">MEASUREMENTS · COCHAINS</text>
+	<text x={narrow ? 8 : 20} y="28" class="t-ui cap" class:big={narrow}>PLACES · CHAINS</text>
+	<text x={narrow ? 8 : 20} y="322" class="t-ui cap" class:big={narrow}>MEASUREMENTS · COCHAINS</text>
 
 	<!-- little pictures of the simplices in each column -->
 	<g class="pic">
@@ -39,13 +44,18 @@
 		<line x1={xs[k] + 36} y1={yBot} x2={xs[k + 1] - 34} y2={yBot} class="arr gold" marker-end="url(#arrow-gold)" />
 		<SvgTeX x={(xs[k] + xs[k + 1]) / 2} y={yBot + 22} tex={`\\delta_${k} = \\partial_${k + 1}^{\\mathsf T}`} size={17} color="var(--gold-bright)" w={120} h={30} />
 	{/each}
-	<SvgTeX x={588} y={318} tex={'\\langle \\delta\\varphi, c\\rangle = \\langle \\varphi, \\partial c\\rangle'} size={17} color="var(--ink-bright)" w={240} h={32} anchor="end" />
+	<SvgTeX x={narrow ? 200 : 588} y={narrow ? 354 : 318} tex={'\\langle \\delta\\varphi, c\\rangle = \\langle \\varphi, \\partial c\\rangle'} size={narrow ? 19 : 17} color="var(--ink-bright)" w={240} h={32} anchor={narrow ? 'middle' : 'end'} />
 </Svg>
+</div>
 
 <style>
 	.cap {
 		font-size: 10.5px !important;
 		letter-spacing: 0.2em !important;
+	}
+	.cap.big {
+		font-size: 12.5px !important;
+		letter-spacing: 0.14em !important;
 	}
 	.pair {
 		stroke: rgba(235, 229, 213, 0.22);

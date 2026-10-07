@@ -62,7 +62,7 @@
 		<line x1="40" y1={base} x2={W - 40} y2={base} class="axis" />
 		<!-- the mirror -->
 		<line x1={mirrorX} y1="22" x2={mirrorX} y2={base + 6} class="mirror" />
-		<text x={mirrorX} y="16" class="t-ui mlabel">mirror  k ↔ {n} − k</text>
+		<text x={mirrorX} y="16" class="t-ui mlabel" style:font-size={cw < 520 ? '14px' : null}>mirror  k ↔ {n} − k</text>
 		<g class="bars" class:flipped style="transform-origin: {mirrorX}px 0px">
 			{#each b as x, k (k)}
 				{@const h = x * unit}
@@ -85,7 +85,7 @@
 			/>
 		{/each}
 		{#each b as _, k (k)}
-			<SvgTeX x={cx(k)} y={base + 22} tex={`b_{${k}}`} size={16} w={50} h={26} color="var(--ink-dim)" />
+			<SvgTeX x={cx(k)} y={base + 22} tex={`b_{${k}}`} size={cw < 520 ? 18 : 16} w={50} h={26} color="var(--ink-dim)" />
 		{/each}
 	</Svg>
 	<div class="ctl ui">

@@ -274,4 +274,10 @@
 		opacity: 0.35;
 		cursor: default;
 	}
+	/* phones: the drawing is at about 100%, but its numbers are small; one size up */
+	@container figure (max-width: 34rem) {
+		.num {
+			font-size: 13.5px !important;
+		}
+	}
 </style>

@@ -51,7 +51,8 @@
 	const PX = (chi: number, o: boolean) => (vert ? (o ? 150 : 250) : 128 + (2 - chi) * 74);
 	const PY = (chi: number, o: boolean) => (vert ? 110 + (2 - chi) * 92 : o ? 112 : 228);
 	const vb = $derived(vert ? '0 0 320 720' : '0 0 640 300');
-	let picked = $state<Cell>(cells[1]);
+	// raw: \`picked === cell\` below must compare the cell objects themselves, not a proxy of one
+	let picked = $state.raw<Cell>(cells[1]);
 </script>
 
 <div class="wrap" bind:clientWidth={cw}>
@@ -135,13 +136,13 @@
 				{(picked.orientable ? 2 * picked.n : picked.n) === 1 ? 'loop' : 'loops'} and one disk glued along
 				<TeX tex={picked.word} />:
 			{/if}
-			<TeX tex={`c_0 - c_1 + c_2 = ${picked.cells}`} />
+			<span class="nw"><TeX tex={`c_0 - c_1 + c_2 = ${picked.cells}`} /></span>
 		</div>
 		<div class="drow dim">
 			{#if picked.orientable}
-				Orientable, with {picked.n} handle{picked.n === 1 ? '' : 's'}: <TeX tex={`\\chi = 2 - 2g = 2 - 2\\cdot ${picked.n} = ${picked.chi}`} />
+				Orientable, with {picked.n} handle{picked.n === 1 ? '' : 's'}: <span class="nw"><TeX tex={`\\chi = 2 - 2g = 2 - 2\\cdot ${picked.n} = ${picked.chi}`} /></span>
 			{:else}
-				Non-orientable, with {picked.n} cross-cap{picked.n === 1 ? '' : 's'}: <TeX tex={`\\chi = 2 - k = 2 - ${picked.n} = ${picked.chi}`} />
+				Non-orientable, with {picked.n} cross-cap{picked.n === 1 ? '' : 's'}: <span class="nw"><TeX tex={`\\chi = 2 - k = 2 - ${picked.n} = ${picked.chi}`} /></span>
 			{/if}
 		</div>
 	</div>
@@ -236,9 +237,12 @@
 		color: var(--ink-bright);
 	}
 	.drow :global(.katex) {
-		font-size: 1em;
+		font-size: 1.12em;
 	}
 	.dim {
 		color: var(--ink-faint);
+	}
+	.nw {
+		white-space: nowrap;
 	}
 </style>

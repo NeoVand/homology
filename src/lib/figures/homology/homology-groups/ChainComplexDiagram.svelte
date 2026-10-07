@@ -91,13 +91,15 @@
 		<ellipse cx={x} cy={y} rx={rx(L, L.B)} ry={ry(L, L.B)} fill="rgba(95,214,207,0.3)" stroke="var(--teal)" stroke-width="2" />
 		{#if L.vertical}
 			<SvgTeX x={x + L.C.b + 30} y={y - L.C.a + 6} tex={`C_${names[k]}`} size={34} color="var(--violet)" w={80} />
+			<!-- the funnel and the gold arrows arrive from above, so the labels keep clear of the top of each group -->
 			{#if k === 2}
-				<SvgTeX x={x} y={y - Zk.a + 30} tex={'Z_0 = C_0'} size={25} color="var(--gold-bright)" w={140} />
+				<SvgTeX x={x} y={y + 72} tex={'Z_0 = C_0'} size={25} color="var(--gold-bright)" w={140} />
 			{:else}
 				<SvgTeX x={x - Zk.b + 34} y={y} tex={`Z_${names[k]}`} size={27} color="var(--gold-bright)" w={60} />
 			{/if}
-			<SvgTeX x={x} y={y - 28} tex={`B_${names[k]}`} size={24} color="var(--teal)" w={60} />
-			<SvgTeX x={x + L.Z.b - 46} y={y + 2} tex={'\\text{holes}'} size={20} color="var(--rose)" w={90} />
+			<SvgTeX x={x - 32} y={y + 1} tex={`B_${names[k]}`} size={24} color="var(--teal)" w={40} />
+			<!-- in the ring between the teal B and the dashed Z -->
+			<SvgTeX x={x + (L.B.b + L.Z.b) / 2} y={y + 2} tex={'\\text{holes}'} size={19} color="var(--rose)" w={90} />
 		{:else}
 			<SvgTeX x={x} y={y - L.C.b - 24} tex={`C_${names[k]}`} size={30} color="var(--violet)" w={80} />
 			<SvgTeX x={x} y={y - Zk.b + 24} tex={k === 2 ? 'Z_0 = C_0' : `Z_${names[k]}`} size={23} color="var(--gold-bright)" w={k === 2 ? 130 : 60} />

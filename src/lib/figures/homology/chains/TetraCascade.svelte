@@ -59,7 +59,9 @@
 		const vPoints = new THREE.Group();
 		for (let v = 0; v < 4; v++) vPoints.add(glowPoint(P[v].clone(), { color: 'gold', size: 0.05, halo: 7 }));
 		scene.add(vPoints);
-		const vLabels = P.map((p, v) => label(p.clone().multiplyScalar(1.17), tex(String(v)), { className: 'small' }));
+		// on phones the tetrahedron is drawn small (room is kept for the exploded faces): full-size vertex numbers
+		const vSmall = ctx.container.clientWidth < 520 ? '' : 'small';
+		const vLabels = P.map((p, v) => label(p.clone().multiplyScalar(1.17), tex(String(v)), { className: vSmall }));
 
 		// ── the four faces, each with its three edge-copies ──
 		const coneGeo = new THREE.ConeGeometry(0.06, 0.18, 14);

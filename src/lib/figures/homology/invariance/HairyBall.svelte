@@ -292,6 +292,14 @@
 		pointer-events: none;
 		text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
 	}
+	/* a phone: the touch buttons fill the bottom corner, so the note moves to the top */
+	@container figure (max-width: 30rem) {
+		.note {
+			top: 0.6rem;
+			bottom: auto;
+			right: 0.8rem;
+		}
+	}
 	:global(.lbl3d .ix) {
 		font-size: 0.85em;
 		opacity: 0.8;

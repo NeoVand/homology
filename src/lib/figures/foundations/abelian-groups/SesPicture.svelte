@@ -109,4 +109,13 @@
 		font-size: 0.8rem;
 		color: var(--ink-dim);
 	}
+	/* phones: the columns shrink, so their numbers grow */
+	@container figure (max-width: 34rem) {
+		.num {
+			font-size: 12.5px !important;
+		}
+		.num.big {
+			font-size: 15px !important;
+		}
+	}
 </style>

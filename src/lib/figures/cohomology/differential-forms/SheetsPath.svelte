@@ -90,6 +90,9 @@
 		else if (w === 'M') M = v;
 		else B = v;
 	}
+	// On a narrow plate the picture is scaled down; the endpoint labels grow (kh ≥ 1).
+	let width = $state(640);
+	const kh = $derived(Math.min(1.7, Math.max(1, (0.9 * W) / (width || W))));
 	const handles = $derived([
 		{ w: 'A' as const, p: A, tex: 'A' },
 		{ w: 'M' as const, p: M, tex: '' },
@@ -97,7 +100,7 @@
 	]);
 </script>
 
-<div class="sheets">
+<div class="sheets" bind:clientWidth={width}>
 	<Svg bind:svg viewBox="0 0 {W} {H}" maxHeight={500} label="Level lines of a function, and a path crossing them.">
 		<g class="levels">
 			{#each levels as l, i (i)}
@@ -137,7 +140,7 @@
 				<circle r="18" class="hit" />
 				<circle r={h.w === 'M' ? 6 : 8} class="knob" />
 				{#if h.tex}
-					<SvgTeX x={0} y={-22} tex={h.tex} color="var(--gold-bright)" size={18} w={30} h={26} />
+					<SvgTeX x={0} y={-22 * kh} tex={h.tex} color="var(--gold-bright)" size={18 * kh} w={30 * kh} h={26 * kh} />
 				{/if}
 			</g>
 		{/each}

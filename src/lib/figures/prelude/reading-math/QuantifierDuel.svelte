@@ -116,7 +116,7 @@
 			<g class="tick" role="button" tabindex="-1" aria-label="choose y = {v}" onclick={() => setY(v)}>
 				<rect x={sx(v) - 14} y="44" width="28" height="44" class="hit" />
 				<line x1={sx(v)} y1="58" x2={sx(v)} y2="70" class="tk" class:zero={v === 0} />
-				<text x={sx(v)} y="86" class="tl">{v < 0 ? '−' + -v : v}</text>
+				<text x={sx(v)} y="86" class="tl" class:odd={v % 2 !== 0}>{v < 0 ? '−' + -v : v}</text>
 			</g>
 		{/each}
 		{#if x !== null}
@@ -279,6 +279,28 @@
 	.ml.dark {
 		fill: #120d05 !important;
 		font-size: 13px !important;
+	}
+	/* phones: the number line shrinks to about half size, so its lettering grows */
+	@container figure (max-width: 34rem) {
+		/* every other number, so that the rest can be drawn at a readable size */
+		.tl {
+			font-size: 25px !important;
+			transform: translateY(6px);
+		}
+		.tl.odd {
+			display: none;
+		}
+		.ml {
+			font-size: 26px !important;
+		}
+		.ml.dark {
+			font-size: 20px !important;
+			transform: translateY(5px);
+		}
+		.yd {
+			r: 13px;
+			cy: 108px;
+		}
 	}
 	.narr {
 		margin: 0.5rem 1.3rem 0.3rem !important;

@@ -40,13 +40,21 @@
 		const arr = which === 'phi' ? phi : psi;
 		arr[i] = Math.max(-5, Math.min(5, arr[i] + d));
 	}
+	// On a narrow plate the triangle is scaled down: its labels grow (k ≥ 1) and the two edge
+	// readouts move to the top corners, where there is room for them.
+	let width = $state(524);
+	const k = $derived(Math.min(1.7, Math.max(1, (0.9 * 524) / (width || 524))));
+	const narrow = $derived(k > 1.15);
+	const lx = $derived(narrow ? 4 : 128);
+	const rx = $derived(narrow ? 520 : 398);
+	const ly = $derived(narrow ? 26 : 150);
 	const edgeNames = ['[v_0,v_1]', '[v_1,v_2]', '[v_0,v_2]'];
 	const edgeRoles = ['front', 'back', 'long'];
 </script>
 
 <div class="fb">
-	<div class="pic">
-		<Svg viewBox="0 0 524 330" maxHeight={340} label="A triangle with vertices v0, v1, v2. The edge from v0 to v1 is the front face, the edge from v1 to v2 is the back face; the cup product multiplies the first measurement on the front face by the second on the back face.">
+	<div class="pic" bind:clientWidth={width}>
+		<Svg viewBox="0 0 524 {330 + 8 * (k - 1)}" maxHeight={340} label="A triangle with vertices v0, v1, v2. The edge from v0 to v1 is the front face, the edge from v1 to v2 is the back face; the cup product multiplies the first measurement on the front face by the second on the back face.">
 			<defs>
 				<linearGradient id="fb-fill" x1="0" y1="0" x2="1" y2="1">
 					<stop offset="0" stop-color="#6fd6e8" stop-opacity="0.13" />
@@ -74,15 +82,15 @@
 			{#each [V0, V1, V2] as v, i (i)}
 				<circle cx={v[0]} cy={v[1]} r="7.5" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.4" />
 			{/each}
-			<SvgTeX x={V0[0] - 6} y={V0[1] + 26} tex={'v_0'} size={18} />
-			<SvgTeX x={V1[0]} y={V1[1] - 24} tex={'v_1'} size={18} />
-			<SvgTeX x={V2[0] + 6} y={V2[1] + 26} tex={'v_2'} size={18} />
+			<SvgTeX x={V0[0] - 6} y={V0[1] + 26 + 4 * (k - 1)} tex={'v_0'} size={18 * k} w={40 * k} h={40 * k} />
+			<SvgTeX x={V1[0]} y={V1[1] - 24 - 4 * (k - 1)} tex={'v_1'} size={18 * k} w={40 * k} h={40 * k} />
+			<SvgTeX x={V2[0] + 6} y={V2[1] + 26 + 4 * (k - 1)} tex={'v_2'} size={18 * k} w={40 * k} h={40 * k} />
 			<!-- edge readouts -->
-			<SvgTeX x={128} y={150} w={200} anchor="end" tex={`${leftName}([v_0,v_1]) = ${num(left[0]).replace('−', '-')}`} color={leftCol} size={16} />
-			<SvgTeX x={398} y={150} w={200} anchor="start" tex={`${rightName}([v_1,v_2]) = ${num(right[1]).replace('−', '-')}`} color={rightCol} size={16} />
-			<text x="128" y="174" text-anchor="end" class="t-ui role">front face</text>
-			<text x="398" y="174" text-anchor="start" class="t-ui role">back face</text>
-			<text x="262" y="306" text-anchor="middle" class="t-ui role">long edge — never consulted</text>
+			<SvgTeX x={lx} y={ly} w={220} h={30 * k} anchor={narrow ? 'start' : 'end'} tex={`${leftName}([v_0,v_1]) = ${num(left[0]).replace('−', '-')}`} color={leftCol} size={16 * k} />
+			<SvgTeX x={rx} y={ly} w={220} h={30 * k} anchor={narrow ? 'end' : 'start'} tex={`${rightName}([v_1,v_2]) = ${num(right[1]).replace('−', '-')}`} color={rightCol} size={16 * k} />
+			<text x={lx} y={ly + (narrow ? 32 * k : 24)} text-anchor={narrow ? 'start' : 'end'} class="t-ui role" style:font-size={narrow ? `${13 * k}px` : null}>front face</text>
+			<text x={rx} y={ly + (narrow ? 32 * k : 24)} text-anchor={narrow ? 'end' : 'start'} class="t-ui role" style:font-size={narrow ? `${13 * k}px` : null}>back face</text>
+			<text x="262" y={306 + 8 * (k - 1)} text-anchor="middle" class="t-ui role" style:font-size={narrow ? `${12 * k}px` : null}>long edge — never consulted</text>
 			<!-- the product -->
 			<SvgTeX x={262} y={212} w={320} h={44} tex={`${product}`} color="var(--rose)" size={34} />
 		</Svg>

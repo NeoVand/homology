@@ -26,6 +26,10 @@
 		7: [300, 38]
 	};
 	const order = [7, 3, 5, 6, 1, 2, 4, 0];
+	// on narrow plates the columns move closer together, so the pills can be drawn larger
+	let cw = $state(800);
+	const narrow = $derived(cw < 520);
+	const X = (x: number) => (narrow ? 190 + (x - 300) * 0.75 : x);
 	const links: [number, number][] = [];
 	for (const A of order)
 		for (const B of order) if ((A & B) === A && A !== B && popcount(B) === popcount(A) + 1) links.push([A, B]);
@@ -86,20 +90,21 @@
 	}
 </script>
 
-<div class="tb">
-	<Svg viewBox="0 0 600 330" maxHeight={360} label="The eight subsets of a three-point set arranged by inclusion; click a subset to make it open">
+<div class="tb" bind:clientWidth={cw}>
+	<Svg viewBox={narrow ? '0 0 380 330' : '0 0 600 330'} maxHeight={360} label="The eight subsets of a three-point set arranged by inclusion; click a subset to make it open">
 		{#each links as [A, B] (A + ':' + B)}
 			<line
-				x1={pos[A][0]}
+				x1={X(pos[A][0])}
 				y1={pos[A][1] - 18}
-				x2={pos[B][0]}
+				x2={X(pos[B][0])}
 				y2={pos[B][1] + 18}
 				stroke={open.has(A) && open.has(B) ? 'rgba(244,215,156,0.55)' : 'rgba(200,192,170,0.16)'}
 				stroke-width={open.has(A) && open.has(B) ? 2 : 1.2}
 			/>
 		{/each}
 		{#each order as m (m)}
-			{@const [x, y] = pos[m]}
+			{@const x = X(pos[m][0])}
+			{@const y = pos[m][1]}
 			{@const on = open.has(m)}
 			{@const bad = check.bad.has(m)}
 			{@const culprit = check.culprits.has(m)}

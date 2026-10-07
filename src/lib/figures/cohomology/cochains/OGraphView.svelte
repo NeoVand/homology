@@ -14,8 +14,8 @@
 		pos,
 		edges,
 		tris = [],
-		vertexRadius = 11,
-		vertexTextSize = 11,
+		vertexRadius: vertexRadius0 = 11,
+		vertexTextSize: vertexTextSize0 = 11,
 		edgeColor,
 		edgeWidth,
 		edgeDash,
@@ -112,6 +112,13 @@
 		ondragend?: (v: number) => void;
 	} = $props();
 
+	// On a narrow plate the drawing is scaled down: the labels (ls) and the vertex discs (lv)
+	// grow so that they stay readable; the placement below works with the grown sizes.
+	let ls = $state(1);
+	const lv = $derived(Math.min(ls, 1.35));
+	const vertexRadius = $derived(vertexRadius0 * lv);
+	const vertexTextSize = $derived(vertexTextSize0 * lv);
+
 	let hoverV = $state<number | null>(null);
 	let hoverE = $state<number | null>(null);
 
@@ -179,6 +186,7 @@
 			const cx = vb.x + vb.width / 2;
 			const cy = vb.y + vb.height / 2;
 			bounds = [cx - hw + 3, cy - hh + 3, cx + hw - 3, cy + hh - 3];
+			ls = W < 520 ? Math.min(1.7, Math.max(1, 0.9 / k)) : 1;
 		};
 		measure();
 		const ro = new ResizeObserver(measure);
@@ -197,6 +205,14 @@
 		const segs = edges.map(([a, b], i) => ({ a: pos[a], b: pos[b], r: (edgeWidth?.(i) ?? 2.4) / 2 + 4 }));
 		const extra = avoid.map(([a, b]) => ({ a, b, r: 4 }));
 		const o: Obstacles = { segs: [...segs, ...extra], discs: pos.map((c) => ({ c, r: vertexRadius + 3 })), boxes: [], bounds };
+		// triangle labels sit at the centroids; placed labels keep clear of them
+		if (autoPlace && triLabel)
+			tris.forEach((t, i) => {
+				const lbl = triLabel(i);
+				if (!lbl) return;
+				const [cx, cy] = centroid(t);
+				o.boxes.push({ x: cx, y: cy, w: guessW(lbl, 12 * ls), h: 20 * ls });
+			});
 		edges.forEach(([a, b], i) => {
 			const label = edgeLabel?.(i) ?? edgeLabelTeX?.(i);
 			const label2 = edgeLabel2?.(i);
@@ -211,11 +227,11 @@
 			if (!label) edgeAt.push(null);
 			else if (!autoPlace) {
 				const n = normal(side);
-				const off = given ?? 17;
+				const off = given ?? 17 * ls;
 				edgeAt.push([mid[0] + n[0] * off, mid[1] + n[1] * off]);
 			} else {
-				const w = ew[i] || guessW(label, 13);
-				const h = eh[i] || 20;
+				const w = ew[i] || guessW(label, 13 * ls);
+				const h = eh[i] || 20 * ls;
 				// clear of the chevron when the arrowhead sits by the label, else of the stroke
 				const clear = Math.abs((arrowAt?.(i) ?? 0.5) - 0.5) * len < 9 + w / 2 ? 10 : 6;
 				const others = { ...o, segs: o.segs.filter((_, j) => j !== i) };
@@ -243,16 +259,16 @@
 			if (!label2) edge2At.push(null);
 			else {
 				const n = normal(-side);
-				const off = autoPlace ? Math.max(16, 10 + reach(n, guessW(label2, 11.5), 18)) : 16;
+				const off = autoPlace ? Math.max(16 * ls, 10 + reach(n, guessW(label2, 11.5 * ls), 18 * ls)) : 16 * ls;
 				const at: Pt = [mid[0] + n[0] * off, mid[1] + n[1] * off];
-				if (autoPlace) o.boxes.push({ x: at[0], y: at[1], w: guessW(label2, 11.5), h: 18 });
+				if (autoPlace) o.boxes.push({ x: at[0], y: at[1], w: guessW(label2, 11.5 * ls), h: 18 * ls });
 				edge2At.push(at);
 			}
 		});
 		if (!autoPlace) {
 			pos.forEach(([x, y], v) => {
-				pillAt.push(vertexLabel?.(v) ? [x, y - vertexRadius - 19] : null);
-				nameAt.push(vertexName?.(v) ? [x, y + vertexRadius + 11] : null);
+				pillAt.push(vertexLabel?.(v) ? [x, y - vertexRadius - 19 * ls] : null);
+				nameAt.push(vertexName?.(v) ? [x, y + vertexRadius + 11 * ls] : null);
 			});
 			return { edgeAt, edge2At, pillAt, nameAt };
 		}
@@ -268,7 +284,7 @@
 				pos.forEach(([x, y], v) => {
 					const label = vertexLabel?.(v);
 					if (!label) return void (pills[v] = null);
-					const r = placeBeside([x, y], vertexRadius + 4, vw[v] || guessW(label, 12.5), vh[v] || 20, ABOVE, q, keepV[v]);
+					const r = placeBeside([x, y], vertexRadius + 4, vw[v] || guessW(label, 12.5 * ls), vh[v] || 20 * ls, ABOVE, q, keepV[v]);
 					kp[v] = r.k;
 					total += r.cost;
 					q.boxes.push(r.box);
@@ -278,7 +294,7 @@
 				pos.forEach(([x, y], v) => {
 					const name = vertexName?.(v);
 					if (!name) return void (names[v] = null);
-					const r = placeBeside([x, y], vertexRadius + 3, name.length * 6.6 + 2, 11, BELOW, q, keepN[v]);
+					const r = placeBeside([x, y], vertexRadius + 3, (name.length * 6.6 + 2) * ls, 11 * ls, BELOW, q, keepN[v]);
 					kn[v] = r.k;
 					total += r.cost;
 					q.boxes.push(r.box);
@@ -304,7 +320,7 @@
 	});
 </script>
 
-<g class="og" bind:this={root}>
+<g class="og" bind:this={root} style="--ls:{ls}">
 	<!-- triangles -->
 	{#each tris as t, i (i)}
 		{@const fill = triFill?.(i)}
@@ -378,7 +394,7 @@
 			{@const lbl = triLabel(i)}
 			{#if lbl}
 				{@const [cx, cy] = centroid(t)}
-				<foreignObject x={cx - 60} y={cy - 14} width="120" height="28" class="fo">
+				<foreignObject x={cx - 60 * ls} y={cy - 14 * ls} width={120 * ls} height={28 * ls} class="fo">
 					<div class="lblwrap"><span class="pill tri-pill" style="--c:{triLabelColor?.(i) ?? 'var(--violet)'}">{lbl}</span></div>
 				</foreignObject>
 			{/if}
@@ -391,7 +407,7 @@
 		{@const tx = edgeLabelTeX?.(i)}
 		{@const at = layout.edgeAt[i]}
 		{#if (txt || tx) && at}
-			<foreignObject x={at[0] - 50} y={at[1] - 13} width="100" height="26" class="fo">
+			<foreignObject x={at[0] - 50 * ls} y={at[1] - 13 * ls} width={100 * ls} height={26 * ls} class="fo">
 				<div class="lblwrap">
 					<span
 						class="pill"
@@ -406,7 +422,7 @@
 		{@const t2 = edgeLabel2?.(i)}
 		{@const at2 = layout.edge2At[i]}
 		{#if t2 && at2}
-			<foreignObject x={at2[0] - 50} y={at2[1] - 12} width="100" height="24" class="fo">
+			<foreignObject x={at2[0] - 50 * ls} y={at2[1] - 12 * ls} width={100 * ls} height={24 * ls} class="fo">
 				<div class="lblwrap">
 					<span class="pill small2" style="--c:{edgeLabel2Color?.(i) ?? 'var(--violet)'}">{t2}</span>
 				</div>
@@ -453,7 +469,7 @@
 				>
 			{/if}
 			{#if vertexLabel?.(v) && pill}
-				<foreignObject x={pill[0] - 60} y={pill[1] - 13} width="120" height="26" class="fo">
+				<foreignObject x={pill[0] - 60 * ls} y={pill[1] - 13 * ls} width={120 * ls} height={26 * ls} class="fo">
 					<div class="lblwrap">
 						<span
 							class="pill vpill"
@@ -570,7 +586,7 @@
 	}
 	.vname {
 		font-family: var(--font-ui);
-		font-size: 11.5px !important;
+		font-size: calc(11.5px * var(--ls, 1)) !important;
 		letter-spacing: 0.06em;
 		fill: var(--ink-faint) !important;
 		text-anchor: middle;
@@ -593,7 +609,7 @@
 		padding: 0.05em 0.42em 0.08em;
 		border-radius: 999px;
 		font-family: var(--font-ui);
-		font-size: 13px;
+		font-size: calc(13px * var(--ls, 1));
 		font-weight: 650;
 		line-height: 1.35;
 		font-variant-numeric: tabular-nums;
@@ -614,13 +630,13 @@
 		font-size: 1.05em;
 	}
 	.vpill {
-		font-size: 12.5px;
+		font-size: calc(12.5px * var(--ls, 1));
 	}
 	.small2 {
-		font-size: 11.5px;
+		font-size: calc(11.5px * var(--ls, 1));
 		padding: 0 0.38em 0.04em;
 	}
 	.tri-pill {
-		font-size: 12px;
+		font-size: calc(12px * var(--ls, 1));
 	}
 </style>

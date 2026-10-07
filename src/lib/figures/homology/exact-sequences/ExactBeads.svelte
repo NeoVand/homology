@@ -39,6 +39,10 @@
 		return q === 1 ? '0' : `\\mathbb Z/${q}`;
 	});
 
+	// On a narrow plate the drawing is scaled down; scale its labels up (ks ≥ 1) so they stay readable.
+	let width = $state(640);
+	const ks = $derived(Math.min(1.5, Math.max(1, (0.85 * 640) / (width || 640))));
+
 	const presets = [
 		{ m: 2, k: 2, label: '×2, mod 2' },
 		{ m: 4, k: 2, label: '×4, mod 2' },
@@ -47,20 +51,20 @@
 	];
 </script>
 
-<div class="beads">
-	<Svg viewBox="0 0 640 400" maxHeight={430} label="Beads for the groups of the sequence 0, Z, Z, Z/k, 0 and the maps between them">
+<div class="beads" bind:clientWidth={width}>
+	<Svg viewBox="0 0 640 {400 + 8 * (ks - 1)}" maxHeight={430} label="Beads for the groups of the sequence 0, Z, Z, Z/k, 0 and the maps between them">
 		<!-- column titles -->
-		<SvgTeX x={52} y={22} tex={'0'} size={18} color="var(--ink-dim)" w={40} h={28} />
-		<SvgTeX x={xL} y={22} tex={'\\mathbb Z'} size={19} color="var(--ink-bright)" w={40} h={28} />
-		<SvgTeX x={xM} y={22} tex={'\\mathbb Z'} size={19} color="var(--ink-bright)" w={40} h={28} />
-		<SvgTeX x={cR[0]} y={22} tex={`\\mathbb Z/${k}`} size={19} color="var(--ink-bright)" w={70} h={28} />
-		<SvgTeX x={612} y={22} tex={'0'} size={18} color="var(--ink-dim)" w={40} h={28} />
+		<SvgTeX x={52} y={22} tex={'0'} size={18 * ks} color="var(--ink-dim)" w={40 * ks} h={28 * ks} />
+		<SvgTeX x={xL} y={22} tex={'\\mathbb Z'} size={19 * ks} color="var(--ink-bright)" w={40 * ks} h={28 * ks} />
+		<SvgTeX x={xM} y={22} tex={'\\mathbb Z'} size={19 * ks} color="var(--ink-bright)" w={40 * ks} h={28 * ks} />
+		<SvgTeX x={cR[0]} y={22} tex={`\\mathbb Z/${k}`} size={19 * ks} color="var(--ink-bright)" w={70 * ks} h={28 * ks} />
+		<SvgTeX x={612} y={22} tex={'0'} size={18 * ks} color="var(--ink-dim)" w={40 * ks} h={28 * ks} />
 		<line x1="68" y1="22" x2={xL - 22} y2="22" class="top" marker-end="url(#arrow-dim)" />
 		<line x1={xL + 22} y1="22" x2={xM - 22} y2="22" class="top" marker-end="url(#arrow-ivory)" />
 		<line x1={xM + 22} y1="22" x2={cR[0] - 40} y2="22" class="top" marker-end="url(#arrow-ivory)" />
 		<line x1={cR[0] + 40} y1="22" x2="596" y2="22" class="top" marker-end="url(#arrow-dim)" />
-		<SvgTeX x={(xL + xM) / 2} y={40} tex={`\\times ${m}`} size={15} color="var(--gold-bright)" w={60} h={22} />
-		<SvgTeX x={(xM + cR[0]) / 2 - 8} y={40} tex={`\\text{mod } ${k}`} size={15} color="var(--teal)" w={80} h={22} />
+		<SvgTeX x={(xL + xM) / 2} y={40} tex={`\\times ${m}`} size={15 * ks} color="var(--gold-bright)" w={60 * ks} h={22 * ks} />
+		<SvgTeX x={(xM + cR[0]) / 2 - 8} y={40} tex={`\\text{mod } ${k}`} size={15 * ks} color="var(--teal)" w={80 * ks} h={22 * ks} />
 
 		<!-- the map ×m: arrows from left beads to their images -->
 		{#each LEFT as j (j)}
@@ -90,7 +94,7 @@
 			<circle cx={xL} cy={yLeft(j)} r={gap ? 13 : 0} class="gapglow" />
 			<circle cx={xL} cy={yLeft(j)} r="8" class="bead" class:ker={inKer} class:gap />
 			{#if inIm}<circle cx={xL} cy={yLeft(j)} r="12" class="ring" />{/if}
-			<text x={xL - 22} y={yLeft(j) + 4} class="num" text-anchor="end">{j}</text>
+			<text x={xL - 22} y={yLeft(j) + 4 + (ks - 1) * 6} class="num" text-anchor="end" style="font-size:{14 * ks}px">{j}</text>
 		{/each}
 
 		<!-- middle ℤ -->
@@ -108,7 +112,7 @@
 				<circle cx={xM} cy={yMid(i)} r="7.5" class="bead" class:ker={inKer} class:gap class:bad class:hov={hover === i} />
 				{#if inIm}<circle cx={xM} cy={yMid(i)} r="11.5" class="ring" />{/if}
 			</g>
-			<text x={xM + 24} y={yMid(i) + 4} class="num">{i}</text>
+			<text x={xM + 22 + 4 * ks} y={yMid(i) + 4 + (ks - 1) * 6} class="num" style="font-size:{14 * ks}px">{i}</text>
 		{/each}
 
 		<!-- ℤ/k as a clock -->
@@ -117,11 +121,11 @@
 			{@const p = ringPos(r)}
 			<circle cx={p[0]} cy={p[1]} r="8" class="bead ker" class:hov={hover !== null && mod(hover, k) === r} />
 			<circle cx={p[0]} cy={p[1]} r="12" class="ring" />
-			<text x={cR[0] + (p[0] - cR[0]) * 1.42} y={cR[1] + (p[1] - cR[1]) * 1.42 + 4} class="num" text-anchor="middle">{r}</text>
+			<text x={cR[0] + (p[0] - cR[0]) * 1.42} y={cR[1] + (p[1] - cR[1]) * 1.42 + 4} class="num" text-anchor="middle" style="font-size:{14 * ks}px">{r}</text>
 		{/each}
 
 		<!-- verdicts under each column -->
-		<g class="verdicts">
+		<g class="verdicts" style="font-size:{14 * ks}px">
 			<text x={xL} y={388} text-anchor="middle" class:ok={exactLeft} class:no={!exactLeft}>{exactLeft ? 'exact' : 'gap: ℤ'}</text>
 			<text x={xM} y={388} text-anchor="middle" class:ok={exactMid} class:no={!exactMid}>{exactMid ? 'exact' : isComplex ? 'gap' : 'not a complex'}</text>
 			<text x={cR[0]} y={388} text-anchor="middle" class="ok">exact</text>
@@ -212,7 +216,6 @@
 	}
 	.num {
 		font-family: var(--font-ui);
-		font-size: 13px;
 		fill: var(--ink-faint) !important;
 	}
 	.dots {
@@ -227,7 +230,7 @@
 	}
 	.verdicts text {
 		font-family: var(--font-ui);
-		font-size: 14px;
+		font-size: inherit !important;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		font-weight: 650;

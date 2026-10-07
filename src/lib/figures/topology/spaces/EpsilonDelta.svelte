@@ -23,11 +23,16 @@
 	};
 	const F = $derived(fns[fn].f);
 
-	// plot frame: x ∈ [0, 4] → [60, 580], y ∈ [−0.2, 2.4] → [330, 20]
+	// plot frame: x ∈ [0, 4] → [60, 580], y ∈ [−0.2, 2.4] → [330, 20];
+	// on narrow plates the frame is narrower (x → [60, 380]), so the drawing is not shrunk as much
+	let cw = $state(800);
+	const narrow = $derived(cw < 520);
 	const X0 = 60,
-		X1 = 580,
 		Y0 = 330,
 		Y1 = 20;
+	const X1 = $derived(narrow ? 380 : 580);
+	// label scale: the narrow drawing is still shown at under 90%
+	const lk = $derived(narrow ? 1.3 : 1);
 	const sx = (x: number) => X0 + ((X1 - X0) * x) / 4;
 	const sy = (y: number) => Y0 + ((Y1 - Y0) * (y + 0.2)) / 2.6;
 	const ux = (px: number) => ((px - X0) * 4) / (X1 - X0);
@@ -52,7 +57,7 @@
 	// the ε label sits just outside the band, at the end of the frame away from the
 	// window, unless the graph or a window edge runs through it there
 	const epsLabel = $derived.by(() => {
-		const y = epsY + (epsUp ? -12 : 12);
+		const y = epsY + (epsUp ? -12 : 12) * lk;
 		const clearance = (px0: number, px1: number) => {
 			let m = Infinity;
 			for (let px = px0; px <= px1; px += 3) m = Math.min(m, Math.abs(sy(F(ux(px))) - y));
@@ -136,8 +141,8 @@
 	}
 </script>
 
-<div class="ed">
-	<Svg viewBox="0 0 600 374" maxHeight={410} label="The graph of a function with a horizontal epsilon band around f(a) and a vertical delta window around a">
+<div class="ed" bind:clientWidth={cw}>
+	<Svg viewBox={narrow ? '0 0 400 374' : '0 0 600 374'} maxHeight={410} label="The graph of a function with a horizontal epsilon band around f(a) and a vertical delta window around a">
 		<!-- axes -->
 		<line x1={X0} y1={Y0} x2={X1 + 8} y2={Y0} stroke="rgba(200,192,170,0.45)" stroke-width="1.4" marker-end="url(#arrow-dim)" />
 		<line x1={X0} y1={Y0} x2={X0} y2={Y1 - 6} stroke="rgba(200,192,170,0.45)" stroke-width="1.4" marker-end="url(#arrow-dim)" />
@@ -181,19 +186,19 @@
 		<line x1={sx(a)} y1={Y0} x2={sx(a)} y2={sy(fa)} stroke="rgba(244,215,156,0.4)" stroke-dasharray="2 4" />
 		<line x1={X0} y1={sy(fa)} x2={sx(a)} y2={sy(fa)} stroke="rgba(244,215,156,0.4)" stroke-dasharray="2 4" />
 		<circle cx={sx(a)} cy={sy(fa)} r="6.5" fill="url(#vertex-fill)" stroke="#060912" stroke-width="1.4" filter="url(#glow)" />
-		<SvgTeX x={sx(a)} y={Y0 + 34} tex="a" color="var(--gold-bright)" size={16} w={30} h={22} />
-		<SvgTeX x={X0 - 32} y={sy(fa)} tex="f(a)" color="var(--gold-bright)" size={15} w={46} h={22} />
+		<SvgTeX x={sx(a)} y={Y0 + 34} tex="a" color="var(--gold-bright)" size={16 * lk} w={30 * lk} h={22 * lk} />
+		<SvgTeX x={X0 - 32} y={sy(fa)} tex="f(a)" color="var(--gold-bright)" size={15 * lk} w={46 * lk} h={22 * lk} />
 		<SvgTeX
 			x={epsLabel.x}
 			y={epsLabel.y}
 			tex={epsUp ? 'f(a)+\\varepsilon' : 'f(a)-\\varepsilon'}
 			color="var(--teal)"
-			size={13}
-			w={80}
-			h={20}
+			size={13 * lk}
+			w={80 * lk}
+			h={20 * lk}
 			anchor={epsLabel.anchor}
 		/>
-		<SvgTeX x={deltaX + (deltaRight ? 16 : -16)} y={Y1} tex={deltaRight ? 'a+\\delta' : 'a-\\delta'} color="var(--violet)" size={13} w={50} h={20} anchor={deltaRight ? 'start' : 'end'} />
+		<SvgTeX x={deltaX + (deltaRight ? 16 : -16)} y={Y1} tex={deltaRight ? 'a+\\delta' : 'a-\\delta'} color="var(--violet)" size={13 * lk} w={50 * lk} h={20 * lk} anchor={deltaRight ? 'start' : 'end'} />
 		<!-- the three handles -->
 		<Handle
 			x={X0}
@@ -308,5 +313,10 @@
 	}
 	.hint.bad {
 		color: var(--rose);
+	}
+	@container figure (max-width: 34rem) {
+		.ed text.t-ui {
+			font-size: 13px;
+		}
 	}
 </style>

@@ -11,7 +11,10 @@
 	type P = [number, number];
 	let ex = $state<'wrap' | 'collapse'>('wrap');
 	let cw = $state(640);
-	const k = $derived(cw < 560 ? 1.6 : 1);
+	// on narrow plates the empty margins are cropped away and the labels grow
+	const narrow = $derived(cw < 560);
+	const k = $derived(narrow ? 1.3 : 1);
+	const nk = $derived(narrow ? 1.6 : 1); // vertex numbers
 	let t = $state(0);
 	$effect(() => {
 		void ex;
@@ -42,7 +45,7 @@
 </script>
 
 <div class="wrap" bind:clientWidth={cw}>
-	<Svg viewBox="0 0 640 400" maxHeight={400} label="A simplicial map shown as a morph: the source is carried vertex by vertex onto its image">
+	<Svg viewBox={narrow ? '100 6 440 384' : '0 0 640 400'} maxHeight={400} label="A simplicial map shown as a morph: the source is carried vertex by vertex onto its image">
 		{#if ex === 'wrap'}
 			<!-- the target: a hollow triangle -->
 			<polygon points={tri.map((p) => p.join(',')).join(' ')} class="target" />
@@ -56,7 +59,7 @@
 			{/each}
 			{#each hexNow as p, i (i)}
 				<circle cx={p[0]} cy={p[1]} r={8 * Math.sqrt(k)} fill={colours[i % 3]} class="dot" />
-				<SvgTeX x={p[0] + (hex[i][0] - C[0]) * 0.16} y={p[1] + (hex[i][1] - C[1]) * 0.16} tex={`${i}`} color="var(--ink-bright)" size={14 * k} w={24 * k} h={22 * k} />
+				<SvgTeX x={p[0] + (hex[i][0] - C[0]) * 0.16} y={p[1] + (hex[i][1] - C[1]) * 0.16} tex={`${i}`} color="var(--ink-bright)" size={14 * nk} w={24 * nk} h={22 * nk} />
 			{/each}
 		{:else}
 			<line x1={sq[0][0]} y1={sq[0][1]} x2={sq[1][0]} y2={sq[1][1]} class="target thick" />
@@ -69,16 +72,24 @@
 			{/each}
 			{#each colNow as p, i (i)}
 				<circle cx={p[0]} cy={p[1]} r={8 * Math.sqrt(k)} fill={colours[i === 0 ? 0 : 1]} class="dot" />
-				<SvgTeX x={p[0] + (i === 2 ? 18 : i === 0 ? -16 : 16)} y={p[1] - 18} tex={`${i}`} color="var(--ink-bright)" size={14 * k} w={24 * k} h={22 * k} />
+				<SvgTeX x={p[0] + (i === 2 ? 18 : i === 0 ? -16 : 16)} y={p[1] - 18} tex={`${i}`} color="var(--ink-bright)" size={14 * nk} w={24 * nk} h={22 * nk} />
 			{/each}
 		{/if}
 	</Svg>
 	<div class="readout ui">
 		{#if ex === 'wrap'}
-			<TeX tex={'f(0)=f(3)=\\textcolor{#f2d08f}{w_0},\\quad f(1)=f(4)=\\textcolor{#5fd6cf}{w_1},\\quad f(2)=f(5)=\\textcolor{#a493ff}{w_2}'} />
+			<!-- one unbreakable piece per vertex of the triangle, so a narrow plate wraps between them -->
+			<span class="eqs"
+				><span><TeX tex={'f(0)=f(3)=\\textcolor{#f2d08f}{w_0},'} /></span>
+				<span><TeX tex={'f(1)=f(4)=\\textcolor{#5fd6cf}{w_1},'} /></span>
+				<span><TeX tex={'f(2)=f(5)=\\textcolor{#a493ff}{w_2}'} /></span></span
+			>
 			<span>Every edge <TeX tex={'[i,\\,i+1]'} /> lands on an edge of the triangle, so the hexagon goes round the triangle twice.</span>
 		{:else}
-			<TeX tex={'f(0)=\\textcolor{#f2d08f}{w_0},\\quad f(1)=f(2)=\\textcolor{#5fd6cf}{w_1}'} />
+			<span class="eqs"
+				><span><TeX tex={'f(0)=\\textcolor{#f2d08f}{w_0},'} /></span>
+				<span><TeX tex={'f(1)=f(2)=\\textcolor{#5fd6cf}{w_1}'} /></span></span
+			>
 			<span>The triangle <TeX tex="[0,1,2]" /> lands on the edge <TeX tex="[w_0,w_1]" />: a simplicial map may squash a simplex flat.</span>
 		{/if}
 	</div>
@@ -143,5 +154,14 @@
 		padding: 0.75rem 1.2rem 0.9rem;
 		border-top: 1px solid var(--line-faint);
 		background: rgba(5, 8, 16, 0.45);
+	}
+	.eqs {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		column-gap: 1.1em;
+	}
+	.eqs > span {
+		white-space: nowrap;
 	}
 </style>

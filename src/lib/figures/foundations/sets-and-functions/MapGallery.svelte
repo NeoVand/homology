@@ -135,6 +135,16 @@
 		fill: var(--ink-faint) !important;
 		text-anchor: middle;
 	}
+	/* phones: two small panels per row, so their lettering grows */
+	@container figure (max-width: 34rem) {
+		.lb {
+			font-size: 11.5px !important;
+			transform: translateY(0.6px);
+		}
+		.setname {
+			font-size: 15px !important;
+		}
+	}
 	.cap {
 		display: flex;
 		flex-direction: column;

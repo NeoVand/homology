@@ -96,11 +96,11 @@
 
 	<div class="verdict ui" class:iso>
 		{#if iso}
-			All 16 entries agree with <TeX tex={'\\mathbb{Z}/4'} />: this renaming is an <b>isomorphism</b>.
+			All 16 entries agree with <span class="nw"><TeX tex={'\\mathbb{Z}/4'} />:</span> this renaming is an <b>isomorphism</b>.
 		{:else}
 			{matches} of 16 entries agree.
 			{#if kind === 'rect'}
-				No renaming can work: every rectangle symmetry done twice is <TeX tex={'e'} />, but in <TeX tex={'\\mathbb{Z}/4'} /> we have <TeX tex={'1 + 1 = 2 \\neq 0'} />.
+				No renaming can work: every rectangle symmetry done twice is <TeX tex={'e'} />, but in <TeX tex={'\\mathbb{Z}/4'} /> we have <span class="nw"><TeX tex={'1 + 1 = 2 \\neq 0'} />.</span>
 			{:else}
 				Not this one — try another renaming.
 			{/if}
@@ -242,11 +242,15 @@
 	}
 	.verdict {
 		text-align: center;
+		text-wrap: balance;
 		font-size: 0.86rem;
 		color: var(--rose);
 		line-height: 1.6;
 	}
 	.verdict.iso {
 		color: var(--green);
+	}
+	.nw {
+		white-space: nowrap;
 	}
 </style>

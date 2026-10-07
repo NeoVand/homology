@@ -244,4 +244,13 @@
 		font-size: 0.8rem;
 		color: var(--ink-dim);
 	}
+	/* phones: twelve columns squeeze the drawing, so its numbers grow */
+	@container figure (max-width: 34rem) {
+		.num {
+			font-size: 15px !important;
+		}
+		.rowlbl {
+			font-size: 13px !important;
+		}
+	}
 </style>

@@ -69,10 +69,11 @@
 				{#if P.sign}<span class="sign">{P.sign}</span>{/if}
 				{P.title}
 			</div>
-			<Svg viewBox="8 6 284 246" maxHeight={250} label="{P.title} part of the edge flow">
+			<Svg viewBox="8 -12 284 264" maxHeight={268} label="{P.title} part of the edge flow">
 				<!-- the hole -->
 				<polygon points={[0, 2, 3].map((v) => Hg.pos[v].join(',')).join(' ')} class="hole" />
-				<text x="150" y="196" class="hole-lbl">hole</text>
+				<!-- in the gradient panel the height of vertex 4 sits where the label would be -->
+				<text x="150" y={P.key === 'g' ? 176 : 196} class="hole-lbl">hole</text>
 				<OGraphView
 					pos={Hg.pos}
 					edges={Hg.edges}
@@ -138,10 +139,19 @@
 		gap: 0.2rem;
 		padding: 0.7rem 0.6rem 0.4rem;
 	}
-	@media (max-width: 760px) {
+	/* container queries: with the sidebar open the plate is narrower than the window */
+	@container figure (max-width: 56rem) {
 		.panels {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 			row-gap: 0.8rem;
+		}
+	}
+	/* a phone: one panel per row, so that the edge numbers stay readable */
+	@container figure (max-width: 30rem) {
+		.panels {
+			grid-template-columns: minmax(0, 1fr);
+			row-gap: 0.6rem;
+			padding: 0.6rem 1rem 0.4rem;
 		}
 	}
 	.panel {

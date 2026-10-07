@@ -4,6 +4,7 @@
 	// half of the hexagon's rim, which closes up because opposite rim points
 	// are the same point.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
+	import { fitCamera } from '../invariance/three-fit';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import { surfaceGeometry } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
@@ -15,7 +16,10 @@
 	let showMesh = $state(true);
 	let api: { mesh(on: boolean): void } | null = null;
 
-	function setup({ scene, label }: SceneContext) {
+	function setup(ctx: SceneContext) {
+		const { scene, label } = ctx;
+		// on narrow canvases pull the camera back so the whole surface stays in frame
+		const unfit = fitCamera(ctx, 1.5, 0.9);
 		const map = boyMap(2.2, 1.15);
 		scene.add(glassUnderlay(surfaceGeometry(map.fn, 220, 90), { opacity: 0.5, grid: [0, 0], brightness: 0.95 }));
 		const cx = buildFlat3D(ex.L, map, { edgeRadius: 0.008, lift: 0.01, vertexSize: 0.026 });
@@ -42,7 +46,12 @@
 			}
 		};
 		api.mesh(showMesh);
-		return { dispose: () => (api = null) };
+		return {
+			dispose: () => {
+				unfit();
+				api = null;
+			}
+		};
 	}
 	$effect(() => {
 		const on = showMesh;

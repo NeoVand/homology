@@ -8,6 +8,9 @@
 	import { renderMathInText } from '$lib/katex/render';
 
 	let g = $state(0);
+	// on narrow plates the drawing shrinks to about half size, so its labels grow
+	let cw = $state(800);
+	const k = $derived(cw < 520 ? 1.6 : 1);
 
 	const W = 600;
 	const H = 300;
@@ -40,7 +43,7 @@
 	});
 	const glued = $derived(g > 0.995);
 	const ticks = [0.25, 0.5, 0.75];
-	const tickTeX = ['\\tfrac14', '\\tfrac12', '\\tfrac34'];
+	const tickTeX = $derived(k > 1 ? ['1/4', '1/2', '3/4'] : ['\\tfrac14', '\\tfrac12', '\\tfrac34']);
 
 	const end0 = $derived(pt(0, g));
 	const end1 = $derived(pt(1, g));
@@ -56,7 +59,7 @@
 	);
 </script>
 
-<div class="ic">
+<div class="ic" bind:clientWidth={cw}>
 	<Svg viewBox="0 0 {W} {H}" maxHeight={340} label="The interval from 0 to 1 bends until its two ends meet and it becomes a circle">
 		<defs>
 			<linearGradient id="ic-grad" x1="0" y1="0" x2="1" y2="0">
@@ -71,7 +74,7 @@
 			{@const p = pt(s, g)}
 			{@const nn = normal(s, g)}
 			<line x1={p[0] - nn[0] * 6} y1={p[1] - nn[1] * 6} x2={p[0] + nn[0] * 6} y2={p[1] + nn[1] * 6} class="tick" />
-			<SvgTeX x={p[0] + nn[0] * 24} y={p[1] + nn[1] * 24} tex={tickTeX[i]} size={13} color="var(--ink-dim)" w={40} h={26} />
+			<SvgTeX x={p[0] + nn[0] * 24 * k} y={p[1] + nn[1] * 24 * k} tex={tickTeX[i]} size={13 * k} color="var(--ink-dim)" w={40 * k} h={26 * k} />
 		{/each}
 		{#if glued}
 			<circle cx={end0[0]} cy={end0[1]} r="22" class="spark" />
@@ -79,10 +82,10 @@
 		<circle cx={end0[0]} cy={end0[1]} r="7.5" class="end" />
 		<circle cx={end1[0]} cy={end1[1]} r="7.5" class="end" />
 		{#if glued}
-			<SvgTeX x={end0[0]} y={end0[1] - 30} tex={String.raw`0\sim1`} size={17} color="var(--gold-bright)" w={90} h={30} />
+			<SvgTeX x={end0[0]} y={end0[1] - 30 * k} tex={String.raw`0\sim1`} size={17 * k} color="var(--gold-bright)" w={90 * k} h={30 * k} />
 		{:else}
-			<SvgTeX x={end0[0] + n0[0] * 26 - (g < 0.05 ? 0 : 10)} y={end0[1] + n0[1] * 26} tex="0" size={17} color="var(--gold-bright)" w={30} h={30} />
-			<SvgTeX x={end1[0] + n1[0] * 26 + (g < 0.05 ? 0 : 10)} y={end1[1] + n1[1] * 26} tex="1" size={17} color="var(--gold-bright)" w={30} h={30} />
+			<SvgTeX x={end0[0] + n0[0] * 26 * k - (g < 0.05 ? 0 : 10 * k)} y={end0[1] + n0[1] * 26 * k} tex="0" size={17 * k} color="var(--gold-bright)" w={30 * k} h={30 * k} />
+			<SvgTeX x={end1[0] + n1[0] * 26 * k + (g < 0.05 ? 0 : 10 * k)} y={end1[1] + n1[1] * 26 * k} tex="1" size={17 * k} color="var(--gold-bright)" w={30 * k} h={30 * k} />
 		{/if}
 	</Svg>
 	<p class="readout" aria-live="polite">{@html renderMathInText(readout)}</p>

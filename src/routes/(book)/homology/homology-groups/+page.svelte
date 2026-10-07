@@ -499,7 +499,7 @@
 			<p class="kcap ui">Klein bottle: top row 0 2 1 0</p>
 		</div>
 	</div>
-	{#snippet caption()}Two gluings of the same grid. On the left the top row repeats the bottom row, giving the torus; on the right it repeats it backwards, giving the Klein bottle. Gold: the bottom row \(a\). Rose: the left column \(b\).{/snippet}
+	{#snippet caption()}Two gluings of the same grid. In the first the top row repeats the bottom row, giving the torus; in the second it repeats it backwards, giving the Klein bottle. Gold: the bottom row \(a\). Rose: the left column \(b\).{/snippet}
 </Figure>
 
 <p>The counts are the same as for the torus: \(9\) vertices, \(27\) edges, \(18\) triangles, and you can check that every edge still lies in exactly two triangles. Over \(\Z/2\) the ranks are the same too: \(\rank\partial_1 = 8\) and \(\rank\partial_2 = 17\). So the mod-2 Betti numbers are</p>

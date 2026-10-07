@@ -54,6 +54,13 @@
 				: '0'
 	);
 	const centroid = (t: number[]) => [t.reduce((s, v) => s + square.pos[v][0], 0) / 3, t.reduce((s, v) => s + square.pos[v][1], 0) / 3];
+	// each spin arrow sits a little past its triangle's centroid, towards the corner off the
+	// diagonal, which leaves room for the shared edge's label
+	const spinAt = (t: number[]) => {
+		const [x, y] = centroid(t);
+		const far = square.pos[t.find((v) => !edges[SHARED].includes(v))!];
+		return [x + 0.3 * (far[0] - x), y + 0.3 * (far[1] - y)];
+	};
 </script>
 
 <div class="wrap">
@@ -86,7 +93,7 @@
 		{#if mode === 'z'}
 			{#each tris as t, i (t.join(''))}
 				{#if coeffs[i]}
-					{@const [x, y] = centroid(t)}
+					{@const [x, y] = spinAt(t)}
 					{@const s = baseSpin[i] * Math.sign(coeffs[i])}
 					{@const r = 17}
 					<path

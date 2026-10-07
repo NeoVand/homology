@@ -32,6 +32,10 @@
 	const OY = 300;
 	const cx = (p: number) => OX + CW * p + CW / 2;
 	const cy = (q: number) => OY - CH * q - CH / 2;
+	// On a narrow plate the grid is scaled down; scale the labels and dots up (k ≥ 1) so they stay readable.
+	let width = $state(500);
+	const k = $derived(Math.min(1.6, Math.max(1, (0.85 * 500) / (width || 500))));
+	const kd = $derived(Math.min(k, 1.25)); // dots: up to three share a cell
 	const dotPos = $derived.by(() => {
 		const byCell = new Map<string, number[]>();
 		F.gens.forEach((g, i) => {
@@ -53,8 +57,8 @@
 		const L = Math.hypot(dx, dy);
 		const ux = dx / L;
 		const uy = dy / L;
-		const s: [number, number] = [a[0] + ux * 14, a[1] + uy * 14];
-		const e: [number, number] = [b[0] - ux * 16, b[1] - uy * 16];
+		const s: [number, number] = [a[0] + ux * 14 * kd, a[1] + uy * 14 * kd];
+		const e: [number, number] = [b[0] - ux * 16 * kd, b[1] - uy * 16 * kd];
 		const mx = (s[0] + e[0]) / 2 - uy * 22;
 		const my = (s[1] + e[1]) / 2 + ux * 22;
 		return `M ${s[0]} ${s[1]} Q ${mx} ${my} ${e[0]} ${e[1]}`;
@@ -96,8 +100,8 @@
 
 <div class="ss">
 	<div class="cols">
-		<div class="gridwrap">
-			<Svg viewBox="0 0 500 360" maxHeight={380} label="The grid of a spectral sequence page: columns are stages p, rows are q; dots are generators and gold arrows are differentials">
+		<div class="gridwrap" bind:clientWidth={width}>
+			<Svg viewBox="0 {-6 * (k - 1)} 500 {360 + 12 * (k - 1)}" maxHeight={380} label="The grid of a spectral sequence page: columns are stages p, rows are q; dots are generators and gold arrows are differentials">
 				<!-- cells -->
 				{#each Array.from({ length: PMAX + 1 }, (_, p) => p) as p (p)}
 					{#each Array.from({ length: QMAX + 1 }, (_, q) => q) as q (q)}
@@ -107,26 +111,26 @@
 				<!-- total-degree diagonals -->
 				{#each [0, 1, 2] as n (n)}
 					<line x1={cx(0) - CW * 0.45} y1={cy(n) - CH * 0.45} x2={cx(n) + CW * 0.45} y2={cy(0) + CH * 0.45} class="diag" />
-					<text x={cx(0) - CW * 0.42} y={cy(n) - CH * 0.3} class="t-ui diag-t">n = {n}</text>
+					<text x={cx(0) - CW * 0.42} y={cy(n) - CH * 0.3 + 2 * (k - 1)} class="t-ui diag-t" style="font-size:{10 + 18 * (k - 1)}px">n = {n}</text>
 				{/each}
 				<!-- axes -->
 				<line x1={OX} y1={OY} x2={OX + CW * (PMAX + 1) + 10} y2={OY} class="axis" marker-end="url(#arrow-dim)" />
 				<line x1={OX} y1={OY} x2={OX} y2={OY - CH * (QMAX + 1) - 10} class="axis" marker-end="url(#arrow-dim)" />
 				{#each Array.from({ length: PMAX + 1 }, (_, p) => p) as p (p)}
-					<SvgTeX x={cx(p)} y={OY + 16} tex={String(p)} size={13} color="var(--ink-faint)" w={20} h={18} />
+					<SvgTeX x={cx(p)} y={OY + 16 + 4 * (k - 1)} tex={String(p)} size={13 * k} color="var(--ink-faint)" w={20 * k} h={18 * k} />
 				{/each}
 				{#each Array.from({ length: QMAX + 1 }, (_, q) => q) as q (q)}
-					<SvgTeX x={OX - 14} y={cy(q)} tex={String(q)} size={13} color="var(--ink-faint)" w={20} h={18} />
+					<SvgTeX x={OX - 14 - 4 * (k - 1)} y={cy(q)} tex={String(q)} size={13 * k} color="var(--ink-faint)" w={20 * k} h={18 * k} />
 				{/each}
-				<SvgTeX x={OX + CW * (PMAX + 1) + 4} y={OY + 18} tex="p" size={15} color="var(--ink-dim)" w={20} h={20} />
-				<SvgTeX x={OX - 16} y={OY - CH * (QMAX + 1) - 4} tex="q" size={15} color="var(--ink-dim)" w={20} h={20} />
+				<SvgTeX x={OX + CW * (PMAX + 1) + 4} y={OY + 18} tex="p" size={15 * k} color="var(--ink-dim)" w={20 * k} h={20 * k} />
+				<SvgTeX x={OX - 16} y={OY - CH * (QMAX + 1) - 4} tex="q" size={15 * k} color="var(--ink-dim)" w={20 * k} h={20 * k} />
 
 				<!-- differentials of this page -->
 				{#each diffs as d (d.from + ',' + d.to)}
 					{@const a = dotPos.get(d.from)!}
 					{@const b = dotPos.get(d.to)!}
 					<path d={arrowPath(a, b)} class="dr" marker-end="url(#arrow-gold)" />
-					<SvgTeX x={(a[0] + b[0]) / 2 + 8} y={(a[1] + b[1]) / 2 - 26} tex={`d^{${page}}`} size={13} color="var(--gold-bright)" w={36} h={20} />
+					<SvgTeX x={(a[0] + b[0]) / 2 + 8} y={(a[1] + b[1]) / 2 - 26 - 4 * (k - 1)} tex={`d^{${page}}`} size={13 * k} color="var(--gold-bright)" w={36 * k} h={20 * k} />
 				{/each}
 
 				<!-- dots -->
@@ -134,8 +138,8 @@
 					{@const pos = dotPos.get(i)!}
 					{@const on = alive.has(i)}
 					<g class="dot" class:off={!on} class:dying={dying.has(i)} transform="translate({pos[0]} {pos[1]})">
-						<circle r="11" class="d" />
-						<SvgTeX x={0} y={0} tex={g.tex} size={13} color={on ? '#0b1122' : 'var(--ink-ghost)'} w={20} h={20} />
+						<circle r={11 * kd} class="d" />
+						<SvgTeX x={0} y={0} tex={g.tex} size={13 * kd} color={on ? '#0b1122' : 'var(--ink-ghost)'} w={20 * kd} h={20 * kd} />
 					</g>
 				{/each}
 
@@ -220,7 +224,7 @@
 	}
 	.diag-t {
 		fill: rgba(242, 208, 143, 0.45) !important;
-		font-size: 10px !important;
+		font-size: 10px;
 	}
 	.axis {
 		stroke: rgba(235, 229, 213, 0.4);

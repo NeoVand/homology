@@ -348,7 +348,7 @@
 <Figure num="3.2.4" title="Orientation and signs" hint="Flip the edge · choose a vertex order · multiply by c">
 	<OrientationSigns />
 	{#snippet caption()}
-		Left: flipping an edge negates it, and its boundary is always <em>head minus tail</em>. Right: the six ways of writing the triangle \([0,1,2]\) — solid chips
+		The edge: flipping it negates it, and its boundary is always <em>head minus tail</em>. The triangle: the six ways of writing the triangle \([0,1,2]\) — solid chips
 		have the standard orientation, dashed chips the opposite one. Whatever order you choose, the boundary formula produces arrows that run around the triangle
 		in its direction of rotation, and multiplying the chain by \(c\) multiplies every coefficient of the boundary by \(c\).
 	{/snippet}
@@ -715,7 +715,7 @@
 <Figure num="3.2.7" title="A chain complex as a conveyor belt" hint="Step through">
 	<ConveyorBelt />
 	{#snippet caption()}
-		Chains travel from left to right, losing a dimension at each \(\partial\). The teal region \(\bdy{B_1}\) is everything \(\partial_2\) produces; the gold
+		Chains travel along the belt, losing a dimension at each \(\partial\). The teal region \(\bdy{B_1}\) is everything \(\partial_2\) produces; the gold
 		region \(\cyc{Z_1}\) is everything \(\partial_1\) crushes to \(0\). The law \(\partial\partial = 0\) puts the teal inside the gold, and the rose gap between
 		them is what homology measures.
 	{/snippet}

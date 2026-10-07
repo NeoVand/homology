@@ -20,6 +20,9 @@
 	let c2 = $state<V2>([-0.5, 1]);
 	// how far the map has been applied: 0 is the plane before, 1 after
 	let t = $state(1);
+	// on narrow plates the drawing shrinks, so its labels grow
+	let cw = $state(800);
+	const lk = $derived(cw < 460 ? 1.4 : 1);
 	let playing = $state(false);
 
 	let reduced = false;
@@ -159,12 +162,12 @@
 		const o = unit(other);
 		const side: V2 = [u[0] - 0.35 * o[0], u[1] - 0.35 * o[1]];
 		const s = unit(side);
-		return add(v, mul(0.62, s[0] || s[1] ? s : [0.7, 0.7]));
+		return add(v, mul(0.62 * lk, s[0] || s[1] ? s : [0.7, 0.7]));
 	};
 </script>
 
 <div class="lmp">
-	<div class="canvas">
+	<div class="canvas" bind:clientWidth={cw}>
 		<Svg
 			viewBox="0 0 {view.w} {view.h}"
 			maxHeight={520}
@@ -259,11 +262,11 @@
 
 			{#if len(m1) > 0.3}
 				{@const p = tip(m1, m2)}
-				<SvgTeX x={view.X(p[0])} y={view.Y(p[1])} tex={t > 0.5 ? 'A\\mathbf{e}_1' : '\\mathbf{e}_1'} color={C.violet} size={17} w={70} />
+				<SvgTeX x={view.X(p[0])} y={view.Y(p[1])} tex={t > 0.5 ? 'A\\mathbf{e}_1' : '\\mathbf{e}_1'} color={C.violet} size={17 * lk} w={70 * lk} />
 			{/if}
 			{#if len(m2) > 0.3}
 				{@const p = tip(m2, m1)}
-				<SvgTeX x={view.X(p[0])} y={view.Y(p[1])} tex={t > 0.5 ? 'A\\mathbf{e}_2' : '\\mathbf{e}_2'} color={C.blue} size={17} w={70} />
+				<SvgTeX x={view.X(p[0])} y={view.Y(p[1])} tex={t > 0.5 ? 'A\\mathbf{e}_2' : '\\mathbf{e}_2'} color={C.blue} size={17 * lk} w={70 * lk} />
 			{/if}
 
 			<rect x="0" y="0" width={view.w} height={view.h} fill="url(#lmp-vignette)" pointer-events="none" />

@@ -170,6 +170,23 @@
 			margin: 0 auto;
 		}
 	}
+	/* phones: ∂₁ (5 × 7) would need a sideways scroll; put each caption above its matrix and tighten the cells */
+	@container figure (max-width: 30rem) {
+		.grid {
+			padding: 0.8rem 0.3rem 0.2rem;
+		}
+		.mats :global(.mv) {
+			flex-direction: column;
+			gap: 0.2rem;
+		}
+		.grid .mats :global(.mv.mv td) {
+			min-width: 1.7rem;
+			padding: 0.3rem 0.18rem;
+		}
+		.grid .mats :global(.mv.mv th) {
+			padding: 0.2rem 0.12rem;
+		}
+	}
 	.readout {
 		padding: 0.5rem 1.2rem 0.8rem;
 		min-height: 3.6rem;

@@ -60,6 +60,22 @@
 		font-family: var(--font-body);
 		padding: 0 0.4rem;
 	}
+	/* a phone: the two pictures one above the other, the ≅ between them */
+	@container figure (max-width: 30rem) {
+		.exc {
+			flex-direction: column;
+			flex-wrap: nowrap;
+		}
+		.panel {
+			flex: none;
+			width: 100%;
+			max-width: 300px;
+		}
+		.iso {
+			line-height: 1;
+			padding: 0.1rem 0 0.3rem;
+		}
+	}
 	.x {
 		fill: rgba(116, 169, 255, 0.12);
 		stroke: rgba(116, 169, 255, 0.6);

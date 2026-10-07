@@ -328,4 +328,11 @@
 		color: var(--ink-bright);
 		box-shadow: 0 0 14px -4px rgba(242, 205, 135, 0.6);
 	}
+	/* phones: the diagram shrinks, so its numbers grow */
+	@container figure (max-width: 34rem) {
+		.num {
+			font-size: 14px !important;
+			transform: translateY(0.8px);
+		}
+	}
 </style>

@@ -6,6 +6,7 @@
 	// the product of the three signs never changes: −1 for the Möbius band, +1
 	// for the cylinder. A golden arrow carried once around comes back reversed.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
+	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Timeline from '$lib/components/ui/Timeline.svelte';
@@ -80,7 +81,10 @@
 
 	let api: { rebuild(): void; update(): void; carry(): void } | null = null;
 
-	function setup({ scene, THREE, invalidate, label }: SceneContext) {
+	function setup(ctx: SceneContext) {
+		const { scene, THREE, invalidate, label } = ctx;
+		// on a narrow (portrait) canvas, step back so the whole band stays in frame
+		const unfit = fitCamera(ctx, 1.9);
 		const band = new THREE.Group();
 		const arrows = new THREE.Group();
 		const marks = new THREE.Group();
@@ -211,6 +215,7 @@
 		api.rebuild();
 		return {
 			dispose() {
+				unfit();
 				api = null;
 				shaftGeo.dispose();
 				headGeo.dispose();

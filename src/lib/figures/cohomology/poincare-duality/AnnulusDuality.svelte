@@ -82,7 +82,13 @@
 		<circle cx={mid[0]} cy={mid[1]} r="10" class="halo" />
 		<circle cx={mid[0]} cy={mid[1]} r="4.8" class="dot" />
 		<SvgTeX x={cx} y={cy - rc - 18} tex={pair === 'core' ? String.raw`\text{loop } C \in H_1(A)` : String.raw`\text{test loop}`} color={pair === 'core' ? 'var(--gold-bright)' : 'var(--violet)'} size={15} w={200} h={26} />
-		<SvgTeX x={rungB[0] + 30} y={rungB[1] - 22} tex={pair === 'core' ? String.raw`\text{test path}` : String.raw`\text{relative cycle } R \in H_1(A,\partial A)`} color={pair === 'core' ? 'var(--violet)' : 'var(--gold-bright)'} size={14} w={240} h={26} anchor="end" />
+		{#if pair === 'core'}
+			<SvgTeX x={rungB[0] + 30} y={rungB[1] - 22} tex={String.raw`\text{test path}`} color="var(--violet)" size={14} w={240} h={26} anchor="end" />
+		{:else}
+			<!-- two lines up and to the right of the rung's end, clear of the test loop and the rim -->
+			<SvgTeX x={416} y={rungB[1] - 48} tex={String.raw`\text{relative cycle } R`} color="var(--gold-bright)" size={14} w={200} h={24} anchor="end" />
+			<SvgTeX x={416} y={rungB[1] - 26} tex={String.raw`\in H_1(A,\partial A)`} color="var(--gold-bright)" size={14} w={200} h={24} anchor="end" />
+		{/if}
 		<text x={cx} y={cy + r1 + 24} class="t-ui note">dashed circles: the boundary ∂A</text>
 	</Svg>
 	<div class="ctl ui">
@@ -138,6 +144,12 @@
 	.note {
 		text-anchor: middle;
 		font-size: 11px;
+	}
+	/* a phone: the drawing is scaled to about 0.8, so the small note grows */
+	@container figure (max-width: 30rem) {
+		.note {
+			font-size: 13.5px !important;
+		}
 	}
 	.ctl {
 		display: flex;

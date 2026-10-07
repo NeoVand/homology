@@ -194,4 +194,9 @@
 		color: var(--blue);
 		font-weight: 650;
 	}
+	@container figure (max-width: 34rem) {
+		.x {
+			font-size: 0.66rem;
+		}
+	}
 </style>

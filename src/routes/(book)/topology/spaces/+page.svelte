@@ -122,7 +122,7 @@
 <Figure num="2.1.1" title="A rubber sheet" hint="Drag the gold pins to stretch · then try Tear and Glue">
 	<RubberSheet />
 	{#snippet caption()}
-		Stretching changes every measurement in the left column, but none of the facts in the right column. Tearing the loop open
+		Stretching changes every measurement under “changes when you stretch”, but none of the facts under “survives any stretching”. Tearing the loop open
 		destroys “inside”, and gluing two of its points together splits the inside in two. If you pull too hard the sheet folds over
 		itself; that is not allowed either, because two different points would end up in the same place.
 	{/snippet}
@@ -197,8 +197,8 @@
 <Figure num="2.1.2" title="Three rulers for the plane">
 	<MetricBalls />
 	{#snippet caption()}
-		Left: from \(A\) to \(B\) it is \(5\) blocks as the crow flies but \(7\) by taxi, and every staircase route is equally long.
-		Right: the points at distance less than \(1\) from \(x\) form a disk for the straight-line distance, a diamond for the
+		The taxi ride: from \(A\) to \(B\) it is \(5\) blocks as the crow flies but \(7\) by taxi, and every staircase route is
+		equally long. The balls: the points at distance less than \(1\) from \(x\) form a disk for the straight-line distance, a diamond for the
 		taxicab distance and a square for the max distance. Each fits inside the next.
 	{/snippet}
 </Figure>

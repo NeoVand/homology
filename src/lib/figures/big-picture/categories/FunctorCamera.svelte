@@ -10,6 +10,7 @@
 	import Stepper from '$lib/components/ui/Stepper.svelte';
 	import { torusCurve, torusOutline, torusGrid, coil, type TorusView } from './torus';
 	import { animate } from './diagram';
+	import { untrack } from 'svelte';
 
 	let { mode = 'covariant' }: { mode?: 'covariant' | 'contravariant' } = $props();
 
@@ -19,9 +20,16 @@
 	let s = $state(1);
 	const w = $derived(r * p + s * q);
 
-	// 0 = homology picture, 1 = cohomology picture (arrows mirrored)
-	let flip = $state(0);
-	let which = $state<'H1' | 'Hc'>('H1');
+	// 0 = homology picture, 1 = cohomology picture (arrows mirrored).
+	// The contravariant figure opens on cohomology, so that it does not look like the one before it.
+	const co0 = untrack(() => mode === 'contravariant');
+	let flip = $state(co0 ? 1 : 0);
+	let which = $state<'H1' | 'Hc'>(co0 ? 'Hc' : 'H1');
+
+	// On a narrow plate the drawing is scaled down; scale the labels up (k ≥ 1) so they stay readable.
+	let width = $state(720);
+	const k = $derived(Math.min(1.8, Math.max(1, (0.9 * 720) / (width || 720))));
+	const narrow = $derived(k > 1.3);
 	let cancel: (() => void) | null = null;
 	function setWhich(v: 'H1' | 'Hc') {
 		cancel?.();
@@ -62,8 +70,8 @@
 	);
 </script>
 
-<div class="fc">
-	<Svg viewBox="0 0 720 510" maxHeight={520} label="Spaces and maps on top; the groups and matrices that the functor assigns to them below">
+<div class="fc" bind:clientWidth={width}>
+	<Svg viewBox="0 0 720 {510 + 26 * (k - 1)}" maxHeight={520} label="Spaces and maps on top; the groups and matrices that the functor assigns to them below">
 		<defs>
 			<linearGradient id="fc-torus" x1="0" y1="0" x2="1" y2="1">
 				<stop offset="0" stop-color="#6fd6e8" stop-opacity="0.22" />
@@ -72,18 +80,21 @@
 			</linearGradient>
 		</defs>
 
-		<text x="16" y="24" class="t-ui">SPACES AND CONTINUOUS MAPS</text>
-		<text x="128" y={yBot - 62} class="t-ui">GROUPS AND HOMOMORPHISMS</text>
+		<!-- row captions (no room for them on a phone, where the labels are scaled up) -->
+		{#if !narrow}
+			<text x="16" y="24" class="t-ui">SPACES AND CONTINUOUS MAPS</text>
+			<text x="128" y={yBot - 62} class="t-ui">GROUPS AND HOMOMORPHISMS</text>
+		{/if}
 
 		<!-- composite on top -->
 		<path d="M 118 70 Q 360 -52 602 70" class="arc" marker-end="url(#arrow-blue)" />
-		<SvgTeX x={360} y={32} tex={'g\\circ f'} size={16} color="var(--blue)" w={80} h={24} />
+		<SvgTeX x={360} y={32} tex={'g\\circ f'} size={16 * k} color="var(--blue)" w={80 * k} h={24 * k} />
 
 		<!-- the left circle (the loop that generates) -->
 		<circle cx="110" cy={yTop} r="44" class="ring" />
 		<circle cx="110" cy={yTop} r="44" class="loop" />
 		<path d="M 104 84 L 116 84" marker-end="url(#arrowmid-gold)" class="tick" />
-		<SvgTeX x={110} y={yTop} tex="S^1" size={17} color="var(--ink)" w={40} h={26} />
+		<SvgTeX x={110} y={yTop} tex="S^1" size={17 * k} color="var(--ink)" w={40 * k} h={26 * k} />
 
 		<!-- torus -->
 		<ellipse cx={outline.outer.cx} cy={outline.outer.cy} rx={outline.outer.rx} ry={outline.outer.ry} fill="url(#fc-torus)" class="tbody" />
@@ -97,35 +108,35 @@
 		{#if p === 0 && q === 0}
 			<circle cx={T.cx} cy={T.cy - (T.R * Math.sin(T.tilt) + T.r) * T.s} r="5" class="dot" />
 		{/if}
-		<SvgTeX x={360} y={yTop + 88} tex="T^2" size={17} color="var(--ink)" w={40} h={26} />
+		<SvgTeX x={360} y={yTop + 88 + 4 * (k - 1)} tex="T^2" size={17 * k} color="var(--ink)" w={40 * k} h={26 * k} />
 
 		<!-- right circle with the composite loop -->
 		<circle cx="610" cy={yTop} r="44" class="ring" />
 		<path d={coilPath} class="loop" />
-		<SvgTeX x={610} y={yTop} tex="S^1" size={17} color="var(--ink)" w={40} h={26} />
+		<SvgTeX x={610} y={yTop} tex="S^1" size={17 * k} color="var(--ink)" w={40 * k} h={26 * k} />
 
 		<!-- maps f, g -->
 		<path d="M 164 {yTop} L 252 {yTop}" class="map" marker-end="url(#arrow-ivory)" />
-		<SvgTeX x={208} y={yTop - 16} tex="f" size={16} w={30} h={24} />
+		<SvgTeX x={208} y={yTop - 16 - 6 * (k - 1)} tex="f" size={16 * k} w={30 * k} h={24 * k} />
 		<path d="M 470 {yTop} L 558 {yTop}" class="map" marker-end="url(#arrow-ivory)" />
-		<SvgTeX x={514} y={yTop - 16} tex="g" size={16} w={30} h={24} />
+		<SvgTeX x={514} y={yTop - 16 - 6 * (k - 1)} tex="g" size={16 * k} w={30 * k} h={24 * k} />
 
 		<!-- the functor: three beams -->
 		{#each [110, 360, 610] as x (x)}
 			<path d="M {x} {yTop + (x === 360 ? 104 : 60)} L {x} {yBot - 30}" class="beam" marker-end="url(#arrow-gold)" />
 			<g transform="translate({x} {yBot - 96})">
-				<rect x="-20" y="-13" width="40" height="26" rx="13" class="pill" />
-				<g opacity={fade}><SvgTeX x={0} y={0} tex={Hname} size={15} color="var(--gold-bright)" w={40} h={24} /></g>
+				<rect x={-20 * k} y={-13 * k} width={40 * k} height={26 * k} rx={13 * k} class="pill" />
+				<g opacity={fade}><SvgTeX x={0} y={0} tex={Hname} size={15 * k} color="var(--gold-bright)" w={40 * k} h={24 * k} /></g>
 			</g>
 		{/each}
 
 		<!-- groups -->
 		{#each [[110, '\\Z'], [360, '\\Z^2'], [610, '\\Z']] as [x, t], i (i)}
 			<g transform="translate({x} {yBot})">
-				<rect x="-34" y="-21" width="68" height="42" rx="12" class="gnode" />
-				<SvgTeX x={0} y={0} tex={String(t)} size={19} color="var(--ink-bright)" w={60} h={30} />
+				<rect x="-34" y={-21 * Math.min(k, 1.3)} width="68" height={42 * Math.min(k, 1.3)} rx="12" class="gnode" />
+				<SvgTeX x={0} y={0} tex={String(t)} size={19 * Math.min(k, 1.4)} color="var(--ink-bright)" w={60} h={30 * k} />
 				<g opacity={fade}>
-					<SvgTeX x={0} y={36} tex={elements[i]} size={13} color="var(--gold-bright)" w={90} h={20} />
+					<SvgTeX x={0} y={36 + 12 * (k - 1)} tex={elements[i]} size={13 * k} color="var(--gold-bright)" w={90 * k} h={20 * k} />
 				</g>
 			</g>
 		{/each}
@@ -134,16 +145,16 @@
 		<g transform={mirror(234)}>
 			<path d="M 150 {yBot} L 318 {yBot}" class="hom" marker-end="url(#arrow-gold)" />
 		</g>
-		<g opacity={fade}><SvgTeX x={234} y={yBot - 30} tex={fLabel} size={13} color="var(--gold-pale)" w={110} h={46} /></g>
+		<g opacity={fade}><SvgTeX x={234} y={yBot - 30 - 14 * (k - 1)} tex={fLabel} size={13 * k} color="var(--gold-pale)" w={110 * k} h={46 * k} /></g>
 		<g transform={mirror(486)}>
 			<path d="M 402 {yBot} L 570 {yBot}" class="hom" marker-end="url(#arrow-gold)" />
 		</g>
-		<g opacity={fade}><SvgTeX x={486} y={yBot - 30} tex={gLabel} size={13} color="var(--gold-pale)" w={110} h={46} /></g>
+		<g opacity={fade}><SvgTeX x={486} y={yBot - 30 - 14 * (k - 1)} tex={gLabel} size={13 * k} color="var(--gold-pale)" w={110 * k} h={46 * k} /></g>
 		<g transform={mirror(360)}>
-			<path d="M 118 {yBot + 50} Q 360 {yBot + 128} 602 {yBot + 50}" class="arc" marker-end="url(#arrow-blue)" />
+			<path d="M 118 {yBot + 50 + 14 * (k - 1)} Q 360 {yBot + 128 + 14 * (k - 1)} 602 {yBot + 50 + 14 * (k - 1)}" class="arc" marker-end="url(#arrow-blue)" />
 		</g>
 		<g opacity={fade}>
-			<SvgTeX x={360} y={yBot + 100} tex={`${Hname}(g\\circ f) = (${sgn(w)})`} size={14} color="var(--blue)" w={200} h={24} />
+			<SvgTeX x={360} y={yBot + 100 + 20 * (k - 1)} tex={`${Hname}(g\\circ f) = (${sgn(w)})`} size={14 * k} color="var(--blue)" w={200 * k} h={24 * k} />
 		</g>
 	</Svg>
 
@@ -291,5 +302,15 @@
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
 		color: var(--gold);
+	}
+	/* a phone: each group (caption and its two steppers) on one line, the captions in a column */
+	@container figure (max-width: 30rem) {
+		.group {
+			flex-wrap: nowrap;
+			gap: 0.3rem 0.5rem;
+		}
+		.cap {
+			min-width: 3.3rem;
+		}
 	}
 </style>

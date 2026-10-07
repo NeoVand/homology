@@ -12,9 +12,10 @@
 	import { tex } from '$lib/katex/render';
 	import { PauseIcon, PlayIcon } from '$lib/icons';
 	import type * as THREE_NS from 'three';
-	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 
 	const AMOUNT = 0.55;
+	let cw = $state(0);
+	const narrow = $derived(cw > 0 && cw < 520);
 	let kneading = $state(true);
 	let api: { wake(): void } | null = null;
 	$effect(() => {
@@ -24,18 +25,18 @@
 
 	function setup(ctx: SceneContext) {
 		const { THREE, scene, label, onFrame, canvas, controls, pick, reducedMotion } = ctx;
-		// on narrow canvases pull the camera back so both shapes and their labels stay in frame
-		const unfit = fitCamera(ctx, 1.9, 0.7);
+		// on narrow plates the torus sits below the sphere instead of beside it
+		const at = (k: number): [number, number] => (narrow ? [0, k === 0 ? 2.45 : -2.45] : [k === 0 ? -2.35 : 2.35, 0]);
 		const s = glassMesh(surfaceGeometry(sphere(1.35), 96, 64), { opacity: 0.9, grid: [36, 18], gridStrength: 0.2, hue: 0.05, wobble: true });
 		const t = glassMesh(surfaceGeometry(torus(1.35, 0.55), 128, 56), { opacity: 0.9, grid: [48, 18], gridStrength: 0.2, hue: 0.55, wobble: true });
-		s.position.set(-2.35, 0, 0);
-		t.position.set(2.35, 0, 0);
+		s.position.set(...at(0), 0);
+		t.position.set(...at(1), 0);
 		t.rotation.x = 0.95;
 		scene.add(s, t);
-		label([-2.35, -2.05, 0], `<span class="tag">sphere</span>`, { className: 'tag small' });
-		label([2.35, -2.05, 0], `<span class="tag">torus</span>`, { className: 'tag small' });
-		label([-2.35, 2.05, 0], tex('\\text{tunnels } 0 \\quad \\text{cavities } 1'), { className: 'small gold' });
-		label([2.35, 2.05, 0], tex('\\text{tunnels } 1 \\quad \\text{cavities } 1'), { className: 'small gold' });
+		label([at(0)[0], at(0)[1] - 2.05, 0], `<span class="tag">sphere</span>`, { className: 'tag small' });
+		label([at(1)[0], at(1)[1] - 2.05, 0], `<span class="tag">torus</span>`, { className: 'tag small' });
+		label([at(0)[0], at(0)[1] + 2.05, 0], tex('\\text{tunnels } 0 \\quad \\text{cavities } 1'), { className: 'small gold' });
+		label([at(1)[0], at(1)[1] + 2.05, 0], tex('\\text{tunnels } 1 \\quad \\text{cavities } 1'), { className: 'small gold' });
 
 		type Shape = { g: THREE_NS.Group; m: THREE_NS.ShaderMaterial; amp: number; max: number };
 		const shapes: Shape[] = [
@@ -118,7 +119,6 @@
 
 		return {
 			dispose() {
-				unfit();
 				off?.();
 				api = null;
 				canvas.removeEventListener('pointerdown', onDown, { capture: true });
@@ -130,13 +130,15 @@
 	}
 </script>
 
-<Scene3D
-	{setup}
-	height={380}
-	camera={{ position: [0, 0.6, 9.2], fov: 38 }}
-	controls={{ autoRotate: false }}
-	label="A sphere and a torus being stretched and squeezed into lumpy shapes; the sphere never gains a tunnel and the torus never loses its tunnel"
-/>
+<div bind:clientWidth={cw}>
+	<Scene3D
+		{setup}
+		height={narrow ? 600 : 380}
+		camera={narrow ? { position: [0, -0.35, 15.4], target: [0, -0.35, 0], fov: 38 } : { position: [0, 0.6, 9.2], fov: 38 }}
+		controls={{ autoRotate: false }}
+		label="A sphere and a torus being stretched and squeezed into lumpy shapes; the sphere never gains a tunnel and the torus never loses its tunnel"
+	/>
+</div>
 <Controls>
 	<Button icon={kneading ? PauseIcon : PlayIcon} onclick={() => (kneading = !kneading)}>{kneading ? 'Pause the kneading' : 'Knead again'}</Button>
 	<span class="tip ui">Press and hold on a shape to pull it out</span>

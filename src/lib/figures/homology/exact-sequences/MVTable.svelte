@@ -182,17 +182,24 @@
 	.conn.hot .lab {
 		color: var(--gold-bright);
 	}
-	@media (max-width: 520px) {
+	@container figure (max-width: 32.5rem) {
 		.mvt {
 			font-size: 0.8rem;
-			padding: 0.5rem 0.5rem 0.7rem;
+			padding: 0.5rem 0.4rem 0.7rem;
 		}
 		.row {
-			grid-template-columns: 2.1rem minmax(0, 1fr) 0.9rem minmax(0, 1.25fr) 0.9rem minmax(0, 1fr);
+			grid-template-columns: 2.4rem minmax(0, 1fr) 0.9rem minmax(0, 1.25fr) 0.9rem minmax(0, 1fr);
 			gap: 0.15rem;
 		}
+		.conn {
+			grid-template-columns: 2.4rem 1fr;
+		}
+		.deg {
+			white-space: nowrap;
+			padding-right: 0.1rem;
+		}
 		.h {
-			font-size: 0.72rem;
+			font-size: 0.74rem;
 		}
 		.cell {
 			min-height: 1.9rem;

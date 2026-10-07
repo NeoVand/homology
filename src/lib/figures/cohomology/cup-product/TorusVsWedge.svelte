@@ -98,17 +98,18 @@
 			if (s) {
 				T.position.set(0, 1.22, 0);
 				Wg.position.set(0, -1.12, 0);
-				camera.position.set(0, 1.0, 8.6);
+				// aimed a little low, so the wedge's label clears the touch buttons in the bottom corner
+				camera.position.set(0, 0.6, 8.9);
 			} else {
 				T.position.set(-1.75, 0.05, 0);
 				Wg.position.set(1.85, 0.05, 0);
 				camera.position.set(0, 1.45, 6.6);
 			}
-			camera.lookAt(0, s ? 0 : -0.15, 0);
-			ctx.controls?.target.set(0, s ? 0 : -0.15, 0);
+			camera.lookAt(0, s ? -0.4 : -0.15, 0);
+			ctx.controls?.target.set(0, s ? -0.4 : -0.15, 0);
 			ctx.controls?.update();
 			lT.position.copy(T.position).add(new THREE.Vector3(0, -0.78, 0.4));
-			lW.position.copy(Wg.position).add(new THREE.Vector3(0, -1.32, 0.3));
+			lW.position.copy(Wg.position).add(new THREE.Vector3(0, s ? -1.2 : -1.32, 0.3));
 			lProdT.position.copy(T.position).add(new THREE.Vector3(0, 0.82, 0));
 			lProdW.position.copy(Wg.position).add(new THREE.Vector3(0, 1.32, 0));
 			ctx.invalidate();

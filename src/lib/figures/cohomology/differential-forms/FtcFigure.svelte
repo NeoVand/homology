@@ -62,6 +62,9 @@
 
 	let svg: SVGSVGElement | undefined = $state();
 	let drag: 'a' | 'b' | null = null;
+	// On a narrow plate the drawing is scaled down; its labels and handles grow (k ≥ 1).
+	let width = $state(640);
+	const k = $derived(Math.min(1.7, Math.max(1, (0.9 * 640) / (width || 640))));
 	function toX(e: PointerEvent) {
 		const m = svg!.getScreenCTM()!.inverse();
 		const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m);
@@ -88,8 +91,8 @@
 	}
 </script>
 
-<div class="ftc">
-	<Svg bind:svg viewBox="0 0 640 410" maxHeight={520} label="The graph of a function F and of its slope F prime, with draggable endpoints a and b.">
+<div class="ftc" bind:clientWidth={width}>
+	<Svg bind:svg viewBox="0 0 640 {410 + 14 * (k - 1)}" maxHeight={520} label="The graph of a function F and of its slope F prime, with draggable endpoints a and b.">
 		<defs>
 			<linearGradient id="ftc-rect" x1="0" y1="0" x2="0" y2="1">
 				<stop offset="0" stop-color="#a493ff" stop-opacity="0.55" />
@@ -97,8 +100,8 @@
 			</linearGradient>
 		</defs>
 		<!-- panel labels -->
-		<text x="18" y="34" class="t-ui">HEIGHT</text>
-		<text x="18" y="262" class="t-ui">SLOPE</text>
+		<text x="18" y="34" class="t-ui" style:font-size={k > 1 ? `${11 * k}px` : null}>HEIGHT</text>
+		<text x="18" y="262" class="t-ui" style:font-size={k > 1 ? `${11 * k}px` : null}>SLOPE</text>
 		<!-- top axis -->
 		<line x1={X0} y1={top.y0} x2={X1} y2={top.y0} class="axis" />
 		<!-- bottom axis -->
@@ -120,11 +123,11 @@
 			/>
 		{/each}
 		<path d={dFpath} class="slope" />
-		<SvgTeX x={X1 + 18} y={gy(dF(xmax)) - 6} tex="F'" color="var(--blue)" size={16} w={40} />
+		<SvgTeX x={X1 + 18} y={gy(dF(xmax)) - 6} tex="F'" color="var(--blue)" size={16 * k} w={40 * k} h={40 * k} />
 
 		<!-- the height graph and the staircase of predicted rises -->
 		<path d={Fpath} class="height" />
-		<SvgTeX x={X1 + 18} y={fy(Fn(xmax)) - 4} tex="F" color="var(--ink-bright)" size={17} w={40} />
+		<SvgTeX x={X1 + 18} y={fy(Fn(xmax)) - 4} tex="F" color="var(--ink-bright)" size={17 * k} w={40 * k} h={40 * k} />
 		<path d={stairs.d} class="stairs-halo" />
 		<path d={stairs.d} class="stairs" />
 		{#each stairs.pts as p, i (i)}
@@ -154,9 +157,9 @@
 				onkeydown={(e) => key(e, name as 'a' | 'b')}
 			>
 				<line x1="0" y1="-26" x2="0" y2={-(bot.y0 + 26 - 34)} class="tick" />
-				<circle r="16" class="hit" />
-				<path d="M 0 -9 L 8 4 L -8 4 Z" class="knob" />
-				<SvgTeX x={0} y={18} tex={name as string} color="var(--gold-bright)" size={17} w={30} h={24} />
+				<circle r={16 * k} class="hit" />
+				<path d="M 0 -9 L 8 4 L -8 4 Z" class="knob" transform="scale({Math.min(k, 1.4)})" />
+				<SvgTeX x={0} y={18 + 6 * (k - 1)} tex={name as string} color="var(--gold-bright)" size={17 * k} w={30 * k} h={24 * k} />
 			</g>
 		{/each}
 	</Svg>

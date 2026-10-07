@@ -14,6 +14,9 @@
 	const eps = 0.11;
 	const CX = 300;
 	const BASE = 236;
+	// on narrow plates the drawing shrinks to about half size, so its labels grow
+	let cw = $state(800);
+	const k = $derived(cw < 520 ? 1.6 : 1);
 
 	function pt(s01: number, gg: number): [number, number] {
 		// position of the parameter s ∈ [0,1] after bending by gg ∈ [0,1]
@@ -34,14 +37,14 @@
 	// so they never land on the arc however far it is bent
 	function endLabel([x, y]: [number, number], side: -1 | 1, gg: number): [number, number] {
 		const a = gg * Math.PI;
-		return [x + 20 * side * Math.sin(a) - 9 * side * Math.cos(a), y + 20 * Math.cos(a) + 9 * Math.sin(a)];
+		return [x + k * (20 * side * Math.sin(a) - 9 * side * Math.cos(a)), y + k * (20 * Math.cos(a) + 9 * Math.sin(a))];
 	}
 	const L0 = $derived(endLabel(P0, -1, g));
 	const L1 = $derived(endLabel(P1, 1, g));
 	const glued = $derived(g > 0.995);
 </script>
 
-<div class="ic">
+<div class="ic" bind:clientWidth={cw}>
 	<Svg viewBox="0 0 600 300" maxHeight={330} label="An interval bending round until its two ends meet, with a highlighted set near the ends">
 		<polyline points={poly(0, 1, g)} fill="none" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
 		<polyline points={poly(0, eps, g)} fill="none" stroke={which === 'good' ? 'var(--teal)' : 'var(--rose)'} stroke-width="8" stroke-linecap="round" filter="url(#glow)" />
@@ -51,12 +54,12 @@
 		<!-- the end points -->
 		{#if glued}
 			<circle cx={P0[0]} cy={P0[1]} r="7" fill="var(--gold-bright)" stroke="#060912" stroke-width="1.5" filter="url(#glow)" />
-			<SvgTeX x={P0[0]} y={P0[1] - 22} tex={'[0]=[1]'} size={15} w={90} h={22} color="var(--gold-bright)" />
+			<SvgTeX x={P0[0]} y={P0[1] - 22 * k} tex={'[0]=[1]'} size={15 * k} w={90 * k} h={22 * k} color="var(--gold-bright)" />
 		{:else}
 			<circle cx={P0[0]} cy={P0[1]} r="6.5" fill="var(--gold-bright)" stroke="#060912" stroke-width="1.5" />
 			<circle cx={P1[0]} cy={P1[1]} r="6.5" fill={which === 'bad' ? 'var(--rose)' : 'var(--gold-bright)'} stroke="#060912" stroke-width="1.5" />
-			<SvgTeX x={L0[0]} y={L0[1]} tex="0" size={15} w={20} h={20} />
-			<SvgTeX x={L1[0]} y={L1[1]} tex="1" size={15} w={20} h={20} />
+			<SvgTeX x={L0[0]} y={L0[1]} tex="0" size={15 * k} w={20 * k} h={20 * k} />
+			<SvgTeX x={L1[0]} y={L1[1]} tex="1" size={15 * k} w={20 * k} h={20 * k} />
 		{/if}
 	</Svg>
 </div>

@@ -5,6 +5,7 @@
 	// surface always equals the total divergence inside — even with a wind
 	// blowing through.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
+	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 	import { glassMesh, glowPoint, pointCloud } from '$lib/three/materials';
 	import { sphere, surfaceGeometry } from '$lib/three/surfaces';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
@@ -31,6 +32,8 @@
 	let api: { set(cx: number, R: number, wind: boolean): void } | null = null;
 
 	function setup(ctx: SceneContext) {
+		// on a narrow (portrait) canvas, step back so the sphere and its arrows stay in frame
+		const unfit = fitCamera(ctx, 1.5);
 		const { THREE, scene, reducedMotion, invalidate, label } = ctx;
 		const rand = mulberry(5);
 		const gauss = () => {
@@ -329,6 +332,7 @@
 				if (NP) step(Math.min(dt, 1 / 30));
 			},
 			dispose: () => {
+				unfit();
 				api = null;
 				rim.geometry.dispose();
 				rimMat.dispose();

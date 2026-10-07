@@ -227,4 +227,14 @@
 		color: var(--ink-dim);
 		min-height: 3em;
 	}
+	/* phones: the diagram shrinks, so its lettering grows */
+	@container figure (max-width: 34rem) {
+		.cap {
+			font-size: 12.5px !important;
+			letter-spacing: 0.06em;
+		}
+		.pill text {
+			font-size: 13px !important;
+		}
+	}
 </style>

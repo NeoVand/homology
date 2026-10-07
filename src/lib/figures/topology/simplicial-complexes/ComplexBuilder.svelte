@@ -95,6 +95,8 @@
 	/** SVG units per CSS pixel: larger on phones, where the board is drawn smaller */
 	const u = $derived(W / Math.max(cw, 1));
 	const vs = $derived(Math.max(1, 0.78 * u));
+	// vertex numbers: at least about 12 CSS px on a phone
+	const ls = $derived(Math.max(1, 1.05 * u));
 
 	const key = (s: number[]) => [...s].sort((a, b) => a - b).join(',');
 	const P = (id: number): Pt => {
@@ -331,7 +333,7 @@
 				<g class="vtx" class:pending={pending.includes(v.id)} class:bad={badKeys.has(String(v.id))} class:hov={hoverKey === String(v.id)}>
 					<circle cx={v.x} cy={v.y} r={Math.max(20, 16 * u)} class="vhit" />
 					<circle cx={v.x} cy={v.y} r={(pending.includes(v.id) ? 9 : 7) * vs} class="vdot" />
-					<text x={v.x + 12 * vs} y={v.y - 10 * vs} class="vlbl" style="font-size:{12 * vs}px">{v.id}</text>
+					<text x={v.x + 11 * ls} y={v.y - 9 * ls} class="vlbl" style="font-size:{12 * ls}px">{v.id}</text>
 				</g>
 			{/each}
 		</Svg>

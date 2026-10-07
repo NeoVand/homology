@@ -8,32 +8,33 @@
 	import { glassMesh, glowTube, disposeTree, faceMaterial } from '$lib/three/materials';
 	import { sphere, torus, surfaceGeometry, SurfaceCurve } from '$lib/three/surfaces';
 	import * as THREE from 'three';
-	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 
 	let pull = $state(0);
+	let cw = $state(0);
+	const narrow = $derived(cw > 0 && cw < 520);
 	let api: { set(p: number): void } | null = null;
 
 	function setup(ctx: SceneContext) {
 		const { scene, label, invalidate } = ctx;
-		// on narrow canvases pull the camera back so both shapes stay in frame
-		const unfit = fitCamera(ctx, 1.9, 0.7);
+		// on narrow plates the torus sits below the sphere instead of beside it
+		const at = (k: number): [number, number] => (narrow ? [0, k === 0 ? 2.15 : -2.15] : [k === 0 ? -2.4 : 2.4, 0]);
 		const R = 1.3;
 		const sf = sphere(R);
 		const sGroup = new THREE.Group();
-		sGroup.position.set(-2.4, 0, 0);
+		sGroup.position.set(...at(0), 0);
 		sGroup.rotation.set(0.35, 0, 0.15);
 		sGroup.add(glassMesh(surfaceGeometry(sf, 96, 64), { opacity: 0.75, grid: [28, 14], gridStrength: 0.16 }));
 		scene.add(sGroup);
 
 		const tf = torus(1.2, 0.5);
 		const tGroup = new THREE.Group();
-		tGroup.position.set(2.4, 0, 0);
+		tGroup.position.set(...at(1), 0);
 		tGroup.rotation.set(1.0, 0, -0.2);
 		tGroup.add(glassMesh(surfaceGeometry(tf, 140, 60), { opacity: 0.78, grid: [42, 16], gridStrength: 0.16, hue: 0.5 }));
 		scene.add(tGroup);
 
-		const stuckLabel = label([2.4, -1.75, 0], 'this band is stuck', { className: 'tag small rose' });
-		const shrinkLabel = label([-2.4, -1.75, 0], 'shrinks to a point', { className: 'tag small teal' });
+		const stuckLabel = label([at(1)[0], at(1)[1] - 1.75, 0], 'this band is stuck', { className: 'tag small rose' });
+		const shrinkLabel = label([at(0)[0], at(0)[1] - 1.75, 0], 'shrinks to a point', { className: 'tag small teal' });
 
 		let dyn: THREE.Object3D[] = [];
 		const clear = () => {
@@ -93,7 +94,6 @@
 		api = { set };
 		return {
 			dispose: () => {
-				unfit();
 				api = null;
 			}
 		};
@@ -105,12 +105,14 @@
 	});
 </script>
 
-<Scene3D
-	{setup}
-	height={360}
-	camera={{ position: [0, 0.3, 8.4], fov: 38 }}
-	label="Rubber bands on a sphere and on a torus. As they are pulled tight, the band on the sphere and a small band on the torus shrink to points, while the band around the torus's tube cannot shrink."
-/>
+<div bind:clientWidth={cw}>
+	<Scene3D
+		{setup}
+		height={narrow ? 540 : 360}
+		camera={narrow ? { position: [0, -0.75, 12.6], target: [0, -0.75, 0], fov: 38 } : { position: [0, 0.3, 8.4], fov: 38 }}
+		label="Rubber bands on a sphere and on a torus. As they are pulled tight, the band on the sphere and a small band on the torus shrink to points, while the band around the torus's tube cannot shrink."
+	/>
+</div>
 <Controls>
 	<Timeline bind:value={pull} duration={2.8} from="loose" to="pulled tight" label="Pulling the rubber bands tight" />
 </Controls>

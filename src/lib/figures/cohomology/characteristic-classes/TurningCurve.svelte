@@ -76,10 +76,22 @@
 		}
 		return d;
 	});
+
+	// On a narrow plate the dial moves out of the picture, next to the readout, and the
+	// picture is cropped to where the curve can be (so it is scaled down less).
+	let width = $state(720);
+	const narrow = $derived(width > 0 && width < 520);
 </script>
 
-<div class="wrap">
-	<Svg bind:svg={svgEl} viewBox="0 0 720 400" maxHeight={430} label="A closed curve through draggable points, with a comb showing how sharply it turns at each place, and a dial adding up the total turning." onpointermove={move} onpointerup={up} onpointerleave={up}>
+{#snippet dial()}
+	<circle cx="640" cy="200" r="46" fill="rgba(6,10,20,0.6)" stroke="rgba(216,178,110,0.3)" />
+	<path d={spiral} fill="none" stroke="var(--gold-bright)" stroke-width="2.4" />
+	<SvgTeX x={640} y={268} tex={`${deg}^\\circ`} size={18} color="var(--gold-bright)" w={100} />
+	<text x="640" y="132" text-anchor="middle" class="t-ui dlab">TOTAL TURNING</text>
+{/snippet}
+
+<div class="wrap" bind:clientWidth={width}>
+	<Svg bind:svg={svgEl} viewBox={narrow ? '10 12 550 376' : '0 0 720 400'} maxHeight={430} label="A closed curve through draggable points, with a comb showing how sharply it turns at each place, and a dial adding up the total turning." onpointermove={move} onpointerup={up} onpointerleave={up}>
 		{#each comb as t, i (i)}
 			<line x1={t.x0} y1={t.y0} x2={t.x1} y2={t.y1} stroke={t.pos ? 'var(--gold)' : 'var(--teal)'} stroke-width="1.3" opacity="0.7" />
 		{/each}
@@ -89,12 +101,13 @@
 			<circle cx={p[0]} cy={p[1]} r="7" fill="url(#vertex-fill)" stroke="#fff6dc" stroke-width="1" pointer-events="none" />
 		{/each}
 		<!-- the dial -->
-		<circle cx="640" cy="200" r="46" fill="rgba(6,10,20,0.6)" stroke="rgba(216,178,110,0.3)" />
-		<path d={spiral} fill="none" stroke="var(--gold-bright)" stroke-width="2.4" />
-		<SvgTeX x={640} y={268} tex={`${deg}^\\circ`} size={18} color="var(--gold-bright)" w={100} />
-		<text x="640" y="132" text-anchor="middle" class="t-ui">TOTAL TURNING</text>
+		{#if !narrow}{@render dial()}{/if}
 	</Svg>
 
+	<div class="readrow">
+	{#if narrow}
+		<svg class="dialsvg" viewBox="574 118 132 168" aria-hidden="true">{@render dial()}</svg>
+	{/if}
 	<div class="readout ui" aria-live="polite">
 		The tangent turns through <strong class="tx">{deg}°</strong> in all:{' '}
 		<strong class="tx">{k}</strong> full turn{Math.abs(k) === 1 ? '' : 's'}.
@@ -107,6 +120,7 @@
 		{:else}
 			Each extra loop adds a whole extra turn — never a fraction of one.
 		{/if}
+	</div>
 	</div>
 
 	<Controls>
@@ -140,6 +154,28 @@
 	}
 	.tx {
 		color: var(--gold-bright);
+	}
+	.readrow {
+		display: flex;
+		align-items: center;
+		gap: 0.2rem;
+		padding-left: 0.8rem;
+	}
+	.readrow .readout {
+		flex: 1;
+		padding-left: 0.4rem;
+	}
+	.dialsvg {
+		flex: none;
+		width: 92px;
+		height: auto;
+		overflow: visible;
+	}
+	.dialsvg .dlab {
+		font-family: var(--font-ui);
+		font-size: 14px;
+		letter-spacing: 0.04em;
+		fill: var(--ink-faint);
 	}
 	.hint {
 		font-size: 0.75rem;
