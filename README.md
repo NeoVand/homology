@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="https://neovand.github.io/homology/"><img src="docs/banner.webp" alt="The book’s home page: the title Homology &amp; Cohomology beside a glowing glass torus" width="100%"></a>
+</p>
+
 # Homology & Cohomology — an illustrated journey
 
 An interactive, illustrated textbook that teaches **homology** and **cohomology** from first principles —
@@ -19,8 +23,8 @@ A prelude and five parts, 31 chapters, about 200,000 words and 260 figures:
 | IV. Cohomology | Cochains · Cohomology groups · Differential forms · de Rham cohomology · The cup product · Poincaré duality · Sheaves and Čech cohomology · Characteristic classes |
 | V. The big picture | Categories and functors · Homological algebra · Horizons |
 
-Every chapter has interactive figures, worked examples, exercises with hidden hints and solutions, a summary
-and annotated further reading. A searchable glossary (about 700 terms, each linked from the text), a notation
+Every chapter has interactive figures, worked examples, exercises with hidden hints and solutions, a summary,
+a list of the references it cites and annotated further reading. A searchable glossary (about 700 terms, each linked from the text), a notation
 table, a one-page cheat sheet and a map of how the chapters depend on each other complete the book.
 
 ## Built with
