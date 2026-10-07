@@ -44,7 +44,7 @@
 
 <p class="lead">We left the last chapter in an uncomfortable tie. The torus and the Klein bottle are different surfaces, one orientable and one not, yet with coefficients in \(\Z/2\) their homology agrees exactly: Betti numbers \(1, 2, 1\) for both. This chapter breaks the tie.</p>
 
-<p class="lead">The tool is the oldest one in the subject: matrices. We will see that computing homology is linear algebra, and that over a field it comes down to ranks. Over the integers, where we may not divide, something extra survives the computation. That extra, called <em>torsion</em>, is exactly what separates the Klein bottle from the torus.</p>
+<p class="lead">The tool is the oldest one in the subject: matrices. Computing homology turns out to be linear algebra, and over a field it comes down to ranks, which you can find with a pencil by clearing out columns until nothing more will cancel. Over the integers, where we may not divide, something extra survives the clearing. That extra, called <em>torsion</em>, is what separates the Klein bottle from the torus.</p>
 
 <p>Along the way we turn homology into a completely mechanical procedure, the “powerful machine” of Atiyah’s devil, and then into a calculator you can feed any complex you like. Atiyah’s own advice, a few lines further on, was to cheat the devil: pretend to sell your soul, and keep it <Cite k="atiyah2001" />. So at every step we will ask what the algebra means geometrically. For torsion the answer is a surface glued to itself with a flip, or, in Poincaré’s phrase, a space “so to speak twisted onto itself”.</p>
 
@@ -54,7 +54,7 @@
 
 <h2 id="linear-algebra">Homology is linear algebra</h2>
 
-<p>Look back at what we did in <Ref to="homology/homology-groups" />. For each space we listed its simplices, wrote down the boundary matrices, found their kernels and images, and took quotients. Nothing in that procedure depends on pictures or cleverness. It is a machine with four stages.</p>
+<p>Look back at what we did in <Ref to="homology/homology-groups" />. For each space we listed its simplices, wrote down the boundary matrices, found their kernels and images, and took quotients. Nothing in that procedure needs pictures or cleverness, and that is its charm: you can hand it a space you cannot even imagine, and it will still tell you the holes. It is a machine with four stages.</p>
 
 <Figure num="3.4.1" title="The homology machine">
 	<Pipeline />
@@ -71,23 +71,25 @@
 
 <p>Why is a single number per matrix enough? Because a vector space is determined, up to isomorphism, by its dimension (<Ref to="foundations/linear-algebra" />). The cycles form a subspace \(Z_k\), the boundaries a subspace \(B_k\) inside it, and the quotient \(Z_k/B_k\) is a vector space of dimension \(\dim Z_k - \dim B_k\). Knowing that dimension, we know the quotient completely: it is \(F^{b_k}\). Nothing else can happen.</p>
 
-<p>So over a field, computing homology means computing ranks, and the standard way to compute a rank is <Term t="row-reduction">row reduction</Term>. Choose a non-zero entry in the first column, the <em>pivot</em>; swap its row to the top; subtract multiples of that row from the rows below so that the rest of the column becomes zero. Then move one row down and one column right, and repeat. When you run out of pivots the matrix is in echelon form, and the rank is the number of pivots.</p>
+<p>So over a field, computing homology means computing ranks: how many columns of the matrix are independent, how many really point somewhere new. Before handing a big matrix to the machine, try a small one in your head. Over \(\Z/2\), where \(-1 = 1\) and signs disappear, the second boundary matrix of the hollow tetrahedron has four columns, one per face, and each column is the set of that face’s three edges. Start with \(\set{01, 02, 12}\), the edges of face \(012\). Add the column of face \(013\): the shared edge \(01\) appears twice and cancels, leaving \(\set{02, 12, 03, 13}\). Add the column of face \(023\): now \(02\) and \(03\) cancel, leaving \(\set{12, 13, 23}\), which is exactly the column of the fourth face, \(123\). So the four columns add up to zero, and the rank is at most \(3\). The first three are independent, because each brings in an edge that the ones before it lack (\(03\) for the second, \(23\) for the third). So the rank is exactly \(3\), and the rank formula gives \(b_2 = 4 - 3 - 0 = 1\): the sphere’s cavity, found by crossing out pairs of edges.</p>
 
-<p>Over \(\Z/2\) this is especially pleasant. Every non-zero entry is \(1\), since \(-1 = 1\) in \(\Z/2\). “Subtracting a multiple of a row” is just adding the pivot row, entry by entry, with \(1 + 1 = 0\). Figure 3.4.2 runs the procedure on the second boundary matrix of the six-vertex projective plane, a \(15 \times 10\) matrix, one pivot per step. Run it twice, once over \(\Z/2\) and once over \(\Q\).</p>
+<p>For bigger matrices you want a routine that never needs an idea. The standard one is <Term t="row-reduction">row reduction</Term>. Choose a non-zero entry in the first column, the <em>pivot</em>; swap its row to the top; subtract multiples of that row from the rows below so that the rest of the column becomes zero. Then move one row down and one column right, and repeat. When you run out of pivots the matrix is in echelon form, and the rank is the number of pivots. Over \(\Z/2\) every non-zero entry is \(1\), and “subtracting a multiple of a row” means adding the pivot row, entry by entry, with \(1 + 1 = 0\): the same crossing out you did in your head.</p>
+
+<p>Figure 3.4.2 runs the routine on the second boundary matrix of the six-vertex projective plane, a \(15 \times 10\) matrix, one pivot per step. Run it twice, once over \(\Z/2\) and once over \(\Q\).</p>
 
 <Figure num="3.4.2" title="Rank by row reduction" hint="Step through · switch number system">
 	<MatrixLab matrix="rp2" mode="Z2" modes={['Z2', 'Q']} matrices={['sphere', 'rp2', 'klein']} />
 	{#snippet caption()}Row-reducing \(\partial_2\). Each step chooses a pivot (gold) and clears the entries below it; changed rows are tinted blue; finished pivots stay gold. For the sphere the rank is \(3\) either way. For \(\RP^2\) and the Klein bottle the last pivot over \(\Q\) is \(2\) or \(-2\) (rose): a perfectly good pivot there, but zero over \(\Z/2\), so the rank drops by one.{/snippet}
 </Figure>
 
-<p>Something remarkable happened. <em>The same matrix has rank \(9\) over \(\Z/2\) and rank \(10\) over \(\Q\).</em> Everything goes identically until the very end, when the last pivot turns out to be a \(2\). Over \(\Q\) we may divide by \(2\), so it is a pivot like any other. Over \(\Z/2\), \(2 = 0\), and the column simply vanishes. Feed the two ranks into the rank formula (with \(n_1 = 15\), \(n_2 = 10\) and \(\rank\partial_1 = 5\) in both cases):</p>
+<p>Did you see the last step? <em>The same matrix has rank \(9\) over \(\Z/2\) and rank \(10\) over \(\Q\).</em> The two runs go step for step alike until the very end, when the last pivot turns out to be a \(2\). Over \(\Q\) we may divide by \(2\), so it is a pivot like any other. Over \(\Z/2\), \(2 = 0\), and the whole column is wiped out. Feed the two ranks into the rank formula (with \(n_1 = 15\), \(n_2 = 10\) and \(\rank\partial_1 = 5\) in both cases):</p>
 
 \[ \text{over } \Z/2: \quad b_1 = 15 - 5 - 9 = 1, \quad b_2 = 10 - 9 = 1; \qquad \text{over } \Q: \quad b_1 = 15 - 5 - 10 = 0, \quad b_2 = 0. \]
 
 <p>So which is right: does \(\RP^2\) have a non-bounding loop or not? Both answers are correct. They answer different questions, because “bounding” depends on what coefficients the filling chain may have. To see the whole truth at once we must work over the integers, and over the integers we may not divide at all.</p>
 
 <Question>
-	<p>For the hollow tetrahedron, \(\partial_2\) has rank \(3\) over both fields (try it in Figure 3.4.2). What does that tell you about its Betti numbers over \(\Z/2\) and over \(\Q\)? (They agree: \(1, 0, 1\). Two fields can disagree only when a pivot like the \(2\) above turns up, and we are about to see that such a pivot means torsion.)</p>
+	<p>You found by hand that \(\partial_2\) of the hollow tetrahedron has rank \(3\) over \(\Z/2\); Figure 3.4.2 (choose the sphere) finds rank \(3\) over \(\Q\) too. What does that tell you about its Betti numbers over \(\Z/2\) and over \(\Q\)? (They agree: \(1, 0, 1\). Two fields can disagree only when a pivot like the \(2\) above turns up, and we are about to see that such a pivot means torsion.)</p>
 </Question>
 
 <h2 id="integers">When you cannot divide</h2>
@@ -153,7 +155,7 @@
 </Figure>
 
 <Intuition title="Why the 2 cannot be removed">
-	<p>Integer row and column operations never change the greatest common divisor of all the entries of a matrix (an integer combination of multiples of \(g\) is a multiple of \(g\)). When only the last column is left (a \(6\times1\) block for \(\RP^2\), a \(10\times1\) block for the Klein bottle) and all its entries are even, no sequence of allowed moves can ever produce an odd number there. Over \(\Q\) you would simply divide by \(2\). Over \(\Z\) the \(2\) is stuck, and it records a genuine feature of the space.</p>
+	<p>Integer row and column operations never change the greatest common divisor of all the entries of a matrix (an integer combination of multiples of \(g\) is a multiple of \(g\)). When only the last column is left (a \(6\times1\) block for \(\RP^2\), a \(10\times1\) block for the Klein bottle) and all its entries are even, no sequence of allowed moves can ever produce an odd number there. Over \(\Q\) you would divide by \(2\) and move on. Over \(\Z\) the \(2\) is stuck, and it records a genuine feature of the space.</p>
 </Intuition>
 
 <h2 id="klein-bottle">The Klein bottle, over the integers</h2>
@@ -245,7 +247,7 @@
 
 \[ \partial\Big(\sum_{10\text{ triangles}} \pm\, t\Big) \;=\; 2c. \]
 
-<p>And \(c\) is not a boundary. Over \(\Z/2\) a 2-chain is just a set of triangles, and there are only \(2^{10} = 1024\) of them; a computer (or a patient reader) checks that no set has boundary \(c\). An integer chain \(x\) with \(\partial x = c\) would give such a set by reducing mod 2, so none exists. Hence \([c]\) generates \(H_1(\RP^2) \cong \Z/2\). In fact all ten triangles of edges that are <em>not</em> faces, such as \(1 \to 2 \to 4 \to 1\), are cycles in this same class; they are the “projective lines” of the projective plane.</p>
+<p>And \(c\) is not a boundary. Over \(\Z/2\) a 2-chain is a set of triangles, and there are only \(2^{10} = 1024\) of them; a computer (or a patient reader) checks that no set has boundary \(c\). An integer chain \(x\) with \(\partial x = c\) would give such a set by reducing mod 2, so none exists. Hence \([c]\) generates \(H_1(\RP^2) \cong \Z/2\). In fact all ten triangles of edges that are <em>not</em> faces, such as \(1 \to 2 \to 4 \to 1\), are cycles in this same class; they are the “projective lines” of the projective plane.</p>
 
 <Figure num="3.4.8" title="The loop c on Boy’s surface" hint="Drag to rotate">
 	<BoySurface3D />

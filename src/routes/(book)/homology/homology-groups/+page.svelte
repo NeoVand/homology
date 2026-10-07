@@ -50,11 +50,11 @@
 
 <Epigraph author="Pavel Alexandroff and Heinz Hopf" source="Topologie I (1935), preface; translated from the German">The tendency toward a strong algebraisation of topology on a group-theoretic basis, which we follow in our presentation, goes back entirely to Emmy Noether.</Epigraph>
 
-<p class="lead">In the last two chapters we collected the parts of a machine. We can write down chains, which are inventories of oriented simplices with whole-number multiplicities. We can take their boundaries with the operator \(\partial\). And we know the one law that makes everything work: the boundary of a boundary is zero. What we have not yet done is turn the crank.</p>
+<p class="lead">Draw a loop once around the hole of a washer. Draw another a little further out, then a wiggly one, then one that goes round twice. Four loops, and still only one hole. The first three are the drinking-straw puzzle of <Ref to="homology/cycles-and-boundaries" /> again, and that chapter settled it with a word: they are <em>homologous</em>, because any two of them together are the edge of something, the strip of washer between them. The fourth is a new wrinkle. It is not the same loop as the first, yet it is no new hole either: it is the old hole, counted twice.</p>
 
-<p class="lead">This chapter turns it. We define the <em>homology groups</em> of a simplicial complex, the precise version of the slogan from <Ref to="homology/cycles-and-boundaries" />: a hole is a cycle that is not a boundary. Then we compute them, completely and by hand, for seven spaces, from a single point to a torus.</p>
+<p class="lead">This chapter turns both observations into arithmetic. The machine is already assembled: <Ref to="homology/chains" /> gave us chains, the boundary operator \(\partial\), and the one law that makes everything work, \(\partial\partial = 0\). What we have not yet done is turn the crank. The result is the <em>homology group</em>, and its definition fits on one line: \(H_k = Z_k / B_k\), “cycles modulo boundaries”.</p>
 
-<p>The definition fits on one line: \(H_k = Z_k / B_k\), “cycles modulo boundaries”. Everything else in this chapter is about understanding that line. We will see why it needs a quotient, what its elements look like, and how to compute it with nothing but matrices and their ranks. We will prove that its first piece, \(H_0\), counts the pieces of a space. We will find the Euler characteristic of <Ref to="topology/euler-characteristic" /> hiding inside it. And at the end we will meet a puzzle that sends us to the integers in the next chapter.</p>
+<p>Once that line makes sense in pictures, the rest is payoff. The holes of a space become the elements of a group, and counting them, twice-round loops and all, becomes computing the ranks of matrices. Seven test spaces, from a single point to a torus, give up their homology to a few lines of arithmetic. The Euler characteristic of <Ref to="topology/euler-characteristic" /> turns out to have been homology in disguise. And the last surface we try sets a puzzle that only the integers can solve.</p>
 
 <Ahead>
 	<p>This is the central definition of the book, and every later chapter leans on it. In <Ref to="homology/invariance" /> continuous maps push homology classes around, which proves the fixed-point theorems. In <Ref to="homology/exact-sequences" /> we compute homology by cutting spaces into pieces. Persistent homology (<Ref to="homology/persistence" />) watches classes being born and dying as data grows. And all of cohomology, Part IV, is this same construction with the arrows reversed. If you read one chapter of the book slowly, make it this one.</p>
@@ -62,17 +62,15 @@
 
 <h2 id="cycles-and-boundaries">Two subgroups of chains</h2>
 
-<p>Let us recall where we stand. Fix a simplicial complex \(K\) (<Ref to="topology/simplicial-complexes" />), with its vertices labelled by whole numbers. For each dimension \(k\) we have the <Term t="chain-group">chain group</Term> \(C_k(K)\). Its elements, the \(k\)-chains, are formal sums of oriented \(k\)-simplices with integer coefficients, such as \(3[0,1] - [1,2]\). Every simplex is written with its vertices in increasing order, and that order is its orientation. The boundary operator</p>
+<p>First, a quick reminder of the setting. Fix a simplicial complex \(K\) (<Ref to="topology/simplicial-complexes" />), with its vertices labelled by whole numbers. Its \(k\)-chains, the elements of the <Term t="chain-group">chain group</Term> \(C_k(K)\), are formal sums of oriented \(k\)-simplices with integer coefficients, such as \(3[0,1] - [1,2]\). Each simplex is written with its vertices in increasing order, and that order is its orientation. The boundary operator</p>
 
 \[ \partial_k[v_0, v_1, \dots, v_k] \;=\; \sum_{i=0}^{k} (-1)^i\, [v_0, \dots, \hat v_i, \dots, v_k] \]
 
-<p>(the hat means “leave this vertex out”) turns a \(k\)-chain into a \((k-1)\)-chain. Lined up, the chain groups and boundary maps form the <Term t="chain-complex">chain complex</Term> of <Ref to="homology/chains" />:</p>
+<p>(the hat means “leave this vertex out”) lowers the dimension by one, and the chain groups and boundary maps line up into the <Term t="chain-complex">chain complex</Term> of <Ref to="homology/chains" />,</p>
 
-\[ \cdots \xrightarrow{\;\partial_3\;} C_2(K) \xrightarrow{\;\partial_2\;} C_1(K) \xrightarrow{\;\partial_1\;} C_0(K) \xrightarrow{\;\partial_0\;} 0. \]
+\[ \cdots \xrightarrow{\;\partial_3\;} C_2(K) \xrightarrow{\;\partial_2\;} C_1(K) \xrightarrow{\;\partial_1\;} C_0(K) \xrightarrow{\;\partial_0\;} 0, \]
 
-<p>The last map \(\partial_0\) is zero, because a vertex has no boundary. And the fundamental fact of the previous chapter holds at every step: \(\partial_{k-1} \circ \partial_k = 0\). Taking the boundary twice always gives zero.</p>
-
-<p>Inside each chain group live two special collections of chains. You met both informally in <Ref to="homology/cycles-and-boundaries" />; now they get their official names.</p>
+<p>with \(\partial_0 = 0\) (a vertex has no boundary) and \(\partial_{k-1} \circ \partial_k = 0\) at every step. Inside each chain group sit the two collections this whole chapter is about. You have met them twice already, in pictures in <Ref to="homology/cycles-and-boundaries" /> and in symbols in <Ref to="homology/chains" />; here they are once more, for reference.</p>
 
 <Definition id="def-cycles-boundaries">
 	{#snippet head()}Cycles \(Z_k\) and boundaries \(B_k\){/snippet}
@@ -83,18 +81,15 @@
 	</ul>
 </Definition>
 
-<p>Read \(Z_k\) aloud as “zee \(k\)”, the \(k\)-cycles; the letter comes from the German <em>Zyklus</em>, cycle. Read \(B_k\) as “bee \(k\)”, the \(k\)-boundaries. Notice the shift in the indices: cycles in dimension \(k\) are defined using \(\partial_k\), the map going <em>out</em> of \(C_k\), while boundaries in dimension \(k\) are defined using \(\partial_{k+1}\), the map coming <em>in</em> from one dimension up.</p>
+<p>Read \(Z_k\) as “zee \(k\)” (from the German <em>Zyklus</em>) and \(B_k\) as “bee \(k\)”. Mind the shift in the indices: cycles in dimension \(k\) are tested by \(\partial_k\), the map going <em>out</em> of \(C_k\), while boundaries in dimension \(k\) are produced by \(\partial_{k+1}\), the map coming <em>in</em> from one dimension up. Both are subgroups of \(C_k\), since kernels and images of homomorphisms always are (<Ref to="foundations/groups" />). At the two ends of the complex they are extreme: every 0-chain is a cycle (\(Z_0 = C_0\), since \(\partial_0 = 0\)), and in the top dimension \(n\) of \(K\) nothing is a boundary (\(B_n = 0\), since there are no \((n+1)\)-simplices to fill anything).</p>
 
 <Example title="The hollow and the filled triangle">
-	<p>On the hollow triangle (vertices \(0, 1, 2\) and its three edges), take the walk \(0 \to 1 \to 2 \to 0\). As a chain it is \(z = [0,1] + [1,2] - [0,2]\): the edge \([0,2]\) is walked from \(2\) back to \(0\), against its orientation, so it gets a minus sign. Its boundary is</p>
+	<p>Our running example is the walk \(0 \to 1 \to 2 \to 0\) around a triangle. As a chain it is \(z = [0,1] + [1,2] - [0,2]\), with a minus sign because the edge \([0,2]\) is walked from \(2\) back to \(0\), against its orientation. Its boundary is</p>
 	\[ \partial z = ([1]-[0]) + ([2]-[1]) - ([2]-[0]) = 0, \]
-	<p>so \(z\) is a 1-cycle. Is it a boundary? A boundary would have to be \(\partial\) of some 2-chain, but the hollow triangle has no triangles, so the only 2-chain is \(0\) and \(B_1 = \set{0}\). So \(z\) is a cycle that is not a boundary: the hole.</p>
-	<p>On the filled triangle the same chain is a boundary: \(\partial[0,1,2] = [1,2] - [0,2] + [0,1] = z\).</p>
+	<p>so \(z\) is a 1-cycle. On the hollow triangle there are no triangles to fill it, so \(B_1 = \set{0}\) and \(z\) is a cycle that is not a boundary: the hole. Fill the triangle in, and \(z = \partial[0,1,2]\) becomes a boundary: no hole.</p>
 </Example>
 
-<p>Two small but useful remarks. First, both \(Z_k\) and \(B_k\) really are subgroups of \(C_k\). The boundary operator is a homomorphism (\(\partial(c + c') = \partial c + \partial c'\)), and the kernel and image of a homomorphism are always subgroups (<Ref to="foundations/groups" />). Second, the ends of the chain complex are special. Every 0-chain is a cycle, because \(\partial_0 = 0\); so \(Z_0 = C_0\). And in the top dimension \(n\) of \(K\) there are no \((n+1)\)-simplices to take boundaries of, so \(B_n = 0\).</p>
-
-<p>Now the most important containment in the subject.</p>
+<p>Finally, the containment that <Ref to="homology/chains" /> called the engine of the subject.</p>
 
 <Lemma id="lem-boundaries-are-cycles">
 	{#snippet head()}Every boundary is a cycle: \(B_k \subseteq Z_k\){/snippet}
@@ -105,7 +100,7 @@
 	<p>Let \(b \in B_k\). By definition there is a \((k+1)\)-chain \(c\) with \(b = \partial_{k+1} c\). Then \(\partial_k b = \partial_k \partial_{k+1} c = 0\), because the boundary of a boundary is zero. So \(b\) has zero boundary: \(b \in Z_k\).</p>
 </Proof>
 
-<p>In words: a boundary has no boundary. The loop of edges around a filled triangle closes up precisely because it is the rim of something. The converse is false, and the hollow triangle shows it: its loop \(z\) is a cycle but not a boundary. The gap between “cycle” and “boundary” is exactly what homology measures. Figure 3.3.1 draws the whole situation at once.</p>
+<p>The converse is false, and the hollow triangle’s \(z\) is the witness: a cycle that is the rim of nothing. That gap between “cycle” and “boundary” is what homology measures. Figure 3.3.1 draws the whole situation at once.</p>
 
 <Figure num="3.3.1" title="The anatomy of a chain complex">
 	<ChainComplexDiagram />
@@ -119,10 +114,10 @@
 <ol>
 	<li><strong>It is not a group.</strong> It does not contain \(0\). Worse, on an annulus (a ring-shaped region) the inner rim and the outer rim, run in opposite directions, are both cycles that bound nothing on their own; but their sum is the full boundary of the annulus, which bounds. Adding two “holes” produced a non-hole.</li>
 	<li><strong>It is far too big.</strong> On the hollow triangle, \(z, 2z, -z, 3z, \dots\) are all cycles that are not boundaries: infinitely many, although there is only one hole.</li>
-	<li><strong>It over-counts.</strong> On a cylinder, the bottom circle and the top circle are different cycles. Neither bounds, yet both go around the same hole, and the band between them says so.</li>
+	<li><strong>It over-counts.</strong> On the straw of <Ref to="homology/cycles-and-boundaries" />, the circles at the two ends are different cycles. Neither bounds, yet both go around the same hole, and the tube between them says so.</li>
 </ol>
 
-<p>What we really want is to <em>ignore</em> boundaries, since they enclose nothing, and to regard two cycles as <em>the same</em> whenever they differ by a boundary. You have seen this move before. On a clock, 13 o’clock and 1 o’clock are the same hour because they differ by 12: clock arithmetic ignores multiples of 12 (<Ref to="foundations/equivalence" />). In <Ref to="foundations/abelian-groups" /> the same idea became the <Term t="quotient-group">quotient group</Term> \(G/H\): the elements of \(G\), where two elements count as equal when their difference lies in the subgroup \(H\). Homology is exactly this construction with \(G = Z_k\) and \(H = B_k\). This is the first of the book’s four recurring ideas, <strong>quotients</strong>, making its decisive appearance.</p>
+<p>All three failures have the same cure, the one <Ref to="homology/cycles-and-boundaries" /> found with pictures: two loops are the same hole when together they are the edge of something. In symbols, we <em>ignore</em> boundaries, since they enclose nothing, and regard two cycles as <em>the same</em> whenever they differ by a boundary. You have seen this move before. On a clock, 13 o’clock and 1 o’clock are the same hour because they differ by 12: clock arithmetic ignores multiples of 12 (<Ref to="foundations/equivalence" />). In <Ref to="foundations/abelian-groups" /> the same idea became the <Term t="quotient-group">quotient group</Term> \(G/H\): the elements of \(G\), where two elements count as equal when their difference lies in the subgroup \(H\). Homology is this construction with \(G = Z_k\) and \(H = B_k\), and it is the decisive appearance of the first of the book’s four recurring ideas, <strong>quotients</strong>.</p>
 
 <Definition id="def-homology">
 	{#snippet head()}The homology group \(H_k(K)\){/snippet}
@@ -131,10 +126,10 @@
 	<p>Its elements are the cosets \([z] = z + B_k\) of \(k\)-cycles \(z\), called <dfn>homology classes</dfn>. Two cycles \(z\) and \(z'\) are <dfn>homologous</dfn>, written \(z \sim z'\), if their difference is a boundary: \(z - z' = \partial c\) for some \((k+1)\)-chain \(c\). Homologous cycles have the same class: \([z] = [z']\).</p>
 </Definition>
 
-<p>Read \(H_k(K)\) aloud as “H \(k\) of \(K\)”, and \(Z_k/B_k\) as “Z \(k\) modulo B \(k\)”. In plain words:</p>
+<p>Read \(H_k(K)\) aloud as “H \(k\) of \(K\)”, and \(Z_k/B_k\) as “Z \(k\) modulo B \(k\)”. Over the integers, “together they bound” needs a direction, and the minus sign supplies it: \(z - z'\) is \(z\) run forwards and \(z'\) run backwards. Take the annulus, with its outer rim \(z\) and inner rim \(z'\) both running counterclockwise. Reverse the inner one, and the pair is exactly the rim of the ring between them: \(z - z' = \partial(\text{ring})\). So the two rims are homologous, and \([z] = [z']\). One hole, seen twice.</p>
 
 <KeyIdea>
-	<p>\(H_k\) is the set of \(k\)-cycles, where two cycles count as the same when they differ by a boundary. The zero class consists of the cycles that bound. A non-zero class is a hole, and a class is never a single cycle but a whole family of cycles, any two of which differ by a boundary.</p>
+	<p>Two \(k\)-cycles are the same element of \(H_k\) when, with one of them reversed, together they are the rim of something: \(z - z' = \partial c\). A cycle that is a rim all by itself is the zero class. Each non-zero class is a hole, or a combination of holes, and it is never a single cycle but a whole family of them, any two of which cobound.</p>
 </KeyIdea>
 
 <Warning title="Cycles first, then divide">
@@ -154,12 +149,12 @@
 
 <p>Now switch to the triangle with a hole, a picture borrowed from Daniel Tubbenhauer’s short video lecture <em>What is…homology intuitively?</em> <Cite k="tubbenhauer2021" />. Start from the rim, twelve edges long, and shrink-wrap it onto the hole one push at a time, until it is a loop of three edges. It takes at least fifteen pushes, one for each triangle: when you arrive, the violet chain covers every triangle exactly once, so rim minus hug is the boundary of everything in between. Then try to make the little loop vanish. You cannot, and the hole is the reason.</p>
 
-<p>That gives three complementary pictures of a homology class, all worth keeping.</p>
+<p>So there are three ways to hold a homology class in your head, and each is useful at different moments.</p>
 
 <ul>
 	<li><strong>Algebra:</strong> a coset \(z + B_k\), one cycle together with everything obtained from it by adding boundaries.</li>
-	<li><strong>Geometry:</strong> homologous cycles <em>cobound</em>. If \(z' - z = \partial c\), the chain \(c\) fills the space between them, like the band of a cylinder between its top and bottom circles.</li>
-	<li><strong>Bookkeeping:</strong> boundaries are declared to be noise. Anything that is the rim of a filled-in region becomes invisible, and the class is what survives when the noise is ignored.</li>
+	<li><strong>Geometry:</strong> homologous cycles <em>cobound</em>. If \(z' - z = \partial c\), the chain \(c\) fills the space between them, like the tube of the straw between its two end circles.</li>
+	<li><strong>Bookkeeping:</strong> boundaries are noise. Anything that is the rim of a filled-in region becomes invisible, and the class is what survives.</li>
 </ul>
 
 <Warning title="Homologous is not the same as deformable">
@@ -167,7 +162,7 @@
 </Warning>
 
 <Notation title="Coefficients">
-	<p>Everything above works word for word if the coefficients are taken in \(\Z/2\) (also written \(\F_2\)) instead of \(\Z\). Then a chain is just a set of simplices and \(\partial\) keeps the faces that appear an odd number of times (<Ref to="homology/chains" />). It works equally well with rational coefficients \(\Q\). We write \(H_k(K;\Z/2)\), \(H_k(K;\Q)\), and in general \(H_k(K;G)\) for “homology with coefficients in \(G\)”. Plain \(H_k(K)\) always means integer coefficients. Over \(\Z/2\) and \(\Q\) the chain groups are vector spaces and the quotient is a quotient vector space (<Ref to="foundations/linear-algebra" />), which, as we are about to see, makes counting easy.</p>
+	<p>Everything above works word for word if the coefficients are taken in \(\Z/2\) (also written \(\F_2\)) instead of \(\Z\). Then a chain is a set of simplices and \(\partial\) keeps the faces that appear an odd number of times (<Ref to="homology/chains" />). It works equally well with rational coefficients \(\Q\). We write \(H_k(K;\Z/2)\), \(H_k(K;\Q)\), and in general \(H_k(K;G)\) for “homology with coefficients in \(G\)”. Plain \(H_k(K)\) always means integer coefficients. Over \(\Z/2\) and \(\Q\) the chain groups are vector spaces and the quotient is a quotient vector space (<Ref to="foundations/linear-algebra" />), which, as we are about to see, makes counting easy.</p>
 </Notation>
 
 <Question>
@@ -180,7 +175,7 @@
 
 <h2 id="betti-numbers">Betti numbers and the rank formula</h2>
 
-<p>A group is a rich object, but often the first thing we want from it is a number: how big is it? For every space in this chapter, each homology group will turn out to be a <Term t="free-abelian-group">free abelian group</Term> \(\Z^b\): a lattice of \(b\) independent directions (<Ref to="foundations/abelian-groups" />). The exponent \(b\) counts independent holes.</p>
+<p>Now back to the washer’s twice-round loop. How many holes does a space have? Not the number of classes: even the hollow triangle has infinitely many, \([z], 2[z], -[z], \dots\), all made from the single class \([z]\). \(2[z]\) is the old hole walked twice, \(-[z]\) the old hole walked backwards. On a figure eight, the loop that goes around both lobes is not a third hole either: it is the sum of the loops around each, as <Ref to="homology/cycles-and-boundaries" /> found for the diagonal loop on the torus. Classes add up, and so the honest count of holes is the number of classes you need to build all the others: the size of a basis. For every space in this chapter, each homology group will turn out to be a <Term t="free-abelian-group">free abelian group</Term> \(\Z^b\): a lattice of \(b\) independent directions (<Ref to="foundations/abelian-groups" />), one for each independent hole.</p>
 
 <Definition id="def-betti">
 	{#snippet head()}Betti numbers \(b_k\){/snippet}
@@ -480,7 +475,7 @@
 
 <h2 id="cliffhanger">A cliffhanger: two surfaces, one set of numbers</h2>
 
-<p>Let us compute one more surface, and to keep the work light, let us do it over \(\Z/2\). There a chain is just a set of simplices, the boundary keeps the faces that appear an odd number of times, and orientations never matter (<Ref to="homology/chains" />).</p>
+<p>Let us compute one more surface, and to keep the work light, let us do it over \(\Z/2\). There a chain is a set of simplices, the boundary keeps the faces that appear an odd number of times, and orientations never matter (<Ref to="homology/chains" />).</p>
 
 <p>Take the 3×3 grid again, but this time glue the top of the square to the bottom <em>with a flip</em>: the top row reads \(0, 2, 1, 0\) instead of \(0, 1, 2, 0\). The left and right sides are still glued straight. The result is the <Term t="klein-bottle">Klein bottle</Term> \(K\) of <Ref to="topology/gluing" />, the surface that cannot be built in ordinary space without passing through itself.</p>
 
