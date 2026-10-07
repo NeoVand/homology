@@ -71,7 +71,7 @@
 	];
 </script>
 
-<Epigraph author="David Hilbert" source="as reported by Otto Blumenthal (1935)">One must always be able to say, instead of ‘points, straight lines, and planes’, ‘tables, chairs, and beer mugs’.</Epigraph>
+<Epigraph author="David Hilbert" source="as reported by Otto Blumenthal (1935), translated from the German">One must always be able to say, instead of ‘points, straight lines, and planes’, ‘tables, chairs, and beer mugs’.</Epigraph>
 
 <p class="lead">
 	Every object in this book — a triangle, a doughnut, a family of loops, a group of symmetries — is a <em>set</em> with some
@@ -876,10 +876,13 @@
 <p>
 	With more cleverness, the rational numbers \(\Q\) can be listed too (the exercise “Listing all pairs” below shows the key
 	trick). But not everything is
-	countable. In 1891 Georg Cantor gave a famously short argument that the real numbers cannot be listed: given any list of real
-	numbers between \(0\) and \(1\), written as decimals, build a new number whose first digit differs from the first digit of the
-	first number, whose second digit differs from the second digit of the second number, and so on. This new number differs from
-	every number on the list, so the list was incomplete. Sets like \(\R\) are called <em>uncountable</em>.
+	countable. In 1891 Georg Cantor gave a famously short argument that the real numbers cannot be listed. In its modern form with
+	decimals, it goes like this. Take any list of real numbers between \(0\) and \(1\), written as decimals, and build a new
+	number digit by digit: its \(n\)-th digit is \(5\), unless the \(n\)-th digit of the \(n\)-th number on the list is \(5\),
+	in which case it is \(4\). This new number differs from every number on the list (from the \(n\)-th one in the \(n\)-th
+	digit), so the list was incomplete. Using only the digits \(4\) and \(5\) avoids a trap: a number such as \(0.2000\ldots =
+	0.1999\ldots\) has two decimal expansions, and differing in one digit would not prove two numbers different. Sets like \(\R\)
+	are called <em>uncountable</em>.
 </p>
 
 <Remark title="Why this matters for homology">

@@ -318,7 +318,7 @@
 <p>and every 1-cycle is uniquely \(m z_1 + n z_2\) for integers \(m, n\). (A cycle must use the edge \([0,1]\) as often as \([1,2]\), as often as \(-[0,2]\), and similarly in the second lobe.) So \(H_1 \cong \Z^2\), with basis \([z_1], [z_2]\).</p>
 
 <Remark title="Homology forgets the order">
-	<p>The fundamental group of the figure eight (<Ref to="topology/homotopy" />) is not abelian: going around the first lobe and then the second is a different loop from going around the second and then the first. Homology cannot see the difference, because chains add commutatively: both loops give \(z_1 + z_2\). Homology keeps only the net number of times each lobe is traversed. Allen Hatcher puts it neatly: “loops become cycles, without a chosen basepoint.” The precise relationship between the two, \(H_1 = \pi_1\) made abelian, is in <Ref to="homology/invariance" />.</p>
+	<p>The fundamental group of the figure eight (<Ref to="topology/homotopy" />) is not abelian: going around the first lobe and then the second is a different loop from going around the second and then the first. Homology cannot see the difference, because chains add commutatively: both loops give \(z_1 + z_2\). Homology keeps only the net number of times each lobe is traversed. Allen Hatcher puts it neatly: “loops become cycles, without a chosen basepoint” <Cite k="hatcher2002" loc="p. 99" />. The precise relationship between the two, \(H_1 = \pi_1\) made abelian, is in <Ref to="homology/invariance" />.</p>
 </Remark>
 
 <h3>The torus</h3>

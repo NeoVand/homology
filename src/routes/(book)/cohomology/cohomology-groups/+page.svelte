@@ -19,6 +19,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import PairingPlayground from '$lib/figures/cohomology/cohomology-groups/PairingPlayground.svelte';
 	import MatrixDuality from '$lib/figures/cohomology/cohomology-groups/MatrixDuality.svelte';
 	import CohomologySteps from '$lib/figures/cohomology/cohomology-groups/CohomologySteps.svelte';
@@ -50,6 +51,14 @@
 			url: 'https://www.cs.cmu.edu/~kmcrane/Projects/DDG/paper.pdf',
 			note: 'Discrete forms and the discrete exterior derivative on meshes: the same transposed boundary matrices, put to work in geometry processing.',
 			kind: 'notes' as const,
+			free: true
+		},
+		{
+			title: 'What, and why, is coHomology',
+			author: 'K-Theory (YouTube channel)',
+			url: 'https://www.youtube.com/watch?v=irv1qm_WMRY',
+			note: 'Just over half an hour, algebra first: the (co)homology of tiny complexes as the failure of maps to be one-to-one or onto, with topology only at the end. A good companion to the “verdict on one map” view of this chapter.',
+			kind: 'video' as const,
 			free: true
 		},
 		{
@@ -320,6 +329,14 @@
 	per connected piece, and \(H^1 = C^1/\im\delta_0 \cong G^{E - V + c}\), one free value per edge outside a spanning tree — the loop sums of
 	the fundamental loops. With \(G = \Z\): \(H^0 \cong \Z^{b_0}\) and \(H^1 \cong \Z^{b_1}\).
 </p>
+<p>
+	Read the graph case as a verdict on one map. The cochain complex is \(0 \to C^0 \xto{\delta} C^1 \to 0\), so \(H^0 = \ker\delta\) measures
+	how far \(\delta\) is from being one-to-one (the “\(+\,C\)”: different heights with the same climbs), and \(H^1 = C^1/\im\delta\)
+	measures how far it is from being onto (the climbs that no heights produce: the obstructions). Every cohomology group asks the same
+	question of the \(\delta\) on either side of it: what is left over that the maps fail to account for? The YouTube channel K-Theory, in
+	<em>What, and why, is coHomology</em>, works through such tiny complexes (one term, two terms, a short exact sequence) and turns to
+	spaces only at the end.
+</p>
 
 <h3>The circle and the torus, step by step</h3>
 <p>
@@ -511,10 +528,10 @@
 	<p>
 		Cohomology was found twice in one week. At the first international topology conference, in Moscow in September 1935, James Alexander and
 		Andrei Kolmogorov independently presented what we now call cohomology and its product; Alexander’s talk was titled “On the ring of a
-		complex and the combinatory theory of integration.” Charles Weibel’s history calls it “the fourth great advance in 1935 … the discovery
+		complex and the combinatory theory of integration” <Cite k="apushkinskaya2019" />. Charles Weibel’s history calls it “the fourth great advance in 1935 … the discovery
 		of cohomology theory and cup products, simultaneously and independently by Alexander and Kolmogoroff.” The names came a little later:
 		Hassler Whitney’s 1938 paper “introduced the modern ‘co’ terminology: coboundary (δ) and cocycle”, the “co” standing for the duality
-		with boundaries and cycles.
+		with boundaries and cycles <Cite k="weibel1999,whitney1938" />.
 	</p>
 </History>
 
@@ -611,11 +628,14 @@
 </p>
 
 <Theorem id="thm-uct" label="Theorem (Universal Coefficient Theorem)">
-	<p>For every simplicial complex \(K\) and every \(k \ge 0\),</p>
+	<p>For every simplicial complex \(K\) and every \(k \ge 0\) (with \(H_{-1}(K) = 0\)),</p>
 	\[ H^k(K;\Z) \;\cong\; \Hom\big(H_k(K), \Z\big) \;\oplus\; \Ext\big(H_{k-1}(K), \Z\big). \]
 </Theorem>
 
-<p>Let us read the two pieces, for finitely generated groups (the only kind our complexes produce).</p>
+<p>
+	Hatcher proves it as Theorem 3.2 <Cite k="hatcher2002" loc="§3.1" />. Let us read the two pieces, for finitely generated groups (the
+	only kind our complexes produce).
+</p>
 <ul>
 	<li>
 		\(\Hom(H_k(K), \Z)\) is the group of homomorphisms from \(H_k\) to \(\Z\) — the “measurements of homology classes” from the pairing.
@@ -642,9 +662,10 @@
 \[ H^k(K; G) \;\cong\; \Hom\big(H_k(K), G\big) \;\oplus\; \Ext\big(H_{k-1}(K), G\big), \qquad \Ext(\Z/n, G) \cong G/nG. \]
 <p>
 	With \(G = \Z/2\) and \(K = \RP^2\): \(H^1 = \Hom(\Z/2, \Z/2) \oplus \Ext(\Z, \Z/2) = \Z/2\) and
-	\(H^2 = \Hom(0, \Z/2) \oplus \Ext(\Z/2, \Z/2) = \Z/2\), as we computed by hand. When the coefficients form a field \(F\), the \(\Ext\) term
-	vanishes for the homology with field coefficients, and the theorem says that \(H^k(K;F)\) is the dual vector space of \(H_k(K;F)\): same
-	dimension, as we found by counting ranks.
+	\(H^2 = \Hom(0, \Z/2) \oplus \Ext(\Z/2, \Z/2) = \Z/2\), as we computed by hand. When the coefficients form a field \(F\), there is
+	also a version of the theorem that uses homology with coefficients in \(F\) itself; over a field every vector space is free, the
+	\(\Ext\) term disappears, and \(H^k(K;F)\) is the dual vector space of \(H_k(K;F)\): same dimension, as we found by counting ranks.
+	(With integer homology the \(\Ext\) term does not vanish in general: for \(\RP^2\) and \(F = \Z/2\) it is the whole of \(H^2\).)
 </p>
 
 <Figure num="4.2.7" title="Three kinds of measurement" hint="Choose a space">

@@ -17,6 +17,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import FormulaDecoder from '$lib/figures/prelude/reading-math/FormulaDecoder.svelte';
 	import QuantifierDuel from '$lib/figures/prelude/reading-math/QuantifierDuel.svelte';
 	import NegationMachine from '$lib/figures/prelude/reading-math/NegationMachine.svelte';
@@ -77,7 +78,7 @@
 	];
 </script>
 
-<Epigraph author="Paul Halmos" source="I Want to Be a Mathematician (1985)">Don’t just read it; fight it! Ask your own question, look for your own examples, discover your own proofs.</Epigraph>
+<Epigraph author="Paul Halmos" source="I Want to Be a Mathematician (1985)">Don’t just read it; fight it! Ask your own questions, look for your own examples, discover your own proofs.</Epigraph>
 
 <p class="lead">
 	Mathematics is written in a language of its own: a few hundred symbols, a few dozen stock phrases, and a very precise logic.
@@ -281,7 +282,7 @@
 <p>
 	An implication and its contrapositive are always both true or both false: “every \(P\) is a \(Q\)” and “anything that is not a
 	\(Q\) is not a \(P\)” are the same promise, seen from opposite ends. The converse is a different promise altogether, and it can
-	fail even when the original holds. Confusing a statement with its converse is the single most common error in reasoning, in and
+	fail even when the original holds. Confusing a statement with its converse is one of the commonest errors in reasoning, in and
 	out of mathematics. Try the next puzzle before reading its explanation.
 </p>
 
@@ -439,8 +440,8 @@
 
 <p>
 	A proof is an argument that would convince a careful, skeptical reader, in which every step follows from definitions, from results
-	already proved, or from logic. Henri Poincaré put the division of labour well: “It is by logic that we prove, but by intuition that
-	we discover.” Finding a proof is an act of imagination; writing it down is an act of logic. Most proofs you will meet in this book
+	already proved, or from logic. Henri Poincaré put the division of labour in a single line: “it is by logic one demonstrates, by
+	intuition one invents” <Cite k="poincare1908" loc="Book II, ch. 2" />. Finding a proof is an act of imagination; writing it down is an act of logic. Most proofs you will meet in this book
 	have one of six shapes, and recognizing the shape is half of understanding the proof.
 </p>
 
@@ -522,7 +523,7 @@
 <h3>Induction</h3>
 
 <p>
-	To prove that a statement holds for every natural number \(n = 1, 2, 3,\dots\), it is enough to prove two things: the <em>base
+	To prove that a statement holds for every whole number \(n = 1, 2, 3,\dots\), it is enough to prove two things: the <em>base
 	case</em>, that it holds for \(n = 1\); and the <em>inductive step</em>, that whenever it holds for some \(n\), it also holds for
 	\(n+1\). Think of an infinite row of dominoes: the first one falls, and each falling domino knocks over the next. Then all of them
 	fall.

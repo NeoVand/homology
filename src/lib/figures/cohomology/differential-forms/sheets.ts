@@ -288,13 +288,14 @@ export const endPresets: Record<string, EndPreset> = {
 		g: () => 2,
 		PQ: (x, y) => [-y, x],
 		closed: false,
-		eps: 0.3,
+		// same ε as x dy, so that "twice as densely" is literally true in the picture
+		eps: 0.15,
 		sheets: ([x0, x1, y0, y1]) => {
 			// rays θ = const; the number of rays crossing the circle of radius r is 2πr²/ε
 			const out: Sheet[] = [];
 			const R = Math.hypot(Math.max(-x0, x1), Math.max(-y0, y1));
 			for (let k = 0; k < MAXN; k++) {
-				const rs = Math.sqrt(((k + 0.5) * 0.3) / (2 * Math.PI));
+				const rs = Math.sqrt(((k + 0.5) * 0.15) / (2 * Math.PI));
 				if (rs > R) break;
 				const phi = 2 * Math.PI * vdc(k + 1) + 0.1;
 				const u: Vec2 = [Math.cos(phi), Math.sin(phi)];

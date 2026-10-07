@@ -1,5 +1,5 @@
 // Works cited in §2.6 The Euler Characteristic. DOIs checked against Crossref,
-// urls opened (October 2026). (rado1925 lives in simplicial-complexes.ts.)
+// urls opened (October 2026). (rado1925 lives in simplicial-complexes.ts, lhuilier1813 in shape-of-a-question.ts.)
 import type { Work } from '../index';
 
 export const works: Work[] = [
@@ -28,17 +28,6 @@ export const works: Work[] = [
 		year: 1813,
 		title: 'Recherches sur les polyèdres. Premier mémoire',
 		venue: 'Journal de l’École polytechnique 9 (cahier 16), 68–86; read to the Institut in February 1811',
-		kind: 'paper'
-	},
-	{
-		key: 'lhuilier1813',
-		authors: ['Simon Lhuilier'],
-		year: 1813,
-		title:
-			'Mémoire sur la polyédrométrie, contenant une démonstration directe du théorème d’Euler sur les polyèdres, et un examen des diverses exceptions auxquelles ce théorème est assujetti',
-		venue: 'Annales de Mathématiques pures et appliquées 3 (1812–1813), 169–189 (the second part reported by the editor, J. D. Gergonne)',
-		url: 'https://www.numdam.org/item/AMPA_1812-1813__3__169_0/',
-		free: true,
 		kind: 'paper'
 	},
 	{

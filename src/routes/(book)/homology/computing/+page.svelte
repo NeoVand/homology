@@ -173,7 +173,7 @@
 
 <h3 id="six-cells">Six cells, by hand</h3>
 
-<p>That took a \(27 \times 18\) matrix, which is a job for a machine. By hand you want fewer, bigger pieces, and <Ref to="homology/homology-groups" hash="computations" /> showed how: the torus from six cells, namely one vertex \(v\), three edges \(a, b, c\) and two triangles \(L\) and \(U\), the square cut along one diagonal. There every edge was a loop, so \(\partial_1 = 0\); both triangles had the same rim, \(\partial L = \partial U = a + b - c\); and dividing \(\Z^3\) by that single relation left \(H_1 \cong \Z^2\). Now reverse one arrow.</p>
+<p>That took a \(27 \times 18\) matrix, which is a job for a machine. By hand you want fewer, bigger pieces, and <Ref to="homology/homology-groups" hash="six-cells" /> showed how: the torus from six cells, namely one vertex \(v\), three edges \(a, b, c\) and two triangles \(L\) and \(U\), the square cut along one diagonal. There every edge was a loop, so \(\partial_1 = 0\); both triangles had the same rim, \(\partial L = \partial U = a + b - c\); and dividing \(\Z^3\) by that single relation left \(H_1 \cong \Z^2\). Now reverse one arrow.</p>
 
 <Example title="The Klein bottle in six cells">
 	<p>Take the same square, but let the top edge point to the left, so that the top is glued to the bottom with a flip. This is the Klein bottle, the square with the word \(abab^{-1}\) of <Ref to="topology/gluing" />. All four corners are still one vertex, so every edge is still a loop and every 1-chain is a cycle: \(Z_1 = \Z^3\). Walk around each triangle counterclockwise. Around \(L\): along the bottom, up the right side, back down the diagonal. Around \(U\): up the diagonal, right to left along the top (which is now the way its arrow points), and down the left side, against its arrow:</p>
@@ -285,7 +285,7 @@
 </History>
 
 <Warning title="Torsion is not always a twist of orientation">
-	<p>For surfaces, torsion in \(H_1\) happens exactly for the non-orientable ones, as we just proved. In higher dimensions the link breaks: the three-dimensional projective space \(\RP^3\) is orientable, yet \(H_1(\RP^3) \cong \Z/2\), and there are orientable 3-manifolds with any finite cyclic group you like as \(H_1\). Poincaré’s explanation of the name was too narrow. The general meaning is the one in the definition: a loop (or a higher cycle) that does not bound, some multiple of which does.</p>
+	<p>For surfaces, torsion in \(H_1\) happens exactly for the non-orientable ones, as we just proved. In general the link is looser. The three-dimensional projective space \(\RP^3\) is orientable, yet \(H_1(\RP^3) \cong \Z/2\); a twist still hides inside it, since it contains a projective plane. But the triple-wrapped disk of Figure 3.4.10 has \(H_1 \cong \Z/3\), and nothing in it is glued with a flip: its \(3\) comes from a rim that runs three times around one loop. Poincaré’s explanation of the name was too narrow. The general meaning is the one in the definition: a loop (or a higher cycle) that does not bound, some multiple of which does.</p>
 </Warning>
 
 <h2 id="coefficients">Three lenses: \(\Z\), \(\Q\) and \(\Z/2\)</h2>
@@ -360,7 +360,7 @@
 </Exercise>
 
 <Exercise level={1} title="A Smith normal form by hand">
-	<p>Bring \(\begin{pmatrix} 2 & 4 \\ 6 & 8 \end{pmatrix}\) to Smith normal form using integer row and column operations. If this were \(\partial_{k+1}\) and its two rows were a basis of the cycles \(Z_k\), what would \(H_k\) be?</p>
+	<p>Bring \(\begin{pmatrix} 2 & 4 \\ 6 & 8 \end{pmatrix}\) to Smith normal form using integer row and column operations. If this were \(\partial_{k+1}\), with \(C_k \cong \Z^2\) and \(\partial_k = 0\) (so that every \(k\)-chain is a cycle), what would \(H_k\) be?</p>
 	{#snippet hint()}
 		<p>The greatest common divisor of all entries is \(2\), and the determinant is \(-8\). The invariant factors multiply to \(\lvert\det\rvert\).</p>
 	{/snippet}

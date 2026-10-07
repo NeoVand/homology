@@ -1,5 +1,5 @@
 // Works cited in §2.5 Simplicial Complexes. DOIs checked against Crossref,
-// urls opened (October 2026).
+// urls opened (October 2026). whitehead1949 is defined in exact-sequences.ts.
 import type { Work } from '../index';
 
 export const works: Work[] = [
@@ -68,17 +68,6 @@ export const works: Work[] = [
 		doi: '10.1090/jams829',
 		arxiv: '1303.2354',
 		url: 'https://arxiv.org/abs/1303.2354',
-		free: true,
-		kind: 'paper'
-	},
-	{
-		key: 'whitehead1949',
-		authors: ['J. H. C. Whitehead'],
-		year: 1949,
-		title: 'Combinatorial homotopy. I',
-		venue: 'Bulletin of the American Mathematical Society 55(3), 213–245',
-		doi: '10.1090/S0002-9904-1949-09175-9',
-		url: 'https://www.ams.org/journals/bull/1949-55-03/S0002-9904-1949-09175-9/',
 		free: true,
 		kind: 'paper'
 	}

@@ -74,16 +74,17 @@
 	}
 	function move(e: PointerEvent) {
 		if (!drag) return;
+		// keep a to the left of b, so that the readout F(b) − F(a) has the right sign
 		const x = toX(e);
-		if (drag === 'a') a = x;
-		else b = x;
+		if (drag === 'a') a = Math.min(x, b - 0.3);
+		else b = Math.max(x, a + 0.3);
 	}
 	function key(e: KeyboardEvent, which: 'a' | 'b') {
 		const d = e.key === 'ArrowRight' || e.key === 'ArrowUp' ? 0.1 : e.key === 'ArrowLeft' || e.key === 'ArrowDown' ? -0.1 : 0;
 		if (!d) return;
 		e.preventDefault();
-		if (which === 'a') a = clamp(a + d, 0.1, xmax - 0.1);
-		else b = clamp(b + d, 0.1, xmax - 0.1);
+		if (which === 'a') a = clamp(a + d, 0.1, b - 0.3);
+		else b = clamp(b + d, a + 0.3, xmax - 0.1);
 	}
 </script>
 

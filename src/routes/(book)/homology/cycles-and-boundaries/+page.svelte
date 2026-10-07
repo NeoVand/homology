@@ -48,28 +48,11 @@
 <Ahead>
 	<p>
 		This chapter builds the central picture of homology with nothing but drawings and counting: <strong>cycles</strong> (closed loops),
-		<strong>boundaries</strong> (loops that are the edge of something filled in), and <strong>holes</strong> (cycles that are not boundaries). Every
-		definition in the chapters that follow is a careful restatement of something you will see and play with here. If you ever feel lost in Part III, this is
-		the whole road in five steps:
+		<strong>boundaries</strong> (loops that are the edge of something filled in), and <strong>holes</strong> (cycles that are not boundaries). The next two
+		chapters turn the picture into algebra. <Ref to="homology/chains" /> makes “the edge of” into a precise operation, the boundary operator
+		\(\partial\); <Ref to="homology/homology-groups" /> defines the homology groups \(H_k\), which count holes exactly. Every definition there is a careful
+		restatement of something you will see and play with here — so time spent on these pictures is time saved later.
 	</p>
-	<ol>
-		<li><strong>A hole is a cycle that bounds nothing.</strong> Pictures and counting, in this chapter.</li>
-		<li>
-			<strong>Cut the space into simplices.</strong> “The edge of” becomes an operator \(\partial\) on sums of simplices, with \(\partial\partial = 0\):
-			<Ref to="homology/chains" />.
-		</li>
-		<li>
-			<strong>Cycles modulo boundaries.</strong> This defines the homology groups \(H_k\); a circle gets \(H_1 = \Z\), a torus \(H_1 = \Z^2\):
-			<Ref to="homology/homology-groups" />.
-		</li>
-		<li>
-			<strong>Let the computer do it.</strong> Matrices, row reduction, and a new phenomenon, torsion, that tells a Klein bottle from a torus:
-			<Ref to="homology/computing" />.
-		</li>
-		<li>
-			<strong>Does the answer depend on how we cut?</strong> No: <Ref to="homology/invariance" />, which is what makes the numbers worth computing.
-		</li>
-	</ol>
 </Ahead>
 
 <h2 id="what-is-a-hole">What is a hole, really?</h2>
@@ -652,14 +635,6 @@
 	ball and the void disappears, just as filling a triangle killed a loop’s hole. The surface of a torus also encloses a void — the air in an inner tube — so
 	\(b_2(T^2) = 1\) as well. A much-loved answer on Math StackExchange puts it memorably: \(b_2\) counts the separate plugs you would need to inflate the
 	object <Cite k="mse40151" />.
-</p>
-
-<p>
-	Daniel Tubbenhauer’s video lecture pairs the plugs with a test for \(b_1\): the number of necklaces you can put the object on <Cite k="tubbenhauer2021" />.
-	A doughnut goes on one necklace, through its middle, and has no air inside: \(b_1 = 1\), \(b_2 = 0\). An inner tube needs one plug and goes on two
-	necklaces at once, one through the middle and one threaded <em>inside</em> the air chamber, all the way round the tube: \(b_1 = 2\), \(b_2 = 1\). Notice
-	that both tests count things in the space <em>around</em> the object, strings and pockets of air, rather than in the object itself. For shapes sitting in
-	ordinary space that is no coincidence: it is <Ref to="cohomology/poincare-duality" hash="alexander">Alexander duality</Ref>, which we reach in §4.6.
 </p>
 
 <p>

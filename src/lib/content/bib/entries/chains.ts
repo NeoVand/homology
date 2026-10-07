@@ -4,20 +4,9 @@
 import type { Work } from '../index';
 
 // Also cited in §3.2 and defined elsewhere: kun2013 (cycles-and-boundaries.ts),
-// poincare1899 (poincare-duality.ts), and the shared works in core.ts.
+// farrell2021 (spaces.ts), poincare1899 (poincare-duality.ts), and core.ts.
 
 export const works: Work[] = [
-	{
-		key: 'farrell2021',
-		authors: ['David Farrell'],
-		label: 'Boarbarktree',
-		year: 2021,
-		title: 'You Could Have Invented Homology, Part 3: Boundaries & The Big Idea',
-		venue: 'Boarbarktree, YouTube video (16 February 2021)',
-		url: 'https://www.youtube.com/watch?v=j9JJJoTjIpY',
-		free: true,
-		kind: 'video'
-	},
 	{
 		key: 'tietze1908',
 		authors: ['Heinrich Tietze'],

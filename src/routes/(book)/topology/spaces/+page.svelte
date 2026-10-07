@@ -18,6 +18,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import RubberSheet from '$lib/figures/topology/spaces/RubberSheet.svelte';
 	import MetricBalls from '$lib/figures/topology/spaces/MetricBalls.svelte';
 	import WiggleRoom from '$lib/figures/topology/spaces/WiggleRoom.svelte';
@@ -32,7 +33,7 @@
 			title: 'Topology Without Tears',
 			author: 'Sidney A. Morris',
 			url: 'https://www.topologywithouttears.net/',
-			note: 'A free, famously gentle book that starts exactly where this chapter does — topologies on small finite sets — and takes many small steps. The best next read.',
+			note: 'A free, famously gentle book that opens with the definition of a topology and many small finite examples, like those of Figure 2.1.4, and takes many small steps. The best next read.',
 			kind: 'book' as const,
 			free: true
 		},
@@ -46,7 +47,7 @@
 			title: 'How does a topologist classify the letters of the alphabet?',
 			author: 'Rafael López (arXiv, 2014)',
 			url: 'https://arxiv.org/abs/1410.3364',
-			note: 'A short, playful paper that does for the whole alphabet what our Letter Lab does, and points out how much the answer depends on the font.',
+			note: 'A short, playful paper that does for the whole alphabet what our Letter Lab does, using TeX’s sans-serif capitals. Its font gives nine classes instead of our eight: there G has a spur, K’s arms meet the stem at two points, and Q’s tail crosses the loop.',
 			kind: 'paper' as const,
 			free: true
 		},
@@ -62,7 +63,7 @@
 			title: 'Topology vs “a” Topology',
 			author: 'Kelsey Houston-Edwards (PBS Infinite Series)',
 			url: 'https://www.pbs.org/video/topology-vs-a-topology-6onwsj/',
-			note: 'A fifteen-minute video on why the axioms for open sets look the way they do — a good companion to our section on topological spaces.',
+			note: 'A ten-minute video on why the axioms for open sets look the way they do — a good companion to our section on topological spaces.',
 			kind: 'video' as const,
 			free: true
 		},
@@ -415,7 +416,7 @@
 </ul>
 <p>
 	This “observable properties” picture comes from computer science, where topology describes what a program can find out in
-	finite time. It is worth keeping alongside the wiggle-room picture: both will help later.
+	finite time <Cite k="vickers1989" />. It is worth keeping alongside the wiggle-room picture: both will help later.
 </p>
 
 <h3>Examples, from blurry to sharp</h3>
@@ -705,10 +706,10 @@
 
 <History title="Rubber sheets and rulers">
 	<p>
-		Johann Listing coined the word <em>Topologie</em> in 1847. Abstract distance came in Maurice Fréchet’s 1906 thesis, and Felix
-		Hausdorff’s <em>Grundzüge der Mengenlehre</em> (1914) gave a definition of topological space built on neighbourhoods. The open-set
-		axioms in the form above became standard over the following decades — so the definitions in this chapter are younger than
-		the motor car.
+		Johann Listing coined the word <em>Topologie</em> in 1847. Abstract distance came in Maurice Fréchet’s 1906 thesis
+		<Cite k="frechet1906" />, and Felix Hausdorff’s <em>Grundzüge der Mengenlehre</em> (1914) gave a definition of topological space
+		built on neighbourhoods. The open-set axioms in the form above won out over several rivals during the following decades
+		<Cite k="moore2008" /> — so the definitions in this chapter are younger than the motor car.
 	</p>
 </History>
 
@@ -777,7 +778,7 @@
 	homeomorphic? There is a feeling that \((0, 1)\) is “leaky”: you can walk towards \(0\) forever, getting closer and closer,
 	without ever arriving at a point of the space. The closed interval has no such escape routes. The property that captures this
 	is called compactness. In the words of Evelyn Lamb, “Compact means small. It is a peculiar kind of small, but at its heart,
-	compactness is a precise way of being small in the mathematical world.”
+	compactness is a precise way of being small in the mathematical world” <Cite k="lamb2017" />.
 </p>
 <p>
 	Here is the precise definition, which takes some getting used to. An <dfn>open cover</dfn> of \(X\) is a collection of open
@@ -795,7 +796,7 @@
 	(every point \(x > 0\) lies in one of them), but any finitely many of them only cover \((\tfrac1n, 1)\) for the largest
 	\(n\) used, leaving out the points near \(0\). The leak lets the cover escape. For subsets of \(\R^n\) there is a simple test,
 	the <strong>Heine–Borel theorem</strong>: a subset of \(\R^n\) is compact exactly when it is closed and bounded (fits inside
-	some big ball). So \([0, 1]\), the circle, the sphere, the torus and the solid doughnut are compact; \((0, 1)\), \(\R\) and the
+	some big ball) <Cite k="munkres2000" loc="Thm 27.3" />. So \([0, 1]\), the circle, the sphere, the torus and the solid doughnut are compact; \((0, 1)\), \(\R\) and the
 	open disk are not.
 </p>
 <p>
@@ -890,6 +891,15 @@
 	to build tori, spheres and stranger surfaces from simple pieces; in <Ref to="topology/homotopy" /> we will make
 	“shrinking a loop” precise; and in Part III, homology will count holes of every dimension, with numbers that no homeomorphism
 	can change.
+</p>
+<p>
+	Here is a way to hunt for holes with nothing but this chapter’s tools. We cannot list all spaces, but we can map simple shapes into
+	one and watch what happens. A map from a point picks out a point. A map from the segment \([0, 1]\) is a path, and asks which points
+	can be joined. A map from a circle is a loop. And a map from the edge of a triangle asks the sharpest question: does it extend to
+	the whole triangle? Can the loop be filled in? In the plane every such loop can be filled; on the torus the gold loop of
+	Figure 2.1.7 cannot. David Farrell’s video series <em>You Could Have Invented Homology</em> builds up to exactly this test, drawing
+	a triangle’s three-coloured edge in the plane and wrapped around a cylinder <Cite k="farrell2021" />. Part III turns the test into
+	homology.
 </p>
 
 <KeyIdea>

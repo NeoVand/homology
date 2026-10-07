@@ -3,8 +3,8 @@
 // to read the answer instead).
 import type { Work } from '../index';
 
-// Also cited in §3.1 and defined elsewhere: richeson2021 and tubbenhauer2021
-// (shape-of-a-question.ts), kirchhoff1847 (euler-characteristic.ts).
+// Also cited in §3.1 and defined elsewhere: richeson2021 (shape-of-a-question.ts),
+// kirchhoff1847 (euler-characteristic.ts).
 
 export const works: Work[] = [
 	{

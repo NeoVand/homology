@@ -40,24 +40,13 @@ export const works: Work[] = [
 		kind: 'web'
 	},
 	{
-		key: 'lopez2014',
-		authors: ['Rafael López'],
-		year: 2014,
-		title: 'How does a topologist classify the letters of the alphabet?',
-		venue: 'arXiv:1410.3364',
-		arxiv: '1410.3364',
-		url: 'https://arxiv.org/abs/1410.3364',
-		free: true,
-		kind: 'paper'
-	},
-	{
-		key: 'farrell2020',
+		key: 'farrell2021',
 		authors: ['David Farrell'],
 		label: 'Boarbarktree',
-		year: 2020,
-		title: 'You Could Have Invented Homology, Part 1: Topology',
-		venue: 'Boarbarktree, YouTube video (16 December 2020); parts 2 and 3 followed in January and February 2021',
-		url: 'https://www.youtube.com/watch?v=pSjahcOnJvU',
+		year: 2021,
+		title: 'You Could Have Invented Homology, Part 3: Boundaries & The Big Idea',
+		venue: 'Boarbarktree, YouTube video (16 February 2021); part 1 appeared on 16 December 2020',
+		url: 'https://www.youtube.com/watch?v=j9JJJoTjIpY',
 		free: true,
 		kind: 'video'
 	}
