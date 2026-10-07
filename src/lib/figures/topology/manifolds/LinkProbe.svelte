@@ -6,6 +6,7 @@
 	// cross. Click a shape to move the probe; pull the sphere's rim in to shrink
 	// it and zoom in.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
+	import { fitCamera } from '$lib/figures/homology/invariance/three-fit';
 	import { glowPoint, glowTube } from '$lib/three/materials';
 	import { surfaceGeometry } from '$lib/three/surfaces';
 	import Controls from '$lib/components/ui/Controls.svelte';
@@ -155,6 +156,8 @@
 		ctx.camera.near = 0.4;
 		ctx.camera.far = 60;
 		ctx.camera.updateProjectionMatrix();
+		// on narrow canvases pull the camera back so the wide shapes (the double cone's rims) stay in frame
+		const unfit = fitCamera(ctx, 1.3, 0.55);
 		const groups: Record<Key, InstanceType<typeof THREE.Group>> = {
 			eight: new THREE.Group(),
 			cone: new THREE.Group(),
@@ -348,6 +351,7 @@
 		canvas.addEventListener('pointercancel', onUp);
 		return {
 			dispose: () => {
+				unfit();
 				api = null;
 				canvas.removeEventListener('pointerdown', onDown, { capture: true });
 				canvas.removeEventListener('pointermove', onMove);

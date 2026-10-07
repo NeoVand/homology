@@ -97,7 +97,7 @@
 </script>
 
 <div class="oct" bind:clientWidth={cw}>
-	<Svg viewBox={lk > 1 ? '0 0 600 368' : '0 0 600 352'} maxHeight={390} label="An octagon with edges a1, b1, a1 inverse, b1 inverse, a2, b2, a2 inverse, b2 inverse, cut into two halves, each glued into a torus with a hole, and finally glued into a surface with two holes">
+	<Svg viewBox={lk > 1 ? '50 0 500 368' : '0 0 600 352'} maxHeight={390} label="An octagon with edges a1, b1, a1 inverse, b1 inverse, a2, b2, a2 inverse, b2 inverse, cut into two halves, each glued into a torus with a hole, and finally glued into a surface with two holes">
 		<!-- polygon stage -->
 		<g class="fade" style="opacity:{showPoly ? 1 : 0}">
 			<g class="move" style="transform: translate({-34 * shift}px, {-18 * shift}px)">

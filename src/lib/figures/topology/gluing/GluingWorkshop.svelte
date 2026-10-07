@@ -329,7 +329,7 @@
 	}
 	@container figure (max-width: 520px) {
 		.panel2d {
-			grid-template-columns: 160px 1fr;
+			grid-template-columns: 176px 1fr;
 			padding: 0 0.2rem;
 		}
 		.facts div {

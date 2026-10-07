@@ -90,7 +90,7 @@
 			{#if solvable}
 				<!-- just above the gold line, away from the teal kernel below it -->
 				{@const lx = clamp(xp[0] + 2.6, -3.2, 3.4)}
-				<SvgTeX x={view.X(lx)} y={view.Y(xp[1] - (lx - xp[0]) / 2 + 0.42 * lk)} tex={'\\text{solutions}'} color={C.gold} size={13 * lk} w={90 * lk} />
+				<SvgTeX x={view.X(lx)} y={view.Y(xp[1] - (lx - xp[0]) / 2 + 0.42 * lk + 0.35)} tex={'\\text{solutions}'} color={C.gold} size={13 * lk} w={90 * lk} />
 			{/if}
 			<Arrow view={view} to={x} color={hit ? C.gold : C.violet} width={2.6} head={10} />
 			<Handle view={view} svg={svgL} pos={x} color={hit ? C.gold : C.violet} label="the input vector x" onmove={setX} />
