@@ -10,6 +10,7 @@
 	import Warning from '$lib/components/prose/Warning.svelte';
 	import Remark from '$lib/components/prose/Remark.svelte';
 	import History from '$lib/components/prose/History.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import Question from '$lib/components/prose/Question.svelte';
 	import Recap from '$lib/components/prose/Recap.svelte';
 	import Exercise from '$lib/components/prose/Exercise.svelte';
@@ -181,7 +182,7 @@
 
 <History title="A lost notebook, a letter, and a theorem with a rocky childhood">
 	<p>
-		Leonhard Euler announced the formula in a letter to Christian Goldbach in November 1750 and published it in 1758. His insight was
+		Leonhard Euler announced the formula in a letter to Christian Goldbach in November 1750 and published it in 1758 <Cite k="euler1758" />. His insight was
 		to ignore angles and lengths and look only at the <em>pattern</em> of a solid: how many corners, edges and faces it has, and how
 		they fit together — the first truly topological way of looking at a shape. René Descartes had come
 		close around 1630, in a notebook about polyhedra; after his death the notebook was shipped back to Paris, the boat sank in the
@@ -189,7 +190,7 @@
 		until the copy turned up in Hanover around 1860. Euler’s own proof had gaps; Augustin-Louis Cauchy gave a better one in 1811 — the
 		one you will see next — and in 1813 Simon Lhuilier pointed out polyhedra for which the formula fails. The long argument about what
 		exactly the theorem says, and what counts as a polyhedron, is the subject of Imre Lakatos’s delightful book
-		<em>Proofs and Refutations</em> (1976).
+		<em>Proofs and Refutations</em> <Cite k="lakatos1976" />; the whole story is told in <Cite k="richeson2008" text />.
 	</p>
 </History>
 

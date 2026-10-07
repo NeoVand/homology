@@ -7,8 +7,9 @@
 	import ChapterHeader from '$lib/components/layout/ChapterHeader.svelte';
 	import ChapterFooter from '$lib/components/layout/ChapterFooter.svelte';
 	import TocList from '$lib/components/layout/TocList.svelte';
+	import References from '$lib/components/prose/References.svelte';
 
-	let { children } = $props();
+	let { children, data } = $props();
 
 	const id = $derived(chapterIdFromRoute(page.route.id));
 	const chapter = $derived(chapterById.get(id));
@@ -98,6 +99,7 @@
 		<article class="prose chapter" bind:this={article}>
 			{@render children()}
 		</article>
+		<References keys={data.cited} />
 		<ChapterFooter {id} />
 	</main>
 </div>
