@@ -37,7 +37,7 @@
 			onfocus={() => (sq = i)}
 		/>
 		{#if on}
-			<!-- across, then down (gold) and down, then across (teal) -->
+			<!-- across, then down (gold: f# ∘ ∂) and down, then across (teal: ∂ ∘ f#) -->
 			<path d="M {s[0]} {s[1]} Q {e[0] + 4} {s[1] - 4} {e[0]} {e[1]}" class="route gold" marker-end="url(#arrow-gold)" />
 			<path d="M {s[0]} {s[1]} Q {s[0] - 4} {e[1] + 4} {e[0]} {e[1]}" class="route teal" marker-end="url(#arrow-teal)" />
 			<circle cx={s[0]} cy={s[1]} r="3.5" class="end" />
@@ -57,7 +57,7 @@
 			<SvgTeX x={(x + xs[i + 1]) / 2 + 4} y={yBot + 15} tex={dLab[i]} size={15} color="var(--ink-dim)" w={44} h={24} />
 		{/if}
 	{/each}
-	<SvgTeX x={240} y={246} tex={`\\textcolor{#f4d79c}{\\partial_{${3 - sq}}\\circ f_\\#} \\;=\\; \\textcolor{#5fd6cf}{f_\\#\\circ\\partial_{${3 - sq}}}`} size={16} color="var(--ink-bright)" w={300} h={28} />
+	<SvgTeX x={240} y={246} tex={`\\textcolor{#f4d79c}{f_\\#\\circ\\partial_{${3 - sq}}} \\;=\\; \\textcolor{#5fd6cf}{\\partial_{${3 - sq}}\\circ f_\\#}`} size={16} color="var(--ink-bright)" w={300} h={28} />
 </Svg>
 
 <style>

@@ -28,7 +28,8 @@
 		const { scene, THREE, invalidate, label } = ctx;
 		const unfit = fitCamera(ctx, 1.7);
 		const f = torus(1.6, 0.62);
-		scene.add(glassMesh(surfaceGeometry(f, 160, 64), { opacity: 0.55, grid: [48, 20], gridStrength: 0.22 }));
+		// a quiet, bluish torus, so that the violet band stands out against it
+		scene.add(glassMesh(surfaceGeometry(f, 160, 64), { opacity: 0.4, grid: [48, 20], gridStrength: 0.2, tint: 'blue', tintMix: 0.55, brightness: 0.7 }));
 
 		// the swept band, as a parametric patch over (s, θ) ∈ [0, t] × [0, 1]
 		const NS = 40;
@@ -46,7 +47,7 @@
 		bandGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
 		bandGeo.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
 		bandGeo.setIndex(idx);
-		const bandMat = iridescent({ opacity: 0.62, tint: 'violet', tintMix: 0.72, grid: [8, 24], gridStrength: 0.35, gridColor: 'violet', depthWrite: false });
+		const bandMat = iridescent({ opacity: 0.8, tint: 'violet', tintMix: 0.9, brightness: 1.15, grid: [8, 24], gridStrength: 0.35, gridColor: 'violet', depthWrite: false });
 		const band = new THREE.Mesh(bandGeo, bandMat);
 		band.renderOrder = 3;
 		scene.add(band);
@@ -79,7 +80,7 @@
 
 		const loopAt = (s: number) => new SurfaceCurve(f, (th) => [uOf(th, s), th], 0.014);
 		const start = glowTube(loopAt(0), { color: 'gold', closed: true, radius: 0.026 });
-		const finish = glowTube(loopAt(1), { color: 'teal', closed: true, radius: 0.02, intensity: 0.55 });
+		const finish = glowTube(loopAt(1), { color: 'teal', closed: true, radius: 0.022, intensity: 0.85 });
 		scene.add(start, finish);
 		let moving: THREE_NS.Object3D | null = null;
 		const bead = glowPoint([0, 0, 0], { color: 'violet', size: 0.05 });

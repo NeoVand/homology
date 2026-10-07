@@ -17,6 +17,7 @@
 	import Recap from '$lib/components/prose/Recap.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import PathHomotopy from '$lib/figures/topology/homotopy/PathHomotopy.svelte';
 	import LetterMelter from '$lib/figures/topology/homotopy/LetterMelter.svelte';
@@ -44,16 +45,30 @@
 			free: true
 		},
 		{
+			title: 'Topology (2nd edition), Chapter 9',
+			author: 'James R. Munkres',
+			note: 'Sections 51–60 do paths, the fundamental group, covering spaces, π₁(S¹) ≅ ℤ and deformation retracts with complete, careful proofs. The standard undergraduate text.',
+			kind: 'book' as const
+		},
+		{
 			title: 'Algebraic Topology: An Introduction',
 			author: 'William S. Massey',
 			note: 'A classic, patient textbook built around surfaces and the fundamental group. Good if you want every detail of π₁ and covering spaces done carefully.',
 			kind: 'book' as const
 		},
 		{
+			title: 'Topology & Geometry (lecture course)',
+			author: 'Tadashi Tokieda',
+			url: 'https://av.tib.eu/series/549',
+			note: 'A course recorded at the African Institute for Mathematical Sciences in 2014 (35 videos): the topology most useful in practice, taught with pictures instead of algebraic machinery. Its motto could be this chapter’s — look at the generic case, spot an invariant, solve the problem by deformation.',
+			kind: 'video' as const,
+			free: true
+		},
+		{
 			title: 'Winding numbers and domain coloring',
 			author: '3Blue1Brown (Grant Sanderson)',
 			url: 'https://www.3blue1brown.com/lessons/winding-numbers',
-			note: 'A beautifully animated lesson that uses winding numbers to solve two-dimensional equations — the homotopy invariance of the winding number put to work.',
+			note: 'An animated lesson that uses winding numbers to solve two-dimensional equations — the homotopy invariance of the winding number put to work. No prerequisites beyond this chapter.',
 			kind: 'video' as const,
 			free: true
 		},
@@ -101,7 +116,7 @@
 	In <Ref to="topology/spaces" /> we called two spaces the same when there is a <Term t="homeomorphism">homeomorphism</Term> between
 	them: a continuous bijection with a continuous inverse, a perfect rubber-sheet correspondence. That notion is exact, but for counting
 	holes it is too fussy. A thick ring and a thin circle are not homeomorphic (one is two-dimensional, the other one-dimensional), yet
-	they obviously have “the same hole”. A solid disk and a single point are not homeomorphic either, yet neither has any hole at all.
+	anyone can see that they have “the same hole”. A solid disk and a single point are not homeomorphic either, yet neither has any hole at all.
 	Homotopy is the coarser, more forgiving notion of sameness that sees holes and nothing else.
 </p>
 
@@ -272,7 +287,7 @@
 
 <p>
 	Now we use films to compare <em>spaces</em>. The example with which Hatcher opens his book, right after this chapter’s epigraph, is the
-	alphabet. Write each capital letter in two ways: as a thin skeleton of curves, and as a fat, inflated version of itself. The thin letter
+	alphabet <Cite k="hatcher2002" loc="pp. 1–2" />. Write each capital letter in two ways: as a thin skeleton of curves, and as a fat, inflated version of itself. The thin letter
 	sits inside the fat one, and the fat one can be squashed onto it by sliding each point straight in towards the skeleton.
 </p>
 
@@ -359,7 +374,7 @@
 		<li>\(f_1(X) \subseteq A\) (at the end, everything has arrived in \(A\));</li>
 		<li>\(f_t(a) = a\) for every \(a \in A\) and every \(t\) (the points of \(A\) never move).</li>
 	</ol>
-	<p>We then say \(X\) <dfn>deformation retracts</dfn> onto \(A\).</p>
+	<p>We then say \(X\) <dfn>deformation retracts</dfn> onto \(A\). <Cite k="hatcher2002" loc="p. 2" /></p>
 </Definition>
 
 <p>
@@ -425,8 +440,10 @@
 	<p>
 		A disk deformation retracts onto a point, but a point certainly does not deformation retract onto a disk (it does not even contain
 		one). Deformation retraction is a lopsided relationship between a space and a subspace. Homotopy equivalence is the symmetric notion
-		it produces. Many homotopy equivalences are not visibly retractions at all: two spaces can be homotopy equivalent without either
-		sitting inside the other, like the letters \(\mathsf A\) and \(\mathsf O\).
+		it produces, and it can hold between two spaces neither of which fits inside the other. The letter \(\theta\) — a circle with a bar
+		across it — is homotopy equivalent to the figure eight (squash the bar to a point). Yet neither fits inside the other: the figure
+		eight needs a point where four strands meet, which \(\theta\) lacks, and \(\theta\) needs two points where three strands meet,
+		which the figure eight lacks.
 	</p>
 </Warning>
 
@@ -472,8 +489,8 @@
 	<p>
 		The idea of studying a space through the loops in it, and of declaring two loops the same when one can be deformed into the other,
 		goes back to Henri Poincaré’s founding paper <em>Analysis Situs</em> of 1895, where the fundamental group of the next sections first
-		appears. Poincaré used it to tell apart three-dimensional spaces that his numerical invariants (the Betti numbers, ancestors of
-		homology) could not distinguish.
+		appears <Cite k="poincare1895" />. Poincaré used it to tell apart three-dimensional spaces that his numerical invariants (the Betti
+		numbers, ancestors of homology) could not distinguish.
 	</p>
 </History>
 
@@ -600,6 +617,7 @@
 	<p>
 		If \(f\colon X \to Y\) is a homotopy equivalence, then \(f_*\colon \pi_1(X, x_0) \to \pi_1(Y, f(x_0))\) is an isomorphism. In
 		particular, homeomorphic spaces, and more generally homotopy-equivalent spaces, have isomorphic fundamental groups.
+		<Cite k="hatcher2002" loc="Prop. 1.18" />
 	</p>
 </Theorem>
 
@@ -641,7 +659,9 @@
 		curves”, relatives of the famous curves of Peano and Hilbert — so “pick a point the loop misses” is not always possible. The fix is
 		to first replace the loop by a homotopic one that does miss a point: chop it into short arcs, each lying in a small cap of the sphere,
 		and replace each arc by the shortest great-circle arc with the same ends (a homotopy inside the cap). The new loop is made of finitely
-		many great-circle arcs, and those cannot cover the whole sphere. Hatcher’s Proposition 1.14 carries this out in detail.
+		many great-circle arcs, and those cannot cover the whole sphere. Hatcher dodges the difficulty differently: he chops the loop into
+		pieces that each miss the north pole or the south pole, and shrinks them one at a time
+		<Cite k="hatcher2002" loc="Prop. 1.14" />.
 	</p>
 </Proof>
 
@@ -698,11 +718,12 @@
 	<p>
 		The winding number gives an isomorphism \(\pi_1(S^1) \cong \Z\). Explicitly, every loop at \((1,0)\) is homotopic to exactly one of
 		the loops \(\omega_n(s) = (\cos 2\pi n s, \sin 2\pi n s)\), \(n \in \Z\), which goes \(n\) times round counter-clockwise.
+		<Cite k="hatcher2002" loc="Thm 1.7" />
 	</p>
 </Theorem>
 
 <Proof>
-	<p>Here is the shape of the argument (Hatcher’s Theorem 1.7 gives every detail). There are three steps.</p>
+	<p>Here is the shape of the argument; Hatcher’s proof of Theorem 1.7 fills in every detail. There are three steps.</p>
 	<ol>
 		<li>
 			<strong>Lifts exist and are unique.</strong> Every path in the circle has exactly one lift to the spiral staircase starting at a
@@ -715,9 +736,10 @@
 		</li>
 		<li>
 			<strong>It is a bijective homomorphism.</strong> Lifting \(\alpha\cdot\beta\) means climbing the stairs for \(\alpha\) and then for
-			\(\beta\), so winding numbers add: the map is a homomorphism. A loop with winding number \(n\) can be slid onto \(\omega_n\) (straighten
-			its lift into a straight ramp — the staircase is a line, so the straight-line film works there — and project back down), so the map
-			is onto and only \(\omega_0\), the constant loop, goes to \(0\).
+			\(\beta\), so winding numbers add: the map is a homomorphism. It is onto, because \(\omega_n\) has winding number \(n\). And it is
+			one-to-one, because a loop with winding number \(n\) can be slid onto \(\omega_n\): straighten its lift into a straight ramp from
+			\(0\) to \(n\) — the staircase is a line, so the straight-line film works there — and project the film back down. In particular only
+			the class of the constant loop \(\omega_0\) goes to \(0\).
 		</li>
 	</ol>
 </Proof>
@@ -733,7 +755,7 @@
 	<p>
 		The torus is a product of two circles, \(T^2 = S^1 \times S^1\), and a loop in a product is just a pair of loops, one in each factor.
 		So a loop on the torus has two winding numbers — how many times it goes round the hole (the teal direction) and how many times round
-		the tube (the gold direction) — and \(\pi_1(T^2) \cong \Z \times \Z = \Z^2\). In particular, the order of trips does not matter on the
+		the tube (the gold direction) — and \(\pi_1(T^2) \cong \Z \times \Z = \Z^2\) <Cite k="hatcher2002" loc="Prop. 1.12" />. In particular, the order of trips does not matter on the
 		torus: if \(a\) goes round the tube and \(b\) round the hole, then \(ab \simeq ba\). You can see why in the gluing square: the loop
 		\(aba^{-1}b^{-1}\) runs round the boundary of the square, and the whole square is there to shrink it across. Remember this; in a
 		moment the square will be punctured.
@@ -765,7 +787,7 @@
 
 <p>
 	That different reduced words give non-homotopic loops is the hard part; it is usually proved with van Kampen’s theorem or with covering
-	spaces (Hatcher, §1.2–1.3), and we shall take it on trust. The figure below shows the idea behind the covering-space proof. Build your
+	spaces <Cite k="hatcher2002" loc="Example 1.21, §1.3" />, and we shall take it on trust. The figure below shows the idea behind the covering-space proof. Build your
 	own loops from the four letters and watch three pictures at once.
 </p>
 
@@ -798,8 +820,8 @@
 		The commutator has a famous party trick. Hang a picture on two nails with a string wound as \(aba^{-1}b^{-1}\): round the first nail,
 		then the second, then the first the other way, then the second the other way. With both nails in, the string is a non-trivial loop in
 		the plane minus two points, which is homotopy equivalent to a figure eight, and the picture hangs. Pull out either nail — say the second
-		— and every \(b\) in the word becomes trivial, leaving \(a\,a^{-1}\), which cancels: the picture falls. (See the paper by Demaine and
-		others in the reading list.)
+		— and every \(b\) in the word becomes trivial, leaving \(a\,a^{-1}\), which cancels: the picture falls. Demaine and five co-authors
+		turned this into a whole theory, with pictures that fall when any one of \(n\) nails is pulled <Cite k="demaine2014" />.
 	</p>
 </Remark>
 
@@ -817,19 +839,21 @@
 	<p>
 		The first homology group is the abelianized fundamental group: for a path-connected space,
 		\[ H_1(X) \;\cong\; \pi_1(X)^{\mathrm{ab}}. \]
-		This is the Hurewicz theorem in dimension one, proved in <Ref to="homology/invariance" />. Homology keeps the net count of how often a
+		This is the Hurewicz theorem in dimension one, proved in <Ref to="homology/invariance" /> <Cite k="hatcher2002" loc="Thm 2A.1" />. Homology keeps the net count of how often a
 		loop goes round each hole and forgets the order — exactly the information on the grid. For the figure eight, \(H_1 \cong \Z^2\); for
 		the circle and the torus, whose fundamental groups were already abelian, \(H_1\) is \(\Z\) and \(\Z^2\).
 	</p>
 </KeyIdea>
 
 <p>
-	Why trade the richer group for the poorer one? Because the fundamental group is hard. Its words can be arbitrarily complicated; deciding
-	whether two words describe the same element is, for general spaces, provably impossible to automate. The higher homotopy groups
-	\(\pi_n\) are wilder still: even for the 2-sphere they are non-zero in infinitely many dimensions and are not completely known. Homology
+	Why trade the richer group for the poorer one? Because the fundamental group is hard. Its words can be arbitrarily complicated, and
+	there are spaces built from finitely many cells for which no computer program can decide whether two words describe the same loop:
+	the problem is provably unsolvable <Cite k="boone1958" />, <Cite k="hatcher2002" loc="Cor. 1.28" />. The higher homotopy groups
+	\(\pi_n\) are wilder still: even for the 2-sphere, \(\pi_n(S^2)\) is non-zero for infinitely many \(n\)
+	<Cite k="hatcher2002" loc="p. 98" />, and nobody knows them all. Homology
 	gives up the order of loops, and in exchange becomes <em>computable</em> — by the linear algebra of <Ref to="foundations/linear-algebra" />
 	— in every dimension at once, detecting the sphere’s hollow along the way. Hatcher’s way of putting the bridge: abelianizing frees loops
-	from their basepoint, so that “loops become cycles”. Cycles are where Part III begins.
+	from their basepoint, so that “loops become cycles” <Cite k="hatcher2002" loc="p. 99" />. Cycles are where Part III begins.
 </p>
 
 <h2 id="exercises">Exercises</h2>

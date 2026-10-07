@@ -20,6 +20,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 
 	import CosetCollapse from '$lib/figures/foundations/abelian-groups/CosetCollapse.svelte';
 	import CircleQuotient3D from '$lib/figures/foundations/abelian-groups/CircleQuotient3D.svelte';
@@ -109,8 +110,8 @@
 		group \(H_k = Z_k / B_k\) is a quotient group: the cycles, with the boundaries collapsed to zero — the collapse you
 		will perform by hand in the first figure. The classification theorem then says that every homology group of a
 		finite shape looks like \(\Z^r \oplus \Z/d_1 \oplus \dots \oplus \Z/d_k\). The number \(r\) counts holes (it will be
-		called a Betti number), and the finite part, called <em>torsion</em>, is how homology tells a torus (whose first
-		homology is <span class="nw">\(\Z^2\))</span> from a Klein bottle <span class="nw">(\(\Z \oplus \Z/2\)).</span>
+		called a Betti number), and the finite part, called <em>torsion</em>, records twisting: the first homology of a Klein
+		bottle, <span class="nw">\(\Z \oplus \Z/2\),</span> has some, and that of a torus, <span class="nw">\(\Z^2\),</span> has none.
 	</p>
 </Ahead>
 
@@ -179,8 +180,8 @@
 		Think of \(H\) as the set of “right answers” and sort every element of \(G\) by <em>how</em> it fails to be in
 		<span class="nw">\(H\).</span> The multiples of three are right; the numbers in \(1 + 3\Z\) are all wrong in the same way (one too many);
 		those in \(2 + 3\Z\) are wrong in another way. Tai-Danae Bradley, on her blog Math3ma, sums it up with an old
-		saying: “There are many ways to be wrong, but only one way to be right!” Exactly one coset is “right” — the subgroup
-		\(H\) itself, the only coset containing <span class="nw">\(0\).</span>
+		saying: “There are many ways to be wrong, but only one way to be right!” <Cite k="bradley2016" /> Exactly one coset
+		is “right” — the subgroup \(H\) itself, the only coset containing <span class="nw">\(0\).</span>
 	</p>
 </Intuition>
 
@@ -210,7 +211,7 @@
 	<p>
 		If \(G\) is a finite group and \(H\) a subgroup, then the number of elements of \(H\) divides the number of
 		elements of <span class="nw">\(G\).</span> More precisely, <span class="nw">\(|G| = [G : H] \cdot |H|\),</span> where <span class="nw">\([G : H]\),</span> the <dfn>index</dfn> of <span class="nw">\(H\),</span> is
-		the number of cosets.
+		the number of cosets. <Cite k="judson2025" loc="Thm 6.2.2" />
 	</p>
 </Theorem>
 
@@ -227,6 +228,15 @@
 	<em>the order of every element of a finite group divides the order of the group</em>.
 </p>
 
+<p>
+	The theorem is older than the word “group”. Joseph-Louis Lagrange met it in 1770–71, while studying why the known
+	formulas for equations of degree three and four work and whether anything like them could work in degree five. In his
+	version it says that a function of the \(n\) roots of an equation, with the roots shuffled in all \(n!\) possible ways,
+	takes a number of different values that divides <span class="nw">\(n!\)</span> <Cite
+		k="roth2001"
+	/>.
+</p>
+
 <!-- ─────────────────────────────────────────────────────────────────── -->
 <h2 id="quotient-groups">Collapsing each coset to a point: quotient groups</h2>
 
@@ -237,8 +247,8 @@
 </p>
 
 <p>
-	Experience suggests that this step, treating a whole set as one thing, is the single hardest moment in a first course
-	on groups. It is worth doing it with your own hands.
+	Research on how people learn group theory singles out this step, treating a whole set as one thing, as the hard one
+	<Cite k="dubinsky1994" />. It is worth doing it with your own hands.
 </p>
 
 <Figure num="1.4.1" title="Collapse the cosets" hint="Choose a stage · tap two integers (or two dots) to add">

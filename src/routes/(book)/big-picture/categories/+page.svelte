@@ -19,6 +19,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import CategoryExplorer from '$lib/figures/big-picture/categories/CategoryExplorer.svelte';
 	import TwoRoads from '$lib/figures/big-picture/categories/TwoRoads.svelte';
 	import FunctorCamera from '$lib/figures/big-picture/categories/FunctorCamera.svelte';
@@ -31,7 +32,7 @@
 			title: 'Basic Category Theory',
 			author: 'Tom Leinster',
 			url: 'https://arxiv.org/abs/1612.09375',
-			note: 'The gentlest rigorous introduction, written for readers who have seen a little algebra and topology. Chapter 1 covers this whole chapter; its examples come from exactly the mathematics in this book.',
+			note: 'The gentlest rigorous introduction (Cambridge University Press, 2014; free on the arXiv), written for readers with an undergraduate’s algebra and no more. Chapter 1 covers categories, functors, natural transformations and equivalence; Chapter 5 turns this chapter’s universal properties into the general theory of limits.',
 			kind: 'book',
 			free: true
 		},
@@ -39,8 +40,16 @@
 			title: 'Category Theory in Context',
 			author: 'Emily Riehl',
 			url: 'https://emilyriehl.github.io/files/context.pdf',
-			note: 'The next step up: beautifully written, with examples from all over mathematics, including algebraic topology. Chapters 1–3 extend what you met here.',
+			note: 'The next step up (Dover, 2016; free from the author): examples from all over mathematics, algebraic topology included, and many exercises. Chapters 1–3 take functors, the Yoneda lemma and limits much further than this chapter.',
 			kind: 'book',
+			free: true
+		},
+		{
+			title: 'The Catsters',
+			author: 'Eugenia Cheng and Simon Willerton',
+			url: 'https://www.youtube.com/@TheCatsters',
+			note: 'Short blackboard videos, each ten minutes or so, on natural transformations, adjunctions, monads and more. Good for seeing the diagrams drawn and chased by hand.',
+			kind: 'video',
 			free: true
 		},
 		{
@@ -78,7 +87,8 @@
 		{
 			title: 'Categories for the Working Mathematician',
 			author: 'Saunders Mac Lane',
-			note: 'The classic (Springer, 1971; 2nd ed. 1998), by one of the subject’s two founders. Terse, but the source of this chapter’s epigraph and of much of its spirit.',
+			url: 'https://doi.org/10.1007/978-1-4757-4721-8',
+			note: 'The classic (Springer, 1971; 2nd ed. 1998), by one of the subject’s two founders. Terse and aimed at graduate students, but Chapter I is readable after this chapter, and it is the source of the epigraph.',
 			kind: 'book'
 		},
 		{
@@ -91,7 +101,7 @@
 			title: 'History of Homological Algebra',
 			author: 'Charles A. Weibel',
 			url: 'https://metaphor.ethz.ch/x/2025/hs/401-3132-00L/ex/historyweibel.pdf',
-			note: 'Tells how Eilenberg and Mac Lane invented functors and natural isomorphisms in 1942 to make sense of the universal coefficient theorem.',
+			note: 'A forty-page history with exact dates and references (in I. M. James, ed., History of Topology, 1999). Pages 9–10 tell how Eilenberg and Mac Lane invented functors and natural isomorphisms in 1942 while making sense of the universal coefficient theorem.',
 			kind: 'paper',
 			free: true
 		}
@@ -112,9 +122,9 @@
 <p>
 	The common pattern has a name: a <dfn>category</dfn>. A map that turns one kind of thing-and-arrow world into another, the way
 	homology turns spaces into groups, is a <dfn>functor</dfn>. And a way of comparing two functors that involves no arbitrary
-	choices is a <dfn>natural transformation</dfn>. These three ideas were invented in the 1940s by two algebraic topologists, Samuel
-	Eilenberg and Saunders Mac Lane, precisely to talk about homology. So in a real sense you are not starting a new subject: you are
-	learning the names of things you have been doing since Chapter 1.
+	choices is a <dfn>natural transformation</dfn>. These three ideas were invented in the 1940s by a topologist and an algebraist,
+	Samuel Eilenberg and Saunders Mac Lane, to straighten out a puzzle about homology <Cite k="eilenberg-maclane1945" />. So you are
+	not starting a new subject so much as learning the names of things you have been doing since Part I.
 </p>
 
 <Ahead>
@@ -174,7 +184,10 @@
 </p>
 
 <blockquote>
-	“Mathematics is the art of giving the same name to different things.” — Henri Poincaré, <em>Science and Method</em> (1908)
+	“…mathematics is the art of giving the same name to different things. … When language has been well chosen, one is astonished
+	to find that all demonstrations made for a known object apply immediately to many new objects: nothing requires to be changed,
+	not even the terms, since the names have become the same.” — Henri Poincaré, <em>Science and Method</em>, in Francis Maitland’s
+	translation <Cite k="poincare1914" loc="p. 34" />
 </blockquote>
 
 <p>
@@ -382,8 +395,10 @@
 
 <p>
 	The inverse is unique: if \(g\) and \(g'\) both work, then \(g = g\circ 1_B = g\circ(f\circ g') = (g\circ f)\circ g' = 1_A\circ g' =
-	g'\). Notice that this little proof used nothing but the axioms — so it holds in every category at once. Now read the definition
-	in each of our categories:
+	g'\). That little proof used nothing but the axioms, so it holds in every category at once: it proves that inverse functions,
+	inverse matrices and inverse homeomorphisms are unique, and that a homotopy inverse is unique up to homotopy, all in one line. This is Poincaré’s promise kept —
+	the demonstration made for a known object applies immediately to the new ones. Now read the definition in each of our
+	categories:
 </p>
 
 <div class="table-wrap">
@@ -441,8 +456,8 @@
 
 <blockquote>
 	“…the strategy is to learn about a space by extracting data from it in some clever way, assembling that data into an algebraic
-	structure, then studying the algebraic structure instead of the original space.” — Tom Leinster, <em>Basic Category Theory</em>,
-	Examples 1.2.5
+	structure, then studying the algebraic structure instead of the original space.” — Tom Leinster, <em>Basic Category Theory</em>
+	<Cite k="leinster2014" loc="Examples 1.2.5" />
 </blockquote>
 
 <p>Here are functors you already know, some of them old friends wearing a new badge.</p>
@@ -451,7 +466,7 @@
 	<li>
 		<strong>Homology</strong>, \(H_n\colon\Top\to\Ab\). A space \(X\) goes to the group \(H_n(X)\), a map \(f\) goes to \(f_* =
 		H_n(f)\). The two functor laws are the equations from <Ref to="homology/invariance" /> quoted above. Because homotopic maps induce
-		the same homomorphism, \(H_n\) is even a functor \(\mathsf{hTop}\to\Ab\).
+		the same homomorphism, \(H_n\) is even a functor \(\mathsf{hTop}\to\Ab\) <Cite k="hatcher2002" loc="§2.3" />.
 	</li>
 	<li>
 		<strong>Forgetful functors</strong>, such as \(U\colon\Grp\to\Set\), which sends a group to its underlying set and a homomorphism
@@ -477,7 +492,8 @@
 	<li>
 		<strong>Composites of functors.</strong> Simplicial homology was built in two stages: first the chain complex \(C_\bullet(K)\),
 		then its homology. Each stage is a functor — from simplicial complexes to \(\Ch\), and from \(\Ch\) to \(\Ab\) — and \(H_n\) is
-		their composite. Functors compose like arrows; categories and functors themselves form a category.
+		their composite. Functors compose like arrows, so categories and functors themselves form a category (as long as we stick
+		to <em>small</em> categories, whose objects form a set).
 	</li>
 </ul>
 
@@ -586,9 +602,11 @@
 
 <p>
 	Why should anyone care which way the arrows point? Two answers from earlier chapters. First, contravariance is what made the
-	<Term t="cup-product">cup product</Term> possible (<Ref to="cohomology/cup-product" />): to multiply two measurements you only need
-	the diagonal map \(X\to X\times X\), which every space has, and a contravariant functor carries it backwards to a multiplication.
-	Second, measurements can be <em>restricted</em> to smaller pieces of a space, which is what made sheaves work (<Ref
+	<Term t="cup-product">cup product</Term> possible (<Ref to="cohomology/cup-product" />). Two measurements on \(X\) combine into
+	one measurement on \(X\times X\); every space has the diagonal map \(\Delta\colon X\to X\times X\), \(x\mapsto(x,x)\); and a
+	contravariant functor carries \(\Delta\) backwards, turning that measurement on \(X\times X\) into a product measurement on \(X\).
+	Homology, which can only push forward along \(\Delta\), from \(X\) into \(X\times X\), gets no product this way. Second,
+	measurements can be <em>restricted</em> to smaller pieces of a space, which is what made sheaves work (<Ref
 		to="cohomology/sheaves"
 	/>). Direction is not bookkeeping; it is structure.
 </p>
@@ -633,8 +651,14 @@
 		we would get functions
 		\[ \{\text{2 elements}\}\xrightarrow{\ \pi_0(i)\ }\{\text{1 element}\}\xrightarrow{\ \pi_0(r)\ }\{\text{2 elements}\} \]
 		whose composite is the identity. Impossible: the first function squashes both elements to one, and nothing afterwards can pull
-		them apart again. So no such \(r\) exists. (You have just proved the intermediate value theorem in disguise: a continuous function
-		on \([0,1]\) cannot jump from 0 to 1 without passing through values in between.)
+		them apart again. So no such \(r\) exists.
+	</p>
+	<p>
+		Now be suspicious. Why does \(\{0,1\}\) have two path components? Because no path in it runs from 0 to 1 — that is, no continuous
+		map \([0,1]\to\{0,1\}\) sends 0 to 0 and 1 to 1. That is exactly the statement we set out to prove! Here the functor did all of the
+		bookkeeping and none of the work: the input we fed it was the conclusion in disguise. (The real content is the connectedness of
+		the interval, the fact behind the intermediate value theorem.) Keep this in mind for the next argument, where the input will be
+		a hard-won computation and the output a genuinely new theorem.
 	</p>
 </Example>
 
@@ -671,15 +695,17 @@
 	From here, Brouwer’s fixed-point theorem is the short geometric step you saw in <Ref to="homology/invariance" />: if a map
 	\(f\colon D^2\to D^2\) had no fixed point, then for each \(x\) the ray from \(f(x)\) through \(x\) would hit the rim at a point
 	\(r(x)\), and \(r\) would be a retraction. In every dimension the same diagram works with \(H_{n-1}\), since \(H_{n-1}(S^{n-1})\cong\Z\)
-	and \(H_{n-1}(D^n) = 0\) for \(n\ge 2\).
+	and \(H_{n-1}(D^n) = 0\) for \(n\ge 2\) <Cite k="hatcher2002" loc="Cor. 2.15" />. Brouwer himself proved the theorem around 1911,
+	with the degree of a map, a generation before anyone spoke of functors <Cite k="brouwer1911" />.
 </p>
 
 <Remark title="Where the hard work lives">
 	<p>
 		Notice what category theory did and did not do. It supplied the <em>shape</em> of the argument — a commuting triangle, a functor,
 		a contradiction — and that shape is the same for the interval and \(\pi_0\), for the disk and \(H_1\), for the ball and
-		\(H_{n-1}\). It did not compute anything. The genuine input was \(H_1(S^1)\cong\Z\) and \(H_1(D^2) = 0\), and that took Part III of
-		this book. Category theory mostly <em>organises</em>; it rarely does the hard work by itself.
+		\(H_{n-1}\). It did not compute anything. For the interval, the input was the conclusion in disguise; for the disk, the input was
+		\(H_1(S^1)\cong\Z\) and \(H_1(D^2) = 0\), and that took Part III of this book. Category theory mostly <em>organises</em>; it
+		rarely does the hard work by itself.
 	</p>
 </Remark>
 
@@ -709,7 +735,8 @@
 \[ \mathrm{ev}_V\colon V\to V^{**}, \qquad \mathrm{ev}_V(v) = \big(\varphi\mapsto\varphi(v)\big). \]
 <p>
 	It is linear, and for finite-dimensional \(V\) it is an isomorphism (it is injective, and both sides have the same dimension). No
-	basis was mentioned. How do we turn the feeling “\(\mathrm{ev}\) involves no choices but \(\beta\) does” into mathematics?
+	basis was mentioned <Cite k="leinster2014" loc="Example 1.3.14" />. How do we turn the feeling “\(\mathrm{ev}\) involves no
+	choices but \(\beta\) does” into mathematics?
 </p>
 
 <p>
@@ -766,10 +793,11 @@
 <p>
 	So \(V\) and \(V^*\) are isomorphic, but not <em>naturally</em> isomorphic, while \(V\) and \(V^{**}\) are naturally isomorphic. The
 	precise statement is this: there is no way to choose isomorphisms \(V\to V^*\), one for every finite-dimensional space, that all
-	commute with all invertible linear maps. (Already for \(V=\R\) and \(T\) = doubling, the square forces \(\beta = \tfrac14\beta\), so
-	\(\beta=0\).) Mac Lane, describing a similar double-dual map for abelian groups, put it in words: naturality “is just a precise
-	expression for the elementary observation that the definition … depends on no artificial choices of bases, generators, or the
-	like.”
+	commute with all invertible linear maps. (Already for \(V=\R\) and \(T\) = doubling, the square forces <span class="nw"
+		>\(\beta = 4\beta\),</span
+	> so <span class="nw">\(\beta=0\).)</span> Mac Lane, describing a similar double-dual map for abelian groups, put it in words:
+	naturality “is just a precise expression for the elementary observation that the definition … depends on no artificial choices of
+	bases, generators, or the like” <Cite k="maclane1971" loc="§I.4" />.
 </p>
 
 <Warning title="Isomorphic is not the same as naturally isomorphic">
@@ -793,7 +821,8 @@
 		\[ f_*\circ h_X = h_Y\circ f_* : \]
 		map a loop and then view it as a cycle, or view it as a cycle and then map it — the same. So \(h\) is a natural transformation
 		between the functors \(\pi_1\) and \(H_1\) (both regarded as functors from based spaces to groups). This is why the Hurewicz
-		isomorphism \(\pi_1(X)^{\mathrm{ab}}\cong H_1(X)\) for path-connected \(X\) is compatible with every map you apply.
+		isomorphism \(\pi_1(X)^{\mathrm{ab}}\cong H_1(X)\) for path-connected \(X\) is compatible with every map you apply
+		<Cite k="hatcher2002" loc="Thm 2A.1" />.
 	</li>
 	<li>
 		<strong>The connecting homomorphism.</strong> In the long exact sequence of a pair (<Ref to="homology/exact-sequences" />), the
@@ -813,14 +842,16 @@
 
 <History title="Born from homology">
 	<p>
-		In 1941 Samuel Eilenberg, a topologist recently arrived from Poland, asked Saunders Mac Lane for a private repeat of a lecture on
-		group extensions. He noticed at once that Mac Lane’s algebraic answer coincided with a homology group that Steenrod had computed
-		for a space Eilenberg had been studying (the complement of a solenoid). After an all-night session and months of puzzling, they
-		explained the coincidence with what we now call the universal coefficient theorem (1942). To
-		say precisely that \(\Hom(A,B)\) “varies naturally” with \(A\) and \(B\), they invented functors and natural isomorphisms; in 1945
-		they added categories and natural transformations (Weibel’s <em>History of Homological Algebra</em> tells the story). Their 1945
-		paper is candid about priorities: “It should be observed first that the whole concept of a category is essentially an auxiliary
-		one; our basic concepts are essentially those of a functor and of natural transformation.”
+		In 1941 Saunders Mac Lane, an algebraist, lectured at the University of Michigan on group extensions. Samuel Eilenberg, a young
+		topologist recently arrived from Poland, missed the last lecture and asked for a private repeat. He noticed at once that Mac
+		Lane’s algebraic answer was a group he had seen before: Steenrod had found it as a homology group of the complement of a
+		<em>solenoid</em>, a strange coiled space Eilenberg had been studying. After an all-night session and months of puzzling, they
+		explained the coincidence with what we now call the universal coefficient theorem <Cite k="eilenberg-maclane1942" />. To say
+		precisely that \(\Hom(A,B)\) “varies naturally” with \(A\) and \(B\), they invented functors and natural isomorphisms that same
+		year <Cite k="eilenberg-maclane1942b" />; in 1945 they added categories and natural transformations <Cite k="weibel1999" />.
+		Their 1945 paper is candid about priorities: “It should be observed first that the whole concept of a category is essentially
+		an auxiliary one; our basic concepts are essentially those of a functor and of a natural transformation”
+		<Cite k="eilenberg-maclane1945" loc="p. 247" />.
 	</p>
 </History>
 
@@ -897,7 +928,8 @@
 
 <p>
 	This is why we may say “<em>the</em> product”: any two are isomorphic in one, and only one, compatible way. The same argument works
-	for every universal property below.
+	for every universal property below. (Products, kernels and their reversed-arrow twins are all special cases of <em>limits</em> and
+	<em>colimits</em>, the subject of Chapter 5 of Leinster’s book <Cite k="leinster2014" loc="ch. 5" />.)
 </p>
 
 <h3 id="coproducts">Coproducts: the same, with arrows reversed</h3>
@@ -952,9 +984,10 @@
 
 <Warning title="The best solution need not exist">
 	<p>
-		A universal property is a specification, not a guarantee. In the category of fields there is no product of \(\Q\) and \(\Z/2\),
-		for instance, and in a poset two elements may have no greatest lower bound at all. Part of studying a category is finding out which
-		universal constructions it has.
+		A universal property is a specification, not a guarantee. In the category of fields (with ring homomorphisms as arrows) there is
+		no product of \(\Q\) and \(\Z/2\): a homomorphism of fields never changes the characteristic, so a field with arrows to both
+		would need \(1+1\neq 0\) and \(1+1=0\) at once. In a poset two elements may have no greatest lower bound at all. Part of studying
+		a category is finding out which universal constructions it has.
 	</p>
 </Warning>
 
@@ -984,7 +1017,8 @@
 	isomorphic to some \(\R^n\). Choosing a basis for every space gives a functor back, and the round trips are naturally isomorphic to
 	the identities. So the two categories are equivalent, even though one has a single object for each dimension and the other has
 	vast numbers of different-looking spaces of each dimension. This is the precise sense in which “doing linear algebra with
-	matrices” loses nothing — and it is the right way to compare categories that are alike but of very different sizes.
+	matrices” loses nothing. In Mac Lane’s words, equivalence “allows us to compare categories which are ‘alike’ but of very
+	different ‘sizes’” <Cite k="maclane1971" loc="§I.4" />.
 </p>
 
 <h3 id="additive-abelian">Additive and abelian categories</h3>
@@ -1011,12 +1045,13 @@
 
 <p>
 	A category with the first three features (stated with care) is called <dfn>additive</dfn>; one with all four is called
-	<dfn>abelian</dfn>. Abelian categories are exactly the places where the words “exact sequence”, “kernel”, “image” and “homology”
-	make sense, and where every theorem of the next chapter — the snake lemma, long exact sequences, derived functors — can be proved
-	once and for all. Examples include abelian groups, vector spaces, modules over a ring, chain complexes, and sheaves of abelian groups
-	on a space (<Ref to="cohomology/sheaves" />). It was the last example that drove the definition: Alexander Grothendieck’s 1957 paper
-	“Sur quelques points d’algèbre homologique”, known as the Tôhoku paper, introduced the hierarchy of axioms for abelian categories
-	so that sheaf cohomology could be treated with the same tools as the cohomology of spaces.
+	<dfn>abelian</dfn>. Abelian categories are the natural home of the words “exact sequence”, “kernel”, “image” and “homology”: in
+	any of them, every theorem of the next chapter — the snake lemma, long exact sequences, derived functors — is proved once and for
+	all. Examples include abelian groups, vector spaces, modules over a ring, chain complexes, and sheaves of abelian groups on a space
+	(<Ref to="cohomology/sheaves" />). It was the last example that drove the definition. David Buchsbaum had axiomatised “exact
+	categories” in his 1955 thesis; Alexander Grothendieck’s 1957 paper “Sur quelques points d’algèbre homologique”, known as the
+	Tôhoku paper, fixed the name <em>abelian category</em> and its axioms, together with a hierarchy of optional extra ones, so that
+	sheaf cohomology could be built with the same tools as the cohomology of spaces <Cite k="grothendieck1957,weibel1999" />.
 </p>
 
 <Question>
@@ -1091,7 +1126,8 @@
 	<p>
 		Explain why a continuous map \(f\colon X\to Y\) sends each path component of \(X\) into a single path component of \(Y\), and
 		deduce that \(\pi_0\) is a functor \(\Top\to\Set\). Then use it, as in the text, to show that there is no continuous map from the
-		circle \(S^1\) onto the two-point space \(\{0,1\}\) that is surjective.
+		circle \(S^1\) <em>onto</em> the two-point space \(\{0,1\}\subset\R\). Which fact about \(\{0,1\}\) does your argument take for
+		granted?
 	</p>
 	{#snippet hint()}
 		<p>The image of a path is a path. For the second part, think about \(\pi_0(S^1)\).</p>
@@ -1104,23 +1140,35 @@
 			\(\pi_0(g)\circ\pi_0(f)\) both send the component of \(x\) to the component of \(g(f(x))\). For the second part: a surjective
 			continuous \(f\colon S^1\to\{0,1\}\) would give a surjective function \(\pi_0(f)\) from the one-element set \(\pi_0(S^1)\) onto
 			the two-element set \(\pi_0(\{0,1\})\) — impossible. (Surjectivity of \(f\) passes to \(\pi_0(f)\), since every component of
-			\(\{0,1\}\) contains a point \(f(x)\).)
+			\(\{0,1\}\) contains a point \(f(x)\).) The argument takes for granted that \(\{0,1\}\) has two path components, that is, that
+			no path in it runs from 0 to 1: the connectedness of the interval. Unlike the warm-up in the text, this is not circular — the
+			input is a fact about paths, the output a fact about circles — but it shows again where the real content lies.
 		</p>
 	{/snippet}
 </Exercise>
 
 {#snippet exPi0()}\(\pi_0\) is a functor{/snippet}
 
-<Exercise level={2} title="Evaluation is natural">
+<Exercise level={2} title="Natural maps of sets">
 	<p>
-		Prove the naturality of \(\mathrm{ev}\): for every linear map \(T\colon V\to W\) and every \(v\in V\), \(T^{**}(\mathrm{ev}_V(v))
-		= \mathrm{ev}_W(Tv)\), where \(T^{**}(\xi) = \xi\circ T^*\).
+		(a) For each set \(X\) let \(\Delta_X\colon X\to X\times X\) be the diagonal map, \(x\mapsto(x,x)\), the map behind the cup
+		product. Show that the maps \(\Delta_X\) form a natural transformation from the identity functor of \(\Set\) to the functor
+		\(X\mapsto X\times X\), which sends a function \(f\) to \(f\times f\colon(x,x')\mapsto(f(x),f(x'))\). (b) Now show that naturality
+		is a strong condition: the <em>only</em> natural transformation from the identity functor of \(\Set\) to itself is the identity,
+		\(\eta_X = \id_X\) for every \(X\).
 	</p>
+	{#snippet hint()}
+		<p>For (b), test the naturality square on the function \(p_x\colon\{\ast\}\to X\) from a one-point set that picks out \(x\).</p>
+	{/snippet}
 	{#snippet solution()}
 		<p>
-			Both sides are elements of \(W^{**}\), i.e. machines that eat \(\psi\in W^*\). The left side eats \(\psi\) and returns
-			\((\mathrm{ev}_V(v)\circ T^*)(\psi) = \mathrm{ev}_V(v)(\psi\circ T) = (\psi\circ T)(v) = \psi(Tv)\). The right side returns
-			\(\mathrm{ev}_W(Tv)(\psi) = \psi(Tv)\). They agree on every \(\psi\), so they are equal. Nowhere did we choose a basis.
+			(a) For \(f\colon X\to Y\) we need \((f\times f)\circ\Delta_X = \Delta_Y\circ f\). Both sides send \(x\) to \((f(x),f(x))\).
+		</p>
+		<p>
+			(b) Let \(\eta\) be natural and let \(x\in X\). The naturality square for \(p_x\) says \(\eta_X\circ p_x = p_x\circ
+			\eta_{\{\ast\}}\). A one-point set has only one function to itself, so \(\eta_{\{\ast\}}\) is the identity, and evaluating at
+			\(\ast\) gives \(\eta_X(x) = p_x(\ast) = x\). So \(\eta_X\) fixes every element. A choice-free way of turning every set into
+			itself can only be “do nothing”: shuffling the elements of a set would need a choice of which element goes where.
 		</p>
 	{/snippet}
 </Exercise>
@@ -1225,6 +1273,9 @@
 <FurtherReading items={[...reading]} />
 
 <style>
+	.nw {
+		white-space: nowrap;
+	}
 	.same {
 		vertical-align: middle;
 		text-align: center;

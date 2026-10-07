@@ -201,7 +201,7 @@
 	}
 
 	function drawShip(ctx: CanvasRenderingContext2D, x: number, y: number, a: number, S: number, mir: boolean) {
-		const L = S * 0.06;
+		const L = S * 0.085;
 		ctx.save();
 		ctx.translate(x, y);
 		ctx.rotate(-a);
@@ -429,7 +429,7 @@
 	.read b.mir {
 		color: var(--rose);
 	}
-	@media (max-width: 640px) {
+	@container figure (max-width: 640px) {
 		.game {
 			grid-template-columns: 1fr;
 		}

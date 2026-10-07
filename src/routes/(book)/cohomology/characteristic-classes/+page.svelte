@@ -18,6 +18,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import BundleSections from '$lib/figures/cohomology/characteristic-classes/BundleSections.svelte';
 	import CombBall from '$lib/figures/cohomology/characteristic-classes/CombBall.svelte';
 	import IndexExplorer from '$lib/figures/cohomology/characteristic-classes/IndexExplorer.svelte';
@@ -134,8 +135,9 @@
 	at every point; curvature is a measurement at every point. Neither seems to know anything about the overall shape. Yet the
 	zeros of every vector field, counted properly, add up to the Euler characteristic, and so does the total curvature,
 	divided by \(2\pi\). The bookkeeping that makes these facts precise is a family of cohomology classes, the
-	<em>characteristic classes</em>, which measure how a family of vector spaces twists over a space. They also turn out to
-	explain why electric charge comes in whole units and why certain electrical measurements are exact integers.
+	<em>characteristic classes</em>, which measure how a family of vector spaces twists over a space. They also give a
+	famous argument for why electric charge should come in whole units, and they explain why certain electrical
+	measurements are exact integers.
 </p>
 
 <Ahead>
@@ -181,7 +183,8 @@
 		</li>
 		<li>
 			\(E\) is <em>locally trivial</em>: every point of \(B\) has an open neighbourhood \(U\) over which \(E\) looks like a
-			product, \(\pi^{-1}(U)\cong U\times\R^n\), by a homeomorphism that is linear on each fibre.
+			product, \(\pi^{-1}(U)\cong U\times\R^n\), by a homeomorphism that carries each fibre \(E_b\) to
+			\(\{b\}\times\R^n\) by a linear map.
 		</li>
 	</ul>
 	<p>
@@ -265,8 +268,8 @@
 <p>
 	For line bundles the question is decisive: a line bundle has a nowhere-zero section exactly when it is trivial. (Given
 	such a section \(s\), every vector in the fibre over \(b\) is \(t\,s(b)\) for exactly one number \(t\), and \((b,t)\) are
-	coordinates making the bundle a product.) So the Möbius band is the simplest twisted bundle, and the circle carries
-	exactly two line bundles up to isomorphism: the cylinder and the Möbius band.
+	coordinates making the bundle a product.) So the Möbius band really is twisted, and in a moment we will see that it is
+	the only twisted line bundle over the circle.
 </p>
 
 <p>
@@ -288,8 +291,9 @@
 <p>
 	For the Möbius band, \(w_1\) is the nonzero element of \(H^1(S^1;\Z/2)\cong\Z/2\) — the very class you met as the
 	orientation sheaf’s obstruction in <Ref to="cohomology/sheaves" />. In fact real line bundles over a reasonable space
-	\(B\) correspond exactly to elements of \(H^1(B;\Z/2)\): there are \(2\) over a circle, \(4\) over a torus (\(H^1(T^2;\Z/2)
-	\cong (\Z/2)^2\)), and only the trivial one over a sphere.
+	\(B\) correspond exactly to elements of \(H^1(B;\Z/2)\) <Cite k="hatcher-vbkt2017" loc="Prop. 3.10" />: there are
+	\(2\) over a circle (the cylinder and the Möbius band), \(4\) over a torus (\(H^1(T^2;\Z/2) \cong (\Z/2)^2\)), and only
+	the trivial one over a sphere.
 </p>
 
 <Warning title="Where does the twist live?">
@@ -380,8 +384,11 @@
 
 <p>
 	(The same statement holds for closed manifolds of any dimension, with the index defined using spheres instead of
-	loops.) Henri Poincaré proved the theorem for surfaces in 1885; Heinz Hopf proved the general version in the 1920s. Check it
-	against the figures:
+	loops.) Henri Poincaré proved the theorem for surfaces in 1885 <Cite k="poincare1885" />, and Heinz Hopf proved it in
+	every dimension <Cite k="hopf1927" />; John Milnor’s slim classic is the place to read about it <Cite
+		k="milnor1965"
+		loc="§6"
+	/>. Check it against the figures:
 </p>
 
 <ul>
@@ -469,7 +476,9 @@
 	exactly when its winding number around that loop is \(0\). Those winding numbers form a \(2\)-cochain, in fact a
 	\(2\)-cocycle, and its class is \(e(E)\). Second, by Poincaré duality (<Ref to="cohomology/poincare-duality" />), the
 	Euler class is the cohomology class dual to the zero set of a generic section, counted with signs. In every dimension,
-	an oriented bundle of rank \(n\) has an Euler class in \(H^n\), and the same three descriptions apply.
+	an oriented bundle of rank \(n\) has an Euler class in \(H^n\): it is the first obstruction to a nowhere-zero section,
+	it is dual to the zeros of a generic section, and for the tangent bundle of a closed oriented manifold it adds up to
+	\(\chi(M)\) <Cite k="milnor-stasheff1974" loc="§9, Cor. 11.12, Thm 12.5" />.
 </p>
 
 <h2 id="curvature">Curvature from scratch</h2>
@@ -506,8 +515,9 @@
 
 <Theorem label="Theorem (total turning)">
 	<p>
-		For a smooth closed plane curve, \(\oint \kappa\,ds = 2\pi k\), where the <dfn>turning number</dfn> \(k\) is an
-		integer. If the curve is simple (does not cross itself), then \(k = \pm 1\) (Hopf’s <em>Umlaufsatz</em>, 1935).
+		For a smooth closed plane curve that never stops (its velocity is never zero), \(\oint \kappa\,ds = 2\pi k\), where the
+		<dfn>turning number</dfn> \(k\) is an integer. If the curve is simple (does not cross itself), then \(k = \pm 1\)
+		(Hopf’s <em>Umlaufsatz</em> <Cite k="hopf1935" />).
 	</p>
 </Theorem>
 
@@ -523,8 +533,8 @@
 	At a point \(p\) of a surface, slice the surface with planes that contain the normal line at \(p\). Each slice is a curve
 	through \(p\) with its own curvature, the <dfn>normal curvature</dfn> in that direction (counted positive if the curve
 	bends towards the chosen normal). As the slicing plane turns around the normal, the normal curvature varies between a
-	largest value \(k_1\) and a smallest \(k_2\), the <dfn>principal curvatures</dfn>; Leonhard Euler showed in 1760 that they
-	occur in perpendicular directions.
+	largest value \(k_1\) and a smallest \(k_2\), the <dfn>principal curvatures</dfn>; Leonhard Euler showed, in a memoir
+	written in 1763, that they occur in perpendicular directions <Cite k="euler1767" />.
 </p>
 
 <Definition title="Gaussian curvature" id="def-gaussian-curvature">
@@ -559,7 +569,7 @@
 
 <blockquote>
 	“If a curved surface is developed upon any other surface whatever, the measure of curvature in each point remains
-	unchanged.” — Gauss, <em>General Investigations of Curved Surfaces</em>, article 12 (trans. Morehead and Hiltebeitel)
+	unchanged.” — Gauss, <em>General Investigations of Curved Surfaces</em> <Cite k="gauss1827" loc="art. 12" />
 </blockquote>
 
 <p>
@@ -605,15 +615,16 @@
 <p>
 	The symbol \(\iint_T K\,dA\) means: chop \(T\) into tiny pieces, multiply the curvature at each piece by its area, and
 	add up — the <dfn>total curvature</dfn> of \(T\). Gauss wrote that this theorem, “if we mistake not, ought to be counted
-	among the most elegant in the theory of curved surfaces.” It is the local seed of everything that follows.
+	among the most elegant in the theory of curved surfaces” <Cite k="gauss1827" loc="art. 20" />. It is the local seed of
+	everything that follows.
 </p>
 
 <History title="A triangle in Hanover">
 	<p>
 		Gauss spent years surveying the Kingdom of Hanover, measuring the angles of enormous triangles between hilltops. In the
 		abstract of his 1827 paper he reports that in the greatest triangle of his survey, whose longest side is almost fifteen
-		geographical miles, the excess of the sum of the angles over two right angles “amounts almost to fifteen seconds” — the
-		curvature of the Earth, visible in three angles.
+		geographical miles (more than \(100\) km), the excess of the sum of the angles over two right angles “amounts almost to
+		fifteen seconds” <Cite k="gauss1827" loc="abstract" /> — the curvature of the Earth, visible in three angles.
 	</p>
 </History>
 
@@ -621,7 +632,8 @@
 
 <p>
 	Now cover a whole closed surface with geodesic triangles and add up Gauss’s formula over all of them. The answer turns out
-	not to depend on the shape at all.
+	not to depend on the shape at all. (Tristan Needham’s book gives four different geometric proofs of this, each a
+	picture you can hold in your head <Cite k="needham2021" />.)
 </p>
 
 <Theorem label="Theorem (Gauss–Bonnet)" id="thm-gauss-bonnet">
@@ -667,7 +679,7 @@
 <p>
 	A cube has three right angles at each corner, defect \(2\pi - 3\pi/2 = \pi/2\), and eight corners: total \(4\pi\). René
 	Descartes noticed, around 1630, that the total defect of every convex polyhedron is \(4\pi\) (in his units, eight right
-	angles). Here is the general statement, with its complete proof.
+	angles) <Cite k="richeson2008" />. Here is the general statement, with its complete proof.
 </p>
 
 <Theorem label="Theorem (discrete Gauss–Bonnet)" id="thm-discrete-gb">
@@ -690,7 +702,8 @@
 <p>
 	Nothing in the proof used the shape: only that the triangles are flat and fit together into a closed surface. The angle
 	defect at a vertex, divided by the area around the vertex, is a good estimate of the Gaussian curvature there, and as the
-	triangles get finer the sum of defects becomes the integral \(\iint K\,dA\). Now play.
+	triangles get finer the sum of defects becomes the integral \(\iint K\,dA\) <Cite k="crane-ddg" loc="§5.5" />. Now
+	play.
 </p>
 
 <Figure num="4.8.7" title="The Gauss–Bonnet sculptor" hint="Play the deformation · click the surface to push or pull it · drag to rotate">
@@ -725,8 +738,9 @@
 <h3>Why curvature is a cohomology class</h3>
 
 <p>
-	Here is the point of view that generalises. The expression \(K\,dA\) is a <Term t="k-form">\(2\)-form</Term> on
-	\(M\) (<Ref to="cohomology/differential-forms" />). On a surface every \(2\)-form is closed, so it has a de Rham
+	Here is the point of view that generalises. On an oriented surface \(M\), the expression \(K\,dA\) is a <Term
+		t="k-form">\(2\)-form</Term
+	> (<Ref to="cohomology/differential-forms" />). On a surface every \(2\)-form is closed, so it has a de Rham
 	cohomology class in \(H^2_{\dR}(M)\) (<Ref to="cohomology/de-rham" />). Changing the shape (the way lengths are measured)
 	changes \(K\,dA\) only by an exact form \(d\eta\), and by Stokes’ theorem an exact form integrates to zero over a closed
 	surface. So the <em>class</em> of \(\tfrac{1}{2\pi}K\,dA\) does not depend on the shape at all: it is the Euler class of
@@ -736,8 +750,10 @@
 <p>
 	This idea — <em>curvature, a local quantity, represents a characteristic class, a global one</em> — is called <dfn
 		>Chern–Weil theory</dfn
-	>. In 1944 Shiing-Shen Chern gave an intrinsic proof of the Gauss–Bonnet formula for manifolds of every even dimension,
-	and in 1946 he introduced the characteristic classes of complex vector bundles that now bear his name.
+	>. In 1944 Shiing-Shen Chern gave an intrinsic proof of the Gauss–Bonnet formula for manifolds of every even dimension
+	<Cite k="chern1944" />, and in 1946 he introduced the characteristic classes of complex vector bundles that now bear his
+	name <Cite k="chern1946" />. Milnor and Stasheff’s appendix on connections and curvature is the standard short account
+	<Cite k="milnor-stasheff1974" loc="App. C" />.
 </p>
 
 <h2 id="characteristic-classes">Characteristic classes</h2>
@@ -796,7 +812,8 @@
 
 <p>
 	There are higher Stiefel–Whitney classes \(w_i\), higher Chern classes \(c_i\) and Pontryagin classes \(p_i\); Milnor
-	and Stasheff’s book is the classic guide. We look more closely at the one that physics needs most, \(c_1\).
+	and Stasheff’s book is the classic guide <Cite k="milnor-stasheff1974" loc="§4, §9, §14, §15" />. We look more closely
+	at the one that physics needs most, \(c_1\).
 </p>
 
 <h3>Complex line bundles and the first Chern class</h3>
@@ -817,8 +834,9 @@
 	<p>
 		The <dfn>first Chern class</dfn> \(c_1(L)\in H^2(B;\Z)\) of a complex line bundle \(L\) is its basic characteristic
 		class. Over a closed oriented surface such as \(S^2\), it is a single integer, the <dfn>Chern number</dfn>; for the
-		bundle built from \(g_{NS}(\varphi) = e^{in\varphi}\) it is \(n\). Complex line bundles over a reasonable space
-		correspond exactly to elements of \(H^2(B;\Z)\) — over the sphere, one for each integer.
+		bundle built from \(g_{NS}(\varphi) = e^{in\varphi}\) it is \(n\) (or \(-n\): the sign depends on conventions that
+		books do not share). Complex line bundles over a reasonable space correspond exactly to elements of \(H^2(B;\Z)\) —
+		over the sphere, one for each integer <Cite k="hatcher-vbkt2017" loc="Prop. 3.10" />.
 	</p>
 </Definition>
 

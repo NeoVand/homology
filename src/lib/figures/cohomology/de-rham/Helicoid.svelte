@@ -190,7 +190,8 @@
 		<Timeline bind:value={laps} min={0} max={2} duration={6.4} from="start" to="two laps" label="Walking the loop twice" />
 	</Controls>
 	<div class="readout">
-		<TeX tex={String.raw`\text{angle followed continuously:}\quad \theta_{\text{now}} - \theta_{\text{start}} = ${fmt(swept, 2).replace('−', '-')} \;=\; ${fmt(swept / TAU, 2).replace('−', '-')}\times 2\pi`} />
+		<span class="lbl">angle followed continuously:</span>
+		<span class="eq"><TeX tex={String.raw`\theta_{\text{now}} - \theta_{\text{start}} = ${fmt(swept, 2).replace('−', '-')} \;=\; ${fmt(swept / TAU, 2).replace('−', '-')}\times 2\pi`} /></span>
 	</div>
 </div>
 
@@ -201,5 +202,13 @@
 		text-align: center;
 		font-size: 1.02rem;
 		overflow-x: auto;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: baseline;
+		gap: 0.2rem 0.8rem;
+	}
+	.eq {
+		white-space: nowrap;
 	}
 </style>

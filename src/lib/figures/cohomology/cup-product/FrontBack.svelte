@@ -6,6 +6,8 @@
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { MinusIcon, PlusIcon } from '$lib/icons';
 	import { midArrow, num } from './draw';
 
 	// values on [v0,v1], [v1,v2], [v0,v2]
@@ -113,9 +115,9 @@
 						{#each arr as v, i (i)}
 							<td>
 								<span class="step">
-									<button aria-label="decrease" onclick={() => bump(which, i, -1)}>−</button>
-									<span class="n nums">{num(v)}</span>
-									<button aria-label="increase" onclick={() => bump(which, i, 1)}>+</button>
+									<button aria-label="Decrease {which === 'phi' ? 'φ' : 'ψ'} on the {edgeRoles[i]} edge" disabled={v <= -5} onclick={() => bump(which, i, -1)}><Icon icon={MinusIcon} size={14} stroke={1.8} /></button>
+									<span class="n nums" aria-live="polite">{num(v)}</span>
+									<button aria-label="Increase {which === 'phi' ? 'φ' : 'ψ'} on the {edgeRoles[i]} edge" disabled={v >= 5} onclick={() => bump(which, i, 1)}><Icon icon={PlusIcon} size={14} stroke={1.8} /></button>
 								</span>
 							</td>
 						{/each}
@@ -129,7 +131,7 @@
 		</p>
 		<p class="note small">
 			<TeX tex={`(\\delta\\varphi)(\\sigma) = ${dphi}, \\quad (\\delta\\psi)(\\sigma) = ${dpsi}`} />
-			<span class="tag" class:ok={dphi === 0 && dpsi === 0}>{dphi === 0 && dpsi === 0 ? 'both cocycle-like on σ' : 'not both closed on σ'}</span>
+			<span class="tag" class:ok={dphi === 0 && dpsi === 0}>{dphi === 0 && dpsi === 0 ? 'both add up to 0 around the triangle' : 'not both 0 around the triangle'}</span>
 		</p>
 	</div>
 </div>
@@ -142,7 +144,7 @@
 		padding: 0.9rem 1.1rem 1rem;
 		align-items: center;
 	}
-	@media (max-width: 760px) {
+	@container figure (max-width: 760px) {
 		.fb {
 			grid-template-columns: minmax(0, 1fr);
 		}
@@ -217,8 +219,16 @@
 		font-size: 1rem;
 		line-height: 1;
 	}
-	.step button:hover {
+	.step button {
+		display: grid;
+		place-items: center;
+	}
+	.step button:hover:not(:disabled) {
 		background: rgba(216, 178, 110, 0.2);
+	}
+	.step button:disabled {
+		opacity: 0.35;
+		cursor: default;
 	}
 	.n {
 		min-width: 1.6rem;
@@ -239,9 +249,7 @@
 		align-items: baseline;
 	}
 	.tag {
-		font-size: 0.66rem;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
+		font-size: 0.74rem;
 		color: var(--amber);
 	}
 	.tag.ok {

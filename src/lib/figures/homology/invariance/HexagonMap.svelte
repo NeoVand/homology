@@ -273,7 +273,8 @@
 
 	<div class="readout">
 		<div class="big">
-			<TeX tex={`f_*\\colon H_1(K)\\cong\\mathbb Z \\;\\longrightarrow\\; H_1(L)\\cong\\mathbb Z,\\qquad 1 \\longmapsto ${w}`} />
+			<span><TeX tex={`f_*\\colon H_1(K)\\cong\\mathbb Z \\;\\longrightarrow\\; H_1(L)\\cong\\mathbb Z,`} /></span>
+			<span><TeX tex={`1 \\longmapsto ${w}`} /></span>
 		</div>
 		<p class="small">
 			{#if w === 0}
@@ -337,7 +338,7 @@
 	.arrow .v {
 		display: none;
 	}
-	@media (max-width: 700px) {
+	@container figure (max-width: 700px) {
 		.arrow {
 			flex-direction: row;
 			gap: 0.6rem;
@@ -395,7 +396,11 @@
 	.big {
 		font-size: 1.05rem;
 		color: var(--ink-bright);
-		overflow-x: auto;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: baseline;
+		gap: 0.2rem 2rem;
 	}
 	.small {
 		font-size: 0.92rem;
@@ -409,5 +414,22 @@
 	}
 	.mx :global(th .katex) {
 		font-size: 1.12em;
+	}
+	/* on a phone the six-column matrix must fit without scrolling: caption on top, tighter cells */
+	@container figure (max-width: 30rem) {
+		.readout {
+			padding-inline: 0.4rem;
+		}
+		.hexmap .mx :global(.mv) {
+			flex-direction: column;
+			gap: 0.1rem;
+		}
+		.hexmap .mx :global(.mv.mv th) {
+			padding: 0.2rem 0.12rem;
+		}
+		.hexmap .mx :global(.mv.mv td) {
+			min-width: 1.5rem;
+			padding: 0.3rem 0.12rem;
+		}
 	}
 </style>

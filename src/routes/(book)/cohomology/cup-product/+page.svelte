@@ -20,6 +20,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import BandsTorus from '$lib/figures/cohomology/cup-product/BandsTorus.svelte';
 	import FrontBack from '$lib/figures/cohomology/cup-product/FrontBack.svelte';
 	import GridCup from '$lib/figures/cohomology/cup-product/GridCup.svelte';
@@ -48,15 +49,15 @@
 		{
 			title: 'Differential Forms in Algebraic Topology',
 			author: 'Raoul Bott and Loring Tu (Springer GTM 82, 1982)',
-			url: 'https://books.google.com/books/about/Differential_Forms_in_Algebraic_Topology.html?id=COuPBAAAQBAJ',
-			note: 'Builds the whole subject from wedge products of forms, exactly the smooth picture of our second section. The Künneth formula and the cohomology of projective spaces appear early and visually.',
+			url: 'https://link.springer.com/book/10.1007/978-1-4757-3951-0',
+			note: 'Builds the whole subject from wedge products of forms, exactly the smooth picture of our second section. The Künneth formula and the cohomology of projective spaces appear early. Graduate level.',
 			kind: 'book' as const
 		},
 		{
 			title: 'The Essence of de Rham Cohomology',
-			author: 'Anton Petrov (2024)',
+			author: 'Alice Petrov (2024)',
 			url: 'https://arxiv.org/abs/2411.06296',
-			note: 'A student-level exposition of de Rham cohomology that includes products, Künneth and Poincaré duality — a gentle bridge between this chapter and the next.',
+			note: 'A student-level exposition of de Rham cohomology that includes the Künneth formula and Poincaré duality — a gentle bridge between this chapter and the next.',
 			kind: 'paper' as const,
 			free: true
 		},
@@ -76,8 +77,8 @@
 <p class="lead">
 	Here are two shapes. The first is the surface of a doughnut, the torus. The second is a balloon
 	with two key rings hanging from the knot: a sphere with two circles attached at a single point.
-	Feed both into every machine this book has built so far and the answers come out identical — one
-	piece, two independent loops, one enclosed void. Their homology groups agree, their cohomology
+	Feed both into every homology and cohomology machine this book has built so far and the answers
+	come out identical — one piece, two independent loops, one enclosed void. Their homology groups agree, their cohomology
 	groups agree, even their Euler characteristics agree. And yet nobody would mistake one for the
 	other.
 </p>
@@ -93,8 +94,8 @@
 		Cohomology classes can be multiplied. The multiplication is called the <strong>cup product</strong>,
 		and it turns the cohomology of every space into a <em>ring</em>: a number system with both
 		addition and multiplication. That ring is a far sharper invariant than the groups alone. It
-		separates the torus from the balloon with key rings, and the torus from the Klein bottle. It has a
-		beautiful geometric meaning: multiplying two classes counts the places where their “fences” cross.
+		separates the torus from the balloon with key rings, and the torus from the Klein bottle. And it has a
+		concrete geometric meaning: multiplying two classes counts the places where their “fences” cross.
 		It is the doorway to Poincaré duality in <Ref to="cohomology/poincare-duality" />, to the
 		characteristic classes of <Ref to="cohomology/characteristic-classes" />, and to almost all of modern
 		algebraic topology, where cohomology is nearly always used as a ring.
@@ -444,9 +445,8 @@
 	terms of \(\delta\varphi\smile\psi\); deleting a vertex from the back part gives the terms of
 	\(\varphi\smile\delta\psi\), each shifted in sign by \((-1)^p\) because it sits \(p\) places further
 	along. The two sums share one extra pair of terms — deleting the very last front vertex, or the very
-	first back vertex — and that pair cancels, just as \(\varphi_{01}\psi_{23}\) did above. (Hatcher writes
-	this out in full as Lemma 3.6 of his book; our test suite also checks the formula numerically in every
-	degree on a 4-simplex and on the 3-sphere.)
+	first back vertex — and that pair cancels, just as \(\varphi_{01}\psi_{23}\) did above. Hatcher writes
+	this out in full <Cite k="hatcher2002" loc="Lemma 3.6" />.
 </p>
 
 <Corollary title="Products descend to cohomology">
@@ -510,7 +510,7 @@
 
 <p>
 	Three facts make this ring a genuine invariant of the space, not of the triangulation we happened to
-	draw. We state them without proof; they are proved in Hatcher’s §3.2 using singular cohomology.
+	draw. We state them without proof; they are proved using singular cohomology <Cite k="hatcher2002" loc="§3.2" />.
 </p>
 
 <Theorem title="The ring is an invariant">
@@ -546,14 +546,14 @@
 <p>
 	(With integer labels in increasing order this tidy arrangement is impossible — going once around the
 	torus you would have to come back to a smaller label — which is why we allow ourselves the Δ-complex
-	ordering. The answers in cohomology are the same either way; our code checks that too.)
+	ordering. The cohomology ring comes out the same either way, as the theorem above promises.)
 </p>
 
 <h3 id="fences">Two fences</h3>
 
 <p>
 	Next we need two cocycles representing a basis of \(H^1(T^2;\Z)\). They are easiest to describe by a
-	picture that goes back to Hatcher’s introduction to cohomology. Draw a curve on the surface that
+	picture that goes back to Hatcher’s introduction to cohomology <Cite k="hatcher2002" loc="pp. 186–189" />. Draw a curve on the surface that
 	crosses edges transversally — a <dfn>fence</dfn> — and give it a direction in which crossing it counts
 	\(+1\). The cochain of the fence assigns to each edge the number of times the edge crosses the fence,
 	counted with sign. A fence that closes up is always a cocycle: whenever the fence enters a triangle it
@@ -700,7 +700,7 @@
 		For smooth manifolds and real coefficients this is the anticommutativity of forms, carried over by de
 		Rham’s theorem. For simplicial cochains the front-and-back recipe is lopsided — it treats the first
 		vertex and the last vertex differently — so \(\varphi\smile\psi\) and \(\pm\psi\smile\varphi\) are
-		genuinely different cochains, as Figure 4.5.2 showed. The proof (Hatcher, Theorem 3.11) compares the
+		genuinely different cochains, as Figure 4.5.2 showed. The proof <Cite k="hatcher2002" loc="Theorem 3.11" /> compares the
 		recipe with the same recipe applied to the simplex with its vertices listed in reverse order, and
 		builds an explicit “chain homotopy” between the two, which shows that the difference is always a
 		coboundary when \(\varphi,\psi\) are cocycles. The sign \((-1)^{pq}\) is the sign of the
@@ -799,6 +799,7 @@
 		With coefficients in a field \(F\) (such as \(\Q\), \(\R\), \(\Z/2\)) and spaces built from finitely many
 		cells, the cross products of basis elements form a basis of the cohomology of the product:
 		\(H^*(X\times Y;F)\cong H^*(X;F)\otimes H^*(Y;F)\), and this is an isomorphism of rings.
+		<Cite k="hatcher2002" loc="Theorem 3.15" />
 	</p>
 </Theorem>
 
@@ -925,7 +926,7 @@
 	The projective plane is the first of a family. The real projective space \(\RP^n\) is the set of lines
 	through the origin in \(\R^{n+1}\), and the complex projective space \(\CP^n\) is the set of complex
 	lines through the origin in \(\C^{n+1}\) — a space of real dimension \(2n\). Their cohomology rings are as
-	simple as rings can be, and we state them without proof (Hatcher proves them as Theorem 3.19, in three different ways):
+	simple as rings can be, and we state them without proof (Hatcher proves them in three different ways <Cite k="hatcher2002" loc="Theorem 3.19" />):
 </p>
 \[ H^*(\RP^n;\Z/2) = \Z/2[x]/(x^{n+1}),\ \ |x|=1, \qquad\qquad H^*(\CP^n;\Z) = \Z[x]/(x^{n+1}),\ \ |x|=2. \]
 <p>
@@ -943,7 +944,8 @@
 	for a degree-4 class, so its square is \(0\). Different rings — so \(\CP^2\) and \(S^2\vee S^4\) are not
 	homotopy equivalent, even though neither has any loops at all. The ring of \(\RP^n\) also has famous
 	applications; one of them is a short proof of the Borsuk–Ulam theorem (every continuous map
-	\(S^n\to\R^n\) sends some pair of opposite points to the same place).
+	\(S^n\to\R^n\) sends some pair of opposite points to the same place), which Hatcher sets as an
+	exercise <Cite k="hatcher2002" loc="§3.2, Exercise 3" />.
 </p>
 
 <History>
@@ -951,13 +953,13 @@
 		Cohomology and its product were born together. At the first International Topological Conference in
 		Moscow, on 4–10 September 1935, James Alexander gave a talk titled “On the ring of a complex and the
 		combinatory theory of integration”, and Andrey Kolmogorov, in a talk on “Homology rings in closed
-		sets”, presented the same circle of ideas independently. In Charles Weibel’s words: “The fourth great advance in 1935 was the discovery of
+		sets”, presented the same circle of ideas independently <Cite k="apushkinskaya2019" />. In Charles Weibel’s words: “The fourth great advance in 1935 was the discovery of
 		cohomology theory and cup products, simultaneously and independently by Alexander and Kolmogoroff.”
 		Those first formulas, Weibel adds, were “completely ad hoc, and also not exactly correct”; Eduard Čech
 		and Hassler Whitney soon found the right ones. Whitney’s paper <em>On products in a complex</em>
 		(1937–38) introduced the words <em>coboundary</em> and <em>cocycle</em>, the very Leibniz rule we
 		proved above, and the symbols \(\smile\) and \(\frown\), “prophetically suggesting that ‘we might
-		call \(\smile\) “cup” and \(\frown\) “cap”.’”
+		call \(\smile\) “cup” and \(\frown\) “cap”.’” <Cite k="weibel1999,whitney1938" />
 	</p>
 </History>
 
@@ -987,7 +989,7 @@
 <p>
 	Michael Hutchings, in his notes on the subject, states the general version as “cup product is Poincaré
 	dual to intersection of submanifolds”, and adds: “This is arguably the most important thing to know about
-	cup product.” In an \(n\)-dimensional manifold, a class of degree \(p\) can often be drawn as an
+	cup product.” <Cite k="hutchings2011" /> In an \(n\)-dimensional manifold, a class of degree \(p\) can often be drawn as an
 	\((n-p)\)-dimensional “wall” (a fence is the case \(n=2\), \(p=1\)); the product of a degree-\(p\) and a
 	degree-\(q\) class is drawn by intersecting the walls, which leaves something of dimension
 	\(n-p-q\). Making this precise — saying exactly which wall belongs to which class — is the subject of the
@@ -1008,7 +1010,7 @@
 		Fences are a superb way to <em>think</em> about cup products on surfaces, but they are not how the cup
 		product is defined, and they do not always exist: on a space that is not a manifold (the wedge) the
 		“fences” degenerate into gates on circles, and with \(\Z\) coefficients a fence needs a consistent
-		crossing direction, which the twisted surfaces do not allow. The definition is the front-face/back-face
+		crossing direction, which a one-sided curve — the core of a Möbius band — does not have. The definition is the front-face/back-face
 		recipe, which works for every space and every coefficient ring.
 	</p>
 </Warning>
@@ -1150,7 +1152,7 @@
 	</p>
 	{#snippet solution()}
 		<p>
-			Each circle contributes a class \(a_i\) of degree 1 with \(a_i^2=0\). The products give the basis
+			Each circle contributes a class \(\alpha_i\) of degree 1 with \(\alpha_i^2=0\). The products give the basis
 			\(1\); \(\alpha_1,\alpha_2,\alpha_3\); \(\alpha_1\alpha_2,\ \alpha_1\alpha_3,\ \alpha_2\alpha_3\);
 			\(\alpha_1\alpha_2\alpha_3\), so the Betti numbers are \(1,3,3,1\) and \(\chi = 1-3+3-1 = 0\). The products
 			\(\alpha_i\alpha_j\) with \(i\neq j\) are nonzero (and \(\alpha_j\alpha_i = -\alpha_i\alpha_j\)); all squares

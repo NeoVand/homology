@@ -37,7 +37,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'locally-constant-function',
 		term: 'Locally constant function',
-		def: 'A function that is constant near every point, so constant on each connected piece of its domain. These are the functions with \\(df = 0\\), and they form \\(H^0_{\\dR}(M) \\cong \\R^{\\#\\text{components}}\\).',
+		def: 'A function that is constant near every point, so constant on each connected piece of its domain. These are the functions with \\(df = 0\\), and they form \\(H^0_{\\dR}(M)\\), which is \\(\\R^{\\#\\text{components}}\\) when \\(M\\) has finitely many pieces.',
 		chapter,
 		anchor: 'h-zero'
 	},
@@ -108,7 +108,7 @@ export const entries: GlossaryEntry[] = [
 	},
 	{
 		key: 'de-rham-theorem',
-		term: "de Rham's theorem",
+		term: 'de Rham’s theorem',
 		def: 'For every smooth manifold \\(M\\), integration over chains gives an isomorphism \\(H^k_{\\dR}(M)\\cong H^k(M;\\R)\\): the smooth and the combinatorial cohomology agree (with real coefficients).',
 		chapter,
 		anchor: 'thm-de-rham',
@@ -116,10 +116,10 @@ export const entries: GlossaryEntry[] = [
 	},
 	{
 		key: 'amperes-law',
-		term: "Ampère's law",
+		term: 'Ampère’s law',
 		def: 'For a steady current \\(I\\), the circulation of the magnetic field around a loop is \\(\\mu_0 I\\) times the number of times the loop links the current. Outside a wire the field is closed but not exact.',
 		chapter,
-		anchor: 'physics'
+		anchor: 'ampere'
 	},
 	{
 		key: 'vector-potential',
@@ -131,7 +131,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'aharonov-bohm-effect',
 		term: 'Aharonov–Bohm effect',
-		def: 'A quantum particle travelling around a solenoid acquires a phase \\(q\\Phi/\\hbar\\) per turn, although the magnetic field vanishes along its path: the phase measures the de Rham class of the vector potential.',
+		def: 'A quantum particle travelling around a solenoid acquires a phase \\(q\\Phi/\\hbar\\) per turn, although the magnetic field vanishes along its path. The phase is set by the integral of the vector potential around the solenoid, which depends only on its de Rham class.',
 		chapter,
 		anchor: 'aharonov-bohm'
 	},
@@ -144,7 +144,7 @@ export const entries: GlossaryEntry[] = [
 	},
 	{
 		key: 'gauss-law',
-		term: "Gauss's law",
+		term: 'Gauss’s law',
 		def: 'The electric flux out of a closed surface is the enclosed charge divided by \\(\\varepsilon_0\\). For a point charge the field is a multiple of the solid-angle form, and the flux counts how often the surface wraps around the charge.',
 		chapter,
 		anchor: 'gauss'

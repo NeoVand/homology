@@ -1,12 +1,11 @@
 <script lang="ts">
 	// Figure: the Poincaré lemma. On a star-shaped region, integrating a closed
 	// 1-form along the rays from the centre builds a potential (animated as a
-	// growing coloured map with level lines). On an annulus with dθ the rays from
+	// growing coloured map with level lines, played or scrubbed). On an annulus with dθ the rays from
 	// a centre are blocked by the hole, and the two ways around it disagree by 2π.
-	import { onMount } from 'svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { clamp, fmt, type Vec2 } from '$lib/figures/cohomology/differential-forms/calc';
 	import { TAU, conePotential, hiddenPQ, segmentAvoidsDisk, starR } from './derham';
@@ -110,51 +109,16 @@
 		ctx.putImageData(img, 0, 0);
 	}
 
-	let animRaf = 0;
-	function replay() {
-		cancelAnimationFrame(animRaf);
-		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-			reveal = 1;
-			paint();
-			return;
-		}
-		reveal = 0;
-		let last = 0;
-		const tick = (now: number) => {
-			const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
-			last = now;
-			reveal = Math.min(1, reveal + dt / 2.6);
-			paint();
-			if (reveal < 1) animRaf = requestAnimationFrame(tick);
-		};
-		animRaf = requestAnimationFrame(tick);
-	}
-
-	let root: HTMLDivElement;
-	onMount(() => {
-		compute();
-		paint();
-		let played = false;
-		const io = new IntersectionObserver(([e]) => {
-			if (e.isIntersecting && !played) {
-				played = true;
-				replay();
-			}
-		});
-		io.observe(root);
-		return () => {
-			io.disconnect();
-			cancelAnimationFrame(animRaf);
-		};
-	});
-
-	// recompute when the mode or the annulus centre changes
+	// recompute when the mode or the annulus centre changes; repaint as the rays grow
 	let lastKey = '';
 	$effect(() => {
 		const k = `${mode}|${c[0].toFixed(3)},${c[1].toFixed(3)}`;
-		if (k === lastKey || !canvas) return;
-		lastKey = k;
-		compute();
+		void reveal;
+		if (!canvas) return;
+		if (k !== lastKey) {
+			lastKey = k;
+			compute();
+		}
 		paint();
 	});
 
@@ -249,7 +213,7 @@
 	const o = px([0, 0]);
 </script>
 
-<div class="poincare" bind:this={root}>
+<div class="poincare">
 	<div class="stage">
 		<canvas bind:this={canvas} width={CW} height={CH} aria-hidden="true"></canvas>
 		<svg bind:this={svg} viewBox="0 0 {W} {H}" role="img" aria-label="A region coloured by a potential built along rays from a centre point.">
@@ -315,13 +279,15 @@
 				{ value: 'star', label: 'Star-shaped region' },
 				{ value: 'annulus', label: 'Annulus with dθ' }
 			]}
-			onchange={() => setTimeout(replay, 0)}
 		/>
-		<Button variant="subtle" onclick={replay}>Replay</Button>
+		<Timeline bind:value={reveal} duration={3} from="centre" to="whole region" label="Integrating outwards along the rays" />
 	</Controls>
 	<div class="readout">
 		{#if mode === 'star'}
-			<TeX tex={String.raw`f(p) = \int_0^1 \omega\big(t\,p\big)(p)\,dt \qquad\Longrightarrow\qquad df = \omega \ \ \text{(because } d\omega = 0\text{)}`} />
+			<div class="eqs">
+				<span><TeX tex={String.raw`f(p) = \int_0^1 \omega_{tp}(p)\,dt`} /></span>
+				<span><TeX tex={String.raw`\Longrightarrow\quad df = \omega \ \ \text{(because } d\omega = 0\text{)}`} /></span>
+			</div>
 			<p class="note">Each point gets the integral of ω along the straight ray from the centre. The coloured map is the resulting potential, with its level lines; since every ray stays inside the region, every point gets a value.</p>
 		{:else}
 			<div class="routes">
@@ -423,6 +389,15 @@
 		border-top: 1px solid var(--line-faint);
 		font-size: 1rem;
 		overflow-x: auto;
+	}
+	.eqs {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.3rem 1.6rem;
+	}
+	.eqs span {
+		white-space: nowrap;
 	}
 	.routes {
 		display: flex;

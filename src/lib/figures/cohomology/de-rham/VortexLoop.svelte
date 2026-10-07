@@ -209,6 +209,7 @@
 	}
 	.big {
 		font-family: var(--font-display);
+		font-variant-numeric: lining-nums tabular-nums;
 		font-size: 2rem;
 		line-height: 1;
 		color: var(--gold-bright);
@@ -224,12 +225,9 @@
 		color: var(--rose);
 		font-variant-numeric: tabular-nums;
 	}
-	@media (max-width: 640px) {
+	@container figure (max-width: 640px) {
 		.readout {
-			grid-template-columns: 1fr 1fr;
-		}
-		.cell:first-child {
-			grid-column: 1 / -1;
+			grid-template-columns: 1fr;
 		}
 	}
 </style>

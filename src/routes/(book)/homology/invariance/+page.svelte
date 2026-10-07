@@ -21,6 +21,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import HexagonMap from '$lib/figures/homology/invariance/HexagonMap.svelte';
 	import ChainLadder from '$lib/figures/homology/invariance/ChainLadder.svelte';
 	import PrismSweep from '$lib/figures/homology/invariance/PrismSweep.svelte';
@@ -111,7 +112,10 @@
 
 <Question>
 	<p>
-		Can you label the hexagon so that \(f_\#(z) = 3z'\)? And can you make \(f_\#(z) = 0\) while squashing <em>no</em> edge? Answer: going three times around the triangle takes nine forward steps, but the hexagon only has six edges, so with this \(K\) the winding number lies between \(-2\) and \(2\). The labels \(0,1,0,1,0,1\) squash nothing and give \(f_\#(z) = 3[01] - 3[01] = 0\): the band just slides back and forth along one edge.
+		Can you label the hexagon so that \(f_\#(z) = 3z'\)? And can you make \(f_\#(z) = 0\) while squashing <em>no</em> edge? Try both in the figure before reading on.
+	</p>
+	<p>
+		<em>Answers.</em> Going three times around the triangle takes nine forward steps, but the hexagon only has six edges, so with this \(K\) the winding number lies between \(-2\) and \(2\). The labels \(0,1,0,1,0,1\) squash nothing and give \(f_\#(z) = 3[01] - 3[01] = 0\): the band just slides back and forth along one edge.
 	</p>
 </Question>
 
@@ -151,13 +155,13 @@
 </Definition>
 
 <p>
-	The bullet in \(C_\bullet\) is a placeholder meaning “the whole sequence of groups \(C_0, C_1, C_2, \dots\) together with its boundary maps”. It is easiest to <em>see</em> a chain map as a ladder. The two chain complexes are the rails, the maps \(\varphi_k\) are the rungs, and the condition says that in every square of the ladder the two routes from the top-left corner to the bottom-right corner agree. Mathematicians call such a diagram <dfn>commutative</dfn>. That has nothing to do with \(ab = ba\); it means “all routes give the same result”.
+	The bullet in \(C_\bullet\) is a placeholder meaning “the whole sequence of groups \(C_0, C_1, C_2, \dots\) together with its boundary maps”. It is easiest to <em>see</em> a chain map as a ladder. The two chain complexes are the rails, the maps \(\varphi_k\) are the rungs, and the condition says that in every square of the ladder the two routes from the top-left corner to the bottom-right corner agree. Mathematicians call such a diagram <dfn>commutative</dfn>. This is a different use of the word from \(ab = ba\): here it means “all routes give the same result”.
 </p>
 
-<Figure num="3.5.2" title="A chain map is a ladder" hint="Hover a square">
+<Figure num="3.5.2" title="A chain map is a ladder" hint="Hover or tap a square">
 	<ChainLadder />
 	{#snippet caption()}
-		The chain map \(f_\#\) joins the chain complex of \(K\) (top) to that of \(L\) (bottom). In each square, going across and then down (gold) equals going down and then across (teal): \(\partial \circ f_\# = f_\# \circ \partial\).
+		The chain map \(f_\#\) joins the chain complex of \(K\) (top) to that of \(L\) (bottom). In each square, going across and then down (gold, \(f_\#\circ\partial\)) gives the same as going down and then across (teal, \(\partial\circ f_\#\)).
 	{/snippet}
 </Figure>
 
@@ -252,7 +256,7 @@
 </Definition>
 
 <p>
-	Why “singular”? In Hatcher’s words, the word is “used here to express the idea that σ need not be a nice embedding but can have ‘singularities’ where its image does not look at all like a simplex.” A singular triangle can be crumpled, folded onto a curve, or collapsed to a single point. All that is required is continuity.
+	Why “singular”? In Hatcher’s words, the word is “used here to express the idea that σ need not be a nice embedding but can have ‘singularities’ where its image does not look at all like a simplex” <Cite k="hatcher2002" loc="§2.1" />. A singular triangle can be crumpled, folded onto a curve, or collapsed to a single point. All that is required is continuity.
 </p>
 
 <p>
@@ -266,7 +270,7 @@
 </Theorem>
 
 <p>
-	We will not prove this. The proof is not deep, but it is long; it is Theorem 2.27 in Hatcher’s <em>Algebraic Topology</em>, and it uses the tools of the next chapter. Its practical meaning is the important thing. From now on, \(H_n(X)\) means singular homology, a property of the space \(X\) alone, and we may <em>compute</em> it from any triangulation we like, as in <Ref to="homology/computing" />, or from a cell structure, as in <Ref to="homology/exact-sequences" />.
+	We will not prove this. The proof is not deep, but it is long <Cite k="hatcher2002" loc="Thm 2.27" />, and it uses the tools of the next chapter. Its practical meaning is the important thing. From now on, \(H_n(X)\) means singular homology, a property of the space \(X\) alone, and we may <em>compute</em> it from any triangulation we like, as in <Ref to="homology/computing" />, or from a cell structure, as in <Ref to="homology/exact-sequences" />.
 </p>
 
 <Example title="Two computations straight from the definition">
@@ -311,7 +315,7 @@
 </p>
 \[ P(\sigma) = \sum_{i=0}^{n} (-1)^i\, \bigl[v_0,\dots,v_i,\,w_i,\dots,w_n\bigr] \]
 <p>
-	(each bracket stands for the restriction of the prism map to that simplex). For an edge, \(n = 1\), this is the square cut along a diagonal into two triangles. Computing the boundary carefully gives the formula at the heart of the proof:
+	(each bracket stands for the restriction of the prism map to that simplex). For an edge, \(n = 1\), this is the square cut along a diagonal into two triangles. Computing the boundary carefully gives the formula at the heart of the proof <Cite k="hatcher2002" loc="Thm 2.10" />:
 </p>
 \[ \partial P(\sigma) \;=\; g_\#\sigma \;-\; f_\#\sigma \;-\; P(\partial\sigma). \]
 <p>In words: the boundary of a prism is its top, minus its bottom, minus the prisms over its own boundary (the sides).</p>
@@ -401,7 +405,7 @@
 </Definition>
 
 <Theorem id="thm-no-retraction" label="Theorem (no retraction)">
-	<p>There is no retraction of the disk \(D^n\) onto its boundary sphere \(S^{n-1}\).</p>
+	<p>For \(n \ge 1\), there is no retraction of the disk \(D^n\) onto its boundary sphere \(S^{n-1}\).</p>
 </Theorem>
 
 <Proof>
@@ -471,7 +475,7 @@
 
 <History>
 	<p>
-		L. E. J. Brouwer proved the fixed point theorem, together with the invariance of dimension and the theory of degree we meet below, in a burst of papers around 1910–1912. There is an irony here. Brouwer later championed <em>intuitionism</em>, a philosophy of mathematics that rejects proofs of existence that do not show how to find the object — exactly the kind of proof given above.
+		The Dutch mathematician L. E. J. Brouwer proved the fixed point theorem in every dimension, together with the invariance of dimension and the theory of degree we meet below, in a burst of papers around 1910–1912 <Cite k="brouwer1911,brouwer1911dim" />. The proof above is the later, homological streamlining <Cite k="hatcher2002" loc="Cor. 2.15" />. There is an irony here. Brouwer spent the rest of his career championing <em>intuitionism</em>, a philosophy of mathematics that rejects proofs of existence that do not show how to find the object — exactly the kind of proof given above. Dirk van Dalen’s biography tells the story of the topologist and the philosopher who shared one head <Cite k="vandalen2013" />.
 	</p>
 </History>
 
@@ -481,7 +485,7 @@
 <h3>Is dimension a topological property?</h3>
 
 <p>
-	Surely a line, a plane and space are different shapes? As <em>sets</em> they are not: in 1877 Georg Cantor found a one-to-one correspondence between the points of a segment and the points of a square. Continuity does not obviously save us either: in 1890 Giuseppe Peano constructed a continuous curve that passes through every point of a filled square, a space-filling curve. So counting coordinates is not obviously a topological invariant. Could some cleverer map be continuous in both directions?
+	Surely a line, a plane and space are different shapes? As <em>sets</em> they are not. In 1877 Georg Cantor found a one-to-one correspondence between the points of a segment and the points of a square <Cite k="cantor1878" />, and wrote to his friend Richard Dedekind, “Je le vois, mais je ne le crois pas!” — I see it, but I don’t believe it. (He was asking Dedekind to check the proof rather than doubting the result <Cite k="gouvea2011" />.) Continuity does not obviously save us either: in 1890 Giuseppe Peano constructed a continuous curve that passes through every point of a filled square <Cite k="peano1890" />. So counting coordinates is not obviously a topological invariant. Could some cleverer map be continuous in both directions? Brouwer settled the question in 1911 <Cite k="brouwer1911dim" />. With homology the proof takes one paragraph.
 </p>
 
 <Theorem id="thm-invariance-dimension" label="Theorem (invariance of dimension)">
@@ -503,7 +507,7 @@
 
 <Remark title="Local versions">
 	<p>
-		The same idea, applied near a single point, shows that a nonempty open subset of \(\R^m\) can only be homeomorphic to an open subset of \(\R^n\) if \(m = n\). This uses the <em>local homology</em> groups \(H_k(U, U\setminus\{x\})\), defined in the next chapter, which equal \(\Z\) exactly when \(k = m\). It is what makes the <em>dimension of a manifold</em> (<Ref to="topology/manifolds" />) well defined. A deeper cousin is Brouwer’s <dfn>invariance of domain</dfn>: a continuous one-to-one map from an open subset of \(\R^n\) to \(\R^n\) has open image. One consequence: a continuous bijection \(\R^n \to \R^n\) automatically has a continuous inverse.
+		The same idea, applied near a single point, shows that a nonempty open subset of \(\R^m\) can only be homeomorphic to an open subset of \(\R^n\) if \(m = n\) <Cite k="hatcher2002" loc="Thm 2.26" />. This uses the <em>local homology</em> groups \(H_k(U, U\setminus\{x\})\), defined in the next chapter, which equal \(\Z\) exactly when \(k = m\). It is what makes the <em>dimension of a manifold</em> (<Ref to="topology/manifolds" />) well defined. A deeper cousin is Brouwer’s <dfn>invariance of domain</dfn>: a continuous one-to-one map from an open subset of \(\R^n\) to \(\R^n\) has open image <Cite k="hatcher2002" loc="Thm 2B.3" />. One consequence: a continuous bijection \(\R^n \to \R^n\) automatically has a continuous inverse.
 	</p>
 </Remark>
 
@@ -516,11 +520,11 @@
 </Theorem>
 
 <p>
-	For a circle or a triangle this is obvious. But a simple closed curve can be fractal like the Koch snowflake, nowhere smooth, or so wiggly that it has positive area. The statement is easy to believe and slippery to prove. Camille Jordan stated and proved it in 1887, but his proof was long considered incomplete, and Oswald Veblen’s proof of 1905 is often credited as the first rigorous one. Homology gives a clean proof. It shows that for any embedded circle \(C\) in the sphere \(S^2\) (the plane plus one point at infinity),
+	For a circle or a triangle this is obvious. But a simple closed curve can be fractal like the Koch snowflake, nowhere smooth, or so wiggly that it has positive area. The statement is easy to believe and slippery to prove. Camille Jordan stated and proved it in 1887, but for a century his proof was dismissed as incomplete, and Oswald Veblen’s proof of 1905 <Cite k="veblen1905" /> was credited as the first rigorous one. The story has a twist. In 2005 Thomas Hales had a computer check every step of a formal proof, then went back to Jordan to locate the famous error for his introduction. He was “surprised … to find nothing objectionable about it” <Cite k="hales2007" />. Homology gives a clean proof. It shows that for any embedded circle \(C\) in the sphere \(S^2\) (the plane plus one point at infinity),
 </p>
 \[ \tilde H_0\bigl(S^2\setminus C\bigr) \cong \Z, \]
 <p>
-	which says exactly “two path components”. The proof (Hatcher, Proposition 2B.1) chops the curve into smaller and smaller arcs and applies the Mayer–Vietoris sequence of the next chapter at each step. We will not reproduce it, but the tool it needs will be fully explained there.
+	which says exactly “two path components”. The proof chops the curve into smaller and smaller arcs and applies the Mayer–Vietoris sequence of the next chapter at each step <Cite k="hatcher2002" loc="Prop. 2B.1" />. We will not reproduce it, but the tool it needs will be fully explained there.
 </p>
 
 <Figure num="3.5.7" title="Inside or outside?" hint="Drag the probe (or use arrow keys)">
@@ -531,7 +535,7 @@
 </Figure>
 
 <p>
-	In higher dimensions the separation part survives: an embedded \((n-1)\)-sphere in \(S^n\) splits it into exactly two pieces (the Jordan–Brouwer separation theorem, proved the same way). The rest can fail. In 1924 J. W. Alexander built a wildly tangled “horned sphere” in \(\R^3\) whose outside is not simply connected: a loop there can be caught on the horns and never pulled free.
+	In the plane even more is true: a Jordan curve together with its inside is always a deformed closed disk (the Schoenflies theorem). In higher dimensions only the separation survives. An embedded \((n-1)\)-sphere in \(S^n\) splits it into exactly two pieces (the Jordan–Brouwer separation theorem, proved the same way), but the pieces can be strange. In 1924 J. W. Alexander built a wildly tangled “horned sphere” in \(\R^3\) whose outside is not simply connected <Cite k="alexander1924" />: a loop there can be caught on the horns and never pulled free, so the outside looks nothing like the outside of a round ball.
 </p>
 
 <!-- ───────────────────────────────────────────────────────────────────── -->
@@ -561,7 +565,7 @@
 </p>
 \[ \deg f = \sum_{x\in f^{-1}(y)} \pm 1. \]
 <p>
-	The individual preimages come and go as \(y\) moves, but the signed count never changes. Milnor’s little book <em>Topology from the Differentiable Viewpoint</em> builds the whole theory from this formula. Figure 3.5.8 lets you watch it happen.
+	The individual preimages come and go as \(y\) moves, but the signed count never changes. Milnor’s little book <em>Topology from the Differentiable Viewpoint</em> builds the whole theory from this formula <Cite k="milnor1965" />. Figure 3.5.8 lets you watch it happen.
 </p>
 
 <Figure num="3.5.8" title="Counting preimages with signs" hint="Drag the target point · change n and the wobble · drag elsewhere to rotate">
@@ -616,6 +620,8 @@
 	<p>\(S^n\) has a continuous tangent vector field that is nowhere zero if and only if \(n\) is odd. In particular, every continuous tangent vector field on the ordinary sphere \(S^2\) vanishes somewhere.</p>
 </Theorem>
 
+<p>The proof is Hatcher’s <Cite k="hatcher2002" loc="Thm 2.28" />, and it needs nothing but the degree of the antipodal map.</p>
+
 <Proof>
 	<p>
 		<strong>Even \(n\): no such field.</strong> Suppose \(v\) is a tangent field with no zeros. Dividing by its length, we may assume \(\abs{v(x)} = 1\) for all \(x\). Define
@@ -655,7 +661,7 @@
 </Theorem>
 
 <p>
-	(We use rational coefficients so that the groups are vector spaces and traces make sense.) Compactness matters: a translation of the line \(\R\) has \(\tau = 1\) and no fixed point. We will not prove the theorem, but its corollaries are worth savouring:
+	(We use rational coefficients so that the groups are vector spaces and traces make sense.) Compactness matters: a translation of the line \(\R\) has \(\tau = 1\) and no fixed point. We will not prove the theorem <Cite k="hatcher2002" loc="Thm 2C.3" />, but its corollaries are worth savouring:
 </p>
 <ul>
 	<li><strong>Contractible \(X\):</strong> only \(H_0 = \Q\) survives, and \(f_*\) is the identity there, so \(\tau(f) = 1 \neq 0\). Every self-map of a contractible finite complex has a fixed point — Brouwer, generalized.</li>
@@ -706,7 +712,7 @@
 </Theorem>
 
 <p>
-	Hatcher puts the geometric meaning in one sentence. Abelianizing lets you rotate the letters of a loop’s word cyclically, which is the same as choosing a different starting point: “Thus loops become cycles, without a chosen basepoint.”
+	We will not prove it <Cite k="hatcher2002" loc="Thm 2A.1" />, but Hatcher puts its geometric meaning in one sentence. Abelianizing lets you rotate the letters of a loop’s word cyclically, which is the same as choosing a different starting point: “Thus loops become cycles, without a chosen basepoint” <Cite k="hatcher2002" loc="Ch. 2 introduction" />.
 </p>
 
 <Example title="Abelianizing some fundamental groups">
@@ -734,13 +740,13 @@
 
 <Intuition>
 	<p>
-		Homotopy lets a loop <strong>shrink</strong>; homology also lets it <strong>sweep across a surface and cancel</strong>. That extra freedom makes homology coarser, but also far more computable. For instance, the homotopy groups \(\pi_i(S^2)\) are nonzero for infinitely many \(i\), and most of them are still unknown, while \(H_i(S^2) = 0\) for every \(i \gt 2\).
+		Homotopy lets a loop <strong>shrink</strong>; homology also lets it <strong>sweep across a surface and cancel</strong>. That extra freedom makes homology coarser, but also far more computable. For instance, the homotopy groups \(\pi_i(S^2)\) are nonzero for infinitely many \(i\), and nobody knows them all, while \(H_i(S^2) = 0\) for every \(i \gt 2\).
 	</p>
 </Intuition>
 
 <Warning>
 	<p>
-		Homology is a powerful invariant, but not a complete one: spaces can have identical homology and still be different. Poincaré’s <em>homology sphere</em> (1904) has exactly the homology of \(S^3\), but its fundamental group has \(120\) elements. And \(\CP^2\) and \(S^2\vee S^4\) have the same homology groups (\(\Z, 0, \Z, 0, \Z\)) but are not homotopy equivalent. The cup product of <Ref to="cohomology/cup-product" /> tells them apart.
+		Homology is a powerful invariant, but not a complete one: spaces can have identical homology and still be different. Poincaré’s <em>homology sphere</em> has exactly the homology of \(S^3\), but its fundamental group has \(120\) elements. He built it in 1904 to refute a claim he had made four years earlier, that homology alone recognizes the \(3\)-sphere <Cite k="poincare1904" />; the corrected question, with \(\pi_1\) in place of \(H_1\), became the Poincaré conjecture. And \(\CP^2\) and \(S^2\vee S^4\) have the same homology groups (\(\Z, 0, \Z, 0, \Z\)) but are not homotopy equivalent. The cup product of <Ref to="cohomology/cup-product" /> tells them apart.
 	</p>
 </Warning>
 
@@ -765,7 +771,7 @@
 </Exercise>
 
 <Exercise level={1} title="The identity is not null-homotopic">
-	<p>Use homology to prove that the identity map of \(S^1\) is not homotopic to a constant map. What does this say about rotating a rubber band on a post?</p>
+	<p>Use homology to prove that the identity map of \(S^1\) is not homotopic to a constant map. What does this say about a rubber band looped once around a post?</p>
 	{#snippet solution()}
 		<p>
 			The identity induces the identity on \(H_1(S^1)\cong\Z\), which is multiplication by \(1\). A constant map factors through a point, and \(H_1(\text{point}) = 0\), so it induces \(0\). Homotopic maps induce the same homomorphism (Section 4), and \(1\neq 0\). So the two maps are not homotopic. A rubber band wound once around a post cannot be slid off the post, however you wiggle it, without cutting it or lifting it over the top.
@@ -874,14 +880,21 @@
 			title: 'Topology from the Differentiable Viewpoint',
 			author: 'John Milnor',
 			url: 'https://press.princeton.edu/books/paperback/9780691048338/topology-from-the-differentiable-viewpoint',
-			note: 'Sixty-odd perfect pages: degree defined by counting preimages with signs, Brouwer, the hairy ball theorem and the Poincaré–Hopf theorem, all with calculus instead of homology.',
+			note: 'Sixty-odd pages that define degree by counting preimages with signs, then prove Brouwer, the hairy ball theorem and the Poincaré–Hopf theorem with calculus instead of homology. A model of mathematical writing; it needs only multivariable calculus.',
 			kind: 'book'
+		},
+		{
+			title: 'Rental Harmony: Sperner’s Lemma in Fair Division',
+			author: 'Francis Edward Su, American Mathematical Monthly 106 (1999)',
+			url: 'https://doi.org/10.1080/00029890.1999.12005142',
+			note: 'Sperner’s lemma, a combinatorial cousin of Brouwer’s theorem, used to split the rent fairly among housemates who want different rooms. Delightful expository writing that needs no topology.',
+			kind: 'paper'
 		},
 		{
 			title: 'Algebraic Topology: A First Course',
 			author: 'William Fulton',
 			url: 'https://link.springer.com/book/10.1007/978-1-4612-4180-5',
-			note: 'Builds topology up from winding numbers of plane curves; beautiful chapters on the Jordan curve theorem and on fixed points.',
+			note: 'Builds topology up from winding numbers of plane curves, proving the Jordan curve theorem and the plane case of Brouwer’s theorem along the way. A gentle route for readers who like calculus.',
 			kind: 'book'
 		},
 		{
@@ -899,10 +912,18 @@
 			kind: 'book'
 		},
 		{
-			title: 'Algebraic Topology (video lectures)',
-			author: 'N. J. Wildberger',
+			title: 'Algebraic Topology (recorded lectures)',
+			author: 'Pierre Albin, University of Illinois',
+			url: 'https://www.youtube.com/playlist?list=PLpRLWqLFLVTCL15U6N3o35g4uhMSBVA2b',
+			note: 'A graduate course that follows Hatcher closely. Lectures 12–13 do singular homology and homotopy invariance, 17–18 degree, and 25–26 Hurewicz, the Jordan curve theorem, invariance of domain and Lefschetz.',
+			kind: 'video',
+			free: true
+		},
+		{
+			title: 'Algebraic Topology: a beginner’s course',
+			author: 'N. J. Wildberger, UNSW',
 			url: 'https://www.youtube.com/playlist?list=PL41FDABC6AA085E78',
-			note: 'A visual, unhurried lecture series; the later lectures on homology are a good companion to this part of the book.',
+			note: 'Unhurried lectures with plenty of pictures and very little machinery. AlgTop11–13 are about winding numbers and what they prove (the fundamental theorem of algebra among them), a gentle companion to Sections 1 and 7. The course stops at simplicial homology.',
 			kind: 'video',
 			free: true
 		}

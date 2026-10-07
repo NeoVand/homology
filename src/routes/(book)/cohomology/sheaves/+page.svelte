@@ -18,6 +18,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import CoverNerve from '$lib/figures/cohomology/sheaves/CoverNerve.svelte';
 	import CechCircle from '$lib/figures/cohomology/sheaves/CechCircle.svelte';
 	import RestrictionMaps from '$lib/figures/cohomology/sheaves/RestrictionMaps.svelte';
@@ -32,7 +33,7 @@
 		{
 			title: 'Sheaf Theory through Examples',
 			author: 'Daniel Rosiak (MIT Press, 2022)',
-			url: 'https://direct.mit.edu/books/oa-monograph/5460/Sheaf-Theory-through-Examples',
+			url: 'https://doi.org/10.7551/mitpress/12581.001.0001',
 			note: 'The gentlest book-length introduction: sheaves met through colourings, data, chess and music before any formalism. Open access.',
 			kind: 'book' as const,
 			free: true
@@ -56,15 +57,17 @@
 		{
 			title: 'Elementary Applied Topology',
 			author: 'Robert Ghrist (2014)',
-			note: 'Chapter 9 is a lively, picture-rich tour of cellular sheaves and their cohomology with applications to networks, flows and sensing; chapter 5 covers nerves and coverage.',
+			url: 'https://www2.math.upenn.edu/~ghrist/notes.html',
+			note: 'Chapter 9 is a lively, picture-rich tour of cellular sheaves and their cohomology, with applications to flows, network coding and sampling. Undergraduate to graduate level; chapters can be downloaded from the author’s page.',
 			kind: 'book' as const
 		},
 		{
 			title: 'Coverage in sensor networks via persistent homology',
 			author: 'Vin de Silva and Robert Ghrist (Algebr. Geom. Topol. 7, 2007)',
 			url: 'https://doi.org/10.2140/agt.2007.7.339',
-			note: 'How to certify that a region is covered by sensors using only who-can-hear-whom information — nerves and homology at work.',
-			kind: 'paper' as const
+			note: 'How to certify that a region is covered by sensors using only who-can-hear-whom information — nerves and homology at work. Research level, open access.',
+			kind: 'paper' as const,
+			free: true
 		},
 		{
 			title: 'On the Cohomology of Impossible Figures',
@@ -97,6 +100,14 @@
 			kind: 'book' as const
 		},
 		{
+			title: 'Leray in Oflag XVIIA: the origins of sheaf theory, sheaf cohomology, and spectral sequences',
+			author: 'Haynes Miller (Gazette des Mathématiciens, 2000)',
+			url: 'https://math.mit.edu/~hrm/papers/ss.pdf',
+			note: 'How sheaves were born in a prisoner-of-war camp, told by a topologist with help from Armand Borel, Pierre Cartier and Jean-Pierre Serre. Part history, part mathematics; readable after this chapter.',
+			kind: 'paper' as const,
+			free: true
+		},
+		{
 			title: 'Contextuality, Cohomology and Paradox',
 			author: 'Samson Abramsky, Rui Soares Barbosa, Kohei Kishida, Raymond Lal, Shane Mansfield (2015)',
 			url: 'https://arxiv.org/abs/1502.03097',
@@ -123,9 +134,9 @@
 	/> an impossible staircase was a set of step heights that looked fine around every corner but could not come from any
 	actual height. In <Ref to="cohomology/de-rham" /> the angle around the origin was a perfectly good function near every
 	point of the punctured plane but not on the plane as a whole. Both times, cohomology measured exactly how the local
-	pieces failed to fit together. This chapter turns that theme into a definition. We will learn to describe a space by
-	how it is <em>covered</em> by small pieces, to describe data by how it lives on those pieces, and to compute — with
-	nothing but the overlaps — whether the pieces can be glued.
+	pieces failed to fit together. Now the theme becomes a definition: describe a space by how it is <em>covered</em> by
+	small pieces, describe data by how it lives on those pieces, and decide — from the overlaps alone — whether the pieces
+	can be glued.
 </p>
 
 <Ahead>
@@ -315,15 +326,17 @@
 
 <Theorem label="Theorem (the nerve theorem)" id="thm-nerve">
 	<p>
-		If \(\mathcal U\) is a good open cover of a reasonable space \(X\) — a manifold, a simplicial complex, or a subset of
-		\(\R^n\) covered by finitely many open sets — then the nerve \(N(\mathcal U)\) is <Term t="homotopy-equivalence"
+		If \(\mathcal U\) is a good open cover of a reasonable space \(X\) — any manifold, any simplicial complex and any
+		subset of \(\R^n\) qualifies — then the nerve \(N(\mathcal U)\) is <Term t="homotopy-equivalence"
 			>homotopy equivalent</Term
 		> to \(X\). In particular \(N(\mathcal U)\) and \(X\) have the same homology and cohomology groups.
 	</p>
 </Theorem>
 
 <p>
-	We will not prove it; versions of it go back to Jean Leray and to Karol Borsuk (1948). But the idea is easy to believe.
+	(“Reasonable” has a precise meaning, <em>paracompact</em>, which every space in this book satisfies; Hatcher proves the
+	theorem in that generality <Cite k="hatcher2002" loc="Cor. 4G.3" />.) We will not prove it here; versions of it go back
+	to Jean Leray in the 1940s and to Karol Borsuk <Cite k="borsuk1948" />. But the idea is easy to believe.
 	If every piece and every overlap is a featureless blob, then the only way the space can have a hole is for the pieces to
 	be arranged <em>around</em> it — and the arrangement is precisely what the nerve records. You already met the theorem in
 	<Ref to="homology/persistence" />: the Čech complex of a point cloud is the nerve of the disks around the points, and
@@ -352,10 +365,12 @@
 	The nerve theorem says that the information needed is exactly the nerve: record which pairs of disks overlap and which
 	triples share a point, compute \(b_1\) of the resulting simplicial complex, and you know how many holes the covered region
 	has — without knowing a single position. In practice sensors cannot easily tell whether <em>three</em> of them share a
-	point; they only know pairs. Vin de Silva and Robert Ghrist showed in 2007 how to certify coverage of a whole region from
+	point; they only know pairs. Vin de Silva and Robert Ghrist showed how to certify coverage of a whole region from
 	pairwise information alone, using the homology of a related complex (the Vietoris–Rips complex of <Ref
 		to="homology/persistence"
-	/>) together with a little extra knowledge about the sensors along the border of the region.
+	/>) together with a little extra knowledge about the sensors along the border of the region <Cite
+		k="desilva-ghrist2007"
+	/>.
 </p>
 
 <h2 id="cech-cohomology">Čech cohomology: bookkeeping on overlaps</h2>
@@ -383,9 +398,10 @@
 		Let \(\mathcal U = \{U_0, \dots, U_n\}\) be an open cover of \(X\) and \(G\) an abelian group. A <dfn
 			>Čech \(0\)-cochain</dfn
 		> assigns an element \(f_i \in G\) to each piece; a <dfn>Čech \(1\)-cochain</dfn> assigns an element \(c_{ij}\in G\) to
-		each overlap \(U_{ij}\) with \(i \lt j\); a <dfn>Čech \(2\)-cochain</dfn> assigns an element \(a_{ijk}\) to each triple
-		overlap with \(i \lt j \lt k\); and so on. They form groups \(\check C^0(\mathcal U;G)\), \(\check C^1(\mathcal U;G)\)
-		and so on. The <dfn>Čech coboundary</dfn> \(\delta\) is
+		each nonempty overlap \(U_{ij}\) with \(i \lt j\); a <dfn>Čech \(2\)-cochain</dfn> assigns an element \(a_{ijk}\) to
+		each nonempty triple overlap with \(i \lt j \lt k\); and so on. They form groups \(\check C^0(\mathcal U;G)\),
+		\(\check C^1(\mathcal U;G)\) and so on. (For now every nonempty overlap is assumed to be in one piece; the two-arc
+		cover below shows what changes when it is not.) The <dfn>Čech coboundary</dfn> \(\delta\) is
 		\[ (\delta f)_{ij} = f_j - f_i, \qquad (\delta c)_{ijk} = c_{jk} - c_{ik} + c_{ij}, \]
 		and in general \((\delta c)_{i_0\cdots i_{p+1}} = \sum_{k=0}^{p+1} (-1)^k\, c_{i_0 \cdots \widehat{i_k} \cdots
 		i_{p+1}}\), where the hat means “leave this index out”.
@@ -501,17 +517,18 @@
 	<p>
 		For an arbitrary space there may be no good cover at all, and different covers can give different answers. The Čech
 		cohomology \(\check H^p(X;G)\) of the <em>space</em> is defined by passing to finer and finer covers — a limit over
-		refinements. For manifolds and simplicial complexes nothing changes after the first good cover, so you may always
-		compute with one good cover.
+		refinements <Cite k="hatcher2002" loc="§3.3, pp. 256–257" />. On a manifold or a simplicial complex every cover can be
+		refined to a good one, and all good covers give the same answer, so you may always compute with any one good cover.
 	</p>
 </Remark>
 
 <History title="Nerves and Čech">
 	<p>
-		The nerve of a cover was introduced by Pavel Alexandrov in the late 1920s. In 1932 Eduard Čech used the nerves of finer
-		and finer covers to define homology for arbitrary spaces, however wild — spaces that cannot be triangulated at all.
-		Cohomology itself would only be invented three years later; the Čech theory we use today is its dual, built on the same
-		nerves.
+		Pavel Alexandrov introduced the nerve of a cover in the 1920s, as a way to approximate a compact space by polyhedra <Cite
+			k="alexandroff1928"
+		/>. In 1932 Eduard Čech used the nerves of finer and finer covers to define homology for arbitrary spaces, however
+		wild — spaces that cannot be triangulated at all <Cite k="cech1932" />. Cohomology itself would only be invented three
+		years later; the Čech theory we use today is its dual, built on the same nerves.
 	</p>
 </History>
 
@@ -552,7 +569,7 @@
 </Figure>
 
 <p>
-	Here is the fourth of the book’s recurring ideas, <strong>reversed arrows</strong>, in its purest form. Sets get smaller
+	Here is one of the book’s four recurring ideas, <strong>reversed arrows</strong>, in its purest form. Sets get smaller
 	along inclusions \(W\to V \to U\), but data travels the other way, \(F(U)\to F(V)\to F(W)\). That is the same reversal
 	as cochains pulling back along maps, and it is why cohomology, not homology, is the natural home for local data.
 </p>
@@ -569,8 +586,8 @@
 		</li>
 		<li>
 			<strong>Locally constant functions.</strong> \(F(U)\) = the functions \(U\to G\) that are constant near every point,
-			that is, constant on each connected piece of \(U\). These are the solutions of \(f' = 0\), and they are what
-			\(H^0\) counted in <Ref to="cohomology/cochains" />.
+			that is, constant on each connected piece of \(U\). For real-valued functions these are the solutions of
+			\(f' = 0\), and they are what \(H^0\) counted in <Ref to="cohomology/cochains" />.
 		</li>
 		<li>
 			<strong>Constant functions.</strong> \(F(U)\) = the functions \(U\to G\) that take a single value on all of \(U\).
@@ -646,8 +663,8 @@
 	<p>
 		Ask of any property: <em>can I check it by looking near each point separately?</em> Continuity, differentiability,
 		“satisfies this differential equation”, “\(|f|\le 1\)”, “is a square root of \(z\)” — yes, and the corresponding
-		presheaves are sheaves. Boundedness, “is constant”, “integrates to zero over \(U\)” — no, and gluing fails. A sheaf is
-		the mathematical shape of <em>data whose correctness is local</em>.
+		presheaves are sheaves. Boundedness, “is constant”, “has at most one zero” — no: each looks at the whole of \(U\) at
+		once, and gluing fails. A sheaf is the mathematical shape of <em>data whose correctness is local</em>.
 	</p>
 </Intuition>
 
@@ -742,8 +759,9 @@
 
 <Remark title="Riemann surfaces">
 	<p>
-		Bernhard Riemann’s response to monodromy (1851) was to change the space rather than the function: glue together all the
-		local branches into a new surface lying over the plane, on which the branch becomes an honest single-valued function.
+		Bernhard Riemann’s response to monodromy, in his doctoral thesis <Cite k="riemann1851" />, was to change the space
+		rather than the function: glue together all the local branches into a new surface lying over the plane, on which the
+		branch becomes an honest single-valued function.
 		The spiral ramp of \(\log z\) and the two-sheeted surface of \(\sqrt z\) in the figure are those surfaces. (The two
 		sheets of \(\sqrt z\) seem to pass through each other along the negative real axis only because we drew them in
 		three dimensions; the surface itself does not cross itself.)
@@ -784,10 +802,10 @@
 
 <p>
 	In 1958 the psychiatrist and geneticist Lionel Penrose and his son Roger, then a young mathematician, published a drawing of an
-	impossible object: a triangle of three square beams, each meeting the next at a right angle (the Swedish artist Oscar
-	Reutersvärd had drawn a version made of cubes in 1934). Every corner of the drawing is a perfectly ordinary corner. The
-	whole thing cannot exist. In 1991 Roger Penrose explained why, in a short paper titled <em>On the cohomology of impossible
-	figures</em>.
+	impossible object: a triangle of three square beams, each meeting the next at a right angle <Cite k="penrose1958" />. (The
+	Swedish artist Oscar Reutersvärd had drawn a version made of cubes in 1934.) Every corner of the drawing is a perfectly
+	ordinary corner. The whole thing cannot exist. In 1991 Roger Penrose explained why, in a short paper titled <em>On the
+	cohomology of impossible figures</em> <Cite k="penrose1992" />.
 </p>
 
 <p>
@@ -825,9 +843,8 @@
 </p>
 
 <p>
-	There is a beautiful way to see the class in three dimensions. Build the three beams for real, as an open chain, and
-	look at it from exactly the right point: the end of the last beam then sits in front of the start of the first, and the
-	gap closes.
+	You can even see the class in three dimensions. Build the three beams for real, as an open chain, and look at it from
+	exactly the right point: the end of the last beam then sits in front of the start of the first, and the gap closes.
 </p>
 
 <Figure num="4.7.8" title="Possible — from one eye only" hint="Step aside, or drag to look from elsewhere · zoom">
@@ -870,7 +887,8 @@
 </Definition>
 
 <p>
-	(The symbol \(\prod\) means a list with one entry for each choice of indices — one section on each \(p\)-fold overlap.)
+	(The symbol \(\prod\) means a list with one entry for each choice of indices — one section on each overlap of
+	\(p+1\) pieces.)
 	With the constant sheaf of locally constant \(G\)-valued functions we recover exactly the previous section: a locally
 	constant function on an overlap is one element of \(G\) per connected piece, which is the repair we needed for the two
 	arcs.
@@ -896,12 +914,13 @@
 </ul>
 
 <p>
-	A beautiful special case shows how \(\check H^1\) arises from a <em>failure to glue</em>. Suppose every point has a
-	neighbourhood on which some equation can be solved, and any two local solutions differ by an element of a sheaf of
-	abelian groups \(A\). Pick local solutions \(s_i\) on a cover; on each overlap \(s_j - s_i = c_{ij}\) is a section of
-	\(A\); these differences automatically satisfy \(c_{ik} = c_{ij} + c_{jk}\), so \(c\) is a cocycle; and a global solution
-	exists exactly when \([c] = 0\) in \(\check H^1(X; A)\). The hikers, the logarithm and the depth readings are all
-	instances.
+	Here is the recipe behind every example so far, and it shows how \(\check H^1\) arises from a <em>failure to glue</em>.
+	Suppose every point has a neighbourhood on which some equation can be solved, and any two local solutions differ by a
+	section of a sheaf of abelian groups \(A\). Pick local solutions \(s_i\) on a cover; on each overlap \(s_j - s_i =
+	c_{ij}\) is a section of \(A\); these differences automatically satisfy \(c_{ik} = c_{ij} + c_{jk}\), so \(c\) is a
+	cocycle; and a global solution exists exactly when \([c] = 0\) in \(\check H^1(X; A)\). (If \(c = \delta a\), the
+	corrected solutions \(s_i - a_i\) agree on every overlap and glue.) The hikers, the logarithm and the depth readings are
+	all instances.
 </p>
 
 <h3>Leray’s theorem: when one cover is enough</h3>
@@ -909,8 +928,8 @@
 <p>
 	The true sheaf cohomology \(H^p(X;F)\) is defined without choosing any cover, either as the limit of
 	\(\check H^p(\mathcal U;F)\) over finer and finer covers, or through the machinery of derived functors that Alexander
-	Grothendieck introduced in 1957. For the spaces in this book every reasonable definition gives the same groups. To
-	compute them, one well-chosen cover suffices.
+	Grothendieck introduced in 1957 <Cite k="grothendieck1957" />. For the spaces in this book every reasonable definition
+	gives the same groups. To compute them, one well-chosen cover suffices.
 </p>
 
 <Theorem label="Theorem (Leray)" id="thm-leray">
@@ -918,6 +937,7 @@
 		If every finite intersection \(U_{i_0\cdots i_p}\) of the pieces of \(\mathcal U\) has no higher cohomology with
 		coefficients in \(F\) — that is, \(H^q(U_{i_0\cdots i_p}; F) = 0\) for all \(q\ge 1\) — then
 		\[ \check H^p(\mathcal U; F) \cong H^p(X;F) \quad \text{for every } p. \]
+		(For a proof see <Cite k="stacks-project" loc="Lemma 20.11.6, Tag 01ET" text />.)
 	</p>
 </Theorem>
 
@@ -937,11 +957,14 @@
 	function \(f_i\) with \(df_i = \omega\). On an overlap, \(d(f_j - f_i) = \omega - \omega = 0\), so \(f_j - f_i\) is a
 	constant \(c_{ij}\) on each (connected) overlap — a Čech \(1\)-cocycle with values in \(\R\). Changing the local
 	primitives by constants changes \(c\) by a coboundary, and \(\omega\) is exact exactly when the local primitives can be
-	chosen to agree, that is, when \([c] = 0\). This defines an isomorphism
+	chosen to agree, that is, when \([c] = 0\). So \([\omega]\mapsto[c]\) is a well-defined, one-to-one map; with a
+	<em>partition of unity</em> (a tool for blending local functions into a global one) you can show that every Čech class
+	arises this way, and the map is an isomorphism
 	\[ H^1_{\dR}(M) \;\cong\; \check H^1(M;\R). \]
-	For the angle form on the circle with our three arcs, the local primitives are three branches of the angle, and the
-	offsets are \(0, 0\) and \(2\pi\): holonomy \(-2\pi \ne 0\), the class of \(d\theta\). The same argument in every degree,
-	organised by Bott and Tu into the “tic-tac-toe” Čech–de Rham complex, proves de Rham’s theorem.
+	For the angle form on the circle with our three arcs, numbered anticlockwise, the local primitives are three branches
+	of the angle, and the offsets are \(c_{01} = c_{12} = 0\) and \(c_{02} = 2\pi\): holonomy \(-2\pi \ne 0\) (the sign is
+	an artefact of our conventions), the class of \(d\theta\). The same argument in every degree, organised by Bott and Tu
+	into the “tic-tac-toe” Čech–de Rham complex, proves de Rham’s theorem <Cite k="bott-tu1982" loc="§8" />.
 </p>
 
 <History title="A topologist in captivity">
@@ -949,11 +972,11 @@
 		Jean Leray was a French expert on fluid dynamics when he was captured in 1940 and sent to a prisoner-of-war camp in
 		Austria, where he remained until 1945. The MacTutor biography records the reason for his change of field: “Not wishing
 		the Germans to know that he was an expert in hydrodynamics, since he feared that if they found out he would be forced
-		to undertake war work for them, Leray claimed to be a topologist.” In the camp he and his fellow prisoners organised a
-		university in captivity, with Leray as its rector, and in topology lectures there he developed the ideas he published in
-		1946: sheaves and spectral sequences. Henri Cartan’s seminar reworked sheaf cohomology around 1950; Jean-Pierre Serre
-		made sheaves the language of algebraic geometry in 1955; Grothendieck’s 1957 paper made sheaf cohomology a derived
-		functor.
+		to undertake war work for them, Leray claimed to be a topologist” <Cite k="oconnor-robertson-leray" />. In the camp he
+		and his fellow prisoners organised a university in captivity, with Leray as its rector, and in topology lectures there
+		he worked out the ideas he published in 1946: sheaves, sheaf cohomology and spectral sequences <Cite k="miller2000" />.
+		Henri Cartan’s seminar reworked sheaf cohomology around 1950; Jean-Pierre Serre made sheaves the language of algebraic
+		geometry in 1955 <Cite k="serre1955" />; Grothendieck’s 1957 paper made sheaf cohomology a derived functor.
 	</p>
 </History>
 
@@ -961,8 +984,9 @@
 
 <p>
 	Sheaves can sound forbiddingly abstract. In applied topology they are now a practical tool, thanks to a combinatorial
-	version that lives on graphs and cell complexes. Justin Curry, who developed it in his 2014 thesis, describes cellular
-	sheaves as “finite families of vector spaces and maps parametrized by a cell complex”. Here is the version on a graph.
+	version that lives on graphs and cell complexes. It goes back to Allen Shepard’s 1985 thesis; Justin Curry, whose 2014
+	thesis turned it into a tool for data, networks and sensors, describes cellular sheaves as “finite families of vector
+	spaces and maps parametrized by a cell complex” <Cite k="curry2014" />. Here is the version on a graph.
 </p>
 
 <Definition title="Cellular sheaf on a graph" id="def-cellular-sheaf">
@@ -1027,10 +1051,12 @@
 	There is even a natural way for a network to <em>find</em> a global section using only local communication. The <dfn
 		>sheaf Laplacian</dfn
 	> \(L = \delta^{\mathsf T}\delta\) generalises the graph Laplacian, and the heat equation \(\frac{dx}{dt} = -Lx\) lets
-	every vertex nudge its value to reduce its disagreement with its neighbours. Since the flow never increases the total
-	disagreement \(\norm{\delta x}^2\), the flow settles on the global section closest to the starting data — consensus, when
+	every vertex nudge its value to reduce its disagreement with its neighbours: the total disagreement \(\norm{\delta x}^2\)
+	only ever goes down. The part of \(x\) that is already a global section (it lies in \(\ker\delta = \ker L\)) never moves,
+	and everything else decays, so the flow settles on the global section closest to the starting data — consensus, when
 	every map is the identity. Jakob Hansen and Robert Ghrist call the study of such Laplacians “spectral sheaf theory — an
-	extension of spectral graph theory to cellular sheaves”. Press “Let prices settle” in the figure to watch it work: with
+	extension of spectral graph theory to cellular sheaves” <Cite k="hansen-ghrist2019" />. Press “Let prices settle” in
+	the figure to watch it work: with
 	honest rates the prices converge to a consistent list; with an arbitrage loop they drain away to zero, the only
 	consistent list there is.
 </p>
@@ -1077,8 +1103,9 @@
 		<p>
 			(b) Every two faces of a tetrahedron share an edge and every three share a vertex, so enlarged slightly, every pair
 			and every triple of pieces overlaps; but no point is close to all four faces, so there is no \(3\)-simplex. The nerve
-			is the boundary of a tetrahedron: four vertices, six edges, four triangles. All the intersections are small disks, so
-			the cover is good and the nerve theorem says the sphere is homotopy equivalent to the hollow tetrahedron — which has
+			is the boundary of a tetrahedron: four vertices, six edges, four triangles. Each piece is a disk, each overlap of two
+			pieces is a thin strip along an edge, and each overlap of three is a small disk around a corner — all contractible —
+			so the cover is good and the nerve theorem says the sphere is homotopy equivalent to the hollow tetrahedron — which has
 			\(H^0 = \Z\), \(H^1 = 0\), \(H^2 = \Z\), the cohomology of \(S^2\).
 		</p>
 	{/snippet}
@@ -1088,18 +1115,29 @@
 	<p>
 		Which of these presheaves on \(\R\) are sheaves? (a) Continuous functions with \(f(x)\ge 0\) for all \(x\). (b)
 		Continuous functions with \(|f(x)|\le 1\) for all \(x\). (c) Bounded continuous functions. (d) Constant functions. (e)
-		Differentiable functions with \(f' = f\). (f) Continuous functions with \(\int_U f = 0\) (for bounded \(U\)).
+		Differentiable functions with \(f' = f\). (f) Continuous functions with at most one zero in \(U\). (g) A trap:
+		continuous functions with \(\int_U f = 0\) (for bounded \(U\)).
 	</p>
 	{#snippet hint()}
-		<p>Ask whether the defining property can be checked near each point separately.</p>
+		<p>
+			Ask whether the defining property can be checked near each point separately. For (g), check first that restriction
+			makes sense at all.
+		</p>
 	{/snippet}
 	{#snippet solution()}
 		<p>
 			(a), (b) and (e) are sheaves: each property is checked point by point, so glued functions still have it (for (e),
 			the glued function is differentiable near each point, with \(f' = f\) there). (c) is not (the pieces of \(x\mapsto
 			x\) on \((n-1,n+1)\) glue to an unbounded function). (d) is not (two different constants on two disjoint intervals).
-			(f) is not: on \((0,2)\) and \((1,3)\) take \(f(x) = \sin(\pi x)\); its integral over each interval is \(0\), the
-			pieces agree on the overlap, but the integral of the glued function over \((0,3)\) is \(2/\pi \neq 0\).
+			(f) is a presheaf — cutting a function down cannot create zeros — but not a sheaf: the zeros of \(\sin x\) are
+			\(\pi\) apart, so on each interval \((n-1, n+1)\), of length \(2 \lt \pi\), it has at most one zero, yet the glued
+			function \(\sin x\) on \(\R\) has infinitely many.
+		</p>
+		<p>
+			(g) is not even a presheaf. Take \(f(x) = \sin(\pi x)\) on \(U = (0,2)\): its integral is \(0\), so \(f\) is a
+			section over \(U\). Its restriction to \(V = (0,1)\) has integral \(2/\pi \neq 0\), so it is not a section over
+			\(V\): there is no restriction map \(F(U)\to F(V)\). Before asking about gluing, always check that the data can be
+			restricted.
 		</p>
 	{/snippet}
 </Exercise>
@@ -1115,8 +1153,11 @@
 			The cube roots of \(re^{i\theta}\) are \(r^{1/3}e^{i\theta/3}\) times \(1\), \(\omega = e^{2\pi i/3}\) and
 			\(\omega^2\). Following one continuously, the angle \(\theta/3\) grows by \(2\pi/3\) per turn, so one walk multiplies
 			the root by \(\omega\), two by \(\omega^2\), and three bring it back. The factors \(\varepsilon_{ij}\) are cube roots
-			of unity, a group \(\{1,\omega,\omega^2\}\cong\Z/3\) under multiplication, and the product around the loop is
-			\(\omega \neq 1\) whatever local choices are made: a nonzero class in \(\check H^1(S^1;\Z/3)\).
+			of unity, a group \(\{1,\omega,\omega^2\}\cong\Z/3\) under multiplication. Multiplying the root on one arc by a cube
+			root of unity \(\zeta\) multiplies the product \(\varepsilon_{01}\,\varepsilon_{12}\,\varepsilon_{02}^{-1}\) by
+			\(\zeta\) once and by \(\zeta^{-1}\) once, so the product does not change. With the arcs numbered anticlockwise it is
+			\(\omega^{-1} = \omega^2\) (numbered clockwise, it is \(\omega\)) — never \(1\), whatever local choices are made: a
+			nonzero class in \(\check H^1(S^1;\Z/3)\).
 		</p>
 	{/snippet}
 </Exercise>

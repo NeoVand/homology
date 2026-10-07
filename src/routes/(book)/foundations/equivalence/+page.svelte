@@ -20,6 +20,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import RelationChecker from '$lib/figures/foundations/equivalence/RelationChecker.svelte';
 	import PartitionPainter from '$lib/figures/foundations/equivalence/PartitionPainter.svelte';
 	import NecklaceClasses from '$lib/figures/foundations/equivalence/NecklaceClasses.svelte';
@@ -33,7 +34,7 @@
 			title: 'Book of Proof, Chapter 11: Relations',
 			author: 'Richard Hammack',
 			url: 'https://richardhammack.github.io/BookOfProof/',
-			note: 'A patient, free treatment of relations, equivalence relations, classes, partitions and the integers modulo n, with hundreds of exercises (many solved).',
+			note: 'A patient, free undergraduate text. Sections 11.3–11.5 cover equivalence relations, classes and partitions, and the integers modulo n, with many exercises (the odd-numbered ones are solved at the back).',
 			kind: 'book' as const,
 			free: true
 		},
@@ -48,7 +49,7 @@
 			title: 'What’s a Quotient Group, Really? (Parts 1 and 2)',
 			author: 'Tai-Danae Bradley, Math3ma',
 			url: 'https://www.math3ma.com/blog/whats-a-quotient-group-really-part-1',
-			note: 'The “piles” picture of classes and quotients, beautifully illustrated. Written for groups (our §1.4), but the first half is exactly this chapter.',
+			note: 'Two short, friendly blog posts (2016) built on one picture: a quotient is the set of “piles”. Written for groups (our §1.4), but Part 1 is mostly about this chapter’s idea.',
 			kind: 'web' as const,
 			free: true
 		},
@@ -79,13 +80,15 @@
 	];
 </script>
 
-<Epigraph author="Henri Poincaré" source="Science and Method (1908)">Mathematics is the art of giving the same name to different things.</Epigraph>
+<Epigraph author="Henri Poincaré" source="Science and Method (1908), translated by G. B. Halsted"
+	>…mathematics is the art of giving the same name to different things.</Epigraph
+>
 
 <p class="lead">
 	Is \(\tfrac12\) the same number as \(\tfrac24\)? Is three o’clock the same time as fifteen o’clock? Is a coffee mug the same
 	shape as a doughnut? Each time the honest answer is “yes — once you decide what to ignore.” This chapter is about making
-	that decision precisely, and about the remarkable thing that happens next: a whole pile of different things, declared to
-	be the same, becomes a single new object.
+	that decision precisely, and about what happens next: a whole pile of different things, declared to be the same, becomes
+	a single new object.
 </p>
 
 <Ahead>
@@ -129,14 +132,16 @@
 </ul>
 
 <p>
-	In every case, many different things get one shared name — exactly Poincaré’s description of mathematics in the epigraph. But
-	“declaring things the same” cannot be done carelessly. Suppose you decided that two numbers are the same whenever they are
+	In every case, many different things get one shared name, which is exactly what Poincaré meant in the epigraph <Cite
+		k="poincare1908"
+		loc="bk I, ch. II"
+	/>. But “declaring things the same” cannot be done carelessly. Suppose you decided that two numbers are the same whenever they are
 	close, say within \(0.1\) of each other. Then \(0\) would be the same as \(0.1\), which is the same as \(0.2\), which is the same
 	as \(0.3\), … and after a thousand small steps, \(0\) would be “the same” as \(100\). A notion of sameness that lets every
 	number be the same as every other is useless. So sameness must obey some rules, and finding the right rules is our first job.
 </p>
 
-<p>Here is the plan of the chapter, which follows the order in which the idea is used everywhere else in the book:</p>
+<p>We take the idea in five steps, in the order in which the rest of the book will use them:</p>
 
 <ol>
 	<li>say precisely what “declaring things the same” means (an <em>equivalence relation</em>);</li>
@@ -256,10 +261,10 @@
 <Figure title="Three rules, checked live" hint="Tap cells to add or remove pairs · try the presets" num="1.2.1" id="fig-relations">
 	<RelationChecker />
 	{#snippet caption()}
-		A relation on \(\set{1,2,3,4}\), drawn as a table (left) and as arrows (right). The three lights test the rules; when one
+		A relation on \(\set{1,2,3,4}\), drawn as a table and as arrows. The three lights test the rules; when one
 		fails, a <em>witness</em> is highlighted: the gold arrows exist, the dashed rose arrow is the one the rule demands but which is
-		missing. “Close it up” adds exactly the pairs the rules force (shown in violet). Try “\(|x-y|\le 1\)”: it is reflexive and
-		symmetric, yet fails transitivity, just like “close to.”
+		missing. “Close it up” adds exactly the pairs the rules force (shown in violet). Try <span class="nw">“\(|x-y|\le 1\)”:</span> it is
+		reflexive and symmetric, yet fails transitivity, just like “close to.”
 	{/snippet}
 </Figure>
 
@@ -311,9 +316,14 @@
 
 <History title="Gauss and the triple bar">
 	<p>
-		The symbol \(\equiv\) for congruence was introduced by Carl Friedrich Gauss in his <em>Disquisitiones Arithmeticae</em> of
-		1801, the book that turned “clock arithmetic” into a branch of mathematics. Gauss chose a sign that looks like an equals sign
-		with an extra bar, as if to say: equal, in the one respect we care about.
+		The symbol \(\equiv\) for congruence was introduced by Carl Friedrich Gauss, aged twenty-four, in his <em
+			>Disquisitiones Arithmeticae</em
+		> of 1801, the book that made arithmetic modulo \(n\) a systematic theory. A footnote explains the choice: “We have adopted
+		this sign because of the great analogy that is found between equality and congruence.” Adrien-Marie Legendre, Gauss adds,
+		had for the same reason simply used the equals sign itself, which Gauss “hesitated to imitate, lest ambiguity arise” <Cite
+			k="gauss1801"
+			loc="art. 2"
+		/>. (The translations from Gauss’s Latin are ours.) So the third bar says: equal, in the one respect we care about.
 	</p>
 </History>
 
@@ -332,8 +342,8 @@
 		<strong>Same colour</strong> on a bag of marbles; <strong>same birthday</strong> on a set of people; <strong
 			>same number of letters</strong
 		> on a set of words. Any relation of the form “\(x\) and \(y\) give the same answer to a fixed question” is an equivalence
-		relation, for exactly the three reasons in the table above: an answer equals itself, equality goes both ways, and equality
-		chains.
+		relation, and the three rules hold for three small reasons: an answer equals itself, equality goes both ways, and equalities
+		chain.
 	</li>
 	<li>
 		<strong>Same distance from the origin</strong>, for points of the plane: \((x,y)\sim(x',y')\) when \(x^2+y^2 = x'^2+y'^2\).
@@ -356,7 +366,7 @@
 
 <p>
 	The best way to understand a definition with several conditions is to look at examples that satisfy all but one of them. Each
-	of the following fails exactly one rule. Check them in the figure above.
+	of the following fails exactly one rule. (The first two are presets in Figure 1.2.1, on four numbers.)
 </p>
 
 <div class="table-wrap">
@@ -462,8 +472,8 @@
 </Question>
 
 <p>
-	Two facts make classes behave beautifully. The first says that “same class” and “equivalent” are the same thing; the second
-	says that classes never partly overlap.
+	Two facts keep classes tidy. The first says that “same class” and “equivalent” are the same thing; the second says that
+	classes never partly overlap.
 </p>
 
 <Lemma id="lem-same-class">
@@ -512,8 +522,8 @@
 </Definition>
 
 <p>
-	So: every equivalence relation gives a partition (its classes). The amazing part is that it also works backwards, so that
-	equivalence relations and partitions are really the same thing in two costumes.
+	So every equivalence relation gives a partition (its classes). The surprise is that it also works backwards, so that
+	equivalence relations and partitions are really the same thing in two costumes <Cite k="hammack2018" loc="§11.4" />.
 </p>
 
 <Theorem title="Equivalence relations are partitions" id="thm-eq-partition">
@@ -602,9 +612,9 @@
 
 <p>
 	Look back at the partition painter and press <em>Collapse</em>. Each pile shrinks to a single point; the arrows that remain are
-	\(q\). In the first mode you get \(\Z/n\), sitting on a clock face. In the third mode something lovely happens: rotating every
-	lattice point onto the positive \(x\)-axis sends points at the same distance to the same place, so the quotient becomes a
-	collection of points on a ray, one per distance.
+	\(q\). In the first mode you get \(\Z/n\), sitting on a clock face. In the third mode the collapse has a geometric meaning:
+	every lattice point swings round its circle to the positive \(x\)-axis, so points at the same distance land on the same spot,
+	and the quotient becomes a row of points on a ray, one per distance.
 </p>
 
 <KeyIdea>
@@ -618,9 +628,10 @@
 <h3>The hardest step, and how to take it</h3>
 
 <p>
-	Research on how people learn this material finds the same sticking point again and again: students can compute a class as a
+	Researchers who study how people learn this material keep finding the same sticking point: students can compute a class as a
 	list, but find it hard to treat the whole class as a single object that can itself be an element of a set, be added, or be fed
-	into a function. If that feels strange to you, you are in excellent company. Here are three ways to make it feel natural.
+	into a function <Cite k="dubinsky1994" />. If that feels strange to you, you are in good company. Here are three ways to make
+	it feel natural.
 </p>
 
 <ul>
@@ -714,6 +725,16 @@
 	don’t overlap and that together they cover everything.
 </p>
 
+<p>
+	There is a way to get the answer 6 without drawing a single necklace. For each of the four rotations, count the colourings it
+	leaves unchanged: turning by nothing fixes all \(16\), a quarter turn either way fixes only the \(2\) one-colour necklaces, and
+	a half turn fixes \(4\) (opposite corners must match). The average, \((16+2+4+2)/4\), is exactly \(6\). That this always works
+	is <em>Burnside’s counting theorem</em>, one of the first rewards of the groups of the next chapter <Cite
+		k="judson2025"
+		loc="§14.3"
+	/>.
+</p>
+
 <h2 id="well-defined">Functions on classes: the well-definedness check</h2>
 
 <p>
@@ -767,8 +788,8 @@
 <ul>
 	<li>
 		<strong>Fractions, badly.</strong> “The numerator of a fraction” is not well defined: \(\tfrac12 = \tfrac24\), but the
-		numerators are \(1\) and \(2\). Neither is “add the top and the bottom”: \(1+2\neq 2+4\). Both rules secretly depend on how
-		the fraction is written.
+		numerators are \(1\) and \(2\). Neither is “add the top and the bottom”: <span class="nw">\(1+2\neq 2+4\).</span> Both rules
+		secretly depend on how the fraction is written.
 	</li>
 	<li>
 		<strong>Fractions, well.</strong> “The decimal value \(a\div b\)” is well defined: if \(ad = bc\) then \(a\div b = c \div d\).
@@ -1148,3 +1169,10 @@
 <h2 id="further-reading">Further reading</h2>
 
 <FurtherReading items={reading} />
+
+<style>
+	/* keep short formulas together with their punctuation */
+	.nw {
+		white-space: nowrap;
+	}
+</style>

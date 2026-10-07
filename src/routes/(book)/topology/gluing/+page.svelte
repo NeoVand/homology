@@ -16,9 +16,11 @@
 	import Figure from '$lib/components/prose/Figure.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import GluingSquare from '$lib/components/svg/GluingSquare.svelte';
+	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import GluingWorkshop from '$lib/figures/topology/gluing/GluingWorkshop.svelte';
 	import FlatTorusGame from '$lib/figures/topology/gluing/FlatTorusGame.svelte';
 	import IntervalCircle from '$lib/figures/topology/gluing/IntervalCircle.svelte';
@@ -46,7 +48,7 @@
 			title: 'This open problem taught me what topology is',
 			author: '3Blue1Brown (Grant Sanderson)',
 			url: 'https://www.3blue1brown.com/lessons/inscribed-rect-v2/',
-			note: 'A beautiful lesson in which a torus and a Möbius strip appear, by cutting and gluing, as the spaces of pairs of points on a loop — and then solve a geometry puzzle.',
+			note: 'An animated lesson in which a torus and a Möbius strip appear, by cutting and gluing, as spaces of pairs of points on a loop — and then solve a geometry puzzle about rectangles. No prerequisites.',
 			kind: 'video' as const,
 			free: true
 		},
@@ -65,10 +67,18 @@
 			kind: 'book' as const
 		},
 		{
-			title: 'Klein bottle; Boy’s surface',
+			title: 'Klein Bottles',
+			author: 'Numberphile, with Cliff Stoll',
+			url: 'https://www.youtube.com/watch?v=AAsICMPwGPY',
+			note: 'Cliff Stoll, who makes Klein bottles out of glass, shows real ones and talks about what makes them strange. Short and light-hearted: a good antidote to all the formulas.',
+			kind: 'video' as const,
+			free: true
+		},
+		{
+			title: 'Klein bottle',
 			author: 'Wikipedia',
 			url: 'https://en.wikipedia.org/wiki/Klein_bottle',
-			note: 'Good pictures of many immersions of the Klein bottle and its four-dimensional embedding; see also Wikipedia’s article on Boy’s surface.',
+			note: 'Good pictures of several immersions of the Klein bottle, its parametrizations, and its four-dimensional embedding. Its sister article on Boy’s surface does the same for the projective plane.',
 			kind: 'web' as const,
 			free: true
 		}
@@ -82,9 +92,10 @@
 
 <p class="lead">
 	In the old arcade game, a little spaceship flies off the right-hand edge of the screen and reappears on the left; it leaves
-	through the top and comes back through the bottom. The game never says so, but the ship lives on a doughnut. In this chapter
-	we learn to build spaces by <em>gluing</em>: declaring that certain points are to be regarded as the same. From a single square
-	we will make a cylinder, a Möbius band, a torus, a sphere, a Klein bottle and a projective plane.
+	through the top and comes back through the bottom. The game never says so, but the ship lives on a doughnut. This chapter is
+	about building spaces by <em>gluing</em>: declaring that certain points are to be regarded as the same. From a single square
+	we will make a cylinder, a Möbius band, a torus, a sphere, a Klein bottle and a projective plane — and find that two of them
+	cannot be built in our three-dimensional world without passing through themselves.
 </p>
 
 <p>
@@ -110,9 +121,8 @@
 <p>
 	Fly the ship in Figure 2.2.1 (it will fly itself until you take the controls). Leave through the right edge and you reappear
 	on the left, at the same height. Leave through the top and you come back through the bottom, at the same distance from the
-	left. As far as the pilot is concerned, there are no edges at all: the universe is finite — the ship can only ever be in one of
-	the finitely many little squares of the grid — yet it has no boundary anywhere. Wherever the ship is, space continues smoothly
-	in every direction.
+	left. As far as the pilot is concerned, there are no edges at all. The universe is finite — its whole area is one screen — yet
+	it has no boundary anywhere: wherever the ship is, space continues in every direction.
 </p>
 
 <Figure num="2.2.1" title="Flight on a glued square" hint="Arrow keys or the buttons to steer · try all three gluings">
@@ -172,7 +182,8 @@
 <p>
 	In words: <em>a set of glued points is open if, before the gluing, the same points formed an open set</em>. The
 	<Term t="preimage">preimage</Term> does the looking back, exactly as in the definition of continuity — another reversed arrow.
-	Figure 2.2.2 shows the rule at work on the interval.
+	Figure 2.2.2 shows the rule at work on the interval; <Cite k="munkres2000" loc="§22" text /> develops the whole theory, with
+	every proof.
 </p>
 
 <Figure num="2.2.2" title="Looking back before the glue" hint="Play or scrub the gluing · compare the two sets">
@@ -225,15 +236,23 @@
 		The wrapping function \(f(t) = (\cos 2\pi t, \sin 2\pi t)\) sends \([0, 1]\) continuously onto the circle \(S^1\), and it
 		respects the glue: \(f(0) = f(1) = (1, 0)\). By the proposition it passes to a continuous function \(g \colon [0,1]/{\sim} \to
 		S^1\), \(g([t]) = f(t)\), and \(g\) is a bijection. Is it a homeomorphism? In <Ref to="topology/spaces" /> we saw that a
-		continuous bijection need not be. Here we are rescued by a theorem worth knowing.
+		continuous bijection need not be. Here we are rescued by a theorem that will save us work again and again.
 	</p>
 </Example>
 
 <Theorem title="Compact to Hausdorff" id="thm-compact-hausdorff">
 	<p>
-		A continuous bijection from a compact space to a Hausdorff space is a homeomorphism.
+		A continuous bijection from a compact space to a Hausdorff space is a homeomorphism. <Cite k="munkres2000" loc="Thm 26.6" />
 	</p>
 </Theorem>
+
+<Proof>
+	<p>
+		Call the bijection \(g\). Its inverse is continuous exactly when \(g\) carries closed sets to closed sets, because the preimage
+		of a set \(C\) under \(g^{-1}\) is \(g(C)\). Now chain three standard facts: a closed piece of a compact space is compact; a
+		continuous image of a compact set is compact; and a compact set inside a Hausdorff space is closed.
+	</p>
+</Proof>
 
 <p>
 	The quotient \([0,1]/{\sim}\) is compact (a continuous image of the compact interval, via \(q\)) and the circle is Hausdorff
@@ -247,8 +266,8 @@
 		Quotients of perfectly nice spaces can be badly behaved. Take two copies of the real line and glue every point \(x \neq 0\) of
 		the first to the same point of the second, but leave the two zeros unglued. The result looks like a line everywhere, but it
 		has two origins that cannot be separated by disjoint open sets: it is not Hausdorff. All the gluings in this chapter are of the
-		well-behaved kind, but it is worth knowing that “glued” does not automatically mean “nice”. (We will meet this example again
-		in <Ref to="topology/manifolds" />.)
+		well-behaved kind, but “glued” does not automatically mean “nice”. (We will meet this example again in
+		<Ref to="topology/manifolds" />.)
 	</p>
 </Warning>
 
@@ -278,10 +297,10 @@
 <Figure num="2.2.3" title="The torus as a square">
 	<Svg viewBox="0 0 520 250" maxHeight={250} label="A square with both horizontal edges labelled a pointing right, and both vertical edges labelled b pointing up; all four corners marked as the same point">
 		<GluingSquare preset="torus" x={70} y={30} size={170} corners />
-		<text x={330} y={70} class="t-ui">BOTTOM ↔ TOP</text>
-		<text x={330} y={92} class="t-ui">(x, 0) ~ (x, 1)</text>
-		<text x={330} y={140} class="t-ui">LEFT ↔ RIGHT</text>
-		<text x={330} y={162} class="t-ui">(0, y) ~ (1, y)</text>
+		<text x={320} y={72} class="t-ui">BOTTOM TO TOP</text>
+		<SvgTeX x={320} y={98} anchor="start" tex={'(x, 0) \\sim (x, 1)'} size={17} w={180} h={28} color="var(--gold-bright)" />
+		<text x={320} y={150} class="t-ui">LEFT TO RIGHT</text>
+		<SvgTeX x={320} y={176} anchor="start" tex={'(0, y) \\sim (1, y)'} size={17} w={180} h={28} color="var(--teal)" />
 	</Svg>
 	{#snippet caption()}
 		The square is \([0,1] \times [0,1]\), with \((x, y)\) meaning “\(x\) across, \(y\) up”. The arrows say: glue \((x, 0)\) to
@@ -334,15 +353,18 @@
 	must turn over before its ends meet — try it with a strip of paper, giving one end half a turn before taping. The result is the
 	<strong>Möbius band</strong>. Something remarkable has happened to the free edges: the top edge runs into the bottom edge, and the
 	two together form a <em>single</em> boundary circle. A Möbius band has one edge — and, if you run a finger along its surface,
-	only one side. (One-sidedness is called <em>non-orientability</em>; it is studied properly in <Ref to="topology/manifolds" />.)
-	The corners make two classes in both cases, but differently paired: in the cylinder each bottom corner is glued to the bottom
-	corner opposite; in the Möbius band each bottom corner is glued to a top corner.
+	only one side. (One-sidedness has an intrinsic cousin, <em>non-orientability</em>, which a creature living inside the band could
+	detect without ever leaving it; it is studied properly in <Ref to="topology/manifolds" />.) The corners make two classes in both
+	cases, but paired differently: in the cylinder the two bottom corners are glued to each other, and so are the two top corners;
+	in the Möbius band each bottom corner is glued to the top corner diagonally opposite.
 </p>
 
 <Remark title="Stretching allowed">
 	<p>
-		You cannot make a Möbius band from a <em>square</em> of real paper without crumpling it — the strip must be long and narrow.
-		In the workshop the sheet stretches as it rolls. Topology does not mind: in the words of Poincaré quoted at the start of
+		You cannot make a Möbius band from a <em>square</em> of real paper without crumpling it: the strip must be long and narrow.
+		How long was an open question for almost fifty years, until Richard Schwartz proved in 2023 that a smooth paper Möbius band
+		must be more than \(\sqrt3 \approx 1.73\) times as long as it is wide <Cite k="schwartz2025" />. In the workshop the sheet
+		stretches as it rolls. Topology does not mind: in the words of Poincaré quoted at the start of
 		<Ref to="prelude/shape-of-a-question" />, “the proportions may be grossly altered”.
 	</p>
 </Remark>
@@ -351,8 +373,8 @@
 
 <p>
 	Gluing both pairs straight across gives the torus \(aba^{-1}b^{-1}\): roll the square into a tube (gluing the \(b\) edges), then
-	bend the tube round (gluing the end circles \(a\)). In the finished doughnut the gold edge has become a loop around the hole and
-	the teal edge a loop around the tube, crossing at the single corner point.
+	bend the tube round (gluing the end circles \(a\)). In the finished doughnut the gold edge \(a\) has become a loop around the
+	tube and the teal edge \(b\) a loop around the hole, crossing at the single corner point.
 </p>
 <p>
 	Now reverse just one arrow: let the top edge point left. The rule becomes \((x, 0) \sim (1 - x, 1)\) together with \((0, y) \sim
@@ -374,9 +396,10 @@
 <p>
 	A gluing diagram may also glue edges that meet at a corner. Glue the bottom edge to the left edge, and the top edge to the right
 	edge, as in the envelope-shaped word \(abb^{-1}a^{-1}\): \((x, 0) \sim (0, x)\) and \((x, 1) \sim (1, x)\). Fold the square along
-	its diagonal: the two triangles lie on top of each other and their outer edges match up. Zip them together and inflate, and you
-	get a <strong>sphere</strong> \(S^2\), with the zip running along a line from pole to pole. This time the corners form three
-	classes: the two corners on the diagonal stay separate (they become the poles), while the other two are glued together.
+	the diagonal from its bottom-left to its top-right corner: the two triangles lie on top of each other, the bottom edge on the
+	left edge and the right edge on the top. Zip the matching edges together and inflate, and you get a <strong>sphere</strong>
+	\(S^2\), with the zip running from pole to pole. This time the corners form three classes: the two corners on the fold stay
+	separate (they become the poles), while the other two are glued together, halfway along the zip.
 </p>
 <p>
 	The same idea works with fewer edges. A polygon with only two edges, \(a\) and then \(a^{-1}\) — picture a coin purse, or a
@@ -395,8 +418,10 @@
 	The projective plane has another life, which explains its name. Every line through the centre of a ball pierces the ball’s
 	surface in two opposite points. So the set of lines through a point of space is the sphere with opposite points glued — and the
 	upper half of the sphere already contains one point of every line, except that opposite points of its rim (the equator) still
-	need gluing. That is our disk with opposite rim points glued. Artists know this space well: it is the space of all directions of
-	sight-lines in perspective drawing, where parallel lines meet “at infinity”.
+	need gluing. That is our disk with opposite rim points glued. The same space turns up in perspective drawing, where parallel
+	railway lines meet at a vanishing point on the horizon. Add to the plane one such “point at infinity” for every direction, and
+	squash the whole plane into an open disk: the points at infinity become the rim, with opposite rim points glued, because a
+	line runs off to infinity in two opposite directions yet has only one vanishing point. The result is \(\RP^2\) once more.
 </p>
 <p>
 	In the workshop, the disk grows into a famous surface called Boy’s surface. It crosses itself along three rose loops, which meet
@@ -442,8 +467,9 @@
 		An <dfn>embedding</dfn> of a space \(X\) in a space \(Y\) is a continuous, one-to-one map \(e \colon X \to Y\) that is a
 		homeomorphism onto its image \(e(X)\) (with the subspace topology): a faithful copy of \(X\) sitting inside \(Y\). An
 		<dfn>immersion</dfn> of a surface in \(\R^3\) is a smooth map that is an embedding <em>near each point</em> — every point has
-		a small neighbourhood that is placed faithfully — but different parts of the surface may pass through each other. The places
-		where they do form the <dfn>double curve</dfn> of the immersion.
+		a small neighbourhood that is placed faithfully, as a smooth patch with a tangent plane — but different parts of the surface
+		may pass through each other. (Precisely: a smooth map whose derivative is one-to-one at every point.) The places where
+		different parts meet form the <dfn>double curve</dfn> of the immersion.
 	</p>
 </Definition>
 
@@ -460,12 +486,14 @@
 </Theorem>
 
 <p>
-	We will not prove the first statement, but here is the idea. A closed surface sitting in \(\R^3\) without crossing itself
+	We will not prove the first statement here, but here is the idea. A closed surface sitting in \(\R^3\) without crossing itself
 	always divides space into an inside and an outside. (This is the Jordan–Brouwer separation theorem, a three-dimensional relative
 	of the fact that a loop drawn in the plane without crossing itself has an inside and an outside.) A surface with an inside and an
 	outside has two sides: you could paint the inside red and the outside blue. But the Klein bottle and the projective plane
 	contain Möbius bands — look at the vertical strip in the middle of the Klein bottle’s square, glued with a flip — so they have
-	only one side, and cannot have an inside and an outside.
+	only one side, and cannot have an inside and an outside. The full proof, when it comes, is startlingly algebraic: the
+	\(\Z/2\) in the Klein bottle’s homology, promised above, is exactly what forbids it a place in ordinary space
+	<Cite k="hatcher2002" loc="Cor. 3.46" />.
 </p>
 <p>
 	The second statement has a lovely picture. A fourth dimension means a fourth number attached to every point. Show it as a
@@ -486,11 +514,14 @@
 
 <History title="Bottles, bands and Boy">
 	<p>
-		August Möbius and Johann Listing independently discovered the one-sided band in 1858. Felix Klein described his bottle in
-		1882; the English name may come from a pun or a mistranslation of the German <em>Fläche</em> (surface) as <em>Flasche</em>
-		(bottle), though the story is hard to pin down. In 1901 Werner Boy, a student of David Hilbert, was asked to show that the
-		projective plane could not be immersed in space without singular points — and found an immersion instead. The formula we
-		use for Boy’s surface is due to Robert Bryant and Rob Kusner.
+		August Möbius and Johann Listing independently discovered the one-sided band in 1858; Listing published first, in 1861, but
+		the band carries Möbius’s name. Felix Klein described his bottle in 1882, in words rather than pictures: take a piece of rubber
+		tubing, turn it inside out, and let it pass through itself so that when the ends are bent together the outside meets the inside
+		<Cite k="klein1882" loc="§23" />. The English name may come from a pun or a mistranslation of the German <em>Fläche</em>
+		(surface) as <em>Flasche</em> (bottle), though the story is hard to pin down. David Hilbert set his doctoral student Werner Boy
+		the task of proving that the projective plane cannot be immersed in space without singular points. In 1901 Boy found an
+		immersion instead <Cite k="boy1903" />. The formula we use to draw Boy’s surface is much younger: it comes from work of Robert Bryant and Rob
+		Kusner in the 1980s <Cite k="kusner1987" />.
 	</p>
 </History>
 
@@ -531,7 +562,7 @@
 <p>
 	The same is true in every dimension, with \(D^n\) the solid ball and \(S^n\) the sphere bounding a ball in one dimension higher:
 	\(D^n/\partial D^n \cong S^n\). Collapsing the rim of a segment \([0, 1]\) (its two end points) gives a circle, the case \(n = 1\)
-	— our very first gluing. Figure 2.2.6 shows this and four more collapses.
+	— our very first gluing. Figure 2.2.6 shows the disk and four more collapses.
 </p>
 
 <Figure num="2.2.6" title="Collapsing a subspace" hint="Pick an example · play or scrub the collapse · drag to turn">
@@ -558,7 +589,7 @@
 	their tops glued and their bottoms glued — is a circle. In general \(\Sigma S^n \cong S^{n+1}\): suspension climbs up the
 	dimensions. Every cone, on the other hand, can be squashed down to its tip, a fact we will make precise in
 	<Ref to="topology/homotopy" />. As Allen Hatcher remarks, “Suspension becomes increasingly important the farther one goes into
-	algebraic topology, though why this should be so is certainly not evident in advance.”
+	algebraic topology, though why this should be so is certainly not evident in advance” <Cite k="hatcher2002" loc="p. 9" />.
 </p>
 
 <Figure num="2.2.7" title="Three constructions" hint="Pick a construction and a space · play or scrub the gluing">
@@ -590,23 +621,25 @@
 	{#snippet caption()}
 		The octagon \(a_1b_1a_1^{-1}b_1^{-1}a_2b_2a_2^{-1}b_2^{-1}\) is cut along the diagonal \(c\), each half is glued into a torus
 		with a hole, and the two holes are sewn back together. Each pair of edges becomes a loop on the finished surface: \(a_i\)
-		around a hole, \(b_i\) around a handle. All eight corners of the octagon become the single point where the four loops meet.
+		around a tube, \(b_i\) around a hole, as for the torus in Figure 2.2.4. All eight corners of the octagon become a single point
+		of the surface, where all four loops meet; the picture slides the loops apart to keep them readable.
 	{/snippet}
 </Figure>
 
 <p>
 	The pattern continues. A polygon with \(4g\) edges labelled \(a_1b_1a_1^{-1}b_1^{-1} \cdots a_gb_ga_g^{-1}b_g^{-1}\) glues
-	up into the surface \(\Sigma_g\) with \(g\) handles — a doughnut with \(g\) holes. The number \(g\) is called the
-	<em>genus</em>. Following the arrows shows that all \(4g\) corners become a single point, so counting corners minus edges plus
-	faces gives
+	up into the surface \(\Sigma_g\) with \(g\) handles — a doughnut with \(g\) holes <Cite k="hatcher2002" loc="p. 5" />. The
+	number \(g\) is called the <em>genus</em>. Following the arrows shows that all \(4g\) corners become a single point, so counting
+	corners minus edges plus faces gives
 </p>
 \[ 1 - 2g + 1 = 2 - 2g. \]
 <p>
 	For the sphere (\(g = 0\)) that is \(2\), for the torus \(0\), for the pretzel \(-2\). Words in which a letter appears twice
-	the <em>same</em> way round give the one-sided surfaces: \(aa\) (a two-sided polygon whose edges are glued with a twist,
-	another picture of \(\RP^2\)), or \(aabb\), which turns out to be another picture of the Klein bottle. A famous theorem,
-	the <em>classification of surfaces</em>, says that every connected closed surface is homeomorphic to exactly one of these: a sphere, a
-	surface \(\Sigma_g\) with \(g\) handles, or a one-sided surface built from projective planes. We will meet it properly in
+	the <em>same</em> way round give one-sided surfaces: \(aa\) (a lens whose two curved edges are glued with a twist, another
+	picture of \(\RP^2\)), or \(aabb\), which turns out to be another picture of the Klein bottle
+	<Cite k="hatcher2002" loc="pp. 51–52" />. A famous theorem, the <em>classification of surfaces</em>, says that every connected
+	closed surface is homeomorphic to exactly one of these: a sphere, a surface \(\Sigma_g\) with \(g\) handles, or a one-sided
+	surface built from projective planes. We will meet it properly in
 	<Ref to="topology/manifolds" />. For now, the remarkable fact is that a single word written around a single polygon is enough to
 	describe any of them.
 </p>

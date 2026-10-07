@@ -101,9 +101,9 @@ export const gallery: Record<string, GalleryForm> = {
 		closed: true,
 		exact: true,
 		potential: (x, y) => x / (x * x + y * y),
-		potentialTeX: String.raw`\omega = d\big(x/(x^2+y^2)\big)`,
+		potentialTeX: String.raw`\text{potential: } f = x/(x^2+y^2)`,
 		holes: [[0, 0]],
-		blurb: 'Also defined only on the punctured plane, and it swirls around the hole — yet it is exact, so every loop gives 0.'
+		blurb: 'Also defined only on the punctured plane, and its arrows loop out of the hole and back in — yet it is exact, so every loop gives 0.'
 	}
 };
 

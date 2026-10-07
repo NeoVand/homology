@@ -17,6 +17,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 
 	import VortexLoop from '$lib/figures/cohomology/de-rham/VortexLoop.svelte';
 	import Helicoid from '$lib/figures/cohomology/de-rham/Helicoid.svelte';
@@ -60,14 +61,14 @@
 </KeyIdea>
 
 <Example title="Finding a potential by integrating">
-	<p>Take \(\omega = 2xy\,dx + x^2\,dy\) on the whole plane. It is closed: \(\partial_x(x^2) = 2x = \partial_y(2xy)\). To find a potential, follow the recipe of the loop test with base point \(p_0 = (0, 0)\): walk to \((x, y)\) first along the \(x\)-axis, then straight up. On the first leg \(y = 0\) and \(dy = 0\), so \(\omega = 0\) and nothing accumulates. On the second leg \(x\) is fixed and \(dx = 0\), so we collect \(\int_0^y x^2\,dt = x^2 y\). Hence \(f(x, y) = x^2y\), and indeed \(df = 2xy\,dx + x^2\,dy\). Had the form not been closed — try \(y\,dx\) — the two different routes to \((x, y)\) would have given different answers.</p>
+	<p>Take \(\omega = 2xy\,dx + x^2\,dy\) on the whole plane. It is closed: \(\partial_x(x^2) = 2x = \partial_y(2xy)\). To find a potential, follow the recipe of the loop test with base point \(p_0 = (0, 0)\): walk to \((x, y)\) first along the \(x\)-axis, then straight up. On the first leg \(y = 0\) and \(dy = 0\), so \(\omega = 0\) and nothing accumulates. On the second leg \(x\) is fixed and \(dx = 0\), so we collect \(\int_0^y x^2\,dt = x^2 y\). Hence \(f(x, y) = x^2y\), and indeed \(df = 2xy\,dx + x^2\,dy\). Had the form not been closed, the route would have mattered. Try \(y\,dx\): across-then-up collects nothing at all, while up-then-across collects \(\int_0^x y\,dt = xy\).</p>
 </Example>
 
 <p>Closedness is a <em>local</em> condition — you can check it at each point by computing derivatives. Exactness is a <em>global</em> condition — it asks for a single function on the whole region. Figure 4.4.1 lets you test both on five forms; drag the loop around and watch the two numbers.</p>
 
 <Figure title="Closed, exact, or neither?" hint="Pick a form · drag the centre (diamond) or the rim of the circle" num="4.4.1">
 	<ClosedExactGallery />
-	{#snippet caption()}Arrows show each 1-form \(P\,dx + Q\,dy\) as the field \((P, Q)\); rose rings are missing points. The left number is the integral around the gold circle, the right one the integral of \(d\omega\) over the disk inside. For \(d\theta\), small loops give \(0\) and loops around the puncture give \(2\pi\). The last form, \(d(x/r^2)\), swirls around its puncture too, yet it is exact: every loop gives \(0\).{/snippet}
+	{#snippet caption()}Arrows show each 1-form \(P\,dx + Q\,dy\) as the field \((P, Q)\); rose rings are missing points. The first readout is the integral around the gold circle, the second the integral of \(d\omega\) over the part of the disk where \(\omega\) is defined. For \(d\theta\), small loops give \(0\) and loops around the puncture give \(2\pi\). The last form, \(d(x/r^2)\), also lives on the punctured plane and its arrows loop in and out of the puncture, yet it is exact: every loop gives \(0\).{/snippet}
 </Figure>
 
 <p>This should feel familiar. In <Ref to="cohomology/cochains" /> you met edge labellings with zero “curl” around every filled triangle which were nevertheless not differences of vertex heights, because a loop around an unfilled hole picked up a nonzero sum. Here is the dictionary between the two worlds:</p>
@@ -88,7 +89,7 @@
 </div>
 
 <Warning title="Four different meanings of ‘closed’">
-	<p>Mathematics overuses this word. A <em>closed set</em> (<Ref to="topology/spaces" />) contains its limit points; a <em>closed curve</em> or loop ends where it starts; a <em>closed manifold</em> is compact without boundary; a <em>closed form</em> has \(d\omega = 0\). They are unrelated, although closed forms and closed loops will spend a lot of time together.</p>
+	<p>Mathematics overuses this word. A <em>closed set</em> (<Ref to="topology/spaces" />) contains its limit points; a <em>closed curve</em> or loop ends where it starts; a <em>closed manifold</em> is compact without boundary; a <em>closed form</em> has \(d\omega = 0\). The four ideas share a word and little else, although closed forms and closed loops will spend a lot of time together.</p>
 </Warning>
 
 <h2 id="de-rham-groups">The de Rham cohomology groups</h2>
@@ -105,9 +106,9 @@
 
 <h3 id="h-zero">Degree zero: what does not change</h3>
 
-<p>A 0-form is a function \(f\), and there are no forms of degree \(-1\), so nothing is exact in degree \(0\). A function is closed when \(df = 0\), that is, when all its partial derivatives vanish: it is constant near every point. Such <Term t="locally-constant-function">locally constant</Term> functions are constant on each connected piece of \(M\) but may take different values on different pieces. So</p>
+<p>A 0-form is a function \(f\), and there are no forms of degree \(-1\), so nothing is exact in degree \(0\). A function is closed when \(df = 0\), that is, when all its partial derivatives vanish: it is constant near every point. Such <Term t="locally-constant-function">locally constant</Term> functions are constant on each connected piece of \(M\) but may take different values on different pieces. So, when \(M\) has finitely many components,</p>
 \[ H^0_{\dR}(M) \;\cong\; \R^{\#\text{connected components of } M}, \]
-<p>exactly as \(H^0\) of a graph counted its components in <Ref to="cohomology/cochains" />. At the other end, if \(M\) has dimension \(n\) there are no nonzero forms of degree \(k > n\), so \(H^k_{\dR}(M) = 0\) for \(k > n\).</p>
+<p>one real number for each piece, exactly as \(H^0\) of a graph counted its components in <Ref to="cohomology/cochains" />. At the other end, if \(M\) has dimension \(n\) there are no nonzero forms of degree \(k > n\), so \(H^k_{\dR}(M) = 0\) for \(k > n\).</p>
 
 <h3 id="line-and-circle">The line and the circle</h3>
 
@@ -143,9 +144,9 @@
 
 <h3 id="staircase">The endless staircase</h3>
 
-<p>Imagine walking once around the origin while keeping track of your angle continuously. You start at \(\theta = 0\); a quarter of the way round you are at \(\pi/2\); halfway at \(\pi\); and when you are back where you started, your angle reads \(2\pi\), not \(0\). Walk round again and it reads \(4\pi\). The angle is a <Term t="multivalued-function">multivalued function</Term>: a height you can climb forever while going in circles, like Escher’s endless staircase.</p>
+<p>Imagine walking once around the origin while keeping track of your angle continuously. You start at \(\theta = 0\); a quarter of the way round you are at \(\pi/2\); halfway at \(\pi\); and when you are back where you started, your angle reads \(2\pi\), not \(0\). Walk round again and it reads \(4\pi\). The angle is a <Term t="multivalued-function">multivalued function</Term>: a height you can climb forever while going in circles. Lionel and Roger Penrose drew exactly such a staircase in 1958 <Cite k="penrose1958" />, and M. C. Escher turned it into his lithograph <em>Ascending and Descending</em> (1960), with monks trudging round it for ever. Their staircase is an optical illusion. The angle is the real thing.</p>
 
-<p>Figure 4.4.2 makes this literal. Over each point of the punctured plane, stack all its possible angles \(\theta, \theta \pm 2\pi, \theta \pm 4\pi, \ldots\) as heights. These stacks form a single smooth spiral surface, the <em>helicoid</em>, like a parking-garage ramp around the missing axis. A loop in the plane, together with a continuously chosen angle along it, traces a path on the ramp. If the loop goes around the hole, the path climbs a full storey per lap; if it does not, the path rises and falls and comes back to its start.</p>
+<p>Figure 4.4.2 builds it honestly, in three dimensions. Over each point of the punctured plane, stack all its possible angles \(\theta, \theta \pm 2\pi, \theta \pm 4\pi, \ldots\) as heights. These stacks form a single smooth spiral surface, the <em>helicoid</em>, like the ramp of a multistorey car park wound around the missing axis. Instead of pretending to close up, as the Penroses’ staircase does, it simply keeps rising. A loop in the plane, together with a continuously chosen angle along it, traces a path on the ramp. If the loop goes around the hole, the path climbs a full storey per lap; if it does not, the path rises and falls and comes back to its start.</p>
 
 <Figure title="The angle as a spiral staircase" hint="Drag to rotate · play or scrub the walk" num="4.4.2">
 	<Helicoid />
@@ -193,28 +194,29 @@
 </Definition>
 
 <Theorem id="thm-poincare-lemma" label="Theorem (Poincaré lemma)">
-	<p>On a star-shaped open set \(U\subseteq\R^n\), every closed \(k\)-form with \(k \ge 1\) is exact. Consequently \(H^0_{\dR}(U)\cong\R\) and \(H^k_{\dR}(U) = 0\) for all \(k\ge 1\).</p>
+	<p>On a star-shaped open set \(U\subseteq\R^n\), every closed \(k\)-form with \(k \ge 1\) is exact. Consequently \(H^0_{\dR}(U)\cong\R\) and \(H^k_{\dR}(U) = 0\) for all \(k\ge 1\). <Cite k="spivak1965" loc="Theorem 4-11" /></p>
 </Theorem>
 
 <p>For 1-forms the proof is a construction you can watch. Put the centre at the origin. To find a potential \(f\) at a point \(p\), integrate \(\omega\) along the straight ray from the centre to \(p\) — the ray stays inside \(U\), so this makes sense:</p>
 \[ f(p) \;=\; \int_{\text{ray from } 0 \text{ to } p}\omega \;=\; \int_0^1 \omega_{tp}(p)\,dt \;=\; \int_0^1 \sum_i a_i(tp)\,p_i\,dt, \qquad\text{for } \omega = \sum_i a_i\,dx_i . \]
 
-<Proof>
+<Proof label="Proof for 1-forms">
 	<p>Differentiate under the integral sign with respect to \(p_j\):</p>
 	\[ \frac{\partial f}{\partial p_j} = \int_0^1 \Big( a_j(tp) + \sum_i t\,p_i\,\frac{\partial a_i}{\partial x_j}(tp) \Big)\,dt . \]
 	<p>Closedness says \(\tfrac{\partial a_i}{\partial x_j} = \tfrac{\partial a_j}{\partial x_i}\). Using it, the integrand becomes \(a_j(tp) + t\sum_i p_i\,\tfrac{\partial a_j}{\partial x_i}(tp)\), which is exactly the derivative with respect to \(t\) of \(t\,a_j(tp)\) (product rule and chain rule). So \(\tfrac{\partial f}{\partial p_j} = \big[t\,a_j(tp)\big]_{t=0}^{t=1} = a_j(p)\), which says \(df = \omega\).</p>
+	<p>For forms of higher degree the idea is the same — integrate along the rays — but the bookkeeping is heavier; <Cite k="spivak1965" text loc="Theorem 4-11" /> and <Cite k="bott-tu1982" text loc="§4" /> write it out.</p>
 </Proof>
 
-<Figure title="Building a potential along rays" hint="Switch regions · replay · in the annulus, drag c and q" num="4.4.4">
+<Figure title="Building a potential along rays" hint="Switch regions · play or scrub · in the annulus, drag c and q" num="4.4.4">
 	<PoincareLemma />
-	{#snippet caption()}Left mode: a closed 1-form on a star-shaped region. Integrating along each ray from the centre builds the potential, shown growing outward as a coloured map with teal level lines. Right mode: \(d\theta\) on an annulus. Rays from \(c\) that would cross the hole are blocked (hatched), and the two ways round the hole from \(c\) to \(q\) give values that differ by exactly \(2\pi\).{/snippet}
+	{#snippet caption()}A closed 1-form on a star-shaped region: integrating along each ray from the centre builds the potential, shown growing outward as a coloured map with teal level lines. Switch to the annulus, with \(d\theta\) on it. Rays from \(c\) that would cross the hole are blocked (hatched), and the two ways round the hole from \(c\) to \(q\) give values that differ by exactly \(2\pi\).{/snippet}
 </Figure>
 
 <Question>
 	<p>Is the punctured plane star-shaped about any point \(c\)? Try the segment from \(c\) to the point \(-c\) on the other side of the origin. (If \(c\) is the origin itself, it is not in the punctured plane at all.)</p>
 </Question>
 
-<p>The cone construction also shows why the annulus is different. From any centre \(c\) in the annulus, some straight rays run into the hole, so the construction cannot reach the points behind it. Going around the hole instead, the potential would have to take two different values at the same point, one for each way around, and they differ by \(\oint d\theta = 2\pi\).</p>
+<p>The ray construction also shows why the annulus is different. From any centre \(c\) in the annulus, some straight rays run into the hole, so the construction cannot reach the points behind it. Going around the hole instead, the potential would have to take two different values at the same point, one for each way around, and they differ by \(\oint d\theta = 2\pi\).</p>
 
 <Intuition title="Local versus global">
 	<p>Every point of every manifold has a small neighbourhood that looks like a ball, and balls are star-shaped. So by the Poincaré lemma every closed form is exact <em>locally</em>: near each point it has a potential. Cohomology measures the failure of these local potentials to fit together into a global one. That sentence — “local solutions exist, but they may not glue” — is the heart of cohomology, and <Ref to="cohomology/sheaves" /> will take it as a definition.</p>
@@ -236,7 +238,7 @@
 	<p>If two smooth maps \(f, g\colon M\to N\) are homotopic, then \(f^* = g^*\) on de Rham cohomology. Consequently, homotopy-equivalent manifolds have isomorphic de Rham cohomology.</p>
 </Theorem>
 
-<p>The idea is the one we used for loops above: a homotopy sweeps out a “cylinder” between \(f\) and \(g\), and Stokes’ theorem on that cylinder shows that, for a closed form, what you see at one end differs from what you see at the other only by an exact form. Here is what it buys immediately:</p>
+<p>The idea is the one we used for loops above: a homotopy sweeps out a “cylinder” between \(f\) and \(g\), and Stokes’ theorem on that cylinder shows that, for a closed form, what you see at one end differs from what you see at the other only by an exact form <Cite k="lee2013" loc="ch. 17" />. Here is what it buys immediately:</p>
 <ul>
 	<li>\(\R^n\) is homotopy equivalent to a point, so \(H^k_{\dR}(\R^n) = 0\) for \(k\ge1\) — the Poincaré lemma again.</li>
 	<li>The punctured plane deformation-retracts onto the unit circle, so \(H^1_{\dR}(\R^2\setminus0)\cong H^1_{\dR}(S^1)\cong\R\), matching our computation.</li>
@@ -245,16 +247,16 @@
 
 <h3 id="mayer-vietoris">Mayer–Vietoris: computing by cutting</h3>
 
-<p>Like homology in <Ref to="homology/exact-sequences" />, de Rham cohomology can be computed by cutting a space into overlapping pieces. If \(M = U\cup V\) with \(U\), \(V\) open, there is a long exact sequence</p>
+<p>Like homology in <Ref to="homology/exact-sequences" />, de Rham cohomology can be computed by cutting a space into overlapping pieces. If \(M = U\cup V\) with \(U\), \(V\) open, there is a long exact sequence <Cite k="bott-tu1982" loc="§2" /></p>
 \[ 0 \to H^0(M) \to H^0(U)\oplus H^0(V) \to H^0(U\cap V) \to H^1(M) \to H^1(U)\oplus H^1(V) \to H^1(U\cap V) \to H^2(M) \to \cdots \]
 <p>(all groups de Rham). The first map restricts a form to both pieces; the second takes two forms on \(U\) and \(V\) and subtracts their restrictions to the overlap; the third, the “connecting map”, is the clever one.</p>
 
 <Figure title="The circle from two arcs" num="4.4.5">
 	<MayerVietoris />
-	{#snippet caption()}Cover the circle by two arcs \(U\) and \(V\). Each arc is an interval, with no first cohomology, and their overlap has two separate pieces. Locally constant functions on the pieces leave exactly one dimension unaccounted for, and exactness forces it into \(H^1(S^1)\).{/snippet}
+	{#snippet caption()}Cover the circle by two arcs \(U\) and \(V\). Each arc is an interval, with no first cohomology, and their overlap has two separate pieces. Read the sequence downwards: locally constant functions on the pieces leave exactly one dimension unaccounted for, and exactness pushes it into \(H^1(S^1)\).{/snippet}
 </Figure>
 
-<p>Let us run it for the circle. The arcs \(U\) and \(V\) are each connected and contractible, so \(H^0(U) = H^0(V) = \R\) and \(H^1(U) = H^1(V) = 0\). Their intersection is two disjoint arcs \(W_1\sqcup W_2\), so \(H^0(U\cap V) = \R^2\). A pair of constants \((a, b)\) on \(U\) and \(V\) is sent to the difference \(b - a\) on each of \(W_1\) and \(W_2\): the image of this map is only the diagonal line \(\{(t, t)\}\) in \(\R^2\). By exactness, everything in \(H^0(U\cap V)\) not in that image injects into \(H^1(S^1)\), and since the next group is \(0\), it fills all of \(H^1(S^1)\). So \(\dim H^1_{\dR}(S^1) = 2 - 1 = 1\).</p>
+<p>Let us run it for the circle. The arcs \(U\) and \(V\) are each connected and contractible, so \(H^0(U) = H^0(V) = \R\) and \(H^1(U) = H^1(V) = 0\). Their intersection is two disjoint arcs \(W_1\sqcup W_2\), so \(H^0(U\cap V) = \R^2\). A pair of constants \((a, b)\) on \(U\) and \(V\) is sent to the difference \(b - a\) on each of \(W_1\) and \(W_2\): the image of this map is only the diagonal line \(\{(t, t)\}\) in \(\R^2\). Exactness at \(H^0(U\cap V)\) says that the connecting map kills exactly this diagonal, so it carries the quotient \(\R^2/\{(t,t)\}\cong\R\) injectively into \(H^1(S^1)\). Exactness at \(H^1(S^1)\), where the next group \(H^1(U)\oplus H^1(V)\) is \(0\), says the connecting map is also onto. So \(\dim H^1_{\dR}(S^1) = 2 - 1 = 1\).</p>
 
 <p>Geometrically, the leftover class is a choice of two constants \((c_1, c_2)\) on the two overlaps that is not of the form \((t, t)\): a “jump” across one overlap that is not matched by the same jump across the other. Smoothing such a jump out with a bump function produces a closed 1-form whose integral around the circle is the difference \(c_2 - c_1\) (up to a sign fixed by conventions) — a copy of \(d\theta\), up to a constant multiple and exact forms.</p>
 
@@ -268,28 +270,28 @@
 
 <Figure title="The de Rham map" hint="Pick a form · click a triangle or a loop" num="4.4.6">
 	<DeRhamMap />
-	{#snippet caption()}A triangulated annulus around the missing origin — the same shape as the annulus of <Ref to="cohomology/cochains" />. Each edge is labelled with the integral of the chosen form along it. For \(d\theta\) the numbers are fractions of a turn; every triangle adds up to \(0\) (a cocycle) and each loop around the hole to exactly one turn (not a coboundary). Notice how evenly the turn is spread: \(\tfrac13, -\tfrac16, \tfrac16\) on every edge of its kind.{/snippet}
+	{#snippet caption()}A triangulated annulus around the missing origin — the same shape as the annulus of <Ref to="cohomology/cochains" />. Each edge is labelled with the integral of the chosen form along it, in the direction of its arrow. For \(d\theta\) the numbers are fractions of a turn; every triangle adds up to \(0\) (a cocycle) and each loop around the hole to exactly one turn (not a coboundary). Click a triangle to add up around it. The other two forms show what goes wrong when the form is not closed, and what an exact form gives.{/snippet}
 </Figure>
 
-<p>Look at the numbers the integration map produced for \(d\theta\). Each inner or outer edge carries a third of a turn, because it subtends \(120^\circ\) at the missing point; each “rung” from \(a_i\) out to \(b_i\) carries \(-\tfrac16\) of a turn, and each diagonal from \(a_i\) to \(b_{i+1}\) carries \(+\tfrac16\). Around every triangle the angles cancel, since a triangle that does not contain the origin subtends no net angle. Around either loop they add up to one turn. Any other cocycle whose loop sum is one turn — say, one that puts a whole turn on the three edges crossing a single radial “fence” and \(0\) everywhere else — differs from this one by a coboundary: they are two representatives of the same class. The one produced by integrating \(d\theta\) happens to be the most evenly spread of all of them, a hint of the Hodge theory sketched in <Ref to="big-picture/horizons" />.</p>
+<p>Look at the numbers the integration map produced for \(d\theta\). Each inner or outer edge subtends \(120^\circ\) at the missing point, so it carries a third of a turn: \(+\tfrac13\) when its arrow runs counterclockwise, \(-\tfrac13\) when it runs clockwise. Each edge from an inner vertex \(a_i\) to an outer vertex subtends \(60^\circ\) and carries \(\pm\tfrac16\). Around every triangle the angles cancel, since a triangle that does not contain the origin subtends no net angle. Around either loop they add up to one turn. Any other cocycle whose loop sum is one turn — say, the “fence of ones” of <Ref to="cohomology/cochains" />, which is \(1\) on the three edges \(a_0\to a_1\), \(a_0\to b_1\), \(b_0\to b_1\) and \(0\) everywhere else — differs from this one by a coboundary: they are two representatives of the same class. Of all those representatives, the one produced by integrating \(d\theta\) is the most evenly spread: it has the smallest sum of squares. That is a first glimpse of the Hodge theory sketched in <Ref to="big-picture/horizons" />.</p>
 
 <Theorem id="thm-de-rham" label="Theorem (de Rham, 1931)">
 	<p>For every smooth manifold \(M\), integration over chains induces an isomorphism</p>
 	\[ H^k_{\dR}(M) \;\cong\; H^k(M;\R) \qquad\text{for all } k. \]
-	<p>For a triangulated manifold, the right side can be computed with simplicial cochains.</p>
+	<p>For a triangulated manifold, the right side can be computed with simplicial cochains. <Cite k="derham1931,lee2013" loc="ch. 18" /></p>
 </Theorem>
 
-<p>We will not prove it; the proofs compare the two theories piece by piece with a Mayer–Vietoris argument, using the Poincaré lemma for the pieces. But consider what it says:</p>
+<p>We will not prove it. The proofs compare the two theories piece by piece with a Mayer–Vietoris argument, using the Poincaré lemma for the pieces; <Cite k="bott-tu1982" text loc="§8" /> give a particularly clean version. But consider what it says:</p>
 <ul>
 	<li><strong>Two worlds agree.</strong> The smooth world of forms and derivatives and the combinatorial world of simplices and matrices measure the same holes. Any calculation can be done in whichever world is easier.</li>
 	<li><strong>Periods detect everything.</strong> A closed form is exact if and only if all its <Term t="period">periods</Term> — its integrals over cycles — vanish. We saw this for loops; de Rham’s theorem says it in every degree.</li>
 	<li><strong>No torsion.</strong> Forms have real coefficients, so de Rham cohomology cannot see the torsion that \(\Z\)-coefficients detect. For the projective plane, \(H^k_{\dR}(\RP^2) = \R, 0, 0\), although \(H^2(\RP^2;\Z) = \Z/2\) (<Ref to="cohomology/cohomology-groups" />).</li>
 </ul>
 
-<p>Raoul Bott, describing de Rham’s theorem, called it “a sort of topological form of the particle-wave equivalence of quantum mechanics”: chains are localised like particles, forms are spread out like waves, and integration lets each fully describe the other.</p>
+<p>Raoul Bott, remembering de Rham, called the theorem “a sort of topological form of the particle-wave equivalence of quantum mechanics” <Cite k="oconnor-robertson-derham" />. One way to read him: a chain is concentrated on a few simplices, like a particle; a form is spread over the whole manifold, like a wave; and integration lets each describe the other completely.</p>
 
 <History>
-	<p>Élie Cartan had conjectured the theorem, and even used it, in 1928; Poincaré had probably believed something like it. The young Swiss mathematician Georges de Rham proved it in his thesis, defended in Paris on 20 June 1931 before a committee chaired by Cartan himself. Cohomology had not yet been invented — it arrived in 1935 — so, as Charles Weibel notes, de Rham “was forced to state his results in terms of homology”, as statements about integrals over cycles. Away from mathematics de Rham was a serious mountaineer, who spent his student summers making ascents of the greatest difficulty.</p>
+	<p>Élie Cartan had conjectured the theorem, and even used it, in 1928; Poincaré had probably believed something like it. Georges de Rham, a young Swiss mathematician from the canton of Vaud, read Cartan’s note in 1929 and saw how to prove it, by pairing cycles with forms through integration. He defended the proof as his thesis in Paris on 20 June 1931, before a committee chaired by Cartan himself <Cite k="derham1931,oconnor-robertson-derham" />. Cohomology had not yet been invented — it arrived in 1935 — so, as Charles Weibel notes, de Rham “was forced to state his results in terms of homology”, as statements about integrals over cycles <Cite k="weibel1999" />. Away from his desk de Rham was a serious mountaineer, who as a student spent his summers “making ascents of the greatest difficulty”.</p>
 </History>
 
 <h2 id="physics">Holes you can feel: physics</h2>
@@ -312,11 +314,11 @@
 
 <p>Physicists often describe a magnetic field \(\mathbf B\) through a <Term t="vector-potential">vector potential</Term> \(\mathbf A\) with \(\mathbf B = \operatorname{curl}\mathbf A\); as forms, a 1-form \(A\) with \(B = dA\). Take a long thin solenoid — a coil of wire — carrying a magnetic flux \(\Phi\) inside it. Outside the solenoid the magnetic field is zero, so \(dA = 0\) there: \(A\) is closed. But by Stokes’ theorem on a disk spanning a loop around the solenoid, \(\oint A = \Phi \ne 0\). Outside the solenoid, \(A = \tfrac{\Phi}{2\pi}\,d\theta\) (up to an exact form): the angle form once more.</p>
 
-<p>Classically this would not matter, since a charged particle feels only \(\mathbf B\), and \(\mathbf B = 0\) wherever the particle goes. Quantum mechanically it matters: Aharonov and Bohm pointed out in 1959 (anticipated by Ehrenberg and Siday in 1949) that the wave of a charged particle travelling around the solenoid acquires an extra phase \(\tfrac{q}{\hbar}\oint A = \tfrac{q}{\hbar}\Phi\) per turn, which shifts the interference pattern of electrons passing on either side. The effect was confirmed experimentally, most convincingly by Akira Tonomura and colleagues in 1986 with the field completely shielded. The electrons never touch the magnetic field; what they measure is the cohomology class of \(A\).</p>
+<p>Classically this would not matter, since a charged particle feels only \(\mathbf B\), and \(\mathbf B = 0\) wherever the particle goes. Quantum mechanically it matters. Yakir Aharonov and David Bohm pointed out in 1959 <Cite k="aharonov-bohm1959" />, as Werner Ehrenberg and Raymond Siday had a decade earlier <Cite k="ehrenberg-siday1949" />, that the wave of a charged particle travelling around the solenoid acquires an extra phase \(\tfrac{q}{\hbar}\oint A = \tfrac{q}{\hbar}\Phi\) per turn, which shifts the interference pattern of electrons passing on either side. The most convincing confirmation came in 1986, when Akira Tonomura and colleagues sent electrons around a tiny ring magnet sealed inside a superconducting shield <Cite k="tonomura1986" />. The electrons never touch the magnetic field. What they measure is the period \(\oint A\) of the closed form \(A\) around the hole — its cohomology class, read through a loop.</p>
 
 <Figure title="A wire and a solenoid" hint="Drag to rotate · choose the physics and the loop" num="4.4.7">
 	<AmpereAB />
-	{#snippet caption()}Left setting: the magnetic field circles a straight current; the gold loop collects \(\mu_0 I\) for every time it goes around the wire, and nothing if it does not. Right setting: the field is trapped inside a solenoid; outside it vanishes, but the vector potential \(A = \tfrac{\Phi}{2\pi}d\theta\) still circulates (violet), and a charged particle’s phase changes by \(\tfrac{q}{\hbar}\Phi\) per turn.{/snippet}
+	{#snippet caption()}The wire: the magnetic field circles a straight current, and the gold loop collects \(\mu_0 I\) for every time it goes around the wire, and nothing if it does not. The solenoid: the field is trapped inside the coil; outside it vanishes, but the vector potential \(A = \tfrac{\Phi}{2\pi}d\theta\) still circulates (violet), and a charged particle’s phase changes by \(\tfrac{q}{\hbar}\Phi\) per turn.{/snippet}
 </Figure>
 
 <h3 id="gauss">Gauss’s law and a hole of dimension two</h3>
@@ -328,7 +330,7 @@
 <p>The electric field of a point charge \(Q\) is exactly \(\tfrac{Q}{4\pi\varepsilon_0}\,\sigma\), and the statement “the flux out of a closed surface equals the enclosed charge over \(\varepsilon_0\)” is <Term t="gauss-law">Gauss’s law</Term>. The divergence theorem of the previous chapter would give zero flux for every surface — if the field were defined everywhere inside. The charge is the hole.</p>
 
 <Remark title="A preview: magnetic monopoles">
-	<p>Ordinary magnetic fields are exact, \(B = dA\), and so their flux through every closed surface is zero: there are no isolated magnetic poles. If a magnetic monopole existed, its field would be a multiple of \(\sigma\) — closed but not exact — so no single vector potential could describe it on all of space. In 1931 Dirac found that you can still describe it with two potentials on two overlapping regions, and that quantum mechanics then forces electric charge to come in whole multiples of a basic unit. That story belongs to <Ref to="cohomology/characteristic-classes" />.</p>
+	<p>Ordinary magnetic fields are exact, \(B = dA\), and so their flux through every closed surface is zero: there are no isolated magnetic poles. If a magnetic monopole existed, its field would be a multiple of \(\sigma\) — closed but not exact — so no single vector potential could describe it on all of space. Paul Dirac showed in 1931 that quantum mechanics can live with such a monopole only if electric charge comes in whole multiples of a basic unit <Cite k="dirac1931" />. His potential had a line of singularities, the “Dirac string”, running off to infinity; in 1975 Tai Tsun Wu and Chen Ning Yang replaced it by two smooth potentials on two overlapping regions, glued along their overlap <Cite k="wu-yang1975" />. That story belongs to <Ref to="cohomology/characteristic-classes" />.</p>
 </Remark>
 
 <h2 id="exercises">Exercises</h2>
@@ -361,7 +363,7 @@
 </Exercise>
 
 <Exercise level={2} title="The Beautiful Mind problem">
-	<p>In the film <em>A Beautiful Mind</em> (2001) a blackboard shows a problem — devised, as Lek-Heng Lim reports, by the mathematician Dave Bayer — which reads: \(V = \{\mathbf F\colon\R^3\setminus X\to\R^3 \text{ so } \nabla\times\mathbf F = 0\}\), \(W = \{\mathbf F = \nabla g\}\), \(\dim(V/W) = {?}\) Here \(\nabla\times\mathbf F\) is the curl. Explain why \(V/W\) is \(H^1_{\dR}(\R^3\setminus X)\), and find its dimension when \(X\) is (a) a point, (b) a straight line, (c) two disjoint parallel lines.</p>
+	<p>In the film <em>A Beautiful Mind</em> (2001) a blackboard shows a problem — devised, as Lek-Heng Lim reports, by the film’s mathematical consultant Dave Bayer <Cite k="lim2020" loc="Example 3.2" /> — which reads: \(V = \{\mathbf F\colon\R^3\setminus X\to\R^3 \text{ so } \nabla\times\mathbf F = 0\}\), \(W = \{\mathbf F = \nabla g\}\), \(\dim(V/W) = {?}\) Here \(\nabla\times\mathbf F\) is the curl. Explain why \(V/W\) is \(H^1_{\dR}(\R^3\setminus X)\), and find its dimension when \(X\) is (a) a point, (b) a straight line, (c) two disjoint parallel lines.</p>
 	{#snippet solution()}<p>Curl-free fields are closed 1-forms and gradients are exact 1-forms, so \(V/W = H^1_{\dR}(\R^3\setminus X)\). (a) \(\R^3\setminus\) point retracts onto a sphere \(S^2\), which has no first cohomology: dimension \(0\). (b) \(\R^3\setminus\) line retracts onto a circle: dimension \(1\), generated by the angle form around the line. (c) Space minus two parallel lines retracts onto a plane minus two points, which has dimension \(2\) by the previous exercise.</p>{/snippet}
 </Exercise>
 
@@ -398,7 +400,14 @@
 			title: 'Differential Forms in Algebraic Topology',
 			author: 'Raoul Bott and Loring Tu',
 			url: 'https://link.springer.com/book/10.1007/978-1-4757-3951-0',
-			note: 'The classic: de Rham cohomology, Mayer–Vietoris, the Poincaré lemma, and how far forms can take you in topology. Graduate level, but the first chapter is very readable after this one.',
+			note: 'The classic: de Rham cohomology, Mayer–Vietoris, the Poincaré lemma, and how far forms can take you in topology. Graduate level, but its first chapter reads well after this one.',
+			kind: 'book'
+		},
+		{
+			title: 'An Introduction to Manifolds',
+			author: 'Loring W. Tu',
+			url: 'https://link.springer.com/book/10.1007/978-1-4419-7400-6',
+			note: 'The gentlest rigorous route: its closing chapters build de Rham cohomology, the Mayer–Vietoris sequence and homotopy invariance from scratch, with many worked computations. Written as a prequel to Bott and Tu.',
 			kind: 'book'
 		},
 		{

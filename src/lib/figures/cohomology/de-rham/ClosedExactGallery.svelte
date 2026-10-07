@@ -4,7 +4,6 @@
 	// the loop integral is computed along it, and compared with the integral of
 	// dω over the disk inside.
 	import Svg from '$lib/components/svg/Svg.svelte';
-	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
@@ -167,9 +166,6 @@
 			<circle r="17" class="hit" />
 			<circle r="7.5" class="knob" />
 		</g>
-		{#if holesIn.length}
-			<SvgTeX x={W - 112} y={22} tex={String.raw`\text{the disk contains a missing point}`} color="var(--rose)" size={13} w={210} h={22} />
-		{/if}
 	</Svg>
 	<Controls>
 		<Segmented bind:value={key} label="The 1-form" options={Object.values(gallery).map((g) => ({ value: g.key, label: g.label }))} />
@@ -192,6 +188,7 @@
 			<div class="row">
 				<span class="cap ui violet">inside the disk, where the form is defined</span>
 				<TeX tex={String.raw`\iint_D d\omega = ${fmt(inside, 3).replace('−', '-')}`} />
+				{#if holesIn.length}<span class="warn ui">The disk contains {holesIn.length === 1 ? 'a missing point' : 'missing points'}.</span>{/if}
 			</div>
 			<div class="chips ui">
 				<span class="chip" class:yes={F.closed}>{F.closed ? 'closed' : 'not closed'}</span>
@@ -331,7 +328,7 @@
 		font-size: 0.92rem;
 		color: var(--ink-dim);
 	}
-	@media (max-width: 640px) {
+	@container figure (max-width: 640px) {
 		.readout {
 			grid-template-columns: 1fr;
 		}

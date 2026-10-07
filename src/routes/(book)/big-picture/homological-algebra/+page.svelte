@@ -19,6 +19,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import ChainHomotopyLadder from '$lib/figures/big-picture/homological-algebra/ChainHomotopyLadder.svelte';
 	import SnakeLemma from '$lib/figures/big-picture/homological-algebra/SnakeLemma.svelte';
 	import TorExtCalculator from '$lib/figures/big-picture/homological-algebra/TorExtCalculator.svelte';
@@ -122,8 +123,8 @@
 
 <Ahead>
 	<p>
-		This chapter answers questions left hanging earlier in the book. Why does \(\RP^2\) have a “phantom” \(H_2\) with \(\Z/2\)
-		coefficients (<Ref to="homology/computing" />)? Why does torsion in homology show up one degree higher in cohomology (<Ref
+		This chapter explains rules that earlier chapters could only observe. Why does \(\RP^2\) acquire an extra \(H_2\) when you work
+		mod 2 (<Ref to="homology/computing" />)? Why does torsion in homology show up one degree higher in cohomology (<Ref
 			to="cohomology/cohomology-groups"
 		/>)? Why are singular, simplicial and cellular homology all the same? And it sets up <Ref to="big-picture/horizons" />, where
 		spectral sequences compute homotopy groups and where dropping one axiom opens the door to K-theory and cobordism.
@@ -225,7 +226,7 @@
 <p>
 	Before the proof, read the picture. The kernels of the three vertical maps sit in a row above the diagram, the cokernels in a row
 	below. The connecting map \(\delta\) joins the right end of the top row to the left end of the bottom row; drawn in, it winds through
-	the diagram like a snake, which is where the name comes from. The figure follows one element along the snake — in a concrete example
+	the diagram like a snake, which is where the name comes from. The figure follows one element along the snake, in a concrete example
 	where every group is \(\Z\) or \(\Z/m\) and you can check every step with arithmetic.
 </p>
 
@@ -253,10 +254,23 @@
 	</p>
 	<p>
 		<em>Exactness.</em> Each of the four exactness claims is a short chase of the same kind; for instance, if \(x = p(y)\) with \(y\in\ker
-		b\), we may use that \(y\) as the lift, so \(b(y) = 0\) gives \(z = 0\) and \(\delta(x) = 0\). We leave the remaining checks as
-		Exercise 7 — they are the best possible practice in diagram chasing.
+		b\), we may use that \(y\) as the lift, so \(b(y) = 0\) gives \(z = 0\) and \(\delta(x) = 0\). The two exactness claims next to
+		\(\delta\) are Exercise 7, and the other two (at \(\ker b\) and \(\coker b\)) are shorter chases of the same kind — the best
+		possible practice in diagram chasing. Weibel’s text has the whole proof <Cite k="weibel1994" loc="Lemma 1.3.2" />.
 	</p>
 </Proof>
+
+<History title="A lemma with a screen credit">
+	<p>
+		The snake lemma has an unusual distinction: it has been proved in a feature film. <em>It’s My Turn</em> (1980) opens
+		with Jill Clayburgh, as a Chicago mathematics professor, chasing exactly this diagram on a blackboard: “Let me just show you how to
+		construct the map … which is the fun of the lemma anyhow.” A student heckles that the lift is “not unique”, she answers that it
+		is unique “up to an element in the image of \(f\)” — the very check in the second paragraph of the proof above — and his verdict
+		at the end is one every student of the subject has felt: “This stuff is just garbage. That’s another diagram chase.” <Cite
+			k="its-my-turn1980"
+		/>
+	</p>
+</History>
 
 <Intuition title="What δ measures">
 	<p>
@@ -289,7 +303,10 @@
 	be a cycle. Then \(\partial[c] = [a]\). Up, across, down, across: the same zig-zag as in Figure 5.2.2. (In fact the theorem follows by
 	applying the snake lemma to the diagram whose rows are \(A_n/\im\partial\to B_n/\im\partial\to C_n/\im\partial\to 0\) and \(0\to
 	\ker\partial_{n-1}^A\to\ker\partial_{n-1}^B\to\ker\partial_{n-1}^C\), with the vertical maps induced by \(\partial\): their kernels
-	are \(H_n\) and their cokernels are \(H_{n-1}\).)
+	are \(H_n\) and their cokernels are \(H_{n-1}\).) Hatcher proves the theorem by exactly this zig-zag <Cite
+		k="hatcher2002"
+		loc="Thm 2.16"
+	/>.
 </p>
 
 <Remark title="A machine that runs in any abelian category">
@@ -297,7 +314,9 @@
 		Nothing in the snake lemma used anything special about abelian groups except kernels, cokernels and exactness. So it holds in any
 		abelian category (<Ref to="big-picture/categories" hash="abelian-categories" />): vector spaces, modules, sheaves. One chase, proved
 		once, gives long exact sequences for cohomology, for sheaf cohomology, for group cohomology — everywhere at once. This is the “rising
-		sea” of the epigraph: a general theory in which particular problems dissolve.
+		sea” of the epigraph. Grothendieck wanted a hard problem to be “submerged and dissolved by some more or less vast theory, going
+		well beyond the results originally to be established” <Cite k="mclarty2007" />, and the abelian-category snake lemma is a small
+		example of the method.
 	</p>
 </Remark>
 
@@ -386,8 +405,8 @@
 <Intuition title="Tensoring changes the coefficients">
 	<p>
 		Two rules of thumb cover most of what you will meet. <strong>\(A\otimes\Z/n\cong A/nA\)</strong>: tensoring with \(\Z/n\) “reduces
-		everything mod \(n\)”, so \(\Z\otimes\Z/2 = \Z/2\) and \(\Z/3\otimes\Z/2 = 0\). <strong>\(A\otimes\Q\cong\Q^{\rank A}\)</strong>:
-		tensoring with \(\Q\) “allows fractions and forgets torsion”. And chains with coefficients are exactly a tensor product: \(C_n(X;G)
+		everything mod \(n\)”, so \(\Z\otimes\Z/2 = \Z/2\) and \(\Z/3\otimes\Z/2 = 0\). <strong>\(A\otimes\Q\cong\Q^{\rank A}\)</strong>
+		for finitely generated \(A\): tensoring with \(\Q\) “allows fractions and forgets torsion”. And chains with coefficients are exactly a tensor product: \(C_n(X;G)
 		= C_n(X)\otimes G\), since \(C_n(X)\) is a direct sum of copies of \(\Z\), one per simplex, and each copy becomes a copy of \(G\).
 	</p>
 </Intuition>

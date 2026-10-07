@@ -112,7 +112,7 @@
 </script>
 
 <div class="derham">
-	<Svg viewBox="0 0 {W} {H}" maxHeight={500} label="A triangulated annulus around a missing point; each edge is labelled with the integral of a 1-form along it.">
+	<Svg viewBox="110 76 420 364" maxHeight={500} label="A triangulated annulus around a missing point; each edge is labelled with the integral of a 1-form along it.">
 		{#each annulusTris as t, k (k)}
 			<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 			<polygon
@@ -137,14 +137,14 @@
 			{/if}
 			<line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} class="edge" class:on />
 			<path d={arrowMid(i, j)} class="arrowhead" class:on />
-			<SvgTeX x={m[0]} y={m[1]} tex={valueTeX(cochain[k])} color={on ? 'var(--gold-bright)' : 'var(--gold-pale)'} size={on ? 15 : 13} w={60} h={24} />
+			<SvgTeX x={m[0]} y={m[1]} tex={valueTeX(cochain[k])} color={on ? 'var(--gold-bright)' : 'var(--gold-pale)'} size={on ? 17 : 15} w={64} h={28} />
 		{/each}
 		{#each annulusPos as p, v (v)}
 			{@const q = px(p)}
 			<circle cx={q[0]} cy={q[1]} r="6" class="vtx" />
 			{@const rr = Math.hypot(p[0], p[1])}
 			{@const k = v < 3 ? -0.3 : 0.24}
-			<SvgTeX x={q[0] + (p[0] / rr) * k * S} y={q[1] - (p[1] / rr) * k * S} tex={names[v]} color="var(--ink-bright)" size={14} w={30} h={20} />
+			<SvgTeX x={q[0] + (p[0] / rr) * k * S} y={q[1] - (p[1] / rr) * k * S} tex={names[v]} color="var(--ink-bright)" size={16} w={34} h={22} />
 		{/each}
 	</Svg>
 	<Controls>

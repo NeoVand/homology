@@ -19,6 +19,7 @@
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 
 	import TrianglePlayground from '$lib/figures/foundations/groups/TrianglePlayground.svelte';
 	import ClockArithmetic from '$lib/figures/foundations/groups/ClockArithmetic.svelte';
@@ -33,13 +34,14 @@
 			title: 'Abstract Algebra: Theory and Applications',
 			author: 'Thomas W. Judson',
 			url: 'https://judsonbooks.org/abstract-algebra-theory-and-applications/',
-			note: 'A complete, free, open-source textbook (approved by the American Institute of Mathematics). Its chapters on groups, cyclic groups and isomorphisms go one step beyond this chapter, with many exercises.',
+			note: 'A complete, free, open-source undergraduate textbook (on the American Institute of Mathematics list of approved open textbooks). Chapters 3, 4, 9 and 11 (groups, cyclic groups, isomorphisms, homomorphisms) go one step beyond this chapter, with many exercises.',
 			kind: 'book' as const,
 			free: true
 		},
 		{
 			title: 'Visual Group Theory',
 			author: 'Nathan Carter',
+			url: 'https://bookstore.ams.org/clrm-32',
 			note: 'A whole book (MAA, 2009) built on pictures: Cayley diagrams, multiplication tables and symmetry. The ideal companion if this chapter’s figures helped you.',
 			kind: 'book' as const
 		},
@@ -55,13 +57,14 @@
 			title: 'Group theory, abstraction, and the 196,883-dimensional monster',
 			author: '3Blue1Brown (Grant Sanderson)',
 			url: 'https://www.3blue1brown.com/lessons/groups-and-monsters/',
-			note: 'A beautiful video essay on groups as collections of symmetries, from the rotations of a cube to the Monster.',
+			note: 'A video essay on groups as collections of symmetries, building up to the Monster, a group whose elements can be pictured as symmetries of a space with 196,883 dimensions.',
 			kind: 'video' as const,
 			free: true
 		},
 		{
 			title: 'A Book of Abstract Algebra',
 			author: 'Charles C. Pinter',
+			url: 'https://store.doverpublications.com/products/9780486474175',
 			note: 'A famously friendly classic (Dover, 2nd ed. 2010). Its early chapters on groups, subgroups and homomorphisms are written for exactly the reader of this book.',
 			kind: 'book' as const
 		},
@@ -76,7 +79,10 @@
 	];
 </script>
 
-<Epigraph author="Hermann Weyl" source="“Invariants” (1939)">In these days the angel of topology and the devil of abstract algebra fight for the soul of each individual mathematical domain.</Epigraph>
+<Epigraph author="Arthur Cayley" source="On the theory of groups (1854)"
+	>A set of symbols, 1, α, β, … all of them different, and such that the product of any two of them (no matter in what order),
+	or the product of any one of them into itself, belongs to the set, is said to be a group.</Epigraph
+>
 
 <p class="lead">
 	Cut an equilateral triangle out of card and lay it back in the hole it came from. In how many ways can you pick it
@@ -121,7 +127,10 @@
 </p>
 
 <ul>
-	<li>do nothing at all — we call this move \(e\) (the letter is short for the German <em>Einheit</em>, “unit”);</li>
+	<li>
+		do nothing at all — we call this move \(e\) (the letter is traditionally said to come from the German <em>Einheit</em>,
+		“unity”);
+	</li>
 	<li>
 		rotate the card by a third of a turn, \(120^\circ\) anticlockwise — we call this <span class="nw">\(r\);</span>
 	</li>
@@ -215,15 +224,15 @@
 	Here is one way to see it. Rotating and then flipping is like walking forward and then turning left; flipping and
 	then rotating is like turning left and then walking forward. Both sequences use the same two actions, but you end up
 	in different places. In everyday life, “first put on your socks, then your shoes” is famously different from the
-	opposite order. Order mattering is perfectly natural; it is the triangle’s way of telling us that symmetries are a
-	richer kind of arithmetic than the arithmetic of numbers.
+	opposite order. Order mattering is natural, then; it is the triangle’s way of telling us that symmetries are a richer
+	kind of arithmetic than the arithmetic of numbers.
 </p>
 
 <p>
 	One more observation, which will come back much later in the book: the rotations keep the card <em>face up</em> and
-	the arrow on it turning anticlockwise, while the flips turn the card <em>face down</em> and reverse the arrow. The idea
-	of a consistent “direction of turning” is called <em>orientation</em>, and it is exactly what homology uses to tell a
-	torus from a Klein bottle (<Ref to="topology/manifolds" />, <Ref to="homology/computing" />).
+	the arrow on it turning anticlockwise, while the flips turn the card <em>face down</em> and reverse the arrow. A
+	consistent “direction of turning” is called an <em>orientation</em>. A torus has one and a Klein bottle does not, and
+	homology can tell the difference (<Ref to="topology/manifolds" />, <Ref to="homology/computing" />).
 </p>
 
 <!-- ─────────────────────────────────────────────────────────────────── -->
@@ -268,7 +277,8 @@
 	<p>
 		Strictly speaking, the elements of \(\Z/n\) are classes of integers, and \(0, 1, \dots, n-1\) are just convenient
 		<em>names</em> for them (one representative from each class). Adding by adding the names and then wrapping around is
-		safe — the answer does not depend on which names you pick — but that needs an argument, which we give carefully in
+		safe — the answer does not depend on which names you pick — but that needs an argument: it is the well-definedness
+		check of <Ref to="foundations/equivalence" />, and it returns in full generality in
 		<Ref to="foundations/abelian-groups" />. For this chapter you can picture \(\Z/n\) simply as the \(n\) positions on a
 		clock face.
 	</p>
@@ -386,12 +396,11 @@
 
 <Intuition title="A job description, not a list of ingredients">
 	<p>
-		The definition never says what the elements of a group <em>are</em>. They could be moves, numbers, colours, or
-		beer mugs. David Hilbert, one of the founders of this way of thinking, is reported (by his student Otto Blumenthal)
-		to have said of geometry that “one must always be able to say, instead of ‘points, straight lines, and planes’,
-		‘tables, chairs, and beer mugs’.” The axioms of a group are the same kind of thing: a job description. Anything
-		that can perform the four roles — combine, combine without caring about brackets, contain a do-nothing element,
-		allow undoing — is a group, and everything we prove about groups applies to it.
+		The definition never says what the elements of a group <em>are</em>. They could be moves, numbers, colours, or the
+		tables, chairs and beer mugs of Hilbert’s quip at the start of <Ref to="foundations/sets-and-functions" />. The
+		axioms are a job description. Anything that can perform the four roles — combine, combine without caring about
+		brackets, contain a do-nothing element, allow undoing — is a group, and everything we prove about groups applies
+		to it.
 	</p>
 </Intuition>
 
@@ -412,6 +421,7 @@
 <Proposition title="Identities and inverses are unique">
 	<p>
 		A group has only one identity element, and each element \(a\) has only one inverse.
+		<Cite k="judson2025" loc="Props 3.2.10–3.2.11" />
 	</p>
 </Proposition>
 
@@ -433,7 +443,8 @@
 	Here is a second fact, which explains the experiment with the triangle. How do you undo “first <span class="nw">\(h\),</span> then <span class="nw">\(g\)”?</span>
 	You must undo the <em>last</em> move first: undo <span class="nw">\(g\),</span> then undo <span class="nw">\(h\).</span> In symbols,
 	\[ (gh)^{-1} = h^{-1} g^{-1} . \]
-	To check it, combine: \((gh)(h^{-1}g^{-1}) = g(hh^{-1})g^{-1} = geg^{-1} = gg^{-1} = e\). This is often called the
+	To check it, combine: \((gh)(h^{-1}g^{-1}) = g(hh^{-1})g^{-1} = geg^{-1} = gg^{-1} = e\), so \(h^{-1}g^{-1}\) undoes
+	\(gh\), and by uniqueness it is <em>the</em> inverse <Cite k="judson2025" loc="Prop 3.2.12" />. This is often called the
 	<em>socks-and-shoes rule</em>: you put on socks, then shoes, but you take off the shoes first.
 </p>
 
@@ -443,12 +454,14 @@
 	For a finite group we can write down the whole operation as a table, like the one you filled in for the triangle: the
 	entry in row \(g\) and column \(h\) is <span class="nw">\(gh\).</span> Such a table is called a <dfn>Cayley table</dfn>. In both of our tables
 	you may have noticed that <em>every element appears exactly once in every row and exactly once in every column</em>,
-	like the digits of a Sudoku. That is not a coincidence.
+	like the digits of a Sudoku. Cayley noticed this in 1854: “each line as each column of the square will contain all
+	the symbols” <Cite k="cayley1854" />. It is not a coincidence.
 </p>
 
 <Proposition title="The cancellation law">
 	<p>
 		In a group, if \(ab = ac\) then <span class="nw">\(b = c\).</span> Likewise, if \(ba = ca\) then <span class="nw">\(b = c\).</span>
+		<Cite k="judson2025" loc="Prop 3.2.15" />
 	</p>
 </Proposition>
 
@@ -479,9 +492,11 @@
 	<p>
 		The word “group” (<em>groupe</em>) was first used in this sense by Évariste Galois, who used groups of permutations
 		to decide which polynomial equations can be solved by a formula. He died after a duel in May 1832, aged twenty;
-		the night before, he wrote a letter to his friend Auguste Chevalier summarizing his discoveries. The first abstract
-		definition of a group — a set of symbols with a combining rule, displayed as a table — was given by Arthur Cayley
-		in 1854, which is why such tables now carry his name.
+		the night before, he wrote a letter to his friend Auguste Chevalier summarizing his discoveries <Cite
+			k="neumann2011"
+		/>. Twenty-two years later Arthur Cayley gave the first abstract definition of a group — the one in this chapter’s
+		epigraph — and displayed his groups as tables, which is why such tables now carry his name. He paid his debt in a
+		footnote: “The idea of a group as applied to permutations or substitutions is due to Galois” <Cite k="cayley1854" />.
 	</p>
 </History>
 
@@ -593,7 +608,8 @@
 
 <p>
 	The word honours the Norwegian mathematician Niels Henrik Abel (1802–1829), who, like Galois, died young and changed
-	the theory of equations. Abelian groups are so common that the word is usually written with a lower-case “a”.
+	the theory of equations. It is usually written with a small “a”, as if it were an ordinary word — which, in algebra,
+	it now is.
 </p>
 
 <p>
@@ -657,8 +673,8 @@
 	<p>
 		Non-abelian groups will appear in this book mainly once more, as the <em>fundamental group</em> of a shape in
 		<Ref to="topology/homotopy" />, which records how loops can be combined. For a figure-eight that group is not
-		abelian, and one of the first theorems about homology (<Ref to="homology/invariance" />) says that the first
-		homology group is exactly “the fundamental group made abelian”.
+		abelian, and a theorem of Witold Hurewicz (<Ref to="homology/invariance" />) says that, for a connected shape, the
+		first homology group is exactly “the fundamental group made abelian” <Cite k="hatcher2002" loc="Thm 2A.1" />.
 	</p>
 </KeyIdea>
 
@@ -674,7 +690,8 @@
 <Definition id="def-subgroup" title="Subgroup">
 	<p>
 		A subset \(H\) of a group \(G\) is a <dfn>subgroup</dfn>, written \(H \le G\) (read <span class="nw">“\(H\)</span> is a subgroup of
-		<span class="nw">\(G\)”),</span> if it is a group with the same operation. To check this, it is enough to check three things:
+		<span class="nw">\(G\)”),</span> if it is a group with the same operation. To check this, it is enough to check three
+		things <Cite k="judson2025" loc="Prop 3.3.7" />:
 	</p>
 	<ol>
 		<li>\(H\) contains the identity of <span class="nw">\(G\);</span></li>
@@ -781,7 +798,11 @@
 	order of \(k\) in \(\Z/n\) is
 	\[ \operatorname{order}(k) = \frac{n}{\gcd(n, k)} . \]
 	(The walk \(0, k, 2k, \dots\) returns to \(0\) the first time it reaches a common multiple of \(k\) and <span class="nw">\(n\),</span> and the
-	smallest such is <span class="nw">\(nk / \gcd(n,k)\),</span> reached after \(n/\gcd(n,k)\) steps.) In particular, \(k\) generates all of
+	smallest such is <span class="nw">\(nk / \gcd(n,k)\),</span> reached after \(n/\gcd(n,k)\) steps; <Cite
+		k="judson2025"
+		loc="Thm 4.1.13"
+		text
+	/> gives a careful proof.) In particular, \(k\) generates all of
 	\(\Z/n\) exactly when <span class="nw">\(\gcd(n, k) = 1\).</span> On a 12-hour clock the generators are <span class="nw">\(1, 5, 7, 11\).</span>
 </p>
 
@@ -801,7 +822,10 @@
 </p>
 
 <Theorem title="Subgroups of ℤ">
-	<p>Every subgroup of \(\Z\) is <span class="nw">\(n\Z\),</span> the multiples of some whole number <span class="nw">\(n \ge 0\).</span></p>
+	<p>
+		Every subgroup of \(\Z\) is <span class="nw">\(n\Z\),</span> the multiples of some whole number <span class="nw">\(n \ge 0\).</span>
+		<Cite k="judson2025" loc="Cor 4.1.11" />
+	</p>
 </Theorem>
 
 <Proof>
@@ -908,7 +932,10 @@
 </p>
 
 <Definition title="Kernel and image">
-	<p>Let \(\varphi\colon G \to H\) be a homomorphism of abelian groups.</p>
+	<p>
+		Let \(\varphi\colon G \to H\) be a homomorphism. We write the groups additively, as we will for the rest of the book;
+		for a group written multiplicatively, read \(0\) as the identity <span class="nw">\(e\).</span>
+	</p>
 	<ul>
 		<li>
 			The <dfn>kernel</dfn> of \(\varphi\) is everything that \(\varphi\) sends to zero:
@@ -1009,8 +1036,8 @@
 
 <p>
 	A function is <Term t="injective">injective</Term> (one-to-one) if different inputs always give different outputs. For
-	a general function, checking this means comparing every pair of inputs. For a homomorphism there is a spectacular
-	shortcut: you only have to look at what lands on <span class="nw">\(0\).</span>
+	a general function, checking this means comparing every pair of inputs. For a homomorphism there is a shortcut: you
+	only have to look at what lands on <span class="nw">\(0\).</span>
 </p>
 
 <Theorem id="thm-injective" title="Injective exactly when the kernel is trivial">
@@ -1096,7 +1123,7 @@
 <p>
 	How can we be sure that <em>no</em> renaming turns the rectangle’s table into that of <span class="nw">\(\Z/4\)?</span> Trying all six is one
 	way, but there is a better one. An isomorphism preserves every property that can be stated in terms of the operation
-	— being abelian, the number of subgroups, the orders of elements. In \(\Z/4\) the element \(1\) has order <span class="nw">\(4\).</span> In
+	— being abelian, the number of subgroups, the orders of elements <Cite k="judson2025" loc="Thm 9.1.6" />. In \(\Z/4\) the element \(1\) has order <span class="nw">\(4\).</span> In
 	the rectangle group every element has order \(1\) or <span class="nw">\(2\):</span> every symmetry of a rectangle, done twice, is
 	<span class="nw">\(e\).</span> An isomorphism would have to send \(1\) to an element of order <span class="nw">\(4\),</span> and there is none. So the two groups are
 	not isomorphic, even though both have four elements.
@@ -1111,8 +1138,9 @@
 
 <Remark title="Giving the same name to different things">
 	<p>
-		Henri Poincaré wrote that “mathematics is the art of giving the same name to different things.” Isomorphism is
-		that art made precise. When we write <span class="nw">\(G \cong H\),</span> we are saying that, as far as the group operation can tell,
+		Poincaré’s motto from the epigraph of <Ref to="foundations/equivalence" /> — “mathematics is the art of giving the
+		same name to different things” <Cite k="poincare1908" /> — fits isomorphism perfectly. Isomorphism is that art
+		made precise. When we write <span class="nw">\(G \cong H\),</span> we are saying that, as far as the group operation can tell,
 		\(G\) and \(H\) are the same thing with different labels. Most of the time we will happily treat isomorphic groups
 		as equal — homology groups are only ever determined “up to isomorphism” — but the symbol \(\cong\) is there to
 		remind us that a renaming has taken place (the levels of sameness were introduced in

@@ -90,7 +90,7 @@
 </script>
 
 <div class="oct">
-	<Svg viewBox="0 0 600 340" maxHeight={380} label="An octagon with edges a1, b1, a1 inverse, b1 inverse, a2, b2, a2 inverse, b2 inverse, cut into two halves, each glued into a torus with a hole, and finally glued into a surface with two holes">
+	<Svg viewBox="0 0 600 352" maxHeight={390} label="An octagon with edges a1, b1, a1 inverse, b1 inverse, a2, b2, a2 inverse, b2 inverse, cut into two halves, each glued into a torus with a hole, and finally glued into a surface with two holes">
 		<!-- polygon stage -->
 		<g class="fade" style="opacity:{showPoly ? 1 : 0}">
 			<g class="move" style="transform: translate({-34 * shift}px, {-18 * shift}px)">
@@ -132,14 +132,15 @@
 				<ellipse cx={s.T.c.cx} cy={s.T.c.cy} rx={s.T.c.rx} ry={s.T.c.ry} fill="rgba(5,8,16,0.7)" stroke="var(--blue)" stroke-width="2.2" />
 				<path d={s.T.smile} fill="none" stroke="rgba(188,214,255,0.8)" stroke-width="2" />
 				<path d={s.T.frown} fill="none" stroke="rgba(188,214,255,0.8)" stroke-width="2" />
-				<ellipse cx={s.T.aLoop.cx} cy={s.T.aLoop.cy} rx={s.T.aLoop.rx} ry={s.T.aLoop.ry} fill="none" stroke={s.ca} stroke-width="2.6" filter="url(#glow)" />
-				<path d="M {s.T.bLoop.cx - s.T.bLoop.rx} {s.T.bLoop.cy} A {s.T.bLoop.rx} {s.T.bLoop.ry} 0 0 0 {s.T.bLoop.cx + s.T.bLoop.rx} {s.T.bLoop.cy}" fill="none" stroke={s.cb} stroke-width="2.6" />
-				<path d="M {s.T.bLoop.cx - s.T.bLoop.rx} {s.T.bLoop.cy} A {s.T.bLoop.rx} {s.T.bLoop.ry} 0 0 1 {s.T.bLoop.cx + s.T.bLoop.rx} {s.T.bLoop.cy}" fill="none" stroke={s.cb} stroke-width="2" stroke-dasharray="4 4" />
+				<!-- as in the workshop: a goes round the tube, b round the hole -->
+				<ellipse cx={s.T.aLoop.cx} cy={s.T.aLoop.cy} rx={s.T.aLoop.rx} ry={s.T.aLoop.ry} fill="none" stroke={s.cb} stroke-width="2.6" filter="url(#glow)" />
+				<path d="M {s.T.bLoop.cx - s.T.bLoop.rx} {s.T.bLoop.cy} A {s.T.bLoop.rx} {s.T.bLoop.ry} 0 0 0 {s.T.bLoop.cx + s.T.bLoop.rx} {s.T.bLoop.cy}" fill="none" stroke={s.ca} stroke-width="2.6" />
+				<path d="M {s.T.bLoop.cx - s.T.bLoop.rx} {s.T.bLoop.cy} A {s.T.bLoop.rx} {s.T.bLoop.ry} 0 0 1 {s.T.bLoop.cx + s.T.bLoop.rx} {s.T.bLoop.cy}" fill="none" stroke={s.ca} stroke-width="2" stroke-dasharray="4 4" />
 			{/each}
-			<SvgTeX x={T1.aLoop.cx} y={T1.aLoop.cy - 38} tex="a_1" color={cols.a1} size={16} w={30} h={22} />
-			<SvgTeX x={T1.bLoop.cx - 12} y={T1.bLoop.cy + 26} tex="b_1" color={cols.b1} size={16} w={30} h={22} />
-			<SvgTeX x={T2.aLoop.cx} y={T2.aLoop.cy + 40} tex="a_2" color={cols.a2} size={16} w={30} h={22} />
-			<SvgTeX x={T2.bLoop.cx + 12} y={T2.bLoop.cy - 24} tex="b_2" color={cols.b2} size={16} w={30} h={22} />
+			<SvgTeX x={T1.aLoop.cx} y={T1.aLoop.cy - 38} tex="b_1" color={cols.b1} size={16} w={30} h={22} />
+			<SvgTeX x={T1.bLoop.cx - 12} y={T1.bLoop.cy + 26} tex="a_1" color={cols.a1} size={16} w={30} h={22} />
+			<SvgTeX x={T2.aLoop.cx} y={T2.aLoop.cy + 40} tex="b_2" color={cols.b2} size={16} w={30} h={22} />
+			<SvgTeX x={T2.bLoop.cx + 12} y={T2.bLoop.cy - 24} tex="a_2" color={cols.a2} size={16} w={30} h={22} />
 			<SvgTeX x={T1.c.cx + 26} y={T1.c.cy - 36} tex="c" color="var(--blue)" size={16} w={20} h={22} />
 			<SvgTeX x={T2.c.cx - 26} y={T2.c.cy + 36} tex="c" color="var(--blue)" size={16} w={20} h={22} />
 		</g>
@@ -156,26 +157,26 @@
 				<path d="M {hx - 38} {167} Q {hx} {189} {hx + 38} {167}" fill="none" stroke="rgba(188,214,255,0.8)" stroke-width="2" />
 				<path d="M {hx - 28} {173} Q {hx} {159} {hx + 28} {173}" fill="none" stroke="rgba(188,214,255,0.8)" stroke-width="2" />
 			{/each}
-			<ellipse cx="196" cy="171" rx="60" ry="31" fill="none" stroke={cols.a1} stroke-width="2.6" filter="url(#glow)" />
-			<ellipse cx="404" cy="171" rx="60" ry="31" fill="none" stroke={cols.a2} stroke-width="2.6" filter="url(#glow)" />
-			{#each [{ x: 128, c: cols.b1 }, { x: 472, c: cols.b2 }] as b (b.x)}
+			<ellipse cx="196" cy="171" rx="60" ry="31" fill="none" stroke={cols.b1} stroke-width="2.6" filter="url(#glow)" />
+			<ellipse cx="404" cy="171" rx="60" ry="31" fill="none" stroke={cols.b2} stroke-width="2.6" filter="url(#glow)" />
+			{#each [{ x: 128, c: cols.a1 }, { x: 472, c: cols.a2 }] as b (b.x)}
 				<path d="M {b.x - 22} 170 A 22 8 0 0 0 {b.x + 22} 170" fill="none" stroke={b.c} stroke-width="2.6" />
 				<path d="M {b.x - 22} 170 A 22 8 0 0 1 {b.x + 22} 170" fill="none" stroke={b.c} stroke-width="2" stroke-dasharray="4 4" />
 			{/each}
 			<path d="M 300 135 A 9 35 0 0 0 300 205" fill="none" stroke="var(--blue)" stroke-width="2.2" />
 			<path d="M 300 135 A 9 35 0 0 1 300 205" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-dasharray="4 4" />
-			<SvgTeX x={196} y={124} tex="a_1" color={cols.a1} size={16} w={30} h={22} />
-			<SvgTeX x={404} y={124} tex="a_2" color={cols.a2} size={16} w={30} h={22} />
-			<SvgTeX x={128} y={196} tex="b_1" color={cols.b1} size={16} w={30} h={22} />
-			<SvgTeX x={472} y={196} tex="b_2" color={cols.b2} size={16} w={30} h={22} />
+			<SvgTeX x={196} y={124} tex="b_1" color={cols.b1} size={16} w={30} h={22} />
+			<SvgTeX x={404} y={124} tex="b_2" color={cols.b2} size={16} w={30} h={22} />
+			<SvgTeX x={128} y={196} tex="a_1" color={cols.a1} size={16} w={30} h={22} />
+			<SvgTeX x={472} y={196} tex="a_2" color={cols.a2} size={16} w={30} h={22} />
 			<SvgTeX x={300} y={226} tex="c" color="var(--blue)" size={16} w={20} h={22} />
 			<SvgTeX x={300} y={290} tex={'\\Sigma_2'} color="var(--ink-bright)" size={20} w={60} h={30} />
 		</g>
 
 		{#if step <= 2}
-			<SvgTeX x={CX} y={318} tex={'a_1b_1a_1^{-1}b_1^{-1}\\,a_2b_2a_2^{-1}b_2^{-1}'} size={18} w={360} h={30} color="var(--ink-bright)" />
+			<SvgTeX x={CX} y={330} tex={'a_1b_1a_1^{-1}b_1^{-1}\\,a_2b_2a_2^{-1}b_2^{-1}'} size={18} w={360} h={30} color="var(--ink-bright)" />
 		{:else if step === 3}
-			<SvgTeX x={CX} y={318} tex={'a_1b_1a_1^{-1}b_1^{-1}c^{-1}\\quad\\text{and}\\quad c\\,a_2b_2a_2^{-1}b_2^{-1}'} size={16} w={440} h={30} color="var(--ink-bright)" />
+			<SvgTeX x={CX} y={330} tex={'a_1b_1a_1^{-1}b_1^{-1}c^{-1}\\quad\\text{and}\\quad c\\,a_2b_2a_2^{-1}b_2^{-1}'} size={16} w={440} h={30} color="var(--ink-bright)" />
 		{/if}
 	</Svg>
 	<div class="ctl ui">
