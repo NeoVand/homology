@@ -9,6 +9,7 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import { PlusIcon } from '$lib/icons';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { circleLoop, fieldAt, indexOf, windingAlong, type Zero, type ZeroKind } from './fields';
 	import { svgPoint } from '../sheaves/svgutil';
@@ -299,9 +300,9 @@
 			/>
 			<Timeline bind:value={walk} duration={4} from="start" to="once around" label="Walking around the loop" />
 		{:else}
-			<Button onclick={() => add('source')}>+ index +1</Button>
-			<Button onclick={() => add('saddle')}>+ saddle (−1)</Button>
-			<Button onclick={() => add('dipole')}>+ dipole (+2)</Button>
+			<Button icon={PlusIcon} onclick={() => add('source')}>Source (+1)</Button>
+			<Button icon={PlusIcon} onclick={() => add('saddle')}>Saddle (−1)</Button>
+			<Button icon={PlusIcon} onclick={() => add('dipole')}>Dipole (+2)</Button>
 			<Button onclick={() => (zs = zs.slice(0, -1))} disabled={zs.length === 0}>Remove last</Button>
 		{/if}
 	</Controls>

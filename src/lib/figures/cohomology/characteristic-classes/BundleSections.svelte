@@ -10,6 +10,7 @@
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import { ShuffleIcon } from '$lib/icons';
 	import { glassMesh, glowPoint, glowTube } from '$lib/three/materials';
 	import { surfaceGeometry, type SurfaceFn } from '$lib/three/surfaces';
 	import type * as THREE_NS from 'three';
@@ -190,7 +191,7 @@
 		label="Line bundle"
 	/>
 	<Button onclick={() => (vals = [0.6, 0.6, 0.6, 0.6, 0.6, 0.6])}>Keep it positive</Button>
-	<Button onclick={() => (vals = vals.map(() => +(Math.random() * 2 - 1).toFixed(2)))}>Random</Button>
+	<Button icon={ShuffleIcon} onclick={() => (vals = vals.map(() => +(Math.random() * 2 - 1).toFixed(2)))}>Random</Button>
 	<span class="hint ui">Drag the gold points in the strip</span>
 </Controls>
 

@@ -32,14 +32,15 @@
 		{
 			title: 'An Introduction to Homological Algebra',
 			author: 'Charles A. Weibel',
-			note: 'The standard graduate text (Cambridge University Press, 1994). Chapters 1–3 cover chain complexes, the snake lemma, resolutions, Tor and Ext; chapter 5 is a thorough treatment of spectral sequences.',
+			url: 'https://doi.org/10.1017/CBO9781139644136',
+			note: 'The standard graduate text (Cambridge University Press, 1994). Chapters 1–3 cover chain complexes, the snake lemma (Lemma 1.3.2), resolutions, Tor and Ext; Chapter 5 is a thorough treatment of spectral sequences. Read it after this chapter, with Hatcher open beside it for the topology.',
 			kind: 'book'
 		},
 		{
 			title: 'Algebraic Topology, §2.3, §3.1, §3.A–3.B',
 			author: 'Allen Hatcher',
 			url: 'https://pi.math.cornell.edu/~hatcher/AT/AT.pdf',
-			note: 'The Eilenberg–Steenrod axioms (§2.3), the universal coefficient theorem for cohomology (§3.1), and for homology together with the general Künneth formula (§3.A, §3.B). Clear and complete.',
+			note: 'The axioms for homology (§2.3), the universal coefficient theorem for cohomology (§3.1), and the versions for homology and for products (§3.A, §3.B), with full proofs. The natural next step from this chapter.',
 			kind: 'book',
 			free: true
 		},
@@ -47,15 +48,15 @@
 			title: 'You Could Have Invented Spectral Sequences',
 			author: 'Timothy Y. Chow',
 			url: 'https://www.ams.org/notices/200601/fea-chow.pdf',
-			note: 'Five pages in the Notices of the AMS (2006) that derive the spectral sequence of a filtered complex from scratch, the way you might have found it yourself. The best first reading.',
+			note: 'Five pages in the Notices of the AMS (2006) that derive the spectral sequence of a filtered complex from scratch, the way you might have found it yourself. The best first reading after Figure 5.2.6.',
 			kind: 'paper',
 			free: true
 		},
 		{
 			title: 'Spectral Sequences: Friend or Foe?',
 			author: 'Ravi Vakil',
-			url: 'http://math.stanford.edu/~vakil/0708-216/216ss.pdf',
-			note: 'Short, funny and practical notes: spectral sequences of double complexes, used to re-prove facts you already know.',
+			url: 'https://math.stanford.edu/~vakil/0708-216/216ss.pdf',
+			note: 'Twelve short, funny, practical pages: the spectral sequence of a double complex, used to re-prove facts you already know (the snake lemma among them). The source of this chapter’s joke about spectres.',
 			kind: 'notes',
 			free: true
 		},
@@ -63,34 +64,45 @@
 			title: 'Spectral Sequences in Algebraic Topology (Chapter 5)',
 			author: 'Allen Hatcher',
 			url: 'https://pi.math.cornell.edu/~hatcher/AT/SSpage.html',
-			note: 'The Serre spectral sequence and its applications — including homotopy groups of spheres — in Hatcher’s unhurried style. For after Hatcher’s main book.',
+			note: 'The Serre spectral sequence and its applications, including homotopy groups of spheres, in Hatcher’s unhurried style. Unfinished, free, and best read after his main book.',
 			kind: 'notes',
 			free: true
 		},
 		{
 			title: 'A User’s Guide to Spectral Sequences',
 			author: 'John McCleary',
-			note: 'The encyclopedic reference (2nd ed., Cambridge University Press, 2001), with history and many worked applications.',
+			url: 'https://doi.org/10.1017/CBO9780511626289',
+			note: 'The encyclopedic reference (2nd edition, Cambridge University Press, 2001), with history and many worked applications. For looking things up rather than reading straight through.',
 			kind: 'book'
 		},
 		{
 			title: 'Differential Forms in Algebraic Topology',
 			author: 'Raoul Bott and Loring W. Tu',
-			note: 'Springer GTM 82 (1982). Builds spectral sequences from the Čech–de Rham double complex, with pictures; a beautiful bridge from this book’s Part IV.',
+			url: 'https://doi.org/10.1007/978-1-4757-3951-0',
+			note: 'Springer GTM 82 (1982). Builds spectral sequences from the Čech–de Rham double complex, with pictures; the natural bridge from this book’s Part IV.',
 			kind: 'book'
 		},
 		{
 			title: 'History of Homological Algebra',
 			author: 'Charles A. Weibel',
 			url: 'https://metaphor.ethz.ch/x/2025/hs/401-3132-00L/ex/historyweibel.pdf',
-			note: 'Where Tor, Ext, the axioms and spectral sequences came from, with exact dates and the people involved.',
+			note: 'Where Tor, Ext, the axioms, abelian categories and spectral sequences came from, with exact dates and the people involved (in I. M. James, ed., History of Topology, 1999).',
+			kind: 'paper',
+			free: true
+		},
+		{
+			title: 'Leray in Oflag XVIIA: The Origins of Sheaf Theory, Sheaf Cohomology, and Spectral Sequences',
+			author: 'Haynes Miller',
+			url: 'https://math.mit.edu/~hrm/papers/ss.pdf',
+			note: 'How a prisoner-of-war camp produced two of the tools in this chapter: a historian’s account with the mathematics explained (Gazette des Mathématiciens, 2000).',
 			kind: 'paper',
 			free: true
 		},
 		{
 			title: 'Foundations of Algebraic Topology',
 			author: 'Samuel Eilenberg and Norman Steenrod',
-			note: 'Princeton University Press, 1952: the book that axiomatised homology, following their 1945 announcement in the Proceedings of the National Academy of Sciences.',
+			url: 'https://doi.org/10.1515/9781400877492',
+			note: 'Princeton University Press, 1952: the book that axiomatised homology, following the authors’ 1945 announcement. Historically important; Hatcher is easier to learn from.',
 			kind: 'book'
 		}
 	] as const;

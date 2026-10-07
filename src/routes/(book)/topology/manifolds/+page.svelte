@@ -17,6 +17,7 @@
 	import Recap from '$lib/components/prose/Recap.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
+	import Cite from '$lib/components/prose/Cite.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import GenusSurfaces from '$lib/figures/topology/manifolds/GenusSurfaces.svelte';
 	import SphereCharts from '$lib/figures/topology/manifolds/SphereCharts.svelte';
@@ -206,8 +207,8 @@
 
 <p>
 	For two planes crossing along a line the cut-point trick is too weak: remove a point of the crossing line and what is left is still in
-	one piece. The small-sphere picture — two circles that cross, instead of one circle — is the right instinct, and in
-	<Ref to="homology/invariance" /> a tool called local homology turns that instinct into a proof.
+	one piece. The small-sphere picture — two circles that cross, instead of one circle — is the right instinct, and a tool called
+	local homology (<Ref to="homology/exact-sequences" />) turns that instinct into a proof.
 </p>
 
 <Warning title="Corners are invisible">
@@ -274,19 +275,20 @@
 <p>
 	Could a space be a 2-manifold and a 3-manifold at the same time? Intuition says no — a sheet of paper is not a block of wood — but
 	remember that continuous maps can do wild things: Giuseppe Peano found in 1890 a continuous map from an interval <em>onto</em> a whole
-	square. The reassuring answer is a famous theorem.
+	square <Cite k="peano1890" />. The reassuring answer is a famous theorem.
 </p>
 
 <Theorem label="Theorem (invariance of dimension)" id="thm-invariance-of-dimension">
 	<p>
 		If a nonempty open subset of \(\R^m\) is homeomorphic to an open subset of \(\R^n\), then \(m = n\). Consequently every nonempty
-		manifold has a well-defined dimension.
+		manifold has a well-defined dimension. <Cite k="hatcher2002" loc="Thm 2.26" />
 	</p>
 </Theorem>
 
 <p>
-	L. E. J. Brouwer proved this in 1911. It is surprisingly hard to prove from scratch, and becomes easy with homology: we will prove it in
-	<Ref to="homology/invariance" />.
+	L. E. J. Brouwer proved this in 1911 <Cite k="brouwer1911dim" />. It is surprisingly hard to prove from scratch, and becomes easy with
+	homology: <Ref to="homology/invariance" /> proves that \(\R^m\) and \(\R^n\) are not homeomorphic when \(m \neq n\), and
+	<Ref to="homology/exact-sequences" /> finishes the job for open subsets.
 </p>
 
 <Example title="Manifolds in every dimension">
@@ -524,9 +526,10 @@
 </Figure>
 
 <p>
-	Could one point be a boundary point for one chart and an interior point for another? No; but proving it needs the same machinery as
-	invariance of dimension, so it too waits for <Ref to="homology/invariance" />. Granting it, a manifold in the earlier sense is exactly a
-	manifold with boundary whose boundary is empty. Some examples:
+	Could one point be a boundary point for one chart and an interior point for another? No, but the proof needs the same tool as
+	invariance of dimension, local homology (<Ref to="homology/exact-sequences" />): it detects a hole around an interior point that is
+	missing around a point on the edge of \(\mathbb H^n\). Granting this, a manifold in the earlier sense is exactly a manifold with
+	boundary whose boundary is empty. Some examples:
 </p>
 
 <ul>

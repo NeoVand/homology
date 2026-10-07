@@ -10,7 +10,7 @@
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Timeline from '$lib/components/ui/Timeline.svelte';
-	import { ResetIcon } from '$lib/icons';
+	import { PauseIcon, PlayIcon, ResetIcon } from '$lib/icons';
 	import Button from '$lib/components/ui/Button.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import type * as THREE_NS from 'three';
@@ -339,7 +339,7 @@
 		]}
 		label="Click to sculpt"
 	/>
-	<Button onclick={() => (wobble = !wobble)} active={wobble}>{wobble ? 'Stop' : 'Wobble'}</Button>
+	<Button icon={wobble ? PauseIcon : PlayIcon} onclick={() => (wobble = !wobble)} active={wobble}>{wobble ? 'Stop' : 'Wobble'}</Button>
 	<Button onclick={reset} icon={ResetIcon}>Reset</Button>
 </Controls>
 

@@ -13,6 +13,8 @@
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { delta, diffuse, safeStep, sheafDims, type GraphSheaf } from './cellular';
 	import { prefersReducedMotion } from './svgutil';
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { MinusIcon, PlusIcon, PlayIcon, PauseIcon, ShuffleIcon } from '$lib/icons';
 
 	const names = ['€', '$', '£', 'CHF'];
 	const pos: [number, number][] = [
@@ -127,9 +129,9 @@
 			{#each names as n, i (n)}
 				<div class="st">
 					<span class="nm">{n}</span>
-					<button aria-label="lower the {n} price" onclick={() => nudge(i, -0.1)}>−</button>
+					<button aria-label="lower the {n} price" onclick={() => nudge(i, -0.1)}><Icon icon={MinusIcon} size={14} stroke={1.8} /></button>
 					<span class="pv nums">{money(prices[i])}</span>
-					<button aria-label="raise the {n} price" onclick={() => nudge(i, 0.1)}>+</button>
+					<button aria-label="raise the {n} price" onclick={() => nudge(i, 0.1)}><Icon icon={PlusIcon} size={14} stroke={1.8} /></button>
 				</div>
 			{/each}
 		</div>
@@ -158,8 +160,8 @@
 			]}
 			label="Exchange rates"
 		/>
-		<Button onclick={settle} active={running}>{running ? 'Stop' : 'Let prices settle'}</Button>
-		<Button onclick={scramble}>Scramble prices</Button>
+		<Button icon={running ? PauseIcon : PlayIcon} onclick={settle} active={running}>{running ? 'Stop' : 'Let prices settle'}</Button>
+		<Button icon={ShuffleIcon} onclick={scramble}>Scramble prices</Button>
 	</Controls>
 </div>
 
@@ -242,6 +244,9 @@
 		min-width: 2rem;
 	}
 	.st button {
+		display: inline-grid;
+		place-items: center;
+		padding: 0;
 		width: 2rem;
 		height: 2rem;
 		border-radius: 50%;
