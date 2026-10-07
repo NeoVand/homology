@@ -24,7 +24,9 @@
 	const apis: ({ set(l: Lens): void } | null)[] = [null, null];
 
 	function makeSetup(which: 0 | 1) {
-		return function setup({ scene, label }: SceneContext) {
+		return function setup({ scene, label, container }: SceneContext) {
+			// a phone-width canvas has no room beside the bottle for the long label
+			const narrow = container.clientWidth < 520;
 			const ex = which === 0 ? T : Kb;
 			const map: SurfaceMap = which === 0 ? torusMap(1.45, 0.58) : kleinMap(0.2);
 			scene.add(glassUnderlay(surfaceGeometry(map.fn, 170, 70), { opacity: 0.5, grid: [0, 0], brightness: 0.95 }));
@@ -55,8 +57,9 @@
 					cx.setOrientation(l === 'Z' ? eps : null, 'violet');
 					seam.visible = which === 1 && l === 'Z';
 					loopA.visible = !(which === 1 && l === 'Z');
-					lA.set(tex(which === 1 && l === 'Z' ? '2a = \\partial(\\textstyle\\sum \\pm t)' : 'a'));
-					lA.position.copy(which === 1 && l === 'Z' ? aLongAt : aAt);
+					const long = which === 1 && l === 'Z' && !narrow;
+					lA.set(tex(which === 1 && l === 'Z' ? (narrow ? '2a' : '2a = \\partial(\\textstyle\\sum \\pm t)') : 'a'));
+					lA.position.copy(long ? aLongAt : aAt);
 					lA.el.className = 'lbl3d ' + (which === 1 && l === 'Z' ? 'rose' : 'gold');
 					lA.show(true);
 					lB.show(true);
