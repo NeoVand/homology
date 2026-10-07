@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://neovand.github.io/homology/"><img src="docs/banner.webp" alt="The book’s home page: the title Homology &amp; Cohomology beside a glowing glass torus" width="100%"></a>
+  <a href="https://neovand.github.io/homology/"><img src="docs/banner.gif" alt="The book’s home page: the title Homology &amp; Cohomology beside a glowing glass torus that turns and responds to the pointer" width="100%"></a>
 </p>
 
 # Homology & Cohomology — an illustrated journey
