@@ -181,9 +181,11 @@
 	}
 	.where {
 		display: inline-flex;
-		gap: 0.35rem;
+		flex-wrap: wrap;
+		gap: 0.3rem 0.35rem;
 		margin-left: 0.4rem;
 		text-indent: 0;
+		vertical-align: top;
 	}
 	.where a {
 		font-size: 0.7rem;
