@@ -40,7 +40,7 @@
 <p>
 	The machine has two parts and one law. The parts are <strong>chains</strong>, which are things made of simplices that we can add, and the
 	<strong>boundary operator</strong> \(\partial\), which takes a chain to its edge. The law is that the boundary of a boundary is zero:
-	\(\partial \circ \partial = 0\). We will build everything twice. First with arithmetic mod 2, where a chain is just a set of simplices and there are no signs
+	\(\partial \circ \partial = 0\). We will build everything twice. First with arithmetic mod 2, where a chain is a plain set of simplices and there are no signs
 	to worry about. Then with integers, where chains remember directions and multiplicities — which costs us some careful bookkeeping with plus and minus signs,
 	and buys us the ability to see twisting that mod 2 is blind to.
 </p>
@@ -59,7 +59,15 @@
 <h2 id="chains-mod-2">Chains: inventories of simplices</h2>
 
 <p>
-	Throughout this chapter \(K\) is a <Term t="simplicial-complex">simplicial complex</Term> (see <Ref to="topology/simplicial-complexes" />): a collection of
+	Start with a question that sounds too easy: what is the edge of a triangle? Not a segment, but three segments. And the skin of a solid tetrahedron is not
+	a triangle but four triangles. David Farrell’s video series <em>You Could Have Invented Homology</em> draws the skin of a tetrahedron beside a triangle
+	with the verdict \(\partial\Delta^3 \not\approx \Delta^2\): the boundary of the solid tetrahedron \(\Delta^3\) is not a triangle \(\Delta^2\), or any
+	other single simplex <Cite k="farrell2021" />. So if “take the edge” is to be an operation we can apply, and then apply again — and this whole chapter is
+	about applying it again — we need objects made of <em>several</em> simplices, which we can add together. Those objects are chains.
+</p>
+
+<p>
+	First, some notation. Throughout this chapter \(K\) is a <Term t="simplicial-complex">simplicial complex</Term> (see <Ref to="topology/simplicial-complexes" />): a collection of
 	vertices, edges, triangles, tetrahedra and their higher-dimensional cousins, glued along shared faces. A <dfn>\(k\)-simplex</dfn> has \(k + 1\) vertices: a
 	0-simplex is a vertex, a 1-simplex an edge, a 2-simplex a triangle, a 3-simplex a solid tetrahedron. We label vertices by whole numbers and write a simplex
 	by listing its vertices in increasing order inside square brackets, so \([0,2,3]\) is the triangle with vertices \(0\), \(2\) and \(3\). We write \(n_k\) for
@@ -84,8 +92,8 @@
 </p>
 \[ \sigma + \sigma = 0 \qquad\text{for every simplex } \sigma, \]
 <p>
-	which is the arithmetic of \(\Z/2\), where \(1 + 1 = 0\). Think of a chain as an <em>inventory</em>: a list saying, for each \(k\)-simplex, whether it is in
-	(coefficient \(1\)) or out (coefficient \(0\)). Adding inventories adds the coefficients, mod 2.
+	which is the arithmetic of \(\Z/2\), where \(1 + 1 = 0\). Each \(k\)-simplex carries a coefficient, \(1\) if it is in the chain and \(0\) if it is out, and
+	adding chains adds the coefficients, mod 2.
 </p>
 
 <Definition id="def-chain-group-mod-2">
@@ -123,18 +131,12 @@
 	</p>
 </Question>
 
-<Remark title="Why “chain”, and why sums?">
+<Remark title="Why “chain”?">
 	<p>
 		The name suggests simplices strung together like the links of a necklace, and in the simplest examples — a path of edges — that is exactly what a chain
 		looks like. But the meaning is more relaxed: any collection of simplices of one dimension, connected or not, is a chain. A chain is a <em>formal sum</em>
 		— one of the four ideas this book keeps returning to (with quotients, kernels and images, and reversed arrows). We add simplices without ever “computing”
 		the sum; the sum is the inventory.
-	</p>
-	<p>
-		Why allow sums at all? Not just for bookkeeping: the edge of one simplex is several simplices. The edge of a triangle is not a segment but three segments;
-		the skin of a tetrahedron is not a triangle but four triangles. If “take the edge” is to keep us inside our world, the world must contain sums of
-		simplices. (David Farrell’s video series <em>You Could Have Invented Homology</em> draws the skin of a tetrahedron beside a triangle with the verdict
-		\(\partial\Delta^3 \not\approx \Delta^2\): the boundary of a simplex is not a simplex <Cite k="farrell2021" />.)
 	</p>
 </Remark>
 
@@ -246,7 +248,7 @@
 	<TriangleBoundary />
 	{#snippet caption()}
 		The triangle \(\chn{\sigma}\) has three edges; together they have six endpoints, and each vertex is an endpoint of exactly two of them. Mod 2 the pairs
-		simply cancel. (The signs show the integer version of the same picture, which we reach in a moment: each pair is a \(+\) and a \(-\).)
+		cancel. (The signs show the integer version of the same picture, which we reach in a moment: each pair is a \(+\) and a \(-\).)
 	{/snippet}
 </Figure>
 
@@ -266,8 +268,13 @@
 
 <KeyIdea title="Every boundary is a cycle">
 	<p>
-		If \(b = \partial c\), then \(\partial b = \partial\partial c = 0\). So every boundary is a cycle: the rim of anything has no rim of its own. This is the
-		single fact that makes homology possible. In Kun’s phrase, which heads this chapter: “A boundary itself has no boundary.” <Cite k="kun2013" />
+		If \(b = \partial c\), then \(\partial b = \partial\partial c = 0\). So every boundary is a cycle: the rim of anything has no rim of its own. In Kun’s
+		phrase, which heads this chapter: “A boundary itself has no boundary.” <Cite k="kun2013" />
+	</p>
+	<p>
+		This is the single fact that makes homology possible. Homology asks which cycles are <em>not</em> boundaries, and counts what is left when the
+		boundaries are discarded. That subtraction only makes sense because the boundaries sit inside the cycles to begin with — the filled-in loops are some of
+		the loops. If a rim could have loose ends, “cycles minus boundaries” would be like taking the fish out of a basket of apples.
 	</p>
 </KeyIdea>
 
@@ -356,6 +363,10 @@
 
 <h2 id="integer-chains">Integer chains and the signed boundary</h2>
 
+<p>
+	With orientations in hand, a chain can learn to say “twice” and “backwards”: we let its coefficients be any whole numbers.
+</p>
+
 <Definition id="def-integer-chain" title="Chains with integer coefficients">
 	<p>
 		A <dfn>\(k\)-chain</dfn> of \(K\) (with integer coefficients) is a formal sum
@@ -398,7 +409,7 @@
 \[ \partial[v_0, v_1] = v_1 - v_0. \]
 <p>
 	(We write a vertex \(v\) rather than \([v]\) when it appears in a 0-chain.) This is consistent with orientation: \(\partial[v_1, v_0] = v_0 - v_1 = -\partial
-	[v_0, v_1]\), just as \([v_1, v_0] = -[v_0, v_1]\). And it behaves beautifully on paths. Along the path \(0 \to 1 \to 2\),
+	[v_0, v_1]\), just as \([v_1, v_0] = -[v_0, v_1]\). And on paths it does exactly what we want. Along the path \(0 \to 1 \to 2\),
 </p>
 \[ \partial\big([0,1] + [1,2]\big) = (1 - 0) + (2 - 1) = 2 - 0: \]
 <p>
@@ -417,8 +428,9 @@
 </p>
 \[ \partial[v_0, v_1, v_2] = [v_1, v_2] - [v_0, v_2] + [v_0, v_1]. \]
 <p>
-	Look at the pattern: the \(i\)-th term leaves out the vertex \(v_i\), and the signs alternate \(+, -, +\). The same pattern defines the boundary in every
-	dimension.
+	Notice where the minus sign came from. Nobody put it there: it appeared the moment we wrote the edge from \(v_2\) back to \(v_0\) in increasing order. The
+	signs in homology are the bookkeeping of direction, nothing more. Now look at the pattern: the \(i\)-th term leaves out the vertex \(v_i\), and
+	the signs alternate \(+, -, +\). The same pattern defines the boundary in every dimension.
 </p>
 
 <Definition id="def-signed-boundary" title="The boundary operator">

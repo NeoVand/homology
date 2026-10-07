@@ -34,15 +34,16 @@
 
 <p class="lead">
 	Ever since the first page of this book we have been promising that homology “counts holes”. It is time to make good on that promise — and the
-	first thing to admit is that nobody has yet told you what a hole is. That is not an oversight. It is the whole difficulty, and resolving it is one of
-	the great ideas of twentieth-century mathematics.
+	first thing to admit is that nobody has yet told you what a hole is. That is not an oversight. It is the whole difficulty, and the way round it is the
+	idea on which this entire part of the book rests.
 </p>
 
 <p>
-	A hole is a strange kind of object: it is made of nothing. You cannot pick one up, weigh it, or paint it. You only know it is there because of what
-	surrounds it. That observation is the seed of this chapter. Instead of trying to point at holes directly, we will look at the <em>loops</em> that go around
-	them, and we will ask one simple question of every loop: <em>is it the edge of something?</em> A loop that is the edge of something encloses no hole. A loop
-	that is the edge of nothing at all is our witness that a hole is there.
+	A hole is a strange kind of object: it is made of nothing. You cannot pick one up or weigh it. You know it is there only because of what surrounds it. So
+	instead of pointing at holes, we will look at the <em>loops</em> that go around them, and ask one question of every loop: <em>is it the edge of
+		something?</em> Draw a loop in pencil on a sheet of paper, and it is the edge of the patch of paper inside it. Now draw a loop on a flat metal washer,
+	running once around the middle. The patch it ought to enclose has a piece missing — the hole itself — so the loop is the edge of no piece of the washer. A
+	loop that is the edge of nothing is our witness that a hole is there.
 </p>
 
 <Ahead>
@@ -102,8 +103,9 @@
 
 <KeyIdea>
 	<p>
-		We will never point at a hole. We will point at <strong>loops</strong> and ask whether each one is the edge of something. Holes are the scaffolding
-		that motivates the theory, not its definition. The definition is about loops — and, in higher dimensions, about closed surfaces.
+		“Hole” is the word we want to explain; “loop” and “edge of” are words we can make exact. So we will never point at a hole. We will point at
+		<strong>loops</strong> — and, in higher dimensions, at closed surfaces — and ask of each one whether it is the edge of something. The holes will reveal
+		themselves as the loops that are the edge of nothing.
 	</p>
 </KeyIdea>
 
@@ -132,8 +134,8 @@
 
 <p>
 	So let us throw away the baggage and remember only <em>which edges a loop uses</em>. In this chapter we will even forget how many times an edge is used and
-	in which direction — we record each edge as simply <em>in</em> or <em>out</em>. That is a deliberate simplification (we will be honest about what it costs in
-	a moment), and it turns out to be exactly enough to count holes.
+	in which direction — we record each edge as merely <em>in</em> or <em>out</em>. That is a deliberate simplification (the box “What counting mod 2 forgets”,
+	further on, is honest about what it costs), and it turns out to be exactly enough to count holes.
 </p>
 
 <h3>The parity test</h3>
@@ -241,7 +243,7 @@
 	see a red vertex.)
 </p>
 
-<p>The addition of cycles obeys some very familiar rules:</p>
+<p>This addition obeys the rules you learnt at school, plus one that would get you marked wrong there:</p>
 <ul>
 	<li>\(A + B = B + A\) and \((A + B) + C = A + (B + C)\): the order and grouping do not matter;</li>
 	<li>\(A + \varnothing = A\): adding the zero cycle changes nothing;</li>
@@ -249,7 +251,8 @@
 </ul>
 
 <p>
-	These are the rules of a <Term t="vector-space">vector space</Term> over the two-element number system \(\Z/2 = \set{0, 1}\), in which \(1 + 1 = 0\) (see
+	The strange last rule is ordinary arithmetic in the two-element number system \(\Z/2 = \set{0, 1}\), where \(1 + 1 = 0\): each edge is a switch, and
+	flipping a switch twice leaves it where it was. All the rules together are those of a <Term t="vector-space">vector space</Term> over \(\Z/2\) (see
 	<Ref to="foundations/linear-algebra" />; \(\Z/2\) is also written \(\F_2\)). Multiplying by a “scalar” is the simplest possible operation: \(0 \cdot A =
 	\varnothing\) and \(1 \cdot A = A\). So the cycles of a graph form a vector space.
 </p>
@@ -270,7 +273,7 @@
 
 <Intuition>
 	<p>
-		Think of the edges as light switches, and of a set of edges as a pattern of switches turned on. Adding a cycle means <em>flipping</em> its switches. The
+		Push the switch picture further: a set of edges is a pattern of switches turned on, and adding a cycle means <em>flipping</em> its switches. The
 		cycles are the patterns with no loose ends, and they are closed under flipping: flip the switches of one cycle while another cycle is showing, and what
 		you see is again a cycle.
 	</p>
@@ -300,18 +303,24 @@
 	</p>
 </Definition>
 
+<p>Trees are the graphs with no holes at all, and two facts about them do all the work.</p>
+
 <p>
-	Trees are the graphs with no holes at all. Two facts about them do all the work. First, <strong>a tree with \(V\) vertices has exactly \(V - 1\)
-		edges.</strong> (Regrow the tree from a single vertex, each time adding one of its edges that reaches a new vertex; because the tree is connected, you
-	can keep going until every vertex is reached. Each edge brought exactly one new vertex with it, so you used \(V - 1\) edges, and none is left over: a
-	leftover edge, together with the path you grew between its two ends, would be a nonempty cycle.) Second, <strong>between any two vertices of a tree there is exactly one path.</strong> There is at least one because the tree is
-	connected, and there cannot be two different ones, because two different paths between the same vertices would combine into a nonempty cycle.
+	First, <strong>a tree with \(V\) vertices has exactly \(V - 1\) edges.</strong> To see why, regrow the tree from a single vertex, one edge at a time,
+	each edge reaching a vertex you have not visited yet. The tree is connected, so you can keep going until every vertex is reached; each edge brought
+	exactly one new vertex with it, so by then you have used \(V - 1\) edges. None is left over: a leftover edge, together with the path you grew between its
+	two ends, would be a nonempty cycle.
 </p>
 
 <p>
-	Every connected graph has a spanning tree: go through the edges one by one, keeping an edge whenever it joins two vertices not yet connected by kept
-	edges. Now look at an edge \(e\) that the tree leaves out. Its two ends are joined by exactly one path in the tree; that path together with \(e\) is a
-	cycle.
+	Second, <strong>between any two vertices of a tree there is exactly one path.</strong> There is at least one because the tree is connected. There cannot
+	be two, because two different paths between the same vertices would add up to a nonempty cycle.
+</p>
+
+<p>
+	Every connected graph has a spanning tree, and a greedy recipe finds one: go through the edges one by one, keeping an edge whenever it joins two vertices
+	not yet connected by kept edges. (Why the kept edges contain no cycle is a nice puzzle; the box after the proof below solves it.) Now look at an edge
+	\(e\) that the tree leaves out. Its two ends are joined by exactly one path in the tree, and that path together with \(e\) is a cycle.
 </p>
 
 <Definition id="def-fundamental-cycle" title="Fundamental cycles">
@@ -356,14 +365,15 @@
 	</p>
 </Proof>
 
-<p>
-	There is one step we took on trust: that the edges kept by the recipe for a spanning tree really form a tree, with no nonempty cycle among them. The
-	argument is pretty. Take a nonempty set of edges in which every degree is even, and walk along it without reusing an edge. Whenever you enter a vertex
-	other than your starting point, you have used an odd number of its edges, so at least one unused edge remains to leave by. You can therefore only get stuck
-	back where you started: the walk closes up into a loop. Now suppose all the loop’s edges were kept by the recipe, and look at the one it kept last. When
-	that edge was considered, the rest of the loop already joined its two ends, so the recipe would have thrown it away. The kept edges contain no nonempty
-	cycle.
-</p>
+<Remark title="The step we took on trust">
+	<p>
+		Why do the edges kept by the greedy recipe contain no nonempty cycle? Take a nonempty set of edges in which every degree is even, and walk along it
+		without reusing an edge. Whenever you enter a vertex other than your starting point, you have used an odd number of its edges, so at least one unused
+		edge remains to leave by. You can only get stuck back where you started: the walk closes up into a loop. Now suppose all the loop’s edges were kept by
+		the recipe, and look at the one it kept last. When that edge was considered, the rest of the loop already joined its two ends, so the recipe would have
+		thrown it away. Contradiction — the kept edges contain no nonempty cycle.
+	</p>
+</Remark>
 
 <p>
 	The number \(b_1\) is called the <dfn>first Betti number</dfn> of the graph (it also goes by the cycle rank or cyclomatic number); it is the number of
@@ -466,9 +476,9 @@
 
 <p>
 	In Figure 3.1.3, choose the “wider loop on the left”. It also surrounds \(h_1\) — but it encloses three filled triangles as well. Is it a different hole
-	from the tight loop, or the same hole seen from further away? Our everyday intuition says the same hole, and the mathematics agrees, for a reason worth
-	spelling out. Add the two loops. Each edge they share cancels, and what is left is exactly the rim of the three filled triangles between them. The two
-	loops <em>together</em> bound a region, even though neither bounds alone.
+	from the tight loop, or the same hole seen from further away? Intuition says the same hole. Here is why the mathematics agrees. Add the two loops. Each
+	edge they share cancels, and what is left is exactly the rim of the three filled triangles between them. The two loops <em>together</em> bound a region,
+	even though neither bounds alone.
 </p>
 
 <Definition id="def-homologous" title="Homologous cycles">
@@ -634,7 +644,9 @@
 	The hollow sphere is a 2-cycle that is not a boundary, because the solid ball inside is not part of it: the sphere has one void, \(b_2 = 1\). Fill in the
 	ball and the void disappears, just as filling a triangle killed a loop’s hole. The surface of a torus also encloses a void — the air in an inner tube — so
 	\(b_2(T^2) = 1\) as well. A much-loved answer on Math StackExchange puts it memorably: \(b_2\) counts the separate plugs you would need to inflate the
-	object <Cite k="mse40151" />.
+	object <Cite k="mse40151" />. That is one half of Daniel Tubbenhauer’s “necklaces and plugs” test from <Ref to="prelude/shape-of-a-question" />
+	<Cite k="tubbenhauer2021" />, and the other half now checks out too: a swimming ring takes two independent necklaces, one through the middle and one
+	running round inside the air chamber, to match \(b_1(T^2) = 2\).
 </p>
 
 <p>
@@ -690,7 +702,9 @@
 
 <p>
 	<strong>The straw.</strong> Its two end-rims are cycles, and neither bounds anything on the straw. But together they are the rim of the straw’s wall, so they
-	are homologous: they are one hole, seen from two ends. \(b_1 = 1\). The “two” camp was counting rims; the “one” camp was counting homology classes.
+	are homologous: they are one hole, seen from two ends. \(b_1 = 1\). The “two” camp was counting rims; the “one” camp was counting homology classes. And the
+	“zero” camp was answering a different question — how the straw was <em>made</em>. Homology looks only at the finished shape, and gives the same answer
+	for a sheet of paper rolled into a tube and for a rod with a tunnel drilled through it.
 </p>
 
 <p>
