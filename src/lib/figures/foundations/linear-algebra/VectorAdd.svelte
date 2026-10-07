@@ -143,7 +143,7 @@
 	@container figure (max-width: 720px) {
 		.va {
 			grid-template-columns: minmax(0, 1fr);
-			padding: 0.6rem 0.6rem 0.4rem;
+			padding: 0.6rem 0.6rem 1.1rem;
 		}
 	}
 	.canvas {

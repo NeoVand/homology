@@ -195,8 +195,12 @@
 		font-weight: 650;
 	}
 	@container figure (max-width: 34rem) {
+		.lbl {
+			font-size: 0.78rem;
+		}
 		.x {
-			font-size: 0.66rem;
+			font-size: 0.7rem;
+			bottom: -1.25rem;
 		}
 	}
 </style>

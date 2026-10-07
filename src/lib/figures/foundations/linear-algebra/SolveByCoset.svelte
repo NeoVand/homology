@@ -27,6 +27,9 @@
 
 	let b = $state<V2>([1.5, 3]);
 	let x = $state<V2>([-0.5, 1]);
+	// on phones each pane is a little smaller than its drawing, so the labels grow
+	let cw = $state(800);
+	const lk = $derived(cw < 520 ? 1.3 : 1);
 
 	const yb = $derived(y(b));
 	const solvable = $derived(Math.abs(yb) < 1e-9);
@@ -68,7 +71,7 @@
 	const sl = $derived(L(solLine));
 </script>
 
-<div class="sbc">
+<div class="sbc" bind:clientWidth={cw}>
 	<div class="pane">
 		<div class="ttl ui">input space: the <TeX tex={'\\mathbf x'} />’s</div>
 		<Svg viewBox="0 0 {view.w} {view.h}" maxHeight={330} bind:svg={svgL} label="The input plane. A teal line through the origin is the kernel of A. When b is reachable, a gold line parallel to it holds all solutions of A x = b. A violet point x can be dragged.">
@@ -82,13 +85,14 @@
 				<line {...sl} class="sol" />
 				<circle cx={view.X(xp[0])} cy={view.Y(xp[1])} r="4.5" class="xp" />
 			{/if}
-			<SvgTeX x={view.X(-3.1)} y={view.Y(1.95)} tex={'\\ker A'} color={C.teal} size={14} w={60} />
+			<!-- under the teal kernel line, so the gold solutions line (above it at first) stays clear -->
+			<SvgTeX x={view.X(-2.85)} y={view.Y(1.0)} tex={'\\ker A'} color={C.teal} size={14 * lk} w={60 * lk} />
 			{#if solvable}
-				<SvgTeX x={view.X(clamp(xp[0] + 2.6, -3.2, 3.4))} y={view.Y(-1.3 - 0.25)} tex={'\\text{solutions}'} color={C.gold} size={13} w={90} />
+				<SvgTeX x={view.X(clamp(xp[0] + 2.6, -3.2, 3.4))} y={view.Y(-1.3 + 0.36 * lk)} tex={'\\text{solutions}'} color={C.gold} size={13 * lk} w={90 * lk} />
 			{/if}
 			<Arrow view={view} to={x} color={hit ? C.gold : C.violet} width={2.6} head={10} />
 			<Handle view={view} svg={svgL} pos={x} color={hit ? C.gold : C.violet} label="the input vector x" onmove={setX} />
-			<SvgTeX x={view.X(x[0]) + 16} y={view.Y(x[1]) - 14} tex={'\\mathbf x'} color={hit ? C.gold : C.violet} size={15} w={24} />
+			<SvgTeX x={view.X(x[0]) + 16 * lk} y={view.Y(x[1]) - 14 * lk} tex={'\\mathbf x'} color={hit ? C.gold : C.violet} size={15 * lk} w={24 * lk} />
 		</Svg>
 	</div>
 
@@ -108,11 +112,11 @@
 			{/if}
 			<line {...i1} class="img-halo" />
 			<line {...i1} class="img" />
-			<SvgTeX x={view.X(-2.25)} y={view.Y(-3.2)} tex={'\\operatorname{im} A'} color={C.gold} size={14} w={60} />
+			<SvgTeX x={view.X(-2.25)} y={view.Y(-3.2)} tex={'\\operatorname{im} A'} color={C.gold} size={14 * lk} w={60 * lk} />
 			<Arrow view={view} to={ax} color={C.violet} width={2.4} head={10} opacity={0.9} />
 			<Arrow view={view} to={b} color={solvable ? C.gold : C.rose} width={2.6} head={10} dashed={!solvable} />
 			<Handle view={view} svg={svgR} pos={b} color={solvable ? C.gold : C.rose} label="the target vector b" onmove={setB} />
-			<SvgTeX x={view.X(b[0]) + 16} y={view.Y(b[1]) - 14} tex={'\\mathbf b'} color={solvable ? C.gold : C.rose} size={15} w={24} />
+			<SvgTeX x={view.X(b[0]) + 16 * lk} y={view.Y(b[1]) - 14 * lk} tex={'\\mathbf b'} color={solvable ? C.gold : C.rose} size={15 * lk} w={24 * lk} />
 		</Svg>
 	</div>
 </div>

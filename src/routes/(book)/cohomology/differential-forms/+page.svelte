@@ -34,11 +34,11 @@
 
 <Epigraph author="Michael Spivak" source="Calculus on Manifolds (1965), p. 104">Stokes’ theorem shares three important attributes with many fully evolved major theorems: 1. It is trivial. 2. It is trivial because the terms appearing in it have been properly defined. 3. It has significant consequences.</Epigraph>
 
-<p class="lead">In the last two chapters you met a curious kind of calculus that lives on the edges of a graph. You put heights on the vertices, took differences along the edges, and discovered that some edge labellings could not come from any heights at all — the impossible staircase. That discrete calculus has an older, smooth sibling: the calculus of slopes, flows, areas and volumes that engineers and physicists have used for three centuries. This chapter rebuilds it from nothing, in a language called <em>differential forms</em>, which makes the shape of the space visible in the calculus.</p>
+<p class="lead">In the last two chapters you met a curious kind of calculus that lives on the edges of a graph. You put heights on the vertices, took differences along the edges, and discovered that some edge labellings could not come from any heights at all — the impossible staircase. That discrete calculus has an older, smooth sibling: the calculus of slopes, flows, areas and volumes that engineers and physicists have used for three centuries. This chapter rebuilds it from nothing, in a language called <em>differential forms</em>. In that language the calculus can feel the shape of the space it lives on, holes and all.</p>
 
 <p>Here is a puzzle to carry with you. In 1854 the Swiss mathematician Jakob Amsler introduced the <em>polar planimeter</em>: two hinged arms, a pointer and a small measuring wheel <Cite k="foote-levi-tabachnikov2013" />. Set its pivot down beside a field on a map, trace the field’s outline once round with the pointer, and the wheel reports the field’s area. The instrument never visits the inside. How can it know what is in there?</p>
 
-<p>The answer is a theorem about insides and boundaries, which comes in four famous versions: the fundamental theorem of calculus, Green’s theorem, Stokes’ theorem and the divergence theorem. In the language of forms all four collapse into one line, \(\int_{\partial M} \omega = \int_M d\omega\). You will not need to remember any calculus to follow. We relearn slopes and areas with pictures first, and only then make the jump to forms.</p>
+<p>The answer is a theorem about insides and boundaries, which comes in four famous versions: the fundamental theorem of calculus, Green’s theorem, Stokes’ theorem and the divergence theorem. In the language of forms all four collapse into one line, \(\int_{\partial M} \omega = \int_M d\omega\). You do not need to remember any calculus: we relearn slopes and areas with pictures first, and only then jump to forms.</p>
 
 <Ahead>
 	<p>Differential forms are the smooth version of the <Term t="cochain">cochains</Term> of <Ref to="cohomology/cochains" />: a 1-form is something you can add up along any curve, just as a 1-cochain gives a number to each edge. The exterior derivative \(d\) is the smooth version of the coboundary \(\delta\), and Stokes’ theorem is the smooth version of the rule \((\delta\varphi)(c) = \varphi(\partial c)\). In <Ref to="cohomology/de-rham" /> we will use forms to detect holes with calculus: a form whose derivative is zero everywhere, yet which is not the derivative of anything, is a hole announcing itself. De Rham’s theorem will then say that this smooth story and the combinatorial one compute the same cohomology.</p>
@@ -54,13 +54,15 @@
 \[ \frac{\text{rise}}{\text{run}} = \frac{F(x+h) - F(x)}{h}. \]
 <p>As \(h\) shrinks towards \(0\), this ratio settles down (for the smooth roads we will consider) to a single number, the <dfn>derivative</dfn> \(F'(x)\), read “\(F\) prime of \(x\)” and also written \(\tfrac{dF}{dx}\). It is the slope of the graph at \(x\): positive going uphill, negative going downhill, zero at a summit. If \(F(t)\) were your position along a straight road at time \(t\) instead, \(F'(t)\) would be your velocity: the number on the speedometer, with a minus sign while you are reversing.</p>
 
+<p>Try it on the parabola \(F(x) = x^2\). The rise over a run \(h\) is \(\tfrac{(x+h)^2 - x^2}{h} = \tfrac{2xh + h^2}{h} = 2x + h\), and as \(h\) shrinks this settles to \(F'(x) = 2x\). At \(x = 3\) the parabola climbs 6 units for every unit of run; at \(x = 0\) it is momentarily flat. The same expansion gives \(x^3\) the slope \(3x^2\), and in general \(x^n\) the slope \(n x^{n-1}\). Constant factors ride along (\(5x^2\) has slope \(10x\)), and a sum has the sum of the slopes. That is nearly all the differentiating this chapter will ask of you.</p>
+
 <p>Here is the reformulation that matters for this chapter. Turn the definition around: for a <em>small</em> step \(\Delta x\) (read “delta \(x\)”, a small change in \(x\)), the change in height is approximately</p>
 \[ \Delta F \;\approx\; F'(x)\,\Delta x . \]
 <p>So the derivative is a little machine: feed it a small step, and it predicts how much you will climb. Notice that the prediction is <em>linear</em> in the step — twice the step, twice the climb; a step backwards, a negative climb. Keep this machine in mind. It is the seed from which differential forms grow.</p>
 
 <h3 id="totals">Totals</h3>
 
-<p>The second idea runs the other way: from a rate to a total. If you know your speed at every moment, how far did you travel? Chop the time interval into many short pieces of length \(\Delta t\); on each piece, distance \(\approx\) speed \(\times\) \(\Delta t\); add the pieces up. As the pieces get shorter, these sums approach a single number. For a function \(f\) on an interval \([a, b]\), cut the interval into \(n\) equal pieces of width \(\Delta x = (b - a)/n\), pick a point \(x_i\) in the \(i\)-th piece, and let \(n\) grow: the limit is the <dfn>integral</dfn></p>
+<p>The second idea runs the other way: from a rate to a total. If you know your speed at every moment, how far did you travel? At a steady 60 kilometres an hour for 2 hours the answer is 120 kilometres: speed times time, the area of a 2-by-60 rectangle under the graph of speed. When the speed varies, chop the time into many short pieces of length \(\Delta t\); on each piece the speed hardly changes, so distance \(\approx\) speed \(\times\) \(\Delta t\); add the pieces up. As the pieces get shorter, these sums approach a single number. For a function \(f\) on an interval \([a, b]\), cut the interval into \(n\) equal pieces of width \(\Delta x = (b - a)/n\), pick a point \(x_i\) in the \(i\)-th piece, and let \(n\) grow: the limit is the <dfn>integral</dfn></p>
 \[ \int_a^b f(x)\,dx \;=\; \lim_{n\to\infty} \sum_{i=1}^{n} f(x_i)\,\Delta x . \]
 <p>The long S, \(\int\), is an old-fashioned letter S for “sum”; \(a\) and \(b\) are where the adding starts and stops; \(dx\) remembers the little widths \(\Delta x\). In a picture, each term \(f(x_i)\,\Delta x\) is the area of a thin rectangle, so the integral is the area under the graph of \(f\) — with the convention that area below the axis counts as negative.</p>
 
@@ -93,7 +95,7 @@
 
 <h3 id="slopes-in-two-directions">Slopes in two directions</h3>
 
-<p>A landscape is a function of two variables: the height \(f(x, y)\) at the point with east–west coordinate \(x\) and north–south coordinate \(y\). Standing at a point, the slope depends on which way you face. Two directions are especially easy. Walking due east, \(y\) stays fixed while \(x\) changes, and the slope you feel is the <dfn>partial derivative</dfn> \(\tfrac{\partial f}{\partial x}\), read “partial \(f\) partial \(x\)”. It is computed exactly like an ordinary derivative while pretending \(y\) is a constant. Walking due north gives \(\tfrac{\partial f}{\partial y}\). For example, if \(f(x,y) = x^2 y\) then \(\tfrac{\partial f}{\partial x} = 2xy\) and \(\tfrac{\partial f}{\partial y} = x^2\). We will often shorten these to \(f_x\) and \(f_y\).</p>
+<p>A landscape is a function of two variables: the height \(f(x, y)\) at the point with east–west coordinate \(x\) and north–south coordinate \(y\). Standing at a point, the slope depends on which way you face. Two directions are especially easy. Walking due east, \(y\) stays fixed while \(x\) changes, and the slope you feel is the <dfn>partial derivative</dfn> \(\tfrac{\partial f}{\partial x}\), read “partial \(f\) partial \(x\)”. It is computed exactly like an ordinary derivative while pretending \(y\) is a constant. Walking due north gives \(\tfrac{\partial f}{\partial y}\). For example, if \(f(x,y) = x^2 y\) then \(\tfrac{\partial f}{\partial x} = 2xy\) (the \(y\) rides along like the 5 in \(5x^2\)) and \(\tfrac{\partial f}{\partial y} = x^2\). We will often shorten these to \(f_x\) and \(f_y\).</p>
 
 <p>For a small step \((\Delta x, \Delta y)\) in any direction, the change in height is approximately the eastward part of the step times the eastward slope, plus the northward part times the northward slope:</p>
 \[ \Delta f \;\approx\; \frac{\partial f}{\partial x}\,\Delta x + \frac{\partial f}{\partial y}\,\Delta y. \]
@@ -120,10 +122,10 @@
 
 <p>Now suppose the force is a gradient, \(\mathbf F = \nabla f\). Then the work of each small step is approximately the change \(\Delta f\) of \(f\) on that step, the changes telescope exactly as on the road, and</p>
 \[ \int_\gamma \nabla f\cdot d\mathbf r \;=\; f(\text{end}) - f(\text{start}). \]
-<p>This is the fundamental theorem again, now along a curved path in the plane. It has two striking consequences. The work does not depend on the route, only on where you start and finish. And around any closed loop, where the start is the end, the work is zero. Fields with these properties are called <dfn>conservative</dfn>: gravity near the ground is one, with \(f = -mgy\) (height times weight, with a sign).</p>
+<p>This is the fundamental theorem again, now along a curved path in the plane. It has two striking consequences. The work does not depend on the route, only on where you start and finish. And around any closed loop, where the start is the end, the work is zero. Fields with these properties are called <dfn>conservative</dfn>. Gravity near the ground is one, with \(f = -mgy\): the weight \(mg\) times the height \(y\), with a minus sign because gravity pulls down. Haul a suitcase up three flights of stairs by any route you like, and gravity does the same (negative) work.</p>
 
 <Example title="A field that is not a gradient">
-	<p>Take the rotation \(\mathbf F = (-y, x)\) and walk once counterclockwise around the unit circle, \(\gamma(t) = (\cos t, \sin t)\) for \(0 \le t \le 2\pi\). At time \(t\) you are at \((\cos t, \sin t)\), your small step is \(\Delta\mathbf r \approx (-\sin t, \cos t)\,\Delta t\), and the force there is \((-\sin t, \cos t)\). Their dot product is \((\sin^2 t + \cos^2 t)\,\Delta t = \Delta t\). The force always pushes you along, and the total work is \(\oint_\gamma \mathbf F\cdot d\mathbf r = 2\pi\), not zero. So no landscape \(f\) has \(\nabla f = (-y, x)\): there is no consistent “height” whose slopes are these arrows. Remember the impossible staircase of <Ref to="cohomology/cochains" />? This is the same phenomenon in smooth clothing.</p>
+	<p>Take the rotation \(\mathbf F = (-y, x)\) and walk once counterclockwise around the unit circle, \(\gamma(t) = (\cos t, \sin t)\) for \(0 \le t \le 2\pi\). At time \(t\) you are at \((\cos t, \sin t)\), your small step is \(\Delta\mathbf r \approx (-\sin t, \cos t)\,\Delta t\) (on the unit circle you move at unit speed, at right angles to the radius \((\cos t, \sin t)\)), and the force there is \((-\sin t, \cos t)\). Their dot product is \((\sin^2 t + \cos^2 t)\,\Delta t = \Delta t\). The force always pushes you along, and the total work is \(\oint_\gamma \mathbf F\cdot d\mathbf r = 2\pi\), not zero. So no landscape \(f\) has \(\nabla f = (-y, x)\): there is no consistent “height” whose slopes are these arrows. Remember the impossible staircase of <Ref to="cohomology/cochains" />? This is the same phenomenon in smooth clothing.</p>
 </Example>
 
 <h2 id="swirl-and-spread">Swirl and spread: three famous theorems</h2>
@@ -143,11 +145,11 @@
 
 <p>The <em>vortex</em> of Figure 4.3.2, \(\mathbf F = \big(\tfrac{-y}{x^2+y^2}, \tfrac{x}{x^2+y^2}\big)\), springs the opposite surprise. It is roughly how water swirls round a plughole, and its flow lines are circles, yet its curl is \(0\) everywhere it is defined (everywhere except the origin). The water near the centre moves faster than the water farther out, by exactly enough to cancel the turning, so a paddle wheel carried round the plughole keeps facing the same way. Curl measures the spin of a tiny wheel, not the bending of the flow lines. We will meet this field again.</p>
 
-<p>For a gradient, \(P = f_x\) and \(Q = f_y\), so \(\operatorname{curl}\nabla f = f_{yx} - f_{xy}\): the difference of the two “mixed” second derivatives, taken in the two possible orders. For every function with continuous second derivatives these are equal — a classical fact usually credited to Schwarz or Clairaut — so a gradient has zero curl everywhere. Zero curl is the <em>local</em> shadow of having zero circulation.</p>
+<p>For a gradient, \(P = f_x\) and \(Q = f_y\), so \(\operatorname{curl}\nabla f = f_{yx} - f_{xy}\): the difference of the two “mixed” second derivatives, taken in the two possible orders. Try it on \(f = x^2 y\): differentiating \(f_x = 2xy\) by \(y\) gives \(2x\), and differentiating \(f_y = x^2\) by \(x\) gives \(2x\) as well. For every function with continuous second derivatives the two orders agree — a classical fact usually credited to Schwarz or Clairaut — so a gradient has zero curl everywhere. Zero curl is the <em>local</em> shadow of having zero circulation.</p>
 
 <h3 id="flux-and-divergence">Flux and divergence</h3>
 
-<p>Circulation measures flow <em>along</em> a curve. The other natural question is how much flows <em>across</em> it. The <dfn>flux</dfn> of \(\mathbf F\) out of a closed curve is \(\oint \mathbf F\cdot\mathbf n\,ds\), where \(\mathbf n\) is the outward-pointing unit arrow perpendicular to the curve and \(ds\) is the length of a small piece. The same tiny-square computation shows that the outward flux of a tiny square is about</p>
+<p>Circulation measures flow <em>along</em> a curve. The other natural question is how much flows <em>across</em> it. The <dfn>flux</dfn> of \(\mathbf F\) out of a closed curve is \(\oint \mathbf F\cdot\mathbf n\,ds\), where \(\mathbf n\) is the outward-pointing unit arrow perpendicular to the curve and \(ds\) is the length of a small piece. Back to the tiny square. Fluid leaves through its east edge at a rate of about \(P(x + h, y)\,h\) and enters through the west edge at about \(P(x, y)\,h\), a net outflow of about \(\tfrac{\partial P}{\partial x}\,h^2\); the north and south edges compare \(Q\) in the same way. So the outward flux of a tiny square is about</p>
 \[ \Big(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y}\Big)\,h^2 \;=\; \operatorname{div}\mathbf F \times\text{area}. \]
 <p>The <dfn>divergence</dfn> \(\operatorname{div}\mathbf F = \tfrac{\partial P}{\partial x} + \tfrac{\partial Q}{\partial y}\) is the outflow per unit area: positive at a source, where fluid appears; negative at a sink, where it disappears. The source \((x, y)\) has divergence \(2\) everywhere; the rotation has divergence \(0\).</p>
 
@@ -181,7 +183,7 @@
 
 <h3 id="in-three-dimensions">In three dimensions</h3>
 
-<p>In space a vector field has three components, \(\mathbf F = (P, Q, R)\). A tiny loop can now face in any direction, so the curl becomes an arrow, \(\operatorname{curl}\mathbf F = \big(R_y - Q_z,\; P_z - R_x,\; Q_x - P_y\big)\), whose component in a direction \(\mathbf n\) is the circulation per unit area around a tiny loop facing \(\mathbf n\). The divergence is \(\operatorname{div}\mathbf F = P_x + Q_y + R_z\), the outflow per unit volume of a tiny box. The tiling argument, with tiny squares on a curved surface or tiny cubes in a solid, gives two more theorems:</p>
+<p>In space a vector field has three components, \(\mathbf F = (P, Q, R)\). A tiny loop can now face in any direction, so the curl becomes an arrow, \(\operatorname{curl}\mathbf F = \big(R_y - Q_z,\; P_z - R_x,\; Q_x - P_y\big)\), whose component in a direction \(\mathbf n\) is the circulation per unit area around a tiny loop facing \(\mathbf n\). Hold a paddle wheel in a flow in space and how fast it turns depends on where you point its axle; it turns fastest with the axle along the curl arrow. The divergence is \(\operatorname{div}\mathbf F = P_x + Q_y + R_z\), the outflow per unit volume of a tiny box. The tiling argument, with tiny squares on a curved surface or tiny cubes in a solid, gives two more theorems:</p>
 \[ \oint_{\partial S} \mathbf F\cdot d\mathbf r = \iint_S (\operatorname{curl}\mathbf F)\cdot\mathbf n\,dA \quad\text{(Kelvin–Stokes)}, \qquad \iint_{\partial V} \mathbf F\cdot\mathbf n\,dA = \iiint_V \operatorname{div}\mathbf F\,dV \quad\text{(Gauss)}. \]
 <p>In the first, \(S\) is a surface with boundary curve \(\partial S\); in the second, \(V\) is a solid with boundary surface \(\partial V\), and \(\mathbf n\) points outward. The second one is the <dfn>divergence theorem</dfn>: what flows out through the skin is what was created inside.</p>
 
@@ -219,7 +221,7 @@
 
 <h3 id="measuring-devices">Measuring devices</h3>
 
-<p>Recall from <Ref to="foundations/linear-algebra" /> the <Term t="dual-space">dual space</Term> \(V^*\) of a vector space \(V\): the set of all linear functions from \(V\) to the numbers. Its elements are called <dfn>covectors</dfn>. Think of a covector as a measuring device for arrows: you hand it an arrow, it hands you back a number, and it respects the arrow arithmetic (the reading of a sum is the sum of the readings, and doubling the arrow doubles the reading).</p>
+<p>Picture a measuring device for arrows. You hand it an arrow, it hands you back a number, and it respects arrow arithmetic: the reading of a sum is the sum of the readings, and doubling the arrow doubles the reading. Such a device is called a <dfn>covector</dfn>. You met covectors in <Ref to="foundations/linear-algebra" /> under another name: the covectors on a vector space \(V\) are the elements of its <Term t="dual-space">dual space</Term> \(V^*\), the linear functions from \(V\) to the numbers.</p>
 
 <p>In the plane there are two especially simple measuring devices. The covector \(dx\) reads off how far east an arrow goes, and \(dy\) reads off how far north:</p>
 \[ dx(\mathbf v) = v_1, \qquad dy(\mathbf v) = v_2 \qquad\text{for } \mathbf v = (v_1, v_2). \]
@@ -308,7 +310,7 @@
 
 <h2 id="exterior-derivative">The exterior derivative: where sheets end</h2>
 
-<p>We have one derivative already: \(d\) turns a function \(f\) into the 1-form \(df\). Now we extend it to forms of every degree, by a single rule.</p>
+<p>We have one derivative already: \(d\) turns a function \(f\) into the 1-form \(df\), and \(\int_\gamma df = f(B) - f(A)\) is the fundamental theorem in the new language. Green’s theorem asks for the next rung. Whatever “\(d\) of a 1-form” turns out to be, its integral over a region ought to equal the integral of the 1-form round the region’s edge. For \(\omega = P\,dx + Q\,dy\) that means it had better be the curl, \((Q_x - P_y)\,dx\wedge dy\). One short rule delivers exactly this, and keeps working in every degree: differentiate the coefficient, and wedge the result onto what was already there.</p>
 
 <Definition id="def-d" title="Exterior derivative">
 	<p>The <dfn>exterior derivative</dfn> \(d\colon\Omega^k \to \Omega^{k+1}\) acts on functions by \(df = \sum_i \tfrac{\partial f}{\partial x_i}\,dx_i\), on sums term by term, and on a single term by</p>
@@ -319,7 +321,7 @@
 \[ d\omega = dP\wedge dx + dQ\wedge dy = (P_x\,dx + P_y\,dy)\wedge dx + (Q_x\,dx + Q_y\,dy)\wedge dy . \]
 <p>Two of the four products contain \(dx\wedge dx\) or \(dy\wedge dy\) and vanish, and \(dy\wedge dx = -dx\wedge dy\), leaving</p>
 \[ d(P\,dx + Q\,dy) = \Big(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\Big)\,dx\wedge dy . \]
-<p>That is the curl, appearing on its own. For example, \(d(x^2 y\,dx + xy\,dy) = (y - x^2)\,dx\wedge dy\). Now Green’s theorem can be written without a single arrow:</p>
+<p>There is the curl, produced by a rule that never mentioned it. For example, \(d(x^2 y\,dx + xy\,dy) = (y - x^2)\,dx\wedge dy\). Now Green’s theorem can be written without a single arrow:</p>
 \[ \oint_{\partial R}\omega = \iint_R d\omega . \]
 
 <h3 id="where-sheets-end">Where sheets end</h3>
@@ -372,7 +374,9 @@
 
 <h3 id="pulling-back">Pulling forms back along maps</h3>
 
-<p>To integrate a 2-form over a curved surface, or to change coordinates, we need to move forms from one place to another. Suppose \(\varphi\colon U \to V\) (phi) is a smooth map between regions. A small arrow \(\mathbf v\) at a point \(p\) of \(U\) is carried by \(\varphi\) to a small arrow \(D\varphi_p(\mathbf v)\) at \(\varphi(p)\) — its image under the best linear approximation of \(\varphi\), the matrix of partial derivatives. Given a form \(\omega\) on \(V\) we can then measure arrows in \(U\) by measuring their images.</p>
+<p>A disk is awkward to chop into little squares, but it is easy to describe in polar coordinates: every point of the disk of radius \(R\) is \((r\cos\theta,\, r\sin\theta)\) for some distance \(r\) between \(0\) and \(R\) and some angle \(\theta\) between \(0\) and \(2\pi\). So the map \(\varphi(r, \theta) = (r\cos\theta,\, r\sin\theta)\) takes a plain rectangle of \((r, \theta)\) values and wraps it round onto the disk. Can we find the disk’s area, the integral of \(dx\wedge dy\), by working on the rectangle instead? To do that we must move the form from the disk back to the rectangle. The same need arises whenever we integrate over a curved surface, which is never a flat region but can be described by one.</p>
+
+<p>In general, suppose \(\varphi\colon U \to V\) (phi) is a smooth map between regions. A small arrow \(\mathbf v\) at a point \(p\) of \(U\) is carried by \(\varphi\) to a small arrow \(D\varphi_p(\mathbf v)\) at \(\varphi(p)\) — its image under the best linear approximation of \(\varphi\), the matrix of partial derivatives. A form \(\omega\) on \(V\) can then measure arrows in \(U\): carry them across, and measure their images.</p>
 
 <Definition id="def-pullback" title="Pullback">
 	<p>The <dfn>pullback</dfn> \(\varphi^*\omega\) of a \(k\)-form \(\omega\) on \(V\) is the \(k\)-form on \(U\) given by</p>
@@ -381,9 +385,9 @@
 </Definition>
 
 <Example title="Polar coordinates">
-	<p>Let \(\varphi(r, \theta) = (r\cos\theta,\, r\sin\theta)\). Substituting \(x = r\cos\theta\) and \(y = r\sin\theta\) gives \(dx = \cos\theta\,dr - r\sin\theta\,d\theta\) and \(dy = \sin\theta\,dr + r\cos\theta\,d\theta\). Wedge them together, remembering \(dr\wedge dr = d\theta\wedge d\theta = 0\) and \(d\theta\wedge dr = -dr\wedge d\theta\):</p>
+	<p>Back to the disk and \(\varphi(r, \theta) = (r\cos\theta,\, r\sin\theta)\). Substituting \(x = r\cos\theta\) and \(y = r\sin\theta\) gives \(dx = \cos\theta\,dr - r\sin\theta\,d\theta\) and \(dy = \sin\theta\,dr + r\cos\theta\,d\theta\). (The slopes of \(\cos\theta\) and \(\sin\theta\) are \(-\sin\theta\) and \(\cos\theta\): they are the velocity \((-\sin t, \cos t)\) of the walker round the unit circle in the rotation-field example.) Wedge them together, remembering \(dr\wedge dr = d\theta\wedge d\theta = 0\) and \(d\theta\wedge dr = -dr\wedge d\theta\):</p>
 	\[ \varphi^*(dx\wedge dy) = \big(\cos\theta\cdot r\cos\theta - (-r\sin\theta)\sin\theta\big)\,dr\wedge d\theta = r\,dr\wedge d\theta . \]
-	<p>So the area of a disk of radius \(R\) is \(\int_0^{2\pi}\int_0^R r\,dr\,d\theta = 2\pi\cdot\tfrac{R^2}{2} = \pi R^2\). The factor \(r\) is the familiar “Jacobian” of polar coordinates, and Figure 4.3.10 shows where it comes from.</p>
+	<p>So the area of a disk of radius \(R\) is \(\int_0^{2\pi}\int_0^R r\,dr\,d\theta = 2\pi\cdot\tfrac{R^2}{2} = \pi R^2\), where \(\int_0^R r\,dr = \tfrac{R^2}{2}\) is the fundamental theorem at work: \(\tfrac{r^2}{2}\) has slope \(r\). Calculus books call the factor \(r\) the “Jacobian” of polar coordinates; Figure 4.3.10 shows where it comes from.</p>
 </Example>
 
 <Figure title="Pulling back area" hint="Drag the highlighted cell in either picture · arrow keys" num="4.3.10">

@@ -112,10 +112,10 @@
 	/* phones: the columns shrink, so their numbers grow */
 	@container figure (max-width: 34rem) {
 		.num {
-			font-size: 12.5px !important;
+			font-size: 14px !important;
 		}
 		.num.big {
-			font-size: 15px !important;
+			font-size: 17px !important;
 		}
 	}
 </style>
