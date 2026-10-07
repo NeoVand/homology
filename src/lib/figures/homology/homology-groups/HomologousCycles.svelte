@@ -141,8 +141,10 @@
 		{#if spaceId === 'annulus'}
 			<Svg viewBox={A.L.viewBox} maxHeight={470} label="A triangulated annulus around a central hole, with a gold cycle drawn on its edges. Clicking a triangle pushes the cycle across it.">
 				<circle cx="0" cy="0" r={A.L.scale * 1.05} class="hole-disk" />
-				<SvgTeX x={0} y={-8} tex={'\\text{hole}'} size={17} color="var(--rose)" w={80} />
-				<SvgTeX x={0} y={18} tex={'(\\text{not part of } K)'} size={11} color="var(--ink-faint)" w={120} />
+				<SvgTeX x={0} y={-14} tex={'\\text{hole}'} size={19} color="var(--rose)" w={80} />
+				<!-- two short lines, so the note can be drawn at a readable size inside the hole -->
+				<SvgTeX x={0} y={10} tex={'\\text{not part}'} size={14} color="var(--ink-dim)" w={100} />
+				<SvgTeX x={0} y={28} tex={'\\text{of } K'} size={14} color="var(--ink-dim)" w={100} />
 				<FlatComplex
 					L={A.L}
 					edgeCoef={(e) => z[e]}

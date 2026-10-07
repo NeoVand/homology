@@ -165,17 +165,21 @@
 	td.faded {
 		opacity: 0.45;
 	}
-	/* phones: ten columns must fit without a sideways scroll */
+	/* phones: ten columns must fit without a sideways scroll, so the column
+	   names stand on end (read bottom to top) and the cells set the width */
 	@container figure (max-width: 30rem) {
 		th {
 			padding: 0.2rem 0.15rem !important;
 		}
-		th :global(.katex) {
-			font-size: 0.8em;
+		th.ch {
+			writing-mode: vertical-rl;
+			transform: rotate(180deg);
+			padding: 0.3rem 0 !important;
+			vertical-align: bottom;
 		}
 		td {
 			min-width: 1.5rem;
-			padding: 0.26rem 0.1rem !important;
+			padding: 0.26rem 0.08rem !important;
 		}
 	}
 </style>
