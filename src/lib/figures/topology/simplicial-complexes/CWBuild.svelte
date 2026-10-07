@@ -37,7 +37,7 @@
 
 	function setup(ctx: SceneContext) {
 		const { scene, invalidate, label, reducedMotion } = ctx;
-		const offFit = fitCamera(ctx, 2.2);
+		const offFit = fitCamera(ctx, 2.45);
 		let root: THREE.Group | null = null;
 		let built: string | null = null;
 		let labels: LabelHandle[] = [];
@@ -105,7 +105,7 @@
 			else fn(0, 0, base);
 			const bead = glowPoint(base.clone(), { color: 'goldPale', size: 0.075, halo: 9 });
 			root.add(bead);
-			labels.push(label(base.clone().add(new THREE.Vector3(0.18, 0.22, 0.12)), tex('v'), { className: 'small' }));
+			labels.push(label(base.clone().add(new THREE.Vector3(0.18, 0.22, 0.12)), tex('v')));
 
 			// the 2-cell (geometry rewritten in place as it grows)
 			patchGeo = new THREE.BufferGeometry();

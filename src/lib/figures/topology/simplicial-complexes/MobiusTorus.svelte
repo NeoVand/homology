@@ -88,7 +88,7 @@
 
 	function setup(ctx: SceneContext) {
 		const { scene, invalidate, label } = ctx;
-		const offFit = fitCamera(ctx, 2.3);
+		const offFit = fitCamera(ctx, 2.55);
 		const tris = torus7Triangles();
 		const edges: [number, number][] = [];
 		for (let i = 0; i < 7; i++) for (let j = i + 1; j < 7; j++) edges.push([i, j]);

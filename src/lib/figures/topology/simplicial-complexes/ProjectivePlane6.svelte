@@ -197,4 +197,17 @@
 		margin: 0.2rem 0 0.4rem !important;
 		min-height: 2.6em;
 	}
+	/* phones: the disk is drawn at about 85%, so the vertex discs and numbers grow */
+	@container figure (max-width: 34rem) {
+		.disc {
+			r: 13px;
+		}
+		.nd.on .disc {
+			r: 15px;
+		}
+		.num {
+			font-size: 15px !important;
+			transform: translateY(1px);
+		}
+	}
 </style>

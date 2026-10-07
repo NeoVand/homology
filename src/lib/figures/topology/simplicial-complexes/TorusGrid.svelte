@@ -53,7 +53,7 @@
 
 	function setup(ctx: SceneContext) {
 		const { scene, invalidate, label } = ctx;
-		const offFit = fitCamera(ctx, 2.3);
+		const offFit = fitCamera(ctx, 2.55);
 		const fn = torus(1.55, 0.68);
 		const base = glassMesh(surfaceGeometry(fn, 140, 56), { opacity: 0.42, grid: [0, 0], film: 1.0, rim: 0.5, hue: 0.55 });
 		scene.add(base);
