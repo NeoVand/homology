@@ -89,11 +89,11 @@
 >
 
 <p class="lead">
-	In the old arcade game, a little spaceship flies off the right-hand edge of the screen and reappears on the left; it leaves
-	through the top and comes back through the bottom. The game never says so, but the ship lives on a doughnut. This chapter is
-	about building spaces by <em>gluing</em>: declaring that certain points are to be regarded as the same. From a single square
-	we will make a cylinder, a Möbius band, a torus, a sphere, a Klein bottle and a projective plane — and find that two of them
-	cannot be built in our three-dimensional world without passing through themselves.
+	In the arcade game <em>Asteroids</em>, a little spaceship flies off the right-hand edge of the screen and reappears on the left;
+	it leaves through the top and comes back through the bottom. The game never says so, but the ship lives on a doughnut. What put
+	it there is <em>gluing</em>: declaring that certain points are to be regarded as the same. Take a single square, decide which
+	edges to glue and which way round, and out come a cylinder, a Möbius band, a torus, a sphere, a Klein bottle and a projective
+	plane. Two of them refuse to be built in our three-dimensional world without passing through themselves.
 </p>
 
 <p>
@@ -151,7 +151,7 @@
 <h2 id="quotient-topology">Gluing, made precise: the quotient topology</h2>
 
 <p>
-	Let us recall the set-theoretic part of gluing from <Ref to="foundations/equivalence" />. To glue, we choose an
+	Half of the work is already done: <Ref to="foundations/equivalence" /> glued sets, and we only need to remember how. To glue, we choose an
 	<Term t="equivalence-relation">equivalence relation</Term> \(\sim\) on a space \(X\): \(x \sim y\) means “\(x\) and \(y\) are to
 	become the same point”. The glued set is the <Term t="quotient-set">quotient set</Term> \(X/{\sim}\), whose elements are the
 	equivalence classes \([x]\) (read “the class of \(x\)”: the pile of all points glued to \(x\)). And there is the
@@ -343,12 +343,15 @@
 <p>
 	Now glue them with a twist: \((0, y) \sim (1, 1 - y)\), so the arrow on the right points down. To match the arrows, the sheet
 	must turn over before its ends meet — try it with a strip of paper, giving one end half a turn before taping. The result is the
-	<strong>Möbius band</strong>. Now watch the free edges: the top edge runs into the bottom edge, and the
+	<strong>Möbius band</strong>. Watch the free edges: the top edge runs into the bottom edge, and the
 	two together form a <em>single</em> boundary circle. A Möbius band has one edge — and, if you run a finger along its surface,
 	only one side. (One-sidedness has an intrinsic cousin, <em>non-orientability</em>, which a creature living inside the band could
-	detect without ever leaving it; it is studied properly in <Ref to="topology/manifolds" />.) The corners make two classes in both
-	cases, but paired differently: in the cylinder the two bottom corners are glued to each other, and so are the two top corners;
-	in the Möbius band each bottom corner is glued to the top corner diagonally opposite.
+	detect without ever leaving it; it is studied properly in <Ref to="topology/manifolds" />.)
+</p>
+<p>
+	The corners show the difference too. Both surfaces have two corner classes, but paired differently: in the cylinder the two
+	bottom corners are glued to each other, and so are the two top corners; in the Möbius band each bottom corner is glued to the
+	top corner diagonally opposite.
 </p>
 
 <Remark title="Stretching allowed">
@@ -373,8 +376,9 @@
 	(1, y)\), and the word becomes \(abab^{-1}\). This is the <strong>Klein bottle</strong> \(K\). Roll the square into a tube as
 	before. Now the two end circles must be glued, but with their directions reversed. Bending the tube round as for the torus would
 	match them the wrong way. The only way to make the arrows agree is to bring one end <em>inside</em> the tube and meet the other
-	end from within — and in our three-dimensional space, getting inside means passing through the tube’s own wall. Watch the
-	workshop: the rose circle is where the surface crosses itself.
+	end from within — and in our three-dimensional space, getting inside means passing through the tube’s own wall. The finished
+	picture is the familiar bottle: stood upright, its narrow neck curls over and dips through the side wall, then opens out to join
+	the base from inside. In the workshop, the rose circle is where the neck passes through.
 </p>
 <p>
 	Go back to Figure 2.2.1 and switch to Klein bottle mode. Fly through the top edge: you come back through the bottom, but
@@ -408,12 +412,15 @@
 </p>
 <p>
 	The projective plane has another life, which explains its name. Every line through the centre of a ball pierces the ball’s
-	surface in two opposite points. So the set of lines through a point of space is the sphere with opposite points glued — and the
-	upper half of the sphere already contains one point of every line, except that opposite points of its rim (the equator) still
-	need gluing. That is our disk with opposite rim points glued. The same space turns up in perspective drawing, where parallel
-	railway lines meet at a vanishing point on the horizon. Add to the plane one such “point at infinity” for every direction, and
-	squash the whole plane into an open disk: the points at infinity become the rim, with opposite rim points glued, because a
-	line runs off to infinity in two opposite directions yet has only one vanishing point. The result is \(\RP^2\) once more.
+	surface in two opposite points. So the set of lines through a point of space is the sphere with opposite points glued. Most
+	lines are already accounted for by the upper half of the sphere, which they pierce exactly once; only the horizontal lines,
+	which pierce the equator twice, still need their two points glued. That is our disk with opposite rim points glued.
+</p>
+<p>
+	The same space turns up in perspective drawing, where parallel railway lines meet at a vanishing point on the horizon. Give the
+	plane one such “point at infinity” for every direction, and squash the whole plane into an open disk, so that the points at
+	infinity form its rim. A line runs off to infinity in two opposite directions, yet it has only one vanishing point — so opposite
+	rim points must be glued, and the result is \(\RP^2\) once more.
 </p>
 <p>
 	In the workshop, the disk grows into a famous surface called Boy’s surface. It crosses itself along three rose loops, which meet
@@ -520,8 +527,9 @@
 <h2 id="more-gluings">Wedges, cones, suspensions and collapsing</h2>
 
 <p>
-	Squares are not the only things we can glue. Here are four constructions that appear constantly in topology, all of them
-	quotient spaces. First, a way to put two spaces side by side.
+	Squares are not the only things we can glue. Four other gluings come up so often in topology that they have names, and each
+	answers a plain request: join two spaces at a point; crush part of a space to a point; cap a cylinder at one end; cap it at
+	both. First, a way to put two spaces side by side.
 </p>
 
 <Definition title="Disjoint union and wedge sum" id="def-wedge">

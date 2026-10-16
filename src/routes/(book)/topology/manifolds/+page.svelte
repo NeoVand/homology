@@ -101,18 +101,19 @@
 
 <p class="lead">
 	Stand in a field and the Earth looks flat: as far as you can tell, the ground around you is a piece of a plane. Many early cultures
-	pictured the world that way, and it took careful reasoning to see past it — Aristotle noticed that the shadow the Earth casts on the
-	Moon during an eclipse is always round — before people understood that the whole thing curves round and closes up into a ball. This chapter is about spaces with exactly that property: every small piece looks
-	like flat space, while the whole may be curved, twisted or closed up in surprising ways. They are called <em>manifolds</em>. Spheres,
-	tori, Klein bottles, the space we live in and the spacetime of relativity are all manifolds, and they are the natural home of homology
-	and cohomology.
+	pictured the world that way. Seeing past it took careful reasoning: Aristotle noticed that the shadow the Earth casts on the Moon
+	during an eclipse is always round, and only a ball casts a round shadow from every angle. Each small patch of ground looks flat; the
+	whole Earth curves round and closes up. Spaces like
+	this, flat in every small piece while the whole may be curved, twisted or closed up in surprising ways, are called
+	<em>manifolds</em>. Spheres, tori, Klein bottles, the space we live in and the spacetime of relativity are all manifolds, and they
+	are the natural home of homology and cohomology.
 </p>
 
 <p>
-	We will make “looks flat up close” precise, and learn how mathematicians describe a curved space by a collection of flat maps, the way
-	cartographers describe the Earth with an atlas. Along the way we meet three new ideas — edges, tangent planes, and orientation, the
-	question of whether “clockwise” makes sense on a surface — and we finish with one of the jewels of topology: a complete list of all
-	closed surfaces.
+	Cartographers already know how to handle such a space: no single flat map shows the whole Earth, so they bind many into an atlas.
+	Mathematicians do the same, and the atlas will carry us to edges, to tangent planes, and to the question of whether “clockwise”
+	makes sense on a surface at all. The reward at the end is a complete list of every closed surface there can be. Every one of them,
+	however tangled, is a sphere with handles added, or with Möbius bands sewn in.
 </p>
 
 <Ahead>
@@ -325,7 +326,7 @@
 
 <p>
 	Two constructions make new manifolds from old. An <Term t="open-set">open subset</Term> of an \(n\)-manifold is again an
-	\(n\)-manifold: just shrink the neighbourhoods. And the product \(M \times N\) of an \(m\)-manifold and an \(n\)-manifold is an
+	\(n\)-manifold: around each of its points, a small enough chart neighbourhood fits inside it. And the product \(M \times N\) of an \(m\)-manifold and an \(n\)-manifold is an
 	\((m+n)\)-manifold, because a product of an open ball in \(\R^m\) with one in \(\R^n\) is an open subset of \(\R^{m+n}\). The torus is
 	the product \(S^1 \times S^1\). Manifolds also arise as spaces of <em>states</em>, just as Riemann foresaw: the two angles of a double
 	pendulum can each be anything on a circle, so the positions of the pendulum form a torus.
@@ -342,8 +343,8 @@
 
 <p>
 	A manifold is defined by its small neighbourhoods. To compute anything on it we need coordinates on those neighbourhoods, and
-	cartography supplies the vocabulary. No flat map shows the whole Earth faithfully, so an atlas uses many maps, each covering part of the
-	globe, overlapping at their edges. On an overlap the same town appears on two pages with different coordinates, and a good atlas tells
+	cartography supplies the vocabulary. An atlas of the Earth uses many maps, each covering part of the globe, overlapping at their
+	edges. On an overlap the same town appears on two pages with different coordinates, and a good atlas tells
 	you how to convert from one to the other.
 </p>
 

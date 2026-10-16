@@ -123,9 +123,9 @@
 <p class="lead">
 	A rubber band is wrapped once around a flagpole. You may slide it up and down, twist it, stretch it into strange shapes — but as long
 	as you are not allowed to lift it over the top, you will never get it off. The pole is a hole in the space the band lives in, and the
-	band can <em>feel</em> it. This chapter turns that feeling into mathematics. We will learn to deform not spaces but <em>maps</em>,
-	continuously, like frames of a film; to call two spaces the same when one can be squashed onto the other; and to build our first
-	algebraic invariant of a space, a group made of loops.
+	band can <em>feel</em> it. To turn that feeling into mathematics, we let <em>maps</em> move instead of spaces: continuously, like
+	the frames of a film. Films of maps will let us call two spaces the same when one can be squashed onto the other, and they will
+	hand us our first algebraic invariant of a space — a group whose elements are loops.
 </p>
 
 <p>
@@ -302,7 +302,7 @@
 <h2 id="homotopy-equivalence">The same shape in a broader sense</h2>
 
 <p>
-	Now we use films to compare <em>spaces</em>. The example with which Hatcher opens his book, right after this chapter’s epigraph, is the
+	Now we use films to compare <em>spaces</em>. Hatcher opens his book, straight after the sentence in our epigraph, with the
 	alphabet <Cite k="hatcher2002" loc="pp. 1–2" />. Write each capital letter in two ways: as a thin skeleton of curves, and as a fat, inflated version of itself. The thin letter
 	sits inside the fat one, and the fat one can be squashed onto it by sliding each point straight in towards the skeleton.
 </p>
@@ -465,6 +465,12 @@
 
 <h2 id="contractible">Contractible spaces, and why homotopy is the right lens</h2>
 
+<p>
+	The disk in Figure 2.3.3 shrank all the way to its centre, and the letters C and T of Figure 2.3.2 can go as far: squeeze the
+	skeleton of a C along itself and it ends as a single point. The simplest homotopy type of all is that of a point, and spaces of
+	that type get a name.
+</p>
+
 <Definition title="Contractible" id="def-contractible">
 	<p>
 		A space \(X\) is <dfn>contractible</dfn> if it is homotopy equivalent to a one-point space. Equivalently, the identity map of \(X\) is
@@ -618,8 +624,8 @@
 	<p>
 		If \(X\) is path-connected, no: a path \(h\) from \(x_0\) to \(x_1\) turns each loop \(\alpha\) at \(x_1\) into the loop
 		\(h\cdot\alpha\cdot\bar h\) at \(x_0\) (walk over, do \(\alpha\), walk back), and this gives an
-		<Term t="isomorphism">isomorphism</Term> \(\pi_1(X, x_1) \cong \pi_1(X, x_0)\). So for path-connected spaces one often writes simply
-		\(\pi_1(X)\), meaning the group “up to isomorphism”.
+		<Term t="isomorphism">isomorphism</Term> \(\pi_1(X, x_1) \cong \pi_1(X, x_0)\). So for path-connected spaces one often drops the basepoint and
+		writes \(\pi_1(X)\), meaning the group “up to isomorphism”.
 	</p>
 </Remark>
 
