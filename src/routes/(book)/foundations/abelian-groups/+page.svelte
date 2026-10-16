@@ -89,18 +89,19 @@
 <p class="lead">
 	You have met clock arithmetic twice now: as a set of classes in <Ref to="foundations/equivalence" />, and as a group in
 	<Ref to="foundations/groups" />. Behind it stands a construction so important that homology itself is an instance of
-	it: take a group, choose a subgroup, and declare every element of that subgroup to be zero. What survives is a new group, called a <em>quotient</em>. This chapter is
-	about that construction, and about a second one that is just as important to us: the group of <em>formal sums</em>,
-	the algebra of inventories. Put the two together and you can describe every abelian group homology will ever
-	produce.
+	it: take a group, choose a subgroup, and declare every element of that subgroup to be zero. What survives is a new
+	group, called a <em>quotient</em>. Beside it we build a second kind of group that homology needs just as much: the
+	group of <em>formal sums</em>, the algebra of inventories. Put the two together and you can describe every abelian
+	group homology will ever produce.
 </p>
 
 <p>
-	We go slowly, because this is the algebraic engine of the whole book. First come <em>cosets</em> (shifted copies of a
-	subgroup) and <em>quotient groups</em> (cosets collapsed to points), with three pictures: the integers, the real line,
-	and a lattice in the plane. Then the <em>First Isomorphism Theorem</em>, which ties quotients to homomorphisms;
-	<em>direct sums</em>; <em>free abelian groups</em> of formal sums; <em>generators and relations</em>; the
-	<em>classification</em> of finitely generated abelian groups; and finally a first look at <em>exact sequences</em>.
+	We go slowly, because this is the algebraic engine of the whole book. Shifted copies of a subgroup, the
+	<em>cosets</em>, get collapsed to points to make <em>quotient groups</em>, which we watch happen to the integers, the
+	real line and a lattice in the plane. The <em>First Isomorphism Theorem</em> then ties quotients to homomorphisms.
+	After that come inventories (<em>free abelian groups</em>), a way to build groups from rules (<em>generators and
+	relations</em>), and a theorem that gives every group homology can produce a standard name. A first look at
+	<em>exact sequences</em> closes the chapter.
 </p>
 
 <Ahead>
@@ -168,7 +169,8 @@
 <p>
 	This proposition says that the cosets of \(H\) are exactly the classes of the relation <span class="nw">“\(a \sim b\)</span> when <span class="nw">\(a - b \in
 	H\)”,</span> and this is an <Term t="equivalence-relation">equivalence relation</Term> in the sense of
-	<Ref to="foundations/equivalence" />. Each of the three requirements uses one property of a subgroup: it is
+	<Ref to="foundations/equivalence" />. The proof is the one given there for congruence, with \(n\Z\) replaced by
+	<span class="nw">\(H\):</span> each of the three requirements uses one property of a subgroup. It is
 	<em>reflexive</em> because <span class="nw">\(a - a = 0 \in H\);</span> <em>symmetric</em> because if \(a - b \in H\) then its negative
 	\(b - a\) is in <span class="nw">\(H\);</span> and <em>transitive</em> because if \(a - b\) and \(b - c\) are in <span class="nw">\(H\),</span> so is their sum
 	<span class="nw">\(a - c\).</span> Therefore the cosets form a <Term t="partition">partition</Term> of <span class="nw">\(G\):</span> every element lies in exactly one
@@ -687,7 +689,9 @@
 
 <p>
 	The symbols \(a, b, c\) have a special property: every element of \(\Z[a, b, c]\) can be written as an integer
-	combination of them in <em>exactly one</em> way. That property can be shared by other sets of elements.
+	combination of them in <em>exactly one</em> way. They are not the only building blocks with that property, and when
+	we compute homology we will often trade one set of building blocks for a more convenient one. So the property needs
+	a name.
 </p>
 
 <Definition title="Basis and rank">
@@ -854,10 +858,13 @@
 <h2 id="classification">The shape of every finite answer</h2>
 
 <p>
-	A group is <dfn>finitely generated</dfn> if some finite set of its elements generates it. Every finite group is,
-	\(\Z^r\) is, and so is every homology group of a shape built from finitely many pieces. Such groups always have a
-	finite presentation, and the Smith normal form then turns that presentation into a standard name. The result is a
-	complete catalogue: every such group appears in it exactly once.
+	We now have a machine: relations in, diagonal matrix out, group read off. Two questions remain. Does the machine
+	accept every group homology will hand it? And could two different-looking answers, such as \(\Z/6\) and
+	<span class="nw">\(\Z/2 \oplus \Z/3\),</span> secretly be the same group? The first needs a word. A group is <dfn>finitely
+	generated</dfn> if some finite set of its elements generates it. Every finite group is, \(\Z^r\) is, and so is every
+	homology group of a shape built from finitely many pieces. Such groups always have a finite presentation, and the
+	Smith normal form then turns that presentation into a standard name. The result is a complete catalogue, in which
+	every such group appears exactly once.
 </p>
 
 <Theorem id="thm-classification" title="Classification of finitely generated abelian groups">
@@ -906,6 +913,12 @@
 </Example>
 
 <h3 id="torsion">Torsion</h3>
+
+<p>
+	The two halves of the catalogue behave very differently. Add an element of \(\Z^r\) to itself again and again and it
+	marches off for ever; do the same to an element of a clock \(\Z/d\) and it comes home to \(0\). The part that comes
+	home has a name.
+</p>
 
 <Definition title="Torsion">
 	<p>
@@ -988,8 +1001,8 @@
 	We end with a piece of bookkeeping that will become one of the main tools of Part III. Often several groups are linked
 	by a chain of homomorphisms,
 	\[ A \xrightarrow{\;f\;} B \xrightarrow{\;g\;} C , \]
-	and the interesting question is how the image of one map sits inside the next group compared with the kernel of the
-	next map.
+	and the question is how two subgroups of the middle group compare: the image of \(f\), everything \(f\) can reach,
+	and the kernel of \(g\), everything \(g\) sends to zero.
 </p>
 
 <Definition title="Exactness">

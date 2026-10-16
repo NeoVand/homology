@@ -93,11 +93,10 @@
 </p>
 
 <p>
-	This chapter starts with the two examples, the triangle and the clock, and lets you play with them until the common
-	rules become obvious. Then we write the rules down, meet a gallery of groups (and of impostors), and learn the
-	handful of ideas we will lean on for the rest of the book: <em>abelian</em> groups, <em>subgroups</em> and
-	<em>generators</em>, and the structure-preserving maps called <em>homomorphisms</em>, with their
-	<em>kernels</em> and <em>images</em>.
+	We will play with the triangle and the clock until the shared rules jump out at you, write them down, and test them
+	on a gallery of groups and impostors. Then come the few ideas the rest of the book leans on: <em>abelian</em> groups,
+	<em>subgroups</em> and <em>generators</em>, and the structure-preserving maps called <em>homomorphisms</em>, with
+	their <em>kernels</em> and <em>images</em>.
 </p>
 
 <Ahead>
@@ -204,7 +203,7 @@
 	<li>
 		<strong>Brackets do not matter.</strong> If you do three moves <span class="nw">\(f\),</span> then <span class="nw">\(g\),</span> then <span class="nw">\(h\),</span> it makes no
 		difference whether you first combine \(f\) and \(g\) into one move, or \(g\) and <span class="nw">\(h\):</span> in symbols,
-		<span class="nw">\((h \circ g) \circ f = h \circ (g \circ f)\).</span> Both sides simply mean <span class="nw">“\(f\),</span> then <span class="nw">\(g\),</span> then <span class="nw">\(h\)”.</span>
+		<span class="nw">\((h \circ g) \circ f = h \circ (g \circ f)\).</span> Both sides mean <span class="nw">“\(f\),</span> then <span class="nw">\(g\),</span> then <span class="nw">\(h\)”.</span>
 	</li>
 	<li>
 		<strong>But the order can matter.</strong> First \(f_1\) then \(r\) gives <span class="nw">\(f_3\);</span> first \(r\) then \(f_1\) gives
@@ -279,8 +278,8 @@
 		<em>names</em> for them (one representative from each class). Adding by adding the names and then wrapping around is
 		safe — the answer does not depend on which names you pick — but that needs an argument: it is the well-definedness
 		check of <Ref to="foundations/equivalence" />, and it returns in full generality in
-		<Ref to="foundations/abelian-groups" />. For this chapter you can picture \(\Z/n\) simply as the \(n\) positions on a
-		clock face.
+		<Ref to="foundations/abelian-groups" />. For this chapter you can picture \(\Z/n\) as nothing more than the \(n\)
+		positions on a clock face.
 	</p>
 </Remark>
 
@@ -493,7 +492,7 @@
 	<p>
 		The word “group” (<em>groupe</em>) was first used in this sense by Évariste Galois, who used groups of permutations
 		to decide which polynomial equations can be solved by a formula. He died after a duel in May 1832, aged twenty;
-		the night before, he wrote a letter to his friend Auguste Chevalier summarizing his discoveries <Cite
+		the night before, he wrote a letter to his friend Auguste Chevalier summarising his discoveries <Cite
 			k="neumann2011"
 		/>. Twenty-two years later Arthur Cayley gave the first abstract definition of a group — the one in this chapter’s
 		epigraph — and displayed his groups as tables, which is why such tables now carry his name. He paid his debt in a
@@ -505,14 +504,15 @@
 <h2 id="examples">A gallery of groups — and some impostors</h2>
 
 <p>
-	The best way to understand a definition is to collect examples of things that satisfy it, and of things that almost
-	do. Here are the groups we will meet again and again.
+	A definition earns its keep through its examples. Here are the groups we will meet again and again; after them come
+	some impostors, which teach just as much.
 </p>
 
 <ul>
 	<li>
 		<strong>\((\Z, +)\)</strong>, the integers under addition. The identity is <span class="nw">\(0\);</span> the inverse of \(a\) is <span class="nw">\(-a\).</span>
-		This is the most important group in this book.
+		This is the most important group in this book: homology will count the hole in a circle with one copy of \(\Z\),
+		and the two independent holes of a torus with two.
 	</li>
 	<li>
 		<strong>\((\Z/n, +)\)</strong>, clock arithmetic with \(n\) hours. The identity is <span class="nw">\(0\);</span> the inverse of \(a\) is
@@ -546,7 +546,7 @@
 	<li>
 		<strong>The <dfn>trivial group</dfn></strong> <span class="nw">\(\{0\}\),</span> with a single element and the only possible rule
 		<span class="nw">\(0 + 0 = 0\).</span> It is the smallest group there is, and it will be the answer to many homology questions
-		(“no holes here”), so it is usually written simply <span class="nw">\(0\).</span>
+		(“no holes here”), so it is usually written plain <span class="nw">\(0\).</span>
 	</li>
 </ul>
 
@@ -776,8 +776,10 @@
 
 <p>
 	On a clock, keep adding the same number and you must eventually come back to <span class="nw">\(0\).</span> On a 12-hour clock, starting
-	from \(0\) and adding \(3\) each time gives <span class="nw">\(3, 6, 9, 12 = 0\):</span> four steps. The number of steps it takes is an
-	important number.
+	from \(0\) and adding \(3\) each time gives <span class="nw">\(3, 6, 9, 12 = 0\):</span> four steps. That count will matter in
+	homology. A Klein bottle carries a loop that is not the edge of any region, yet the same loop traced twice
+	<em>is</em> one: in homology it behaves like a clock hand that returns after two steps
+	(<Ref to="homology/computing" />).
 </p>
 
 <Definition title="Order of an element">
@@ -819,7 +821,11 @@
 <h3 id="subgroups-of-z">All the subgroups of the integers</h3>
 
 <p>
-	Here is a complete answer to a natural question, and it will be the starting point of the next chapter.
+	Which subsets of \(\Z\) are subgroups? We have found \(n\Z\) for every <span class="nw">\(n\).</span> Could there be stranger
+	ones — say, the smallest subgroup containing both \(4\) and <span class="nw">\(6\)?</span> Try it: that subgroup must contain
+	<span class="nw">\(6 - 4 = 2\),</span> hence every even number; and anything built from \(4\)s and \(6\)s by adding and subtracting is even, so it
+	contains nothing odd. It is
+	\(2\Z\) all over again. That is no accident.
 </p>
 
 <Theorem title="Subgroups of ℤ">
@@ -843,13 +849,19 @@
 	</p>
 </Proof>
 
+<p>
+	(For \(4\) and <span class="nw">\(6\),</span> the proof’s \(n\) is <span class="nw">\(2 = \gcd(4, 6)\).)</span> The theorem will pay off in the next chapter,
+	which collapses a subgroup of \(\Z\) to zero: since every subgroup is some <span class="nw">\(n\Z\),</span> the clocks \(\Z/n\) (and \(\Z\)
+	itself, for <span class="nw">\(n = 0\))</span> are the only possible results.
+</p>
+
 <!-- ─────────────────────────────────────────────────────────────────── -->
 <h2 id="homomorphisms">Maps that respect the rules: homomorphisms</h2>
 
 <p>
-	Every integer is either even or odd, and there are well-known rules: even plus odd is odd, odd plus odd is even. The
-	remarkable thing about these rules is that they work: to know whether \(a + b\) is even, you do not need to know
-	\(a\) and \(b\) — only whether <em>they</em> are even. Write \(p(m)\) for the parity of <span class="nw">\(m\):</span> \(p(m) = 0\) if
+	Every integer is either even or odd, and there are well-known rules: even plus odd is odd, odd plus odd is even. Look
+	at what those rules let you do. To decide whether \(a + b\) is even you never need \(a\) and \(b\) themselves —
+	only whether <em>they</em> are even. Write \(p(m)\) for the parity of <span class="nw">\(m\):</span> \(p(m) = 0\) if
 	\(m\) is even and \(p(m) = 1\) if \(m\) is odd. Then the parity rules say
 	\[ p(a + b) = p(a) + p(b) \qquad \text{for all integers } a, b, \]
 	where the addition on the right is the addition of <span class="nw">\(\Z/2\).</span> The function \(p\colon \Z \to \Z/2\) translates the
@@ -1150,9 +1162,10 @@
 </Remark>
 
 <p>
-	We now have the whole vocabulary of the chapter: groups, abelian groups, subgroups, generators, homomorphisms,
-	kernels, images and isomorphisms. The next chapter uses it to build new groups out of old ones — above all, by
-	collapsing a subgroup to zero.
+	That completes the vocabulary, and leaves one question hanging. The warning “\(\Z/n\) is not a subgroup of \(\Z\)”
+	said that clock arithmetic is the integers with the multiples of \(n\) <em>declared equal to zero</em>. How do you do
+	that to any group and any subgroup, and get a group back? The answer, the <em>quotient group</em>, opens the next
+	chapter. It is the piece of algebra on which the definition of homology rests.
 </p>
 
 <!-- ─────────────────────────────────────────────────────────────────── -->
