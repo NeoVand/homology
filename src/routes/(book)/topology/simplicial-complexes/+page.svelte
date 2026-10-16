@@ -161,17 +161,13 @@
 	finite.
 </p>
 
-<p>Here is the route we will take.</p>
-
-<ol>
-	<li>The pieces: <em>simplices</em> (point, edge, triangle, tetrahedron, and so on), their faces, and coordinates inside them.</li>
-	<li>The two rules for gluing simplices into a <em>simplicial complex</em>, and why each rule is there.</li>
-	<li>The discovery that the geometry is redundant: a complex is just a list of vertex sets.</li>
-	<li>Triangulations of the shapes we know: circle, sphere, torus, projective plane — including two famous small ones.</li>
-	<li><em>Orientations</em>: giving each simplex a direction, which homology will need for its signs.</li>
-	<li>Maps between complexes, and <em>subdivision</em>, which cuts a complex into finer pieces.</li>
-	<li>Two looser ways of gluing — <em>Δ-complexes</em> and <em>CW complexes</em> — that build the same shapes from far fewer pieces.</li>
-</ol>
+<p>
+	Here is a puzzle to carry through the chapter: <em>how few pieces does it take to build a torus?</em> By the end you will have
+	three answers — \(42\), \(6\) and \(4\) — depending on how strict the gluing rules are, and the strictest answer hides a small
+	gem: a torus on which every corner is joined to every other. First the pieces, then the rules for gluing them. Then comes the
+	surprise that makes everything else possible: once the rules are in force, the geometry can be thrown away, and what remains is a
+	list.
+</p>
 
 <h2 id="simplices">Simplices: points, edges, triangles and beyond</h2>
 
@@ -364,11 +360,19 @@
 		which is not a ball, and nothing about it says how to cut it into pieces. The boundary of an \(n\)-simplex comes already cut: it is
 		\(n+1\) simplices of dimension \(n-1\), one opposite each vertex, and their boundaries are cut in the same way, all the way down
 		to points. Simplices stay simplices when you take boundaries, and that is what will let a whole shape, boundaries and all, be
-		written down as a list. (Notice that the boundary of a simplex is <em>several</em> simplices, not one: the hollow tetrahedron is
-		a sphere, not a triangle in disguise. The third part of Boarbarktree’s video series <em>You Could Have Invented Homology</em>
-		also asks why simplices rather than balls.)
+		written down as a list. (The third part of Boarbarktree’s video series <em>You Could Have Invented Homology</em> asks the same
+		question, and answers it the same way.)
 	</p>
 </Intuition>
+
+<Question>
+	<p>
+		The boundary of a tetrahedron is made of triangles. Is the hollow tetrahedron, then, a triangle in disguise — homeomorphic to
+		the filled triangle \(\Delta^2\)? (No. The hollow tetrahedron is a sphere. A filled triangle has a rim: a point in the middle of
+		one of its edges has surface on one side only. A sphere has no rim anywhere. The boundary of a simplex is <em>several</em>
+		simplices glued together, never a single one.)
+	</p>
+</Question>
 
 <h2 id="simplicial-complexes">Gluing simplices: the two rules</h2>
 
@@ -421,7 +425,8 @@
 	simplices: a complex made of edges and vertices is 1-dimensional (a <Term t="graph">graph</Term>, the main character of
 	<Ref to="homology/cycles-and-boundaries" />); a surface made of triangles is 2-dimensional. The number of \(k\)-simplices of \(K\) is written \(n_k\), and the list
 	\[ (n_0, n_1, n_2, \dots) \]
-	is the <dfn>f-vector</dfn> of \(K\): the number of vertices, edges, triangles, and so on. The union of all the simplices — the actual
+	is the <dfn>f-vector</dfn> of \(K\): the number of vertices, edges, triangles, and so on. The hollow tetrahedron has f-vector
+	\((4, 6, 4)\); keep an eye on f-vectors, because the next chapter will find something hiding in them. The union of all the simplices — the actual
 	set of points in space — is the <dfn>underlying space</dfn> of \(K\), written \(\abs{K}\). A sub-collection that obeys the rules by
 	itself is a <dfn>subcomplex</dfn>; the most useful ones are the <dfn>skeletons</dfn>: the <em>\(k\)-skeleton</em> \(K^{(k)}\)
 	consists of all simplices of dimension at most \(k\). The 1-skeleton of a hollow tetrahedron is a graph with 4 vertices and 6 edges;
@@ -607,8 +612,9 @@
 	triangles, using the triangles
 	\[ \set{i,\, i+1,\, i+3} \quad\text{and}\quad \set{i,\, i+2,\, i+3} \qquad\text{for } i = 0, 1, \dots, 6, \]
 	where the labels are read modulo 7 (on a 7-hour clock: \(5 + 3 = 1\), as in <Ref to="foundations/equivalence" />). It is found in
-	the notes of August Möbius, published after his death <Cite k="lutz2008" />. It has a remarkable property: <em>every</em> pair of its seven vertices is joined by an
-	edge, since \(\binom{7}{2} = 21\). And seven is the minimum — you will prove that with the next chapter’s tools.
+	the notes of August Möbius, published after his death <Cite k="lutz2008" />. Now count its edges against its vertices. Seven
+	vertices can be paired up in \(\binom{7}{2} = 21\) ways, and there are \(21\) edges, so no pair is left out: <em>every</em> vertex is
+	joined to every other. And seven is the minimum — you will prove that with the next chapter’s tools.
 </p>
 
 <p>
@@ -696,7 +702,7 @@
 </p>
 
 <p>
-	There is a neat way to tell the two kinds of order apart without drawing anything. Starting from \([v_0, v_1, v_2]\), count how many
+	You can tell the two kinds of order apart without drawing anything. Starting from \([v_0, v_1, v_2]\), count how many
 	swaps of two neighbouring entries it takes to reach the order you have. Rotating, \([v_0, v_1, v_2] \to [v_1, v_0, v_2] \to [v_1,
 	v_2, v_0]\), takes two swaps; reversing a pair takes one. An even number of swaps keeps the orientation, an odd number reverses it.
 	Different routes to the same order may use different numbers of swaps, but the parity (even or odd) always comes out the same —
@@ -756,8 +762,9 @@
 <h2 id="maps-and-subdivision">Simplicial maps and subdivision</h2>
 
 <p>
-	Shapes are more interesting with maps between them. Since a simplicial complex is “vertices plus which sets span simplices”, the
-	natural maps between complexes send vertices to vertices and respect those sets.
+	So far each complex has stood alone. But topology is as much about maps as about spaces: a circle winding twice around another, a
+	disk squashed flat onto a segment. Since a simplicial complex is “vertices plus which sets span simplices”, the natural maps
+	between complexes send vertices to vertices and respect those sets.
 </p>
 
 <Definition id="def-simplicial-map">

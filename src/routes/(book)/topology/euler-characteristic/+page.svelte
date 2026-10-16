@@ -51,7 +51,7 @@
 			title: 'Euler’s Formula and Graph Duality',
 			author: '3Blue1Brown (Grant Sanderson)',
 			url: 'https://www.3blue1brown.com/lessons/eulers-characteristic-formula',
-			note: 'A beautifully animated version of the “two trees” proof in this chapter.',
+			note: 'An animated version of the “two trees” proof in this chapter.',
 			kind: 'video' as const,
 			free: true
 		},
@@ -129,8 +129,8 @@
 </Figure>
 
 <p>
-	Here are the five <dfn>Platonic solids</dfn> — the convex polyhedra whose faces are identical regular polygons, the same number
-	meeting at every corner — in a table.
+	The five <dfn>Platonic solids</dfn> — the convex polyhedra whose faces are identical regular polygons, the same number meeting at
+	every corner — make a good first test.
 </p>
 
 <div class="table-wrap">
@@ -204,8 +204,9 @@
 	polyhedron, the angles of the faces meeting there add up to less than a full turn of \(360°\) — otherwise the corner would be flat.
 	The shortfall is the <dfn>angle defect</dfn> at that corner. A cube has three right angles at each corner, so each defect is \(360°
 	- 270° = 90°\), and the eight corners together fall short by \(8 \times 90° = 720°\). Descartes found that the total defect of every
-	convex polyhedron is exactly \(720°\), two full turns <Cite k="federico1982" /> — and two is the same 2 as in Euler’s formula. This is the first glimpse of a
-	deep link between counting and curvature that we will return to at the end of the chapter.
+	convex polyhedron is exactly \(720°\), two full turns <Cite k="federico1982" /> — and two is the same 2 as in Euler’s formula.
+	That should seem odd. Adding up angles is measuring; counting corners, edges and faces is not. Why should one know about the
+	other? Keep the question in mind: the last section of the chapter answers it in three lines.
 </p>
 
 <h2 id="why-it-is-true">Why it is true</h2>
@@ -440,7 +441,7 @@
 	hollow box with thick walls. Its surface is made of two separate pieces — the outside of the box and the inside of the cavity —
 	each a cube’s surface. Counting everything gives \(V = 8 + 8 = 16\), \(E = 12 + 12 = 24\), \(F = 6 + 6 = 12\), and
 	\[ V - E + F = 16 - 24 + 12 = 4 = 2 + 2. \]
-	This one is easy to explain: the count simply adds up over separate pieces, and each piece is a sphere in disguise. The Euler
+	This one is easy to explain: the count adds up over separate pieces, and each piece is a sphere in disguise. The Euler
 	characteristic of several separate pieces is the sum of their Euler characteristics.
 </p>
 
@@ -516,7 +517,7 @@
 </p>
 
 <p>
-	There is also a neat way to see these formulas through the <Term t="connected-sum">connected sum</Term> of
+	The same formulas fall out of the <Term t="connected-sum">connected sum</Term> of
 	<Ref to="topology/manifolds" />, which cuts a small disk out of each of two surfaces and glues them along the two boundary circles.
 	Triangulate both surfaces and cut out one triangle from each: each \(\chi\) drops by 1 (one face fewer). Then glue the two
 	triangular holes together: the 3 vertices and 3 edges of one hole are matched with those of the other, so we lose \(3\) vertices and
@@ -528,7 +529,7 @@
 <h3 id="cut-and-paste">Counting by cutting and pasting</h3>
 
 <p>
-	The connected-sum argument is an instance of a rule worth knowing by itself. Suppose a complex \(X\) is the union of two
+	The connected-sum argument is one instance of a rule that deserves a name of its own. Suppose a complex \(X\) is the union of two
 	subcomplexes \(A\) and \(B\), which overlap in the subcomplex \(A \cap B\). Count the cells of \(X\) by counting those of \(A\) and
 	those of \(B\): the cells in the overlap get counted twice, so we subtract them once. Since this works for vertices, edges and faces
 	separately, it works for the alternating sum:
@@ -618,10 +619,11 @@
 </KeyIdea>
 
 <p>
-	The formula \(E = 3(V - \chi)\) for triangulated surfaces (see the exercise “Counting a triangulated surface”) also explains the small triangulations of the last chapter.
-	A triangulated torus has \(E = 3V\), and since at most \(\binom{V}{2}\) edges are possible, \(3V \le V(V-1)/2\), which forces \(V \ge
-	7\). The seven-vertex torus meets this bound exactly, which is why every pair of its vertices is joined. The same argument gives \(V
-	\ge 6\) for the projective plane and \(V \ge 4\) for the sphere.
+	Now we can keep a promise from the last chapter: why can no torus be triangulated with fewer than seven vertices? In a
+	triangulated closed surface, \(E = 3(V - \chi)\) (see the exercise “Counting a triangulated surface”). So a triangulated torus
+	has \(E = 3V\), and since at most \(\binom{V}{2}\) edges are possible, \(3V \le V(V-1)/2\), which forces \(V \ge 7\). The
+	seven-vertex torus meets this bound exactly — which is why every pair of its vertices had to be joined. The same argument gives
+	\(V \ge 6\) for the projective plane and \(V \ge 4\) for the sphere.
 </p>
 
 <h2 id="graphs">χ for graphs: pieces minus loops</h2>
@@ -693,9 +695,13 @@
 </KeyIdea>
 
 <p>
-	The Euler characteristic turns up far beyond counting. The angle defects of Descartes add up to \(360° \times \chi\) for any closed
-	polyhedral surface — \(720°\) for a sphere, and \(0°\) for the picture frame, where each of the eight outer corners falls \(90°\)
-	short of flat while each of the eight corners around the tunnel overshoots by \(90°\).
+	The Euler characteristic turns up far beyond counting. Here is the promised answer to Descartes’s puzzle. A face with \(k\) corners
+	has angles adding up to \((k - 2) \times 180°\). Add this up over all the faces: since every edge borders two faces, the \(k\)’s add
+	up to \(2E\), and the angles of all the faces together come to \(2E \times 180° - F \times 360° = 360° \times (E - F)\). The total
+	defect is a full turn at every vertex minus all those angles:
+	\[ 360° \times V - 360° \times (E - F) \;=\; 360° \times \chi. \]
+	That holds for any closed polyhedral surface — \(720°\) for a sphere, and \(0°\) for the picture frame, where each of the eight
+	outer corners falls \(90°\) short of flat while each of the eight corners around the tunnel overshoots by \(90°\).
 	For smooth surfaces the defects become <em>curvature</em>, and the Gauss–Bonnet theorem says the total curvature of a closed
 	surface is \(2\pi\chi\), whatever its shape. A vector field on a closed surface — a breeze blowing along it — must have calm points
 	whose “indices” add up to \(\chi\); since \(\chi(S^2) = 2 \neq 0\), every breeze on the Earth has a calm spot somewhere (the hairy
@@ -707,6 +713,15 @@
 	And the alternating sum makes sense in every dimension. The 3-dimensional sphere, triangulated as the boundary of a 4-simplex, has
 	\(5 - 10 + 10 - 5 = 0\); in fact every closed manifold of odd dimension has \(\chi = 0\), a consequence of the Poincaré duality of
 	<Ref to="cohomology/poincare-duality" />. Not bad for a count Euler made with polyhedra.
+</p>
+
+<p>
+	Still, a single number is a blunt instrument, and the minus signs are to blame. A circle has \(\chi = 0\); so do two separate
+	circles, because the extra piece and the extra loop cancel. A sphere and a pair of points both have \(\chi = 2\). The alternating
+	sum balances the books and throws away the entries. To get the entries back — \(b_0\), \(b_1\), \(b_2\), one at a time — we have to
+	say exactly what a hole is, which, you may have noticed, nobody has yet done, and then count holes straight from a list of
+	simplices. That is the machine Part III builds, starting in <Ref to="homology/cycles-and-boundaries" /> with the pieces and loops
+	of a graph.
 </p>
 
 <h2 id="exercises">Exercises</h2>
