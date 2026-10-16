@@ -70,14 +70,13 @@ const wobbleGLSL = /* glsl */ `
 	}
 `;
 
-// A free pull: the surface near uPullAt moves by the vector uPullV with a Gaussian
-// falloff of radius uPullR, so a grabbed patch follows the pointer in any
-// direction (not only along the normal). The normal is carried along exactly:
-// for p ↦ p + V g(p), n′ ∝ n − ∇g (V·n) / (1 + ∇g·V).
-const pullGLSL = /* glsl */ `
-	uniform vec3 uPullAt;
-	uniform vec3 uPullV;
-	uniform float uPullR;
+// A deformation computed elsewhere (a simulation): per (u, v), how far the
+// surface has moved (uDisp) and how its normal has turned (uDispN), one texel
+// per simulated particle; the GPU interpolates between them.
+const dispGLSL = /* glsl */ `
+	uniform sampler2D uDisp;
+	uniform sampler2D uDispN;
+	uniform vec2 uDispRes;
 `;
 
 const iridescentVertex = /* glsl */ `
@@ -90,8 +89,8 @@ const iridescentVertex = /* glsl */ `
 	#ifdef WOBBLE
 	${wobbleGLSL}
 	#endif
-	#ifdef PULL
-	${pullGLSL}
+	#ifdef DISP_TEX
+	${dispGLSL}
 	#endif
 	void main() {
 		vUv = uv;
@@ -107,14 +106,12 @@ const iridescentVertex = /* glsl */ `
 		pos += normal * s;
 		nrm = normalize(normal - (gr - dot(gr, normal) * normal));
 		#endif
-		#ifdef PULL
+		#ifdef DISP_TEX
 		{
-			vec3 dq = position - uPullAt;
-			float r2 = uPullR * uPullR;
-			float gp = exp(-dot(dq, dq) / r2);
-			vec3 gg = (-2.0 * gp / r2) * dq;
-			pos += uPullV * gp;
-			nrm = normalize(nrm - gg * dot(uPullV, nrm) / max(1.0 + dot(gg, uPullV), 0.05));
+			// texel i sits at u = i / width: sample at its centre
+			vec2 tc = uv + 0.5 / uDispRes;
+			pos += texture2D(uDisp, tc).xyz;
+			nrm = normalize(nrm + texture2D(uDispN, tc).xyz);
 		}
 		#endif
 		vObj = pos;
@@ -290,9 +287,9 @@ export interface IridescentOptions {
 	/** knead the surface on the GPU: uniforms uWobble (amplitude) and uWobbleT (time),
 	 *  plus one pull uPoke (centre, object space), uPokeAmp and uPokeR (radius) */
 	wobble?: boolean;
-	/** a free pull on the GPU: the patch around uPullAt (object space) moves by the
-	 *  vector uPullV, with Gaussian falloff radius uPullR */
-	pull?: boolean;
+	/** a deformation from textures over (u, v): uDisp (displacement), uDispN (change
+	 *  of normal), uDispRes (their size); see elasticTorus.ts */
+	displacement?: boolean;
 	/** grid lines for implicit surfaces without (u, v): around these hole centres (x) */
 	implicitGrid?: { centres: number[]; R: number };
 	/** allow two round holes to be cut (uniforms uCut0, uCut1 = centre xyz, radius) */
@@ -332,11 +329,11 @@ export function iridescent(o: IridescentOptions = {}): THREE.ShaderMaterial {
 		uniforms.uPokeAmp = { value: 0 };
 		uniforms.uPokeR = { value: 0.5 };
 	}
-	if (o.pull) {
-		defines.PULL = '';
-		uniforms.uPullAt = { value: new THREE.Vector3() };
-		uniforms.uPullV = { value: new THREE.Vector3() };
-		uniforms.uPullR = { value: 0.6 };
+	if (o.displacement) {
+		defines.DISP_TEX = '';
+		uniforms.uDisp = { value: null };
+		uniforms.uDispN = { value: null };
+		uniforms.uDispRes = { value: new THREE.Vector2(1, 1) };
 	}
 	if (o.implicitGrid) {
 		defines.IMPLICIT_GRID = '';
@@ -441,7 +438,7 @@ export function orientOutward(geometry: THREE.BufferGeometry): boolean {
 /** The depth-only twin of a surface material (same vertex shader, so the depths match). */
 function depthPrepass(face: THREE.ShaderMaterial): THREE.ShaderMaterial {
 	const shared: Record<string, THREE.IUniform> = {};
-	for (const k of ['uWobble', 'uWobbleT', 'uPoke', 'uPokeAmp', 'uPokeR', 'uPullAt', 'uPullV', 'uPullR', 'uCut0', 'uCut1'])
+	for (const k of ['uWobble', 'uWobbleT', 'uPoke', 'uPokeAmp', 'uPokeR', 'uDisp', 'uDispN', 'uDispRes', 'uCut0', 'uCut1'])
 		if (face.uniforms[k]) shared[k] = face.uniforms[k];
 	return new THREE.ShaderMaterial({
 		vertexShader: iridescentVertex,

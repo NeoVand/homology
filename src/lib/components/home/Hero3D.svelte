@@ -9,6 +9,7 @@
 	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
 	import { glassMesh, glowCore, glowHalo, ghostCore, dotTexture, color } from '$lib/three/materials';
 	import { torus, surfaceGeometry } from '$lib/three/surfaces';
+	import { ElasticTorus } from '$lib/three/elasticTorus';
 	import { tex } from '$lib/katex/render';
 	import type * as THREE_NS from 'three';
 
@@ -57,17 +58,46 @@
 			gridStrength: 0.22,
 			film: 1.25,
 			rim: 0.75,
-			pull: true
+			displacement: true
 		});
 		root.add(body);
 		const face = (body.userData.materials as THREE_NS.ShaderMaterial[])[0];
-		const pullAt = face.uniforms.uPullAt.value as THREE_NS.Vector3;
-		const pullV = face.uniforms.uPullV.value as THREE_NS.Vector3;
 		const visibleMesh = body.children[1];
 
-		// the same deformation as the shader, so curves stay on the stretched surface
-		const dq = new V3();
-		const gg = new V3();
+		// the rubber: a simulated elastic sheet over (u, v), passed to the shader as
+		// two small textures (displacement and change of normal)
+		const sim = new ElasticTorus({ R, r });
+		const texel = sim.nu * sim.nv * 4;
+		const dispF = new Float32Array(texel);
+		const dnF = new Float32Array(texel);
+		const half = (f: Float32Array, out: Uint16Array) => {
+			for (let k = 0; k < f.length; k++) out[k] = THREE.DataUtils.toHalfFloat(f[k]);
+		};
+		const fieldTex = () => {
+			const t = new THREE.DataTexture(new Uint16Array(texel), sim.nu, sim.nv, THREE.RGBAFormat, THREE.HalfFloatType);
+			t.wrapS = t.wrapT = THREE.RepeatWrapping;
+			t.magFilter = t.minFilter = THREE.LinearFilter;
+			t.generateMipmaps = false;
+			t.needsUpdate = true;
+			return t;
+		};
+		const dispTex = fieldTex();
+		const dnTex = fieldTex();
+		face.uniforms.uDisp.value = dispTex;
+		face.uniforms.uDispN.value = dnTex;
+		face.uniforms.uDispRes.value.set(sim.nu, sim.nv);
+		const uploadFields = () => {
+			sim.fields(dispF, dnF);
+			half(dispF, dispTex.image.data as Uint16Array);
+			half(dnF, dnTex.image.data as Uint16Array);
+			dispTex.needsUpdate = true;
+			dnTex.needsUpdate = true;
+		};
+		let deformed = false;
+
+		// a point of the (deformed) surface, read from the same fields as the shader,
+		// so the loops stay on the stretched rubber
+		const sd: [number, number, number] = [0, 0, 0];
 		function surface(u: number, v: number, P: THREE_NS.Vector3, N: THREE_NS.Vector3) {
 			const th = TAU * u;
 			const ph = TAU * v;
@@ -75,15 +105,16 @@
 			const w = R + r * c;
 			P.set(w * Math.cos(th), r * Math.sin(ph), w * Math.sin(th));
 			N.set(c * Math.cos(th), Math.sin(ph), c * Math.sin(th));
-			const R2 = face.uniforms.uPullR.value * face.uniforms.uPullR.value;
-			dq.subVectors(P, pullAt);
-			const g = Math.exp(-dq.lengthSq() / R2);
-			if (g > 1e-5 && pullV.lengthSq() > 1e-10) {
-				gg.copy(dq).multiplyScalar((-2 * g) / R2);
-				const den = Math.max(1 + gg.dot(pullV), 0.05);
-				const vn = pullV.dot(N);
-				P.addScaledVector(pullV, g);
-				N.addScaledVector(gg, -vn / den).normalize();
+			if (deformed) {
+				sim.sample(dispF, u, v, sd);
+				P.x += sd[0];
+				P.y += sd[1];
+				P.z += sd[2];
+				sim.sample(dnF, u, v, sd);
+				N.x += sd[0];
+				N.y += sd[1];
+				N.z += sd[2];
+				N.normalize();
 			}
 		}
 
@@ -351,8 +382,7 @@
 		};
 
 		// ── pulling the surface ───────────────────────────────────────────────
-		const pullVel = new V3();
-		const pullTarget = new V3();
+		const grabRest = new V3(); // the grabbed point at rest (object space)
 		const plane = new THREE.Plane();
 		const ray = new THREE.Raycaster();
 		const ndc = new THREE.Vector2();
@@ -390,12 +420,9 @@
 			const hit = hitTorus(e.clientX, e.clientY);
 			if (hit) {
 				mode = 'pull';
-				root.updateMatrixWorld();
-				pullAt.copy(root.worldToLocal(hit.point.clone()));
-				pullV.set(0, 0, 0);
-				pullVel.set(0, 0, 0);
-				pullTarget.set(0, 0, 0);
-				face.uniforms.uPullR.value = 0.62;
+				const uv = hit.uv ?? new THREE.Vector2();
+				const [gx, gy, gz] = sim.grab(uv.x, uv.y);
+				grabRest.set(gx, gy, gz);
 				camera.getWorldDirection(tmp);
 				plane.setFromNormalAndCoplanarPoint(tmp, hit.point);
 				omega.set(0, 0, 0);
@@ -434,8 +461,11 @@
 				if (ray.ray.intersectPlane(plane, hitW)) {
 					root.updateMatrixWorld();
 					root.worldToLocal(hitW);
-					pullTarget.subVectors(hitW, pullAt);
-					if (pullTarget.length() > 2.4) pullTarget.setLength(2.4);
+					// the fingertip follows the pointer, up to a generous stretch
+					hitW.sub(grabRest);
+					if (hitW.length() > 2.2) hitW.setLength(2.2);
+					hitW.add(grabRest);
+					sim.moveTo(hitW.x, hitW.y, hitW.z);
 				}
 			}
 			lastX = e.clientX;
@@ -446,7 +476,7 @@
 			if (e.pointerId !== pid) return;
 			// a throw only counts if the pointer was still moving when let go
 			if (performance.now() - lastMoveT > 90) omega.multiplyScalar(0.15);
-			if (mode === 'pull') pullTarget.set(0, 0, 0);
+			if (mode === 'pull') sim.release();
 			mode = 'none';
 			pid = -1;
 			releasedAt = performance.now();
@@ -481,7 +511,6 @@
 		const vA = { v0: 0.18 };
 		const uB = { u0: 0.07 };
 		const kp = { du: 0, dv: 0 };
-		const pv = new V3();
 		let drewStill = false;
 
 		return {
@@ -507,7 +536,7 @@
 
 				// fully at rest (and the rest already drawn): nothing to do this frame
 				const quiet =
-					m === 0 && mode === 'none' && omega.lengthSq() < 1e-8 && pullV.lengthSq() < 1e-6 && pullVel.lengthSq() < 1e-5;
+					m === 0 && mode === 'none' && omega.lengthSq() < 1e-8 && sim.asleep && !deformed;
 				if (quiet && drewStill) return false;
 				drewStill = quiet;
 
@@ -544,23 +573,12 @@
 				root.quaternion.copy(q);
 				root.updateMatrixWorld();
 
-				// the pull: snappy while held, a jelly wobble when let go
-				const k = mode === 'pull' ? 230 : 75;
-				const zeta = mode === 'pull' ? 0.85 : 0.17;
-				const c = 2 * zeta * Math.sqrt(k);
-				const sub = 4;
-				for (let i = 0; i < sub; i++) {
-					const h = dt / sub;
-					pv.subVectors(pullTarget, pullV).multiplyScalar(k).addScaledVector(pullVel, -c);
-					pullVel.addScaledVector(pv, h);
-					pullV.addScaledVector(pullVel, h);
+				// the rubber: simulated while held or moving, then asleep
+				const pulling = sim.step(dt);
+				if (pulling || deformed) {
+					uploadFields();
+					deformed = !sim.asleep;
 				}
-				const pulling = mode === 'pull' || pullV.lengthSq() > 1e-6 || pullVel.lengthSq() > 1e-5;
-				if (!pulling) {
-					pullV.set(0, 0, 0);
-					pullVel.set(0, 0, 0);
-				}
-				face.uniforms.uPullR.value = Math.max(0.62, pullV.length() / 1.05);
 
 				// the loops move along with the ambient clock
 				clock += dt * m;
