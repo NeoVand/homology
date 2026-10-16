@@ -634,13 +634,16 @@
 	products \(1 \cdot 1\), and \(1 + 1 = 0\).
 </p>
 
-<History title="Poincaré’s tables">
+<History title="Poincaré’s tables" people="heegaard">
 	<p>
-		Boundary matrices are almost as old as homology. In 1898 the Danish mathematician Poul Heegaard found a gap in Poincaré’s first paper, and Poincaré’s
-		answer, the next year, was to cut his manifolds into simplices and record how they fit together in tables of \(+1\), \(-1\) and \(0\): one table for each
-		dimension, saying which simplices lie on the boundary of which, and with which orientation. On the page after he defines the tables he checks that
-		consecutive tables multiply to zero <Cite k="poincare1899,weibel1999" />. The name “chain complex” arrived thirty years later; the thing itself was
-		already there, as a stack of matrices.
+		Boundary matrices began as an answer to a thesis written in Danish. Its author, who confessed that as a
+		schoolboy he had believed seven plus eight to be seventeen, defended it in Copenhagen in 1898, and it contained an example that contradicted the duality
+		theorem of Poincaré’s first paper. Poincaré asked him about the passages he could not follow, and he sent him a summary in French <Cite
+			k="oconnor-robertson-heegaard"
+		/>. Poincaré’s answer, the next year, was to cut his manifolds into simplices and record how they fit together in tables of \(+1\), \(-1\) and \(0\):
+		one table for each dimension, saying which simplices lie on the boundary of which. A page later he checks that
+		consecutive tables multiply to zero <Cite k="poincare1899,weibel1999" />. The name “chain complex” arrived thirty years later; the thing
+		itself was already there, as a stack of matrices.
 	</p>
 </History>
 

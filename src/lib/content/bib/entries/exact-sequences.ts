@@ -50,5 +50,16 @@ export const works: Work[] = [
 		venue: 'Topology 2(4), 341–358',
 		doi: '10.1016/0040-9383(63)90014-4',
 		kind: 'paper'
+	},
+	{
+		key: 'oconnor-robertson-vietoris',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2015,
+		title: 'Leopold Vietoris',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Vietoris/',
+		free: true,
+		kind: 'web'
 	}
 ];

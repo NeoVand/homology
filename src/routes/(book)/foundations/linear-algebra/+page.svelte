@@ -724,13 +724,14 @@
 	Gaussian elimination, and it is the same elimination you may have used at school to solve two equations in two unknowns.
 </p>
 
-<History>
+<History title="The Nine Chapters" people="liu-hui">
 	<p>
 		The method is about two thousand years old. Chapter Eight of the Chinese classic <em>The Nine Chapters on the Mathematical
-		Art</em>, “Rectangular Arrays”, solves eighteen systems of equations by the same systematic elimination, and Liu Hui wrote a
-		commentary on it in the third century. Gauss did not invent it, and called it “common” elimination himself. In 1810 he devised a
-		compact notation for
-		eliminating in the least-squares problems of astronomy; professional human computers adopted his notation, his name stuck to the
+		Art</em>, “Rectangular Arrays”, solves eighteen systems of equations by the same systematic elimination. Liu Hui, who lived
+		in the kingdom of Wei, finished a commentary on the book in 263; no likeness of him survives. When he could not find the
+		volume of a sphere, he said so, leaving the problem “to whoever can tell the truth”
+		<Cite k="oconnor-robertson-nine-chapters" />. Gauss did not invent the method, and called it “common” elimination himself.
+		In 1810 he devised a compact notation for eliminating in the least-squares problems of astronomy; professional human computers adopted his notation, his name stuck to the
 		method, and after the Second World War “Gaussian elimination” became the standard name for the ordinary school procedure
 		<Cite k="grcar2011" />.
 	</p>

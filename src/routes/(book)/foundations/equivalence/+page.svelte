@@ -315,11 +315,13 @@
 	is how homology will declare two loops the same.
 </p>
 
-<History title="Gauss and the triple bar">
+<History title="Gauss and the triple bar" people="gauss">
 	<p>
-		The symbol \(\equiv\) for congruence was introduced by Carl Friedrich Gauss, aged twenty-four, in his <em
+		The symbol \(\equiv\) for congruence was introduced by Gauss, aged twenty-four, in his <em
 			>Disquisitiones Arithmeticae</em
-		> of 1801, the book that made arithmetic modulo \(n\) a systematic theory. A footnote explains the choice: “We have adopted
+		> of 1801, the book that made arithmetic modulo \(n\) a systematic theory. A stipend from the Duke of Brunswick freed him to
+		write it, and its last section held the discovery he had made as a student: a regular 17-sided polygon can be drawn with
+		ruler and compasses. A footnote explains the choice of symbol: “We have adopted
 		this sign because of the great analogy that is found between equality and congruence.” Adrien-Marie Legendre, Gauss adds,
 		had for the same reason simply used the equals sign itself, which Gauss “hesitated to imitate, lest ambiguity arise” <Cite
 			k="gauss1801"

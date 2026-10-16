@@ -27,7 +27,7 @@ export const people: Record<string, Person> = Object.fromEntries(
 	[
 		P('pythagoras', 'Pythagoras', 'c. 570 – c. 490 BC', 'Pythagoras', { imagined: true }),
 		P('aristotle', 'Aristotle', '384 – 322 BC', 'Aristotle'),
-		P('liu-hui', 'Liu Hui', 'c. 220 – c. 280', 'Liu_Hui', { imagined: true }),
+		P('liu-hui', 'Liu Hui', 'c. 220 – c. 280', undefined, { imagined: true, url: 'https://en.wikipedia.org/wiki/Liu_Hui' }),
 		P('kepler', 'Johannes Kepler', '1571 – 1630', 'Kepler'),
 		P('descartes', 'René Descartes', '1596 – 1650', 'Descartes'),
 		P('leibniz', 'Gottfried Wilhelm Leibniz', '1646 – 1716', 'Leibniz'),
@@ -52,7 +52,7 @@ export const people: Record<string, Person> = Object.fromEntries(
 		P('cantor', 'Georg Cantor', '1845 – 1918', 'Cantor'),
 		P('klein', 'Felix Klein', '1849 – 1925', 'Klein'),
 		P('poincare', 'Henri Poincaré', '1854 – 1912', 'Poincare'),
-		P('dyck', 'Walther von Dyck', '1856 – 1934', undefined, { url: 'https://en.wikipedia.org/wiki/Walther_von_Dyck' }),
+		P('dyck', 'Walther von Dyck', '1856 – 1934', 'Von_Dyck'),
 		P('hilbert', 'David Hilbert', '1862 – 1943', 'Hilbert'),
 		P('hausdorff', 'Felix Hausdorff', '1868 – 1942', 'Hausdorff'),
 		P('elie-cartan', 'Élie Cartan', '1869 – 1951', 'Cartan'),

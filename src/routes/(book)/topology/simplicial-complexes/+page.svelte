@@ -342,10 +342,12 @@
 	\(\Delta^0\) to \(\Delta^4\).
 </p>
 
-<History title="A geometer’s weights">
+<History title="A geometer’s weights" people="mobius">
 	<p>
 		Barycentric coordinates were introduced by August Ferdinand Möbius in his book <em>Der barycentrische Calcul</em> (“The
-		barycentric calculus”) of 1827 <Cite k="mobius1827" />. His idea was the one we just used: describe a point by the weights
+		barycentric calculus”) of 1827 <Cite k="mobius1827" />. Möbius, the son of a dancing teacher, was by profession an
+		astronomer: he spent his whole career at Leipzig, where he supervised the rebuilding of the observatory. He was, it seems, a
+		poor lecturer, and had to advertise his courses as free of charge before students thought them worth taking. His idea was the one we just used: describe a point by the weights
 		that, hung at the corners of a fixed triangle, would make it the balance point. It is the same Möbius whose one-sided band you met in
 		<Ref to="topology/gluing" />, and, as we shall see in a moment, the first person known to have written down the smallest
 		triangulated torus.

@@ -486,9 +486,9 @@
 	</ul>
 </Warning>
 
-<History>
+<History title="The topologist who disowned topology" people="brouwer">
 	<p>
-		The Dutch mathematician L. E. J. Brouwer proved the fixed point theorem in every dimension, together with the invariance of dimension and the theory of degree we meet below, in a burst of papers around 1910–1912 <Cite k="brouwer1911,brouwer1911dim" />. The proof above is the later, homological streamlining <Cite k="hatcher2002" loc="Cor. 2.15" />. There is an irony here. Brouwer spent the rest of his career championing <em>intuitionism</em>, a philosophy of mathematics that rejects proofs of existence that do not show how to find the object — exactly the kind of proof given above. Dirk van Dalen’s biography tells the story of the topologist and the philosopher who shared one head <Cite k="vandalen2013" />.
+		In a burst of papers around 1910–1912 he proved the fixed point theorem in every dimension, together with the invariance of dimension and the theory of degree we meet below <Cite k="brouwer1911,brouwer1911dim" />. The proof above is the later, homological streamlining <Cite k="hatcher2002" loc="Cor. 2.15" />. There is an irony here. Brouwer spent the rest of his career championing <em>intuitionism</em>, a philosophy of mathematics that rejects proofs of existence that do not show how to find the object — exactly the kind of proof given above. Bartel van der Waerden, who heard him lecture in Amsterdam in the early 1920s, recalled that Brouwer never taught topology at all, only intuitionism, and seemed to judge his own greatest work false <Cite k="oconnor-robertson-brouwer" />. Dirk van Dalen’s biography tells the story of the topologist and the philosopher who shared one head <Cite k="vandalen2013" />.
 	</p>
 </History>
 
@@ -517,6 +517,12 @@
 		Removing a point from \(\R^n\) leaves something that shrinks onto a small sphere \(S^{n-1}\) around the puncture: two points for a line, a circle for a plane, a \(2\)-sphere for space. Homology sees the dimension of that sphere, and hence the dimension of the space.
 	{/snippet}
 </Figure>
+
+<History title="Dedekind’s conjecture" people="dedekind">
+	<p>
+		The last doctoral student of Gauss, he taught for over thirty years at the technical college of his home town, Brunswick, and lived there with his sister, who, like him, never married <Cite k="oconnor-robertson-dedekind" />. When Cantor sent him the proof of 1877, Dedekind did more than check it. He found a gap in Cantor’s first version, which missed some points of the segment, and on 2 July he answered the paradox with a conjecture: a one-to-one correspondence between manifolds of different dimensions must be discontinuous throughout <Cite k="johnson1979" loc="pp. 134–142" />. That is, in essence, the theorem just proved. It waited thirty-four years for Brouwer.
+	</p>
+</History>
 
 <Remark title="Local versions">
 	<p>
@@ -550,6 +556,12 @@
 <p>
 	In the plane even more is true: a Jordan curve together with its inside is always a deformed closed disk (the Schoenflies theorem). In higher dimensions only the separation survives. An embedded \((n-1)\)-sphere in \(S^n\) splits it into exactly two pieces (the Jordan–Brouwer separation theorem, proved the same way), but the pieces can be strange. In 1924 J. W. Alexander built a wildly tangled “horned sphere” in \(\R^3\) whose outside is not simply connected <Cite k="alexander1924" />: a loop there can be caught on the horns and never pulled free, so the outside looks nothing like the outside of a round ball.
 </p>
+
+<History title="An engineer’s theorems" people="jordan">
+	<p>
+		Trained at the École Polytechnique, he worked as an engineer for many years, officially until 1885; most of his original research dates from that time. In 1870 he wrote the first book on group theory, which contains the normal form for matrices that carries his name, and in 1866 he had already studied how one path on a surface can be deformed into another, an early glimpse of homotopy. The curve theorem is in his <em>Cours d’analyse de l’École polytechnique</em>, a title he told Henri Lebesgue was put on the cover to please the publisher. His last years were darkened by the First World War: between 1914 and 1916, three of his six sons were killed <Cite k="oconnor-robertson-jordan" />.
+	</p>
+</History>
 
 <!-- ───────────────────────────────────────────────────────────────────── -->
 <h2 id="degree">Degree: how many times does a sphere wrap?</h2>
@@ -691,6 +703,12 @@
 		An integer matrix \(A\) defines a map of the torus \(\R^2/\Z^2\) by \(x\mapsto Ax\) (mod \(1\)). On \(H_1(T^2;\Q) = \Q^2\) it acts by \(A\) itself, on \(H_0\) and \(H_2\) by \(1\) and \(\det A\), so \(\tau = 1 - \operatorname{tr}A + \det A = \det(I - A)\). For Arnold’s “cat map” \(A = \left(\begin{smallmatrix}2&1\\1&1\end{smallmatrix}\right)\), \(\tau = -1\): there must be a fixed point, and in fact there is exactly one, the corner \((0,0)\). For \(A = -I\), the half-turn \(x\mapsto -x\), \(\tau = 4\), and there are exactly four fixed points: \((0,0)\), \((\tfrac12,0)\), \((0,\tfrac12)\) and \((\tfrac12,\tfrac12)\).
 	</p>
 </Example>
+
+<History title="Chalk in a gloved hand" people="lefschetz">
+	<p>
+		An engineer at the Westinghouse company in Pittsburgh, he lost both hands in November 1907, when a transformer explosion burned them off. He turned to mathematics. He wore artificial hands in shiny black gloves, and each morning a graduate student pushed a piece of chalk into one of them <Cite k="oconnor-robertson-lefschetz" />. He found his fixed point theorem in the 1920s, and in 1927 recast it with the traces of matrices, making Brouwer’s theorem a special case. Noether’s groups took him longer. In 1930 he wrote that translating everything into the theory of groups “is of course a mere question of a different terminology” <Cite k="lefschetz1930" loc="p. 29" />; in 1935, closing the first international conference on topology in Moscow, he stressed “the great value that Emmy Noether’s ideas had for the development of modern topology” <Cite k="hirzebruch1999" />.
+	</p>
+</History>
 
 <!-- ───────────────────────────────────────────────────────────────────── -->
 <h2 id="hurewicz">Homology versus homotopy</h2>

@@ -42,5 +42,38 @@ export const works: Work[] = [
 		url: 'https://www.youtube.com/watch?v=5xLe77iTHuQ',
 		free: true,
 		kind: 'video'
+	},
+	{
+		key: 'oconnor-robertson-poincare',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2003,
+		title: 'Henri Poincaré',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Poincare/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-noether',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2014,
+		title: 'Emmy Amalie Noether',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Noether_Emmy/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-betti',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2015,
+		title: 'Enrico Betti',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Betti/',
+		free: true,
+		kind: 'web'
 	}
 ];

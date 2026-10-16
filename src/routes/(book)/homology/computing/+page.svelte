@@ -158,6 +158,10 @@
 	<p>Integer row and column operations never change the greatest common divisor of all the entries of a matrix (an integer combination of multiples of \(g\) is a multiple of \(g\)). When only the last column is left (a \(6\times1\) block for \(\RP^2\), a \(10\times1\) block for the Klein bottle) and all its entries are even, no sequence of allowed moves can ever produce an odd number there. Over \(\Q\) you would divide by \(2\) and move on. Over \(\Z\) the \(2\) is stuck, and it records a genuine feature of the space.</p>
 </Intuition>
 
+<History title="A prize for an old answer" people="smith">
+	<p>Born in Dublin, he lost his father before he was two. He became Savilian professor of geometry at Oxford, where he lived with his sister Eleanor, and he worked mostly on whole numbers, in the tradition of Gauss, whom he revered. The best-known episode of his life came at its end. In 1882 the Paris Academy of Sciences set, as the problem for its Grand Prix, the number of ways of writing an integer as a sum of squares: a question Smith had already settled in 1867. Hermite, anxious not to make the Academy look foolish, asked him to enter anyway. Smith did, and died in February 1883, before the award. The Academy gave two full prizes: one to Smith, and one to a young mathematician from Königsberg, Hermann Minkowski <Cite k="oconnor-robertson-smith" />.</p>
+</History>
+
 <h2 id="klein-bottle">The Klein bottle, over the integers</h2>
 
 <p>Back to the cliffhanger. The Klein bottle grid is the \(3\times3\) square with its left and right sides glued straight and its top glued to its bottom with a flip (top row \(0, 2, 1, 0\)). It has \(9\) vertices, \(27\) edges and \(18\) triangles, exactly like the torus. The Smith normal forms are</p>

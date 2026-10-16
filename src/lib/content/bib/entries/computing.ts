@@ -20,5 +20,16 @@ export const works: Work[] = [
 		url: 'https://www.dtubbenhauer.com/slides/algebraic-topology/13-cellular-homology.pdf',
 		free: true,
 		kind: 'notes'
+	},
+	{
+		key: 'oconnor-robertson-smith',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2005,
+		title: 'Henry John Stephen Smith',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Smith/',
+		free: true,
+		kind: 'web'
 	}
 ];

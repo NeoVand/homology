@@ -710,12 +710,16 @@
 	all spaces into classes of “the same shape”.
 </p>
 
-<History title="Rubber sheets and rulers">
+<History title="Rubber sheets and rulers" people="listing,frechet,hausdorff">
 	<p>
-		Johann Listing coined the word <em>Topologie</em> in 1847. Abstract distance came in Maurice Fréchet’s 1906 thesis
-		<Cite k="frechet1906" />, and Felix Hausdorff’s <em>Grundzüge der Mengenlehre</em> (1914) gave a definition of topological space
-		built on neighbourhoods. The open-set axioms in the form above won out over several rivals during the following decades
-		<Cite k="moore2008" /> — so the definitions in this chapter are younger than the motor car.
+		The word <em>Topologie</em> first appears in an 1836 letter by Johann Listing, a student of Gauss, and in print in his
+		book of 1847; a physicist by profession, Listing wrote a classic on the optics of the eye. Abstract distance came in Maurice Fréchet’s 1906
+		thesis <Cite k="frechet1906" />; in the First World War Fréchet spent two and a half years at or near the front, as an
+		interpreter with the British Army. Felix Hausdorff, who also published poems and philosophy as “Paul Mongré”, gave Fréchet’s
+		spaces the name “metric”, and his <em>Grundzüge der Mengenlehre</em> (1914) defined topological spaces by neighbourhoods. In
+		January 1942, about to be interned by the Nazis, he took his own life with his wife and her sister. The open-set axioms in the
+		form above won out over rivals in the following decades <Cite k="moore2008" /> — so the definitions in this chapter are younger
+		than the motor car.
 	</p>
 </History>
 

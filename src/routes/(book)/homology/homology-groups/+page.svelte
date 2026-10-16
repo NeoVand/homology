@@ -132,6 +132,10 @@
 	<p>Two \(k\)-cycles are the same element of \(H_k\) when, with one of them reversed, together they are the rim of something: \(z - z' = \partial c\). A cycle that is a rim all by itself is the zero class. Each non-zero class is a hole, or a combination of holes, and it is never a single cycle but a whole family of them, any two of which cobound.</p>
 </KeyIdea>
 
+<History title="Every road to analysis situs" people="poincare">
+	<p>Born in Nancy, he was so short-sighted that as a student he could not make out what his lecturers wrote on the blackboard; he listened instead, and pictured what he heard. He did mathematics for four hours a day, from ten until noon and from five until seven, and did no important work in the evening, so as not to disturb his sleep <Cite k="oconnor-robertson-poincare" />. Looking back in 1901, he said that differential equations, multiple integrals and much else had all led him to the same place: topology, then called <em>analysis situs</em>. His memoir of that name, in 1895, and its five supplements created the subject of this book <Cite k="poincare1895" />. At its centre is his “homology”, the relation between cycles that together form the boundary of something: the definition above.</p>
+</History>
+
 <Warning title="Cycles first, then divide">
 	<p>A tempting shortcut is to divide all the chains by the boundaries, \(C_k/B_k\). Try it on the filled triangle. There \(C_1 \cong \Z^3\) and \(B_1 = \Z z\), so \(C_1/B_1 \cong \Z^2\): two “holes” in a disk. The impostors are open paths such as the single edge \([0,1]\). It is not zero modulo \(B_1\), but it is not a cycle either, so it was never a candidate for a hole. Homology keeps only the cycles first, and then divides. The slip is natural enough that a popular video on the subject makes it, twelve minutes in, and carries the correction in its description: “You take n-cycles/(n+1)-boundaries not n-chains” <Cite k="aleph0-2025" />.</p>
 </Warning>
@@ -169,8 +173,8 @@
 	<p>On the hollow triangle, is \(2z\) homologous to \(z\)? What about on the filled triangle? (On the hollow triangle, \(2z - z = z\) is not a boundary, so \([2z] = 2[z] \ne [z]\). On the filled triangle every 1-cycle is a boundary, so \([2z] = [z] = 0\).)</p>
 </Question>
 
-<History title="Numbers become groups">
-	<p>For thirty years after Poincaré’s <em>Analysis Situs</em> <Cite k="poincare1895" />, topologists computed Betti numbers and “torsion coefficients” as numbers read off from matrices. The step to groups was taken in the mid-1920s, by Emmy Noether in Göttingen and, independently, by Leopold Vietoris in Vienna, who defined homology groups in his lectures of 1926–27 and in print <Cite k="vietoris1927" />. Noether never wrote a paper about it. Her ideas spread by conversation: on the “algebraic-topological” walks she led, which Pavel Alexandroff remembered fondly, and from the audience of the lectures that Alexandroff and Heinz Hopf, her young colleagues, gave in Göttingen. Friedrich Hirzebruch summed it up: “She published half a sentence and has an everlasting effect” <Cite k="hirzebruch1999" />. Not everyone was convinced at once. In 1930 Solomon Lefschetz wrote that translating everything into the theory of groups “is of course a mere question of a different terminology” <Cite k="lefschetz1930" loc="p. 29" />. Five years later, closing the first international conference on topology in Moscow, he stressed, in the words of Noether’s biographer Auguste Dick, “the great value that Emmy Noether’s ideas had for the development of modern topology”.</p>
+<History title="Numbers become groups" people="noether">
+	<p>For thirty years after Poincaré’s <em>Analysis Situs</em> <Cite k="poincare1895" />, Betti numbers and “torsion coefficients” were numbers read off from matrices. Noether had studied in her home town of Erlangen when a woman could attend lectures only with each professor’s permission, and her first Göttingen courses were advertised under Hilbert’s name <Cite k="oconnor-robertson-noether" />. In 1925, in her lectures and in a report fourteen lines long, she pointed out that the numbers are shadows of something better: abelian <em>groups</em> <Cite k="weibel1999" />. Leopold Vietoris saw the same in Vienna (<Ref to="homology/exact-sequences" hash="mayer-vietoris">Section 3.6</Ref>). Noether never wrote a paper about it. Her ideas spread on the “algebraic-topological” walks she led, which Pavel Alexandroff remembered fondly, and from the audience at the lectures that he and Heinz Hopf gave in Göttingen. Friedrich Hirzebruch summed it up: “She published half a sentence and has an everlasting effect” <Cite k="hirzebruch1999" />.</p>
 </History>
 
 <h2 id="betti-numbers">Betti numbers and the rank formula</h2>
@@ -207,6 +211,10 @@
 <p>The formula is older than the groups. Poincaré wrote it down in 1899 in terms of the ranks of his incidence matrices, which are our boundary matrices; his Betti number \(P_k\) is our \(b_k + 1\) <Cite k="poincare1899" loc="p. 299" />.</p>
 
 <p>For the hollow triangle, \(n_0 = 3\), \(n_1 = 3\), and the boundary matrix \(\partial_1\) has rank \(2\), so \(b_0 = 3 - 0 - 2 = 1\) and \(b_1 = 3 - 2 - 0 = 1\). Fill the triangle in and \(\partial_2\) has rank \(1\), so \(b_1 = 3 - 2 - 1 = 0\) and \(b_2 = 1 - 1 - 0 = 0\). Computing Betti numbers is nothing more than computing ranks of matrices, something you practised in <Ref to="foundations/linear-algebra" /> and something a computer does in a blink. Next, we do it by hand.</p>
+
+<History title="Riemann in Pisa" people="betti">
+	<p>As a young assistant at the University of Pisa, he fought as a corporal with the Tuscan university battalion against the Austrians at Curtatone and Montanara in 1848, and later sat in the parliament of the new Kingdom of Italy. In 1858 he met Bernhard Riemann in Göttingen, and in the autumn of 1863 Riemann came to Italy, hoping to improve his health. “I have newly talked with Riemann about the connectivity of spaces,” Betti wrote that October, “and have formed an accurate idea of the matter” <Cite k="oconnor-robertson-betti" />. In 1871 he published a paper that carried Riemann’s count of connectivity to spaces of any dimension, with one number for each dimension. Poincaré, who came to topology partly through that paper, named the numbers after him.</p>
+</History>
 
 <h2 id="computations">Seven complete computations</h2>
 

@@ -281,6 +281,18 @@
 	</p>
 </Remark>
 
+<History title="Riemann’s manifoldness" people="riemann,weyl">
+	<p>
+		The word “manifold” comes from Bernhard Riemann’s <em>Mannigfaltigkeit</em>, in the lecture he gave at Göttingen on 10 June 1854 to
+		qualify as a university teacher <Cite k="riemann1854" />. Riemann, a Lutheran pastor’s son, had entered the university to study
+		theology. For the lecture he offered three topics, and Carl Friedrich Gauss, who was in the audience, chose the one on the
+		foundations of geometry, against Riemann’s expectations. The lecture was published only in 1868, two years after Riemann died of
+		tuberculosis in Italy, aged thirty-nine. Hermann Weyl, a student of Hilbert, gave the first modern, intrinsic definition — for
+		surfaces, by neighbourhoods and coordinate charts — in his 1913 book on Riemann surfaces <Cite k="weyl1913" />, the year he moved to a
+		chair in Zürich and spent a year as Einstein’s colleague.
+	</p>
+</History>
+
 <p>
 	Could a space be a 2-manifold and a 3-manifold at the same time? Intuition says no — a sheet of paper is not a block of wood — but
 	remember that continuous maps can do wild things: Giuseppe Peano found in 1890 a continuous map from an interval <em>onto</em> a whole
@@ -1049,17 +1061,14 @@
 	</p>
 </Remark>
 
-<History title="From Riemann to Conway">
+<History title="From Möbius to Conway" people="dyck">
 	<p>
-		The word “manifold” comes from Bernhard Riemann’s <em>Mannigfaltigkeit</em>, in the lecture he gave at Göttingen on 10 June 1854 to
-		qualify as a university teacher <Cite k="riemann1854" />. Riemann had offered three topics, and Carl Friedrich Gauss, who was in the
-		audience, chose the one on the foundations of geometry. The lecture was published only in 1868, two years after Riemann’s death.
-		Hermann Weyl gave the first modern, intrinsic definition — for surfaces, by neighbourhoods and coordinate charts — in 1913
-		<Cite k="weyl1913" />. Surfaces were classified long before the definition was settled. In the 1860s August Möbius and Camille
-		Jordan independently classified the closed orientable surfaces; Walther von Dyck added the non-orientable ones in 1888, proving the
-		theorem that bears his name along the way <Cite k="dyck1888" />. None of them had a definition of “surface” to work with. Max Dehn
-		and Poul Heegaard gave a far more careful proof in 1907, Henry Brahana the first fully rigorous one in 1921, for surfaces built from
-		polygons, and Radó’s triangulation theorem closed the last gap in 1925 <Cite k="gallier-xu2013" />. Around 1992 John Conway found
+		Surfaces were classified long before the definition was settled. In the 1860s August Möbius and Camille Jordan independently
+		classified the closed orientable surfaces; Walther von Dyck added the non-orientable ones in 1888, proving the theorem that bears
+		his name along the way <Cite k="dyck1888" />. Dyck, a painter’s son and once Klein’s assistant, had already been the first to study
+		groups systematically by generators and relations, and later helped found the Deutsches Museum in Munich. None of these
+		classifiers had a definition of “surface” to work with. Max Dehn and Poul Heegaard gave a far more careful proof in 1907, Henry
+		Brahana the first fully rigorous one in 1921, for surfaces built from polygons, and Radó’s triangulation theorem closed the last gap in 1925 <Cite k="gallier-xu2013" />. Around 1992 John Conway found
 		the ZIP proof — the name stands for “zero irrelevancy proof” <Cite k="francis-weeks1999" />.
 	</p>
 </History>

@@ -382,11 +382,14 @@
 	\(I\times I = [0,1]\times[0,1]\).
 </p>
 
-<History title="Descartes’ grid">
+<History title="Descartes’ grid" people="descartes">
 	<p>
-		The product is named after René Descartes, whose <em>La Géométrie</em> (1637) showed how to describe points of the plane by
-		pairs of numbers and curves by equations — turning geometry into algebra. Every graph you have ever drawn lives in his grid,
-		\(\R\times\R\).
+		The product is named after René Descartes, whose <em>La Géométrie</em>, published in 1637 as an appendix to his <em>Discourse
+		on Method</em>, showed how to describe curves by equations — turning geometry into algebra. Every graph you have ever drawn
+		lives in the grid that grew from it, \(\R\times\R\). Descartes did his thinking in bed: all his life he worked there in the
+		mornings and rose at eleven. In 1649 Queen Christina of Sweden persuaded him to come to Stockholm, and she wanted to draw
+		tangents at five in the morning. After a few months of walking to the palace for five o’clock in the northern cold, he died of
+		pneumonia in February 1650.
 	</p>
 </History>
 
@@ -893,6 +896,17 @@
 	0.1999\ldots\) has two decimal expansions, and differing in one digit would not prove two numbers different. Sets like \(\R\)
 	are called <em>uncountable</em>.
 </p>
+
+<History title="Cantor’s lists" people="cantor">
+	<p>
+		A fine violinist, born in St Petersburg, Cantor taught at Halle from 1869 until he retired, and from there founded set theory,
+		the language of this chapter. His first proof that the real numbers cannot be listed, published in 1874, used a
+		different argument; the diagonal one above came seventeen years later. Not everyone welcomed infinite sets. Leopold Kronecker
+		treated Cantor’s 1877 paper on dimension with such suspicion that it appeared only after Richard Dedekind intervened, and Cantor
+		never sent that journal another paper. From 1884 he suffered recurring depression, and in his bad spells he turned from
+		mathematics to his conviction that Francis Bacon had written Shakespeare’s plays.
+	</p>
+</History>
 
 <Remark title="Why this matters for homology">
 	<p>

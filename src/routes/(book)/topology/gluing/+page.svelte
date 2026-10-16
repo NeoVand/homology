@@ -511,15 +511,15 @@
 	{/snippet}
 </Figure>
 
-<History title="Bottles, bands and Boy">
+<History title="Bottles, bands and Boy" people="klein,hilbert">
 	<p>
-		August Möbius and Johann Listing independently discovered the one-sided band in 1858; Listing published first, in 1861, but
-		the band carries Möbius’s name. Felix Klein described his bottle in 1882, in words rather than pictures: take a piece of rubber
-		tubing, turn it inside out, and let it pass through itself so that when the ends are bent together the outside meets the inside
-		<Cite k="klein1882" loc="§23" />. The English name may come from a pun or a mistranslation of the German <em>Fläche</em>
-		(surface) as <em>Flasche</em> (bottle), though the story is hard to pin down. David Hilbert set his doctoral student Werner Boy
-		the task of proving that the projective plane cannot be immersed in space without singular points. In 1901 Boy found an
-		immersion instead <Cite k="boy1903" />. The formula we use to draw Boy’s surface is much younger: it comes from work of Robert Bryant and Rob
+		August Möbius and Johann Listing found the one-sided band independently in 1858; Listing published first, but the band
+		carries Möbius’s name. Felix Klein described his bottle in 1882, the year his health collapsed in a race with Poincaré, in
+		words rather than pictures: take a piece of rubber tubing, turn it inside out, and let it pass through itself so that when the
+		ends are bent together the outside meets the inside <Cite k="klein1882" loc="§23" />. Klein brought David Hilbert to Göttingen
+		in 1895. In 1900 Hilbert set mathematics twenty-three problems for the new century, and he gave his doctoral student Werner
+		Boy the task of proving that the projective plane cannot be immersed in space without singular points. In 1901 Boy found an
+		immersion instead <Cite k="boy1903" />. Our formula for Boy’s surface is much younger: it comes from Robert Bryant and Rob
 		Kusner in the 1980s <Cite k="kusner1987" />.
 	</p>
 </History>

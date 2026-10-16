@@ -488,15 +488,16 @@
 	</p>
 </Warning>
 
-<History title="Galois and Cayley">
+<History title="Galois and Cayley" people="galois,cayley">
 	<p>
 		The word “group” (<em>groupe</em>) was first used in this sense by Évariste Galois, who used groups of permutations
-		to decide which polynomial equations can be solved by a formula. He died after a duel in May 1832, aged twenty;
-		the night before, he wrote a letter to his friend Auguste Chevalier summarising his discoveries <Cite
-			k="neumann2011"
-		/>. Twenty-two years later Arthur Cayley gave the first abstract definition of a group — the one in this chapter’s
-		epigraph — and displayed his groups as tables, which is why such tables now carry his name. He paid his debt in a
-		footnote: “The idea of a group as applied to permutations or substitutions is due to Galois” <Cite k="cayley1854" />.
+		to decide which polynomial equations can be solved by a formula. A paper he sent to the Academy was lost when Fourier,
+		its secretary, died. Galois died after a duel in May 1832, aged twenty; the night before, he wrote to his friend
+		Auguste Chevalier summarising his discoveries <Cite k="neumann2011" />, and his papers waited until 1846 for print.
+		Twenty-two years after the duel Arthur Cayley, then a practising lawyer, gave the first abstract definition of a group
+		(this chapter’s epigraph) and displayed his groups as tables, which now carry his name. In his fourteen years
+		at the bar he published about 250 papers. He paid his debt in a footnote: “The idea of a group as applied to
+		permutations or substitutions is due to Galois” <Cite k="cayley1854" />.
 	</p>
 </History>
 
@@ -607,11 +608,17 @@
 	</p>
 </Definition>
 
-<p>
-	The word honours the Norwegian mathematician Niels Henrik Abel (1802–1829), who, like Galois, died young and changed
-	the theory of equations. It is usually written with a small “a”, as if it were an ordinary word — which, in algebra,
-	it now is.
-</p>
+<History title="Abel’s pamphlet" people="abel">
+	<p>
+		The word honours the Norwegian mathematician Niels Henrik Abel, who, like Galois, died young and changed the theory of
+		equations. In 1824, poor as he always was, he proved that the general equation of the fifth degree cannot be solved by
+		a formula, and printed the proof at his own expense, squeezed onto six pages to save money. He sent a
+		copy to Gauss, in whose papers it was found after his death, unopened. At Christmas 1828 Abel fell seriously ill on a
+		sledge journey to visit his fiancée, and he died in April 1829, aged twenty-six; two days later his friend August
+		Crelle wrote to tell him that a post had been found for him in Berlin. The word
+		is usually written with a small “a”, as if it were an ordinary word — which, in algebra, it now is.
+	</p>
+</History>
 
 <p>
 	Most of our examples are abelian: <span class="nw">\(\Z\),</span> <span class="nw">\(\Z/n\),</span> <span class="nw">\(\R\),</span> <span class="nw">\(\R \setminus \{0\}\),</span> the two signs, the rotations of a

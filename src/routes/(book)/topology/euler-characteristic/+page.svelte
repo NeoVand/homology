@@ -183,19 +183,15 @@
 	whole content of the formula is a fact about the sphere, and that other surfaces give other numbers.
 </p>
 
-<History title="A lost notebook, a letter, and a theorem with a rocky childhood">
+<History title="A lost notebook and a letter" people="euler">
 	<p>
-		Leonhard Euler announced the formula in a letter to Christian Goldbach in November 1750 and published it, with an attempted
-		proof, in 1758 <Cite k="euler1758,euler1758b" />. His insight was to ignore angles and lengths and look only at the
-		<em>pattern</em> of a solid: how many corners, edges and faces it has, and how they fit together — the first truly topological
-		way of looking at a shape. René Descartes had come close around 1630, in a notebook about polyhedra. After his death in Stockholm
-		the notebook was shipped back to Paris, the boat sank in the Seine, and the pages spent three days under water. Leibniz copied
-		them in 1676; then both the original and the copy vanished, until the copy turned up in Hanover around 1860
-		<Cite k="federico1982" />. Euler’s own proof had gaps. Augustin-Louis Cauchy, aged 21, gave a better one in a memoir read in
-		1811 <Cite k="cauchy1813" /> — the one you will see next — and two years later Simon Lhuilier catalogued polyhedra for which the
-		formula fails <Cite k="lhuilier1813" />. The long argument about what exactly the theorem says, and what counts as a
-		polyhedron, is the subject of Imre Lakatos’s <em>Proofs and Refutations</em> <Cite k="lakatos1976" />, a dialogue in which a
-		teacher and a class of students argue over this very formula. The whole story is told in <Cite k="richeson2008" text />.
+		The formula was announced in a letter to Christian Goldbach in November 1750 and published, with an attempted proof, in 1758
+		<Cite k="euler1758,euler1758b" />. Euler’s insight was to ignore angles and lengths and count only corners,
+		edges and faces. Euler went almost entirely blind soon after he returned to St Petersburg in 1766; working from a remarkable
+		memory, with his sons’ help, he went on to produce almost half of all his work. René Descartes had come close around 1630, in a notebook about polyhedra. After his death in Stockholm the notebook
+		was shipped back to Paris, the boat sank in the Seine, and the pages spent three days under water. Leibniz copied them in 1676;
+		then both the original and the copy vanished, until the copy turned up in Hanover around 1860 <Cite k="federico1982" />. The
+		whole story is told in <Cite k="richeson2008" text />.
 	</p>
 </History>
 
@@ -283,6 +279,17 @@
 	stretched flat. That is true for anything shaped like a sphere — a sphere with a hole punched in it is a disk — and it is exactly
 	what will fail for a polyhedron with a tunnel through it.
 </p>
+
+<History title="An engineer’s proof" people="cauchy">
+	<p>
+		Euler’s own proof had gaps. Cauchy gave this one at twenty-one, in a memoir read to the Institut in Paris in
+		February 1811 <Cite k="cauchy1813" />. He was then an engineer at Cherbourg, working on the harbour for Napoleon’s planned
+		invasion of England, and had taken Laplace’s <em>Celestial Mechanics</em> and Lagrange’s <em>Theory of Functions</em> with him
+		to read. He went on to write 789 papers. The trap in step 3, and the long argument about what the theorem says and what counts
+		as a polyhedron, are the subject of Imre Lakatos’s <em>Proofs and Refutations</em> <Cite k="lakatos1976" />, a dialogue in
+		which a teacher and a class of students argue over this very formula.
+	</p>
+</History>
 
 <h3 id="two-trees">A second proof: two trees</h3>
 
@@ -435,6 +442,17 @@
 	does not change \(\chi\).) Lhuilier had already found the general rule: a polyhedron pierced by \(g\) separate tunnels has
 	\(V - E + F = 2 - 2g\).
 </p>
+
+<History title="The man who wrote “lim”" people="lhuilier">
+	<p>
+		The son of a Geneva goldsmith, Lhuilier turned down a large fortune from a wealthy relation because it came on condition
+		that he enter the church; he had already chosen mathematics. He spent eleven years in Poland as tutor to a prince’s son, won
+		a Berlin Academy prize with an essay on limits, published in 1786, that introduced the notation “lim”, and held the chair of
+		mathematics in Geneva from 1795 to 1823. The people of Geneva found him whimsical: he put geometric theorems into verse and
+		wrote ballads on the number three and on the square root of minus one. His 1813 memoir gathered the exceptions to Euler’s
+		formula met in this section <Cite k="lhuilier1813" />.
+	</p>
+</History>
 
 <p>
 	Lhuilier had another “monster”, as Lakatos would later call such examples: a cube with a cube-shaped cavity hidden inside it, like a

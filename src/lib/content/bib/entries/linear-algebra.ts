@@ -25,6 +25,17 @@ export const works: Work[] = [
 		kind: 'paper'
 	},
 	{
+		key: 'oconnor-robertson-nine-chapters',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2003,
+		title: 'Nine Chapters on the Mathematical Art',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/HistTopics/Nine_chapters/',
+		free: true,
+		kind: 'web'
+	},
+	{
 		key: 'strang1993',
 		authors: ['Gilbert Strang'],
 		year: 1993,

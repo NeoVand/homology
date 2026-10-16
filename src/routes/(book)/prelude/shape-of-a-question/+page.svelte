@@ -248,19 +248,16 @@
 	Every additional tunnel lowers the count by 2.
 </p>
 
-<History>
+<History title="A geometry of position" people="leibniz">
 	<p>
-		Leonhard Euler announced the formula in a letter to Christian Goldbach in November 1750 and published it in 1758.
-		René Descartes had found facts from which it follows at once, around 1630, but his notebook had a rough life. It
-		was found among his papers in Stockholm after his death in 1650, spent three days in the Seine when the boat
-		carrying it to Paris sank, was copied by Gottfried Leibniz in 1676, and then vanished; Leibniz’s copy turned up in
-		Hanover around 1860 <Cite k="federico1982" />. In 1813 Simon Lhuilier pointed out polyhedra with tunnels, where
-		the count comes out as \(2 - 2g\) for a solid with \(g\) tunnels <Cite k="lhuilier1813" />. Then, in his 1895
-		memoir <em>Analysis Situs</em> (“the analysis of position”), Henri Poincaré saw that Euler’s number is an
-		alternating sum of hole-counts, \(\chi = b_0 - b_1 + b_2\), and founded what we now call algebraic topology <Cite
-			k="poincare1895"
-			loc="§16"
-		/>.
+		The man who gave calculus the notation \(\int f(x)\,dx\), and who went to Hanover in 1676 as the duke’s librarian and stayed for
+		the rest of his life, was the first to use the phrase <em>analysis situs</em>, “the analysis of position”. For Leibniz a
+		position was still fixed by distances. It was Euler, opening his paper on the bridges of Königsberg, who credited Leibniz with a
+		geometry of position and used it for what survives any deformation <Cite k="euler1741" />. Leibniz also copied Descartes’
+		waterlogged notes on polyhedra <Cite k="federico1982" />, a story told in <Ref to="topology/euler-characteristic" />. In 1813
+		Simon Lhuilier found that tunnels change the count <Cite k="lhuilier1813" />. Then, in his 1895 memoir <em>Analysis Situs</em>,
+		Henri Poincaré took up Leibniz’s phrase, saw that Euler’s number is an alternating sum of hole-counts,
+		\(\chi = b_0 - b_1 + b_2\), and founded what we now call algebraic topology <Cite k="poincare1895" loc="§16" />.
 	</p>
 </History>
 

@@ -391,14 +391,15 @@
 	</p>
 </Remark>
 
-<History>
+<History title="Two Austrians and a union" people="mayer,vietoris">
 	<p>
-		In 1925 Emmy Noether pointed out, in her Göttingen lectures and in a report fourteen lines long, that the Betti numbers and torsion coefficients of a space are shadows of something better: abelian <em>groups</em> <Cite k="weibel1999" />. Two Austrian mathematicians took the hint. Leopold Vietoris — who had finished his doctoral thesis as an Italian prisoner of war in 1919, and who lived to within two months of his 111th birthday — told his colleague Walther Mayer about a problem on the homology of a union, the answer he expected, and a way to prove it. Mayer solved it for Betti numbers in 1929 <Cite k="mayer1929" />, and Vietoris finished the job for the full homology groups in 1930 <Cite k="vietoris1930,reitberger2002" />. By then Mayer, who as a Jew had little hope of a career in Vienna, had become Albert Einstein’s mathematical assistant in Berlin; in 1933 he escaped with the Einsteins to Princeton <Cite k="lessel2023" />.
-	</p>
-	<p>
-		Neither of them wrote down an exact sequence. The word “exact” was coined in 1947 by John Kelley and Everett Pitcher, who also proved the zig-zag lemma of Section 2 <Cite k="kelley-pitcher1947" />, and the Mayer–Vietoris sequence took its modern form in Eilenberg and Steenrod’s <em>Foundations of Algebraic Topology</em> <Cite k="eilenberg-steenrod1952,weibel1999" />. Hatcher calls it “the analog for homology of van Kampen’s theorem” for the fundamental group <Cite k="hatcher2002" loc="Ch. 2 introduction" />.
+		Vietoris, the younger of the two, finished his doctoral thesis as an Italian prisoner of war in 1919, published his last paper at 103, and lived to within two months of his 111th birthday <Cite k="oconnor-robertson-vietoris" />. In his Vienna lectures of 1926–27 he defined homology groups, independently of Emmy Noether (<Ref to="homology/homology-groups" />), and he put them in print <Cite k="vietoris1927" />. A new lecturer, Mayer, sat in. Vietoris told him about a problem on the homology of a union, the answer he expected, and a way to prove it. Mayer solved it for Betti numbers in 1929 <Cite k="mayer1929" />, and Vietoris finished the job for the full homology groups in 1930 <Cite k="vietoris1930,reitberger2002" />. By then Mayer, who as a Jew had little hope of a career in Vienna, had become Albert Einstein’s mathematical assistant in Berlin; in 1933 he escaped with the Einsteins to Princeton <Cite k="lessel2023" />.
 	</p>
 </History>
+
+<p>
+	Neither of them wrote down an exact sequence. The word “exact” was coined in 1947 by John Kelley and Everett Pitcher, who also proved the zig-zag lemma of Section 2 <Cite k="kelley-pitcher1947" />, and the Mayer–Vietoris sequence took its modern form in Eilenberg and Steenrod’s <em>Foundations of Algebraic Topology</em> <Cite k="eilenberg-steenrod1952,weibel1999" />. Hatcher calls it “the analog for homology of van Kampen’s theorem” for the fundamental group <Cite k="hatcher2002" loc="Ch. 2 introduction" />.
+</p>
 
 <!-- ───────────────────────────────────────────────────────────────────── -->
 <h2 id="spheres">Spheres, one dimension at a time</h2>

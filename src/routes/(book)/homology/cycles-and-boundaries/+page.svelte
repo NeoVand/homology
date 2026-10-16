@@ -384,13 +384,14 @@
 	/>.
 </p>
 
-<History title="Kirchhoff’s loops">
+<History title="Kirchhoff’s loops" people="kirchhoff">
 	<p>
-		In 1847 the young physicist Gustav Kirchhoff wanted to compute the currents in an electrical network. His voltage law gives one equation for every loop
-		of wires — but loops that are sums of other loops give equations that are sums of other equations, and so carry no new information. Kirchhoff needed a
-		set of independent loops, and he found it exactly as we did: remove wires until no closed loop is left (what remains is a spanning tree), and let each
-		removed wire close up its own loop <Cite k="kirchhoff1847" />. He described the tree only through the wires he took away, and he never counted trees,
-		although the theorem that counts them is often given his name; a recent study untangles what he did and did not do <Cite k="kirby2016" />.
+		Born in Königsberg, the city of Euler’s bridges, he was still a student there when he announced his laws for the currents in an
+		electrical network. His voltage law gives one equation for every loop of wires — but loops that are sums of other loops give equations that are sums of
+		other equations, and so carry no new information. In 1847 he showed how to choose independent loops, exactly as we did: remove wires until no closed
+		loop is left (what remains is a spanning tree), and let each removed wire close up its own loop <Cite k="kirchhoff1847" />. He never counted trees,
+		although the theorem that counts them is often given his name <Cite k="kirby2016" />. Later, working with Robert Bunsen in Heidelberg, he read the
+		chemistry of the sun’s atmosphere from the dark lines in its spectrum <Cite k="oconnor-robertson-kirchhoff" />.
 	</p>
 </History>
 

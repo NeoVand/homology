@@ -58,5 +58,16 @@ export const works: Work[] = [
 		url: 'https://math.stackexchange.com/a/40151',
 		free: true,
 		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-kirchhoff',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2002,
+		title: 'Gustav Robert Kirchhoff',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Kirchhoff/',
+		free: true,
+		kind: 'web'
 	}
 ];

@@ -230,14 +230,16 @@
 	<em>the order of every element of a finite group divides the order of the group</em>.
 </p>
 
-<p>
-	The theorem is older than the word “group”. Joseph-Louis Lagrange met it in 1770–71, while studying why the known
-	formulas for equations of degree three and four work and whether anything like them could work in degree five. In his
-	version it says that a function of the \(n\) roots of an equation, with the roots shuffled in all \(n!\) possible ways,
-	takes a number of different values that divides <span class="nw">\(n!\)</span> <Cite
-		k="roth2001"
-	/>.
-</p>
+<History title="Older than the word “group”" people="lagrange">
+	<p>
+		Born in Turin as Giuseppe Lodovico Lagrangia, Lagrange was a professor at the Royal Artillery School there at nineteen. He
+		refused to go to Berlin while Euler was there, and accepted the post when Euler left for St
+		Petersburg in 1766. In Berlin, in 1770–71, he met this theorem, while studying why the known formulas for equations of
+		degree three and four work and whether anything like them could work in degree five. In his version it says that a
+		function of the \(n\) roots of an equation, with the roots shuffled in all \(n!\) possible ways, takes a number of
+		different values that divides <span class="nw">\(n!\)</span> <Cite k="roth2001" />.
+	</p>
+</History>
 
 <!-- ─────────────────────────────────────────────────────────────────── -->
 <h2 id="quotient-groups">Collapsing each coset to a point: quotient groups</h2>

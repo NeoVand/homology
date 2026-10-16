@@ -45,5 +45,16 @@ export const works: Work[] = [
 		doi: '10.1007/978-3-319-09354-3',
 		free: true,
 		kind: 'book'
+	},
+	{
+		key: 'oconnor-robertson-heegaard',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson', 'H. J. Munkholm'],
+		label: 'O’Connor, Robertson & Munkholm',
+		year: 2010,
+		title: 'Poul Heegaard',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Heegaard/',
+		free: true,
+		kind: 'web'
 	}
 ];

@@ -87,5 +87,60 @@ export const works: Work[] = [
 		venue: 'Rendiconti del Circolo Matematico di Palermo 18, 45–110',
 		doi: '10.1007/BF03014091',
 		kind: 'paper'
+	},
+	{
+		key: 'oconnor-robertson-brouwer',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2003,
+		title: 'Luitzen Egbertus Jan Brouwer',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Brouwer/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-dedekind',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 1998,
+		title: 'Julius Wilhelm Richard Dedekind',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Dedekind/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'johnson1979',
+		authors: ['Dale M. Johnson'],
+		year: 1979,
+		title: 'The problem of the invariance of dimension in the growth of modern topology, part I',
+		venue: 'Archive for History of Exact Sciences 20, 97–188',
+		url: 'https://webhomes.maths.ed.ac.uk/~v1ranick/papers/johnson1.pdf',
+		doi: '10.1007/BF00327627',
+		free: true,
+		kind: 'paper'
+	},
+	{
+		key: 'oconnor-robertson-jordan',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2001,
+		title: 'Marie Ennemond Camille Jordan',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Jordan/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-lefschetz',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2003,
+		title: 'Solomon Lefschetz',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Lefschetz/',
+		free: true,
+		kind: 'web'
 	}
 ];

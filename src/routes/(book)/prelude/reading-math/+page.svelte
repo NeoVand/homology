@@ -18,6 +18,7 @@
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import Cite from '$lib/components/prose/Cite.svelte';
+	import History from '$lib/components/prose/History.svelte';
 	import FormulaDecoder from '$lib/figures/prelude/reading-math/FormulaDecoder.svelte';
 	import QuantifierDuel from '$lib/figures/prelude/reading-math/QuantifierDuel.svelte';
 	import NegationMachine from '$lib/figures/prelude/reading-math/NegationMachine.svelte';
@@ -521,10 +522,20 @@
 	</p>
 </Proof>
 
+<History title="Odd, even and the diagonal" people="pythagoras,aristotle">
+	<p>
+		No writings by Pythagoras survive, and no likeness; the drawing follows a later, imagined one. The society he led at Croton, in
+		southern Italy, was half religious and half scientific, kept a code of secrecy, and held that all things are numbers — meaning
+		whole numbers and their ratios. The proof above breaks that creed, since the diagonal of a square is no such ratio of its side.
+		The discovery is credited to the Pythagoreans, though probably not to Pythagoras himself. Aristotle, who came to Plato’s Academy
+		at seventeen and stayed twenty years, called logic “analytics”, and in his <em>Prior Analytics</em> this argument
+		is already the example of a proof “through the impossible”: if the side and the diagonal of a square could both be measured in
+		whole numbers of some common unit, he says, odd numbers would equal even ones.<Cite k="aristotle-prior-analytics" loc="I.23, 41a" />
+	</p>
+</History>
+
 <p>
-	This argument is more than two thousand years old. Aristotle already uses it as his example of a proof “through the
-	impossible”: if the side and the diagonal of a square could both be measured in whole numbers of some common unit, he says,
-	odd numbers would equal even ones.<Cite k="aristotle-prior-analytics" loc="I.23, 41a" /> Look back at the proof and you will find that clash of odd and even at its heart.
+	So the argument is more than two thousand years old. Look back at the proof and you will find that clash of odd and even at its heart.
 </p>
 
 <h3>Double inclusion</h3>
