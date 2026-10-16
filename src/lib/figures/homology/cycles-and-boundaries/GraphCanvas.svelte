@@ -102,18 +102,19 @@
 	}
 	const isHot = (kind: Kind, i: number) => hover?.kind === kind && hover.i === i;
 	const centroid = (t: number[]): Pt => [t.reduce((s, v) => s + pos[v][0], 0) / t.length, t.reduce((s, v) => s + pos[v][1], 0) / t.length];
-	// edge labels are drawn larger on phones (see the @media rule below), so they sit further from their edge
+	// edge labels are drawn larger on narrow figures (see the @container rule below), so they sit further from their edge
 	let labelGap = $state(19);
+	let root: SVGGElement;
 	onMount(() => {
-		const mq = window.matchMedia('(max-width: 640px)');
-		const set = () => (labelGap = mq.matches ? 24 : 19);
-		set();
-		mq.addEventListener('change', set);
-		return () => mq.removeEventListener('change', set);
+		const fig = root.closest('figure.figure');
+		if (!fig) return;
+		const ro = new ResizeObserver(() => (labelGap = fig.clientWidth <= 640 ? 24 : 19));
+		ro.observe(fig);
+		return () => ro.disconnect();
 	});
 </script>
 
-<g class="gc">
+<g class="gc" bind:this={root}>
 	<!-- triangles -->
 	{#each tris as t, i (t.join(','))}
 		{@const L = triLook?.(i) ?? {}}
@@ -310,7 +311,7 @@
 		cursor: pointer;
 		outline: none;
 	}
-	@media (max-width: 640px) {
+	@container figure (max-width: 640px) {
 		/* fingers are wider than mouse pointers */
 		.hit {
 			stroke-width: calc(var(--hit) * 1.5);
