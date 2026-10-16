@@ -159,7 +159,9 @@
 <h2 id="fundamental-class">The fundamental class</h2>
 
 <p>
-	Start with the top dimension. Take a closed manifold \(M\) of dimension \(n\), cut into \(n\)-simplices
+	A mirror needs a frame. Before we can match \(k\)-dimensional holes with \((n-k)\)-dimensional ones, we need
+	the whole manifold as a single object of algebra, and the natural candidate lives in the top dimension. Take a
+	closed manifold \(M\) of dimension \(n\), cut into \(n\)-simplices
 	(triangles for a surface, tetrahedra for a 3-manifold). Because \(M\) is a manifold without boundary,
 	every \((n-1)\)-dimensional face — every edge of a triangulated surface — is shared by
 	<em>exactly two</em> top simplices, one on each side.
@@ -212,8 +214,19 @@
 <h2 id="dual-cells">Cutting a manifold the other way</h2>
 
 <p>
-	Here is Poincaré’s key idea, and the picture to keep in mind for the rest of the chapter. Take a
-	triangulated surface and build a <em>second</em> decomposition of it into cells, as follows.
+	The key idea begins with a marriage far older than topology. In his <em>Harmonices Mundi</em> of 1619,
+	Johannes Kepler saw “two noteworthy weddings” among the Platonic solids, the cube with the octahedron and the
+	dodecahedron with the icosahedron, and one solid left over, the tetrahedron, “as it were bachelor or
+	hermaphrodite … because it is inscribed in itself” <Cite k="kepler1619" />. What marks the partners, he wrote,
+	is “angles opposite planes”. Put a dot in the middle of each face of a cube and join the dots on neighbouring
+	faces: you have built an octahedron, whose corners sit where the cube had faces and whose faces sit where the
+	cube had corners.
+</p>
+
+<p>
+	Poincaré’s insight, in effect, was that Kepler’s wedding can be performed on any triangulated manifold. It is
+	the picture to keep in mind for the rest of the chapter. Take a triangulated surface and build a
+	<em>second</em> decomposition of it into cells, as follows.
 </p>
 
 <ul>
@@ -251,17 +264,9 @@
 <p>
 	For the \(3\times 3\) torus that is \(18\) dual vertices, \(27\) dual edges and \(9\) hexagonal dual faces.
 	For an octahedron (\(6\) vertices, \(12\) edges, \(8\) faces) it is \(8, 12, 6\): the dual of the octahedron
-	is the cube. The seven-vertex torus has a dual with seven hexagons, known in geometry as the Szilassi
+	is the cube, and Kepler’s “angles opposite planes” is exactly the swap \(V^* = F\), \(F^* = V\). The seven-vertex torus has a dual with seven hexagons, known in geometry as the Szilassi
 	polyhedron. Since the alternating sum \(V-E+F\) on a surface reads the same in both directions, the Euler
 	characteristic does not notice the swap.
-</p>
-
-<p>
-	Pairing solids this way is far older than topology. In his <em>Harmonices Mundi</em> of 1619, Johannes Kepler
-	saw “two noteworthy weddings” among the Platonic solids, the cube with the octahedron and the dodecahedron with
-	the icosahedron, and one solid left over, the tetrahedron, “as it were bachelor or hermaphrodite … because it is
-	inscribed in itself” <Cite k="kepler1619" />. What marks the partners, he wrote, is “angles opposite planes”:
-	the corners of one solid sit where the faces of the other do — exactly the swap \(V^* = F\), \(F^* = V\).
 </p>
 
 <Definition id="def-dual-cells" title="Dual cell decomposition">
@@ -348,7 +353,7 @@
 </Proof>
 
 <p>
-	The duality is not just an abstract isomorphism; it has a very concrete face on surfaces. A degree-1
+	On a surface the isomorphism has a face you can draw. A degree-1
 	cohomology class can be drawn as a <Term t="fence">fence</Term>, as in <Ref to="cohomology/cup-product" />. Poincaré duality
 	says that the fence, read as a loop, is the dual homology class.
 </p>
@@ -587,7 +592,7 @@
 <p>
 	For a surface (\(m=1\)) we have met it already: the torus gives \(\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)\),
 	and the genus-\(g\) surface gives \(g\) copies of that block — the multiplication table of Figure 4.5.6. For
-	four-dimensional manifolds (\(m=2\)) the form is symmetric, and it carries a great deal of information.
+	four-dimensional manifolds (\(m=2\)) the form is symmetric, and it is where the modern study of those spaces begins.
 </p>
 
 <ul>
@@ -645,8 +650,8 @@
 <h2 id="boundaries-and-complements">Boundaries and complements: Lefschetz and Alexander</h2>
 
 <p>
-	Poincaré duality needs a closed manifold. Two classical variations relax this, and both are worth
-	knowing.
+	Poincaré duality needs a closed manifold. Two classical variations relax this: one lets the manifold have
+	a rim, the other looks at the space left over around a shape sitting inside a sphere.
 </p>
 
 <h3 id="lefschetz">Manifolds with boundary</h3>
