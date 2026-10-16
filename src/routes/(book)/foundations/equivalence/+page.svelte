@@ -898,7 +898,7 @@
 
 <p>
 	The figure below makes this visible by winding the line around a cylinder, one unit per turn, like a spring. Numbers in the
-	same class sit directly above one another, on one vertical line. The projection \(q\) simply drops every point straight down
+	same class sit directly above one another, on one vertical line. The projection \(q\) drops every point straight down
 	onto the floor, where its shadow traces a circle. The integers wound the same way, with \(n\) points per turn, give \(\Z/n\):
 	exactly the clock face of the partition painter.
 </p>
@@ -956,13 +956,10 @@
 <h2 id="the-big-idea">Why this is the most important idea in the book</h2>
 
 <p>
-	Step back and look at what we did. We started with a set, declared some of its elements the same, and obtained a new set with
-	fewer, “coarser” elements — one for each pile. We checked that recipes using representatives were safe. And we saw that the
-	same construction builds circles and tori out of intervals and squares.
-</p>
-
-<p>
-	This is the first of the four ideas that run through the whole book, and it will return in every part of it:
+	One recipe has done all the work: declare some things the same, then treat each pile as a single new thing. Applied to
+	numbers it gave clocks and fractions; to beads, necklaces; to the points of a square, a torus. Along the way we learned the one
+	precaution it demands — check that nothing depends on which representative you picked. This recipe is the first of the four
+	ideas that run through the whole book, and it returns in every part of it:
 </p>
 
 <ul>
@@ -976,7 +973,9 @@
 	</li>
 	<li>
 		<strong>Homology</strong> (<Ref to="homology/homology-groups" />): a loop on a surface may or may not enclose a region. Two
-		loops are declared the same when together they form the edge of a region between them. The piles of loops that result are the
+		loops are declared the same when together they form the edge of a region between them. Set this beside congruence, where
+		\(x\equiv y\pmod n\) when \(x-y\) is a multiple of \(n\): homology plays the same game with loops, and “differ by a multiple of
+		\(n\)” becomes “differ by the edge of a region.” The piles of loops that result are the
 		elements of the first <Term t="homology">homology</Term> group, and each pile — like \([1]\in\Z/3\) — is one object with
 		infinitely many names. The formula \(H_n = Z_n/B_n\) at the centre of the book is this chapter’s \(X/{\sim}\) with new
 		letters.
