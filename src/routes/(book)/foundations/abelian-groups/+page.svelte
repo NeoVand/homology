@@ -915,8 +915,8 @@
 <h3 id="torsion">Torsion</h3>
 
 <p>
-	The two halves of the catalogue behave very differently. Add an element of \(\Z^r\) to itself again and again and it
-	marches off for ever; do the same to an element of a clock \(\Z/d\) and it comes home to \(0\). The part that comes
+	The two halves of the catalogue behave very differently. Add a nonzero element of \(\Z^r\) to itself again and again and
+	it marches off for ever; do the same to an element of a clock \(\Z/d\) and it comes home to \(0\). The part that comes
 	home has a name.
 </p>
 
