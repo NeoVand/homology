@@ -1,6 +1,7 @@
 <script lang="ts">
 	// A first look at Betti numbers: a point, a circle, a sphere and a torus,
-	// with their holes of each dimension lit up on demand.
+	// with their holes of each dimension lit up on demand. Dragging turns all
+	// four shapes in place (sideways only on touch screens, so the page still scrolls).
 	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
@@ -28,9 +29,17 @@
 
 	let api: { set(m: Mode): void } | null = null;
 
-	function setup({ THREE, scene, label, invalidate }: SceneContext) {
+	function setup({ THREE, scene, label, invalidate, canvas }: SceneContext) {
 		const X = narrow ? [-1.5, 1.5, -1.5, 1.5] : [-5.1, -1.75, 1.7, 5.15];
 		const Y = narrow ? [3.25, 3.25, -1.55, -1.55] : [0, 0, 0, 0];
+
+		// each shape turns about its own centre when the reader drags
+		const pivots = X.map((x, i) => {
+			const g = new THREE.Group();
+			g.position.set(x, Y[i], 0);
+			scene.add(g);
+			return g;
+		});
 
 		// point
 		const pt = glowPoint([X[0], Y[0], 0], { color: 'ivory', size: 0.09, halo: 8 });
@@ -39,28 +48,25 @@
 		// circle
 		const circleCurve = new THREE.EllipseCurve(0, 0, 1.15, 1.15, 0, Math.PI * 2, false, 0);
 		const c3 = new THREE.CatmullRomCurve3(
-			circleCurve.getPoints(96).map((p) => new THREE.Vector3(X[1] + p.x, Y[1] + p.y * 0.42, p.y * 0.9)),
+			circleCurve.getPoints(96).map((p) => new THREE.Vector3(p.x, p.y * 0.42, p.y * 0.9)),
 			true
 		);
 		const circle = glowTube(c3, { color: 'blue', radius: 0.035, closed: true, segments: 160, intensity: 0.8 });
-		scene.add(circle);
+		pivots[1].add(circle);
 
 		// sphere
 		const sph = glassMesh(surfaceGeometry(sphere(1.2), 96, 64), { opacity: 0.78, grid: [28, 14], gridStrength: 0.18 });
-		sph.position.set(X[2], Y[2], 0);
-		scene.add(sph);
+		pivots[2].add(sph);
 		const sphGlow = new THREE.Sprite(
 			new THREE.SpriteMaterial({ map: dotTexture(), color: 0xf28db6, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0 })
 		);
 		sphGlow.scale.set(2.6, 2.6, 1);
-		sphGlow.position.set(X[2], Y[2], 0);
-		scene.add(sphGlow);
+		pivots[2].add(sphGlow);
 
 		// torus with its two loops and an inner glow for its cavity
 		const tf = torus(1.05, 0.42);
 		const tor = glassMesh(surfaceGeometry(tf, 140, 60), { opacity: 0.8, grid: [40, 16], gridStrength: 0.18, hue: 0.5 });
 		const torGroup = new THREE.Group();
-		torGroup.position.set(X[3], Y[3], 0);
 		torGroup.rotation.x = 1.05;
 		torGroup.add(tor);
 		const longi = glowTube(new SurfaceCurve(tf, loopPath(1, 0, 0, 0.25), 0.02), { color: 'gold', radius: 0.03, closed: true, segments: 220 });
@@ -71,7 +77,45 @@
 			new THREE.MeshBasicMaterial({ color: 0xf28db6, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })
 		);
 		torGroup.add(cavity);
-		scene.add(torGroup);
+		pivots[3].add(torGroup);
+
+		// drag to turn: sideways spins every shape, up and down tilts it
+		let yaw = 0;
+		let pitch = 0;
+		let drag: { id: number; x: number; y: number } | null = null;
+		const turn = () => {
+			for (const g of pivots) g.rotation.set(pitch, yaw, 0);
+			invalidate();
+		};
+		canvas.style.cursor = 'grab';
+		canvas.style.touchAction = 'pan-y';
+		const down = (e: PointerEvent) => {
+			drag = { id: e.pointerId, x: e.clientX, y: e.clientY };
+			canvas.setPointerCapture(e.pointerId);
+			canvas.style.cursor = 'grabbing';
+		};
+		const move = (e: PointerEvent) => {
+			if (!drag || e.pointerId !== drag.id) return;
+			yaw += (e.clientX - drag.x) * 0.012;
+			if (e.pointerType !== 'touch') pitch = Math.max(-1.2, Math.min(1.2, pitch + (e.clientY - drag.y) * 0.012));
+			drag.x = e.clientX;
+			drag.y = e.clientY;
+			turn();
+		};
+		const up = (e: PointerEvent) => {
+			if (!drag || e.pointerId !== drag.id) return;
+			drag = null;
+			canvas.style.cursor = 'grab';
+		};
+		const reset = () => {
+			yaw = pitch = 0;
+			turn();
+		};
+		canvas.addEventListener('pointerdown', down);
+		canvas.addEventListener('pointermove', move);
+		canvas.addEventListener('pointerup', up);
+		canvas.addEventListener('pointercancel', up);
+		canvas.addEventListener('dblclick', reset);
 
 		// labels: name + Betti numbers
 		const nameLabels = shapes.map((s, i) => label([X[i], Y[i] - 1.95, 0], s.name, { className: 'tag small' }));
@@ -106,7 +150,14 @@
 				sph.rotation.y = t * 0.15;
 				torGroup.rotation.z = t * 0.12;
 			},
-			dispose: () => (api = null)
+			dispose: () => {
+				api = null;
+				canvas.removeEventListener('pointerdown', down);
+				canvas.removeEventListener('pointermove', move);
+				canvas.removeEventListener('pointerup', up);
+				canvas.removeEventListener('pointercancel', up);
+				canvas.removeEventListener('dblclick', reset);
+			}
 		};
 	}
 

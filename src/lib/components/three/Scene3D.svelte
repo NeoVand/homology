@@ -406,7 +406,7 @@
 </script>
 
 <div class="scene3d" bind:this={container} style="height:{height}px">
-	<div class="host" class:shown bind:this={host}></div>
+	<div class="host" class:shown class:orbit={ctlOpts !== false} bind:this={host}></div>
 	<div class="labels" class:shown bind:this={labelLayer} aria-hidden="true"></div>
 	{#if status === 'error'}
 		<div class="fallback ui">
@@ -458,9 +458,12 @@
 	.host :global(canvas) {
 		display: block;
 		outline: none;
+	}
+	/* the hand only where dragging turns the view (figures with their own drag set their own cursor) */
+	.host.orbit :global(canvas) {
 		cursor: grab;
 	}
-	.host :global(canvas:active) {
+	.host.orbit :global(canvas:active) {
 		cursor: grabbing;
 	}
 	.labels {

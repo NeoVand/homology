@@ -168,7 +168,7 @@
 	<li>and so on, in higher dimensions that we cannot picture but can compute.</li>
 </ul>
 
-<Figure title="A first gallery of holes" hint="Choose which holes to light up" num="0.1.2">
+<Figure title="A first gallery of holes" hint="Drag to turn the shapes · choose which holes to light up" num="0.1.2">
 	<HoleGallery />
 	{#snippet caption()}
 		The Betti numbers of four basic shapes. The torus has \(b_1 = 2\): one loop around the central hole and one around
