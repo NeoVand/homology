@@ -6,14 +6,19 @@
 	// way and q times the other, with its homology class written underneath.
 	// Everything moves by small steps each frame (never by absolute time), so
 	// nothing jumps when the scene wakes up again.
-	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
+	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import { glassMesh, glowCore, glowHalo, ghostCore, dotTexture, color } from '$lib/three/materials';
 	import { torus, surfaceGeometry } from '$lib/three/surfaces';
 	import { ElasticTorus } from '$lib/three/elasticTorus';
 	import { tex } from '$lib/katex/render';
 	import type * as THREE_NS from 'three';
 
-	let { height = 560 }: { height?: number } = $props();
+	// The canvas fills its container (the whole hero); `anchor` is the element in
+	// the page layout where the torus should sit, and the camera frames it there.
+	let { anchor }: { anchor?: HTMLElement } = $props();
+
+	// where the anchor box is, in the canvas's own pixels (for the overlay text)
+	let box = $state({ cx: 0, top: 0, bottom: 0, ready: false });
 
 	// the overlay: the class of the winding loop, and a hint that goes once used
 	let classHtml = $state('');
@@ -46,13 +51,13 @@
 	const classOf = (p: number, q: number) => tex(`[\\gamma] = ${p === 1 ? '' : p}a + ${q === 1 ? '' : q}b`);
 
 	function setup(ctx: SceneContext) {
-		const { THREE, scene, camera, canvas, container, label, reducedMotion } = ctx;
+		const { THREE, scene, camera, canvas, container, reducedMotion } = ctx;
 		const V3 = THREE.Vector3;
 
 		// ── the torus ─────────────────────────────────────────────────────────
 		const root = new THREE.Group();
 		scene.add(root);
-		const body = glassMesh(surfaceGeometry(torus(R, r), 220, 90), {
+		const body = glassMesh(surfaceGeometry(torus(R, r), 288, 112), {
 			opacity: 0.86,
 			grid: [64, 24],
 			gridStrength: 0.22,
@@ -267,40 +272,6 @@
 		const head = sprite(0xffe2ef, 0.42);
 		head.visible = false;
 
-		// the letters a and b ride along their loops, on the side facing the reader
-		const labA: LabelHandle = label([0, 0, 0], tex('a'), { className: 'hero-loop', normal: [0, 0, 1] });
-		const labB: LabelHandle = label([0, 0, 0], tex('b'), { className: 'hero-loop', normal: [0, 0, 1] });
-		const labState = [
-			{ h: labA, tube: loopA, at: new V3(), init: false },
-			{ h: labB, tube: loopB, at: new V3(), init: false }
-		];
-		const camLocal = new V3();
-		const cand = new V3();
-		const candN = new V3();
-		function placeLetters() {
-			camLocal.copy(camera.position);
-			root.worldToLocal(camLocal);
-			for (const L of labState) {
-				// the sample nearest the camera, pushed out along its normal
-				let best = -Infinity;
-				let bj = 0;
-				const n = L.tube.segs;
-				for (let j = 0; j < n; j += 6) {
-					cand.set(L.tube.pts[j * 3], L.tube.pts[j * 3 + 1], L.tube.pts[j * 3 + 2]);
-					const d = -cand.distanceToSquared(camLocal);
-					if (d > best) [best, bj] = [d, j];
-				}
-				cand.set(L.tube.pts[bj * 3], L.tube.pts[bj * 3 + 1], L.tube.pts[bj * 3 + 2]);
-				candN.set(L.tube.nrm[bj * 3], L.tube.nrm[bj * 3 + 1], L.tube.nrm[bj * 3 + 2]);
-				cand.addScaledVector(candN, 0.3);
-				if (!L.init) [L.at, L.init] = [L.at.copy(cand), true];
-				else L.at.lerp(cand, 0.12);
-				L.h.position.copy(L.at);
-				root.localToWorld(L.h.position);
-				L.h.normal!.copy(candN).transformDirection(root.matrixWorld);
-			}
-		}
-
 		// ── a cloud of points orbiting in a ring: the shape of data ────────────
 		const orbit = new THREE.Group();
 		orbit.rotation.set(0.32, 0, -0.12);
@@ -362,7 +333,40 @@
 
 		camera.position.set(0, 0.4, 8.2);
 		camera.lookAt(0, 0, 0);
-		const baseDist = camera.position.length();
+
+		// frame the torus inside the anchor box: shift the view so the origin falls at
+		// the box's centre, and stand back far enough for the torus to fill most of it
+		const frame = { W: 0, H: 0, cx: 0, cy: 0, size: 0 };
+		/** returns true when the framing changed */
+		function frameAnchor() {
+			const rc = canvas.getBoundingClientRect();
+			const W = rc.width;
+			const H = rc.height;
+			if (W < 2 || H < 2) return false;
+			let cx = W / 2;
+			let cy = H / 2;
+			let size = Math.min(W, H);
+			if (anchor) {
+				const ar = anchor.getBoundingClientRect();
+				cx = ar.left - rc.left + ar.width / 2;
+				cy = ar.top - rc.top + ar.height / 2;
+				size = Math.min(ar.width, ar.height);
+			}
+			if (W === frame.W && H === frame.H && Math.abs(cx - frame.cx) < 0.5 && Math.abs(cy - frame.cy) < 0.5 && size === frame.size)
+				return false;
+			Object.assign(frame, { W, H, cx, cy, size });
+			camera.setViewOffset(W, H, W / 2 - cx, H / 2 - cy, W, H);
+			const tanV = Math.tan((camera.fov * Math.PI) / 360);
+			// the torus (half-width about 2.2) spans 86% of the box
+			camera.position.setLength((2.2 * (H / 2)) / (tanV * 0.43 * size));
+			camera.lookAt(0, 0, 0);
+			if (anchor) {
+				const ar = anchor.getBoundingClientRect();
+				box = { cx, top: ar.top - rc.top, bottom: ar.bottom - rc.top, ready: true };
+			}
+			return true;
+		}
+		frameAnchor();
 
 		// ── orientation: thrown by the reader, then gently righting itself ─────
 		const Y = new V3(0, 1, 0);
@@ -525,14 +529,9 @@
 				if (motion < 1e-3 && wantMotion === 0) motion = 0;
 				const m = motion;
 
-				// keep the whole torus in frame on narrow (portrait) screens
-				const halfV = (camera.fov * Math.PI) / 360;
-				const halfH = Math.atan(Math.tan(halfV) * camera.aspect);
-				const want = Math.max(baseDist, 2.55 / Math.tan(halfH));
-				if (Math.abs(camera.position.length() - want) > 1e-3) {
-					camera.position.setLength(want);
-					camera.lookAt(0, 0, 0);
-				}
+
+				// the layout moved (a resize, fonts loading): reframe and redraw
+				if (frameAnchor()) drewStill = false;
 
 				// fully at rest (and the rest already drawn): nothing to do this frame
 				const quiet =
@@ -620,7 +619,6 @@
 					along(p.tube, p.s, p.sp.position);
 					p.sp.scale.setScalar(0.28 * (0.85 + 0.15 * Math.sin(clock * 6 + p.speed * 40)));
 				}
-				placeLetters();
 
 				// the data cloud keeps orbiting
 				if (m > 0) {
@@ -646,55 +644,44 @@
 <div class="hero3d">
 	<Scene3D
 		{setup}
-		{height}
+		height={600}
 		controls={false}
 		camera={{ position: [0, 0.4, 8.2], fov: 38 }}
-		label="An iridescent torus with its two fundamental loops, a and b, glowing in gold, and a third loop winding around it; drag to spin it, or grab the surface to stretch it"
+		label="An iridescent torus with its two fundamental loops glowing in gold, and a third loop winding around it; drag to spin it, or grab the surface to stretch it"
 	>
-		<div class="cls" class:on={classOn} aria-live="polite">{@html classHtml}</div>
-		<div class="hint ui" class:on={hintOn}>Drag to spin it · grab the surface to stretch it</div>
+		{#if box.ready}
+			<div class="hint ui" class:on={hintOn} style="left:{box.cx}px; top:{box.top}px">Drag to spin it · grab the surface to stretch it</div>
+			<div class="cls" class:on={classOn} aria-live="polite" style="left:{box.cx}px; top:{box.bottom}px">{@html classHtml}</div>
+		{/if}
 	</Scene3D>
 </div>
 
 <style>
+	/* the canvas fills the whole hero, behind the text */
 	.hero3d {
-		position: relative;
-		width: 100%;
+		position: absolute;
+		inset: 0;
 	}
 	.hero3d :global(.scene3d) {
+		height: 100% !important;
 		max-height: none;
-	}
-	@media (max-width: 979px) {
-		.hero3d :global(.scene3d) {
-			height: min(600px, 50vh) !important;
-		}
-	}
-	.hero3d :global(.lbl3d.hero-loop) {
-		font-size: 1.75rem;
-		color: var(--gold-bright);
-		text-shadow:
-			0 0 10px rgba(4, 6, 12, 0.95),
-			0 0 22px rgba(4, 6, 12, 0.8);
-		pointer-events: none;
 	}
 	.cls,
 	.hint {
 		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
+		transform: translate(-50%, -100%);
 		pointer-events: none !important;
 		white-space: nowrap;
 		opacity: 0;
 		transition: opacity 0.9s var(--ease);
 	}
 	.cls {
-		bottom: 3%;
 		font-size: 1.45rem;
 		color: #f6c6d8;
 		text-shadow: 0 0 18px rgba(4, 6, 12, 0.95);
 	}
 	.hint {
-		top: 2.5%;
+		transform: translate(-50%, 0);
 		font-size: 0.72rem;
 		letter-spacing: 0.08em;
 		color: var(--ink-faint);

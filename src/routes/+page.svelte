@@ -11,6 +11,8 @@
 	const chapterCount = parts.flatMap((p) => p.chapters).length;
 
 	let open = $state<Record<string, boolean>>({});
+	// where the torus sits in the layout; its canvas covers the whole hero behind the text
+	let artEl = $state<HTMLElement>();
 	// a returning reader continues with the chapter they last opened
 	const resume = $derived.by(() => {
 		let best = '';
@@ -33,44 +35,47 @@
 	/>
 </svelte:head>
 
-<section class="hero">
-	<div class="hero-art" aria-hidden="false">
-		<Hero3D height={600} />
+<section class="hero-wrap">
+	<div class="hero-layer">
+		{#if artEl}<Hero3D anchor={artEl} />{/if}
 	</div>
-	<div class="hero-text">
-		<p class="eyebrow">
-			<span>An illustrated journey</span><span class="eb-dot" aria-hidden="true"> · </span><span>from first principles</span>
-		</p>
-		<h1 class="title">
-			<span class="gold-text">Homology</span>
-			<span class="amp">&amp;</span>
-			<span class="gold-text">Cohomology</span>
-		</h1>
-		<p class="sub">
-			How mathematics learned to count holes — and to measure what cannot be done. A complete course for the
-			curious, with every prerequisite taught along the way.
-		</p>
-		<div class="ctas ui">
-			<a class="btn gold" href={chapterHref(resume?.id ?? 'prelude/shape-of-a-question')}>
-				{resume ? `Continue with ${resume.num} ${resume.title}` : 'Begin the journey'}
-				<Icon icon={ArrowRightIcon} size={18} stroke={1.8} />
-			</a>
-			<a class="btn ghost" href={href('/map/')}>See the map</a>
-		</div>
-		<!-- two groups, so that on a phone the line breaks between them and
-		     never leaves a separator dangling at the start or end of a line -->
-		<div class="stats ui nums">
-			<span class="grp">
-				<span><b>{chapterCount}</b> chapters</span>
-				<span class="dot" aria-hidden="true">·</span>
-				<span>a prelude + <b>{parts.length - 1}</b> parts</span>
-			</span>
-			<span class="dot between" aria-hidden="true">·</span>
-			<span class="grp">
-				<span>about <b>{Math.round(totalMinutes / 60)}</b> hours</span>
-				<span class="dot" aria-hidden="true">·</span>
-				<span>no background needed</span>
-			</span>
+	<div class="hero">
+		<div class="hero-art" bind:this={artEl} aria-hidden="true"></div>
+		<div class="hero-text">
+			<p class="eyebrow">
+				<span>An illustrated journey</span><span class="eb-dot" aria-hidden="true"> · </span><span>from first principles</span>
+			</p>
+			<h1 class="title">
+				<span class="gold-text">Homology</span>
+				<span class="amp">&amp;</span>
+				<span class="gold-text">Cohomology</span>
+			</h1>
+			<p class="sub">
+				How mathematics learned to count holes — and to measure what cannot be done. A complete course for the
+				curious, with every prerequisite taught along the way.
+			</p>
+			<div class="ctas ui">
+				<a class="btn gold" href={chapterHref(resume?.id ?? 'prelude/shape-of-a-question')}>
+					{resume ? `Continue with ${resume.num} ${resume.title}` : 'Begin the journey'}
+					<Icon icon={ArrowRightIcon} size={18} stroke={1.8} />
+				</a>
+				<a class="btn ghost" href={href('/map/')}>See the map</a>
+			</div>
+			<!-- two groups, so that on a phone the line breaks between them and
+			     never leaves a separator dangling at the start or end of a line -->
+			<div class="stats ui nums">
+				<span class="grp">
+					<span><b>{chapterCount}</b> chapters</span>
+					<span class="dot" aria-hidden="true">·</span>
+					<span>a prelude + <b>{parts.length - 1}</b> parts</span>
+				</span>
+				<span class="dot between" aria-hidden="true">·</span>
+				<span class="grp">
+					<span>about <b>{Math.round(totalMinutes / 60)}</b> hours</span>
+					<span class="dot" aria-hidden="true">·</span>
+					<span>no background needed</span>
+				</span>
+			</div>
 		</div>
 	</div>
 </section>
@@ -269,8 +274,28 @@
 </footer>
 
 <style>
+	/* the hero: a full-width canvas behind the text, so a stretched torus or the
+	   ring of stars is never cut off by a frame */
+	.hero-wrap {
+		position: relative;
+		overflow: hidden;
+	}
+	.hero-layer {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+	/* the text lets drags through to the torus; its links and buttons still work */
+	.hero {
+		pointer-events: none;
+	}
+	.hero :global(a),
+	.hero :global(button) {
+		pointer-events: auto;
+	}
 	.hero {
 		position: relative;
+		z-index: 1;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
 		align-items: center;
@@ -282,6 +307,7 @@
 	.hero-art {
 		order: 0;
 		margin: 0 -1.25rem;
+		height: min(600px, 50vh);
 	}
 	.hero-text {
 		order: 1;
@@ -303,6 +329,7 @@
 		.hero-art {
 			order: 1;
 			margin: 0;
+			height: min(600px, 74vh);
 		}
 	}
 	.title {
