@@ -86,9 +86,9 @@
 
 <p class="lead">
 	Is \(\tfrac12\) the same number as \(\tfrac24\)? Is three o’clock the same time as fifteen o’clock? Is a coffee mug the same
-	shape as a doughnut? Each time the honest answer is “yes — once you decide what to ignore.” This chapter is about making
-	that decision precisely, and about what happens next: a whole pile of different things, declared to be the same, becomes
-	a single new object.
+	shape as a doughnut? Each time the honest answer is “yes — once you decide what to ignore.” Our job is to make that decision
+	precisely, and then to watch what it does: a whole pile of different things, once declared the same, becomes a single new
+	object.
 </p>
 
 <Ahead>
@@ -141,7 +141,7 @@
 	number be the same as every other is useless. So sameness must obey some rules, and finding the right rules is our first job.
 </p>
 
-<p>We take the idea in five steps, in the order in which the rest of the book will use them:</p>
+<p>We take the idea in five steps:</p>
 
 <ol>
 	<li>say precisely what “declaring things the same” means (an <em>equivalence relation</em>);</li>
@@ -240,7 +240,7 @@
 </Definition>
 
 <p>
-	Each rule has a shape in each picture, and learning to see these shapes makes checking the rules almost effortless.
+	Each rule has a shape in each picture, and once you can see the shapes you can check the rules at a glance.
 </p>
 
 <ul>
@@ -309,9 +309,10 @@
 </Proof>
 
 <p>
-	Notice how each rule used a different everyday fact: \(0\) is a multiple of anything; the negative of a multiple is a multiple;
-	the sum of two multiples is a multiple. That is the typical shape of such proofs: each of the three rules is a small, separate
-	check.
+	Each rule needed one everyday fact about the multiples of \(n\): \(0\) is one; the negative of one is one; the sum of two is
+	one. Keep that short list in mind. In <Ref to="foundations/groups" /> those three facts become the definition of a
+	<em>subgroup</em>, and the proof you have just read then works word for word for “differ by an element of a subgroup” — which
+	is how homology will declare two loops the same.
 </p>
 
 <History title="Gauss and the triple bar">
@@ -430,8 +431,9 @@
 <h2 id="classes">Classes and partitions</h2>
 
 <p>
-	Once we have an equivalence relation, every element has a <em>pile</em>: all the things it is equivalent to. These piles are
-	the heart of the matter.
+	Sort the integers by their remainder on division by \(3\) and they fall into three piles: the multiples of \(3\), the numbers
+	one more than a multiple, and the numbers two more. Every equivalence relation sorts its set like this. Each element has a
+	<em>pile</em> — everything equivalent to it — and from here on the piles, rather than the elements, take centre stage.
 </p>
 
 <Definition title="Equivalence class" id="def-class">
@@ -589,7 +591,7 @@
 </Definition>
 
 <p>
-	Two properties of \(q\) are immediate, and they are worth saying slowly because they summarize everything so far.
+	Two properties of \(q\) follow at once, and between them they sum up everything so far.
 </p>
 
 <ul>
@@ -609,6 +611,18 @@
 		\(X\) with each element \(x\) renamed \([x]\). Every interesting quotient forgets something.
 	</p>
 </Question>
+
+<Notation title="The integers modulo n">
+	<p>
+		The quotient of \(\Z\) by congruence modulo \(n\) is written \(\Z/n\) and read “Z mod n.” It has exactly \(n\) elements,
+	</p>
+	\[ \Z/n = \set{[0],[1],[2],\dots,[n-1]}, \]
+	<p>
+		because every integer leaves one of the remainders \(0,1,\dots,n-1\). Other books write \(\Z/n\Z\) or \(\Z_n\); in this book we
+		always write \(\Z/n\). The two-element set \(\Z/2 = \set{[0],[1]} = \set{\text{even},\text{odd}}\) will be a hero of later
+		chapters, where it is also written \(\mathbb F_2\).
+	</p>
+</Notation>
 
 <p>
 	Look back at the partition painter and press <em>Collapse</em>. Each pile shrinks to a single point; the arrows that remain are
@@ -651,22 +665,11 @@
 </ul>
 
 <p>
-	All three pictures describe the same set \(\Z/n\). Which one is “right”? All of them; good mathematicians switch between them
-	constantly. What matters is knowing which operations are safe in which picture — and that is exactly the question of the next
-	section.
+	Which picture is “right”? All of them, and good mathematicians switch between them constantly. What matters is knowing which
+	operations are safe in which picture. Counting envelopes is always safe. Reading what is written on the label is not, because
+	the same envelope carries many labels — and that danger is the subject of <a href="#well-defined">the well-definedness
+	check</a> below.
 </p>
-
-<Notation title="The integers modulo n">
-	<p>
-		The quotient of \(\Z\) by congruence modulo \(n\) is written \(\Z/n\) and read “Z mod n.” It has exactly \(n\) elements,
-	</p>
-	\[ \Z/n = \set{[0],[1],[2],\dots,[n-1]}, \]
-	<p>
-		because every integer leaves one of the remainders \(0,1,\dots,n-1\). Other books write \(\Z/n\Z\) or \(\Z_n\); in this book we
-		always write \(\Z/n\). The two-element set \(\Z/2 = \set{[0],[1]} = \set{\text{even},\text{odd}}\) will be a hero of later
-		chapters, where it is also written \(\mathbb F_2\).
-	</p>
-</Notation>
 
 <Warning title="ℤ/n is not a set of numbers">
 	<p>
@@ -697,7 +700,7 @@
 	</p>
 	<p>
 		The quotient set \(P/{\sim}\) <em>is</em> the set of rational numbers \(\Q\), and the fraction \(\tfrac12\) <em>is</em> the
-		class \([(1,2)] = \set{(1,2),(2,4),(3,6),(-1,-2),\dots}\). Writing a fraction “in lowest terms” is simply choosing a favourite
+		class \([(1,2)] = \set{(1,2),(2,4),(3,6),(-1,-2),\dots}\). Writing a fraction “in lowest terms” is choosing a favourite
 		representative.
 	</p>
 </Example>
