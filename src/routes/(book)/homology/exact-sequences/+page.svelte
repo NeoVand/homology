@@ -391,7 +391,7 @@
 	</p>
 </Remark>
 
-<History title="Two Austrians and a union" people="vietoris">
+<History title="Two Austrians and a union" people="mayer,vietoris">
 	<p>
 		Vietoris, the younger of the two, finished his doctoral thesis as an Italian prisoner of war in 1919, published his last paper at 103, and lived to within two months of his 111th birthday <Cite k="oconnor-robertson-vietoris" />. In his Vienna lectures of 1926–27 he defined homology groups, independently of Emmy Noether (<Ref to="homology/homology-groups" />), and he put them in print <Cite k="vietoris1927" />. A new lecturer, Mayer, sat in. Vietoris told him about a problem on the homology of a union, the answer he expected, and a way to prove it. Mayer solved it for Betti numbers in 1929 <Cite k="mayer1929" />, and Vietoris finished the job for the full homology groups in 1930 <Cite k="vietoris1930,reitberger2002" />. By then Mayer, who as a Jew had little hope of a career in Vienna, had become Albert Einstein’s mathematical assistant in Berlin; in 1933 he escaped with the Einsteins to Princeton <Cite k="lessel2023" />.
 	</p>
