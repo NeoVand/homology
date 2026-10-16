@@ -1070,7 +1070,7 @@
 		His childhood was spent with foster parents in Hamburg and then, with his mother, in internment camps in the south of France; at a
 		school in Le Chambon-sur-Lignon he hid in the woods whenever the authorities came looking for Jews. As a student at Montpellier,
 		unhappy that nobody had explained what volume is, he rediscovered a general form of the Lebesgue integral on his own. The Tôhoku paper
-		came about a decade later. In November and December 1967 he visited North Vietnam, then under American bombing, and spent a week and
+		of the paragraph above came about a decade later. In November and December 1967 he visited North Vietnam, then under American bombing, and spent a week and
 		a half at Hanoi University, evacuated to the countryside about 100 km from the capital, giving what he called “a more specialized
 		seminar on categories and homological algebra, with thirty to forty listeners” <Cite k="oconnor-robertson-grothendieck" />.
 	</p>

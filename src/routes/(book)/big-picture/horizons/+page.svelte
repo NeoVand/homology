@@ -536,6 +536,18 @@
 	computes analytic invariants of differential operators from topology.
 </p>
 
+<History title="Lights out at Warwick" people="bott,hirzebruch,atiyah">
+	<p>
+		Bott’s doctorate was in electrical network theory, and when the lights failed during a seminar at Warwick in the late 1960s he leapt
+		up: “I’ll fix them — I’m an electrician!” They came on for a few seconds, twice, and the seminar was held by the headlights of cars
+		driven up to the window <Cite k="oconnor-robertson-bott" />. Hirzebruch had been drafted at fifteen, with his whole school class, to
+		help at an anti-aircraft battery. From 1957 he organised the Arbeitstagung in Bonn, at whose first thirty meetings Atiyah, who grew up
+		in Khartoum and Cairo, lectured thirty-two times. Grothendieck’s lectures at the first one set the two of them on the road to K-theory
+		<Cite k="oconnor-robertson-hirzebruch,oconnor-robertson-atiyah" />, and Atiyah and Bott went on to a decade of joint work on index
+		theory.
+	</p>
+</History>
+
 <h3 id="cobordism">Cobordism: homology made of manifolds</h3>
 
 <p>
@@ -579,6 +591,16 @@
 	natural “higher-dimensional holes” one could imagine — and they are far harder to compute than homology.
 </p>
 
+<History title="Groups that were obviously commutative" people="hurewicz">
+	<p>
+		A Polish Jew with a Vienna doctorate, he defined the higher homotopy groups in 1935–36, while he was Brouwer’s assistant in
+		Amsterdam. Čech had proposed them in 1932, but until Hurewicz, as Hans Freudenthal put it, nobody had pursued the idea as it should have been:
+		“investigators did not expect much new information from groups, which were obviously commutative”. To the young Samuel Eilenberg he was “an idol, a Jew
+		from Poland who became a prominent world mathematician”. In 1941 he also discovered exact sequences. A famously absent-minded man, he
+		died in 1956 after falling from a pyramid on an outing from a topology conference in Mexico <Cite k="oconnor-robertson-hurewicz" />.
+	</p>
+</History>
+
 <p>
 	For a first taste, compare spheres. Homology is simple: \(H_k(S^n)\) is \(\Z\) for \(k = 0, n\) and zero otherwise. Homotopy starts
 	the same way — \(\pi_k(S^n) = 0\) for \(k < n\), and \(\pi_n(S^n)\cong\Z\), detected by <Term t="degree">degree</Term> (<Ref
@@ -611,9 +633,11 @@
 	generator is a map from the 3-sphere to the 2-sphere that you can actually see.
 </p>
 
-<History title="Hopf’s surprise">
+<History title="Hopf’s surprise" people="hopf">
 	<p>
-		Heinz Hopf found his map in 1931, four years before Witold Hurewicz defined the higher homotopy groups in general. Homology sees
+		A lieutenant on the Western Front in the First World War, he spent a fortnight’s leave in 1917 at Erhard Schmidt’s lectures in
+		Breslau, and came away knowing that he wanted to do research; what fascinated him, he wrote, was “the power of the method of the
+		mapping degree”, and the fascination never left him <Cite k="oconnor-robertson-hopf" />. He found his map in 1931, four years before Witold Hurewicz defined the higher homotopy groups in general. Homology sees
 		nothing between \(S^3\) and \(S^2\) — \(H_3(S^2) = 0\) — so it would be reasonable to guess that every map from the 3-sphere to the
 		2-sphere can be squashed to a point. Hopf showed instead that there are infinitely many essentially different such maps, told
 		apart by an integer, his invariant <Cite k="hopf1931" />. The tool he used was linking, an idea as old as Gauss.

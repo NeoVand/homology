@@ -325,8 +325,8 @@
 	<p>
 		A Zürich painter’s son, he wrote his thesis under Heinz Hopf in 1935 on fields of directions on manifolds: how many vector fields,
 		independent at every point, can a manifold carry? The obstructions he found, generalising the Euler characteristic, were the first
-		characteristic classes, discovered at the same time by Hassler Whitney and now named after both. A colonel in the Swiss army, he was so
-		often on military service that Olga Taussky-Todd, advised by Hopf to talk to him, kept missing him. In 1948 his career turned: he founded an
+		characteristic classes, discovered at the same time by Hassler Whitney and now named after both. He served in the Swiss army, rising to
+		colonel, and was so often away on duty that Olga Taussky-Todd, advised by Hopf to talk to him, kept missing him. In 1948 his career turned: he founded an
 		institute for applied mathematics at ETH Zürich, and in 1949, hearing that Konrad Zuse’s Z4 computer was standing in a German Alpine
 		village, he went to see it and rented it. Among the methods his group developed is the conjugate gradient algorithm <Cite
 			k="oconnor-robertson-stiefel"
@@ -790,6 +790,17 @@
 	/>.
 </p>
 
+<History title="A week through Africa and South America" people="chern">
+	<p>
+		Taught mathematics as a boy by his father, a lawyer with a classical Confucian education, he was one of a class of four mathematics
+		students at Nankai University in Tianjin. In Paris in 1936–37 he worked with Élie Cartan, from whom, he remembered, a letter usually
+		came the day after each meeting: “After you left, I thought more about your questions …”. He came home in 1937 to a country at war with
+		Japan, and taught at a university that had fled to Kunming. Invited to Princeton, he was given a seat on an almost empty US Air Force plane from Calcutta to Miami; the trip
+		took a week, through Africa and South America. Both pieces of work above belong to the two years that followed, 1943–45, in Princeton
+		<Cite k="oconnor-robertson-chern" />.
+	</p>
+</History>
+
 <h2 id="characteristic-classes">Characteristic classes</h2>
 
 <p>
@@ -950,6 +961,17 @@
 		\(e^{iq\chi/\hbar}\) is the essential physics, but deriving it properly needs the gauge principle of quantum mechanics.
 	</p>
 </Warning>
+
+<History title="A man of few words" people="dirac">
+	<p>
+		The son of a Swiss teacher of French in Bristol, who allowed only French at the dinner table, he first studied electrical engineering,
+		because he thought the only career open to a mathematician was school teaching. By 1928 he had found the equation of the electron
+		that joins quantum mechanics to relativity, and in 1932 he became Lucasian Professor at Cambridge, in Newton’s old chair. A whole
+		folklore grew up around his literal-mindedness: told at dinner that it was windy, he left the table, looked out of the door, came back
+		and agreed that it was. He once said: “I was taught at school never to start a sentence without knowing the end of it”
+		<Cite k="oconnor-robertson-dirac" />.
+	</p>
+</History>
 
 <h3>Berry’s phase</h3>
 

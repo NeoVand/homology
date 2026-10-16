@@ -150,5 +150,38 @@ export const works: Work[] = [
 		url: 'https://www.nobelprize.org/prizes/physics/2016/summary/',
 		free: true,
 		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-stiefel',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2008,
+		title: 'Eduard L. Stiefel',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Stiefel/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-chern',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2014,
+		title: 'Shiing-shen Chern',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews (quotes Chern’s interviews)',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Chern/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-dirac',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2003,
+		title: 'Paul Adrien Maurice Dirac',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Dirac/',
+		free: true,
+		kind: 'web'
 	}
 ];

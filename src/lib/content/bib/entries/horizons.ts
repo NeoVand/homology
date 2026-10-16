@@ -135,5 +135,60 @@ export const works: Work[] = [
 		url: 'https://arxiv.org/abs/1005.4346',
 		free: true,
 		kind: 'paper'
+	},
+	{
+		key: 'oconnor-robertson-hopf',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2000,
+		title: 'Heinz Hopf',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Hopf/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-hurewicz',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2014,
+		title: 'Witold Hurewicz',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews (quotes H. Freudenthal and S. Eilenberg)',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Hurewicz/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-bott',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2006,
+		title: 'Raoul Bott',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews (with E. F. Robertson’s own memory of Bott at Warwick)',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Bott/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-hirzebruch',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2009,
+		title: 'Friedrich Ernst Peter Hirzebruch',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Hirzebruch/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-atiyah',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2014,
+		title: 'Michael Francis Atiyah',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Atiyah/',
+		free: true,
+		kind: 'web'
 	}
 ];

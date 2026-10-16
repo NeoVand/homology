@@ -38,7 +38,7 @@ export const works: Work[] = [
 		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
 		label: 'O’Connor & Robertson',
 		year: 2015,
-		title: 'Saunders Mac Lane',
+		title: 'Leslie Saunders Mac Lane',
 		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
 		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/MacLane/',
 		free: true,

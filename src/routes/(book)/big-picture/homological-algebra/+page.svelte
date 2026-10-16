@@ -797,7 +797,7 @@
 
 <History title="Out of the camp">
 	<p>
-		Spectral sequences were born alongside sheaves, in the lectures Jean Leray gave as a prisoner of war; the story is told in <Ref
+		Spectral sequences grew, alongside sheaves, out of the algebraic topology Jean Leray taught as a prisoner of war; the story is told in <Ref
 			to="cohomology/sheaves"
 			hash="leray-captivity"
 		>Section 4.7</Ref>. He published them in 1946 <Cite k="miller2000" />. Jean-Louis Koszul gave spectral sequences their algebraic
