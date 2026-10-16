@@ -68,7 +68,7 @@
 {/snippet}
 
 <span class="cite"
-	>{#if !text}({/if}{#each works as w, i (w.key)}{#if i > 0}; {/if}{@render one(w, i === works.length - 1)}{/each}{#if !text}{#if loc}, {loc}{/if}){/if}</span
+	>{#if !text}({/if}{#each works as w, i (w.key)}{#if i > 0}{'; '}{/if}{@render one(w, i === works.length - 1)}{/each}{#if !text}{#if loc}, {loc}{/if}){/if}</span
 >
 
 <style>
