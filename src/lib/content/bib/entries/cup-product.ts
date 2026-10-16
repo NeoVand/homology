@@ -33,5 +33,16 @@ export const works: Work[] = [
 		url: 'https://arxiv.org/abs/1903.02065',
 		free: true,
 		kind: 'paper'
+	},
+	{
+		key: 'oconnor-robertson-whitney',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2005,
+		title: 'Hassler Whitney',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Whitney/',
+		free: true,
+		kind: 'web'
 	}
 ];

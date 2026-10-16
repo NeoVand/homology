@@ -91,5 +91,16 @@ export const works: Work[] = [
 		url: 'https://msp.org/pjm/1962/12-1/p26.xhtml',
 		free: true,
 		kind: 'paper'
+	},
+	{
+		key: 'oconnor-robertson-steenrod',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2000,
+		title: 'Norman Earl Steenrod',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Steenrod/',
+		free: true,
+		kind: 'web'
 	}
 ];

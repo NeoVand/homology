@@ -795,15 +795,15 @@
 	</p>
 </Warning>
 
-<History title="A topologist in a prison camp">
+<History title="Out of the camp">
 	<p>
-		Jean Leray spent 1940 to 1945 as a prisoner of war in Oflag XVII-A, an officers’ camp in Austria. According to his MacTutor
-		biography, “Not wishing the Germans to know that he was an expert in hydrodynamics, since he feared that if they found out he
-		would be forced to undertake war work for them, Leray claimed to be a topologist” <Cite k="oconnor-robertson-leray" />. The
-		prisoners ran a “university in captivity”, with Leray as its rector; he taught algebraic topology there and came home with the
-		ideas of sheaves, sheaf cohomology and spectral sequences, published in 1946 <Cite k="miller2000" />. Jean-Louis Koszul gave
-		spectral sequences their algebraic form in 1947, using a filtered complex as Henri Cartan suggested, and Serre’s 1951 thesis
-		showed what they could do <Cite k="weibel1999" />.
+		Spectral sequences were born alongside sheaves, in the lectures Jean Leray gave as a prisoner of war; the story is told in <Ref
+			to="cohomology/sheaves"
+			hash="leray-captivity"
+		>Section 4.7</Ref>. He published them in 1946 <Cite k="miller2000" />. Jean-Louis Koszul gave spectral sequences their algebraic
+		form in 1947, using a filtered complex as Henri Cartan suggested, and Serre’s 1951 thesis showed what they could do <Cite
+			k="weibel1999"
+		/>.
 	</p>
 </History>
 
@@ -896,9 +896,11 @@
 	cobordism. These are among the destinations of <Ref to="big-picture/horizons" hash="generalized-cohomology" />.
 </p>
 
-<History title="From the axioms to the book">
+<History title="From the axioms to the book" people="steenrod">
 	<p>
-		Eilenberg and Steenrod announced their axioms in a four-page note in the Proceedings of the National Academy of Sciences in 1945,
+		With no fellowship after graduating, he spent a year at home in Dayton, Ohio, working alone on problems from Raymond Wilder’s topology
+		course, the one mathematics course he had taken at Michigan, until his first paper brought offers from
+		Harvard, Princeton and Duke <Cite k="oconnor-robertson-steenrod" />. He and Eilenberg announced their axioms in a four-page note in the Proceedings of the National Academy of Sciences in 1945,
 		and developed them into <em>Foundations of Algebraic Topology</em> (1952) <Cite k="eilenberg-steenrod1952" />. The note pointed
 		out at once that singular and Čech homology both satisfy the axioms, and so must agree on all finite complexes <Cite
 			k="weibel1999"

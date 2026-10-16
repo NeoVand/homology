@@ -269,6 +269,18 @@
 	characteristic does not notice the swap.
 </p>
 
+<History title="Weddings, barrels and a trial" people="kepler">
+	<p>
+		Tycho Brahe’s successor as Imperial Mathematician, Kepler is remembered for three laws of planetary motion; the third appeared in
+		the same book as the polyhedral weddings, <em>Harmonices Mundi</em>. He wrote it while his mother, Katharina, was on trial for
+		witchcraft. He enlisted the law faculty at Tübingen in her defence, and on the coach journey to Württemberg he read a treatise on music
+		by Galileo’s father, which the book cites again and again. Its second book holds the first systematic treatment of tilings of the
+		plane. Even his second wedding produced mathematics: at the celebrations he watched the wine barrels being measured with a rod pushed in
+		through the bung-hole, and began the study of volumes that became his <em>New Stereometry of Wine Barrels</em> (1615)
+		<Cite k="field-kepler" />.
+	</p>
+</History>
+
 <Definition id="def-dual-cells" title="Dual cell decomposition">
 	<p>
 		Let \(M\) be a triangulated closed \(n\)-manifold. The <dfn>dual cell</dfn> \(\sigma^*\) of a
@@ -634,12 +646,9 @@
 <History>
 	<p>
 		Poincaré stated the symmetry of Betti numbers in his 1895 memoir <em>Analysis Situs</em> and tried to prove
-		it there by intersecting cycles with one another <Cite k="poincare1895" />. In his 1898 thesis the Danish
-		mathematician Poul Heegaard found an example in which Poincaré’s definition of the Betti numbers and the
-		duality theorem contradicted each other. Poincaré answered in 1899 with the first of five supplements to
-		the memoir <Cite k="poincare1899" />: he rebuilt the theory on tables of incidence numbers — the ancestors
-		of our boundary matrices — and explained duality through the “reciprocal” subdivision, the dual cells of
-		this chapter. Gaston Darboux recalled that Poincaré drafted each memoir “all in one go, with only a few
+		it there by intersecting cycles with one another <Cite k="poincare1895" />. Heegaard’s counterexample sent him back to the
+		problem (<Ref to="homology/chains" />), and in 1899 he explained duality through the “reciprocal” subdivision, the dual cells
+		of this chapter <Cite k="poincare1899" />. Gaston Darboux recalled that Poincaré drafted each memoir “all in one go, with only a few
 		erasures, and did not return to what he had written”; John Stillwell, who translated the memoir and its
 		supplements, advises reading them the same way, taking in “their general sweep without lingering too long
 		over gaps and errors” <Cite k="poincare1895" />. The formula \(D(\varphi) = [M]\frown\varphi\) had to wait for the cup and

@@ -41,5 +41,16 @@ export const works: Work[] = [
 		venue: 'Physical Review Letters 56, 792–795',
 		doi: '10.1103/PhysRevLett.56.792',
 		kind: 'paper'
+	},
+	{
+		key: 'oconnor-robertson-elie-cartan',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2014,
+		title: 'Élie Joseph Cartan',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Cartan/',
+		free: true,
+		kind: 'web'
 	}
 ];

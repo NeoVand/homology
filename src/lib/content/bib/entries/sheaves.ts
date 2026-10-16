@@ -112,5 +112,38 @@ export const works: Work[] = [
 		url: 'https://arxiv.org/abs/1808.01513',
 		free: true,
 		kind: 'paper'
+	},
+	{
+		key: 'oconnor-robertson-alexandrov',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 1999,
+		title: 'Pavel Sergeevich Aleksandrov',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Aleksandrov/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-cech',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2000,
+		title: 'Eduard Čech',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Cech/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-henri-cartan',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2004,
+		title: 'Henri Paul Cartan',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Cartan_Henri/',
+		free: true,
+		kind: 'web'
 	}
 ];

@@ -565,10 +565,11 @@
 	because scale factors combine by multiplication. We will meet Penrose’s argument properly in <Ref to="cohomology/sheaves" />.
 </p>
 
-<History title="The paradox and the theory">
+<History title="The paradox and the theory" people="escher,lionel-penrose">
 	<p>
-		The influence ran both ways. Roger Penrose drew his triangle in 1954, after seeing Escher’s work; the Penroses sent Escher a copy of
-		their 1958 paper, and he turned the staircase into <em>Ascending and Descending</em> (1960) and the tribar into the endless aqueduct
+		One was a Dutch printmaker who had failed mathematics at school; the other an English geneticist, a Quaker who had served with the
+		Friends’ Ambulance Unit in France in the First World War. Escher and Lionel Penrose were born six days apart, in June 1898. The influence ran both ways. Roger Penrose drew his triangle in 1954,
+		after seeing Escher’s work; father and son sent Escher a copy of their 1958 paper, and he turned the staircase into <em>Ascending and Descending</em> (1960) and the tribar into the endless aqueduct
 		of <em>Waterfall</em> (1961) <Cite k="penrose-models" />. It took more than thirty years for Roger Penrose to say in print that the
 		impossibility was a cohomology class. Today applied topologists build whole galleries of such figures, on cylinders, Möbius bands
 		and Klein bottles; Ghrist and Cooperband’s phrase for the common principle is “the obstruction to globalizing locally consistent

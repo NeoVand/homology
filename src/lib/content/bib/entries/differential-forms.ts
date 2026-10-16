@@ -82,5 +82,27 @@ export const works: Work[] = [
 		url: 'https://arxiv.org/abs/1207.0834',
 		free: true,
 		kind: 'paper'
+	},
+	{
+		key: 'oconnor-robertson-thomson',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2003,
+		title: 'William Thomson (Lord Kelvin)',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Thomson/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-stokes',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2003,
+		title: 'George Gabriel Stokes',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews (quotes his letters of 1857 to Mary Susanna Robinson)',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Stokes/',
+		free: true,
+		kind: 'web'
 	}
 ];

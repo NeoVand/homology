@@ -321,6 +321,19 @@
 	</p>
 </Warning>
 
+<History title="From vector fields to a rented computer" people="stiefel">
+	<p>
+		A Zürich painter’s son, he wrote his thesis under Heinz Hopf in 1935 on fields of directions on manifolds: how many vector fields,
+		independent at every point, can a manifold carry? The obstructions he found, generalising the Euler characteristic, were the first
+		characteristic classes, discovered at the same time by Hassler Whitney and now named after both. A colonel in the Swiss army, he was so
+		often on military service that Olga Taussky-Todd, advised by Hopf to talk to him, kept missing him. In 1948 his career turned: he founded an
+		institute for applied mathematics at ETH Zürich, and in 1949, hearing that Konrad Zuse’s Z4 computer was standing in a German Alpine
+		village, he went to see it and rented it. Among the methods his group developed is the conjugate gradient algorithm <Cite
+			k="oconnor-robertson-stiefel"
+		/>.
+	</p>
+</History>
+
 <h2 id="hairy-balls">Combing a hairy ball</h2>
 
 <p>

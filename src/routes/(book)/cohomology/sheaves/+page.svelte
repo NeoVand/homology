@@ -537,13 +537,16 @@
 	</p>
 </Remark>
 
-<History title="Nerves and Čech">
+<History title="Nerves and Čech" people="alexandrov,cech">
 	<p>
-		Pavel Alexandrov introduced the nerve of a cover in the 1920s, as a way to approximate a compact space by polyhedra <Cite
-			k="alexandroff1928"
-		/>. In 1932 Eduard Čech used the nerves of finer and finer covers to define homology for arbitrary spaces, however
-		wild — spaces that cannot be triangulated at all <Cite k="cech1932" />. Cohomology itself would only be invented three
-		years later; the Čech theory we use today is its dual, built on the same nerves.
+		Set by his teacher Nikolai Luzin to settle the continuum hypothesis, the young Pavel Alexandrov failed — as anyone would have, since it
+		can be neither proved nor disproved — decided that he had no future in mathematics, and went off to produce plays in a provincial
+		theatre. Back in Moscow, he introduced the nerve of a cover in the 1920s, as a way to approximate a compact space by
+		polyhedra <Cite k="alexandroff1928,oconnor-robertson-alexandrov" />. In 1932 Eduard Čech used the nerves of finer and finer covers to
+		define homology for arbitrary spaces, however wild — spaces that cannot be triangulated at all <Cite k="cech1932" />. After the
+		Germans closed the Czech universities, his topology seminar in Brno went on meeting in a student’s flat, until
+		the Gestapo arrested the student in 1941 <Cite k="oconnor-robertson-cech" />. Cohomology itself would only be invented three years
+		after Čech’s paper; the Čech theory we use today is its dual, built on the same nerves.
 	</p>
 </History>
 
@@ -719,6 +722,19 @@
 		when global solutions do not exist.
 	</p>
 </KeyIdea>
+
+<History title="Open sets, and a seminar" people="cartan">
+	<p>
+		Élie Cartan’s son (<Ref to="cohomology/de-rham" />) and a founding member of Bourbaki, he was perhaps the first person to understand
+		Leray’s new theory. Leray’s sheaves gave groups to closed sets. In his Paris seminar of 1950–51 Cartan rebuilt
+		the theory on open sets, wrote \(\Gamma\) for sections and defined sheaf cohomology by axioms; by 1953 a sheaf was, for him, a presheaf
+		satisfying the gluing conditions, as above, though the word “presheaf” had to wait for Grothendieck <Cite k="miller2000" />. This is the work Leray had in
+		mind in the epigraph of this chapter. The seminar’s notes, written up at the suggestion of Serre, then his student, appeared until 1964. Cartan lived to 104; in the 1970s he
+		campaigned for the mathematician Leonid Plyushch, held in a Soviet psychiatric hospital until his release in 1976 <Cite
+			k="oconnor-robertson-henri-cartan"
+		/>.
+	</p>
+</History>
 
 <h2 id="when-gluing-fails">When local solutions refuse to glue</h2>
 
@@ -986,16 +1002,16 @@
 	into the “tic-tac-toe” Čech–de Rham complex, proves de Rham’s theorem <Cite k="bott-tu1982" loc="§8" />.
 </p>
 
-<History title="A topologist in captivity">
+<History title="A topologist in captivity" people="leray" id="leray-captivity">
 	<p>
-		Jean Leray was a French expert on fluid dynamics when he was captured in 1940 and sent to a prisoner-of-war camp in
-		Austria, where he remained until 1945. The MacTutor biography records the reason for his change of field: “Not wishing
-		the Germans to know that he was an expert in hydrodynamics, since he feared that if they found out he would be forced
-		to undertake war work for them, Leray claimed to be a topologist” <Cite k="oconnor-robertson-leray" />. In the camp he
-		and his fellow prisoners organised a university in captivity, with Leray as its rector, and in topology lectures there
-		he worked out the ideas he published in 1946: sheaves, sheaf cohomology and spectral sequences <Cite k="miller2000" />.
-		Henri Cartan’s seminar reworked sheaf cohomology around 1950; Jean-Pierre Serre made sheaves the language of algebraic
-		geometry in 1955 <Cite k="serre1955" />; Grothendieck’s 1957 paper made sheaf cohomology a derived functor.
+		An army officer and an expert on fluid dynamics, he was captured in 1940 and spent the next five years in Oflag XVII-A, an officers’
+		camp in Austria. The MacTutor biography records the reason for his change of field: “Not wishing the Germans to know that he was an
+		expert in hydrodynamics, since he feared that if they found out he would be forced to undertake war work for them, Leray claimed to be a
+		topologist” <Cite k="oconnor-robertson-leray" />. The prisoners organised a university in captivity, with Leray as its rector. The
+		course he gave there was sent to a journal in Paris, approved by Heinz Hopf in neutral Zürich, and published in 1945 as “a course in
+		algebraic topology taught in captivity”; in 1946 he announced sheaves, sheaf cohomology and spectral sequences <Cite k="miller2000" />.
+		Jean-Pierre Serre made sheaves the language of algebraic geometry in 1955 <Cite k="serre1955" />, and Grothendieck’s 1957 paper made
+		sheaf cohomology a derived functor.
 	</p>
 </History>
 

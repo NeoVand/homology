@@ -560,12 +560,15 @@
 	{/snippet}
 </Figure>
 
-<History title="Why “co”, and when">
+<History title="Why “co”, and when" people="alexander,kolmogorov">
 	<p>
 		Cohomology was found twice in one week. At the first international topology conference, in Moscow in September 1935, James Alexander and
-		Andrei Kolmogorov independently presented what we now call cohomology and its product; Alexander’s talk was titled “On the ring of a
-		complex and the combinatory theory of integration” <Cite k="apushkinskaya2019" />. Charles Weibel’s history calls it “the fourth great advance in 1935 … the discovery
-		of cohomology theory and cup products, simultaneously and independently by Alexander and Kolmogoroff.” The names came a little later:
+		Andrey Kolmogorov independently presented what we now call cohomology and its product; Alexander’s talk was titled “On the ring of a
+		complex and the combinatory theory of integration” <Cite k="apushkinskaya2019" />. The two discoverers were an
+		unlikely pair. Alexander, a Princeton topologist who had inherited a fortune, never drew a salary from the Institute for Advanced Study,
+		and colleagues remembered his fondness for limericks. Kolmogorov had worked as a railway conductor after leaving school, and two years
+		before Moscow he had built probability theory on axioms <Cite k="oconnor-robertson-alexander,oconnor-robertson-kolmogorov" />. The
+		names came a little later:
 		Hassler Whitney’s 1938 paper “introduced the modern ‘co’ terminology: coboundary (δ) and cocycle”, the “co” standing for the duality
 		with boundaries and cycles <Cite k="weibel1999,whitney1938" />.
 	</p>

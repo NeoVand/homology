@@ -45,5 +45,28 @@ export const works: Work[] = [
 		url: 'https://collection.sciencemuseumgroup.org.uk/objects/co59923',
 		free: true,
 		kind: 'web'
+	},
+	// the next two are cited in §4.2 (its history box)
+	{
+		key: 'oconnor-robertson-alexander',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2000,
+		title: 'James Waddell Alexander',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Alexander/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-kolmogorov',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 1999,
+		title: 'Andrey Nikolaevich Kolmogorov',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Kolmogorov/',
+		free: true,
+		kind: 'web'
 	}
 ];

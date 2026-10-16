@@ -956,15 +956,13 @@
 	exercise <Cite k="hatcher2002" loc="§3.2, Exercise 3" />.
 </p>
 
-<History>
+<History title="Cup and cap" people="whitney">
 	<p>
-		Cohomology and its product were born together. At the first International Topological Conference in
-		Moscow, on 4–10 September 1935, James Alexander gave a talk titled “On the ring of a complex and the
-		combinatory theory of integration”, and Andrey Kolmogorov, in a talk on “Homology rings in closed
-		sets”, presented the same circle of ideas independently <Cite k="apushkinskaya2019" />. In Charles Weibel’s words: “The fourth great advance in 1935 was the discovery of
-		cohomology theory and cup products, simultaneously and independently by Alexander and Kolmogoroff.”
-		Those first formulas, Weibel adds, were “completely ad hoc, and also not exactly correct”; Eduard Čech
-		and Hassler Whitney soon found the right ones. Whitney’s paper <em>On products in a complex</em>
+		As a Yale undergraduate in 1929, he and his cousin Bradley Gilman made the first ascent of a 700-foot knife-edge ridge on Cannon Cliff
+		in New Hampshire, climbing without pitons; it is still called the Whitney–Gilman ridge. A grandson of the astronomer Simon Newcomb,
+		Whitney wrote his thesis on colouring graphs and worked almost entirely alone <Cite k="oconnor-robertson-whitney" />. The products
+		that Alexander and Kolmogorov announced in Moscow in 1935 (<Ref to="cohomology/cohomology-groups" />; <Cite k="apushkinskaya2019" text />) were, in Charles Weibel’s words,
+		“completely ad hoc, and also not exactly correct”; Eduard Čech and Whitney soon found the right formulas. Whitney’s paper <em>On products in a complex</em>
 		(1937–38) introduced the words <em>coboundary</em> and <em>cocycle</em>, the very Leibniz rule we
 		proved above, and the symbols \(\smile\) and \(\frown\), “prophetically suggesting that ‘we might
 		call \(\smile\) “cup” and \(\frown\) “cap”.’” <Cite k="weibel1999,whitney1938" />

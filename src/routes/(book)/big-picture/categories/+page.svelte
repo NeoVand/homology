@@ -848,18 +848,17 @@
 	survive.
 </p>
 
-<History title="Born from homology">
+<History title="Born from homology" people="eilenberg,mac-lane">
 	<p>
-		In 1941 Saunders Mac Lane, an algebraist, lectured at the University of Michigan on group extensions. Samuel Eilenberg, a young
-		topologist recently arrived from Poland, missed the last lecture and asked for a private repeat. He noticed at once that Mac
+		In 1941 Saunders Mac Lane, an algebraist who had finished his doctorate in Göttingen in 1933 as the Nazis emptied its mathematics
+		department, lectured at the University of Michigan on group extensions. Samuel Eilenberg, a young topologist recently arrived from
+		Poland — and later the owner of one of the world’s great collections of Southeast Asian art — missed the last lecture and asked for a
+		private repeat <Cite k="oconnor-robertson-maclane,oconnor-robertson-eilenberg" />. He noticed at once that Mac
 		Lane’s algebraic answer was a group he had seen before: Steenrod had found it as a homology group of the complement of a
 		<em>solenoid</em>, a strange coiled space Eilenberg had been studying. After an all-night session and months of puzzling, they
 		explained the coincidence with what we now call the universal coefficient theorem <Cite k="eilenberg-maclane1942" />. To say
 		precisely that \(\Hom(A,B)\) “varies naturally” with \(A\) and \(B\), they invented functors and natural isomorphisms that same
 		year <Cite k="eilenberg-maclane1942b" />; in 1945 they added categories and natural transformations <Cite k="weibel1999" />.
-		Their 1945 paper is candid about priorities: “It should be observed first that the whole concept of a category is essentially
-		an auxiliary one; our basic concepts are essentially those of a functor and of a natural transformation”
-		<Cite k="eilenberg-maclane1945" loc="p. 247" />.
 	</p>
 </History>
 
@@ -1065,6 +1064,17 @@
 	Tôhoku paper, fixed the name <em>abelian category</em> and its axioms, together with a hierarchy of optional extra ones, so that
 	sheaf cohomology could be built with the same tools as the cohomology of spaces <Cite k="grothendieck1957,weibel1999" />.
 </p>
+
+<History title="A seminar under the bombs" people="grothendieck">
+	<p>
+		His childhood was spent with foster parents in Hamburg and then, with his mother, in internment camps in the south of France; at a
+		school in Le Chambon-sur-Lignon he hid in the woods whenever the authorities came looking for Jews. As a student at Montpellier,
+		unhappy that nobody had explained what volume is, he rediscovered a general form of the Lebesgue integral on his own. The Tôhoku paper
+		came about a decade later. In November and December 1967 he visited North Vietnam, then under American bombing, and spent a week and
+		a half at Hanoi University, evacuated to the countryside about 100 km from the capital, giving what he called “a more specialized
+		seminar on categories and homological algebra, with thirty to forty listeners” <Cite k="oconnor-robertson-grothendieck" />.
+	</p>
+</History>
 
 <Question>
 	<p>

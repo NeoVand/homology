@@ -32,5 +32,38 @@ export const works: Work[] = [
 		doi: '10.1073/pnas.28.12.537',
 		free: true,
 		kind: 'paper'
+	},
+	{
+		key: 'oconnor-robertson-maclane',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2015,
+		title: 'Saunders Mac Lane',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/MacLane/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-eilenberg',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2000,
+		title: 'Samuel Eilenberg',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews (quotes H. Bass on his art collection)',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Eilenberg/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'oconnor-robertson-grothendieck',
+		authors: ['John J. O’Connor', 'Edmund F. Robertson'],
+		label: 'O’Connor & Robertson',
+		year: 2014,
+		title: 'Alexander Grothendieck',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews (quotes Grothendieck’s account of his 1967 visit to Vietnam)',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Grothendieck/',
+		free: true,
+		kind: 'web'
 	}
 ];

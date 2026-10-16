@@ -64,5 +64,15 @@ export const works: Work[] = [
 		venue: 'Transactions of the American Mathematical Society 30(2), 275–306',
 		doi: '10.1090/S0002-9947-1928-1501429-1',
 		kind: 'paper'
+	},
+	{
+		key: 'field-kepler',
+		authors: ['J. V. Field'],
+		year: 1999,
+		title: 'Johannes Kepler',
+		venue: 'MacTutor History of Mathematics Archive, University of St Andrews',
+		url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Kepler/',
+		free: true,
+		kind: 'web'
 	}
 ];
