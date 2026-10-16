@@ -52,6 +52,14 @@
 	in <Ref to="homology/computing" />.
 </p>
 
+<p>
+	The method finds things nobody expected. In 2008 Gunnar Carlsson and three colleagues took the commonest high-contrast \(3 \times 3\)
+	patches of grey from ordinary photographs, each patch a point with nine coordinates, and asked what shape the cloud makes. The barcodes
+	pointed to a Klein bottle: the one-sided surface of <Ref to="topology/gluing" />, which cannot sit in ordinary space without passing
+	through itself, hiding in the statistics of everyday pictures. We return to that study near the end of the chapter, along with sensor
+	networks, viruses, brains, glass and galaxies.
+</p>
+
 <Ahead>
 	<p>
 		This chapter is the bridge from pure to applied mathematics. It reuses almost everything from Parts II and III: simplicial complexes
@@ -74,22 +82,12 @@
 	numbers: a point of \(\R^2\) is a pair \((x, y)\), a point of \(\R^3\) a triple, and a point of \(\R^{9}\) a list of nine numbers. The
 	distance between two points is computed by Pythagoras’ theorem, one coordinate at a time:
 	\[ \abs{p - q} = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \dots + (p_d - q_d)^2}, \]
-	read “the distance from \(p\) to \(q\)”. (Distances, balls and metric spaces were introduced in <Ref to="topology/spaces" />.) Point
-	clouds are everywhere:
+	read “the distance from \(p\) to \(q\)”. (Distances, balls and metric spaces were introduced in <Ref to="topology/spaces" />.) The
+	examples of the opening all fit. A station measuring \(d\) quantities produces one point of \(\R^d\) per reading. A \(3 \times 3\)
+	patch of a grey photograph is nine brightness values, a point of \(\R^{9}\), and a thousand photographs give millions of them. The
+	atoms of a protein or of a piece of glass are points of \(\R^3\). And if you record the firing rates of \(N\) neurons, every moment
+	of time becomes a point of \(\R^N\).
 </p>
-<ul>
-	<li>
-		<strong>Sensor readings.</strong> A station measuring \(d\) quantities at regular times produces one point of \(\R^d\) per time.
-	</li>
-	<li>
-		<strong>Images.</strong> A \(3 \times 3\) patch of a grey photograph is nine brightness values, so it is a point of \(\R^{9}\). A
-		thousand photographs give millions of such points.
-	</li>
-	<li><strong>Molecules and materials.</strong> The atoms of a protein or of a piece of glass are points of \(\R^3\).</li>
-	<li>
-		<strong>Brains.</strong> If you record the firing rates of \(N\) neurons, every moment of time becomes a point of \(\R^N\).
-	</li>
-</ul>
 
 <p>
 	Now look at <a href="#fig-torus">Figure 3.7.1</a>. It shows a few hundred points in space, slowly turning. Raise the number of points and,
@@ -106,8 +104,8 @@
 </Figure>
 
 <p>
-	The mathematician Shmuel Weinberger put this beautifully, thinking of the paintings of Georges Seurat, which are made of thousands of
-	separate dots of colour:
+	The mathematician Shmuel Weinberger, thinking of the paintings of Georges Seurat, which are made of thousands of separate dots of
+	colour, described what your eye has just done:
 </p>
 <blockquote>
 	“The eye, or the brain, performs the marvelous task of taking the sense data of individual points and assembling them into a coherent
@@ -809,8 +807,9 @@
 <h2 id="applications">What persistence has found</h2>
 
 <p>
-	Since the early 2000s persistent homology has become a standard tool of <em>topological data analysis</em>. A few examples show the
-	range; <a href="#fig-gallery">Figure 3.7.9</a> sketches six of them.
+	Since the early 2000s persistent homology has become a standard tool of <em>topological data analysis</em>, and Ghrist’s telescope
+	from the top of the chapter has been pointed at everything from photographs to galaxies. Here is a sample;
+	<a href="#fig-gallery">Figure 3.7.9</a> sketches six of them.
 </p>
 
 <Figure id="fig-gallery" num="3.7.9" title="A gallery of applications" hint="Schematic pictures, not data">
@@ -828,7 +827,7 @@
 		relative to the sensors on the fence around the region — certifies that the sensing discs leave no gap.
 	</li>
 	<li>
-		<strong>Natural images.</strong> Gunnar Carlsson, Tigran Ishkhanov, Vin de Silva and Afra Zomorodian <Cite k="carlsson2008" /> studied millions of
+		<strong>Natural images.</strong> This is the study from the opening of the chapter. Gunnar Carlsson, Tigran Ishkhanov, Vin de Silva and Afra Zomorodian <Cite k="carlsson2008" /> studied millions of
 		\(3 \times 3\) patches cut from photographs, normalised for brightness and contrast, and kept the densest ones. The \(H_1\) barcode
 		has one long bar: the patches crowd around a circle of “edge” patches, one for each angle of a straight light–dark edge. At finer
 		density settings three circles appear, and \(H_2\), computed with \(\Z/2\) and \(\Z/3\) coefficients, points to a Klein bottle
@@ -871,7 +870,8 @@
 		Edelsbrunner and Harer recall, “all three developments happened roughly simultaneously” <Cite k="edelsbrunner-harer2008" loc="p. 257" />.
 	</p>
 	<p>
-		The complex itself is much older. Leopold Vietoris — the Vietoris of the Mayer–Vietoris sequence — introduced it in 1927
+		The complex itself is much older. Leopold Vietoris — the Vietoris of the Mayer–Vietoris sequence, who lived to within two months
+		of his 111th birthday — introduced it in 1927
 		<Cite k="vietoris1927" />, and until the Second World War it was standard knowledge among topologists. Then it was forgotten.
 		Eliyahu Rips reinvented it around 1980 to study hyperbolic groups, Mikhail Gromov used it in his foundational work on such groups, and in 1995 Jean-Claude Hausmann,
 		noticing that the idea went back to Vietoris, gave it the double name it carries today <Cite k="hausmann1995,reitberger2002" />.
