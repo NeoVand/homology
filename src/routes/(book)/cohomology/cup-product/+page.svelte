@@ -207,7 +207,7 @@
 </p>
 
 <Intuition title="Three pictures of one product">
-	<p>The cup product will appear in three guises in this chapter, and it pays to keep all three in mind:</p>
+	<p>The cup product appears in three guises in this chapter. Keep all three in view:</p>
 	<ul>
 		<li>
 			<strong>Densities.</strong> For smooth shapes, cohomology classes are represented by
@@ -716,7 +716,7 @@
 	</p>
 </Proof>
 
-<p>Two consequences are worth stating separately, because the rest of the chapter turns on them.</p>
+<p>Two consequences get boxes of their own, because the rest of the chapter turns on them.</p>
 
 <Corollary title="Squares of odd classes">
 	<p>
@@ -769,8 +769,8 @@
 </Proof>
 
 <p>
-	The groups were identical; the multiplication was not. That is the whole point of the chapter, and it
-	is worth exploring on more spaces. In the explorer below, every entry of every table is computed by
+	Same groups, different multiplication: that is the whole point of the chapter, and you can test it on
+	more spaces. In the explorer below, every entry of every table is computed by
 	the front-face/back-face recipe on a triangulation of the pictured polygon, from the fences drawn on
 	it; choose an entry to see the fences involved and where they cross.
 </p>
@@ -988,8 +988,8 @@
 	</p>
 	\[ \ip{\alpha\smile\beta}{[M]} = \#\,\big(F_\alpha \cap F_\beta\big), \]
 	<p>
-		the number of points where \(F_\alpha\) crosses \(F_\beta\), counted with signs over \(\Z\) (and simply
-		counted, mod 2, over \(\Z/2\)). To square a class, cross its
+		the number of points where \(F_\alpha\) crosses \(F_\beta\), counted with signs over \(\Z\) (and counted
+		without signs, mod 2, over \(\Z/2\)). To square a class, cross its
 		fence with a pushed-off copy of itself.
 	</p>
 </KeyIdea>
@@ -998,12 +998,15 @@
 	Michael Hutchings, in his notes on the subject, states the general version as “cup product is Poincaré
 	dual to intersection of submanifolds”, and adds: “This is arguably the most important thing to know about
 	cup product.” <Cite k="hutchings2011" /> In an \(n\)-dimensional manifold, a class of degree \(p\) can often be drawn as an
-	\((n-p)\)-dimensional “wall” (a fence is the case \(n=2\), \(p=1\)); the product of a degree-\(p\) and a
-	degree-\(q\) class is drawn by intersecting the walls, which leaves something of dimension
-	\(n-p-q\). Codimensions add, just as degrees do — provided the walls cross cleanly, the way two lines cross in
-	an “×”. Two curves that merely touch, tangent to each other, give no honest count until one of them is nudged,
-	which is why the key idea above asks for fences “in general position”. Making this precise — saying exactly which wall belongs to which class — is the subject of the
-	next chapter, <Ref to="cohomology/poincare-duality" />.
+	\((n-p)\)-dimensional “wall” (a fence is the case \(n=2\), \(p=1\)), and to multiply two classes you
+	intersect their walls. On the three-dimensional torus, for instance, each degree-1 class \(\alpha_i\) is a
+	wall \(x_i=\text{constant}\), a whole 2-torus. Two such walls meet in a circle, and the circle pierces the third
+	wall in a single point — which is why \(\alpha_1\smile\alpha_2\smile\alpha_3\) generates \(H^3(T^3)\). Daniel
+	Tubbenhauer, in his video on the cohomology ring, packs this into a slogan: codimension \(k\) meets codimension
+	\(l\) in codimension \(k+l\). The slogan needs the walls to cross cleanly, the way two lines cross in an “×”.
+	Two curves that merely touch, tangent to each other, give no honest count until one of them is nudged, which
+	is why the key idea above asks for fences “in general position”. Making all this precise — saying exactly
+	which wall belongs to which class — is the subject of the next chapter, <Ref to="cohomology/poincare-duality" />.
 </p>
 
 <p>

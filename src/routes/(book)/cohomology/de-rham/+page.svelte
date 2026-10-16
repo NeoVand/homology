@@ -30,21 +30,22 @@
 
 <Epigraph author="Raoul Bott and Loring Tu" source="Differential Forms in Algebraic Topology (1982)">The guiding principle in this book is to use differential forms as an aid in exploring some of the less digestible aspects of algebraic topology.</Epigraph>
 
-<p class="lead">At the end of the last chapter we met a strange 1-form on the plane with one point removed. Its exterior derivative is zero everywhere — it has no swirl at any point — and yet its integral around a circle is \(2\pi\), not zero. A field with no local swirl and a global one: that is the impossible staircase of <Ref to="cohomology/cochains" />, drawn this time with calculus instead of with numbers on edges. The missing point is to blame. This chapter turns that observation into an instrument for detecting holes with calculus, called <em>de Rham cohomology</em>, and then shows that the instrument reads exactly the same as the combinatorial one you have already built.</p>
+<p class="lead">At the end of the last chapter you met a strange 1-form on the plane with one point removed. Its exterior derivative is zero everywhere — no swirl at any point — and yet its integral around a circle is \(2\pi\), not zero. That is Escher’s staircase from <Ref to="cohomology/cochains" /> all over again: honest at every step, impossible once round. This time it is built from calculus instead of numbers on edges, and the missing point is to blame.</p>
+<p class="lead">This chapter turns that observation into an instrument for detecting holes with derivatives and integrals, called <em>de Rham cohomology</em>. Then it asks a question that has no right to a simple answer. You now own two hole detectors. One is made of smooth functions and limits; the other of finite lists of numbers written on the triangles of a triangulation. Do they ever disagree?</p>
 
 <Ahead>
-	<p>De Rham cohomology is cohomology made out of calculus: closed forms modulo exact forms. Its simplest instance, the angle form \(d\theta\), returns \(2\pi\) times the winding number of any loop — the circle’s hole announcing itself. De Rham’s theorem says these groups agree with the cohomology groups of <Ref to="cohomology/cohomology-groups" /> (with real numbers as coefficients), with integration as the bridge. Everything that follows uses this: the cup product of <Ref to="cohomology/cup-product" /> is the wedge product of forms, Poincaré duality pairs forms by integrating their wedge, and the curvature forms of <Ref to="cohomology/characteristic-classes" /> are closed forms whose classes are topological invariants.</p>
+	<p>De Rham cohomology is cohomology made out of calculus: closed forms modulo exact forms. Its simplest instance, the angle form \(d\theta\), returns \(2\pi\) times the winding number of any loop — the circle’s hole announcing itself. The surprise at the end, de Rham’s theorem, says these groups agree with the cohomology groups of <Ref to="cohomology/cohomology-groups" /> (with real numbers as coefficients), with integration as the bridge. Everything that follows uses this: the cup product of <Ref to="cohomology/cup-product" /> is the wedge product of forms, Poincaré duality pairs forms by integrating their wedge, and the curvature forms of <Ref to="cohomology/characteristic-classes" /> are closed forms whose classes are topological invariants.</p>
 </Ahead>
 
 <h2 id="closed-and-exact">Closed and exact forms</h2>
 
-<p>Recall the two most important consequences of \(d\circ d = 0\) from <Ref to="cohomology/differential-forms" />. They deserve names.</p>
+<p>A gradient field never swirls: if \(\omega = df\) then \(d\omega = d(df) = 0\), as <Ref to="cohomology/differential-forms" /> showed. Physics leans hard on the converse — a force with no curl, the textbooks say, comes from a potential energy — and on most regions the converse is true. This chapter is about the regions where it is false, and why. First, names for the two conditions.</p>
 
 <Definition id="def-closed-exact" title="Closed and exact forms">
 	<p>A differential form \(\omega\) is <dfn>closed</dfn> if \(d\omega = 0\). It is <dfn>exact</dfn> if \(\omega = d\eta\) for some form \(\eta\) of one degree lower; such an \(\eta\) is called a <em>primitive</em> or <em>potential</em> of \(\omega\).</p>
 </Definition>
 
-<p>For a 1-form on the plane, \(\omega = P\,dx + Q\,dy\), being closed means \(\tfrac{\partial Q}{\partial x} = \tfrac{\partial P}{\partial y}\): the curl of the field \((P, Q)\) vanishes everywhere. Being exact means \(\omega = df\) for some function \(f\): the field is a gradient, and \(f\) is its potential (the “height” of <Ref to="cohomology/cochains" />). Because \(d(df) = 0\), <strong>every exact form is closed</strong>. This chapter is about the converse.</p>
+<p>For a 1-form on the plane, \(\omega = P\,dx + Q\,dy\), being closed means \(\tfrac{\partial Q}{\partial x} = \tfrac{\partial P}{\partial y}\): the curl of the field \((P, Q)\) vanishes everywhere. Being exact means \(\omega = df\) for some function \(f\): the field is a gradient, and \(f\) is its potential (the “height” of <Ref to="cohomology/cochains" />). Because \(d(df) = 0\), <strong>every exact form is closed</strong>. Everything below hangs on the converse.</p>
 
 <Question>
 	<p>Is every closed form exact? Is every field without curl a gradient? Before reading on, try to decide using only the pictures of the last chapter: can the sheets of a closed 1-form be stitched together into the level curves of a single function?</p>
@@ -144,9 +145,9 @@
 
 <h3 id="staircase">The endless staircase</h3>
 
-<p>Imagine walking once around the origin while keeping track of your angle continuously. You start at \(\theta = 0\); a quarter of the way round you are at \(\pi/2\); halfway at \(\pi\); and when you are back where you started, your angle reads \(2\pi\), not \(0\). Walk round again and it reads \(4\pi\). The angle is a <Term t="multivalued-function">multivalued function</Term>: a height you can climb forever while going in circles. Lionel and Roger Penrose drew exactly such a staircase in 1958 <Cite k="penrose1958" />, and M. C. Escher turned it into his lithograph <em>Ascending and Descending</em> (1960), with monks trudging round it for ever. Their staircase is an optical illusion. The angle is the real thing.</p>
+<p>Imagine walking once around the origin while keeping track of your angle continuously. You start at \(\theta = 0\); a quarter of the way round you are at \(\pi/2\); halfway at \(\pi\); and when you are back where you started, your angle reads \(2\pi\), not \(0\). Walk round again and it reads \(4\pi\). The angle is a <Term t="multivalued-function">multivalued function</Term>: a height you can climb for ever while going in circles. It is the staircase of Escher’s monks, which Lionel and Roger Penrose first drew in 1958 <Cite k="penrose1958" />. Theirs is an optical illusion, a staircase that pretends to close up. The angle is the real thing.</p>
 
-<p>Figure 4.4.2 builds it honestly, in three dimensions. Over each point of the punctured plane, stack all its possible angles \(\theta, \theta \pm 2\pi, \theta \pm 4\pi, \ldots\) as heights. These stacks form a single smooth spiral surface, the <em>helicoid</em>, like the ramp of a multistorey car park wound around the missing axis. Instead of pretending to close up, as the Penroses’ staircase does, it keeps rising. A loop in the plane, together with a continuously chosen angle along it, traces a path on the ramp. If the loop goes around the hole, the path climbs a full storey per lap; if it does not, the path rises and falls and comes back to its start.</p>
+<p>Figure 4.4.2 builds it honestly, in three dimensions. Over each point of the punctured plane, stack all its possible angles \(\theta, \theta \pm 2\pi, \theta \pm 4\pi, \ldots\) as heights. These stacks form a single smooth spiral surface, the <em>helicoid</em>, like the ramp of a multistorey car park wound around the missing axis. It never pretends to close up; it keeps rising. A loop in the plane, together with a continuously chosen angle along it, traces a path on the ramp. If the loop goes around the hole, the path climbs a full storey per lap; if it does not, the path rises and falls and comes back to its start.</p>
 
 <Figure title="The angle as a spiral staircase" hint="Drag to rotate · play or scrub the walk" num="4.4.2">
 	<Helicoid />
@@ -171,7 +172,7 @@
 	{#snippet caption()}The field of \(d\theta\), streaming around the missing origin. A bead walks your loop while the rose spiral at the centre records the angle swept so far. Whatever loop you draw, the integral computed along it is \(2\pi\) times a whole number: \(2\pi\) once around, \(4\pi\) for the star that goes round twice, \(0\) for a loop beside the hole, \(-2\pi\) backwards. Switch to “Angle rays” to see the level curves of \(\theta\): rays that never end, but cannot be labelled consistently.{/snippet}
 </Figure>
 
-<p>Integration has turned into counting. That is a hint of what is coming: the numbers we get from integrating closed forms around loops are locked to topological data, and cannot be changed by small wiggles.</p>
+<p>Integration has turned into counting. An integral is the kind of number you expect to drift when you nudge the loop, yet this one sits on a whole number of turns and refuses to budge. Remember that: it is the first hint of the surprise at the end of the chapter.</p>
 
 <h3 id="computing-h1">The first cohomology of the punctured plane</h3>
 
@@ -262,7 +263,9 @@
 
 <h2 id="de-rhams-theorem">De Rham’s theorem: calculus meets combinatorics</h2>
 
-<p>We now have two kinds of cohomology for a manifold \(M\): the de Rham groups built from forms, and the groups \(H^k(M;\R)\) of <Ref to="cohomology/cohomology-groups" /> built from cochains on a triangulation (or from singular simplices). They are built out of completely different raw material — smooth functions and derivatives on one side, finite lists of numbers and matrices on the other. Integration connects them.</p>
+<p>Step back and look at what you own. On one side are the de Rham groups: closed forms modulo exact ones, made of smooth functions, derivatives and limits. On the other are the groups \(H^k(M;\R)\) of <Ref to="cohomology/cohomology-groups" />: cocycles modulo coboundaries, made from a triangulation (or from singular simplices) and nothing but lists of numbers, one per simplex.</p>
+
+<p>Try both on the annulus around the missing origin. Its closed 1-forms fill an infinite-dimensional space — any multiple of \(d\theta\) plus the differential of any smooth function you care to write down — and its exact forms fill another. Divide one by the other and, by homotopy invariance and our computation for the punctured plane, a single dimension survives, spanned by \([d\theta]\). Now triangulate the same annulus with six vertices, twelve edges and six triangles, as in Figure 4.4.6. A 1-cochain is twelve numbers. The six triangle rules cut the cocycles down to a six-dimensional space; the coboundaries, height differences of six vertices, take up five of those dimensions. One dimension survives. Infinitely many smooth functions on one side, twelve numbers on the other, and the same answer. Coincidence? Integration says no.</p>
 
 <p>Given a \(k\)-form \(\omega\), integrate it over each oriented \(k\)-simplex \(\sigma\) of a triangulation to get a number. That assignment is a \(k\)-cochain, \(I(\omega)(\sigma) = \int_\sigma\omega\): the <Term t="de-rham-map">integration map</Term>, or de Rham map. Stokes’ theorem says</p>
 \[ I(d\omega)(\sigma) = \int_\sigma d\omega = \int_{\partial\sigma}\omega = I(\omega)(\partial\sigma) = \big(\delta I(\omega)\big)(\sigma), \]
@@ -281,7 +284,7 @@
 	<p>For a triangulated manifold, the right side can be computed with simplicial cochains. <Cite k="derham1931,lee2013" loc="ch. 18" /></p>
 </Theorem>
 
-<p>We will not prove it. The proofs compare the two theories piece by piece with a Mayer–Vietoris argument, using the Poincaré lemma for the pieces; <Cite k="bott-tu1982" text loc="§8" /> give a particularly clean version. But consider what it says:</p>
+<p>Pause on how unlikely this is. The cochain side depends on a triangulation: refine it and every cochain group changes size, although the quotients do not (the invariance of <Ref to="homology/invariance" />). The form side has never heard of triangles. One theory is made of limits, the other of arithmetic you could do with a pencil, and on every smooth manifold, in every degree, they give the same real cohomology. We will not prove it. The proofs compare the two theories piece by piece with a Mayer–Vietoris argument, using the Poincaré lemma for the pieces; <Cite k="bott-tu1982" text loc="§8" /> give a particularly clean version. Here is what it buys:</p>
 <ul>
 	<li><strong>Two worlds agree.</strong> The smooth world of forms and derivatives and the combinatorial world of simplices and matrices measure the same holes. Any calculation can be done in whichever world is easier.</li>
 	<li><strong>Periods detect everything.</strong> A closed form is exact if and only if all its <Term t="period">periods</Term> — its integrals over cycles — vanish. We saw this for loops; de Rham’s theorem says it in every degree.</li>
