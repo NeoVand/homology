@@ -81,6 +81,12 @@
 			barcode and decomposition shown in an interactive figure is computed live by a small, tested engine written for
 			this book.
 		</p>
+		<p>
+			The portraits in the history boxes are drawings made with an image model from historical portraits, most of them from the
+			<a href="https://mathshistory.st-andrews.ac.uk/" target="_blank" rel="noopener noreferrer">MacTutor History of Mathematics</a>
+			archive. They are likenesses, not photographs; for Pythagoras and Liu Hui no authentic likeness survives, and their drawings follow
+			later imagined ones. Each name under a portrait links to a biography.
+		</p>
 	</section>
 </main>
 
