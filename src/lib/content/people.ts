@@ -33,7 +33,7 @@ export const people: Record<string, Person> = Object.fromEntries(
 		P('leibniz', 'Gottfried Wilhelm Leibniz', '1646 – 1716', 'Leibniz'),
 		P('euler', 'Leonhard Euler', '1707 – 1783', 'Euler'),
 		P('lagrange', 'Joseph-Louis Lagrange', '1736 – 1813', 'Lagrange'),
-		P('lhuilier', 'Simon Lhuilier', '1750 – 1840', 'Lhuilier'),
+		// Simon Lhuilier (1750–1840) has a history box in 2.6 but no portrait: no likeness of him is known.
 		P('gauss', 'Carl Friedrich Gauss', '1777 – 1855', 'Gauss'),
 		P('cauchy', 'Augustin-Louis Cauchy', '1789 – 1857', 'Cauchy'),
 		P('mobius', 'August Ferdinand Möbius', '1790 – 1868', 'Mobius'),

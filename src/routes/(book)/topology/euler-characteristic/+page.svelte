@@ -443,7 +443,7 @@
 	\(V - E + F = 2 - 2g\).
 </p>
 
-<History title="The man who wrote “lim”" people="lhuilier">
+<History title="The man who wrote “lim”">
 	<p>
 		The son of a Geneva goldsmith, Lhuilier turned down a large fortune from a wealthy relation because it came on condition
 		that he enter the church; he had already chosen mathematics. He spent eleven years in Poland as tutor to a prince’s son, won
