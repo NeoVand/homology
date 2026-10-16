@@ -113,10 +113,11 @@
 >
 
 <p class="lead">
-	Look back over this book. Every chapter had two kinds of characters. There were <em>things</em> — sets, groups, vector spaces,
+	Look back over this book and you will find two kinds of characters. There were <em>things</em> — sets, groups, vector spaces,
 	spaces, simplicial complexes, chain complexes — and there were <em>arrows between things</em> — functions, homomorphisms, linear
-	maps, continuous maps, simplicial maps, chain maps. Again and again, the arrows did the real work. This chapter is about what all
-	those arrows have in common.
+	maps, continuous maps, simplicial maps, chain maps. The things got the chapter titles, but the arrows did the real work. Brouwer’s
+	fixed-point theorem was not proved by staring at a disk; it was proved by asking what a map with no fixed point would force
+	homology to do (<Ref to="homology/invariance" />). This chapter is about what all those arrows have in common.
 </p>
 
 <p>
@@ -201,8 +202,8 @@
 <h2 id="categories">Categories: dots and arrows</h2>
 
 <p>
-	Let us write down the pattern exactly. Read the definition slowly; after it we will look at many examples, and the figure lets
-	you play with three small categories by hand.
+	Here is the pattern written out in full. It looks long, but every clause is one of the table’s three facts, or the bookkeeping
+	needed to state them. Read it once, then play with the figure after it.
 </p>
 
 <Definition id="def-category" title="Category">
@@ -235,7 +236,8 @@
 
 <p>
 	Notice what the definition does <em>not</em> say. It never says that objects have elements, or that arrows are functions. An arrow
-	is just something with a source and a target that can be composed. That freedom is what makes the idea so widely applicable.
+	is anything with a source and a target that can be composed, and that freedom lets some unexpected things qualify, as the figure
+	and the examples below show.
 </p>
 
 <Figure num="5.1.1" title="Three small categories" hint="Click arrows head to tail · a third arrow tests associativity">
@@ -297,7 +299,7 @@
 	</p>
 	<p>
 		The divisors of 12 under divisibility, \(a\mid b\), form such a category (Figure 5.1.1). So do the real numbers under \(\le\). The
-		arrows are not functions of any kind: an arrow is simply the fact “\(a\le b\)”.
+		arrows are not functions of any kind: an arrow is nothing more than the fact “\(a\le b\)”.
 	</p>
 </Example>
 
@@ -434,8 +436,9 @@
 <h2 id="functors">Functors: maps between categories</h2>
 
 <p>
-	A category is a world of objects and arrows. A <em>functor</em> is a way of translating one world into another that keeps the
-	arrows talking to each other in the same way. It is precisely what homology does.
+	You have already met the most important example. Homology takes a space and returns a group; it takes a map of spaces and
+	returns a homomorphism; and it sends a composite of maps to the composite of the homomorphisms. It translates one world of objects
+	and arrows into another, and the arrows go on talking to each other in the same way. Such a translation is a <em>functor</em>.
 </p>
 
 <Definition id="def-functor" title="Functor">
@@ -470,7 +473,7 @@
 	</li>
 	<li>
 		<strong>Forgetful functors</strong>, such as \(U\colon\Grp\to\Set\), which sends a group to its underlying set and a homomorphism
-		to the same function, simply forgetting that there was an operation. Likewise \(\Ab\to\Grp\), \(\Top\to\Set\), \(\Vect\to\Ab\).
+		to the same function, forgetting that there was an operation. Likewise \(\Ab\to\Grp\), \(\Top\to\Set\), \(\Vect\to\Ab\).
 		They sound trivial, and they are; but they let us say precisely “this is the same map, viewed with less structure”.
 	</li>
 	<li>
@@ -539,7 +542,7 @@
 <Definition id="def-op" head={opHead}>
 	<p>
 		For any category \(\mathcal C\), the <dfn>opposite category</dfn> \(\mathcal C\op\) has the same objects, and one arrow \(A\to
-		B\) for each arrow \(B\to A\) of \(\mathcal C\): every arrow is simply turned around. Composition is turned around too: the
+		B\) for each arrow \(B\to A\) of \(\mathcal C\): every arrow is turned around. Composition is turned around too: the
 		composite of \(f\) and \(g\) in \(\mathcal C\op\) is \(f\circ g\) computed in \(\mathcal C\).
 	</p>
 	<p>
@@ -712,9 +715,13 @@
 <h2 id="naturality">Natural transformations: no arbitrary choices</h2>
 
 <p>
-	Mathematicians often say that some map is “natural” or “canonical”. For a long time this was a matter of taste: a natural map was
-	one that did not seem to involve any arbitrary decisions. Eilenberg and Mac Lane made the idea precise, and the precise version is
-	one of the most useful concepts in the subject. The cleanest example comes from linear algebra.
+	Some maps feel more honest than others, and this book has used both kinds. The Hurewicz map of <Ref to="homology/invariance" />
+	sends a loop to the same loop, read as a cycle: nobody has to choose anything. The Universal Coefficient Theorem of <Ref
+		to="cohomology/cohomology-groups"
+	/> splits \(H^n(X;G)\) into two pieces, but to write the splitting down you must make choices, and different choices give
+	different isomorphisms. For decades mathematicians called the first kind of map “natural” or “canonical”, as a matter of taste.
+	Eilenberg and Mac Lane turned the taste into a definition — while making sense of the Universal Coefficient Theorem, as the
+	History box below tells. The cleanest place to watch the definition at work is linear algebra.
 </p>
 
 <h3 id="double-dual">Two isomorphisms, one natural</h3>
@@ -835,9 +842,10 @@
 </ul>
 
 <p>
-	Not everything is natural. The Universal Coefficient Theorem of <Ref to="cohomology/cohomology-groups" /> says \(H^n(X;G)\cong
-	\Hom(H_n(X),G)\oplus\Ext(H_{n-1}(X),G)\); the isomorphism exists, but the splitting into two pieces cannot be chosen naturally. We
-	will meet this in the next chapter.
+	Now the Universal Coefficient Theorem from the start of this section can be stated precisely. It says \(H^n(X;G)\cong
+	\Hom(H_n(X),G)\oplus\Ext(H_{n-1}(X),G)\); the isomorphism exists, but the splitting into two pieces cannot be chosen naturally.
+	For the homology version of the theorem, the next chapter exhibits a single map of spaces that no natural splitting could
+	survive.
 </p>
 
 <History title="Born from homology">
@@ -858,10 +866,13 @@
 <h2 id="universal-properties">Universal properties: the best solution to a problem</h2>
 
 <p>
-	So far we have described objects by what they are made of. Category theory suggests a second description, which turns out to be
-	astonishingly powerful: describe an object by <em>how it relates to every other object</em>. The typical shape of such a
-	description is: “among all solutions to a certain problem, this one is the best, in the sense that every other solution factors
-	through it in exactly one way.” Such a description is called a <dfn>universal property</dfn>.
+	So far we have described objects by what they are made of: a product of sets is a set of pairs, a quotient group is a set of
+	cosets. But look at how this book <em>used</em> them. To get a map out of \(H_n = Z_n/B_n\), we defined it on cycles and checked
+	that it killed boundaries. To define the boundary operator on chains, we said what it did to each simplex and let linearity do the
+	rest. In those arguments we never once looked inside a coset. What mattered was <em>how the object relates to every other
+	object</em>. Category theory turns that into a way of defining things: “among all solutions to a certain problem, this one is the
+	best, in the sense that every other solution factors through it in exactly one way.” Such a description is called a
+	<dfn>universal property</dfn>.
 </p>
 
 <h3>Products</h3>
@@ -998,8 +1009,9 @@
 <p>
 	Categories and functors form a world of their own, so we can ask our usual question one level up: when are two categories the
 	same? An <em>isomorphism</em> of categories — functors \(F\colon\mathcal C\to\mathcal D\) and \(G\colon\mathcal D\to\mathcal C\) with
-	\(G\circ F\) and \(F\circ G\) exactly the identity functors — turns out to be far too strict to be useful. The right notion lets the
-	round trips be the identity only up to natural isomorphism.
+	\(G\circ F\) and \(F\circ G\) exactly the identity functors — is far too strict: as the example below shows, it would separate two
+	categories that everyone who has used a matrix regards as the same. The right notion lets the round trips be the identity only up
+	to natural isomorphism.
 </p>
 
 <Definition id="def-equivalence" title="Equivalence of categories">
@@ -1064,9 +1076,11 @@
 
 <p>
 	We end where Mac Lane’s epigraph began. Categories were defined so that functors could be defined, and functors so that natural
-	transformations could be defined. In this book the payoff of the whole language is a handful of precise sentences: homology is a
-	covariant functor \(\Top\to\Ab\); cohomology is a contravariant one; the long exact sequences are natural; direct sums, kernels and
-	quotients are universal; and theorems such as Brouwer’s follow by applying a functor to a diagram that cannot exist.
+	transformations could be defined. Go back to the box at the top of this chapter: each of its loose sentences now has a precise
+	meaning, and one of them, applied to a diagram that cannot exist, gave the no-retraction theorem, and with it Brouwer’s, in a few
+	lines. The next chapter moves into one abelian category, chain complexes, and finds that the tools you built by hand for spaces —
+	exact sequences, connecting maps, the Universal Coefficient Theorem — are really facts about chain complexes, whether or not a
+	space is in sight.
 </p>
 
 <h2 id="exercises">Exercises</h2>

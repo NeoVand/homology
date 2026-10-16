@@ -115,9 +115,12 @@
 >
 
 <p class="lead">
-	Homology began as a way to count holes. Along the way it produced an algebraic machine — chain complexes, kernels modulo images,
-	exact sequences — that turned out to be useful far beyond topology. This chapter takes that machine out of its case, cleans it, and
-	looks at it on its own: what it does, why it works, and the four or five big theorems it makes almost automatic.
+	Several times in this book a computation did something odd, and we checked it and moved on. Working mod 2, the projective plane
+	acquired an \(H_2\) that it does not have over the integers (<Ref to="homology/computing" />). In cohomology, the torsion of
+	\(H_1\) turned up one degree higher, in \(H^2\) (<Ref to="cohomology/cohomology-groups" />). And simplicial, singular and cellular
+	homology, three quite different definitions, kept giving the same answers. None of these is a quirk of a particular space. They
+	are all consequences of the algebraic machine that homology runs on — chain complexes, kernels modulo images, exact sequences —
+	and this chapter takes that machine out of its case to see how it works.
 </p>
 
 <p>
@@ -135,11 +138,10 @@
 
 <Ahead>
 	<p>
-		This chapter explains rules that earlier chapters could only observe. Why does \(\RP^2\) acquire an extra \(H_2\) when you work
-		mod 2 (<Ref to="homology/computing" />)? Why does torsion in homology show up one degree higher in cohomology (<Ref
-			to="cohomology/cohomology-groups"
-		/>)? Why are singular, simplicial and cellular homology all the same? And it sets up <Ref to="big-picture/horizons" />, where
-		spectral sequences compute homotopy groups and where dropping one axiom opens the door to K-theory and cobordism.
+		The route: the snake lemma, which builds every connecting map; Hom and tensor, and how each breaks exactness; Tor and Ext, which
+		measure the breakage and explain the first two puzzles; Künneth for products; spectral sequences; and the five axioms that
+		explain the third puzzle. All of this sets up <Ref to="big-picture/horizons" />, where spectral sequences compute homotopy groups
+		and where dropping one axiom opens the door to K-theory and cobordism.
 	</p>
 </Ahead>
 
@@ -376,8 +378,9 @@
 <h3 id="tensor">Tensor product</h3>
 
 <p>
-	The other combination is less familiar. We want a group whose elements are “formal products” \(a\otimes g\) of an element of \(A\)
-	with an element of \(G\), obeying the distributive laws and nothing else.
+	The other combination is less familiar by name, but it is the first of the two ways coefficients appeared above: a chain mod 2 is
+	a sum of simplices, each “times” an element of \(\Z/2\). In general we want a group whose elements are such “formal products”
+	\(a\otimes g\) of an element of \(A\) with an element of \(G\), obeying the distributive laws and nothing else.
 </p>
 
 <Definition id="def-tensor" title="Tensor product">
@@ -469,7 +472,9 @@
 
 <p>
 	Free abelian groups are the easy case: if \(F\) is free, then \(\Hom(F,-)\) and \(-\otimes F\) preserve all exactness, because \(F\) is
-	just a sum of copies of \(\Z\), and both operations do nothing to \(\Z\). So the idea is to replace any group by free groups.
+	a sum of copies of \(\Z\), and both operations do nothing to \(\Z\). So here is the plan: describe any group by free groups — its
+	generators and its relations — and do the measuring there. The failure of exactness then shows up as the homology of a small
+	complex built from those free groups, which we know how to compute.
 </p>
 
 <Definition id="def-resolution" title="Free resolution">
