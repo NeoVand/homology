@@ -70,6 +70,16 @@ const wobbleGLSL = /* glsl */ `
 	}
 `;
 
+// A free pull: the surface near uPullAt moves by the vector uPullV with a Gaussian
+// falloff of radius uPullR, so a grabbed patch follows the pointer in any
+// direction (not only along the normal). The normal is carried along exactly:
+// for p ↦ p + V g(p), n′ ∝ n − ∇g (V·n) / (1 + ∇g·V).
+const pullGLSL = /* glsl */ `
+	uniform vec3 uPullAt;
+	uniform vec3 uPullV;
+	uniform float uPullR;
+`;
+
 const iridescentVertex = /* glsl */ `
 	varying vec3 vNormal;
 	varying vec3 vWorldPos;
@@ -79,6 +89,9 @@ const iridescentVertex = /* glsl */ `
 	#include <clipping_planes_pars_vertex>
 	#ifdef WOBBLE
 	${wobbleGLSL}
+	#endif
+	#ifdef PULL
+	${pullGLSL}
 	#endif
 	void main() {
 		vUv = uv;
@@ -93,6 +106,16 @@ const iridescentVertex = /* glsl */ `
 		gr -= (2.0 * g / (uPokeR * uPokeR)) * dp;
 		pos += normal * s;
 		nrm = normalize(normal - (gr - dot(gr, normal) * normal));
+		#endif
+		#ifdef PULL
+		{
+			vec3 dq = position - uPullAt;
+			float r2 = uPullR * uPullR;
+			float gp = exp(-dot(dq, dq) / r2);
+			vec3 gg = (-2.0 * gp / r2) * dq;
+			pos += uPullV * gp;
+			nrm = normalize(nrm - gg * dot(uPullV, nrm) / max(1.0 + dot(gg, uPullV), 0.05));
+		}
 		#endif
 		vObj = pos;
 		vec4 wp = modelMatrix * vec4(pos, 1.0);
@@ -267,6 +290,9 @@ export interface IridescentOptions {
 	/** knead the surface on the GPU: uniforms uWobble (amplitude) and uWobbleT (time),
 	 *  plus one pull uPoke (centre, object space), uPokeAmp and uPokeR (radius) */
 	wobble?: boolean;
+	/** a free pull on the GPU: the patch around uPullAt (object space) moves by the
+	 *  vector uPullV, with Gaussian falloff radius uPullR */
+	pull?: boolean;
 	/** grid lines for implicit surfaces without (u, v): around these hole centres (x) */
 	implicitGrid?: { centres: number[]; R: number };
 	/** allow two round holes to be cut (uniforms uCut0, uCut1 = centre xyz, radius) */
@@ -305,6 +331,12 @@ export function iridescent(o: IridescentOptions = {}): THREE.ShaderMaterial {
 		uniforms.uPoke = { value: new THREE.Vector3() };
 		uniforms.uPokeAmp = { value: 0 };
 		uniforms.uPokeR = { value: 0.5 };
+	}
+	if (o.pull) {
+		defines.PULL = '';
+		uniforms.uPullAt = { value: new THREE.Vector3() };
+		uniforms.uPullV = { value: new THREE.Vector3() };
+		uniforms.uPullR = { value: 0.6 };
 	}
 	if (o.implicitGrid) {
 		defines.IMPLICIT_GRID = '';
@@ -409,7 +441,8 @@ export function orientOutward(geometry: THREE.BufferGeometry): boolean {
 /** The depth-only twin of a surface material (same vertex shader, so the depths match). */
 function depthPrepass(face: THREE.ShaderMaterial): THREE.ShaderMaterial {
 	const shared: Record<string, THREE.IUniform> = {};
-	for (const k of ['uWobble', 'uWobbleT', 'uPoke', 'uPokeAmp', 'uPokeR', 'uCut0', 'uCut1']) if (face.uniforms[k]) shared[k] = face.uniforms[k];
+	for (const k of ['uWobble', 'uWobbleT', 'uPoke', 'uPokeAmp', 'uPokeR', 'uPullAt', 'uPullV', 'uPullR', 'uCut0', 'uCut1'])
+		if (face.uniforms[k]) shared[k] = face.uniforms[k];
 	return new THREE.ShaderMaterial({
 		vertexShader: iridescentVertex,
 		fragmentShader: prepassFragment,
