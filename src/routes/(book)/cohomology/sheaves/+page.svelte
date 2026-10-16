@@ -143,12 +143,13 @@
 
 <Ahead>
 	<p>
-		Three tools come out of this chapter. <strong>Nerves</strong> turn a cover of a space into a simplicial complex with
-		the same holes, which is how sensor networks detect gaps in coverage and how persistent homology (<Ref
-			to="homology/persistence"
-		/>) builds shapes from data. <strong>Čech cohomology</strong> computes the cohomology groups you already know using
-		only overlaps. <strong>Sheaves</strong> let the coefficients change from place to place, so that cohomology can
-		measure the failure of square roots, orientations, depth readings or currency prices to glue. In the next chapter (<Ref
+		One question runs through the chapter: <em>when do local pieces of data fit together into one global piece?</em>
+		Three tools answer it. The <strong>nerve</strong> of a cover turns a pattern of overlapping pieces into a simplicial
+		complex with the same holes; it lets sensors that do not know where they are find a gap in their coverage, and it is
+		how persistent homology (<Ref to="homology/persistence" />) builds shapes from data. <strong>Čech cohomology</strong>
+		computes the cohomology groups you already know from the overlaps alone. <strong>Sheaves</strong> let the data
+		change from place to place — heights, square roots, orientations, depths, prices — so that one kind of cohomology
+		class can say exactly why each of them fails to glue. In the next chapter (<Ref
 			to="cohomology/characteristic-classes"
 		/>) the same Čech cocycles, now with values in groups such as \(\{\pm 1\}\) and the circle of phases, classify twisted
 		families of vector spaces — from the Möbius band to the magnetic monopole.
@@ -177,10 +178,15 @@
 </Question>
 
 <p>
-	If the three offsets add up to zero as you go around the ring, yes: fix one hiker’s zero and the other two are forced.
-	If they do not add up to zero, no shifting can ever make the readings consistent; the trail would be an Escher staircase,
-	climbing forever and yet returning to its start. You met exactly this test in <Ref to="cohomology/cochains" />: a labelling
-	of the edges of a loop is a gradient exactly when its sum around the loop is zero.
+	Try it with numbers. Walk once round the ring, and each time you pass from one hiker’s stretch into the next, note how
+	much higher the new hiker’s numbers run: say \(+40\), then \(+25\), then \(-65\). These add up to zero, and that settles
+	it. Fix the first hiker’s zero, and the other two are forced: the second must move her zero up by \(40\) metres, the
+	third by \(65\). Now suppose the last offset had been \(-60\). Stitch the profiles together as you walk, and by the time
+	you are back where you started, the stitched profile disagrees with itself by \(5\) metres: the trail has become an
+	Escher staircase, climbing for ever and yet returning to its start. No shifting of zeros can help. Moving one hiker’s
+	zero raises one of her two offsets and lowers the other by the same amount, so the sum around the ring never changes.
+	You met exactly this test in <Ref to="cohomology/cochains" />: a labelling of the edges of a loop is a gradient exactly
+	when its sum around the loop is zero.
 </p>
 
 <p>The example has three ingredients, and each will get its own section.</p>
@@ -388,10 +394,10 @@
 
 <p>
 	Cover the ring trail \(X = S^1\) by three open arcs \(U_0, U_1, U_2\), the stretches of the three hikers. Fix a group of
-	values \(G\) — the real numbers \(\R\), or the integers \(\Z\). Hiker \(i\) shifts her readings by some amount
-	\(f_i \in G\) (moving her zero). On the overlap \(U_{ij}\) of two stretches, with \(i \lt j\), let \(c_{ij}\) be the
-	offset: how much higher hiker \(j\)’s zero sits than hiker \(i\)’s. Shifting the zeros by \(f\) removes the offsets
-	exactly when
+	values \(G\) — the real numbers \(\R\), or the integers \(\Z\). Hiker \(i\) may move her zero up by some amount
+	\(f_i \in G\), which lowers all her readings by \(f_i\). On the overlap \(U_{ij}\) of two stretches, with \(i \lt j\),
+	let \(c_{ij}\) be the offset: how much higher hiker \(j\)’s readings run than hiker \(i\)’s. Moving the zeros by \(f\)
+	removes every offset exactly when
 	\[ c_{ij} = f_j - f_i \quad\text{on every overlap } U_{ij}. \]
 	That is a system of three equations in three unknowns — and a familiar one.
 </p>
@@ -473,6 +479,12 @@
 		c_{02}. \]
 	</li>
 </ul>
+
+<p>
+	For the hikers, \(c_{01} = 40\), \(c_{12} = 25\) and \(c_{02} = 65\). The loop test gives \(40 + 25 - 65 = 0\), and
+	\(f = (0, 40, 65)\) is the shift we found by hand. Had \(c_{02}\) been \(60\), the loop test would give \(5\), and the
+	class \([c]\in\check H^1 \cong G\) would be exactly those stray \(5\) metres.
+</p>
 
 <p>
 	These are \(H^0(S^1;G) = G\) and \(H^1(S^1;G) = G\), the cohomology of the circle from <Ref
@@ -606,8 +618,12 @@
 <h3>The sheaf axioms</h3>
 
 <p>
-	Some of these presheaves are better behaved than others. The good ones are those for which <em>local knowledge is
-	enough</em>: a section is determined by its pieces, and compatible pieces can always be assembled.
+	Some of these presheaves are better behaved than others. Ask two questions of any kind of local data. <em>If two
+	pieces of data agree on every piece of a cover, are they the same?</em> And: <em>if data given piece by piece agree
+	wherever the pieces overlap, do they come from data on the whole?</em> For the hikers’ height profiles, once the
+	altimeters are calibrated, both answers are yes: two height maps of the ring that agree on every stretch are the same
+	map, and profiles that agree on the overlaps join into one. Data for which local knowledge is enough, in exactly this
+	sense, form a sheaf.
 </p>
 
 <Definition title="Sheaf" id="def-sheaf">

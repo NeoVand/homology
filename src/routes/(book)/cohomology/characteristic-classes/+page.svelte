@@ -151,13 +151,13 @@
 
 <Ahead>
 	<p>
-		This chapter gathers threads from all over the book: the Euler characteristic (<Ref to="topology/euler-characteristic"
-		/>), the hairy ball theorem (<Ref to="homology/invariance" />), de Rham cohomology (<Ref to="cohomology/de-rham" />),
-		Poincaré duality (<Ref to="cohomology/poincare-duality" />) and the Čech cocycles of the previous chapter (<Ref
-			to="cohomology/sheaves"
-		/>). Characteristic classes are the obstructions of cohomology at their most concrete: they are where cohomology
-		touches geometry and physics, and the road from here leads to K-theory, gauge theory and topological phases of matter
-		(<Ref to="big-picture/horizons" />).
+		By the end of the chapter you will be able to say, before you pick up the comb, what the cowlicks of any combing of a
+		surface must add up to; prove that every potato has exactly the same total curvature as a ball; and see why one
+		number, \(2\), keeps turning up for the sphere. The ingredients come from all over the book: the Euler characteristic
+		(<Ref to="topology/euler-characteristic" />), the hairy ball theorem (<Ref to="homology/invariance" />), de Rham
+		cohomology (<Ref to="cohomology/de-rham" />), Poincaré duality (<Ref to="cohomology/poincare-duality" />) and the Čech
+		cocycles of the previous chapter (<Ref to="cohomology/sheaves" />). The road onward leads to K-theory, gauge theory
+		and topological phases of matter (<Ref to="big-picture/horizons" />).
 	</p>
 </Ahead>
 
@@ -227,6 +227,13 @@
 
 <h2 id="sections">Sections: choosing a vector at every point</h2>
 
+<p>
+	Here is a test that tells the cylinder from the Möbius band. Take a pencil and draw a line once around the band,
+	crossing every fibre exactly once, without ever touching the core circle that runs down the middle. On the cylinder it
+	is easy: draw a line parallel to the core. On the Möbius band, try it in the figure below. The line you are drawing has
+	a name.
+</p>
+
 <Definition title="Section" id="def-section">
 	<p>
 		A <dfn>section</dfn> of a vector bundle \(\pi\colon E \to B\) is a continuous map \(s\colon B\to E\) with \(\pi(s(b)) =
@@ -246,7 +253,7 @@
 
 <p>
 	For a trivial bundle the answer is yes: take a constant nonzero vector in \(B\times\R^n\). So whenever the answer is no,
-	the bundle must be twisted. Try it on the cylinder and on the Möbius band.
+	the bundle must be twisted — and the pencil test suggests that the Möbius band is the first example.
 </p>
 
 <Figure num="4.8.1" title="Sections of the cylinder and the Möbius band" hint="Drag the gold points in the strip · switch bundles · drag the 3D view">
@@ -320,8 +327,8 @@
 	Now take the tangent bundle of the sphere. A nowhere-zero section would be a way to comb hair on a ball with no cowlick
 	and no bald spot. In <Ref to="homology/invariance" /> you proved, using homology, that this is impossible: <Term
 		t="hairy-ball-theorem">every continuous tangent vector field on \(S^2\) vanishes somewhere</Term
-	>. On a torus, by contrast, you can comb the hair flat around the hole. Here is the picture, and in the next two sections
-	we will find out exactly <em>how many</em> zeros a field must have, and why.
+	>. On a torus, by contrast, you can comb the hair flat around the hole. Here is the picture. In the next two sections we
+	find out what the zeros of a field must <em>add up to</em>, counted properly, and why.
 </p>
 
 <Figure num="4.8.2" title="Combing the sphere and the torus" hint="Choose a field · drag to rotate">
@@ -383,6 +390,15 @@
 
 <h2 id="poincare-hopf">Poincaré–Hopf: the zeros know the shape</h2>
 
+<p>
+	Add up the indices in Figure 4.8.2. On the sphere every field comes to \(2\): spinning about an axis gives two
+	centres, \(1 + 1\); flowing from pole to pole gives a source and a sink, \(1 + 1\); the dipole has a single zero of
+	index \(2\). On the torus the total is \(0\): the field around the hole has no zeros at all, and the wind blowing
+	across the doughnut has a source and a sink on the outside and two saddles on the inside, \(1 + 1 - 1 - 1\). Two
+	surfaces, two totals, and neither budges however the hair is combed. You have seen both numbers before:
+	\(\chi(S^2) = 2\) and \(\chi(T^2) = 0\).
+</p>
+
 <Theorem label="Theorem (Poincaré–Hopf)" id="thm-poincare-hopf">
 	<p>
 		Let \(M\) be a closed surface and \(v\) a continuous tangent vector field on \(M\) with finitely many zeros. Then the sum
@@ -395,23 +411,14 @@
 	(The same statement holds for closed manifolds of any dimension, with the index defined using spheres instead of
 	loops.) Henri Poincaré proved the theorem for surfaces <Cite k="poincare1885" />, and Heinz Hopf proved it in
 	every dimension <Cite k="hopf1927" />; the place to read about it is <Cite k="milnor1965" loc="§6" text />, a slim
-	classic. Check it against the figures:
+	classic.
 </p>
 
-<ul>
-	<li>
-		<strong>Sphere</strong>, \(\chi(S^2) = 2\): spinning about an axis gives two centres, \(1 + 1 = 2\); flowing from pole
-		to pole gives a source and a sink, \(1 + 1 = 2\); the dipole field has a single zero of index \(2\).
-	</li>
-	<li>
-		<strong>Torus</strong>, \(\chi(T^2) = 0\): the field “around the hole” has no zeros at all; the wind blowing across the
-		doughnut has a source and a sink on the outside and two saddles on the inside, \(1 + 1 - 1 - 1 = 0\).
-	</li>
-	<li>
-		<strong>Double torus</strong>, \(\chi = -2\): stand it on end and let water run down it. There is a source at the top,
-		a sink at the bottom and four saddles, one at the top and bottom of each hole: \(1 + 1 - 4 = -2\).
-	</li>
-</ul>
+<p>
+	The theorem makes predictions about surfaces we have not combed. A double torus has \(\chi = -2\). Stand it on end and
+	let water run down it: there is a source at the top, a sink at the bottom and four saddles, one at the top and bottom
+	of each hole, and indeed \(1 + 1 - 4 = -2\).
+</p>
 
 <h3>Why it is true: a sketch</h3>
 
@@ -461,9 +468,11 @@
 <h3>The Euler class</h3>
 
 <p>
-	Poincaré–Hopf says that the number “sum of indices of a section” does not depend on the section. That number is the first
-	example of a characteristic class. Here is the general idea, stated for oriented bundles of rank \(2\) over a closed
-	oriented surface \(M\) (the tangent bundle of an orientable surface is one).
+	Poincaré–Hopf says that the number “sum of indices of a section” does not depend on the section. Nothing in that idea
+	needs the planes to be tangent planes: any family of planes over a surface has sections, their zeros have indices, and
+	the same count can be made. The total is the first example of a characteristic class, and it turns the question “is
+	there a nowhere-zero section?” into arithmetic. Here it is for oriented bundles of rank \(2\) over a closed oriented
+	surface \(M\) (the tangent bundle of an orientable surface is one).
 </p>
 
 <Definition title="Euler class (for rank-2 bundles over surfaces)" id="def-euler-class">
@@ -638,8 +647,11 @@
 <h2 id="gauss-bonnet">The Gauss–Bonnet theorem</h2>
 
 <p>
-	Now cover a whole closed surface with geodesic triangles and add up Gauss’s formula over all of them. The answer turns out
-	not to depend on the shape at all. <Cite k="needham2021" text /> gives four different geometric proofs of it.
+	Now cover a whole closed surface with geodesic triangles and add up Gauss’s formula over all of them. The right-hand
+	sides add up to the total curvature of the surface. On the left, the angles that meet at each vertex fill a full turn,
+	\(2\pi\), so all the angles together come to \(2\pi V\), and the left-hand sides add up to \(2\pi V - \pi F\). A little
+	counting, done in the proof below, turns that into \(2\pi(V - E + F)\). The shape has dropped out.
+	<Cite k="needham2021" text /> gives four different geometric proofs of the result.
 </p>
 
 <Theorem label="Theorem (Gauss–Bonnet)" id="thm-gauss-bonnet">
@@ -768,9 +780,12 @@
 <h2 id="characteristic-classes">Characteristic classes</h2>
 
 <p>
-	We have met three cohomology classes attached to bundles: \(w_1\), which detects orientability; the Euler class \(e\),
-	which obstructs nowhere-zero sections; and, through Gauss–Bonnet, \(e\) again, computed from curvature. They are members
-	of a family.
+	Follow the sphere through the chapter so far. Its number \(2\) turned up as the Euler characteristic \(V - E + F\), as
+	the total index of every combing (Poincaré–Hopf), as the Euler class \(e(TS^2)\), and as the total curvature divided by
+	\(2\pi\) (Gauss–Bonnet). A count of cells, a count of cowlicks, a cohomology class and an integral: the theorems of
+	this chapter say they are one invariant, the Euler class of the tangent bundle, which measures how the tangent planes
+	twist as they are carried around the sphere. The Möbius band gave us a second invariant of the same kind, \(w_1\). Both
+	belong to a family.
 </p>
 
 <Definition title="Characteristic class (the idea)" id="def-characteristic-class">
@@ -861,8 +876,9 @@
 <h2 id="physics">Monopoles, Berry phases and topological matter</h2>
 
 <p>
-	This section is a guided tour rather than a course: it summarises some of the most celebrated appearances of
-	characteristic classes in physics, with simplifications flagged as we go.
+	This section is a guided tour rather than a course, with simplifications flagged as we go. All three stories are about
+	complex line bundles over the two surfaces we know best, the sphere and the torus, and in each of them a Chern number
+	becomes something nature measures.
 </p>
 
 <h3>Dirac’s monopole and the quantisation of charge</h3>
