@@ -151,6 +151,7 @@
 			width={plotW}
 			height={height - padB + 6}
 			fill="transparent"
+			class="surface"
 			onpointerdown={down}
 			onpointermove={move}
 			onpointerup={up}
@@ -251,8 +252,13 @@
 		touch-action: pan-y;
 		user-select: none;
 	}
-	svg.scrub {
+	/* only the plot area scrubs; the labels and axis around it do not */
+	svg.scrub .surface {
 		cursor: ew-resize;
+	}
+	.grid,
+	.axis {
+		pointer-events: none;
 	}
 	.grid {
 		stroke: rgba(235, 229, 213, 0.06);
