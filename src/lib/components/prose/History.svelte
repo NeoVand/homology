@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import Callout from './Callout.svelte';
-	import Portraits from './Portraits.svelte';
+	import Portraits, { type PortraitVariant } from './Portraits.svelte';
 
 	let {
 		title = '',
@@ -9,6 +9,7 @@
 		head,
 		id,
 		people,
+		variant = 'banner',
 		children
 	}: {
 		title?: string;
@@ -17,6 +18,7 @@
 		id?: string;
 		/** portrait keys from $lib/content/people, comma-separated: people="mayer,vietoris" */
 		people?: string;
+		variant?: PortraitVariant;
 		children: Snippet;
 	} = $props();
 
@@ -29,7 +31,7 @@
 </script>
 
 <Callout kind="history" {title} {label} {head} {id}>
-	{#if keys.length}<Portraits {keys} />{/if}
+	{#if keys.length}<Portraits {keys} {variant} />{/if}
 	{@render children()}
 	{#if keys.length}<div class="clear"></div>{/if}
 </Callout>
