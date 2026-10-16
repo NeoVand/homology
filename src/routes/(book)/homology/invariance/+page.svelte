@@ -232,7 +232,7 @@
 <h2 id="singular-homology">Singular homology: any space, any map</h2>
 
 <p>
-	There is a weakness in everything so far. Simplicial maps are rare. A typical continuous map between two triangulated spaces sends vertices to points that are not vertices, and edges to wiggly curves crossing many triangles. Worse, our homology groups were defined from a <em>chosen</em> triangulation. We have checked by example that different triangulations of the torus give the same groups, but we have not proved that they always will. What we want is a version of homology that
+	Two weaknesses have been hiding in everything so far. The first is that simplicial maps are rare. A typical continuous map between two triangulated spaces sends vertices to points that are not vertices, and edges to wiggly curves crossing many triangles. The second is worse: our homology groups were defined from a <em>chosen</em> triangulation. We have computed the torus twice, once from \(54\) simplices and once from six cells, and the circle from three edges and from six, and the answers agreed every time. But a few agreeing examples are not a proof. Nothing we have said rules out some perverse triangulation of the torus, with a million triangles, that grows a third independent loop. What we want is a version of homology that
 </p>
 <ol>
 	<li>is defined for <em>every</em> space, with no triangulation chosen;</li>
@@ -243,7 +243,7 @@
 	You could have invented it yourself. Faced with an arbitrary space, with no triangles in sight, the only thing we can do is map things into it. David Farrell’s video series <em>You Could Have Invented Homology</em> puts the whole programme on one slide: “Have: continuous functions. Study: continuous functions.” So probe the space with test shapes. The simplest test shapes are simplices, and a simplex comes with its faces built in. Let an \(n\)-chain be a formal sum of continuous maps \(\Delta^n\to X\) — crumpled simplices, as many as you like — and let the boundary be “restrict to the faces, with alternating signs”. That is the whole definition.
 </p>
 
-<p>Singular homology does all three. The price is that it is gigantic.</p>
+<p>This recipe is called singular homology, and it grants all three wishes, the third with the help of a theorem. The price is size.</p>
 
 <p>
 	Recall the standard \(n\)-simplex \(\Delta^n\): the point for \(n = 0\), a segment for \(n = 1\), a filled triangle for \(n = 2\), a solid tetrahedron for \(n = 3\), with vertices labelled \(e_0, \dots, e_n\).
@@ -265,7 +265,7 @@
 </p>
 
 <p>
-	This definition is enormous. A singular \(1\)-simplex in the circle is <em>any</em> continuous path \([0,1] \to S^1\), and there are uncountably many of them, so \(C_1(S^1)\) is a free abelian group with uncountably many generators. Nobody computes singular homology straight from the definition. Its virtue is theoretical. Functoriality is now automatic: a map \(f\colon X\to Y\) acts on singular simplices simply by composition, \(f_\#(\sigma) = f\circ\sigma\). No exceptions are needed for squashed simplices, because a squashed singular simplex is still a singular simplex. And \(f_\#\) commutes with \(\partial\) because restricting to a face commutes with composing with \(f\).
+	This definition is enormous. A singular \(1\)-simplex in the circle is <em>any</em> continuous path \([0,1] \to S^1\), and there are uncountably many of them, so \(C_1(S^1)\) is a free abelian group with uncountably many generators. Nobody computes singular homology straight from the definition. Its virtue is theoretical. Functoriality is now automatic: a map \(f\colon X\to Y\) acts on singular simplices by composition, \(f_\#(\sigma) = f\circ\sigma\). No exceptions are needed for squashed simplices, because a squashed singular simplex is still a singular simplex. And \(f_\#\) commutes with \(\partial\) because restricting to a face commutes with composing with \(f\).
 </p>
 
 <Theorem id="thm-singular-simplicial" label="Theorem (simplicial = singular)">
@@ -275,7 +275,11 @@
 </Theorem>
 
 <p>
-	We will not prove this. The proof is not deep, but it is long <Cite k="hatcher2002" loc="Thm 2.27" />, and it uses the tools of the next chapter. Its practical meaning is the important thing. From now on, \(H_n(X)\) means singular homology, a property of the space \(X\) alone, and we may <em>compute</em> it from any triangulation we like, as in <Ref to="homology/computing" />, or from a cell structure, as in <Ref to="homology/exact-sequences" />.
+	Why should you believe it? One direction is free. Each simplex of \(K\) <em>is</em> a continuous map \(\Delta^n \to X\), the one that lays the standard simplex onto it, so every simplicial chain is already a singular chain and every simplicial cycle a singular cycle. The danger lies the other way. Singular homology has uncountably many extra cycles, wiggly loops and crumpled triangles that cross the triangulation any old way, and one of them might be a hole the triangulation cannot see. None is. Chop a singular cycle into small enough pieces and each piece lies close to a single simplex; slide each piece onto that simplex by a small homotopy, and you are left with a simplicial cycle in the same class. The same trick, applied to a filling, shows that a simplicial cycle which bounds some crumpled chain also bounds an honest simplicial one. No hole is gained and none is lost. Making the chopping and sliding precise is long rather than deep <Cite k="hatcher2002" loc="Thm 2.27" />, and Hatcher’s proof uses the tools of the next chapter, so we take it on trust.
+</p>
+
+<p>
+	Now look at what the theorem buys. The definition of singular homology mentions nothing but the space \(X\) and continuous maps into it. No choices, so nothing to depend on: it is a property of \(X\) alone. (And a homeomorphism, which has a continuous inverse, induces isomorphisms on it, by the argument of Section 2 word for word.) The theorem says that every triangulation of \(X\) computes this one choice-free answer. Two triangulations of the torus agree, not because anyone compared them, but because both are computing the same thing. From now on \(H_n(X)\) means singular homology, and we may <em>compute</em> it from any triangulation we like, as in <Ref to="homology/computing" />, or from a cell structure, as in <Ref to="homology/exact-sequences" />.
 </p>
 
 <Example title="Two computations straight from the definition">
@@ -378,12 +382,16 @@
 
 <KeyIdea>
 	<p>
-		A <Term t="homeomorphism">homeomorphism</Term> is in particular a homotopy equivalence. So <strong>homeomorphic spaces have isomorphic homology groups</strong>: Betti numbers and torsion are properties of the space itself, not of the way we chose to cut it into triangles. This is the promise the book made back in <Ref to="homology/cycles-and-boundaries" />, now kept.
+		Put the two halves of the argument together. The theorem “simplicial = singular” says the triangulation does not matter. Homotopy invariance says more: the space itself may be squashed, thickened or shrunk, anything up to homotopy equivalence, and homology will not notice. A <Term t="homeomorphism">homeomorphism</Term> is in particular a homotopy equivalence. So <strong>homeomorphic spaces have isomorphic homology groups</strong>: Betti numbers and torsion are properties of the space itself, not of the way we chose to cut it into triangles. This is the promise the book made back in <Ref to="homology/cycles-and-boundaries" />, now kept.
 	</p>
 </KeyIdea>
 
 <!-- ───────────────────────────────────────────────────────────────────── -->
 <h2 id="brouwer">First triumph: Brouwer’s fixed point theorem</h2>
+
+<p>
+	Watch how little of the definition the next two sections need. Brouwer’s theorem and the invariance of dimension use nothing but functoriality, homotopy invariance and the homology of spheres. That is what Hatcher meant, in the remark at the top of this chapter, by the basic properties being used more often than the definition itself.
+</p>
 
 <h3>Spheres are not contractible</h3>
 
