@@ -133,6 +133,7 @@
 	.mv.mv tr:hover {
 		background: none;
 	}
+	/* every rule below that changes a cell keeps the doubled .mv.mv, or this base colour would win */
 	.mv.mv td {
 		min-width: 2.1rem;
 		text-align: center;
@@ -142,55 +143,60 @@
 		transition: background 0.12s;
 		cursor: default;
 	}
-	td.zero {
+	.mv.mv td.zero {
 		color: var(--ink-ghost);
 	}
-	td.first {
+	.mv.mv td.first {
 		border-left: 1.5px solid var(--ink-dim);
 	}
-	td.last {
+	.mv.mv td.last {
 		border-right: 1.5px solid var(--ink-dim);
 	}
-	tbody tr:first-child td.first {
-		border-top-left-radius: 6px;
-		box-shadow: inset 6px 1.5px 0 -4.5px var(--ink-dim);
+	/* the bracket bends in at the top and bottom, like the parentheses of a matrix in the text:
+	   a rounded corner whose other side is transparent fades the line out along the curve
+	   (the whole first and last rows get the transparent edge, so their entries stay level) */
+	.mv.mv tbody tr:first-child td {
+		border-top: 1.5px solid transparent;
 	}
-	tbody tr:first-child td.last {
-		border-top-right-radius: 6px;
-		box-shadow: inset -6px 1.5px 0 -4.5px var(--ink-dim);
+	.mv.mv tbody tr:last-child td {
+		border-bottom: 1.5px solid transparent;
 	}
-	tbody tr:last-child td.first {
-		border-bottom-left-radius: 6px;
-		box-shadow: inset 6px -1.5px 0 -4.5px var(--ink-dim);
+	.mv.mv tbody tr:first-child td.first {
+		border-top-left-radius: 9px;
 	}
-	tbody tr:last-child td.last {
-		border-bottom-right-radius: 6px;
-		box-shadow: inset -6px -1.5px 0 -4.5px var(--ink-dim);
+	.mv.mv tbody tr:first-child td.last {
+		border-top-right-radius: 9px;
 	}
-	td.rowhl,
-	td.colhl {
+	.mv.mv tbody tr:last-child td.first {
+		border-bottom-left-radius: 9px;
+	}
+	.mv.mv tbody tr:last-child td.last {
+		border-bottom-right-radius: 9px;
+	}
+	.mv.mv td.rowhl,
+	.mv.mv td.colhl {
 		background: rgba(216, 178, 110, 0.08);
 	}
-	td.rowhl.colhl {
+	.mv.mv td.rowhl.colhl {
 		background: rgba(216, 178, 110, 0.22);
 	}
-	td.gold {
+	.mv.mv td.gold {
 		color: var(--gold-bright);
 		font-weight: 650;
 	}
-	td.teal {
+	.mv.mv td.teal {
 		color: var(--teal);
 		font-weight: 650;
 	}
-	td.violet {
+	.mv.mv td.violet {
 		color: var(--violet);
 		font-weight: 650;
 	}
-	td.rose {
+	.mv.mv td.rose {
 		color: var(--rose);
 		font-weight: 650;
 	}
-	td.pivot {
+	.mv.mv td.pivot {
 		background: rgba(216, 178, 110, 0.28);
 		color: var(--gold-pale);
 		font-weight: 700;

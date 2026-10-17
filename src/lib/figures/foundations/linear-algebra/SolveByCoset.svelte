@@ -161,6 +161,10 @@
 		gap: 0.6rem;
 		padding: 1rem 1.1rem 0.4rem;
 	}
+	/* the vertical arrow is for the stacked phone layout; this rule must come before the media query */
+	.mid .arr.v {
+		display: none;
+	}
 	@media (max-width: 680px) {
 		.sbc {
 			grid-template-columns: minmax(0, 1fr);
@@ -178,9 +182,6 @@
 		.mid .arr.v {
 			display: inline;
 		}
-	}
-	.mid .arr.v {
-		display: none;
 	}
 	.pane {
 		display: flex;

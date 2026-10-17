@@ -109,7 +109,7 @@
 	<div class="eqs">
 		<span><TeX tex={`\\textcolor{${C.violet}}{\\mathbf p + W}\\ \\text{meets the axis at}\\ {${tfmt(f(p))}}`} /></span>
 		<span><TeX tex={`\\textcolor{${C.blue}}{\\mathbf q + W}\\ \\text{at}\\ {${tfmt(f(q))}}`} /></span>
-		<span><TeX tex={`\\textcolor{${C.green}}{(\\mathbf p + \\mathbf q) + W}\\ \\text{at}\\{${tfmt(f(p))}} + ${f(q) < 0 ? `(${tfmt(f(q))})` : tfmt(f(q))} = ${tfmt(f(pq))}`} /></span>
+		<span><TeX tex={`\\textcolor{${C.green}}{(\\mathbf p + \\mathbf q) + W}\\ \\text{at}\\ {${tfmt(f(p))}} + ${f(q) < 0 ? `(${tfmt(f(q))})` : tfmt(f(q))} = ${tfmt(f(pq))}`} /></span>
 	</div>
 	<p>
 		{#if same}

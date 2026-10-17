@@ -133,8 +133,8 @@
 			[1.4, 0, -1.6],
 			[-1.3, 0, -1.4]
 		];
-		// a paler gold than the kernel (CSS --gold-bright), so the cosets read as the kernel's family
-		const fibreMat = new THREE.LineBasicMaterial({ color: color(0xf4d79c), transparent: true, opacity: 0.75 });
+		// a paler gold than the kernel, so the cosets read as the kernel's family
+		const fibreMat = new THREE.LineBasicMaterial({ color: color('goldBright'), transparent: true, opacity: 0.75 });
 		for (const f of feet) {
 			const g = new THREE.Group();
 			g.position.set(...f);

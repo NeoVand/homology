@@ -7,6 +7,7 @@ export const palette = {
 	gold: 0xf3c46c, // a touch richer than the CSS gold so 3D cycles stand out on iridescent glass
 	goldDeep: 0xd8b26e,
 	goldPale: 0xfff1d0,
+	goldBright: 0xf4d79c,
 	teal: 0x5fd6cf,
 	violet: 0xa493ff,
 	rose: 0xf28db6,
