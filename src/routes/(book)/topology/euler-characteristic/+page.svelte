@@ -96,7 +96,7 @@
 
 <p class="lead">
 	Take any box, die, pyramid or gemstone. Count its corners, its edges and its flat faces. Subtract the second number from the
-	first, and add the third. A cube gives \(8 - 12 + 6 = 2\). A pyramid gives \(5 - 8 + 5 = 2\). A soccer ball, stitched from 32
+	first, and add the third. A cube gives \(8 - 12 + 6 = 2\). A pyramid gives \(5 - 8 + 5 = 2\). A football, stitched from 32
 	panels, gives \(60 - 90 + 32 = 2\). The answer is always 2. This chapter is about why — and about what happens when it is
 	<em>not</em> 2, which turns out to be even more interesting.
 </p>
@@ -771,9 +771,9 @@
 	{/snippet}
 </Exercise>
 
-<Exercise title="The soccer ball" level={1}>
+<Exercise title="The football" level={1}>
 	<p>
-		A soccer ball is a polyhedron with \(12\) pentagons and \(20\) hexagons, three faces meeting at every corner. Find \(E\) and \(V\)
+		A football is a polyhedron with \(12\) pentagons and \(20\) hexagons, three faces meeting at every corner. Find \(E\) and \(V\)
 		from the faces alone, and check Euler’s formula.
 	</p>
 	{#snippet hint()}
@@ -791,7 +791,7 @@
 <Exercise title="Why exactly twelve pentagons?" level={2}>
 	<p>
 		Suppose a polyhedron shaped like a sphere has only pentagons and hexagons as faces, with three faces at every corner. Show that it
-		has exactly 12 pentagons, however many hexagons it has. (This is why every soccer ball — and every “buckyball” molecule of carbon —
+		has exactly 12 pentagons, however many hexagons it has. (This is why every football — and every “buckyball” molecule of carbon —
 		has 12 pentagons.)
 	</p>
 	{#snippet solution()}
@@ -915,7 +915,7 @@
 			be disks.
 		</li>
 		<li>
-			\(\chi(S^2) = 2\), \(\chi(T^2) = 0\), \(\chi(\RP^2) = 1\), \(\chi(K) = 0\); \(\chi(\Sigma_g) = 2 - 2g\), \(\chi(N_k) = 2 - k\);
+			\(\chi(S^2) = 2\), \(\chi(T^2) = 0\), \(\chi(\RP^2) = 1\), \(\chi(\text{Klein bottle}) = 0\); \(\chi(\Sigma_g) = 2 - 2g\), \(\chi(N_k) = 2 - k\);
 			\(\chi(A \mathbin{\#} B) = \chi(A) + \chi(B) - 2\).
 		</li>
 		<li>Closed surfaces are classified by two facts: orientable or not, and \(\chi\).</li>

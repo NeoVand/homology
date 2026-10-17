@@ -95,7 +95,8 @@
 <Ahead>
 	<p>
 		This chapter plants the single most important idea of the book. Declaring things the same and then treating each pile as
-		one object is called taking a <em>quotient</em>, and it is the first of the book’s four recurring ideas. You will meet it
+		one object is called taking a <em>quotient</em>, and it is the first of the book’s four recurring ideas (the others are kernels and images, formal sums, and reversed
+		arrows, all coming in Part I). You will meet it
 		again when we build the clock groups \(\Z/n\) (<Ref to="foundations/groups" />) and quotient groups (<Ref
 			to="foundations/abelian-groups"
 		/>), when we glue the sides of a square into a torus (<Ref to="topology/gluing" />), and above all in homology itself
@@ -622,7 +623,8 @@
 	\[ \Z/n = \set{[0],[1],[2],\dots,[n-1]}, \]
 	<p>
 		because every integer leaves one of the remainders \(0,1,\dots,n-1\). Other books write \(\Z/n\Z\) or \(\Z_n\); in this book we
-		always write \(\Z/n\). The two-element set \(\Z/2 = \set{[0],[1]} = \set{\text{even},\text{odd}}\) will be a hero of later
+		write \(\Z/n\), and keep \(\Z/n\Z\) for the moment in <Ref to="foundations/abelian-groups" /> when it is rebuilt as a
+		quotient group and shown to be the same thing. The two-element set \(\Z/2 = \set{[0],[1]} = \set{\text{even},\text{odd}}\) will be a hero of later
 		chapters, where it is also written \(\mathbb F_2\).
 	</p>
 </Notation>
@@ -735,7 +737,7 @@
 	There is a way to get the answer 6 without drawing a single necklace. For each of the four rotations, count the colourings it
 	leaves unchanged: turning by nothing fixes all \(16\), a quarter turn either way fixes only the \(2\) one-colour necklaces, and
 	a half turn fixes \(4\) (opposite corners must match). The average, \((16+2+4+2)/4\), is exactly \(6\). That this always works
-	is <em>Burnside’s counting theorem</em>, one of the first rewards of the groups of the next chapter <Cite
+	is <em>Burnside’s counting theorem</em>, one of the first rewards of group theory, though this book will not need it <Cite
 		k="judson2025"
 		loc="§14.3"
 	/>.

@@ -169,7 +169,7 @@ export const entries: GlossaryEntry[] = [
 		def: 'For every simplicial complex, \\(H^k(K;G) \\cong \\Hom(H_k(K), G) \\oplus \\Ext(H_{k-1}(K), G)\\). With \\(G = \\Z\\): integer cohomology in degree \\(k\\) is the free part of \\(H_k\\) plus the torsion of \\(H_{k-1}\\). The isomorphism is not natural.',
 		chapter,
 		anchor: 'thm-uct',
-		see: ['ext-group', 'hom-group', 'torsion-shift']
+		see: ['ext-group', 'hom-group', 'torsion-shift', 'universal-coefficient-theorems']
 	},
 	{
 		key: 'ext-group',
@@ -177,7 +177,7 @@ export const entries: GlossaryEntry[] = [
 		def: 'A group \\(\\Ext(A, G)\\) built from abelian groups \\(A\\) and \\(G\\), defined properly in the chapter on homological algebra. For finitely generated groups: \\(\\Ext(\\Z, G) = 0\\), \\(\\Ext(\\Z/n, G) \\cong G/nG\\), and \\(\\Ext\\) of a direct sum is the direct sum.',
 		chapter,
 		anchor: 'universal-coefficients',
-		see: ['universal-coefficient-theorem']
+		see: ['universal-coefficient-theorem', 'ext']
 	},
 	{
 		key: 'real-cohomology',

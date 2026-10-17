@@ -4,14 +4,6 @@ const chapter = 'homology/knots';
 
 export const entries: GlossaryEntry[] = [
 	{
-		key: 'knot',
-		term: 'Knot',
-		def: 'A smooth closed curve in \\(\\R^3\\) (or \\(S^3\\)) that does not cross itself. As a space every knot is a circle; what distinguishes knots is how they sit in space, up to ambient isotopy.',
-		chapter,
-		anchor: 'def-knot',
-		see: ['link', 'ambient-isotopy']
-	},
-	{
 		key: 'link',
 		term: 'Link',
 		def: 'A finite collection of disjoint knots, its components. The Hopf link, the Whitehead link and the Borromean rings are links of two, two and three components.',
@@ -100,6 +92,14 @@ export const entries: GlossaryEntry[] = [
 		see: ['fox-colouring', 'alexander-polynomial']
 	},
 	{
+		key: 'knot-meridian',
+		term: 'Meridian (of a knot)',
+		def: 'A small loop \\(\\mu\\) going once around the strand of a knot \\(K\\), on the surface of a thin tube around it. Its class generates \\(H_1(S^3\\setminus K)\\cong\\Z\\) for every knot; the loop that runs once along the tube without linking the knot is the longitude \\(\\lambda\\).',
+		chapter,
+		anchor: 'what-homology-sees',
+		see: ['meridian', 'linking-number', 'knot-group']
+	},
+	{
 		key: 'linking-number',
 		term: 'Linking number',
 		def: 'How many times a closed curve \\(\\gamma\\) winds around a knot \\(K\\), counted with signs: the integer \\(n\\) with \\([\\gamma] = n[\\mu]\\) in \\(H_1(S^3\\setminus K)\\cong\\Z\\). In a diagram it is half the sum of the signs of the crossings between the two curves; it is also the signed number of times \\(\\gamma\\) pierces a Seifert surface of \\(K\\).',
@@ -114,14 +114,6 @@ export const entries: GlossaryEntry[] = [
 		chapter,
 		anchor: 'knot-group',
 		see: ['wirtinger-presentation', 'abelianization']
-	},
-	{
-		key: 'wirtinger-presentation',
-		term: 'Wirtinger presentation',
-		def: 'A presentation of the knot group read off a diagram: one generator for each arc (a lasso around it), and at each crossing one relation \\(x_c = x_a^{\\pm1}x_bx_a^{\\mp1}\\) between the lassos around the over-arc and the two under-arcs.',
-		chapter,
-		anchor: 'knot-group',
-		see: ['knot-group']
 	},
 	{
 		key: 'braid-group',
@@ -182,7 +174,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'khovanov-homology',
 		term: 'Khovanov homology',
-		def: 'A bigraded homology theory of knots (Mikhail Khovanov, 2000), built from the cube of states of a diagram, whose graded Euler characteristic is the Jones polynomial. Kronheimer and Mrowka proved in 2011 that it detects the unknot.',
+		def: 'A bigraded homology theory of knots (Mikhail Khovanov, posted 1999, published 2000), built from the cube of states of a diagram, whose graded Euler characteristic is the Jones polynomial. Kronheimer and Mrowka proved in 2011 that it detects the unknot.',
 		chapter,
 		anchor: 'khovanov',
 		see: ['jones-polynomial', 'categorification']

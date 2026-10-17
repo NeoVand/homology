@@ -51,6 +51,30 @@ export const entries: GlossaryEntry[] = [
 		see: ['loop-sum', 'discrete-gradient']
 	},
 	{
+		key: 'gradient',
+		term: 'Gradient',
+		def: 'On a graph or complex, an edge flow \\(\\psi = \\delta f\\) that comes from heights \\(f\\) on the vertices: each edge carries the climb along it. In calculus (Chapter 4.3) the gradient of a function is the vector \\(\\nabla f = (\\partial f/\\partial x, \\partial f/\\partial y)\\) of partial derivatives, which points straight uphill and is perpendicular to the level curves.',
+		chapter,
+		anchor: 'the-gradient-puzzle',
+		see: ['gradient-test', 'exterior-derivative']
+	},
+	{
+		key: 'circulation',
+		term: 'Circulation',
+		def: 'The sum of an edge flow around a closed loop, each edge counted with the sign of the direction it is walked in; around a single triangle it is also called the curl. In calculus (Chapter 4.3) it is the line integral \\(\\oint \\mathbf F\\cdot d\\mathbf r\\) of a field around a loop: how much the field pushes you along as you go round.',
+		chapter,
+		anchor: 'local-and-global',
+		see: ['curl', 'line-integral']
+	},
+	{
+		key: 'curl',
+		term: 'Curl',
+		def: 'For an edge flow, its circulation around one filled triangle; a gradient has curl zero on every triangle. In calculus (Chapter 4.3) it is circulation per unit area around a tiny loop; in the plane, \\(\\operatorname{curl}\\mathbf F = \\partial Q/\\partial x - \\partial P/\\partial y\\), and a paddle wheel in the flow spins at half this rate.',
+		chapter,
+		anchor: 'local-and-global',
+		see: ['circulation', 'gradient-test']
+	},
+	{
 		key: 'gradient-test',
 		term: 'Gradient test',
 		def: 'An edge labelling is a gradient (a difference of potentials) if and only if its sum around every closed loop is zero. It is enough to check the \\(E - V + c = b_1\\) fundamental loops of a spanning tree.',
@@ -177,6 +201,14 @@ export const entries: GlossaryEntry[] = [
 		chapter,
 		anchor: 'hodge-decomposition',
 		see: ['harmonic-flow', 'hodgerank']
+	},
+	{
+		key: 'graph-laplacian',
+		term: 'Graph Laplacian',
+		def: 'The square matrix \\(L = \\delta^{\\mathsf T}\\delta\\), one row and column per vertex: the number of edges at each vertex on the diagonal, and \\(-1\\) in row \\(u\\), column \\(v\\) whenever an edge joins \\(u\\) and \\(v\\). Solving \\(Lf = \\delta^{\\mathsf T}X\\) finds the gradient closest to an edge flow \\(X\\).',
+		chapter,
+		anchor: 'hodge-decomposition',
+		see: ['hodge-decomposition', 'hodge-laplacian', 'sheaf-laplacian']
 	},
 	{
 		key: 'harmonic-flow',

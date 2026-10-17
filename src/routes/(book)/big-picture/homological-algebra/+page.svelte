@@ -919,7 +919,7 @@
 			k="weibel1999"
 		/>. The dimension axiom went in because every homology theory then known obeyed it; within a few years topologists were studying
 		<em>bordism</em>, whose groups of a point are nonzero in infinitely many dimensions <Cite k="hatcher2002" loc="§2.3" />. The
-		generalized theories of today keep the other axioms and add Milnor’s axiom for infinite unions in place of the dimension axiom.
+		generalized theories of today keep the other four axioms, Milnor’s additivity among them, and simply drop the dimension axiom.
 	</p>
 </History>
 

@@ -135,7 +135,7 @@ export const entries: GlossaryEntry[] = [
 		def: 'A loop going once around the tube of a torus. It bounds nothing on the hollow torus, but on a solid torus it bounds a disk-shaped slice.',
 		chapter,
 		anchor: 'sphere-and-torus',
-		see: ['longitude']
+		see: ['longitude', 'knot-meridian']
 	},
 	{
 		key: 'longitude',

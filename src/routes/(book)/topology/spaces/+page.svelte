@@ -101,7 +101,7 @@
 		space into a list of numbers and groups; the whole point of the machine is that <strong>homeomorphic spaces give the same
 		output</strong>. That makes homology a <em>topological invariant</em> — a tool for proving that two spaces are different. Along
 		the way, three ideas from this chapter will come back again and again: <em>continuity defined through preimages</em> (the
-		first appearance of the “reversed arrows” that drive cohomology in Part IV), <em>connectedness</em> (which becomes the
+		“reversed arrows” of §1.1 and §1.5 again, which drive cohomology in Part IV), <em>connectedness</em> (which becomes the
 		zeroth homology group \(H_0\)), and <em>compactness</em> (which is why our spaces can be built from finitely many pieces).
 	</p>
 </Ahead>
@@ -199,8 +199,8 @@
 	<MetricBalls />
 	{#snippet caption()}
 		The taxi ride: from \(A\) to \(B\) it is \(5\) blocks as the crow flies but \(7\) by taxi, and every staircase route is
-		equally long. The balls: the points at distance less than \(1\) from \(x\) form a disk for the straight-line distance, a diamond for the
-		taxicab distance and a square for the max distance. Each fits inside the next.
+		equally long. The balls: the points at distance less than \(1\) from \(x\) form a diamond for the taxicab distance, a disk for the
+		straight-line distance and a square for the max distance. Each fits inside the next.
 	{/snippet}
 </Figure>
 
@@ -501,7 +501,7 @@
 <p>
 	Draw the graph of a function \(f\). Informally, \(f\) is continuous if you can draw its graph without lifting your pen. Look at
 	the function with a jump in Figure 2.1.5. Near \(a = 2\), the inputs are very close to each other, but the outputs leap from
-	about \(0.6\) to about \(1.7\). Points that were neighbours have been torn apart. Continuity is the promise that this never
+	about \(0.6\) to about \(1.6\). Points that were neighbours have been torn apart. Continuity is the promise that this never
 	happens: <em>inputs that are close enough produce outputs that are close</em>.
 </p>
 <p>
@@ -589,7 +589,8 @@
 		It might seem more natural to ask that a continuous function send open sets to open sets. It does not work. The constant
 		function \(f(x) = 7\) is as continuous as a function can be, yet it sends the open interval \((0, 1)\) to the single point
 		\(\set{7}\), which is not open. And \(x \mapsto x^2\) sends \((-1, 1)\) to \([0, 1)\), not open either. Preimages behave
-		perfectly; images do not. This is our first meeting with one of the four big ideas of the book, <strong>reversed
+		perfectly; images do not. We met this reversal with preimages in <Ref to="foundations/sets-and-functions" /> and with the transpose in <Ref to="foundations/linear-algebra" />;
+		here it becomes the very definition of continuity. It is one of the four recurring ideas of the book, <strong>reversed
 		arrows</strong>: \(f\) goes from \(X\) to \(Y\), but the information about open sets travels backwards, from \(Y\) to \(X\).
 		The same reversal will define cohomology in <Ref to="cohomology/cochains" />.
 	</p>
@@ -694,13 +695,13 @@
 	{/snippet}
 </Figure>
 
-<h3>Knots: one circle, many ways to sit in space</h3>
+<h3 id="knots">Knots: one circle, many ways to sit in space</h3>
 
 <p>
 	Our mug-to-doughnut film happens inside ordinary space, but a homeomorphism need not. Take a piece of string, tie a knot in it,
 	and glue the two ends together. What you hold is a <dfn>knot</dfn>: a closed loop sitting in space. The simplest true knot,
 	the <em>trefoil</em>, cannot be untangled into a round ring without cutting the string; anyone who has fought a tangled cable
-	believes this, and later in the book we will prove it. Yet the trefoil and the circle are homeomorphic. Walk once around each
+	believes this, and <Ref to="homology/knots" /> will prove it. Yet the trefoil and the circle are homeomorphic. Walk once around each
 	and pair up the points in order: the pairing is continuous both ways, a perfect stretching. In Figure 2.1.8 every point of the
 	knot wears the colour of its partner on the circle, and the colours run round the knot in the same order as round the wheel.
 </p>
@@ -1121,8 +1122,8 @@
 			\(X\) are open, unions are open, finite intersections are open.
 		</li>
 		<li>
-			A map is <strong>continuous</strong> when preimages of open sets are open — the ε–δ idea without distances, and the first
-			example of reversed arrows. Continuous maps may glue but never tear.
+			A map is <strong>continuous</strong> when preimages of open sets are open — the ε–δ idea without distances, and reversed
+			arrows once more. Continuous maps may glue but never tear.
 		</li>
 		<li>
 			A <strong>homeomorphism</strong> is a continuous bijection with continuous inverse. Homeomorphic spaces are “the same shape”:

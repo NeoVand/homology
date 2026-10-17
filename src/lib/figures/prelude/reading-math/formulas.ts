@@ -71,7 +71,7 @@ export const formulas: Formula[] = [
 				tex: '\\im',
 				say: 'the image of',
 				mean: 'The **image** of a map: everything it actually reaches. Here: the cycles that are boundaries of something one dimension up — the ones that enclose nothing interesting.',
-				where: 'foundations/sets-and-functions'
+				where: 'foundations/groups'
 			},
 			{
 				tex: '\\partial_{n+1}',
@@ -116,7 +116,7 @@ export const formulas: Formula[] = [
 	},
 	{
 		id: 'quantifiers',
-		label: 'A promise',
+		label: 'A duel of quantifiers',
 		template: '@0 @1 @2 @3\\ @4 @5 @6 @7 @8',
 		tokens: [
 			{ tex: '\\forall', say: 'for every', mean: 'The **universal quantifier**: “for every” (an upside-down A, for “all”).' },

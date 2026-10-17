@@ -152,7 +152,9 @@
 <p>
 	Why exactly six moves? Because a move is completely decided by two pieces of information: where corner \(A\) ends up
 	(three possible places) and whether the card ends up face up or face down (two possibilities). Once you know those,
-	the positions of \(B\) and \(C\) are forced. Three times two is six. Try it for yourself:
+	the positions of \(B\) and \(C\) are forced. Three times two is six. Since a move is decided by where it sends the three
+	corners, and each of the six ways of rearranging \(A, B, C\) happens exactly once, the triangle group is also the group \(S_3\)
+	of all permutations of three things. Try it for yourself:
 </p>
 
 <Figure num="1.3.1" title="The six symmetries of a triangle" hint="Press the moves · tap a table cell to replay it">

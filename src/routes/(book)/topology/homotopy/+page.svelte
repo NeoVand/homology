@@ -849,7 +849,7 @@
 	</p>
 </Remark>
 
-<h3>Loops around a knot</h3>
+<h3 id="loops-around-a-knot">Loops around a knot</h3>
 
 <p>
 	Order-sensitive loops answer a question from <Ref to="topology/spaces" />: why can a trefoil not be untied? Homotopy itself is

@@ -135,7 +135,7 @@
 	<p>
 		The name suggests simplices strung together like the links of a necklace, and in the simplest examples — a path of edges — that is exactly what a chain
 		looks like. But the meaning is more relaxed: any collection of simplices of one dimension, connected or not, is a chain. A chain is a <em>formal sum</em>
-		— one of the four ideas this book keeps returning to (with quotients, kernels and images, and reversed arrows). We add simplices without ever “computing”
+		— one of the book’s four recurring ideas (with quotients, kernels and images, and reversed arrows). We add simplices without ever “computing”
 		the sum; the sum is the inventory.
 	</p>
 </Remark>

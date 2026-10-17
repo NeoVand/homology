@@ -235,7 +235,7 @@
 
 <h2 id="projective-plane">The projective plane</h2>
 
-<p>The six-vertex real projective plane \(\RP^2\) of <Ref to="topology/simplicial-complexes" /> has \(6\) vertices, \(15\) edges and \(10\) triangles; every pair of vertices is joined by an edge. Its Smith normal forms (Figure 3.4.4) are five \(1\)s for \(\partial_1\), and nine \(1\)s and one \(2\) for \(\partial_2\). So</p>
+<p>The six-vertex real projective plane \(\RP^2\) of <Ref to="topology/simplicial-complexes" /> has \(6\) vertices, \(15\) edges and \(10\) triangles; every pair of vertices is joined by an edge. Its Smith normal forms are five \(1\)s for \(\partial_1\) (as for any connected complex on six vertices; the calculator of Figure 3.4.11 shows it), and nine \(1\)s and one \(2\) for \(\partial_2\) (Figure 3.4.4). So</p>
 
 \[ H_0(\RP^2) \cong \Z, \qquad H_1(\RP^2) \cong \Z^{15 - 5 - 10} \oplus \Z/2 = \Z/2, \qquad H_2(\RP^2) \cong \Z^{10 - 10} = 0. \]
 

@@ -70,7 +70,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'functor',
 		term: 'Functor',
-		def: 'A map between categories, \\(F\\colon\\mathcal C\\to\\mathcal D\\): it sends objects to objects and arrows to arrows, preserving identities and composition, \\(F(g\\circ f) = F(g)\\circ F(f)\\). Homology \\(H_n\\colon\\Top\\to\\Ab\\) is the motivating example.',
+		def: 'A map between categories, \\(F\\colon\\mathcal C\\to\\mathcal D\\): it sends objects to objects and arrows to arrows, preserving identities and composition, \\(F(g\\circ f) = F(g)\\circ F(f)\\). Homology \\(H_n\\colon\\Top\\to\\Ab\\) is the motivating example; the word first appears for it in Chapter 3.5.',
 		chapter,
 		anchor: 'def-functor',
 		see: ['functoriality', 'contravariant-functor', 'natural-transformation']

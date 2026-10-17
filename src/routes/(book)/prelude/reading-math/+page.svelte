@@ -130,9 +130,10 @@
 <p>
 	The words “theorem”, “proposition” and “lemma” describe the <em>importance</em> of a result, not its kind: all three are true
 	statements with proofs. A conjecture is a different kind of sentence altogether: nobody knows yet whether it is true. In this book
-	each block lives in its own coloured box, so you can always see what kind of sentence you are reading. A few boxes are the book’s
-	own: key ideas, intuition, warnings, history, and conjectures, which describe open problems from every part of the subject together
-	with what is known about them. The <a href={href('/problems/')}>Open Problems</a> page collects them all.
+	each block lives in its own coloured box, so you can always see what kind of sentence you are reading. Some boxes are the book’s
+	own: key ideas, intuition, warnings, history notes, and questions to pause and ponder. The conjecture boxes describe open
+	problems from every part of the subject together with what is known about them, and the <a href={href('/problems/')}>Open Problems</a>
+	page collects them all.
 </p>
 
 <h3>Definitions are membership tests</h3>
@@ -679,7 +680,7 @@
 
 <p>
 	Every symbol is an abbreviation for words, and every formula can be read aloud as a sentence. When you meet a formula, try reading
-	it out loud, slowly; if you cannot, find the symbol that stops you. The dictionary below lists the symbols used throughout this
+	it out loud, slowly; if you cannot, find the symbol that stops you. The dictionary below lists the most common symbols in this
 	book, with how to say them and where they are explained (the small § numbers).
 </p>
 
@@ -723,6 +724,9 @@
 			<tr><td>\(f^{-1}\)</td><td>the inverse of a function (only when it has one); the preimage of a set (always); \(1/f\) in calculus</td></tr>
 			<tr><td>\(\partial\)</td><td>the boundary map of homology; the boundary of a shape; a partial derivative</td></tr>
 			<tr><td>\(\wedge\)</td><td>“and” in logic; the wedge product of differential forms</td></tr>
+			<tr><td>\(\vee\)</td><td>“or” in logic; the wedge sum \(X\vee Y\) of two spaces joined at a point</td></tr>
+			<tr><td>\([\;\,]\)</td><td>a closed interval \([0,1]\); the class \([x]\) of an element; a homotopy class \([f]\); an oriented simplex \([v_0,v_1]\); the commutator \([g,h]\)</td></tr>
+			<tr><td>\(\lvert\;\,\rvert\)</td><td>absolute value; the number of elements of a set, \(\lvert G\rvert\); the space \(\lvert K\rvert\) underlying a simplicial complex</td></tr>
 			<tr><td>\(/\)</td><td>division; a quotient (“modulo”), as in \(\Z/n\) or \(X/{\sim}\)</td></tr>
 			<tr><td>\(\mid\)</td><td>“such that” inside braces; “divides”, as in \(3\mid 12\)</td></tr>
 			<tr><td>\((a,b)\)</td><td>an ordered pair; an open interval of real numbers</td></tr>
@@ -750,8 +754,8 @@
 
 <p>
 	The equivalence sign \(\sim\) will be the hero of <Ref to="foundations/equivalence" />, where we learn how to declare things the
-	same and what happens when we do. The symbols \(\cong\) and \(\simeq\) are introduced properly in <Ref to="topology/spaces" /> and
-	<Ref to="topology/homotopy" />.
+	same and what happens when we do. The symbol \(\cong\) is introduced properly in <Ref to="foundations/groups" /> (isomorphic groups) and again in
+	<Ref to="topology/spaces" /> (homeomorphic spaces), and \(\simeq\) in <Ref to="topology/homotopy" />.
 </p>
 
 <h3>Subscripts push forward, superscripts pull back</h3>

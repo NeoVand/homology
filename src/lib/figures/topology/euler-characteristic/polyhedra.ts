@@ -160,7 +160,7 @@ export const solids: Record<string, { name: string; make: () => Polyhedron }> = 
 			])
 	},
 	soccer: {
-		name: 'Soccer ball',
+		name: 'Football',
 		make: () => {
 			const ico = icosahedronPoints();
 			const pts: V3[] = [];

@@ -450,6 +450,7 @@
 			<tr><td>circle \(S^1\)</td><td>\(0\)</td><td>\(\Z\)</td><td>\(0\)</td><td>one loop</td></tr>
 			<tr><td>sphere \(S^2\)</td><td>\(0\)</td><td>\(0\)</td><td>\(\Z\)</td><td>one cavity</td></tr>
 			<tr><td>figure eight \(S^1 \vee S^1\)</td><td>\(0\)</td><td>\(\Z^2\)</td><td>\(0\)</td><td>two loops</td></tr>
+			<tr><td>torus \(T^2\)</td><td>\(0\)</td><td>\(\Z^2\)</td><td>\(\Z\)</td><td>two loops, one cavity</td></tr>
 		</tbody>
 	</table>
 </div>
@@ -641,7 +642,7 @@
 			title: 'Computational Topology: An Introduction',
 			author: 'Herbert Edelsbrunner and John Harer',
 			url: 'https://doi.org/10.1090/mbk/069',
-			note: 'Homology from the algorithmic side (chapters IV–V), leading into persistence; includes the incremental "creator or destroyer" view of Figure 3.3.7.',
+			note: 'Homology from the algorithmic side (chapters IV–V), leading into persistence; includes the incremental "creator or killer" view of Figure 3.3.8.',
 			kind: 'book'
 		},
 		{

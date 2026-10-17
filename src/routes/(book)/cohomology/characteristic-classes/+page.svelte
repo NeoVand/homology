@@ -858,6 +858,12 @@
 				<td>orientability (the Möbius band)</td>
 			</tr>
 			<tr>
+				<td>Stiefel–Whitney \(w_i\)</td>
+				<td>real bundles</td>
+				<td>\(H^i(B;\Z/2)\)</td>
+				<td>finer twisting; an oriented bundle has a spin structure exactly when \(w_2 = 0\)</td>
+			</tr>
+			<tr>
 				<td>Euler \(e\)</td>
 				<td>oriented real bundles of rank \(n\)</td>
 				<td>\(H^n(B;\Z)\)</td>
@@ -869,13 +875,25 @@
 				<td>\(H^2(B;\Z)\)</td>
 				<td>twisting of phases (monopoles, quantum Hall effect)</td>
 			</tr>
+			<tr>
+				<td>Chern \(c_i\)</td>
+				<td>complex bundles of rank \(n\), \(i\le n\)</td>
+				<td>\(H^{2i}(B;\Z)\)</td>
+				<td>the top one, \(c_n\), is the Euler class of the bundle seen as a real one</td>
+			</tr>
+			<tr>
+				<td>Pontryagin \(p_i\)</td>
+				<td>real bundles</td>
+				<td>\(H^{4i}(B;\Z)\)</td>
+				<td>for a closed 4-manifold, \(\langle p_1(TM), [M]\rangle\) is three times the signature</td>
+			</tr>
 		</tbody>
 	</table>
 </div>
 
 <p>
-	There are higher Stiefel–Whitney classes \(w_i\), higher Chern classes \(c_i\) and Pontryagin classes \(p_i\);
-	<Cite k="milnor-stasheff1974" loc="§4, §9, §14, §15" text /> is the classic guide. We look more closely
+	The higher classes \(w_i\), \(c_i\) and \(p_i\) get no more than their row in this book;
+	<Cite k="milnor-stasheff1974" loc="§4, §9, §14, §15" text /> is the classic guide to all of them. We look more closely
 	at the one that physics needs most, \(c_1\).
 </p>
 

@@ -46,7 +46,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'angle-defect',
 		term: 'Angle defect',
-		def: 'At a corner of a polyhedron, the amount by which the angles of the faces meeting there fall short of a full turn of \\(360°\\). A cube has defect \\(90°\\) at each corner; a corner can also have negative defect.',
+		def: 'At a corner of a polyhedron, the amount by which the angles of the faces meeting there fall short of a full turn, \\(360°\\) (or \\(2\\pi\\) in radians). A cube has defect \\(90°\\) at each corner; a corner can also have negative defect. The defects of a closed polyhedron add up to \\(360°\\cdot\\chi\\), that is \\(2\\pi\\chi\\): the polyhedral Gauss–Bonnet theorem of Chapter 4.8.',
 		chapter,
 		anchor: 'eulers-formula',
 		see: ['descartes-theorem']

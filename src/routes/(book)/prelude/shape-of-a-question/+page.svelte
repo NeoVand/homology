@@ -218,8 +218,8 @@
 
 <p>
 	Try it for the other solids in the figure below. A tetrahedron (triangular pyramid): \(4 - 6 + 4 = 2\). An
-	icosahedron, with its twenty triangles: \(12 - 30 + 20 = 2\). The football, with 60 corners, 90 seams and 32
-	panels: \(60 - 90 + 32 = 2\). Every time, the answer is 2. This is <strong>Euler’s polyhedron formula</strong>
+	icosahedron, with its twenty triangles: \(12 - 30 + 20 = 2\). And one that is not in the figure, a football,
+	with 60 corners, 90 seams and 32 panels: \(60 - 90 + 32 = 2\). Every time, the answer is 2. This is <strong>Euler’s polyhedron formula</strong>
 	<Cite k="euler1758" />, and it holds for every polyhedron that is, topologically, a ball — however many faces it
 	has, however irregular they are.
 </p>
@@ -475,7 +475,7 @@
 		<strong>Part II, Shapes.</strong> Topological spaces, gluing, homotopy, manifolds, simplicial complexes and the
 		Euler characteristic.
 	</li>
-	<li><strong>Part III, Homology.</strong> Cycles and boundaries, chains, homology groups, computation, invariance, exact sequences and persistence.</li>
+	<li><strong>Part III, Homology.</strong> Cycles and boundaries, chains, homology groups, computation, invariance, exact sequences, knots and links, and persistence.</li>
 	<li><strong>Part IV, Cohomology.</strong> Cochains, cohomology groups, differential forms, de Rham cohomology, cup products, Poincaré duality, sheaves and characteristic classes.</li>
 	<li><strong>Part V, The Bigger Picture.</strong> Categories and functors, homological algebra, and where the road leads next.</li>
 </ul>

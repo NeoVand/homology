@@ -110,7 +110,7 @@
 		triangles glued along their edges; in homology the gluing instructions become algebra. The words we write around the edges of
 		a square in this chapter — like \(aba^{-1}b^{-1}\) for the torus — will turn, almost literally, into the boundary formulas that
 		compute homology in <Ref to="homology/computing" />. The twist in the Klein bottle’s word \(abab^{-1}\) will reappear there as a
-		mysterious \(\Z/2\). And gluing is an instance of one of the book’s four big ideas: <strong>quotients</strong>, making new
+		mysterious \(\Z/2\). And gluing is an instance of one of the book’s four recurring ideas: <strong>quotients</strong>, making new
 		things by declaring different things the same.
 	</p>
 </Ahead>
@@ -511,8 +511,8 @@
 	{#snippet caption()}
 		Two pictures of the Klein bottle and two of the projective plane, each with its double curve in rose. Boy’s surface is a
 		smooth immersion with a single triple point; the cross-cap is simpler to describe but has two pinch points, where it fails to
-		be smooth. With colour as a fourth coordinate, the sheets crossing at each rose point get different colours: in four
-		dimensions they never touch.
+		be smooth. For the two Klein bottles, colour can show a fourth coordinate: the sheets crossing at each rose point get different
+		colours, and in four dimensions they never touch.
 	{/snippet}
 </Figure>
 

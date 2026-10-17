@@ -465,7 +465,7 @@
 			pointless, but it plays the role that the number \(1\) plays for multiplication.
 		</li>
 		<li>
-			If \(A\subseteq X\), the <em>inclusion</em> \(\iota\colon A\to X\), \(\iota(a) = a\) (\(\iota\) is the Greek letter iota),
+			If \(A\subseteq X\), the <em>inclusion</em> \(i\colon A\to X\), \(i(a) = a\) (some books write \(\iota\), the Greek letter iota),
 			regards each element of \(A\) as an element of the bigger set \(X\).
 		</li>
 		<li>
@@ -903,7 +903,7 @@
 		A fine violinist, born in St Petersburg, Cantor taught at Halle from 1869 until he retired, and from there founded set theory,
 		the language of this chapter. His first proof that the real numbers cannot be listed, published in 1874, used a
 		different argument; the diagonal one above came seventeen years later. Not everyone welcomed infinite sets. Leopold Kronecker
-		treated Cantor’s 1877 paper on dimension with such suspicion that it appeared only after Richard Dedekind intervened, and Cantor
+		treated Cantor’s paper on dimension (written in 1877, printed in 1878) with such suspicion that it appeared only after Richard Dedekind intervened, and Cantor
 		never sent that journal another paper. From 1884 he suffered recurring depression, and in his bad spells he turned from
 		mathematics to his conviction that Francis Bacon had written Shakespeare’s plays.
 	</p>

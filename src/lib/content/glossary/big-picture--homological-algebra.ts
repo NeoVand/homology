@@ -73,7 +73,7 @@ export const entries: GlossaryEntry[] = [
 		def: '\\(\\Ext(A,G)\\) is the cohomology in degree 1 of \\(\\Hom(F_\\bullet,G)\\), for a free resolution \\(F_\\bullet\\) of \\(A\\). It measures how \\(\\Hom(-,G)\\) fails to be exact and classifies extensions: \\(\\Ext(\\Z/n,G)\\cong G/nG\\) and \\(\\Ext(\\Z,G) = 0\\).',
 		chapter,
 		anchor: 'def-tor-ext',
-		see: ['tor', 'extension', 'universal-coefficient-theorems']
+		see: ['ext-group', 'tor', 'extension', 'universal-coefficient-theorems']
 	},
 	{
 		key: 'extension',
@@ -97,7 +97,7 @@ export const entries: GlossaryEntry[] = [
 		def: '\\(H_n(X;G)\\cong(H_n(X)\\otimes G)\\oplus\\Tor(H_{n-1}(X),G)\\) and \\(H^n(X;G)\\cong\\Hom(H_n(X),G)\\oplus\\Ext(H_{n-1}(X),G)\\). Integral homology determines (co)homology with any coefficients; the splittings exist but are not natural.',
 		chapter,
 		anchor: 'thm-uct',
-		see: ['tor', 'ext']
+		see: ['universal-coefficient-theorem', 'tor', 'ext']
 	},
 	{
 		key: 'kunneth-theorem',

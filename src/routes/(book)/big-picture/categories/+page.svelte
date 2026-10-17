@@ -531,7 +531,7 @@
 <h2 id="contravariance">When arrows turn around</h2>
 
 <p>
-	One of the four ideas this book keeps restaging is the <em>reversal of arrows</em>. Preimages ran backwards along functions (<Ref
+	One of the book’s four recurring ideas is the <em>reversal of arrows</em>. Preimages ran backwards along functions (<Ref
 		to="foundations/sets-and-functions"
 	/>); the transpose of a matrix ran backwards along a linear map (<Ref to="foundations/linear-algebra" />); differential forms were
 	<Term t="pullback">pulled back</Term> along smooth maps (<Ref to="cohomology/differential-forms" />); and cochains, the measurements

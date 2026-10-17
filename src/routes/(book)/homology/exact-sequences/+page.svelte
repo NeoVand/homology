@@ -449,7 +449,7 @@
 <h2 id="torus-and-klein">Doughnuts and bottles</h2>
 
 <p>
-	The torus and the Klein bottle are made from the same square, with the left and right sides glued straight for the torus and with a flip for the Klein bottle (<Ref to="topology/gluing" />). Mayer–Vietoris sees the difference through one tiny number.
+	The torus and the Klein bottle are made from the same square (<Ref to="topology/gluing" />). Here we turn that square a quarter turn, so that in both spaces the top and bottom are glued straight, and the left and right sides are glued straight for the torus and with a flip for the Klein bottle. Mayer–Vietoris sees the difference through one tiny number.
 </p>
 
 <p>
@@ -816,7 +816,7 @@
 			title: 'Leopold Vietoris (1891–2002)',
 			author: 'Heinrich Reitberger, Notices of the AMS 49 (2002)',
 			url: 'https://www.ams.org/notices/200210/fea-vietoris.pdf',
-			note: 'Five pages on the life of the man in the name: a thesis finished in a prisoner-of-war camp, the birth of the Mayer–Vietoris sequence in his and Mayer’s own words, the Vietoris complex of the next chapter, and a research paper written at 103.',
+			note: 'Five pages on the life of the man in the name: a thesis finished in a prisoner-of-war camp, the birth of the Mayer–Vietoris sequence in his and Mayer’s own words, the Vietoris complex of the persistence chapter, and a research paper written at 103.',
 			kind: 'paper',
 			free: true
 		}

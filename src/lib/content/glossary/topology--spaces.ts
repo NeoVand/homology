@@ -166,7 +166,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'path',
 		term: 'Path',
-		def: 'A continuous map \\(\\gamma \\colon [0, 1] \\to X\\): a journey through \\(X\\) from \\(\\gamma(0)\\) to \\(\\gamma(1)\\).',
+		def: 'A continuous map \\(\\gamma \\colon [0, 1] \\to X\\): a journey through \\(X\\) from \\(\\gamma(0)\\) to \\(\\gamma(1)\\), timing included. It may cross itself, double back or stand still.',
 		chapter,
 		anchor: 'def-connected',
 		see: ['path-connected']
@@ -218,5 +218,13 @@ export const entries: GlossaryEntry[] = [
 		chapter,
 		anchor: 'def-hausdorff',
 		see: ['neighbourhood']
+	},
+	{
+		key: 'knot',
+		term: 'Knot',
+		def: 'A smooth closed curve in \\(\\R^3\\) (or \\(S^3\\)) that does not cross itself. As a space every knot is a circle; what distinguishes knots is how they sit in space, up to ambient isotopy.',
+		chapter,
+		anchor: 'knots',
+		see: ['link', 'ambient-isotopy']
 	}
 ];

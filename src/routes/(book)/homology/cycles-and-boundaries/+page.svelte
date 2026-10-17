@@ -691,6 +691,10 @@
 			<tr><td>two points</td><td>2</td><td>0</td><td>0</td><td>two pieces</td></tr>
 			<tr><td>circle (hollow triangle)</td><td>1</td><td>1</td><td>0</td><td>one loop that bounds nothing</td></tr>
 			<tr><td>disk (filled triangle)</td><td>1</td><td>0</td><td>0</td><td>the loop is filled in</td></tr>
+			<tr><td>the bow-tie graph</td><td>1</td><td>5</td><td>0</td><td>five face rims, a basis of the cycles</td></tr>
+			<tr><td>straw (cylinder)</td><td>1</td><td>1</td><td>0</td><td>one hole, seen from both ends</td></tr>
+			<tr><td>trousers</td><td>1</td><td>2</td><td>0</td><td>three rims; the waist is the sum of the cuffs</td></tr>
+			<tr><td>T-shirt</td><td>1</td><td>3</td><td>0</td><td>four rims, any three independent</td></tr>
 			<tr><td>sphere</td><td>1</td><td>0</td><td>1</td><td>every loop bounds; one void</td></tr>
 			<tr><td>torus (surface)</td><td>1</td><td>2</td><td>1</td><td>meridian, longitude; one void</td></tr>
 			<tr><td>solid torus (doughnut)</td><td>1</td><td>1</td><td>0</td><td>the meridian now bounds a slice</td></tr>

@@ -229,7 +229,7 @@
 </p>
 
 <p>
-	Thicken the knot \(K\) into a thin solid tube \(N\) around it. The tube is a <dfn>solid torus</dfn>, a circle’s worth of disks, and its homology is that of its core circle, \(H_1(N)\cong\Z\). Let \(E\) be the rest of the sphere. Then \(E\) has the same homology as \(S^3\setminus K\), since the gap between \(E\) and the knot is a thin layer that can be pushed onto \(E\)’s edge. The two pieces \(N\) and \(E\) meet along the surface of the tube, a torus \(T\), with \(H_1(T)\cong\Z^2\) (<Ref to="homology/exact-sequences" hash="torus-and-klein" />). On that torus live two special loops: a <dfn>meridian</dfn> \(\mu\), which goes once around the tube, and a <dfn>longitude</dfn> \(\lambda\), which runs once along it. Together they generate \(H_1(T)\).
+	Thicken the knot \(K\) into a thin solid tube \(N\) around it. The tube is a <dfn>solid torus</dfn>, a circle’s worth of disks, and its homology is that of its core circle, \(H_1(N)\cong\Z\). Let \(E\) be the rest of the sphere. Then \(E\) has the same homology as \(S^3\setminus K\), since the gap between \(E\) and the knot is a thin layer that can be pushed onto \(E\)’s edge. The two pieces \(N\) and \(E\) meet along the surface of the tube, a torus \(T\), with \(H_1(T)\cong\Z^2\) (<Ref to="homology/exact-sequences" hash="torus-and-klein" />). On that torus live two special loops: a <Term t="knot-meridian">meridian</Term> \(\mu\), which goes once around the tube, and a <dfn>longitude</dfn> \(\lambda\), which runs once along it. Together they generate \(H_1(T)\).
 </p>
 
 <Figure num="3.7.4" title="Two loops on a thickened knot" hint="Choose a knot and what to show · drag to turn it">
@@ -397,7 +397,7 @@
 </p>
 
 <p>
-	The Seifert surface also makes Section 4 concrete. If a loop \(\gamma\) in the complement pierces the surface, count the piercings with signs, \(+1\) when \(\gamma\) passes through from one side to the other and \(-1\) when it comes back. The count does not change as \(\gamma\) moves, and it equals the linking number \(\operatorname{lk}(\gamma, K)\). The surface is a fence, in the language of <Ref to="cohomology/poincare-duality" />, and counting how often a loop climbs over it realises the isomorphism \(H_1(S^3\setminus K)\cong\Z\).
+	The Seifert surface also makes Section 4 concrete. If a loop \(\gamma\) in the complement pierces the surface, count the piercings with signs, \(+1\) when \(\gamma\) passes through from one side to the other and \(-1\) when it comes back. The count does not change as \(\gamma\) moves, and it equals the linking number \(\operatorname{lk}(\gamma, K)\). The surface is a fence, in the language of <Ref to="cohomology/cohomology-groups" hash="fences-and-pairing" />, and counting how often a loop climbs over it realises the isomorphism \(H_1(S^3\setminus K)\cong\Z\).
 </p>
 
 <History title="Fibres and surfaces" people="seifert">
@@ -509,7 +509,7 @@
 <h2 id="khovanov">Khovanov homology: homology returns</h2>
 
 <p>
-	Look at the bracket again. It is a sum over the \(2^n\) vertices of a cube, with signs and powers of a variable. <Ref to="homology/homology-groups" /> taught us to recognise such sums: an alternating sum of dimensions is an Euler characteristic, and an Euler characteristic is the shadow of a homology theory. In 1999 Mikhail Khovanov built the homology whose shadow is the Jones polynomial <Cite k="khovanov2000" />.
+	Look at the bracket again. It is a sum over the \(2^n\) vertices of a cube, with signs and powers of a variable. <Ref to="homology/homology-groups" /> taught us to recognise such sums: an alternating sum of dimensions is an Euler characteristic, and an Euler characteristic is the shadow of a homology theory. Mikhail Khovanov built the homology whose shadow is the Jones polynomial, in a paper posted in 1999 and published in 2000 <Cite k="khovanov2000" />.
 </p>
 
 <p>
@@ -533,7 +533,7 @@
 </Theorem>
 
 <p>
-	For the trefoil, the \(8\) states carry \(30\) basis vectors in all, and only four survive in homology, one each in bidegrees \((0,1)\), \((0,3)\), \((2,5)\) and \((3,9)\). The Euler characteristic is \(q + q^{3} + q^{5} - q^{9} = (q + q^{-1})(q^2 + q^6 - q^8)\), which is \(q + q^{-1}\) times \(V_{3_1}(q^2)\). This is <Ref to="homology/homology-groups" hash="euler-poincare" />’s theorem, that the Euler characteristic of a chain complex equals that of its homology, now with a second grading.
+	For the trefoil, the \(8\) states carry \(30\) basis vectors in all, and only four survive in homology, one each in bidegrees \((0,1)\), \((0,3)\), \((2,5)\) and \((3,9)\). The Euler characteristic is \(q + q^{3} + q^{5} - q^{9} = (q + q^{-1})(q^2 + q^6 - q^8)\), which is \(q + q^{-1}\) times \(V_{3_1}(q^2)\). This is the Euler–Poincaré theorem of <Ref to="homology/homology-groups" hash="euler-poincare" />, that the Euler characteristic of a chain complex equals that of its homology, now with a second grading.
 </p>
 
 <Figure num="3.7.8" title="The Khovanov cube" hint="Choose a diagram · switch between chain groups and homology">
@@ -681,7 +681,7 @@
 
 <Exercise level={3} title="The trefoil group and its quotients">
 	<p>
-		The trefoil’s group is \(G = \langle x, y\mid xyx = yxy\rangle\). (a) Find a homomorphism from \(G\) onto the permutation group \(S_3\), and conclude that \(G\) is not abelian. (b) Let \(a = xy\) and \(b = xyx\). Show that \(a\) and \(b\) generate \(G\) and that \(a^3 = b^2\). (c) Deduce that \(a^3\) commutes with every element of \(G\), and that \(a^3\ne1\).
+		The trefoil’s group is \(G = \langle x, y\mid xyx = yxy\rangle\). (a) Find a homomorphism from \(G\) onto the permutation group \(S_3\), the triangle group \(D_3\) of <Ref to="foundations/groups" />, and conclude that \(G\) is not abelian. (b) Let \(a = xy\) and \(b = xyx\). Show that \(a\) and \(b\) generate \(G\) and that \(a^3 = b^2\). (c) Deduce that \(a^3\) commutes with every element of \(G\), and that \(a^3\ne1\).
 	</p>
 	{#snippet solution()}
 		<p>

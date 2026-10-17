@@ -31,7 +31,7 @@
 		season: [2, 1, -1, 3, 0, 1],
 		consistent: [1, 2, 3, 1, -2, 2],
 		rps: [1, 1, -1, 0, 0, 0],
-		cycle: [0, 0, -1, -1, -1, 1]
+		cycle: [-1, -1, -2, -3, -3, 3]
 	};
 	let preset = $state<Preset>('season');
 	let margins = $state<number[]>([...presets.season]);

@@ -33,14 +33,6 @@ export const entries: GlossaryEntry[] = [
 		anchor: 'slopes-in-two-directions'
 	},
 	{
-		key: 'gradient',
-		term: 'Gradient',
-		def: 'The vector \\(\\nabla f = (\\partial f/\\partial x, \\partial f/\\partial y)\\) of partial derivatives. It points straight uphill, is perpendicular to the level curves of \\(f\\), and its length is the steepness.',
-		chapter,
-		anchor: 'slopes-in-two-directions',
-		see: ['exterior-derivative']
-	},
-	{
 		key: 'vector-field',
 		term: 'Vector field',
 		def: 'A choice of arrow at every point of a region, such as a wind map or a force field: \\(\\mathbf F(x,y) = (P(x,y), Q(x,y))\\). On a surface or manifold the arrows are tangent to it: a section of the tangent bundle (Chapter 4.8).',
@@ -61,20 +53,6 @@ export const entries: GlossaryEntry[] = [
 		def: 'A vector field that is the gradient of a function. Its line integrals depend only on the endpoints, and its integral around every closed loop is zero.',
 		chapter,
 		anchor: 'work-along-a-path'
-	},
-	{
-		key: 'circulation',
-		term: 'Circulation',
-		def: 'The line integral \\(\\oint \\mathbf F\\cdot d\\mathbf r\\) of a field around a closed loop: how much the field pushes you along as you go round.',
-		chapter,
-		anchor: 'circulation-and-curl'
-	},
-	{
-		key: 'curl',
-		term: 'Curl',
-		def: 'Circulation per unit area around a tiny loop; in the plane, \\(\\operatorname{curl}\\mathbf F = \\partial Q/\\partial x - \\partial P/\\partial y\\). A paddle wheel in the flow spins at half this rate.',
-		chapter,
-		anchor: 'circulation-and-curl'
 	},
 	{
 		key: 'flux',

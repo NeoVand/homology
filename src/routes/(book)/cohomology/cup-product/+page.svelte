@@ -562,7 +562,7 @@
 <p>
 	Next we need two cocycles representing a basis of \(H^1(T^2;\Z)\). They are easiest to describe by a
 	picture that goes back to Hatcher’s introduction to cohomology <Cite k="hatcher2002" loc="pp. 186–189" />. Draw a curve on the surface that
-	crosses edges transversally — a <dfn>fence</dfn> — and give it a direction in which crossing it counts
+	crosses edges transversally — a <Term t="fence">fence</Term>, as in <Ref to="cohomology/cohomology-groups" hash="fences-and-pairing" /> — and give it a direction in which crossing it counts
 	\(+1\). The cochain of the fence assigns to each edge the number of times the edge crosses the fence,
 	counted with sign. A fence that closes up is always a cocycle: whenever the fence enters a triangle it
 	must leave it again, so going once around the boundary of the triangle you cross it as often in one
@@ -889,7 +889,9 @@
 
 <p>
 	The <Term t="klein-bottle">Klein bottle</Term> \(K\) is the square glued straight top-to-bottom and with a
-	flip left-to-right. Its mod-2 cohomology groups are \(\Z/2,\ (\Z/2)^2,\ \Z/2\) — exactly the same as the
+	flip left-to-right. This is the square of <Ref to="topology/gluing" /> turned a quarter turn, as in Hatcher’s book, so the
+	twisted edge is now called \(b\); in <Ref to="homology/computing" /> and <Ref to="cohomology/cohomology-groups" /> it was
+	\(a\). Its mod-2 cohomology groups are \(\Z/2,\ (\Z/2)^2,\ \Z/2\) — exactly the same as the
 	torus mod 2. Take \(\alpha\) to be a vertical fence (crossing the edge \(a\)) and \(\beta\) a fence that
 	crosses the twisted edge \(b\). Over \(\Z/2\) the cup products, written as a table, are
 </p>
@@ -1143,7 +1145,7 @@
 
 <Exercise level={3} title="The Klein bottle by hand">
 	<p>
-		Use Hatcher’s model of the Klein bottle: a square with one vertex, edges \(a\) (bottom and top, glued
+		Use Hatcher’s model of the Klein bottle, the one of the text above: a square with one vertex, edges \(a\) (bottom and top, glued
 		straight), \(b\) (left and right, glued with a flip) and the diagonal \(c\), cut into two triangles whose
 		ordered vertices give \(L\): front face \(c\), back face \(b\), long edge \(a\); and \(U\): front face \(b\),
 		back face \(a\), long edge \(c\). Mod 2, the cocycle condition is \(x+y+z=0\) for values \((x,y,z)\) on

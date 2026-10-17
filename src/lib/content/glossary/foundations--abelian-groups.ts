@@ -150,7 +150,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'invariant-factors',
 		term: 'Invariant factors',
-		def: 'The numbers \\(d_1 \\mid d_2 \\mid \\dots \\mid d_k\\) (each dividing the next) in \\(G \\cong \\Z^r \\oplus \\Z/d_1 \\oplus \\dots \\oplus \\Z/d_k\\). They appear on the diagonal when a relation matrix is diagonalised (its Smith normal form).',
+		def: 'For a group, the numbers \\(d_1 \\mid d_2 \\mid \\dots \\mid d_k\\), each at least \\(2\\), in \\(G \\cong \\Z^r \\oplus \\Z/d_1 \\oplus \\dots \\oplus \\Z/d_k\\). For an integer matrix, the nonzero diagonal entries of its Smith normal form (Chapter 1.5); entries equal to \\(1\\) contribute \\(\\Z/1 = 0\\), and the others are the invariant factors of the cokernel.',
 		chapter,
 		anchor: 'classification',
 		see: ['classification-of-abelian-groups', 'relation-matrix']

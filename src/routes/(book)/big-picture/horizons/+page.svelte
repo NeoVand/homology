@@ -157,6 +157,13 @@
 			note: 'Why classifying spaces by listing them is hopeless, and why that leaves one tool: continuous maps. Hence the plan of the series, and of singular homology — probe a space by mapping simple shapes into it.'
 		},
 		{
+			to: 'topology/homotopy',
+			title: 'Algebraic Topology: Algebraic Invariants of Spaces',
+			who: 'Oxford Mathematics (André Henriques)',
+			url: 'https://www.youtube.com/watch?v=YbjJ2wep8o0',
+			note: 'The first hour of a fourth-year Oxford course: the fundamental group as an invariant, and the properties any invariant should have, homotopy invariance above all.'
+		},
+		{
 			to: 'topology/simplicial-complexes',
 			title: 'You Could Have Invented Homology, Part 2: Some Simple Spaces',
 			who: 'Boarbarktree',
@@ -176,13 +183,6 @@
 			who: 'VisualMath (Daniel Tubbenhauer)',
 			url: 'https://www.youtube.com/watch?v=QanLUNiqZW0',
 			note: 'Slides annotated live. A one-dimensional hole is “the number of necklaces you can put it on”, a two-dimensional one “the number of plugs needed to inflate it”; one slide pushes a big loop across triangles until it hugs a small hole.'
-		},
-		{
-			to: 'topology/homotopy',
-			title: 'Algebraic Topology: Algebraic Invariants of Spaces',
-			who: 'Oxford Mathematics (André Henriques)',
-			url: 'https://www.youtube.com/watch?v=YbjJ2wep8o0',
-			note: 'The first hour of a fourth-year Oxford course: the fundamental group as an invariant, and the properties any invariant should have, homotopy invariance above all.'
 		},
 		{
 			to: 'homology/homology-groups',
@@ -810,7 +810,9 @@
 <Exercise level={2} title="Rank something you care about">
 	<p>
 		Choose a small league or tournament where not every pair has played (or any set of pairwise preferences: films, foods, chess
-		openings). Enter five of the teams and six of the games into Figure 5.3.2. How much of the result is explained by a ranking? Is the
+		openings). Pick five teams and six games that fit the pattern of Figure 5.3.2: three teams A, B, C that all played one another,
+		and two more, D and E, with games C–D, D–E and E–A. Enter the score margins, scaled to lie between \(-5\) and \(5\). How much of
+		the result is explained by a ranking? Is the
 		inconsistency local (curl) or global (harmonic)? What would it mean, practically, if the harmonic part were large?
 	</p>
 	{#snippet solution()}
@@ -998,7 +1000,7 @@
 </p>
 
 <p>
-	Along the way the book kept restaging four ideas: <strong>quotients</strong> (identify things — cycles modulo boundaries),
+	Along the way the book kept restaging its four recurring ideas: <strong>quotients</strong> (identify things — cycles modulo boundaries),
 	<strong>kernels and images</strong> (what is crushed, what is reached), <strong>formal sums</strong> (chains as inventories of
 	pieces), and <strong>reversed arrows</strong> (preimages, transposes, pullbacks, cochains). If those four ideas now feel like old
 	friends, then the book has done what Thurston asked of mathematics in the epigraph: helped you understand and think more clearly.

@@ -341,6 +341,49 @@ export const sources: SourceGroup[] = [
 		]
 	},
 	{
+		title: 'Knots and links',
+		intro: 'For Chapter 3.7: from colourings and braids to Khovanov homology.',
+		items: [
+			{
+				title: 'The Knot Book',
+				author: 'Colin C. Adams (1994; AMS reprint 2004)',
+				url: 'https://bookstore.ams.org/view?ProductCode=KNOTBOOK',
+				note: 'The friendliest introduction there is: diagrams, tabulation, invariants, braids and the Jones polynomial, with open problems and pictures on almost every page.',
+				kind: 'book'
+			},
+			{
+				title: 'Knots and Links',
+				author: 'Dale Rolfsen (1976)',
+				url: 'https://bookstore.ams.org/chel-346-h',
+				note: 'The classic geometric treatment, with Seifert surfaces, covering spaces and the Alexander polynomial done properly, and the knot table that everyone still uses.',
+				kind: 'book'
+			},
+			{
+				title: 'An Introduction to Knot Theory',
+				author: 'W. B. Raymond Lickorish (1997)',
+				url: 'https://link.springer.com/book/10.1007/978-1-4612-0691-0',
+				note: 'A concise graduate text: Seifert matrices, the Jones polynomial and Tait’s conjectures, and the 3-manifold side of the story.',
+				kind: 'book'
+			},
+			{
+				title: 'On Khovanov’s categorification of the Jones polynomial',
+				author: 'Dror Bar-Natan (Algebraic & Geometric Topology, 2002)',
+				url: 'https://arxiv.org/abs/math/0201043',
+				note: 'The paper that made Khovanov homology computable and popular: the cube of resolutions explained clearly, with tables for all prime knots up to eleven crossings.',
+				kind: 'paper',
+				free: true
+			},
+			{
+				title: 'KnotInfo and the Knot Atlas',
+				author: 'Charles Livingston and Allison H. Moore; Dror Bar-Natan, Scott Morrison and others',
+				url: 'https://knotinfo.org',
+				note: 'Two searchable tables of knots with their diagrams, braids, polynomials, genus and unknotting numbers; the Knot Atlas (katlas.org) adds Khovanov homology.',
+				kind: 'interactive',
+				free: true
+			}
+		]
+	},
+	{
 		title: 'Persistent homology and data',
 		intro: 'For Chapter 3.8 and beyond.',
 		items: [

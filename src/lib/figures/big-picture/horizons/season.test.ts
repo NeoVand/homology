@@ -28,3 +28,15 @@ describe('HodgeRank figure: the default season', () => {
 		expect(pct(R.energy.harmonic)).toBe(9);
 	});
 });
+
+describe('HodgeRank figure: the presets named in the caption', () => {
+	const split = (m: number[]) => {
+		const games = pairs.map(([a, b], k) => ({ a, b, sa: Math.max(0, m[k]), sb: Math.max(0, -m[k]) }));
+		const R = hodgeRank(5, games);
+		const t = R.energy.total;
+		return [R.energy.gradient / t, R.energy.curl / t, R.energy.harmonic / t].map((x) => Math.round(100 * x));
+	};
+	it('a consistent season is pure gradient', () => expect(split([1, 2, 3, 1, -2, 2])).toEqual([100, 0, 0]));
+	it('rock–paper–scissors is pure curl', () => expect(split([1, 1, -1, 0, 0, 0])).toEqual([0, 100, 0]));
+	it('round the houses is pure harmonic', () => expect(split([-1, -1, -2, -3, -3, 3])).toEqual([0, 0, 100]));
+});

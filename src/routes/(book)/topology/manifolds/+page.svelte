@@ -952,7 +952,7 @@
 	<p>
 		By the last item, \(\RP^2 \mathbin{\#} \RP^2\) is two Möbius bands glued along their boundary circles. That is the Klein bottle: cut a
 		Klein bottle along a suitable circle and it falls apart into two Möbius bands. (Try it on the gluing square: cut along the two lines
-		that run from one twisted edge to the other, a third and two thirds of the way across. The middle strip and the two outer strips,
+		that run from one twisted edge to the other, a third and two thirds of the way across (any two lines placed symmetrically about the middle will do). The middle strip and the two outer strips,
 		which join up across the straight gluing, each have their ends glued with a twist.) So \(K \cong \RP^2 \mathbin{\#} \RP^2\).
 	</p>
 </Example>
@@ -1017,7 +1017,7 @@
 <div class="table-wrap">
 	<table>
 		<thead>
-			<tr><th>Surface</th><th>Orientable</th><th>\(\chi\)</th><th>Edge word</th><th>\(H_1\) (§3.4)</th></tr>
+			<tr><th>Surface</th><th>Orientable</th><th>\(\chi\)</th><th>Edge word</th><th>\(H_1\)</th></tr>
 		</thead>
 		<tbody>
 			<tr><td>sphere \(S^2\)</td><td>yes</td><td>\(2\)</td><td>\(aa^{-1}\)</td><td>\(0\)</td></tr>

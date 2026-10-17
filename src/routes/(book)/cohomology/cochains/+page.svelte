@@ -826,7 +826,10 @@
 	<li>
 		The <strong>gradient part</strong> \(\delta f = (1, 1, 2, -1, 1)\) comes from the heights \(f = (0, 1, 2, 1)\) on vertices \(1, 2, 3, 4\).
 		It is the gradient closest to \(X\) — the one that minimises the total squared error, the “least squares” fit. Read as a ranking, it
-		says \(3 > 2 = 4 > 1\).
+		says \(3 > 2 = 4 > 1\). Finding \(f\) means solving \(\delta^{\mathsf T}\delta f = \delta^{\mathsf T}X\), one equation per vertex.
+		The matrix \(L = \delta^{\mathsf T}\delta\) is the <dfn>graph Laplacian</dfn>: each vertex’s number of edges on the diagonal, and
+		\(-1\) in row \(u\), column \(v\) whenever an edge joins \(u\) and \(v\). Here \(\delta^{\mathsf T}X = (-4, 0, 4, 0)\), and the heights above solve the
+		equations.
 	</li>
 	<li>
 		The <strong>curl part</strong> \((1, 1, -1, 0, 0)\) is one unit of swirl around the filled triangle: \(+1\) along \(1 \to 2\) and

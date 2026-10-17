@@ -1,37 +1,39 @@
 <script lang="ts">
 	// The destination formula, decoded piece by piece. Hover, focus or tap a
 	// piece to read what it means in plain words.
+	import { chapterById } from '$lib/content/toc';
 	type Piece = 'H' | 'eq' | 'ker' | 'over' | 'im';
 	let active = $state<Piece>('H');
 
-	const info: Record<Piece, { title: string; body: string; chapter: string }> = {
+	const info: Record<Piece, { title: string; body: string; chapters: string[] }> = {
 		H: {
 			title: 'the n-dimensional holes of the shape X',
 			body: 'A list of all the essentially different n-dimensional holes of X, packaged so that holes can be added and compared. For n = 1 these are the loops that go around tunnels; for n = 2, the hollow cavities.',
-			chapter: 'Chapter 3.3'
+			chapters: ['homology/homology-groups']
 		},
 		eq: {
 			title: 'is defined to be',
 			body: 'The left side is a new name; the right side says how to build it.',
-			chapter: 'Chapter 0.2'
+			chapters: ['prelude/reading-math']
 		},
 		ker: {
 			title: 'the cycles: pieces with no boundary',
 			body: 'All the closed loops (and closed surfaces, and their higher cousins) you can draw on X out of its building blocks — anything whose boundary is empty. The ∂ is the “boundary” operator; “ker” collects what it sends to zero.',
-			chapter: 'Chapter 3.2'
+			chapters: ['homology/chains']
 		},
 		over: {
 			title: 'modulo: treat these as zero',
 			body: 'Divide out: two cycles count as the same when they differ by something on the right-hand side. This is the same move as calling 13 o’clock and 1 o’clock the same hour.',
-			chapter: 'Chapter 1.2 & 1.4'
+			chapters: ['foundations/equivalence', 'foundations/abelian-groups']
 		},
 		im: {
 			title: 'the boundaries: cycles that enclose something',
 			body: 'All the cycles that are the edge of a filled-in piece of X, one dimension up. They enclose a region of the shape itself, so they surround no hole.',
-			chapter: 'Chapter 3.1'
+			chapters: ['homology/cycles-and-boundaries']
 		}
 	};
 	const order: Piece[] = ['H', 'eq', 'ker', 'over', 'im'];
+	const where = (ids: string[]) => ids.map((id) => `§${chapterById.get(id)?.num} ${chapterById.get(id)?.title}`).join(' and ');
 </script>
 
 <div class="decoder">
@@ -52,7 +54,7 @@
 	<div class="explain">
 		<div class="e-title p-{active}">{info[active].title}</div>
 		<p>{info[active].body}</p>
-		<div class="e-where ui">explained fully in {info[active].chapter}</div>
+		<div class="e-where ui">explained fully in {where(info[active].chapters)}</div>
 	</div>
 </div>
 

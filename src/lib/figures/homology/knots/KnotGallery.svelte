@@ -12,7 +12,7 @@
 	import type { V3 } from '$lib/knots/diagram';
 	import { closedCurve } from './kit';
 
-	const shown = ['unknot', '3_1', '4_1', '5_1', '5_2', '6_1', '6_2', '6_3', 'granny', 'square', 'hopf', 'solomon', 'whitehead', 'borromean'];
+	const shown = ['unknot', '3_1', '4_1', '5_1', '7_1', '5_2', '6_1', '6_2', '6_3', 'granny', 'square', 'hopf', 'solomon', 'whitehead', 'borromean'];
 	let id = $state('3_1');
 	let parted = $state(false);
 	const k = $derived(knotById.get(id)!);

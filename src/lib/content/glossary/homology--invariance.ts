@@ -4,6 +4,14 @@ const chapter = 'homology/invariance';
 
 export const entries: GlossaryEntry[] = [
 	{
+		key: 'retraction',
+		term: 'Retraction',
+		def: 'A continuous map \\(r\\colon X\\to A\\) onto a subspace that fixes every point of \\(A\\). There is no retraction of the disk \\(D^n\\) onto its boundary sphere \\(S^{n-1}\\), and that is what proves Brouwer’s fixed point theorem.',
+		chapter,
+		anchor: 'def-retraction',
+		see: ['deformation-retraction', 'brouwer-fixed-point-theorem']
+	},
+	{
 		key: 'chain-map',
 		term: 'Chain map',
 		def: 'A family of homomorphisms \\(\\varphi_k\\colon C_k\\to C\'_k\\) between two chain complexes that commutes with the boundary: \\(\\partial\\circ\\varphi = \\varphi\\circ\\partial\\). It sends cycles to cycles and boundaries to boundaries, so it induces maps on homology.',

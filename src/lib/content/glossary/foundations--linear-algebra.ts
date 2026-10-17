@@ -168,7 +168,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'pivot',
 		term: 'Pivot',
-		def: 'The leading 1 of a nonzero row in reduced row echelon form. The number of pivots is the rank; the columns without pivots correspond to free variables, one kernel vector each.',
+		def: 'The leading 1 of a nonzero row in reduced row echelon form. The number of pivots is the rank; the columns without pivots correspond to free variables, one kernel vector each. Over \\(\\Z\\) (Chapters 1.5 and 3.4) a pivot is any nonzero entry used to clear its row and column, and it need not be 1.',
 		chapter,
 		anchor: 'row-reduction'
 	},
