@@ -132,7 +132,7 @@
 <p>Now the hero of the chapter. On the <Term t="punctured-plane">punctured plane</Term> \(\R^2\setminus 0\) (the plane with the origin removed) consider</p>
 \[ \omega \;=\; \frac{-y\,dx + x\,dy}{x^2 + y^2} . \]
 <p>Away from the origin, the polar angle \(\theta\) of a point can be chosen to vary smoothly, at least on any region that does not go all the way around. On the right half-plane \(x > 0\), for example, \(\theta = \arctan(y/x)\). Let us check that its differential is \(\omega\). The derivative of \(\arctan u\) is \(1/(1 + u^2)\), so by the chain rule</p>
-\[ \frac{\partial}{\partial x}\arctan\frac{y}{x} = \frac{1}{1 + y^2/x^2}\cdot\Big(-\frac{y}{x^2}\Big) = \frac{-y}{x^2 + y^2}, \qquad \frac{\partial}{\partial y}\arctan\frac{y}{x} = \frac{1}{1 + y^2/x^2}\cdot\frac{1}{x} = \frac{x}{x^2+y^2}, \]
+\[ \frac{\partial}{\partial x}\arctan\frac{y}{x} = \frac{1}{1 + y^2/x^2}\cdot\Bigl(-\frac{y}{x^2}\Bigr) = \frac{-y}{x^2 + y^2}, \qquad \frac{\partial}{\partial y}\arctan\frac{y}{x} = \frac{1}{1 + y^2/x^2}\cdot\frac{1}{x} = \frac{x}{x^2+y^2}, \]
 <p>and these are exactly the coefficients of \(\omega\). On other half-planes a different formula for the angle does the same job (on the upper half-plane, \(\theta = \operatorname{arccot}(x/y)\), say), and two such formulas differ by a constant where both are defined, so they have the same differential. That is why this form is called the <Term t="angle-form">angle form</Term> and is written \(d\theta\). Being locally the differential of a function, it is closed: \(d\omega = d(d\theta) = 0\). (You can also check \(\partial_x Q = \partial_y P\) directly; it was the last exercise of the previous chapter.) Its field \((P, Q)\) is the vortex of Figure 4.3.2: it circles the origin with strength \(1/r\), and has no curl anywhere.</p>
 
 <p>And yet around the unit circle, \(x = \cos t\), \(y = \sin t\), we have \(\omega = (\sin^2 t + \cos^2 t)\,dt = dt\), so</p>
@@ -356,7 +356,7 @@
 
 <Exercise level={2} title="Same class on the circle">
 	<p>Show that \((1 + \cos\theta)\,d\theta\) and \(d\theta\) are cohomologous on \(S^1\). Which multiple of \([d\theta]\) is the class of \((3 + \sin 2\theta)\,d\theta\)?</p>
-	{#snippet solution()}<p>Their difference is \(\cos\theta\,d\theta = d(\sin\theta)\), and \(\sin\theta\) is a genuine (periodic) function on the circle, so the difference is exact. For the second form, integrate: \(\int_0^{2\pi}(3 + \sin 2\theta)\,d\theta = 6\pi\), while \(\int d\theta = 2\pi\); so the class is \(3[d\theta]\). Indeed \((3 + \sin 2\theta)\,d\theta - 3\,d\theta = d\big(-\tfrac12\cos 2\theta\big)\).</p>{/snippet}
+	{#snippet solution()}<p>Their difference is \(\cos\theta\,d\theta = d(\sin\theta)\), and \(\sin\theta\) is a genuine (periodic) function on the circle, so the difference is exact. For the second form, integrate: \(\int_0^{2\pi}(3 + \sin 2\theta)\,d\theta = 6\pi\), while \(\int d\theta = 2\pi\); so the class is \(3[d\theta]\). Indeed \((3 + \sin 2\theta)\,d\theta - 3\,d\theta = d\bigl(-\tfrac12\cos 2\theta\bigr)\).</p>{/snippet}
 </Exercise>
 
 <Exercise level={2} title="Two holes, two dimensions">
