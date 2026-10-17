@@ -27,6 +27,7 @@
 	import WrapTear from '$lib/figures/topology/spaces/WrapTear.svelte';
 	import CupToDonut from '$lib/figures/topology/spaces/CupToDonut.svelte';
 	import LetterLab from '$lib/figures/topology/spaces/LetterLab.svelte';
+	import OneCircleManyKnots from '$lib/figures/topology/spaces/OneCircleManyKnots.svelte';
 
 	const reading = [
 		{
@@ -693,15 +694,34 @@
 	{/snippet}
 </Figure>
 
-<Warning title="Homeomorphic does not mean “deformable inside space”">
-	<p>
-		Our mug-to-doughnut film happens inside ordinary three-dimensional space, but a homeomorphism need not. Tie a knot in a piece
-		of string and glue its ends: you get a trefoil knot, which cannot be untangled into a round circle inside space without
-		cutting it. Yet the knot and the circle <em>are</em> homeomorphic: walk along each and pair up the points in order. A
-		homeomorphism compares the spaces themselves, not the way they happen to sit in the room. (How shapes sit inside space is
-		the subject of knot theory.)
-	</p>
-</Warning>
+<h3>Knots: one circle, many ways to sit in space</h3>
+
+<p>
+	Our mug-to-doughnut film happens inside ordinary space, but a homeomorphism need not. Take a piece of string, tie a knot in it,
+	and glue the two ends together. What you hold is a <dfn>knot</dfn>: a closed loop sitting in space. The simplest true knot,
+	the <em>trefoil</em>, cannot be untangled into a round ring without cutting the string; anyone who has fought a tangled cable
+	believes this, and later in the book we will prove it. Yet the trefoil and the circle are homeomorphic. Walk once around each
+	and pair up the points in order: the pairing is continuous both ways, a perfect stretching. In Figure 2.1.8 every point of the
+	knot wears the colour of its partner on the circle, and the colours run round the knot in the same order as round the wheel.
+</p>
+
+<Figure num="2.1.8" title="One circle, many knots" hint="Choose a knot · play or scrub to force it round · drag to turn it">
+	<OneCircleManyKnots />
+	{#snippet caption()}
+		A circle coloured like a wheel, and a knot whose points carry the colours of the points they came from: the knot is the
+		circle, bent. The slider slides every point straight towards its place on a round circle. A trefoil or a
+		figure-eight gets there only by passing through itself at one moment (the rose glow): a continuous movie of points may do
+		that, a string may not. The tangled loop comes apart without it, because it was never knotted. The moment is found by
+		computing a knot invariant, the Jones polynomial, all along the way.
+	{/snippet}
+</Figure>
+
+<p>
+	So a homeomorphism compares spaces themselves, not the way they sit in the room: as a space, every knot is just a circle.
+	What makes a knot a knot is how it is <em>placed</em>, and two knots count as the same knot only when one can be moved to the
+	other through space without the string ever passing through itself, a much stricter sameness than homeomorphism. Telling
+	knots apart is the business of knot theory, and it will call on almost every idea in this book.
+</p>
 
 <p>
 	Being homeomorphic behaves like a sameness should. Every space is homeomorphic to itself (use the identity); if \(X \cong Y\)
@@ -850,11 +870,11 @@
 <p>
 	The alphabet is a perfect playground. Think of each capital letter as a space — a shape made of thin strokes. Which letters
 	are homeomorphic? Removing points tells them apart: an end of a stroke is never a cut point; a point in the middle of a stroke
-	that lies on no loop cuts the letter in two; a junction where three strokes meet can cut it into three. In Figure 2.1.8, snip
+	that lies on no loop cuts the letter in two; a junction where three strokes meet can cut it into three. In Figure 2.1.9, snip
 	points out of letters and count.
 </p>
 
-<Figure num="2.1.8" title="The Letter Lab" hint="Pick a letter · click a point of it to remove that point">
+<Figure num="2.1.9" title="The Letter Lab" hint="Pick a letter · click a point of it to remove that point">
 	<LetterLab />
 	{#snippet caption()}
 		Removing a junction of T leaves three pieces, but no single point of O leaves more than one. The numbers of free ends, of

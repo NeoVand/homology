@@ -642,6 +642,69 @@ export function glowTube(
 	return g;
 }
 
+const gradientVertex = /* glsl */ `
+	attribute vec3 color;
+	varying vec3 vNormal;
+	varying vec3 vWorldPos;
+	varying vec3 vColor;
+	void main() {
+		vec4 wp = modelMatrix * vec4(position, 1.0);
+		vWorldPos = wp.xyz;
+		vNormal = normalize(mat3(modelMatrix) * normal);
+		vColor = color;
+		gl_Position = projectionMatrix * viewMatrix * wp;
+	}
+`;
+
+/**
+ * A glow tube whose colour changes along its length: `colorAt(u)` gives the
+ * colour at the fraction u ∈ [0, 1] of the way along. Used to show a map of a
+ * circle onto a curve: points of the same colour correspond.
+ */
+export function gradientTube(
+	curve: THREE.Curve<THREE.Vector3>,
+	colorAt: (u: number) => THREE.Color,
+	o: { radius?: number; segments?: number; closed?: boolean; haloScale?: number; intensity?: number; radialSegments?: number } = {}
+): THREE.Group {
+	const radius = o.radius ?? 0.05;
+	const segs = o.segments ?? 400;
+	const rs = o.radialSegments ?? 10;
+	const g = new THREE.Group();
+	const paint = (geo: THREE.TubeGeometry) => {
+		const uv = geo.getAttribute('uv');
+		const col = new Float32Array(uv.count * 3);
+		for (let i = 0; i < uv.count; i++) {
+			const c = colorAt(uv.getX(i));
+			col.set([c.r, c.g, c.b], i * 3);
+		}
+		geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+		return geo;
+	};
+	const core = new THREE.Mesh(
+		paint(new THREE.TubeGeometry(curve, segs, radius, rs, o.closed ?? true)),
+		new THREE.ShaderMaterial({
+			vertexShader: gradientVertex,
+			fragmentShader: glowCoreFragment.replace('uniform vec3 uColor;', 'varying vec3 vColor;').replaceAll('uColor', 'vColor'),
+			uniforms: { uIntensity: { value: o.intensity ?? 1 }, uOpacity: { value: 1 } }
+		})
+	);
+	core.renderOrder = 5;
+	const halo = new THREE.Mesh(
+		paint(new THREE.TubeGeometry(curve, segs, radius * (o.haloScale ?? 2.6), rs, o.closed ?? true)),
+		new THREE.ShaderMaterial({
+			vertexShader: gradientVertex,
+			fragmentShader: haloFragment.replace('uniform vec3 uColor;', 'varying vec3 vColor;').replaceAll('uColor', 'vColor'),
+			uniforms: { uIntensity: { value: o.intensity ?? 1 } },
+			transparent: true,
+			depthWrite: false,
+			blending: THREE.AdditiveBlending
+		})
+	);
+	halo.renderOrder = 6;
+	g.add(core, halo);
+	return g;
+}
+
 /** Recolour a glow tube/point group in place. */
 export function setGlowColor(root: THREE.Object3D, c: PaletteName | number | string, intensity?: number) {
 	const col = shaderColor(c);

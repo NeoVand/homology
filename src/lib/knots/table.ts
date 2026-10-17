@@ -43,3 +43,6 @@ export const knots: TableKnot[] = [
 ];
 
 export const knotById = new Map(knots.map((k) => [k.id, k]));
+
+/** a loop that looks tangled but is an unknot: the closure of σ₁σ₂⁻¹σ₁⁻¹σ₂, settled */
+export const tangledUnknot = () => settled('unknot-tangled');

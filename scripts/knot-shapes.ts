@@ -14,4 +14,10 @@ for (const k of knots) {
 	out[k.id] = comps.map((c) => c.map((p) => p.map((x) => Math.round(x * 1000) / 1000)));
 	console.log(k.id, comps.map((c) => c.length).join('+'), `${Date.now() - t} ms`);
 }
+// a loop that looks tangled but is an unknot (it comes undone without passing through itself)
+{
+	const comps = relax(braidClosure(3, [1, -2, -1, 2]), { per: 150, steps: 900, size: 1.8 });
+	out['unknot-tangled'] = comps.map((c) => c.map((p) => p.map((x) => Math.round(x * 1000) / 1000)));
+	console.log('unknot-tangled', comps[0].length);
+}
 writeFileSync(new URL('../src/lib/knots/shapes.json', import.meta.url), JSON.stringify(out));

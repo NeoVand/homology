@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { L } from './laurent';
 import { diagramOf, mirror } from './diagram';
-import { torusKnot, figureEight, unknot, borromean, braidClosure } from './curves';
+import { torusKnot, figureEight, unknot, borromean, braidClosure, sampleClosed } from './curves';
 import { jones, alexander, determinant, colourings, linkingNumber, seifertGenus } from './invariants';
 import { khovanov, eulerCharacteristic } from './khovanov';
-import { knots, knotById } from './table';
-import { relax } from './relax';
+import { knots, knotById, tangledUnknot } from './table';
+import { untie } from './untie';
+import { relax, resample } from './relax';
 
 const poly = L.from;
 
@@ -137,5 +138,16 @@ describe('the table of knots', () => {
 		const s = diagramOf(knotById.get('square')!.build());
 		expect(L.eq(alexander(g), alexander(s))).toBe(true);
 		expect(L.eq(jones(g), jones(s))).toBe(false);
+	});
+});
+
+describe('untying by force', () => {
+	const C = sampleClosed((t) => [1.7 * Math.cos(2 * Math.PI * t), 1.7 * Math.sin(2 * Math.PI * t), 0], 200);
+	it('the trefoil and the figure-eight must pass through themselves once; the tangled unknot never', () => {
+		expect(untie(resample(torusKnot(2, 3)[0], 200), C, 80).events.length).toBe(1);
+		expect(untie(resample(figureEight()[0], 200), C, 80).events.length).toBe(1);
+		const u = untie(resample(tangledUnknot()[0], 200), C, 80);
+		expect(u.events.length).toBe(0);
+		expect(L.eq(jones(diagramOf(tangledUnknot())), L.one())).toBe(true);
 	});
 });
