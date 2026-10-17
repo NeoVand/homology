@@ -116,7 +116,7 @@
 			x: 520,
 			y: 640,
 			group: 'applied',
-			text: 'Homology across scales, recorded as barcodes, and stable under noise (§3.7). Applied to proteins, materials, images, voting maps and more; persistent cohomology gives circular coordinates for data (§5.3).',
+			text: 'Homology across scales, recorded as barcodes, and stable under noise (§3.8). Applied to proteins, materials, images, voting maps and more; persistent cohomology gives circular coordinates for data (§5.3).',
 			refs: [{ title: 'Ghrist, Barcodes: the persistent topology of data', url: 'https://www.ams.org/journals/bull/2008-45-01/S0273-0979-07-01191-3/' }, { title: 'Otter et al., A roadmap for the computation of persistent homology', url: 'https://arxiv.org/abs/1506.08903' }]
 		},
 		{

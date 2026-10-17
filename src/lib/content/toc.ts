@@ -252,8 +252,18 @@ export const parts: Part[] = [
 				minutes: 45
 			},
 			{
-				id: 'homology/persistence',
+				id: 'homology/knots',
 				num: '3.7',
+				title: 'Knots and Links',
+				subtitle: 'Tangled circles, and what homology can and cannot see',
+				blurb:
+					'Knots, their diagrams and Reidemeister’s moves; colourings, the knot group and braids; Seifert surfaces; the Alexander and Jones polynomials; and Khovanov homology, which turns the Jones polynomial back into homology.',
+				prereqs: ['homology/exact-sequences', 'topology/homotopy', 'topology/manifolds'],
+				minutes: 70
+			},
+			{
+				id: 'homology/persistence',
+				num: '3.8',
 				title: 'Persistent Homology',
 				subtitle: 'The shape of data',
 				blurb:

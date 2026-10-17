@@ -1,4 +1,4 @@
-// Works cited in §3.7 Persistent homology. DOIs checked against Crossref; urls opened.
+// Works cited in §3.8 Persistent homology. DOIs checked against Crossref; urls opened.
 // (reitberger2002 is in exact-sequences.ts, borsuk1948 in sheaves.ts.)
 import type { Work } from '../index';
 

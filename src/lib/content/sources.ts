@@ -342,7 +342,7 @@ export const sources: SourceGroup[] = [
 	},
 	{
 		title: 'Persistent homology and data',
-		intro: 'For Chapter 3.7 and beyond.',
+		intro: 'For Chapter 3.8 and beyond.',
 		items: [
 			{
 				title: 'Topology and data',

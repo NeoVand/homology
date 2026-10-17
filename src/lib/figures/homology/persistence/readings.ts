@@ -1,4 +1,4 @@
-// Annotated reading list for §3.7 (FurtherReading items).
+// Annotated reading list for §3.8 (FurtherReading items).
 export interface Reading {
 	title: string;
 	author: string;
@@ -68,7 +68,7 @@ export const readings: Reading[] = [
 		title: 'Introduction to Persistent Homology (video)',
 		author: 'Matthew Wright (2016)',
 		url: 'https://www.youtube.com/watch?v=2PSqWBIrn90',
-		note: 'An animated introduction for viewers with no algebraic topology, drawing the growing complex and the barcode side by side — like Figure 3.7.6 in motion. It accompanies a three-page paper in the SoCG 2016 proceedings.',
+		note: 'An animated introduction for viewers with no algebraic topology, drawing the growing complex and the barcode side by side — like Figure 3.8.6 in motion. It accompanies a three-page paper in the SoCG 2016 proceedings.',
 		kind: 'video',
 		free: true
 	},

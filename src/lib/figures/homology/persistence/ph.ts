@@ -1,4 +1,4 @@
-// The persistence engine behind the figures of §3.7.
+// The persistence engine behind the figures of §3.8.
 //
 // Conventions (as in the text): coefficients ℤ/2; the RADIUS convention, so a
 // Vietoris–Rips edge {p, q} appears at r = |p − q| / 2 (the moment the two
