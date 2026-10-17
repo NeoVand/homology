@@ -50,6 +50,7 @@ export {
 	SigmaIcon as NotationIcon,
 	Telescope01Icon as AheadIcon,
 	PencilEdit01Icon as ExerciseIcon,
+	MountainSnowIcon as ConjectureIcon,
 	// pages
 	ThreeDRotateIcon as InteractIcon,
 	Stairs01Icon as StepsIcon,

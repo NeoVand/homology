@@ -90,6 +90,7 @@
 			<kbd class="hide-md">/</kbd>
 		</button>
 		<a class="hide-xs" href={href('/map/')} class:active={is('/map/')}>Map</a>
+		<a class="hide-sm" href={href('/problems/')} class:active={is('/problems/')}>Problems</a>
 		<a href={href('/glossary/')} class:active={is('/glossary/')}>Glossary</a>
 		<a class="hide-sm" href={href('/notation/')} class:active={is('/notation/')}>Notation</a>
 		<a class="hide-sm" href={href('/sources/')} class:active={is('/sources/')}>Sources</a>

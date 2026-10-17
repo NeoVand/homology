@@ -5,6 +5,8 @@
 // In a chapter, cite a work with  <Cite k="hatcher2002" loc="§2.1" />.  The
 // chapter's reference list is built from those tags when the site is built.
 
+import { problemByKey } from '../conjectures';
+
 export type WorkKind = 'book' | 'paper' | 'notes' | 'video' | 'web' | 'interactive' | 'letter' | 'thesis';
 
 export interface Work {
@@ -90,8 +92,10 @@ export function workLink(w: Work): string | undefined {
 /** keys cited in a chunk of Svelte source, in order of first appearance */
 export function citedKeys(source: string): string[] {
 	const seen = new Set<string>();
-	for (const m of source.matchAll(/<Cite\b[^>]*?\bk="([^"]+)"/g)) {
-		for (const k of m[1].split(',').map((s) => s.trim())) if (k) seen.add(k);
+	// a <Conjecture k="…"> box cites the sources listed with its problem
+	for (const m of source.matchAll(/<(Cite|Conjecture)\b[^>]*?\bk="([^"]+)"/g)) {
+		const keys = m[1] === 'Cite' ? m[2].split(',') : (problemByKey.get(m[2].trim())?.cite ?? []);
+		for (const k of keys.map((s) => s.trim())) if (k) seen.add(k);
 	}
 	return [...seen];
 }

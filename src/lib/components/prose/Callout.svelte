@@ -1,6 +1,7 @@
 <script lang="ts" module>
 	import {
 		AheadIcon,
+		ConjectureIcon,
 		DefinitionIcon,
 		ExampleIcon,
 		HistoryIcon,
@@ -30,6 +31,7 @@
 		| 'question'
 		| 'notation'
 		| 'ahead'
+		| 'conjecture'
 		| 'proof';
 
 	type IconNode = typeof RemarkIcon;
@@ -50,6 +52,7 @@
 		question: { label: 'Pause and ponder', color: 'var(--rose)', icon: QuestionIcon },
 		notation: { label: 'Notation', color: 'var(--blue)', icon: NotationIcon },
 		ahead: { label: 'Where this is going', color: 'var(--teal)', icon: AheadIcon },
+		conjecture: { label: 'Conjecture', color: 'var(--rose)', icon: ConjectureIcon },
 		proof: { label: 'Proof', color: 'var(--ink-dim)', icon: null }
 	};
 </script>
@@ -195,6 +198,14 @@
 		font-size: 1.1em;
 		line-height: 1.6;
 		color: #e2d6bf;
+	}
+
+	/* an open question: a faint glow from the summit not yet climbed */
+	.k-conjecture {
+		background:
+			radial-gradient(110% 120% at 100% 0%, rgba(242, 141, 182, 0.09), transparent 60%),
+			linear-gradient(90deg, color-mix(in srgb, var(--c) 7%, transparent), transparent 55%),
+			rgba(12, 14, 30, 0.78);
 	}
 
 	.k-remark,

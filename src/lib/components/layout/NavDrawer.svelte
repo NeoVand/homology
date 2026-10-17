@@ -69,6 +69,7 @@
 			<div class="extras ui">
 				<a href={href('/map/')} onclick={() => (ui.navOpen = false)}>Map of the journey</a>
 				<a href={href('/cheatsheet/')} onclick={() => (ui.navOpen = false)}>The whole story on one page</a>
+				<a href={href('/problems/')} onclick={() => (ui.navOpen = false)}>Open problems</a>
 				<a href={href('/glossary/')} onclick={() => (ui.navOpen = false)}>Glossary</a>
 				<a href={href('/notation/')} onclick={() => (ui.navOpen = false)}>Notation</a>
 				<a href={href('/sources/')} onclick={() => (ui.navOpen = false)}>Sources &amp; further reading</a>

@@ -267,6 +267,8 @@
 	<span class="grp">
 		<a href={href('/cheatsheet/')}>Cheat sheet</a>
 		<span class="sep" aria-hidden="true">·</span>
+		<a href={href('/problems/')}>Open problems</a>
+		<span class="sep" aria-hidden="true">·</span>
 		<a href={href('/sources/')}>Sources<span class="long"> &amp; further reading</span></a>
 		<span class="sep" aria-hidden="true">·</span>
 		<a href="https://github.com/NeoVand/homology" target="_blank" rel="noopener noreferrer">Source code</a>

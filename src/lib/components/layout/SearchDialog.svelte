@@ -8,7 +8,7 @@
 	import { SearchIcon } from '$lib/icons';
 
 	type Item = {
-		type: 'chapter' | 'section' | 'term' | 'symbol';
+		type: 'chapter' | 'section' | 'term' | 'symbol' | 'problem';
 		title: string;
 		html?: string;
 		text: string;
@@ -39,7 +39,7 @@
 		}
 	}
 
-	const typeRank = { chapter: 0, section: 1, term: 2, symbol: 3 } as const;
+	const typeRank = { chapter: 0, section: 1, term: 2, problem: 2, symbol: 3 } as const;
 	const results = $derived.by(() => {
 		if (!items) return [];
 		const toks = norm(q).split(/\s+/).filter(Boolean);
@@ -129,7 +129,7 @@
 			open(results[sel]);
 		}
 	}
-	const labels = { chapter: 'Chapter', section: 'Section', term: 'Glossary', symbol: 'Symbol' };
+	const labels = { chapter: 'Chapter', section: 'Section', term: 'Glossary', symbol: 'Symbol', problem: 'Problem' };
 </script>
 
 {#if ui.searchOpen}
@@ -173,8 +173,8 @@
 					>
 						<span class="tag ui t-{it.type}">{labels[it.type]}</span>
 						<span class="main">
-							<span class="ttl">{#if it.html && it.type !== 'term'}{@html it.html}{:else}{it.title}{/if}</span>
-							{#if it.type === 'term' && it.html}
+							<span class="ttl">{#if it.html && it.type !== 'term' && it.type !== 'problem'}{@html it.html}{:else}{it.title}{/if}</span>
+							{#if (it.type === 'term' || it.type === 'problem') && it.html}
 								<span class="snip">{@html it.html}</span>
 							{:else if it.type === 'symbol'}
 								<span class="snip">{it.text.split(' \\')[0]}</span>
@@ -295,6 +295,9 @@
 	}
 	.t-symbol {
 		color: var(--violet);
+	}
+	.t-problem {
+		color: var(--rose);
 	}
 	.main {
 		display: flex;

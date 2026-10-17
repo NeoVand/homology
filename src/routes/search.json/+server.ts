@@ -2,6 +2,7 @@ import { json } from '@sveltejs/kit';
 import { chapters } from '$lib/content/toc';
 import { glossary } from '$lib/content/glossary';
 import { notation } from '$lib/content/notation';
+import { problems, problemLabel } from '$lib/content/conjectures';
 import { renderMathInText, tex } from '$lib/katex/render';
 
 export const prerender = true;
@@ -25,7 +26,7 @@ function plain(s: string): string {
 
 export function GET() {
 	const items: {
-		type: 'chapter' | 'section' | 'term' | 'symbol';
+		type: 'chapter' | 'section' | 'term' | 'symbol' | 'problem';
 		title: string;
 		/** pre-rendered HTML for the title (may contain KaTeX) */
 		html?: string;
@@ -75,6 +76,18 @@ export function GET() {
 				where: `Notation · ${grp.title}`
 			});
 		}
+	}
+	for (const p of problems) {
+		const ch = chapters.find((c) => c.id === p.chapter);
+		items.push({
+			type: 'problem',
+			title: p.name,
+			text: plain(p.statement),
+			html: renderMathInText(p.statement),
+			path: `/${p.chapter}/`,
+			hash: `cj-${p.key}`,
+			where: ch ? `${problemLabel(p)} · §${ch.num}` : problemLabel(p)
+		});
 	}
 	return json(items);
 }
