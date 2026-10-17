@@ -1,8 +1,10 @@
 <script lang="ts">
 	// Solving A x = b for the rank-1 matrix A = [[1, 2], [2, 4]].
-	// Left: the domain, with the kernel (teal) and — when b is reachable — the
-	// solution set (gold), a copy of the kernel shifted off the origin.
-	// Right: the codomain, with the image (gold line) and the target b.
+	// Left: the domain, with the kernel (solid gold) and — when b is reachable —
+	// the solution set (dashed pale gold), a copy of the kernel shifted off the
+	// origin: a coset of the kernel, so it wears the kernel's colour.
+	// Right: the codomain, with the image (teal line) and the target b (teal when
+	// it lies on the image, rose when it does not).
 	// When b is off the image, a "measurement" y with yA = 0 but y·b ≠ 0
 	// certifies that there is no solution.
 	import Svg from '$lib/components/svg/Svg.svelte';
@@ -15,6 +17,8 @@
 	import { makeView, clipLine, snap2, clamp, tfmt, C, type V2 } from './geom';
 
 	const view = makeView(300, 300, 33);
+	// the solution set is a coset of the kernel: the kernel's gold, paler (and dashed)
+	const GOLD_PALE = '#f9e9c4';
 	let svgL = $state<SVGSVGElement>();
 	let svgR = $state<SVGSVGElement>();
 
@@ -74,7 +78,7 @@
 <div class="sbc" bind:clientWidth={cw}>
 	<div class="pane">
 		<div class="ttl ui">input space: the <TeX tex={'\\mathbf x'} />’s</div>
-		<Svg viewBox="0 0 {view.w} {view.h}" maxHeight={330} bind:svg={svgL} label="The input plane. A teal line through the origin is the kernel of A. When b is reachable, a gold line parallel to it holds all solutions of A x = b. A violet point x can be dragged.">
+		<Svg viewBox="0 0 {view.w} {view.h}" maxHeight={330} bind:svg={svgL} label="The input plane. A solid gold line through the origin is the kernel of A. When b is reachable, a dashed pale-gold line parallel to it holds all solutions of A x = b. A violet point x can be dragged.">
 			{#each grid as g, i (i)}
 				<line x1={g.x1} y1={g.y1} x2={g.x2} y2={g.y2} class="grid" class:axis={g.axis} />
 			{/each}
@@ -85,16 +89,17 @@
 				<line {...sl} class="sol" />
 				<circle cx={view.X(xp[0])} cy={view.Y(xp[1])} r="4.5" class="xp" />
 			{/if}
-			<!-- under the teal kernel line, so the gold solutions line (above it at first) stays clear -->
-			<SvgTeX x={view.X(-2.85)} y={view.Y(1.0)} tex={'\\ker A'} color={C.teal} size={14 * lk} w={60 * lk} />
+			<!-- under the gold kernel line, so the dashed solutions line (above it at first) stays clear -->
+			<SvgTeX x={view.X(-2.85)} y={view.Y(1.0)} tex={'\\ker A'} color={C.gold} size={14 * lk} w={60 * lk} />
 			{#if solvable}
-				<!-- just above the gold line, away from the teal kernel below it -->
+				<!-- just above the dashed line, away from the kernel below it -->
 				{@const lx = clamp(xp[0] + 2.6, -3.2, 3.4)}
-				<SvgTeX x={view.X(lx)} y={view.Y(xp[1] - (lx - xp[0]) / 2 + 0.42 * lk + 0.35)} tex={'\\text{solutions}'} color={C.gold} size={13 * lk} w={90 * lk} />
+				<SvgTeX x={view.X(lx)} y={view.Y(xp[1] - (lx - xp[0]) / 2 + 0.42 * lk + 0.35)} tex={'\\text{solutions}'} color={GOLD_PALE} size={13 * lk} w={90 * lk} />
 			{/if}
-			<Arrow view={view} to={x} color={hit ? C.gold : C.violet} width={2.6} head={10} />
-			<Handle view={view} svg={svgL} pos={x} color={hit ? C.gold : C.violet} label="the input vector x" onmove={setX} />
-			<SvgTeX x={view.X(x[0]) + 16 * lk} y={view.Y(x[1]) - 14 * lk} tex={'\\mathbf x'} color={hit ? C.gold : C.violet} size={15 * lk} w={24 * lk} />
+			<!-- x turns the solution set's pale gold when it is a solution -->
+			<Arrow view={view} to={x} color={hit ? GOLD_PALE : C.violet} width={2.6} head={10} />
+			<Handle view={view} svg={svgL} pos={x} color={hit ? GOLD_PALE : C.violet} label="the input vector x" onmove={setX} />
+			<SvgTeX x={view.X(x[0]) + 16 * lk} y={view.Y(x[1]) - 14 * lk} tex={'\\mathbf x'} color={hit ? GOLD_PALE : C.violet} size={15 * lk} w={24 * lk} />
 		</Svg>
 	</div>
 
@@ -102,7 +107,7 @@
 
 	<div class="pane">
 		<div class="ttl ui">output space: where <TeX tex={'A\\mathbf x'} /> lands</div>
-		<Svg viewBox="0 0 {view.w} {view.h}" maxHeight={330} bind:svg={svgR} label="The output plane. The gold line through the origin is the image of A. A draggable target b is gold when it lies on the image and rose when it does not; then a family of rose level lines of the measurement y = 2u − v shows that b is out of reach.">
+		<Svg viewBox="0 0 {view.w} {view.h}" maxHeight={330} bind:svg={svgR} label="The output plane. The teal line through the origin is the image of A. A draggable target b is teal when it lies on the image and rose when it does not; then a family of rose level lines of the measurement y = 2u − v shows that b is out of reach.">
 			{#each grid as g, i (i)}
 				<line x1={g.x1} y1={g.y1} x2={g.x2} y2={g.y2} class="grid" class:axis={g.axis} />
 			{/each}
@@ -114,11 +119,11 @@
 			{/if}
 			<line {...i1} class="img-halo" />
 			<line {...i1} class="img" />
-			<SvgTeX x={view.X(-2.25)} y={view.Y(-3.2)} tex={'\\operatorname{im} A'} color={C.gold} size={14 * lk} w={60 * lk} />
+			<SvgTeX x={view.X(-2.25)} y={view.Y(-3.2)} tex={'\\operatorname{im} A'} color={C.teal} size={14 * lk} w={60 * lk} />
 			<Arrow view={view} to={ax} color={C.violet} width={2.4} head={10} opacity={0.9} />
-			<Arrow view={view} to={b} color={solvable ? C.gold : C.rose} width={2.6} head={10} dashed={!solvable} />
-			<Handle view={view} svg={svgR} pos={b} color={solvable ? C.gold : C.rose} label="the target vector b" onmove={setB} />
-			<SvgTeX x={view.X(b[0]) + 16 * lk} y={view.Y(b[1]) - 14 * lk} tex={'\\mathbf b'} color={solvable ? C.gold : C.rose} size={15 * lk} w={24 * lk} />
+			<Arrow view={view} to={b} color={solvable ? C.teal : C.rose} width={2.6} head={10} dashed={!solvable} />
+			<Handle view={view} svg={svgR} pos={b} color={solvable ? C.teal : C.rose} label="the target vector b" onmove={setB} />
+			<SvgTeX x={view.X(b[0]) + 16 * lk} y={view.Y(b[1]) - 14 * lk} tex={'\\mathbf b'} color={solvable ? C.teal : C.rose} size={15 * lk} w={24 * lk} />
 		</Svg>
 	</div>
 </div>
@@ -128,13 +133,14 @@
 	{#if solvable}
 		<p class="ok">
 			<strong>Solvable.</strong> One solution is <TeX tex={`\\mathbf x_p = (${tfmt(xp[0])},\\ 0)`} />, and
-			<em>every</em> solution is <TeX tex={`\\mathbf x_p + t\\,(2,-1)`} />: the gold line, a copy of the teal kernel slid
-			over to pass through <TeX tex={'\\mathbf x_p'} />. {#if hit}Your <TeX tex={'\\mathbf x'} /> is one of them.{:else}Drag
-				<TeX tex={'\\mathbf x'} /> onto the gold line and watch <TeX tex={'A\\mathbf x'} /> land on <TeX tex={'\\mathbf b'} />.{/if}
+			<em>every</em> solution is <TeX tex={`\\mathbf x_p + t\\,(2,-1)`} />: the <span class="gp">dashed gold line</span>, a copy
+			of the <span class="g">gold kernel</span> slid over to pass through <TeX tex={'\\mathbf x_p'} />. {#if hit}Your <TeX tex={'\\mathbf x'} /> is one of them.{:else}Drag
+				<TeX tex={'\\mathbf x'} /> onto the dashed line and watch <TeX tex={'A\\mathbf x'} /> land on <TeX tex={'\\mathbf b'} />.{/if}
 		</p>
 	{:else}
 		<p class="no">
-			<strong>No solution.</strong> Whatever <TeX tex={'\\mathbf x'} /> is, <TeX tex={'A\\mathbf x'} /> stays on the gold line.
+			<strong>No solution.</strong> Whatever <TeX tex={'\\mathbf x'} /> is, <TeX tex={'A\\mathbf x'} /> stays on the
+			<span class="t">teal line</span>, the image.
 			The measurement <TeX tex={'y(u,v) = 2u - v'} /> proves it: it gives 0 on both columns,
 			<TeX tex={'y(1,2) = 0'} /> and <TeX tex={'y(2,4) = 0'} />, hence 0 on everything <TeX tex={'A'} /> can reach — but
 			<TeX tex={`y(\\mathbf b) = ${tfmt(yb)} \\neq 0`} />. The rose lines are where <TeX tex={'y'} /> equals 0, ±1, ±2, …
@@ -201,7 +207,8 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		color: var(--gold);
+		/* violet, like the arrow A x it produces (gold is reserved for the kernel) */
+		color: var(--violet);
 		gap: 0.1rem;
 	}
 	.mid .a {
@@ -219,35 +226,40 @@
 	.grid.axis {
 		stroke: rgba(235, 229, 213, 0.26);
 	}
+	/* the kernel: solid gold; its coset, the solution set: dashed pale gold */
 	.ker {
-		stroke: var(--teal);
-		stroke-width: 2.4;
+		stroke: var(--gold-bright);
+		stroke-width: 2.6;
 	}
 	.ker-halo {
-		stroke: var(--teal);
-		stroke-width: 10;
-		opacity: 0.14;
-	}
-	.sol {
-		stroke: var(--gold-bright);
-		stroke-width: 2.6;
-	}
-	.sol-halo {
-		stroke: var(--gold-bright);
-		stroke-width: 11;
-		opacity: 0.18;
-	}
-	.xp {
-		fill: var(--gold-bright);
-	}
-	.img {
-		stroke: var(--gold-bright);
-		stroke-width: 2.6;
-	}
-	.img-halo {
 		stroke: var(--gold-bright);
 		stroke-width: 11;
 		opacity: 0.16;
+	}
+	.sol {
+		stroke: var(--gold-pale);
+		stroke-width: 2.6;
+		stroke-dasharray: 8 5;
+	}
+	.sol-halo {
+		stroke: var(--gold-pale);
+		stroke-width: 11;
+		opacity: 0.12;
+	}
+	.xp {
+		fill: var(--gold-pale);
+		stroke: var(--gold-bright);
+		stroke-width: 1.5;
+	}
+	/* the image: teal */
+	.img {
+		stroke: var(--teal);
+		stroke-width: 2.6;
+	}
+	.img-halo {
+		stroke: var(--teal);
+		stroke-width: 11;
+		opacity: 0.18;
 	}
 	.lvl {
 		stroke: var(--rose);
@@ -270,11 +282,24 @@
 		overflow-y: hidden;
 		padding: 0.2rem 0;
 	}
+	/* solvable = b lies on the (teal) image */
 	.ok strong {
-		color: var(--gold-bright);
+		color: var(--teal);
 	}
 	.no strong {
 		color: var(--rose);
+	}
+	.g {
+		color: var(--gold-bright);
+		font-weight: 600;
+	}
+	.gp {
+		color: var(--gold-pale);
+		font-weight: 600;
+	}
+	.t {
+		color: var(--teal);
+		font-weight: 600;
 	}
 	.read p {
 		margin: 0.5rem 0 0;

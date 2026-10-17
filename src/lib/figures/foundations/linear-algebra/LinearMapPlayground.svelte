@@ -1,7 +1,9 @@
 <script lang="ts">
 	// Drag where the two basis vectors land; the whole grid follows.
-	// When the two columns line up, the plane is flattened: the image (gold)
-	// is a line and the kernel (teal) is a line that gets crushed to 0.
+	// When the two columns line up, the plane is flattened: the image (teal)
+	// is a line and the kernel (gold) is a line that gets crushed to 0.
+	// (The book's colour code: gold = kernel, as cycles will be; teal = image,
+	// as boundaries will be.)
 	import { onMount } from 'svelte';
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
@@ -172,7 +174,7 @@
 			viewBox="0 0 {view.w} {view.h}"
 			maxHeight={520}
 			bind:svg
-			label="A square grid in the plane, deformed by a linear map. Two draggable arrows show where the basis vectors e1 and e2 land; when they line up, the plane flattens onto a gold line and a teal line is crushed to the origin."
+			label="A square grid in the plane, deformed by a linear map. Two draggable arrows show where the basis vectors e1 and e2 land; when they line up, the plane flattens onto a teal line (the image) and a gold line (the kernel) is crushed to the origin."
 		>
 			<defs>
 				<radialGradient id="lmp-vignette" cx="50%" cy="50%" r="70%">
@@ -189,7 +191,8 @@
 			</g>
 
 			{#if rank === 0}
-				<rect x="0" y="0" width={view.w} height={view.h} fill={C.teal} opacity={0.1 * t} />
+				<!-- the zero map: the whole plane is the kernel -->
+				<rect x="0" y="0" width={view.w} height={view.h} fill={C.gold} opacity={0.1 * t} />
 			{/if}
 
 			<!-- the deformed grid -->
@@ -223,7 +226,7 @@
 						y2={view.Y(imageLine[1][1])}
 					/>
 				</g>
-				<text class="tag gold" x={view.X(imgTag[0])} y={view.Y(imgTag[1]) - 10} text-anchor="middle">image</text>
+				<text class="tag teal" x={view.X(imgTag[0])} y={view.Y(imgTag[1]) - 10} text-anchor="middle">image</text>
 			{/if}
 
 			{#if rank === 1 && ghostKernel && kernelNow}
@@ -251,7 +254,7 @@
 				{#each kernelDots as d, i (i)}
 					<circle class="ker-dot" cx={view.X(d[0])} cy={view.Y(d[1])} r="3.6" />
 				{/each}
-				<text class="tag teal" x={view.X(kerTag[0])} y={view.Y(kerTag[1]) + 18} text-anchor="middle">kernel</text>
+				<text class="tag gold" x={view.X(kerTag[0])} y={view.Y(kerTag[1]) + 18} text-anchor="middle">kernel</text>
 			{/if}
 
 			<!-- the origin: where the kernel goes -->
@@ -302,8 +305,8 @@
 				<TeX tex={'\\{\\mathbf 0\\}'} />, and the image is the whole plane.
 				{#if det < 0}The determinant is negative: the map also flips the plane over, like a mirror.{/if}
 			{:else if rank === 1}
-				The columns lie on one line, so the whole plane is flattened onto the <span class="g">gold image line</span>. The
-				<span class="t">teal kernel line</span> is crushed to the single point <TeX tex={'\\mathbf 0'} />. Play the map
+				The columns lie on one line, so the whole plane is flattened onto the <span class="t">teal image line</span>. The
+				<span class="g">gold kernel line</span> is crushed to the single point <TeX tex={'\\mathbf 0'} />. Play the map
 				below to watch it happen.
 			{:else}
 				Every vector is sent to <TeX tex={'\\mathbf 0'} />: the image is a single point and the kernel is the whole plane.
@@ -365,45 +368,47 @@
 		fill: rgba(242, 141, 182, 0.14);
 		stroke: rgba(242, 141, 182, 0.5);
 	}
+	/* image: teal; kernel: gold (the book's colour code) */
 	.img {
-		stroke: var(--gold-bright);
+		stroke: var(--teal);
 		stroke-width: 3;
 		stroke-linecap: round;
 	}
 	.img-halo {
-		stroke: var(--gold-bright);
-		stroke-width: 12;
-		opacity: 0.18;
-		stroke-linecap: round;
-	}
-	.ker-ghost {
-		stroke: var(--teal);
-		stroke-width: 1.5;
-		stroke-dasharray: 5 6;
-		opacity: 0.45;
-	}
-	.ker {
-		stroke: var(--teal);
-		stroke-width: 3;
-		stroke-linecap: round;
-	}
-	.ker-halo {
 		stroke: var(--teal);
 		stroke-width: 12;
 		opacity: 0.2;
 		stroke-linecap: round;
 	}
+	.ker-ghost {
+		stroke: var(--gold-bright);
+		stroke-width: 1.5;
+		stroke-dasharray: 5 6;
+		opacity: 0.55;
+	}
+	.ker {
+		stroke: var(--gold-bright);
+		stroke-width: 3;
+		stroke-linecap: round;
+	}
+	.ker-halo {
+		stroke: var(--gold-bright);
+		stroke-width: 12;
+		opacity: 0.18;
+		stroke-linecap: round;
+	}
 	.ker-dot {
-		fill: #dffaf7;
-		stroke: var(--teal);
+		fill: var(--gold-pale);
+		stroke: var(--gold-bright);
 		stroke-width: 1.5;
 	}
 	.origin {
 		fill: var(--ink-bright);
 	}
+	/* the point the kernel is crushed to */
 	.origin.crushed {
-		fill: var(--teal);
-		filter: drop-shadow(0 0 7px var(--teal));
+		fill: var(--gold-bright);
+		filter: drop-shadow(0 0 7px var(--gold-bright));
 	}
 	.tag {
 		font-family: var(--font-ui);
@@ -477,12 +482,12 @@
 		font-weight: 600;
 	}
 	.cell.img {
-		border: 1px solid rgba(242, 208, 143, 0.55);
-		color: var(--gold-bright);
-	}
-	.cell.ker {
 		border: 1px solid rgba(95, 214, 207, 0.55);
 		color: var(--teal);
+	}
+	.cell.ker {
+		border: 1px solid rgba(242, 208, 143, 0.55);
+		color: var(--gold-bright);
 	}
 	.dimtext {
 		color: var(--ink);

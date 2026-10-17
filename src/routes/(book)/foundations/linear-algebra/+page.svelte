@@ -482,7 +482,7 @@
 	{#snippet caption()}
 		Drag where \(\mathbf e_1\) and \(\mathbf e_2\) land: the whole grid follows, and the matrix \(A\) records the two landing spots as
 		its columns. Try <em>Flatten</em>, or drag one arrow onto the line of the other. The plane collapses onto the
-		<span class="tx-gold">gold line</span> (the image), while the <span class="tx-teal">teal line</span> (the kernel) is crushed to the
+		<span class="tx-teal">teal line</span> (the image), while the <span class="tx-gold">gold line</span> (the kernel) is crushed to the
 		origin. The determinant is the area of the violet parallelogram, the image of the unit square, counted negative when the map flips
 		the plane over (the parallelogram then turns rose); it is \(0\) exactly when the plane is flattened.
 	{/snippet}
@@ -628,7 +628,7 @@
 <p>The kernel deserves several pictures, because homology will lean on all of them.</p>
 <ul>
 	<li>
-		<strong>What gets crushed.</strong> The kernel is everything the map squashes onto the origin: the teal line in the playground
+		<strong>What gets crushed.</strong> The kernel is everything the map squashes onto the origin: the gold line in the playground
 		above.
 	</li>
 	<li>
@@ -675,9 +675,9 @@
 	<ShadowProjection />
 	{#snippet caption()}
 		A rank-2 map of three-dimensional space. Apply it, and every point slides along the slanted direction until it reaches the floor.
-		The <span class="tx-gold">golden floor</span> is the image: 2 dimensions survive. The <span class="tx-teal">teal line</span>
-		through the origin is the kernel, crushed to a single point: 1 dimension is lost. And \(3 = 2 + 1\). The thin teal lines parallel
-		to the kernel collapse to single gold points as well; remember them when we reach quotient spaces.
+		The <span class="tx-teal">teal floor</span> is the image: 2 dimensions survive. The <span class="tx-gold">gold line</span>
+		through the origin is the kernel, crushed to a single point: 1 dimension is lost. And \(3 = 2 + 1\). The thin pale gold lines
+		parallel to the kernel collapse to single teal points as well; remember them when we reach quotient spaces.
 	{/snippet}
 </Figure>
 
@@ -796,7 +796,7 @@
 	\[ \begin{pmatrix} 1 & 2 & 1 & 3 \\ 2 & 4 & 0 & 2 \\ 3 & 6 & 1 & 5 \end{pmatrix} \to \begin{pmatrix} 1 & 2 & 1 & 3 \\ 0 & 0 & -2 & -4 \\ 0 & 0 & -2 & -4 \end{pmatrix}. \]
 	Column 2 has only zeros below row 1, so it gets no pivot. In column 3, the entry \(-2\) in row 2 becomes a pivot after
 	\(R_2 \leftarrow -\tfrac12 R_2\), and then \(R_1 \leftarrow R_1 - R_2\) and \(R_3 \leftarrow R_3 + 2R_2\) clear its column:
-	\[ \to \begin{pmatrix} 1 & 2 & 1 & 3 \\ 0 & 0 & 1 & 2 \\ 0 & 0 & -2 & -4 \end{pmatrix} \to \begin{pmatrix} \cyc{1} & 2 & 0 & 1 \\ 0 & 0 & \cyc{1} & 2 \\ 0 & 0 & 0 & 0 \end{pmatrix}. \]
+	\[ \to \begin{pmatrix} 1 & 2 & 1 & 3 \\ 0 & 0 & 1 & 2 \\ 0 & 0 & -2 & -4 \end{pmatrix} \to \begin{pmatrix} \bdy{1} & 2 & 0 & 1 \\ 0 & 0 & \bdy{1} & 2 \\ 0 & 0 & 0 & 0 \end{pmatrix}. \]
 	Column 4 has only a zero in the one remaining row, so it gets no pivot. Done: two pivots, in columns 1 and 3. You can replay every
 	step in the figure.
 </p>
@@ -804,9 +804,10 @@
 <Figure num="1.5.7" title="Row reduction, one step at a time" hint="Step through">
 	<RowReduction />
 	{#snippet caption()}
-		Each step performs the row operations shown above the matrix; changed rows are tinted, the current pivot glows gold. At the end,
-		the pivots give the rank, the pivot columns <em>of the original matrix</em> give a basis of the image, and each free variable gives
-		a vector of the kernel. Compare the two triangle matrices over \(\Q\) and over \(\Z/2\).
+		Each step performs the row operations shown above the matrix; changed rows are tinted, the current pivot glows, and finished
+		pivots turn teal. At the end the free columns turn gold. The pivots give the rank, the pivot columns <em>of the original
+		matrix</em> give a basis of the <span class="tx-teal">image</span>, and each free variable gives a vector of the
+		<span class="tx-gold">kernel</span>. Compare the two triangle matrices over \(\Q\) and over \(\Z/2\).
 	{/snippet}
 </Figure>
 
@@ -845,7 +846,7 @@
 	is the same as subtracting it. Row reduction becomes: find a 1, swap it into place, and add its row to every other row that has a 1
 	in that column. Here is the “triangle matrix”, whose columns are the three edges of a triangle, each edge recorded by its two
 	corners:
-	\[ \begin{aligned} \begin{pmatrix} 1 & 1 & 0 \\ 1 & 0 & 1 \\ 0 & 1 & 1 \end{pmatrix} &\xrightarrow{R_2 \leftarrow R_2 + R_1} \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 1 & 1 \end{pmatrix} \\[4pt] &\xrightarrow{\substack{R_1 \leftarrow R_1 + R_2 \\ R_3 \leftarrow R_3 + R_2}} \begin{pmatrix} \cyc{1} & 0 & 1 \\ 0 & \cyc{1} & 1 \\ 0 & 0 & 0 \end{pmatrix}. \end{aligned} \]
+	\[ \begin{aligned} \begin{pmatrix} 1 & 1 & 0 \\ 1 & 0 & 1 \\ 0 & 1 & 1 \end{pmatrix} &\xrightarrow{R_2 \leftarrow R_2 + R_1} \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 1 & 1 \end{pmatrix} \\[4pt] &\xrightarrow{\substack{R_1 \leftarrow R_1 + R_2 \\ R_3 \leftarrow R_3 + R_2}} \begin{pmatrix} \bdy{1} & 0 & 1 \\ 0 & \bdy{1} & 1 \\ 0 & 0 & 0 \end{pmatrix}. \end{aligned} \]
 	Rank 2. The free variable \(x_3\) gives the kernel vector \((1,1,1)\): all three edges together, the loop around the triangle. The
 	kernel is \(\set{(0,0,0),\ (1,1,1)}\).
 </p>
@@ -884,8 +885,9 @@
 <Figure num="1.5.8" title="Solutions form a shifted copy of the kernel" hint="Drag b and x">
 	<SolveByCoset />
 	{#snippet caption()}
-		This \(A\) flattens the plane onto its image, the <span class="tx-gold">gold line</span> in the output space. Put \(\mathbf b\) on that
-		line and the solutions appear in the input space: a gold line parallel to the <span class="tx-teal">teal kernel</span>. Drag
+		This \(A\) flattens the plane onto its image, the <span class="tx-teal">teal line</span> in the output space. Put \(\mathbf b\) on that
+		line and the solutions appear in the input space: a dashed, paler gold line parallel to the <span class="tx-gold">gold
+		kernel</span>, a coset of the kernel in the kernel’s colour. Drag
 		\(\mathbf x\) along it and \(A\mathbf x\) stays on \(\mathbf b\). Move \(\mathbf b\) off the line and there is no solution; a
 		<span class="tx-rose">rose measurement</span> appears that proves it, a hint of the duality section to come.
 	{/snippet}
@@ -917,7 +919,7 @@
 <h2 id="quotient-spaces">Quotient spaces: blurring out a subspace</h2>
 
 <p>
-	In the last figure, all the points of one gold line are “the same” as far as \(A\) is concerned, since \(A\) sends them all to the
+	In the last figure, all the points of one dashed gold line are “the same” as far as \(A\) is concerned, since \(A\) sends them all to the
 	same \(\mathbf b\). It is natural to treat each such line as a single object. You have done this kind of thing twice already: in
 	<Ref to="foundations/equivalence" /> you formed <Term t="quotient-set">quotient sets</Term> by declaring equivalent things equal, and in
 	<Ref to="foundations/abelian-groups" /> you formed <Term t="quotient-group">quotient groups</Term> \(G/H\) by collapsing a subgroup.
@@ -944,7 +946,8 @@
 <Figure num="1.5.9" title="The plane modulo a line" hint="Drag p and q">
 	<QuotientPlane />
 	{#snippet caption()}
-		Here \(W\) is the <span class="tx-teal">teal line</span>, and each element of \(\R^2/W\) is a whole line parallel to it. Sliding
+		Here \(W\) is the <span class="tx-gold">gold line</span>, and each element of \(\R^2/W\) is a whole line parallel to it, like the
+		faint gold lines; \(W\) itself is the zero element. Sliding
 		\(\mathbf p\) along its line does not change its coset. Every such line crosses the horizontal axis exactly once, and adding cosets
 		adds the crossing points: \(\R^2/W\) is a copy of the number line, of dimension \(2 - 1 = 1\).
 	{/snippet}
@@ -962,7 +965,7 @@
 </p>
 
 <p>
-	Look back at the shadow figure with this in mind. Each thin teal line, parallel to the kernel, is a coset of the kernel, and the map
+	Look back at the shadow figure with this in mind. Each thin pale gold line, parallel to the kernel, is a coset of the kernel, and the map
 	squashes each of them to a single point of the floor. Different lines land on different points, and every point of the floor is hit.
 	So the cosets of the kernel correspond exactly to the points of the image:
 	\[ V/\ker A \;\cong\; \im A, \]
@@ -1038,8 +1041,8 @@
 	<LightsOut mode="full" />
 	{#snippet caption()}
 		The full machinery, starting from the board with every light on. <em>Solve it</em> presses the shortest solution; switch on
-		<em>show the presses</em> to see it as violet rings. <em>Show a quiet pattern</em> marks a <span class="tx-teal">kernel</span>
-		element with teal dots, and <em>Press it</em> shows that it changes nothing. The two <span class="tx-rose">parity checks</span>
+		<em>show the presses</em> to see it as violet rings. <em>Show a quiet pattern</em> marks a <span class="tx-gold">kernel</span>
+		element with gold rings and dots, and <em>Press it</em> shows that it changes nothing. The two <span class="tx-rose">parity checks</span>
 		decide solvability, as the next section explains. <em>X-ray</em> displays the matrix \(A\) itself. Switch to <em>paint lights</em>
 		to set up any board you like, including unsolvable ones.
 	{/snippet}
@@ -1230,7 +1233,7 @@
 <p>
 	In the figure on solving equations, the measurement \(y(u, v) = 2u - v\) gives 0 on both columns of
 	\(A = \begin{pmatrix}1&2\\2&4\end{pmatrix}\), so \(A^{\mathsf T}y = 0\), and every \(\mathbf b\) with \(y(\mathbf b) \neq 0\) is out
-	of reach. The theorem adds that when every such measurement gives 0, as it does on the gold line, a solution exists.
+	of reach. The theorem adds that when every such measurement gives 0, as it does on the teal line, a solution exists.
 </p>
 
 <p>
@@ -1334,7 +1337,9 @@
 		Every integer matrix \(A\) can be brought, by integer row and column operations, to a diagonal form
 		\[ \begin{gathered} \begin{pmatrix} d_1 & & & \\ & \ddots & & \\ & & d_r & \\ & & & 0 \end{pmatrix}, \\[4pt] d_1 \mid d_2 \mid \cdots \mid d_r, \end{gathered} \]
 		with positive integers \(d_i\), each dividing the next (\(d_1 \mid d_2\) is read “\(d_1\) divides \(d_2\)”), and zeros everywhere
-		else. The numbers \(d_1, \dots, d_r\), called the <dfn>invariant factors</dfn>, depend only on \(A\), not on the operations chosen.
+		else. The numbers \(d_1, \dots, d_r\), called the <dfn>invariant factors</dfn> of the matrix, depend only on \(A\), not on the
+		operations chosen. Those equal to \(1\) contribute \(\Z/1 = 0\) below; the others are the invariant factors of the group, in the
+		sense of <Ref to="foundations/abelian-groups" />.
 		Consequently, for \(A\colon \Z^n \to \Z^m\),
 		\[ \begin{aligned} \Z^m/\im A &\cong \Z/d_1 \oplus \dots \oplus \Z/d_r \oplus \Z^{m-r}, \\ \ker A &\cong \Z^{n-r}. \end{aligned} \]
 	</p>
@@ -1374,7 +1379,8 @@
 	<SmithStepper />
 	{#snippet caption()}
 		Only integer operations: each step is shown above the matrix, remainders become new pivots, and finished diagonal entries turn
-		gold. At the end the figure reads off the cokernel and its <span class="tx-rose">torsion</span>. Try the \(\Z/2 \oplus \Z/3\)
+		teal: in the new bases they generate the image. At the end the figure reads off the <span class="tx-gold">kernel</span> and the
+		<span class="tx-rose">cokernel</span>, with its torsion. Try the \(\Z/2 \oplus \Z/3\)
 		example, where the divisibility rule turns \(\operatorname{diag}(2, 3)\) into \(\operatorname{diag}(1, 6)\), and the
 		\(3 \times 3\) example, whose cokernel \(\Z/2 \oplus \Z/6 \oplus \Z/12\) has \(144 = \abs{\det A}\) elements.
 	{/snippet}
@@ -1383,7 +1389,8 @@
 <p>
 	This is the algorithm behind the <Term t="classification-of-abelian-groups">classification theorem</Term> of
 	<Ref to="foundations/abelian-groups" />: every finitely generated abelian group is
-	\(\Z^r \oplus \Z/d_1 \oplus \dots \oplus \Z/d_k\) with \(d_1 \mid d_2 \mid \cdots\). Describe the group by generators and
+	\(\Z^r \oplus \Z/d_1 \oplus \dots \oplus \Z/d_k\) with \(d_1 \mid d_2 \mid \cdots\). (There \(r\) is the rank of the
+	<em>group</em>, which is \(m\) minus the rank of the relation matrix, and only the factors \(d_i\ge2\) are listed.) Describe the group by generators and
 	relations, write the relations as the columns of a matrix, and the Smith normal form reads off the decomposition. For instance, the
 	group \(\Z^2/\langle (2,4), (6,8) \rangle\), integer pairs modulo the subgroup generated by \((2,4)\) and \((6,8)\), comes from the
 	matrix with those two columns. Its Smith form is \(\operatorname{diag}(2, 4)\), so the group is \(\Z/2 \oplus \Z/4\), with

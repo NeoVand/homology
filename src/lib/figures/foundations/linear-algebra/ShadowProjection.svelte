@@ -1,13 +1,14 @@
 <script lang="ts">
 	// A rank-2 linear map from space to itself: every point slides along one
 	// fixed direction k until it hits the floor, like a shadow cast by slanted
-	// sunlight. The floor is the image (2 dimensions survive); the line through
-	// the origin in direction k is the kernel (1 dimension is crushed to 0).
-	// Every line parallel to k collapses to a single point: those lines are the
-	// "fibres" (cosets of the kernel), and each becomes one point of the image.
+	// sunlight. The floor is the image (teal: 2 dimensions survive); the line
+	// through the origin in direction k is the kernel (gold: 1 dimension is
+	// crushed to 0). Every line parallel to k collapses to a single point: those
+	// lines are the "fibres" (cosets of the kernel, in a paler, thinner gold),
+	// and each becomes one (teal) point of the image.
 	import Scene3D, { type SceneContext } from '$lib/components/three/Scene3D.svelte';
 	import type * as T3 from 'three';
-	import { glassMesh, glowTube, glowPoint, pointCloud, iridescent } from '$lib/three/materials';
+	import { glassMesh, glowTube, glowPoint, pointCloud, iridescent, color } from '$lib/three/materials';
 	import { surfaceGeometry, plane } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
 	import Timeline from '$lib/components/ui/Timeline.svelte';
@@ -29,13 +30,13 @@
 		/** M_t p = p − t·(p_y / k_y)·k : slide toward the floor along k */
 		const mapT = (p: T3.Vector3, tt: number, out: T3.Vector3) => out.copy(p).addScaledVector(k, (-tt * p.y) / k.y);
 
-		// ── the floor: the image of the map ───────────────────────────────
+		// ── the floor: the image of the map (teal) ────────────────────────
 		const floor = glassMesh(surfaceGeometry(plane(4.8, 4.8), 4, 4), {
 			opacity: 0.45,
 			grid: [12, 12],
 			gridStrength: 1.0,
-			gridColor: 'gold',
-			tint: 0x110f09,
+			gridColor: 'teal',
+			tint: 0x08110f,
 			tintMix: 0.72,
 			film: 0.12,
 			rim: 0.1,
@@ -95,12 +96,12 @@
 		cloud.renderOrder = 9;
 		scene.add(cloud);
 
-		// ── the kernel: the line through 0 in direction k ─────────────────
+		// ── the kernel: the line through 0 in direction k (gold) ──────────
 		const L = 2.4;
 		const kernel = new THREE.Group();
 		kernel.add(
 			glowTube(new THREE.LineCurve3(new THREE.Vector3(-L, 0, 0), new THREE.Vector3(L, 0, 0)), {
-				color: 'teal',
+				color: 'gold',
 				radius: 0.035,
 				segments: 8,
 				haloScale: 3.4
@@ -113,15 +114,17 @@
 		const ghostGeo = new THREE.BufferGeometry().setFromPoints([kHat.clone().multiplyScalar(-L), kHat.clone().multiplyScalar(L)]);
 		const ghost = new THREE.Line(
 			ghostGeo,
-			new THREE.LineDashedMaterial({ color: 0x5fd6cf, dashSize: 0.12, gapSize: 0.1, transparent: true, opacity: 0.5 })
+			new THREE.LineDashedMaterial({ color: color('gold'), dashSize: 0.12, gapSize: 0.1, transparent: true, opacity: 0.5 })
 		);
 		ghost.computeLineDistances();
 		scene.add(ghost);
 
-		const origin = glowPoint([0, 0, 0], { color: 'teal', size: 0.055 });
+		// the point the kernel is crushed to
+		const origin = glowPoint([0, 0, 0], { color: 'gold', size: 0.055 });
 		scene.add(origin);
 
-		// ── fibres: other lines parallel to k, each landing on one point ───
+		// ── fibres: other lines parallel to k (cosets of the kernel, pale gold),
+		//    each landing on one point of the image (teal) ──────────────────
 		const fibres = new THREE.Group();
 		const fibreParts: T3.Group[] = [];
 		const feet: [number, number, number][] = [
@@ -130,7 +133,7 @@
 			[1.4, 0, -1.6],
 			[-1.3, 0, -1.4]
 		];
-		const fibreMat = new THREE.LineBasicMaterial({ color: 0x5fd6cf, transparent: true, opacity: 0.55 });
+		const fibreMat = new THREE.LineBasicMaterial({ color: color('goldPale'), transparent: true, opacity: 0.6 });
 		for (const f of feet) {
 			const g = new THREE.Group();
 			g.position.set(...f);
@@ -139,12 +142,12 @@
 			g.add(new THREE.Line(lg, fibreMat));
 			fibres.add(g);
 			fibreParts.push(g);
-			fibres.add(glowPoint(f, { color: 'gold', size: 0.045, halo: 7 }));
+			fibres.add(glowPoint(f, { color: 'teal', size: 0.045, halo: 7 }));
 		}
 		scene.add(fibres);
 
-		const kLabel = label([0, 0, 0], 'kernel', { className: 'teal tag' });
-		label([-1.95, 0.04, 2.05], 'image', { className: 'gold tag' });
+		const kLabel = label([0, 0, 0], 'kernel', { className: 'gold tag' });
+		label([-1.95, 0.04, 2.05], 'image', { className: 'teal tag' });
 
 		const tmp = new THREE.Vector3();
 		function setT(tt: number) {
@@ -202,7 +205,8 @@
 		api?.setFibres(on);
 	});
 
-	const badge = tex('3 = \\underbrace{\\textcolor{#f2d08f}{2}}_{\\text{rank}} + \\underbrace{\\textcolor{#5fd6cf}{1}}_{\\text{nullity}}');
+	// rank (the image) in teal, nullity (the kernel) in gold
+	const badge = tex('3 = \\underbrace{\\textcolor{#5fd6cf}{2}}_{\\text{rank}} + \\underbrace{\\textcolor{#f2d08f}{1}}_{\\text{nullity}}');
 </script>
 
 <Scene3D
@@ -210,7 +214,7 @@
 	height={460}
 	controls={{ autoRotate: true, autoRotateSpeed: 0.45 }}
 	camera={{ position: [4.9, 3.5, 5.6], target: [0, 0.15, 0], fov: 40 }}
-	label="A glass cube floats above a golden floor. Applying a linear map slides every point along one slanted teal direction until it reaches the floor: the cube flattens into its shadow, the teal line through the origin shrinks to a single point, and four thin teal lines parallel to it each collapse to one gold point on the floor."
+	label="A glass cube floats above a teal floor, the image. Applying a linear map slides every point along one slanted gold direction until it reaches the floor: the cube flattens into its shadow, the gold line through the origin (the kernel) shrinks to a single point, and four thin pale-gold lines parallel to it each collapse to one teal point on the floor."
 >
 	<div class="badge ui">{@html badge}</div>
 </Scene3D>

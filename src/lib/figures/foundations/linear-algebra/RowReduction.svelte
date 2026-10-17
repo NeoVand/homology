@@ -64,10 +64,13 @@
 	const colLabels = $derived(Array.from({ length: n }, (_, j) => `x_{${j + 1}}`));
 	const rowLabels = $derived(A.map((_, i) => `R_{${i + 1}}`));
 
+	// The book's colour code: the pivot columns give the image (teal), the free
+	// columns give the kernel (gold). The pivot being worked on keeps the
+	// matrix's own highlight.
 	function cellClass(i: number, j: number): string | undefined {
 		if (cur.pivot && cur.pivot[0] === i && cur.pivot[1] === j) return 'pivot';
-		if (cur.pivots.some((p) => p[0] === i && p[1] === j)) return 'gold';
-		if (last && result.freeCols.includes(j)) return 'teal';
+		if (cur.pivots.some((p) => p[0] === i && p[1] === j)) return 'teal';
+		if (last && result.freeCols.includes(j)) return 'gold';
 		return undefined;
 	}
 
@@ -128,7 +131,7 @@
 				<span class="v"><TeX tex={`${result.rank}`} /> <span class="dim">(number of pivots)</span></span>
 			</div>
 			<div class="s-row">
-				<span class="k gold">image</span>
+				<span class="k teal">image</span>
 				<span class="v">
 					{#if result.pivotCols.length}
 						spanned by the pivot columns of the original matrix:
@@ -139,7 +142,7 @@
 				</span>
 			</div>
 			<div class="s-row">
-				<span class="k teal">kernel</span>
+				<span class="k gold">kernel</span>
 				<span class="v">
 					{#if result.kernelBasis.length}
 						one basis vector per free variable

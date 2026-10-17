@@ -4,6 +4,9 @@
 	//   mode "full": solver, quiet patterns (the kernel), parity checks
 	//                (measurements from the kernel of the transpose), and an
 	//                X-ray of the matrix A.
+	// Colours follow the book's code: quiet patterns (kernel) gold rings and
+	// dots, parity checks (obstructions) rose, the column of A under the pointer
+	// (an element of the image) teal, the solver's presses violet.
 	import { onMount } from 'svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
@@ -216,7 +219,7 @@
 						<Button variant="subtle" onclick={() => pressSequence(quiet)} disabled={quietIdx < 0 || busy}>Press it</Button>
 					</div>
 					<div class="hint">
-						Pressing every teal-dotted button changes nothing at all: each light is toggled an even number of times.
+						Pressing every gold-dotted button changes nothing at all: each light is toggled an even number of times.
 					</div>
 				</div>
 			{/if}
@@ -357,30 +360,38 @@
 			transform: scale(0.92);
 		}
 	}
+	/* quiet patterns (the kernel): a gold ring with a dark band inside it, so that
+	   it still reads on a lit (gold) lamp, and a gold dot ringed in dark */
 	.cell.quiet {
-		box-shadow: inset 0 0 0 2px rgba(95, 214, 207, 0.85);
+		box-shadow:
+			inset 0 0 0 2.5px var(--gold-bright),
+			inset 0 0 0 4.5px rgba(6, 9, 18, 0.85);
 	}
 	.cell.quiet.on {
 		box-shadow:
-			inset 0 0 0 2px rgba(95, 214, 207, 0.85),
+			inset 0 0 0 2.5px var(--gold-bright),
+			inset 0 0 0 4.5px rgba(6, 9, 18, 0.85),
 			0 0 18px -2px rgba(242, 208, 143, 0.55);
 	}
 	.qdot {
 		position: absolute;
-		top: 5px;
-		left: 5px;
-		width: 7px;
-		height: 7px;
+		top: 6px;
+		left: 6px;
+		width: 8px;
+		height: 8px;
 		border-radius: 50%;
-		background: var(--teal);
-		box-shadow: 0 0 6px var(--teal);
+		background: var(--gold-bright);
+		box-shadow:
+			0 0 0 2px rgba(6, 9, 18, 0.9),
+			0 0 8px 1px var(--gold-bright);
 	}
 	.cell.check {
 		outline: 2px dashed var(--rose);
 		outline-offset: -4px;
 	}
+	/* the lights toggled by the hovered button: a column of A, so an element of the image (teal) */
 	.cell.col {
-		outline: 2px solid var(--blue);
+		outline: 2px solid var(--teal);
 		outline-offset: -4px;
 	}
 	.mark {
@@ -505,9 +516,10 @@
 		fill: rgba(116, 169, 255, 0.55);
 	}
 	.mat rect.hcol {
-		fill: rgba(116, 169, 255, 0.12);
+		fill: rgba(95, 214, 207, 0.12);
 	}
+	/* the hovered column of A, an element of the image: teal */
 	.mat rect.one.hcol {
-		fill: var(--gold-bright);
+		fill: var(--teal);
 	}
 </style>

@@ -2,6 +2,9 @@
 	// ℝ² modulo the line W = span{(2, 1)}: each element of the quotient is a
 	// whole line parallel to W. Every such line crosses the horizontal axis
 	// exactly once, so the quotient is "a copy of a line": ℝ²/W ≅ ℝ.
+	// Colours: W plays the part of a kernel (V/ker A ≅ im A comes next), so it is
+	// gold, and its cosets are faint gold lines (W itself is the zero coset).
+	// p is violet, q blue and their sum p + q green.
 	import { onMount } from 'svelte';
 	import Svg from '$lib/components/svg/Svg.svelte';
 	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
@@ -67,7 +70,7 @@
 </script>
 
 <div class="qp" bind:clientWidth={cw}>
-	<Svg viewBox="0 0 {view.w} {view.h}" maxHeight={380} bind:svg label="The plane filled with parallel lines, all parallel to a teal line W through the origin. Two draggable points p and q pick out a violet and a blue line; their sum p plus q picks out a gold line. Each line meets the horizontal axis exactly once.">
+	<Svg viewBox="0 0 {view.w} {view.h}" maxHeight={380} bind:svg label="The plane filled with faint gold lines, all parallel to a bold gold line W through the origin. Two draggable points p and q pick out a violet and a blue line; their sum p plus q picks out a green line. Each line meets the horizontal axis exactly once.">
 		<!-- the family of cosets -->
 		{#each family as o (o.c)}
 			{@const s = seg(o.l)}
@@ -80,20 +83,20 @@
 		<line {...lw} class="w-halo" />
 		<line {...lw} class="w" />
 
-		{#if lpq}<line {...lpq} class="c-halo gold" /><line {...lpq} class="c gold" />{/if}
+		{#if lpq}<line {...lpq} class="c-halo green" /><line {...lpq} class="c green" />{/if}
 		{#if lq}<line {...lq} class="c-halo blue" /><line {...lq} class="c blue" />{/if}
 		{#if lp}<line {...lp} class="c-halo violet" /><line {...lp} class="c violet" />{/if}
 
 		<!-- where each coset crosses the axis: its "address" in ℝ²/W -->
-		<circle cx={xs(f(pq))} cy={view.Y(0)} r="5" class="foot gold" />
+		<circle cx={xs(f(pq))} cy={view.Y(0)} r="5" class="foot green" />
 		<circle cx={xs(f(q))} cy={view.Y(0)} r="5" class="foot blue" />
 		<circle cx={xs(f(p))} cy={view.Y(0)} r="5" class="foot violet" />
 
-		<SvgTeX x={view.X(4.6)} y={view.Y(2.75)} tex={'W'} color={C.teal} size={17 * k} w={30 * k} />
+		<SvgTeX x={view.X(4.6)} y={view.Y(2.75)} tex={'W'} color={C.gold} size={17 * k} w={30 * k} />
 
-		<circle cx={view.X(pq[0])} cy={view.Y(pq[1])} r="5" class="pt gold" />
-		<!-- just below the gold line (which rises to the right), so the label does not sit on it -->
-		<SvgTeX x={view.X(pq[0]) - 18 * k} y={view.Y(pq[1]) + 28 * k} tex={'\\mathbf p+\\mathbf q'} color={C.gold} size={14 * k} w={60 * k} />
+		<circle cx={view.X(pq[0])} cy={view.Y(pq[1])} r="5" class="pt green" />
+		<!-- just below the green line (which rises to the right), so the label does not sit on it -->
+		<SvgTeX x={view.X(pq[0]) - 18 * k} y={view.Y(pq[1]) + 28 * k} tex={'\\mathbf p+\\mathbf q'} color={C.green} size={14 * k} w={60 * k} />
 
 		<Handle {view} {svg} pos={q} color={C.blue} label="the point q" onmove={setQ} />
 		<Handle {view} {svg} pos={p} color={C.violet} label="the point p" onmove={setP} />
@@ -106,7 +109,7 @@
 	<div class="eqs">
 		<span><TeX tex={`\\textcolor{${C.violet}}{\\mathbf p + W}\\ \\text{meets the axis at}\\ {${tfmt(f(p))}}`} /></span>
 		<span><TeX tex={`\\textcolor{${C.blue}}{\\mathbf q + W}\\ \\text{at}\\ {${tfmt(f(q))}}`} /></span>
-		<span><TeX tex={`\\textcolor{${C.gold}}{(\\mathbf p + \\mathbf q) + W}\\ \\text{at}\\ {${tfmt(f(p))}} + ${f(q) < 0 ? `(${tfmt(f(q))})` : tfmt(f(q))} = ${tfmt(f(pq))}`} /></span>
+		<span><TeX tex={`\\textcolor{${C.green}}{(\\mathbf p + \\mathbf q) + W}\\ \\text{at}\\{${tfmt(f(p))}} + ${f(q) < 0 ? `(${tfmt(f(q))})` : tfmt(f(q))} = ${tfmt(f(pq))}`} /></span>
 	</div>
 	<p>
 		{#if same}
@@ -129,8 +132,9 @@
 	.qp {
 		padding: 0.9rem 1rem 0.2rem;
 	}
+	/* the cosets of W: faint copies of W's gold */
 	.fam {
-		stroke: rgba(242, 208, 143, 0.09);
+		stroke: rgba(242, 208, 143, 0.1);
 		stroke-width: 1;
 	}
 	.axis {
@@ -142,11 +146,11 @@
 		stroke-width: 1;
 	}
 	.w {
-		stroke: var(--teal);
+		stroke: var(--gold-bright);
 		stroke-width: 2.6;
 	}
 	.w-halo {
-		stroke: var(--teal);
+		stroke: var(--gold-bright);
 		stroke-width: 11;
 		opacity: 0.16;
 	}
@@ -165,9 +169,9 @@
 	.c-halo.blue {
 		stroke: var(--blue);
 	}
-	.c.gold,
-	.c-halo.gold {
-		stroke: var(--gold-bright);
+	.c.green,
+	.c-halo.green {
+		stroke: var(--green);
 	}
 	.foot {
 		stroke: #0b1122;
@@ -180,9 +184,9 @@
 	.foot.blue {
 		fill: var(--blue);
 	}
-	.foot.gold,
-	.pt.gold {
-		fill: var(--gold-bright);
+	.foot.green,
+	.pt.green {
+		fill: var(--green);
 	}
 	.read {
 		padding: 0.3rem 1.3rem 0.5rem;
@@ -202,6 +206,6 @@
 		min-height: 3.2em;
 	}
 	.g {
-		color: var(--gold-bright);
+		color: var(--green);
 	}
 </style>

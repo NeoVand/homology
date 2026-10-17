@@ -60,8 +60,11 @@
 	const rowLabels = $derived(A.map((_, i) => `R_{${i + 1}}`));
 	const colLabels = $derived(A[0].map((_, j) => `C_{${j + 1}}`));
 
+	// Colours: finished diagonal entries are teal, because in the new bases the
+	// image is d₁ℤ ⊕ d₂ℤ ⊕ …; the kernel is gold and the cokernel (what is left
+	// over, the obstruction) rose, like its torsion.
 	function cellClass(i: number, j: number): string | undefined {
-		if (i === j && i < cur.done) return 'gold';
+		if (i === j && i < cur.done) return 'teal';
 		if (cur.pivot && cur.pivot[0] === i && cur.pivot[1] === j) return 'pivot';
 		return undefined;
 	}
@@ -102,14 +105,14 @@
 				<span class="v"><TeX tex={diagTeX} /> {#if check}<span class="ok"><Mark ok /> agrees with the book’s engine</span>{/if}</span>
 			</div>
 			<div class="s-row">
-				<span class="k gold">cokernel</span>
+				<span class="k rose">cokernel</span>
 				<span class="v">
 					<TeX tex={`\\mathbb Z^{${res.rows}} / \\operatorname{im} A \\;\\cong\\; ${cokernelTeX(res.diagonal, res.rows)}`} />
 					{#if torsion.length}<span class="tor">— torsion: <TeX tex={torsion.map((d) => `\\mathbb Z/${d}`).join(' \\oplus ')} /></span>{/if}
 				</span>
 			</div>
 			<div class="s-row">
-				<span class="k teal">kernel</span>
+				<span class="k gold">kernel</span>
 				<span class="v"><TeX tex={`\\ker A \\;\\cong\\; ${kernelTeX(res.diagonal.length, res.cols)}`} /></span>
 			</div>
 			<div class="s-row">
@@ -211,8 +214,8 @@
 	.k.gold {
 		color: var(--gold-bright);
 	}
-	.k.teal {
-		color: var(--teal);
+	.k.rose {
+		color: var(--rose);
 	}
 	.ok {
 		color: var(--green);
