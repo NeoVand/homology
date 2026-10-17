@@ -1,14 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { L } from './laurent';
 import { diagramOf, mirror } from './diagram';
-import { torusKnot, figureEight, unknot, borromean, braidClosure, sampleClosed } from './curves';
-import { jones, alexander, determinant, colourings, linkingNumber, seifertGenus } from './invariants';
+import { torusKnot, figureEight, unknot, borromean, braidClosure, sampleClosed, plat } from './curves';
+import { jones, alexander, determinant, colourings, linkingNumber, seifertGenus, loopsOf } from './invariants';
 import { khovanov, eulerCharacteristic } from './khovanov';
-import { knots, knotById, tangledUnknot } from './table';
+import { knots, knotById, tangledUnknot, roundTrefoil } from './table';
 import { untie } from './untie';
 import { draw } from './draw';
 import { bestView } from './view';
 import { colouringEquations, isColouring, nullspaceMod } from './colour';
+import { smoothDrawing, joins, loopsOfState } from './smooth';
 import { relax, resample } from './relax';
 
 const poly = L.from;
@@ -194,6 +195,20 @@ describe('flat drawings', () => {
 			const D = diagramOf(k.flat());
 			expect(D.pd.length, k.id).toBe(k.crossings);
 			expect(L.tex(jones(D)), k.id).toBe(L.tex(jones(diagramOf(k.build()))));
+		}
+	});
+});
+
+describe('smoothings, drawn', () => {
+	it('count the same loops as the bracket, and every crossing has its four ends', () => {
+		for (const comps of [roundTrefoil(), figureEight(), torusKnot(2, 2), plat([2, 2, 2, -1, 2])]) {
+			const sd = smoothDrawing(comps);
+			const n = sd.diagram.pd.length;
+			for (let st = 0; st < 1 << n; st++) {
+				const bits = Array.from({ length: n }, (_, c) => (st >> c) & 1);
+				expect(loopsOfState(sd, st).count).toBe(loopsOf(sd.diagram.pd, bits) + sd.diagram.freeLoops);
+				for (let c = 0; c < n; c++) for (const [a, b] of joins(sd, c, bits[c])) expect(a && b).toBeTruthy();
+			}
 		}
 	});
 });
