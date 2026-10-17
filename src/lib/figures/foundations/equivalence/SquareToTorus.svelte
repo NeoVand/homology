@@ -1,129 +1,353 @@
 <script lang="ts">
 	// Teaser for §2.2: identify opposite sides of a square and you get a torus.
-	// Matching symbols mark points that become one point; all four corners
-	// become a single point (transitivity at work).
-	import Svg from '$lib/components/svg/Svg.svelte';
-	import SvgTeX from '$lib/components/svg/SvgTeX.svelte';
-	import GluingSquare from '$lib/components/svg/GluingSquare.svelte';
+	// The square is a flexible sheet. Every pair of points the relation identifies
+	// is joined by a thread; as the sheet rolls and bends, the threads shorten to
+	// nothing and the pairs become single points. Rolling stitches the b-sides
+	// together (the two p's meet, and the corners pair up: 4 → 2), bending
+	// stitches the a-sides (the two q's meet, and the corner pairs meet: 2 → 1).
+	// The geometry is the gluing workshop's torus morph (topology/gluing/morphs.ts),
+	// whose tests check that glued points really do coincide.
+	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
+	import Timeline from '$lib/components/ui/Timeline.svelte';
+	import TeX from '$lib/components/prose/TeX.svelte';
+	import { color, glowPoint } from '$lib/three/materials';
+	import { tex } from '$lib/katex/render';
+	import { presets, edgeSpecs } from '$lib/figures/topology/gluing/morphs';
+	import { ParamSheet, sheetMesh, type P3 } from '$lib/figures/topology/gluing/sheet';
+	import { LineSegments2 } from 'three/addons/lines/LineSegments2.js';
+	import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js';
+	import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+	import type * as THREE_NS from 'three';
 
-	let width = $state(720);
-	const narrow = $derived(width < 560);
+	const torus = presets.torus;
+	const f = torus.f;
+	const PV = 0.65; // the p's sit on the b-sides at this height
+	const QU = 0.68; // the q's sit on the a-sides at this position
 
-	// square position/size and torus centre for both layouts
-	const L = $derived(
-		narrow
-			? { W: 360, H: 560, X: 92, Y: 54, S: 176, tx: 180, ty: 448, ax0: 180, ay0: 300, ax1: 180, ay1: 352, rx: 128, ry: 70 }
-			: { W: 640, H: 330, X: 62, Y: 58, S: 190, tx: 488, ty: 158, ax0: 300, ay0: 150, ax1: 352, ay1: 150, rx: 120, ry: 70 }
+	let t = $state(0);
+	let cw = $state(800);
+	const narrow = $derived(cw < 560);
+
+	// how many distinct points each class has right now (measured in 3D)
+	let counts = $state({ corners: 4, p: 2, q: 2 });
+
+	const stage = $derived(
+		t < 0.015
+			? 'The square. Each thread joins two points that will become one.'
+			: t < 0.42
+				? 'Roll: the threads pull each point of the left side to its partner on the right.'
+				: t < 0.5
+					? 'The b-sides are stitched: a tube. The two p’s are one point, and the corners have paired up.'
+					: t < 0.985
+						? 'Bend: the threads pull the two end circles (the a-sides) together.'
+						: 'Glued: a torus. The two q’s are one point, and all four corners are the single point v.'
 	);
+
+	let api: { render(t: number): void } | null = null;
+
+	function setup(ctx: SceneContext) {
+		const { THREE, scene, camera, invalidate } = ctx;
+		const dpr = Math.min(window.devicePixelRatio || 1, 2);
+		const sheet = new ParamSheet(96, 96);
+		const mesh = sheetMesh(sheet.geometry, { opacity: 0.8, grid: [8, 8], gridStrength: 0.3 });
+		const e = edgeSpecs(torus);
+		mesh.setEdges([e[0], e[1], e[2], e[3]]);
+		const holder = new THREE.Group();
+		holder.add(mesh.group);
+		scene.add(holder);
+
+		// ── threads: thin glowing segments whose ends move with the sheet ─────
+		type Threads = { geo: LineSegmentsGeometry; core: LineMaterial; glow: LineMaterial; group: THREE_NS.Group; buf: Float32Array; n: number };
+		function threads(n: number, col: string, width: number): Threads {
+			const buf = new Float32Array(n * 6);
+			const geo = new LineSegmentsGeometry();
+			geo.setPositions(buf);
+			const c = color(col);
+			const core = new LineMaterial({ color: c, linewidth: width * dpr, transparent: true, depthWrite: false });
+			const glow = new LineMaterial({
+				color: c,
+				linewidth: width * 3.2 * dpr,
+				transparent: true,
+				opacity: 0.3,
+				depthWrite: false,
+				blending: THREE.AdditiveBlending
+			});
+			const group = new THREE.Group();
+			for (const [m, order] of [
+				[glow, 9],
+				[core, 10]
+			] as const) {
+				const l = new LineSegments2(geo, m);
+				l.renderOrder = order;
+				l.frustumCulled = false;
+				group.add(l);
+			}
+			holder.add(group);
+			return { geo, core, glow, group, buf, n };
+		}
+		function setThreads(th: Threads, ends: (k: number, a: P3, b: P3) => void, alpha: (gap: number) => number) {
+			let peak = 0;
+			for (let k = 0; k < th.n; k++) {
+				ends(k, pa, pb);
+				const gap = Math.hypot(pa.x - pb.x, pa.y - pb.y, pa.z - pb.z);
+				peak = Math.max(peak, alpha(gap));
+				th.buf.set([pa.x, pa.y, pa.z, pb.x, pb.y, pb.z], k * 6);
+			}
+			const start = th.geo.attributes.instanceStart as THREE_NS.InterleavedBufferAttribute;
+			start.data.array.set(th.buf);
+			start.data.needsUpdate = true;
+			th.group.visible = peak > 0.01;
+			th.core.opacity = peak;
+			th.glow.opacity = 0.3 * peak;
+		}
+		const pa: P3 = { x: 0, y: 0, z: 0 };
+		const pb: P3 = { x: 0, y: 0, z: 0 };
+		const NB = 9;
+		const NA = 9;
+		const bThreads = threads(NB, 'teal', 1.4); // (0, v) ~ (1, v)
+		const aThreads = threads(NA, 'gold', 1.4); // (u, 0) ~ (u, 1)
+		const pThread = threads(1, 'rose', 2.4);
+		const qThread = threads(1, 'violet', 2.4);
+
+		// ── the marked points ─────────────────────────────────────────────────
+		const corners = [0, 1, 2, 3].map(() => {
+			const g = glowPoint([0, 0, 0], { color: 'ivory', size: 0.055, halo: 8 });
+			holder.add(g);
+			return g;
+		});
+		const ps = [0, 1].map(() => {
+			const g = glowPoint([0, 0, 0], { color: 'rose', size: 0.06, halo: 8 });
+			holder.add(g);
+			return g;
+		});
+		const qs = [0, 1].map(() => {
+			const g = glowPoint([0, 0, 0], { color: 'violet', size: 0.06, halo: 8 });
+			holder.add(g);
+			return g;
+		});
+		const labA: LabelHandle = ctx.label([0, 0, 0], tex('a'), { className: 'gold' });
+		const labB: LabelHandle = ctx.label([0, 0, 0], tex('b'), { className: 'teal' });
+		const labP: LabelHandle = ctx.label([0, 0, 0], tex('p'), { className: 'small' });
+		const labQ: LabelHandle = ctx.label([0, 0, 0], tex('q'), { className: 'small' });
+		const labV: LabelHandle = ctx.label([0, 0, 0], tex('v'), { className: 'small' });
+		labP.el.style.color = 'var(--rose)';
+		labQ.el.style.color = 'var(--violet)';
+
+		const p: P3 = { x: 0, y: 0, z: 0 };
+		const tmp = new THREE.Vector3();
+		let scale = 1;
+		function place(label: LabelHandle, u: number, v: number, tt: number, push: number) {
+			f(u, v, tt, p);
+			tmp.set(p.x - sheet.center.x, p.y - sheet.center.y, p.z - sheet.center.z);
+			const len = tmp.length() || 1;
+			tmp.multiplyScalar(push / len / scale);
+			label.position.set(p.x + tmp.x, p.y + tmp.y, p.z + tmp.z);
+			label.position.applyMatrix4(holder.matrixWorld);
+		}
+		const at = (g: THREE_NS.Object3D, u: number, v: number, tt: number) => {
+			f(u, v, tt, p);
+			g.position.set(p.x, p.y, p.z);
+			g.scale.setScalar(1 / scale);
+			return g.position;
+		};
+		/** number of distinct points among these positions */
+		const distinct = (pts: THREE_NS.Vector3[]) => {
+			const reps: THREE_NS.Vector3[] = [];
+			for (const q of pts) if (!reps.some((r) => r.distanceTo(q) < 0.02)) reps.push(q);
+			return reps.length;
+		};
+
+		api = {
+			render(tt) {
+				sheet.update((u, v, o) => f(u, v, tt, o));
+				// keep the shape framed: scale its on-screen extent to a fixed size
+				const g = sheet.geometry.attributes.position.array as Float32Array;
+				let mx = 0;
+				let my = 0;
+				let mz = 0;
+				const c = sheet.center;
+				for (let i = 0; i < g.length; i += 3) {
+					mx = Math.max(mx, Math.abs(g[i] - c.x));
+					my = Math.max(my, Math.abs(g[i + 1] - c.y));
+					mz = Math.max(mz, Math.abs(g[i + 2] - c.z));
+				}
+				const aspect = camera.aspect || 1.5;
+				const half = Math.max(my, mx / Math.min(1.25, aspect * 0.95), mz * 0.55);
+				scale = 1.55 / Math.max(half, 1e-3);
+				holder.scale.setScalar(scale);
+				holder.position.set(-c.x * scale, -c.y * scale, -c.z * scale);
+				holder.updateMatrixWorld();
+				mesh.setUniform('uEdgeW', 0.095 / scale);
+				mesh.setOutward(sheet.outward);
+
+				// threads: visible while there is a gap to close. The b-threads show from
+				// the start (they are the relation's pairs); the a-threads join in once the
+				// tube has formed, so the square is not covered in a mesh of lines.
+				const closing = (gap: number) => Math.min(1, Math.max(0, (gap - 0.015) / 0.12));
+				const bOn = tt < 0.012 ? 0.55 : 1;
+				const aOn = Math.min(1, Math.max(0, (tt - 0.36) / 0.12));
+				setThreads(
+					bThreads,
+					(k, a, b) => {
+						const v = k / (NB - 1);
+						f(0, v, tt, a);
+						f(1, v, tt, b);
+					},
+					(gap) => bOn * closing(gap)
+				);
+				setThreads(
+					aThreads,
+					(k, a, b) => {
+						const u = k / (NA - 1);
+						f(u, 0, tt, a);
+						f(u, 1, tt, b);
+					},
+					(gap) => aOn * closing(gap)
+				);
+				setThreads(
+					pThread,
+					(_, a, b) => {
+						f(0, PV, tt, a);
+						f(1, PV, tt, b);
+					},
+					(gap) => bOn * closing(gap)
+				);
+				setThreads(
+					qThread,
+					(_, a, b) => {
+						f(QU, 0, tt, a);
+						f(QU, 1, tt, b);
+					},
+					(gap) => Math.max(aOn, tt < 0.012 ? 0.55 : 0) * closing(gap)
+				);
+				for (const th of [bThreads, aThreads, pThread, qThread]) {
+					th.core.resolution.set(ctx.canvas.width, ctx.canvas.height);
+					th.glow.resolution.set(ctx.canvas.width, ctx.canvas.height);
+				}
+
+				// the points, and how many distinct points each class is
+				const cp = (
+					[
+						[0, 0],
+						[1, 0],
+						[1, 1],
+						[0, 1]
+					] as const
+				).map(([u, v], i) => at(corners[i], u, v, tt).clone());
+				const pp = [at(ps[0], 0, PV, tt).clone(), at(ps[1], 1, PV, tt).clone()];
+				const qp = [at(qs[0], QU, 0, tt).clone(), at(qs[1], QU, 1, tt).clone()];
+				const next = { corners: distinct(cp), p: distinct(pp), q: distinct(qp) };
+				if (next.corners !== counts.corners || next.p !== counts.p || next.q !== counts.q) counts = next;
+
+				place(labA, 0.5, 0, tt, 0.34);
+				place(labB, 0, 0.5, tt, 0.34);
+				place(labP, 0, PV, tt, 0.3);
+				place(labQ, QU, 0, tt, 0.3);
+				place(labV, 0, 0, tt, 0.3);
+				labV.show(tt > 0.985);
+				invalidate();
+			}
+		};
+		api.render(t);
+		return {
+			dispose() {
+				api = null;
+			}
+		};
+	}
+
+	$effect(() => {
+		// read t first, so the effect subscribes to it even before the scene exists
+		const tt = t;
+		api?.render(tt);
+	});
+
+	const plural = (n: number) => (n === 1 ? 'point' : 'points');
 </script>
 
-<div bind:clientWidth={width}>
-	<Svg viewBox="0 0 {L.W} {L.H}" maxHeight={narrow ? 620 : 360} label="A square whose opposite sides are glued, and the torus it becomes">
-		<defs>
-			<radialGradient id="tor-fill" cx="50%" cy="38%" r="70%">
-				<stop offset="0" stop-color="#8f7cf7" stop-opacity="0.32" />
-				<stop offset="0.55" stop-color="#6fd6e8" stop-opacity="0.16" />
-				<stop offset="1" stop-color="#ee8fbf" stop-opacity="0.08" />
-			</radialGradient>
-		</defs>
-
-		<GluingSquare preset="torus" x={L.X} y={L.Y} size={L.S} corners />
-
-		<!-- a pair of points on the left/right sides (glued) -->
-		<circle cx={L.X} cy={L.Y + L.S * 0.35} r="6" class="p rose" />
-		<circle cx={L.X + L.S} cy={L.Y + L.S * 0.35} r="6" class="p rose" />
-		<SvgTeX x={L.X + 18} y={L.Y + L.S * 0.35} tex="p" color="var(--rose)" size={16} w={24} h={24} />
-		<SvgTeX x={L.X + L.S - 18} y={L.Y + L.S * 0.35} tex="p" color="var(--rose)" size={16} w={24} h={24} />
-		<!-- a pair on the bottom/top sides (glued) -->
-		<rect x={L.X + L.S * 0.68 - 5.5} y={L.Y - 5.5} width="11" height="11" class="p violet" transform="rotate(45 {L.X + L.S * 0.68} {L.Y})" />
-		<rect x={L.X + L.S * 0.68 - 5.5} y={L.Y + L.S - 5.5} width="11" height="11" class="p violet" transform="rotate(45 {L.X + L.S * 0.68} {L.Y + L.S})" />
-		<SvgTeX x={L.X + L.S * 0.68} y={L.Y + 18} tex="q" color="var(--violet)" size={16} w={24} h={24} />
-		<SvgTeX x={L.X + L.S * 0.68} y={L.Y + L.S - 18} tex="q" color="var(--violet)" size={16} w={24} h={24} />
-		<SvgTeX x={L.X + L.S / 2} y={L.Y + L.S + 50} tex={String.raw`\text{all four corners} \;\to\; \text{one point } v`} color="var(--gold-bright)" size={14} w={260} h={26} />
-
-		<!-- arrow to the torus -->
-		<line x1={L.ax0} y1={L.ay0} x2={L.ax1} y2={L.ay1} class="go" marker-end="url(#arrow-gold)" />
-		{#if narrow}
-			<text x={L.ax0 + 34} y={(L.ay0 + L.ay1) / 2 + 4} class="go-lbl">glue</text>
-		{:else}
-			<text x={(L.ax0 + L.ax1) / 2} y={L.ay0 - 12} class="go-lbl">glue</text>
-		{/if}
-
-		<!-- the torus -->
-		<g>
-			<ellipse cx={L.tx} cy={L.ty} rx={L.rx} ry={L.ry} class="tor" />
-			<path d="M {L.tx - 58} {L.ty - 4} Q {L.tx} {L.ty + 30} {L.tx + 58} {L.ty - 4}" class="hole" />
-			<path d="M {L.tx - 46} {L.ty + 6} Q {L.tx} {L.ty - 18} {L.tx + 46} {L.ty + 6}" class="hole" />
-			<!-- a: around the hole (gold) -->
-			<ellipse cx={L.tx} cy={L.ty + 2} rx={L.rx - 28} ry={L.ry - 24} class="loop gold" />
-			<!-- b: around the tube (teal) -->
-			<path
-				d="M {L.tx - (L.rx - 28)} {L.ty + 2} C {L.tx - (L.rx - 10)} {L.ty + 2}, {L.tx - (L.rx - 6)} {L.ty + 46}, {L.tx - (L.rx - 18)} {L.ty + 56} C {L.tx - (L.rx - 30)} {L.ty + 64}, {L.tx - (L.rx - 46)} {L.ty + 36}, {L.tx - (L.rx - 28)} {L.ty + 2}"
-				class="loop teal"
-			/>
-			<circle cx={L.tx - (L.rx - 28)} cy={L.ty + 2} r="6.5" class="p corner" />
-			<SvgTeX x={L.tx - (L.rx - 10)} y={L.ty - 14} tex="v" color="var(--gold-bright)" size={16} w={24} h={24} />
-			<SvgTeX x={L.tx + 4} y={L.ty + 64} tex="a" color="var(--gold-bright)" size={17} w={24} h={24} />
-			<SvgTeX x={L.tx - (L.rx + 14)} y={L.ty + 46} tex="b" color="var(--teal)" size={17} w={24} h={24} />
-			<!-- p sits on the left/right sides, which become the loop b -->
-			<circle cx={L.tx - 92.75} cy={L.ty + 44.75} r="6" class="p rose" />
-			<SvgTeX x={L.tx - 74} y={L.ty + 46} tex="p" color="var(--rose)" size={16} w={24} h={24} />
-			<!-- q sits on the bottom/top sides, which become the loop a -->
-			<rect x={L.tx + 34 - 5.5} y={L.ty + 46 - 5.5} width="11" height="11" class="p violet" transform="rotate(45 {L.tx + 34} {L.ty + 46})" />
-			<SvgTeX x={L.tx + 50} y={L.ty + 58} tex="q" color="var(--violet)" size={16} w={24} h={24} />
-		</g>
-	</Svg>
+<div class="wrap" bind:clientWidth={cw}>
+	<Scene3D
+		{setup}
+		height={narrow ? 400 : 460}
+		camera={{ position: [0, 1.1, 7.6], fov: 38 }}
+		controls={{ autoRotate: false }}
+		label="A flexible square sheet with its sides marked a and b. Threads join the points to be glued; the sheet rolls into a tube, stitching the b-sides, then bends into a torus, stitching the a-sides"
+	/>
+	{#if !narrow}<div class="stage ui" aria-live="polite">{stage}</div>{/if}
+</div>
+<div class="bar ui">
+	{#if narrow}<div class="stage-line" aria-live="polite">{stage}</div>{/if}
+	<div class="classes" aria-live="polite">
+		<span class="cl"><span class="dot ivory"></span>corners: <b>{counts.corners}</b> {plural(counts.corners)}</span>
+		<span class="cl"><span class="dot rose"></span><TeX tex="p" />: <b>{counts.p}</b> {plural(counts.p)}</span>
+		<span class="cl"><span class="dot violet"></span><TeX tex="q" />: <b>{counts.q}</b> {plural(counts.q)}</span>
+	</div>
+	<Timeline bind:value={t} duration={7} from="square" to="torus" label="Gluing the square into a torus" />
 </div>
 
 <style>
-	div > :global(svg) {
-		padding: 0.6rem 0.4rem 0.4rem;
+	.wrap {
+		position: relative;
 	}
-	.p {
-		stroke: #060912;
-		stroke-width: 1.3;
+	.stage {
+		position: absolute;
+		left: 50%;
+		bottom: 0.6rem;
+		transform: translateX(-50%);
+		width: max-content;
+		max-width: calc(100% - 1.5rem);
+		text-align: center;
+		font-size: 0.78rem;
+		line-height: 1.35;
+		letter-spacing: 0.02em;
+		color: var(--ink-dim);
+		background: rgba(6, 10, 20, 0.66);
+		padding: 0.3rem 0.7rem;
+		border-radius: 8px;
+		pointer-events: none;
 	}
-	.p.rose {
-		fill: var(--rose);
+	.stage-line {
+		text-align: center;
+		font-size: 0.8rem;
+		line-height: 1.4;
+		color: var(--ink-dim);
 	}
-	.p.violet {
-		fill: var(--violet);
+	.bar {
+		display: grid;
+		gap: 0.7rem;
+		padding: 0.8rem 1.2rem 1rem;
+		border-top: 1px solid var(--line-faint);
+		background: rgba(5, 8, 16, 0.45);
 	}
-	.p.corner {
-		fill: url(#vertex-fill);
+	.classes {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.4rem 1.3rem;
+		font-size: 0.82rem;
+		color: var(--ink-dim);
 	}
-	.go {
-		stroke: var(--gold);
-		stroke-width: 1.6;
-		stroke-dasharray: 5 5;
+	.cl {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
 	}
-	.go-lbl {
-		font-family: var(--font-ui);
-		font-size: 11px !important;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		fill: var(--gold) !important;
-		text-anchor: middle;
+	.cl b {
+		color: var(--ink-bright);
+		font-variant-numeric: tabular-nums;
 	}
-	.tor {
-		fill: url(#tor-fill);
-		stroke: rgba(200, 192, 255, 0.55);
-		stroke-width: 1.5;
+	.dot {
+		width: 0.6rem;
+		height: 0.6rem;
+		border-radius: 50%;
 	}
-	.hole {
-		fill: none;
-		stroke: rgba(200, 192, 255, 0.6);
-		stroke-width: 1.5;
-		stroke-linecap: round;
+	.dot.ivory {
+		background: #fbf6e8;
 	}
-	.loop {
-		fill: none;
-		stroke-width: 2.4;
+	.dot.rose {
+		background: var(--rose);
 	}
-	.loop.gold {
-		stroke: var(--gold-bright);
-	}
-	.loop.teal {
-		stroke: var(--teal);
+	.dot.violet {
+		background: var(--violet);
 	}
 </style>

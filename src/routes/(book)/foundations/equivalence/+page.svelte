@@ -943,15 +943,18 @@
 	Now watch the corners. The bottom-left corner is glued to the bottom-right corner (left side to right side, at the bottom). It is
 	also glued to the top-left corner (bottom to top, at the left). And the top-left corner is glued to the top-right corner. By
 	transitivity, <em>all four corners become a single point</em>. A common mistake is to say the corners give two points, or
-	four; the chain of gluings says one.
+	four; the chain of gluings says one. Play Figure 1.2.7 and watch the corner count: four, then two once the sides \(b\) are
+	stitched, then one.
 </p>
 
-<Figure title="A square becomes a torus" num="1.2.7">
+<Figure title="A square becomes a torus" hint="Press play or drag the slider · drag the picture to turn it" num="1.2.7">
 	<SquareToTorus />
 	{#snippet caption()}
-		Gluing the sides marked \(a\) to each other and the sides marked \(b\) to each other, matching the arrows. Points with the
-		same symbol become one point: the two \(p\text{’s}\), the two \(q\text{’s}\), and all four corners, which become the single point \(v\) of
-		the torus where the loops \(a\) and \(b\) cross. (A preview of <Ref to="topology/gluing" />.)
+		Gluing the sides marked \(a\) to each other and the sides marked \(b\) to each other, matching the arrows. Each thread joins
+		two points the relation identifies. Rolling the sheet stitches the \(b\)-sides together and bending it stitches the
+		\(a\)-sides; as the threads shrink to nothing, each pair becomes one point. The counts underneath are the classes: the two
+		\(p\text{’s}\) become one point, the two \(q\text{’s}\) become one point, and the four corners become two points and then one, the
+		point \(v\) of the torus where the loops \(a\) and \(b\) cross. (A preview of <Ref to="topology/gluing" />.)
 	{/snippet}
 </Figure>
 
