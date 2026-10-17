@@ -10,6 +10,7 @@ import { draw } from './draw';
 import { bestView } from './view';
 import { colouringEquations, isColouring, nullspaceMod } from './colour';
 import { smoothDrawing, joins, loopsOfState } from './smooth';
+import { meridianAt, pushOff } from './framing';
 import { relax, resample } from './relax';
 
 const poly = L.from;
@@ -209,6 +210,18 @@ describe('smoothings, drawn', () => {
 				expect(loopsOfState(sd, st).count).toBe(loopsOf(sd.diagram.pd, bits) + sd.diagram.freeLoops);
 				for (let c = 0; c < n; c++) for (const [a, b] of joins(sd, c, bits[c])) expect(a && b).toBeTruthy();
 			}
+		}
+	});
+});
+
+describe('meridian and longitude', () => {
+	it('the meridian links the knot once; the right number of twists gives a longitude that does not link it', async () => {
+		const { linkingNumber: lk } = await import('$lib/figures/cohomology/poincare-duality/knots');
+		for (const comps of [roundTrefoil(), figureEight()]) {
+			const K = resample(comps[0], 300);
+			expect(Math.round(Math.abs(lk(K, meridianAt(K, 40, 0.15))))).toBe(1);
+			const base = Math.round(lk(K, pushOff(K, 0.15, 0)));
+			expect(Math.abs(Math.round(lk(K, pushOff(K, 0.15, -base))))).toBe(0);
 		}
 	});
 });
