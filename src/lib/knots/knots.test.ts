@@ -3,6 +3,7 @@ import { L } from './laurent';
 import { diagramOf, mirror } from './diagram';
 import { torusKnot, figureEight, unknot, borromean, braidClosure } from './curves';
 import { jones, alexander, determinant, colourings, linkingNumber, seifertGenus } from './invariants';
+import { khovanov, eulerCharacteristic } from './khovanov';
 
 const poly = L.from;
 
@@ -68,5 +69,26 @@ describe('the knot engine, on knots everyone knows', () => {
 		// …yet they are linked: their Jones polynomial is not that of three loose circles
 		const three = L.pow(L.from({ 0.5: -1, [-0.5]: -1 }), 2);
 		expect(L.eq(jones(B), three)).toBe(false);
+	});
+});
+
+describe('Khovanov homology', () => {
+	const chi = (D: ReturnType<typeof diagramOf>) => eulerCharacteristic(khovanov(D));
+	const jonesQ = (D: ReturnType<typeof diagramOf>) => L.mul(L.from({ 1: 1, [-1]: 1 }), L.substitute(jones(D), 2));
+
+	it('of the right-handed trefoil sits in four places', () => {
+		const kh = khovanov(diagramOf(torusKnot(2, 3)));
+		expect(Object.fromEntries(kh)).toEqual({ '0,1': 1, '0,3': 1, '2,5': 1, '3,9': 1 });
+	});
+
+	it('of the unknot is two copies of the field, in quantum degrees ±1', () => {
+		expect(Object.fromEntries(khovanov(diagramOf(unknot())))).toEqual({ '0,1': 1, '0,-1': 1 });
+	});
+
+	it('has the Jones polynomial as its graded Euler characteristic', () => {
+		for (const c of [torusKnot(2, 3), mirror(torusKnot(2, 3)), figureEight(), torusKnot(2, 5), braidClosure(3, [1, 1, 1, 2, -1, 2])]) {
+			const D = diagramOf(c);
+			expect(L.tex(chi(D), 'q')).toBe(L.tex(jonesQ(D), 'q'));
+		}
 	});
 });
