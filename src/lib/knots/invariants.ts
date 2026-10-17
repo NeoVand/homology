@@ -146,7 +146,8 @@ export function colourings(D: Diagram, p: number): number {
 		r[arcOf.get(under[1])!] -= 1;
 		return r.map((v) => ((v % p) + p) % p);
 	});
-	return p ** (count - rankMod(rows, p));
+	// a loop with no undercrossing is one more arc, free to take any colour
+	return p ** (count - rankMod(rows, p) + D.freeLoops);
 }
 
 export function rankMod(rows: number[][], p: number): number {

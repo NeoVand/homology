@@ -154,3 +154,25 @@ export function strands(x: PD, sign: number) {
 export function mirror(comps: V3[][]): V3[][] {
 	return comps.map((pts) => pts.map(([x, y, z]) => [x, y, -z] as V3));
 }
+
+/**
+ * A knot given only by its PD code (as in KnotInfo or the Knot Atlas: edges
+ * numbered 1…2n along the knot, X[i, j, k, l] from the incoming under-edge
+ * counterclockwise). Enough for every invariant that reads the code; there is
+ * no picture to draw.
+ */
+export function diagramFromPD(pd: PD[]): Diagram {
+	const m = 2 * pd.length;
+	const signs = pd.map(([, j, , l]) => ((((j - l) % m) + m) % m === 1 ? 1 : -1));
+	return {
+		pd,
+		signs,
+		writhe: signs.reduce((a, b) => a + b, 0),
+		components: 1,
+		freeLoops: 0,
+		edgeComp: new Map(pd.flat().map((e) => [e, 0])),
+		crossComps: pd.map(() => [0, 0] as [number, number]),
+		at: pd.map(() => [0, 0] as V2),
+		passes: [[]]
+	};
+}

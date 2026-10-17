@@ -11,6 +11,7 @@ import { bestView } from './view';
 import { colouringEquations, isColouring, nullspaceMod } from './colour';
 import { smoothDrawing, joins, loopsOfState } from './smooth';
 import { meridianAt, pushOff } from './framing';
+import invariantsTable from './invariants.json';
 import { relax, resample } from './relax';
 
 const poly = L.from;
@@ -223,5 +224,21 @@ describe('meridian and longitude', () => {
 			const base = Math.round(lk(K, pushOff(K, 0.15, 0)));
 			expect(Math.abs(Math.round(lk(K, pushOff(K, 0.15, -base))))).toBe(0);
 		}
+	});
+});
+
+describe('the arms race table', () => {
+	it('matches fresh computations for the small knots, and separates the famous pairs', () => {
+		const rows = Object.fromEntries((invariantsTable as { id: string; col3: number; det: number; alexander: string; jones: string; kh: Record<string, number> }[]).map((r) => [r.id, r]));
+		expect(rows['unknot'].col3).toBe(3);
+		expect(rows['3_1'].jones).toBe(L.tex(jones(diagramOf(roundTrefoil()))));
+		expect(rows['3_1'].alexander).toBe(rows['3_1*'].alexander);
+		expect(rows['3_1'].jones).not.toBe(rows['3_1*'].jones);
+		expect(rows['6_1'].alexander).toBe(rows['9_46'].alexander);
+		expect(rows['6_1'].col3).not.toBe(rows['9_46'].col3);
+		expect(rows['5_1*'].jones).toBe(rows['10_132'].jones);
+		expect(JSON.stringify(rows['5_1*'].kh)).not.toBe(JSON.stringify(rows['10_132'].kh));
+		expect(rows['granny'].alexander).toBe(rows['square'].alexander);
+		expect(rows['granny'].jones).not.toBe(rows['square'].jones);
 	});
 });
