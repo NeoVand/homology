@@ -46,7 +46,7 @@ function arcMean(k: number, len: number) {
 }
 
 /** Turn the finished shape towards a good viewing angle: about x by rx, then about y by ry. */
-function pose(o: P3, rx: number, ry: number) {
+export function pose(o: P3, rx: number, ry: number) {
 	const c1 = Math.cos(rx),
 		s1 = Math.sin(rx);
 	const y = o.y * c1 - o.z * s1;
@@ -106,11 +106,17 @@ function rollTube(u: number, e: number, r: number, out: { cx: number; cz: number
 }
 const _cs = { cx: 0, cz: 0 };
 
+/** the torus morph's two stages (roll, then bend) and its viewing rotation at time t */
+export function torusStages(t: number) {
+	const eA = seg(t, 0.0, 0.42);
+	const eB = seg(t, 0.5, 1.0);
+	return { eA, eB, rx: -0.95 * eB, ry: 0.45 * eA - 0.15 * eB };
+}
+
 function torus(u: number, v: number, t: number, o: P3) {
 	const r = 0.6;
 	const R = 1.55;
-	const eA = seg(t, 0.0, 0.42);
-	const eB = seg(t, 0.5, 1.0);
+	const { eA, eB, rx, ry } = torusStages(t);
 	rollTube(u, eA, r, _cs);
 	// the tube's axis (vertical) bends round to the left into a ring in the xy-plane
 	const len = mix(L, TAU * R, eB);
@@ -124,7 +130,7 @@ function torus(u: number, v: number, t: number, o: P3) {
 	o.x = ax + _cs.cx * c;
 	o.y = ay + _cs.cx * sn;
 	o.z = _cs.cz;
-	pose(o, -0.95 * eB, 0.45 * eA - 0.15 * eB);
+	pose(o, rx, ry);
 }
 
 // The "bottle" immersion of the Klein bottle (as in surfaces.ts kleinBottle and the

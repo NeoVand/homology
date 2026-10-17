@@ -950,9 +950,10 @@
 <Figure title="A square becomes a torus" hint="Press play or drag the slider · drag the picture to turn it" num="1.2.7">
 	<SquareToTorus />
 	{#snippet caption()}
-		Gluing the sides marked \(a\) to each other and the sides marked \(b\) to each other, matching the arrows. Each thread joins
-		two points the relation identifies. Rolling the sheet stitches the \(b\)-sides together and bending it stitches the
-		\(a\)-sides; as the threads shrink to nothing, each pair becomes one point. The counts underneath are the classes: the two
+		Gluing the sides marked \(a\) to each other and the sides marked \(b\) to each other, matching the arrows. Each dotted arc
+		joins two points the relation identifies. Rolling the sheet stitches the \(b\)-sides together and bending it stitches the
+		\(a\)-sides; as the arcs shrink to nothing, each pair becomes one point. The arcs joining corner to corner (ivory) form a
+		closed chain, which is why all four corners end up as one point. The counts underneath are the classes: the two
 		\(p\text{’s}\) become one point, the two \(q\text{’s}\) become one point, and the four corners become two points and then one, the
 		point \(v\) of the torus where the loops \(a\) and \(b\) cross. (A preview of <Ref to="topology/gluing" />.)
 	{/snippet}
