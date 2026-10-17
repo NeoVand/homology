@@ -43,7 +43,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'vector-field',
 		term: 'Vector field',
-		def: 'A choice of arrow at every point of a region, such as a wind map or a force field: \\(\\mathbf F(x,y) = (P(x,y), Q(x,y))\\).',
+		def: 'A choice of arrow at every point of a region, such as a wind map or a force field: \\(\\mathbf F(x,y) = (P(x,y), Q(x,y))\\). On a surface or manifold the arrows are tangent to it: a section of the tangent bundle (Chapter 4.8).',
 		chapter,
 		anchor: 'arrows-everywhere'
 	},
@@ -107,13 +107,6 @@ export const entries: GlossaryEntry[] = [
 		see: ['stokes-theorem']
 	},
 	{
-		key: 'covector',
-		term: 'Covector',
-		def: 'A linear measuring device for vectors: a linear function \\(\\alpha\\colon V \\to \\R\\), i.e. an element of the dual space. In the plane, \\(\\alpha = a\\,dx + b\\,dy\\) gives \\(\\alpha(\\mathbf v) = a v_1 + b v_2\\). Picture it as a stack of parallel lines.',
-		chapter,
-		anchor: 'measuring-devices'
-	},
-	{
 		key: 'one-form',
 		term: 'Differential 1-form',
 		def: 'A covector at every point, varying smoothly: \\(\\omega = P\\,dx + Q\\,dy\\). It eats a small step and returns a number, so it can be integrated along oriented curves.',
@@ -151,13 +144,6 @@ export const entries: GlossaryEntry[] = [
 		chapter,
 		anchor: 'thm-dd',
 		see: ['exterior-derivative']
-	},
-	{
-		key: 'pullback',
-		term: 'Pullback',
-		def: 'For a smooth map \\(\\varphi\\colon U \\to V\\) and a form \\(\\omega\\) on \\(V\\), the form \\(\\varphi^*\\omega\\) on \\(U\\) measures a step by measuring its image. Forms travel against the map; in polar coordinates, \\(\\varphi^*(dx\\wedge dy) = r\\,dr\\wedge d\\theta\\).',
-		chapter,
-		anchor: 'def-pullback'
 	},
 	{
 		key: 'boundary-orientation',

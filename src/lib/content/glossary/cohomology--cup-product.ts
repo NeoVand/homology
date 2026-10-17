@@ -114,14 +114,6 @@ export const entries: GlossaryEntry[] = [
 		see: ['cohomology-ring']
 	},
 	{
-		key: 'fence',
-		term: 'Fence (of a 1-cocycle)',
-		def: 'A curve drawn on a triangulated surface across its edges, with a direction in which crossing it counts \\(+1\\). Counting crossings edge by edge gives a 1-cocycle; cup products of such classes count the crossings of their fences.',
-		chapter,
-		anchor: 'fences',
-		see: ['push-off', 'cup-product']
-	},
-	{
 		key: 'push-off',
 		term: 'Push-off',
 		def: 'A copy of a curve moved slightly to one side. The square \\(\\alpha\\smile\\alpha\\) of a class on a surface counts the crossings of its fence with a push-off; on a torus a push-off never crosses, on \\(\\RP^2\\) it must cross once.',
@@ -168,13 +160,5 @@ export const entries: GlossaryEntry[] = [
 		chapter,
 		anchor: 'kunneth',
 		see: ['cross-product']
-	},
-	{
-		key: 'complex-projective-space',
-		term: 'Complex projective space',
-		def: '\\(\\CP^n\\), the space of complex lines through the origin in \\(\\C^{n+1}\\); it has real dimension \\(2n\\) and cohomology ring \\(\\Z[x]/(x^{n+1})\\) with \\(|x|=2\\).',
-		chapter,
-		anchor: 'projective-spaces',
-		see: ['truncated-polynomial-ring']
 	}
 ];

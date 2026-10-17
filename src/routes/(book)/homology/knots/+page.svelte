@@ -88,7 +88,7 @@
 </Figure>
 
 <p>
-	The gallery shows the families this chapter returns to. The <dfn>trefoil</dfn> \(3_1\) is the simplest knot after the unknot, and the <dfn>figure-eight knot</dfn> \(4_1\) comes next. The trefoil, the cinquefoil \(5_1\) and the septafoil \(7_1\) all wind around a doughnut, twice the short way, as many times as their name says the long way; they are <dfn>torus knots</dfn>. Every knot also has a <dfn>mirror image</dfn> \(\overline K\), its reflection in a plane. Whether a knot equals its mirror image is a real question: the figure-eight knot does, and in Section 7 we will prove that the trefoil does not. A knot that differs from its mirror image is <Term t="chiral-knot">chiral</Term>, like a hand.
+	The gallery shows the families this chapter returns to. The <dfn>trefoil</dfn> \(3_1\) is the simplest knot after the unknot, and the <dfn>figure-eight knot</dfn> \(4_1\) comes next. The trefoil, the cinquefoil \(5_1\) and the septafoil \(7_1\) all lie on the surface of a doughnut, going twice around its hole while they wind three, five or seven times around its tube; they are <dfn>torus knots</dfn>. Every knot also has a <dfn>mirror image</dfn> \(\overline K\), its reflection in a plane. Whether a knot equals its mirror image is a real question: the figure-eight knot does, and in Section 7 we will prove that the trefoil does not. A knot that differs from its mirror image is <Term t="chiral-knot">chiral</Term>, like a hand.
 </p>
 
 <p>
@@ -437,7 +437,7 @@
 
 <Example title="The trefoil by skein relation">
 	<p>
-		Take a crossing of the trefoil. Switching it gives the unknot, and smoothing it gives the Hopf link: \(\nabla(3_1) = 1 + z\,\nabla(\text{Hopf})\). For the Hopf link, switching a crossing gives two separate circles and smoothing it gives one circle: \(\nabla(\text{Hopf}) = \nabla(\text{two circles}) + z\cdot1\). Two separate circles have \(\nabla = 0\) (apply the relation to a diagram of them with a single twist, where switching the crossing changes nothing). So \(\nabla(\text{Hopf}) = z\) and \(\nabla(3_1) = 1 + z^2\). Substituting \(z = t^{1/2} - t^{-1/2}\), with \(z^2 = t - 2 + t^{-1}\), gives \(\Delta(t) = t - 1 + t^{-1}\), as before.
+		Take a crossing of the trefoil. Switching it gives the unknot, and smoothing it gives the Hopf link: \(\nabla(3_1) = 1 + z\,\nabla(\text{Hopf})\). For the Hopf link, switching a crossing gives two separate circles and smoothing it gives one circle: \(\nabla(\text{Hopf}) = \nabla(\text{two circles}) + z\cdot1\). Two separate circles have \(\nabla = 0\): draw the unknot with a single twist and apply the relation at its crossing, where switching gives the unknot again and smoothing gives two separate circles, so \(1 - 1 = z\,\nabla(\text{two circles})\). So \(\nabla(\text{Hopf}) = z\) and \(\nabla(3_1) = 1 + z^2\). Substituting \(z = t^{1/2} - t^{-1/2}\), with \(z^2 = t - 2 + t^{-1}\), gives \(\Delta(t) = t - 1 + t^{-1}\), as before.
 	</p>
 </Example>
 

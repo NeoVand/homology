@@ -52,13 +52,6 @@ export const entries: GlossaryEntry[] = [
 		anchor: 'def-section'
 	},
 	{
-		key: 'vector-field',
-		term: 'Vector field',
-		def: 'A continuous choice of a tangent arrow at every point of a surface or manifold — a section of its tangent bundle.',
-		chapter,
-		anchor: 'def-section'
-	},
-	{
 		key: 'stiefel-whitney-class',
 		term: 'Stiefel–Whitney class w₁',
 		def: 'The class \\(w_1(E)\\in H^1(B;\\Z/2)\\) of the signs of the transition functions of a real bundle. It vanishes exactly when the bundle is orientable; for the Möbius band it is nonzero.',
@@ -150,13 +143,6 @@ export const entries: GlossaryEntry[] = [
 		def: 'For a geodesic triangle, \\(\\alpha+\\beta+\\gamma-\\pi\\). Gauss proved it equals the total curvature \\(\\iint_T K\\,dA\\) inside the triangle.',
 		chapter,
 		anchor: 'thm-angle-excess'
-	},
-	{
-		key: 'angle-defect',
-		term: 'Angle defect',
-		def: 'At a vertex of a triangulated surface, \\(2\\pi\\) minus the sum of the angles of the triangles there. The defects of a closed triangulated surface add up to exactly \\(2\\pi\\chi\\).',
-		chapter,
-		anchor: 'def-angle-defect'
 	},
 	{
 		key: 'gauss-bonnet-theorem',

@@ -12,22 +12,6 @@ export const entries: GlossaryEntry[] = [
 		see: ['homology-group', 'betti-number']
 	},
 	{
-		key: 'cycle-group',
-		term: 'Cycle group',
-		def: 'The group \\(Z_k = \\ker\\partial_k\\) of \\(k\\)-chains whose boundary is zero: the \\(k\\)-cycles.',
-		chapter,
-		anchor: 'def-cycles-boundaries',
-		see: ['boundary-group']
-	},
-	{
-		key: 'boundary-group',
-		term: 'Boundary group',
-		def: 'The group \\(B_k = \\im\\partial_{k+1}\\) of \\(k\\)-chains that are boundaries of \\((k+1)\\)-chains. Because \\(\\partial\\partial = 0\\), every boundary is a cycle: \\(B_k \\subseteq Z_k\\).',
-		chapter,
-		anchor: 'def-cycles-boundaries',
-		see: ['cycle-group']
-	},
-	{
 		key: 'homology-group',
 		term: 'Homology group',
 		def: 'The quotient \\(H_k(K) = Z_k/B_k = \\ker\\partial_k / \\im\\partial_{k+1}\\): the \\(k\\)-cycles, with two cycles counted as the same when their difference is a boundary.',
@@ -39,13 +23,6 @@ export const entries: GlossaryEntry[] = [
 		key: 'homology-class',
 		term: 'Homology class',
 		def: 'The coset \\([z] = z + B_k\\) of a cycle \\(z\\): the cycle together with everything obtained from it by adding boundaries. The elements of \\(H_k\\) are homology classes.',
-		chapter,
-		anchor: 'def-homology'
-	},
-	{
-		key: 'homologous',
-		term: 'Homologous cycles',
-		def: 'Two cycles \\(z, z\'\\) are homologous, \\(z \\sim z\'\\), when \\(z - z\' = \\partial c\\) is a boundary. Then \\([z] = [z\']\\). Geometrically, the chain \\(c\\) fills the space between them.',
 		chapter,
 		anchor: 'def-homology'
 	},
@@ -120,12 +97,6 @@ export const entries: GlossaryEntry[] = [
 		def: 'A \\(k\\)-simplex whose boundary was a cycle that did not yet bound. Adding it fills that cycle in, killing a \\((k-1)\\)-class and lowering \\(b_{k-1}\\) by one.',
 		chapter,
 		see: ['positive-simplex']
-	},
-	{
-		key: 'two-cycle',
-		term: '2-cycle',
-		def: 'A 2-chain with zero boundary, such as the four faces of a hollow tetrahedron oriented consistently, or all the coherently oriented triangles of a closed orientable surface.',
-		chapter
 	},
 	{
 		key: 'cavity',

@@ -28,20 +28,6 @@ export const entries: GlossaryEntry[] = [
 		see: ['closed-form', 'exact-form', 'de-rham-theorem']
 	},
 	{
-		key: 'cohomologous',
-		term: 'Cohomologous',
-		def: 'Two closed forms are cohomologous if their difference is exact; they then define the same de Rham class \\([\\omega]\\).',
-		chapter,
-		anchor: 'def-de-rham'
-	},
-	{
-		key: 'locally-constant-function',
-		term: 'Locally constant function',
-		def: 'A function that is constant near every point, so constant on each connected piece of its domain. These are the functions with \\(df = 0\\), and they form \\(H^0_{\\dR}(M)\\), which is \\(\\R^{\\#\\text{components}}\\) when \\(M\\) has finitely many pieces.',
-		chapter,
-		anchor: 'h-zero'
-	},
-	{
 		key: 'angle-form',
 		term: 'Angle form',
 		def: 'The 1-form \\(d\\theta = (-y\\,dx + x\\,dy)/(x^2+y^2)\\) on the punctured plane. It is closed but not exact: its integral around any loop is \\(2\\pi\\) times the loop’s winding number about the origin.',

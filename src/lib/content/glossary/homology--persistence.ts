@@ -84,22 +84,6 @@ export const entries: GlossaryEntry[] = [
 		see: ['filtration']
 	},
 	{
-		key: 'positive-simplex',
-		term: 'Positive simplex',
-		def: 'A simplex whose arrival in a filtration creates a new homology class (it raises \\(b_k\\) by one, where \\(k\\) is its dimension). Every vertex is positive, and so is an edge that closes a loop.',
-		chapter,
-		anchor: 'filtrations',
-		see: ['negative-simplex']
-	},
-	{
-		key: 'negative-simplex',
-		term: 'Negative simplex',
-		def: 'A \\(k\\)-simplex whose arrival in a filtration destroys a \\((k-1)\\)-dimensional class, lowering \\(b_{k-1}\\) by one — for example an edge joining two pieces, or a triangle filling a loop.',
-		chapter,
-		anchor: 'filtrations',
-		see: ['positive-simplex']
-	},
-	{
 		key: 'birth-death',
 		term: 'Birth and death',
 		def: 'In a filtration, a homology class is *born* at the first parameter value where it exists without coming from an earlier class, and *dies* when it becomes zero or merges into an older class.',

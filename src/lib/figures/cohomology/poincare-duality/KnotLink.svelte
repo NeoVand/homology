@@ -199,7 +199,7 @@
 		t0 = frac(t0 + (e.shiftKey ? 0.05 : 0.01) * k);
 	}
 
-	const multiple = (n: number) => (n === 0 ? '0' : n === 1 ? '[m]' : n === -1 ? '-[m]' : `${n}\\,[m]`);
+	const multiple = (n: number) => (n === 0 ? '0' : n === 1 ? '[\\mu]' : n === -1 ? '-[\\mu]' : `${n}\\,[\\mu]`);
 	const classTeX = $derived(`[\\gamma] = ${multiple(lkInt)} \\ \\in\\ H_1(\\R^3\\setminus K)\\cong\\Z`);
 </script>
 

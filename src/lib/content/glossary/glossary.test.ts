@@ -14,8 +14,14 @@ const pages = import.meta.glob('/src/routes/\\(book\\)/*/*/+page.svelte', {
 }) as Record<string, string>;
 const components = import.meta.glob('/src/**/*.svelte', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 const page = (chapter: string) => pages[`/src/routes/(book)/${chapter}/+page.svelte`];
+const files = import.meta.glob<{ entries: { key: string }[] }>('./*--*.ts', { eager: true });
 
 describe('the glossary', () => {
+	it('defines each term in one chapter only', () => {
+		const keys = Object.values(files).flatMap((m) => m.entries.map((e) => e.key));
+		expect(keys.filter((k, i) => keys.indexOf(k) !== i)).toEqual([]);
+	});
+
 	it('has entries with known chapters', () => {
 		expect(glossary.length).toBeGreaterThan(500);
 		for (const e of glossary) expect(chapterById.has(e.chapter), `${e.key}: ${e.chapter}`).toBe(true);

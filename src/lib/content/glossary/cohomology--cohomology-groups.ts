@@ -94,7 +94,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'cohomologous',
 		term: 'Cohomologous',
-		def: 'Two cocycles are cohomologous when they differ by a coboundary, \\(\\varphi\' = \\varphi + \\delta g\\), so that they define the same cohomology class. Two 1-cocycles on a graph are cohomologous exactly when they have the same loop sums.',
+		def: 'Two cocycles are cohomologous when they differ by a coboundary, \\(\\varphi\' = \\varphi + \\delta g\\), so that they define the same cohomology class. Two 1-cocycles on a graph are cohomologous exactly when they have the same loop sums. For differential forms (Chapter 4.4) the same word means that two closed forms differ by an exact form.',
 		chapter,
 		anchor: 'def-cohomology',
 		see: ['cohomology-class']
@@ -118,7 +118,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'pullback',
 		term: 'Pullback',
-		def: 'For a map \\(f\\colon X \\to Y\\) and a cochain \\(\\varphi\\) on \\(Y\\), the cochain \\(f^*\\varphi = \\varphi\\circ f_\\sharp\\) on \\(X\\): to measure a chain of \\(X\\), push it into \\(Y\\) and measure there. Its matrix is the transpose of the matrix of \\(f_\\sharp\\).',
+		def: 'For a map \\(f\\colon X \\to Y\\) and a cochain \\(\\varphi\\) on \\(Y\\), the cochain \\(f^*\\varphi = \\varphi\\circ f_\\sharp\\) on \\(X\\): to measure a chain of \\(X\\), push it into \\(Y\\) and measure there. Its matrix is the transpose of the matrix of \\(f_\\sharp\\). For differential forms (Chapter 4.3), \\(\\varphi^*\\omega\\) measures a step by measuring its image under \\(\\varphi\\).',
 		chapter,
 		anchor: 'contravariance',
 		see: ['induced-map-on-cohomology', 'contravariant']

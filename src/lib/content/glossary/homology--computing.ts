@@ -26,14 +26,6 @@ export const entries: GlossaryEntry[] = [
 		chapter
 	},
 	{
-		key: 'invariant-factors',
-		term: 'Invariant factors',
-		def: 'The diagonal entries \\(d_1 \\mid d_2 \\mid \\cdots\\) of the Smith normal form of an integer matrix. For \\(\\partial_{k+1}\\), those bigger than \\(1\\) are the orders of the torsion summands of \\(H_k\\).',
-		chapter,
-		anchor: 'thm-snf',
-		see: ['homology-from-smith']
-	},
-	{
 		key: 'homology-from-smith',
 		term: 'Homology from the Smith normal form',
 		def: '\\(H_k \\cong \\Z^{n_k - r_k - r_{k+1}} \\oplus \\bigoplus_{d_i > 1} \\Z/d_i\\), where \\(r_j = \\rank\\partial_j\\) and the \\(d_i\\) are the invariant factors of \\(\\partial_{k+1}\\).',
@@ -44,12 +36,6 @@ export const entries: GlossaryEntry[] = [
 		key: 'rank-over-a-field',
 		term: 'Rank over a field',
 		def: 'The number of pivots left after row reduction. The same integer matrix can have different ranks over different fields: \\(\\partial_2\\) of the projective plane has rank \\(9\\) over \\(\\Z/2\\) and \\(10\\) over \\(\\Q\\), because one pivot is \\(2\\).',
-		chapter
-	},
-	{
-		key: 'pivot',
-		term: 'Pivot',
-		def: 'In row reduction, the non-zero entry used to clear the rest of its column. The rank of a matrix is the number of pivots.',
 		chapter
 	},
 	{
@@ -125,12 +111,6 @@ export const entries: GlossaryEntry[] = [
 		key: 'wrapped-disk',
 		term: 'Wrapped disk (Moore space)',
 		def: 'A disk whose rim is glued around a circle \\(p\\) times. Its first homology is \\(\\Z/p\\); for \\(p = 2\\) it is the projective plane.',
-		chapter
-	},
-	{
-		key: 'boys-surface',
-		term: "Boy's surface",
-		def: 'A model of the real projective plane in three-dimensional space. Like every such model it must pass through itself: it is an immersion, not an embedding.',
 		chapter
 	}
 ];

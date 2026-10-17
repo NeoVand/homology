@@ -150,7 +150,7 @@ export const entries: GlossaryEntry[] = [
 	{
 		key: 'complex-projective-space',
 		term: 'Complex projective space',
-		def: '\\(\\mathbb{CP}^n\\): the complex lines through the origin in \\(\\mathbb C^{n+1}\\). It has one cell in each even dimension \\(0,2,\\dots,2n\\), so \\(H_{2k}\\cong\\mathbb Z\\) and odd groups vanish.',
+		def: '\\(\\mathbb{CP}^n\\): the complex lines through the origin in \\(\\mathbb C^{n+1}\\). It has one cell in each even dimension \\(0,2,\\dots,2n\\), so \\(H_{2k}\\cong\\mathbb Z\\) and odd groups vanish. Its cohomology ring is \\(\\Z[x]/(x^{n+1})\\) with \\(x\\) in degree \\(2\\) (Chapter 4.5).',
 		chapter,
 		anchor: 'cellular-examples',
 		see: ['cellular-homology']

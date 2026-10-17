@@ -4,38 +4,6 @@ const chapter = 'cohomology/sheaves';
 
 export const entries: GlossaryEntry[] = [
 	{
-		key: 'open-cover',
-		term: 'Open cover',
-		def: 'A family of open sets \\(\\{U_i\\}\\) whose union is the whole space. The pieces may overlap; their overlaps are written \\(U_{ij} = U_i\\cap U_j\\), \\(U_{ijk}\\), and so on.',
-		chapter,
-		anchor: 'def-open-cover',
-		see: ['nerve', 'good-cover']
-	},
-	{
-		key: 'nerve',
-		term: 'Nerve of a cover',
-		def: 'The simplicial complex \\(N(\\mathcal U)\\) with a vertex for each piece of a cover and a simplex for each collection of pieces that have a point in common.',
-		chapter,
-		anchor: 'def-nerve',
-		see: ['open-cover', 'nerve-theorem']
-	},
-	{
-		key: 'good-cover',
-		term: 'Good cover',
-		def: 'An open cover in which every nonempty finite intersection of pieces is contractible (for instance, a cover by convex sets).',
-		chapter,
-		anchor: 'def-good-cover',
-		see: ['nerve-theorem']
-	},
-	{
-		key: 'nerve-theorem',
-		term: 'Nerve theorem',
-		def: 'For a good cover of a reasonable (paracompact) space — any manifold, simplicial complex or subset of \\(\\R^n\\) — the nerve is homotopy equivalent to the space, so it has the same homology and cohomology.',
-		chapter,
-		anchor: 'thm-nerve',
-		see: ['nerve', 'good-cover']
-	},
-	{
 		key: 'refinement',
 		term: 'Refinement of a cover',
 		def: 'A cover each of whose pieces lies inside some piece of a given cover. The Čech cohomology of a space is defined by passing to finer and finer covers.',
