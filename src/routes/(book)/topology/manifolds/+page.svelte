@@ -10,6 +10,7 @@
 	import KeyIdea from '$lib/components/prose/KeyIdea.svelte';
 	import Warning from '$lib/components/prose/Warning.svelte';
 	import Remark from '$lib/components/prose/Remark.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import History from '$lib/components/prose/History.svelte';
 	import Question from '$lib/components/prose/Question.svelte';
 	import Exercise from '$lib/components/prose/Exercise.svelte';
@@ -330,7 +331,8 @@
 		<li>
 			<strong>Dimension 3.</strong> Ordinary space \(\R^3\); the 3-sphere \(S^3\), the points of \(\R^4\) at distance 1 from the
 			origin; the 3-torus, a cube whose opposite faces are glued, so that leaving through one wall brings you back through the opposite
-			one — the world of old video games, upgraded to three dimensions.
+			one — the world of old video games, upgraded to three dimensions. And the space around a knot: remove a knotted string
+			from \(\R^3\) and what is left is a 3-manifold, whose shape records the knot (<Ref to="homology/knots" />).
 		</li>
 		<li><strong>Dimension 4.</strong> The spacetime of general relativity: three dimensions of space and one of time.</li>
 	</ul>
@@ -1073,18 +1075,38 @@
 	</p>
 </History>
 
-<Remark title="Higher dimensions">
+<h3 id="higher-dimensions">Higher dimensions</h3>
+
+<p>
+	Closed curves are easy: every connected one is a circle. Closed surfaces are decided by two pieces of data. In dimension three the
+	story is far harder, and the first question anyone asked about it became the most famous problem in topology.
+</p>
+
+<Conjecture k="poincare-conjecture">
 	<p>
-		Closed curves are easy: every connected one is a circle. Closed surfaces are decided by two pieces of data. In dimension three the
-		story is far harder. In 1904 Henri Poincaré asked whether a closed 3-manifold in which every loop can be shrunk to a point
-		(<Term t="simply-connected">simply connected</Term>, <Ref to="topology/homotopy" />) must be the 3-sphere
-		<Cite k="poincare1904" />. The question became the Poincaré conjecture, and it was settled only in 2002–2003 by Grigori Perelman, as
-		part of William Thurston’s programme for describing all 3-manifolds by geometry <Cite k="perelman2002,perelman2003" />. In
-		dimension four no complete list is possible, in a precise sense: in 1958 A. A. Markov proved that no algorithm can decide whether
-		two given closed 4-manifolds are homeomorphic <Cite k="markov1958" />. Algebraic topology was invented to bring order to this zoo, and
-		homology is its first and most useful tool.
+		A loop that can be shrunk to a point is the subject of <Ref to="topology/homotopy" />, where a space with this property is
+		called <Term t="simply-connected">simply connected</Term>. Among closed surfaces, only the sphere is simply connected; the
+		conjecture says the same is true one dimension up. Perelman’s proof is part of William Thurston’s programme for describing all
+		3-manifolds by geometry <Cite k="perelman2003" />.
 	</p>
-</Remark>
+</Conjecture>
+
+<p>
+	In dimension four no complete list is possible, in a precise sense: in 1958 A. A. Markov proved that no algorithm can decide whether
+	two given closed 4-manifolds are homeomorphic <Cite k="markov1958" />. And dimension four keeps one version of Poincaré’s question
+	open, a version that asks for more than a homeomorphism.
+</p>
+
+<Conjecture k="smooth-poincare-4">
+	<p>
+		A smooth structure is what lets you do calculus on a manifold: an atlas whose transition maps are smooth. Two smooth manifolds
+		can be homeomorphic without being smoothly the same, and in dimension four this happens in unexpected ways.
+	</p>
+</Conjecture>
+
+<p>
+	Algebraic topology was invented to bring order to this zoo, and homology is its first and most useful tool.
+</p>
 
 <h2 id="exercises">Exercises</h2>
 

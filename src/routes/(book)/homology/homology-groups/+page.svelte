@@ -18,6 +18,7 @@
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Figure from '$lib/components/prose/Figure.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import MatrixView from '$lib/components/prose/MatrixView.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
@@ -377,6 +378,20 @@
 <p>Two different cuttings of one torus gave the same groups. Luck? No: in <Ref to="homology/invariance" /> we will see that homology depends only on the space, never on how it was cut, and that is what licenses shortcuts like this one. Aleph 0’s fourteen-minute video <em>What is algebraic topology?</em> does this computation on a single notebook page and then turns to exactly that worry <Cite k="aleph0-2025" />.</p>
 
 <p>Look at the seven results side by side (they are under the pictures in Figure 3.3.3). A point and a disk: \(\Z, 0, 0\). Two points: \(\Z^2\). A circle: \(\Z, \Z\). A figure eight: \(\Z, \Z^2\). A sphere: \(\Z, 0, \Z\). A torus: \(\Z, \Z^2, \Z\). In every case the numbers match what the eye sees: pieces, loops, cavities. The difference is that now they are theorems, computed by a procedure that works for any complex whatsoever.</p>
+
+<p>
+	Add up the Betti numbers of each answer. A point has total \(1\), a circle \(1 + 1 = 2\), a torus \(1 + 2 + 1 = 4\); each extra
+	circle factor doubles the total, so a product of \(r\) circles, an \(r\)-dimensional torus, has total \(2^r\). That doubling sits
+	at the heart of an open conjecture about how much symmetry a space with few holes can carry.
+</p>
+
+<Conjecture k="toral-rank">
+	<p>
+		A torus can rotate itself: turn each circle factor by its own angle, and every point moves unless all the angles are whole turns.
+		The conjecture says that a space admitting such an \(r\)-fold rotation, with no point stuck, needs at least as many holes as the
+		torus itself has, counted by the total of its Betti numbers.
+	</p>
+</Conjecture>
 
 <h2 id="h0-counts-pieces">\(H_0\) counts the pieces</h2>
 

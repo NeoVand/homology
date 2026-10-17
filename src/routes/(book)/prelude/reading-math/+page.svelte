@@ -28,6 +28,9 @@
 	import SamenessLadder from '$lib/figures/prelude/reading-math/SamenessLadder.svelte';
 	import PushPull from '$lib/figures/prelude/reading-math/PushPull.svelte';
 	import InductionSquares from '$lib/figures/prelude/reading-math/InductionSquares.svelte';
+	import GoldbachComet from '$lib/figures/prelude/reading-math/GoldbachComet.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
+	import { href } from '$lib/util/paths';
 
 	const reading = [
 		{
@@ -116,6 +119,7 @@
 			<tr><td><strong>Proposition</strong></td><td>A true statement of medium importance.</td><td>Like a theorem, but less famous.</td></tr>
 			<tr><td><strong>Lemma</strong></td><td>A stepping stone: a result proved mainly to help prove something else.</td><td>Ask what it is for; look ahead to where it is used.</td></tr>
 			<tr><td><strong>Corollary</strong></td><td>A quick consequence of a theorem just proved.</td><td>Check that you can see why it follows.</td></tr>
+			<tr><td><strong>Conjecture</strong></td><td>A statement believed to be true, but not yet proved.</td><td>As an invitation. Test it on examples, find where it gets hard, and remember that evidence is not proof.</td></tr>
 			<tr><td><strong>Proof</strong></td><td>The argument that a statement is true. Ends with ∎.</td><td>Line by line, with a pencil. Every step should be justified.</td></tr>
 			<tr><td><strong>Example / Non-example</strong></td><td>A specific object that does (or does not) satisfy a definition.</td><td>Check it yourself against the definition.</td></tr>
 			<tr><td><strong>Remark</strong></td><td>A comment: context, warnings, connections.</td><td>Optional on a first reading, often illuminating on a second.</td></tr>
@@ -125,8 +129,10 @@
 
 <p>
 	The words “theorem”, “proposition” and “lemma” describe the <em>importance</em> of a result, not its kind: all three are true
-	statements with proofs. In this book each block lives in its own coloured box, so you can always see what kind of sentence you
-	are reading.
+	statements with proofs. A conjecture is a different kind of sentence altogether: nobody knows yet whether it is true. In this book
+	each block lives in its own coloured box, so you can always see what kind of sentence you are reading. A few boxes are the book’s
+	own: key ideas, intuition, warnings, history, and conjectures, which describe open problems from every part of the subject together
+	with what is known about them. The <a href={href('/problems/')}>Open Problems</a> page collects them all.
 </p>
 
 <h3>Definitions are membership tests</h3>
@@ -176,6 +182,74 @@
 	really necessary, and where does the proof use it?
 </p>
 
+<h3 id="conjectures">Conjectures: mathematics in the making</h3>
+
+<p>
+	Every theorem was once a guess. A guess that has been stated precisely, tested and shared, but not yet proved, is a
+	<Term t="conjecture">conjecture</Term>, and conjectures are where much of mathematics happens: they tell a field what to try to
+	prove next. There is a saying among mathematicians, often repeated and never traced to a source, that ranks the work: a
+	mathematician proves theorems, a good mathematician makes conjectures, and a great one creates definitions. It is unfair to
+	proofs, which are the only way a guess becomes knowledge. But it is right that knowing <em>what</em> to prove is much of the art,
+	and that the deepest contributions are often new ways of seeing, written down as definitions.
+</p>
+
+<p>
+	Bernhard Riemann made both kinds. In 1854 he gave a lecture defining what we now call a manifold, a space that looks like flat
+	space near each of its points <Cite k="riemann1854" />; this book uses that definition from <Ref to="topology/manifolds" /> on.
+	In 1859, in an eight-page paper on counting primes, he guessed that the zeros of a certain function all lie on one line in the
+	plane <Cite k="riemann1859" />. That guess, the Riemann hypothesis, is still the most famous open problem in mathematics.
+</p>
+
+<p>A conjecture can end in four ways.</p>
+<ul>
+	<li>
+		<strong>Proved.</strong> Pierre de Fermat wrote, around 1637, that \(x^n + y^n = z^n\) has no solutions in positive whole numbers
+		when \(n\ge3\). Andrew Wiles proved it in 1994, with a final step completed together with Richard Taylor
+		<Cite k="wiles1995,taylor-wiles1995" />.
+	</li>
+	<li>
+		<strong>Disproved.</strong> In 1769 Leonhard Euler conjectured that a fifth power cannot be a sum of fewer than five fifth powers,
+		and similarly for higher powers. In 1966 Leon Lander and Thomas Parkin found, by computer search, that
+		\(27^5 + 84^5 + 110^5 + 133^5 = 144^5\) <Cite k="lander-parkin1966" />.
+	</li>
+	<li>
+		<strong>Undecidable.</strong> Some questions cannot be settled by the usual axioms of mathematics at all. The first famous
+		example is about sizes of infinity, and it appears in <Ref to="foundations/sets-and-functions" />.
+	</li>
+	<li><strong>Still open.</strong> Like the Riemann hypothesis, and like the conjecture in the box below.</li>
+</ul>
+
+<Warning title="Evidence is not proof">
+	<p>
+		In 1919 George Pólya conjectured that, for every \(n\ge2\), at least half of the numbers from \(1\) to \(n\) have an odd number
+		of prime factors, counted with repetition (so \(12 = 2\cdot2\cdot3\) counts three). It holds for every \(n\) you are likely to
+		try, and it held for every \(n\) anyone tried for decades. It is false: the smallest counterexample is \(n = 906{,}150{,}257\)
+		<Cite k="haselgrove1958,tanaka1980" />. A conjecture checked a billion times is still a conjecture.
+	</p>
+</Warning>
+
+<p>
+	Here is one of the oldest open conjectures, simple enough to explain to a child, and the first of the conjecture boxes in this
+	book.
+</p>
+
+<Figure num="0.2.1" title="Goldbach’s comet" hint="Hover or tap the cloud · type your own even number · change the range">
+	<GoldbachComet />
+	{#snippet caption()}
+		For each even number, a dot whose height counts the ways to write it as a sum of two primes \(p + q\) with \(p\le q\). The cloud
+		rises and never comes near zero, which is why nobody doubts Goldbach’s conjecture; but no picture, however large, is a proof.
+		The bands are real: an even number divisible by \(3\) has noticeably more ways than its neighbours, and one divisible by \(5\)
+		somewhat more.
+	{/snippet}
+</Figure>
+
+<Conjecture k="goldbach">
+	<p>
+		Goldbach’s own letter counted \(1\) as a prime, as some mathematicians of his time did; the form above is the one Euler gave in
+		his reply.
+	</p>
+</Conjecture>
+
 <h2 id="logic">The logic of mathematical sentences</h2>
 
 <p>
@@ -220,7 +294,7 @@
 	broken in exactly one situation — when \(P\) happens and \(Q\) does not. In every other situation the promise is kept.
 </p>
 
-<Figure title="Promises kept and broken" hint="Judge each situation · then compare the columns" num="0.2.1">
+<Figure title="Promises kept and broken" hint="Judge each situation · then compare the columns" num="0.2.2">
 	<PromiseCards />
 	{#snippet caption()}
 		The promise \(P\Rightarrow Q\) in four situations. Only the second card breaks it. The last two — no rain at all — keep it
@@ -298,7 +372,7 @@
 	reading its explanation. Most people get it wrong the first time.
 </p>
 
-<Figure title="Which cards must you turn over?" hint="Tap the cards you would turn · then check" num="0.2.2">
+<Figure title="Which cards must you turn over?" hint="Tap the cards you would turn · then check" num="0.2.3">
 	<WasonCards />
 	{#snippet caption()}
 		A version of the psychologist Peter Wason’s selection task (1966). The rule is a promise \(P\Rightarrow Q\) with \(P\) =
@@ -394,7 +468,7 @@
 	statement is true exactly when you have a strategy that always wins.
 </p>
 
-<Figure title="The quantifier duel" hint="Play several rounds · then swap the order of the quantifiers" num="0.2.3">
+<Figure title="The quantifier duel" hint="Play several rounds · then swap the order of the quantifiers" num="0.2.4">
 	<QuantifierDuel />
 	{#snippet caption()}
 		With \(\forall x\ \exists y\), the Skeptic chooses \(x\) first and you reply — and you can always win, with \(y=-x\). With
@@ -425,7 +499,7 @@
 	and the broken-promise rule \(\neg(P\Rightarrow Q)\equiv P\wedge\neg Q\).
 </p>
 
-<Figure title="The negation machine" hint="Step through · choose another statement" num="0.2.4">
+<Figure title="The negation machine" hint="Step through · choose another statement" num="0.2.5">
 	<NegationMachine />
 	{#snippet caption()}
 		The \(\hole{\neg}\) moves inward one step at a time; each step uses one rule (lit up below), and what just changed is shown in
@@ -557,7 +631,7 @@
 	fall.
 </p>
 
-<Figure title="Odd numbers make squares" hint="Change n with − and +" num="0.2.5">
+<Figure title="Odd numbers make squares" hint="Change n with − and +" num="0.2.6">
 	<InductionSquares />
 	{#snippet caption()}
 		Each odd number \(2n-1\) is an L-shaped layer that turns an \((n-1)\times(n-1)\) square into an \(n\times n\) square. That
@@ -599,7 +673,7 @@
 	book, with how to say them and where they are explained (the small § numbers).
 </p>
 
-<Figure title="The symbol dictionary" hint="Filter by kind · the § number links to where each symbol is explained" num="0.2.6">
+<Figure title="The symbol dictionary" hint="Filter by kind · the § number links to where each symbol is explained" num="0.2.7">
 	<SymbolAtlas />
 	{#snippet caption()}
 		Read each symbol aloud as you meet it. Those under “Coming later” will mean little now; by the end of Part III they will be old
@@ -616,7 +690,7 @@
 	never needs are there too, with the work they do elsewhere.
 </p>
 
-<Figure title="Greek letters by role" num="0.2.7">
+<Figure title="Greek letters by role" num="0.2.8">
 	<SymbolAtlas mode="greek" />
 	{#snippet caption()}
 		All twenty-four letters, small and capital, with the second shapes some of them have in print (\(\epsilon\) and
@@ -655,7 +729,7 @@
 	very generous one.
 </p>
 
-<Figure title="Levels of sameness" num="0.2.8">
+<Figure title="Levels of sameness" num="0.2.9">
 	<SamenessLadder />
 	{#snippet caption()}
 		From strict to loose: equal, isomorphic (for spaces, homeomorphic), homotopy equivalent. Each looser notion forgets more, so
@@ -689,7 +763,7 @@
 	</li>
 </ul>
 
-<Figure title="Points forward, measurements back" hint="Switch direction · replay" num="0.2.9">
+<Figure title="Points forward, measurements back" hint="Switch direction · replay" num="0.2.10">
 	<PushPull />
 	{#snippet caption()}
 		The same map \(f\colon X\to Y\) carries points forward and measurements backward. Homology is built from things made of points
@@ -766,7 +840,7 @@
 	understand it yet — only to <em>read</em> it. Step through it, or hover over any symbol.
 </p>
 
-<Figure title="The formula decoder" hint="Hover or tap a symbol · step through · try other formulas" num="0.2.10">
+<Figure title="The formula decoder" hint="Hover or tap a symbol · step through · try other formulas" num="0.2.11">
 	<FormulaDecoder />
 	{#snippet caption()}
 		“\(H\) sub \(n\) of \(X\) is the kernel of boundary \(n\), modulo the image of boundary \(n\) plus one.” Each piece names an idea
@@ -893,13 +967,32 @@
 	{/snippet}
 </Exercise>
 
+<Exercise level={1} title="Evidence is not proof">
+	<p>
+		Check that \(n^2 + n + 41\) is prime for \(n = 0, 1, 2, 3, 4\). (It stays prime all the way to \(n = 39\).) Then find, without a
+		computer, a whole number \(n\) for which it is <em>not</em> prime. What does this say about a conjecture supported by forty
+		examples?
+	</p>
+	{#snippet hint()}
+		<p>Try a value of \(n\) that makes every term divisible by \(41\).</p>
+	{/snippet}
+	{#snippet solution()}
+		<p>
+			The values are \(41, 43, 47, 53, 61\), all prime. At \(n = 41\) every term is a multiple of \(41\):
+			\(41^2 + 41 + 41 = 41\cdot43\). (And \(n = 40\) already fails: \(40^2 + 40 + 41 = 40\cdot41 + 41 = 41^2\).) Forty successes
+			in a row proved nothing; only the reason behind a pattern, a proof, makes it certain.
+		</p>
+	{/snippet}
+</Exercise>
+
 <h2 id="summary">Summary</h2>
 
 <Recap>
 	<ul>
 		<li>
 			Mathematical text is built from labelled blocks: definitions (membership tests, where “if” means “iff”), theorems, lemmas,
-			corollaries, proofs, examples and non-examples.
+			corollaries, proofs, examples and non-examples. A conjecture is a statement nobody has proved or disproved yet; it can end
+			proved, disproved, undecidable, or stay open, and no amount of evidence settles it.
 		</li>
 		<li>
 			\(\wedge\), \(\vee\), \(\neg\) are and, (inclusive) or, not. An implication \(P\Rightarrow Q\) is a promise, broken only when

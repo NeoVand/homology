@@ -17,6 +17,7 @@
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Figure from '$lib/components/prose/Figure.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import Cite from '$lib/components/prose/Cite.svelte';
@@ -270,6 +271,19 @@
 	you chose none of them. So the cycle space of the bow-tie has dimension \(5\), and it contains exactly \(2^5 = 32\) cycles, the empty one included: for
 	each of the five faces, include its rim or not.
 </p>
+
+<p>
+	Notice what the face rims do together with the outer rim: they use every edge exactly twice. An inner edge borders two faces, and an
+	edge on the outside borders one face and the outside. Whether every network has a list of cycles with this property was one of the
+	best-known open problems of graph theory until a few months before this chapter was written.
+</p>
+
+<Conjecture k="cycle-double-cover">
+	<p>
+		A cycle here can be read in this chapter’s sense, any set of edges with even degrees, since such a set always splits into
+		simple loops. A bridge must be excluded: no cycle can use it, since removing it would leave the two ends in different pieces.
+	</p>
+</Conjecture>
 
 <Intuition>
 	<p>

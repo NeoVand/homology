@@ -4,6 +4,14 @@ const chapter = 'prelude/reading-math';
 
 export const entries: GlossaryEntry[] = [
 	{
+		key: 'conjecture',
+		term: 'Conjecture',
+		def: 'A precise statement believed to be true but not yet proved. A conjecture may end up proved (Fermat’s last theorem), disproved (Euler’s sum of powers conjecture), shown to be undecidable (the continuum hypothesis), or stay open (Goldbach’s conjecture).',
+		chapter,
+		anchor: 'conjectures',
+		see: ['theorem']
+	},
+	{
 		key: 'statement',
 		term: 'Statement',
 		def: 'A sentence that is definitely true or definitely false, such as “7 is prime”. “\\(x>3\\)” becomes a statement only once we know which \\(x\\) is meant.',

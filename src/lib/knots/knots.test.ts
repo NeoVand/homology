@@ -229,7 +229,7 @@ describe('meridian and longitude', () => {
 
 describe('the arms race table', () => {
 	it('matches fresh computations for the small knots, and separates the famous pairs', () => {
-		const rows = Object.fromEntries((invariantsTable as { id: string; col3: number; det: number; alexander: string; jones: string; kh: Record<string, number> }[]).map((r) => [r.id, r]));
+		const rows = Object.fromEntries((invariantsTable as unknown as { id: string; col3: number; det: number; alexander: string; jones: string; kh: Record<string, number> }[]).map((r) => [r.id, r]));
 		expect(rows['unknot'].col3).toBe(3);
 		expect(rows['3_1'].jones).toBe(L.tex(jones(diagramOf(roundTrefoil()))));
 		expect(rows['3_1'].alexander).toBe(rows['3_1*'].alexander);

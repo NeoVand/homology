@@ -720,7 +720,8 @@
 	So a homeomorphism compares spaces themselves, not the way they sit in the room: as a space, every knot is just a circle.
 	What makes a knot a knot is how it is <em>placed</em>, and two knots count as the same knot only when one can be moved to the
 	other through space without the string ever passing through itself, a much stricter sameness than homeomorphism. Telling
-	knots apart is the business of knot theory, and it will call on almost every idea in this book.
+	knots apart is the business of knot theory, and it will call on almost every idea in this book. Loops take it up in
+	<Ref to="topology/homotopy" />, and it gets a chapter of its own in <Ref to="homology/knots" />.
 </p>
 
 <p>

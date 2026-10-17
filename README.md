@@ -12,14 +12,14 @@ category theory) — with live 3D figures, explorable diagrams, and a built-in h
 
 ## What is inside
 
-A prelude and five parts, 31 chapters, about 200,000 words and 260 figures:
+A prelude and five parts, 32 chapters, about 250,000 words and 280 figures:
 
 | Part | Chapters |
 |---|---|
 | Prelude | The shape of a question · How to read mathematics |
 | I. Foundations | Sets and functions · Equivalence and quotients · Groups · Abelian groups and formal sums · Linear algebra |
 | II. Topology | Spaces and continuity · Gluing · Homotopy · Manifolds and surfaces · Simplicial complexes · The Euler characteristic |
-| III. Homology | Cycles and boundaries · Chains · Homology groups · Computing homology · Invariance and first triumphs · Exact sequences and Mayer–Vietoris · Persistent homology |
+| III. Homology | Cycles and boundaries · Chains · Homology groups · Computing homology · Invariance and first triumphs · Exact sequences and Mayer–Vietoris · Knots and links · Persistent homology |
 | IV. Cohomology | Cochains · Cohomology groups · Differential forms · de Rham cohomology · The cup product · Poincaré duality · Sheaves and Čech cohomology · Characteristic classes |
 | V. The big picture | Categories and functors · Homological algebra · Horizons |
 

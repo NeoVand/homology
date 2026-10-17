@@ -9,6 +9,7 @@
 	import KeyIdea from '$lib/components/prose/KeyIdea.svelte';
 	import Warning from '$lib/components/prose/Warning.svelte';
 	import Remark from '$lib/components/prose/Remark.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import History from '$lib/components/prose/History.svelte';
 	import Question from '$lib/components/prose/Question.svelte';
 	import Recap from '$lib/components/prose/Recap.svelte';
@@ -354,15 +355,19 @@
 	top corner diagonally opposite.
 </p>
 
-<Remark title="Stretching allowed">
+<p>
+	In the workshop the sheet stretches as it rolls. Topology does not mind: in the words of Poincaré quoted at the start of
+	<Ref to="prelude/shape-of-a-question" />, “the proportions may be grossly altered”. Real paper does mind. You cannot make a
+	Möbius band from a <em>square</em> of paper without crumpling it; the strip must be long and narrow. How long it must be was an
+	open question for almost fifty years.
+</p>
+
+<Conjecture k="paper-mobius">
 	<p>
-		You cannot make a Möbius band from a <em>square</em> of real paper without crumpling it: the strip must be long and narrow.
-		How long was an open question for almost fifty years, until Richard Schwartz proved in 2023 that a smooth paper Möbius band
-		must be more than \(\sqrt3 \approx 1.73\) times as long as it is wide <Cite k="schwartz2025" />. In the workshop the sheet
-		stretches as it rolls. Topology does not mind: in the words of Poincaré quoted at the start of
-		<Ref to="prelude/shape-of-a-question" />, “the proportions may be grossly altered”.
+		This is a question of geometry, not topology: every strip glued with a half twist gives the same topological Möbius band,
+		and only lengths decide whether paper can do it.
 	</p>
-</Remark>
+</Conjecture>
 
 <h3>Both pairs: the torus and the Klein bottle</h3>
 

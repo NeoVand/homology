@@ -116,14 +116,6 @@ export const entries: GlossaryEntry[] = [
 		see: ['hopf-fibration', 'linking-number']
 	},
 	{
-		key: 'linking-number',
-		term: 'Linking number',
-		def: 'An integer counting how many times one closed curve in space winds around another. Gauss gave a double integral for it, and it does not change as the curves move without passing through each other.',
-		chapter,
-		anchor: 'hopf-fibration',
-		see: ['hopf-invariant', 'winding-number']
-	},
-	{
 		key: 'riemann-roch',
 		term: 'Riemann–Roch theorem',
 		def: 'For a line bundle \\(L\\) of degree \\(d\\) on a compact Riemann surface of genus \\(g\\): \\(\\dim H^0(L)-\\dim H^1(L) = d+1-g\\). Sheaf cohomology on the left, topology on the right.',
@@ -146,14 +138,6 @@ export const entries: GlossaryEntry[] = [
 		chapter,
 		anchor: 'applications',
 		see: ['khovanov-homology', 'euler-characteristic']
-	},
-	{
-		key: 'khovanov-homology',
-		term: 'Khovanov homology',
-		def: 'A homology theory of knots (Mikhail Khovanov, 2000) whose graded Euler characteristic is the Jones polynomial. Kronheimer and Mrowka proved in 2011 that it detects the unknot.',
-		chapter,
-		anchor: 'applications',
-		see: ['categorification']
 	},
 	{
 		key: 'topological-complexity',

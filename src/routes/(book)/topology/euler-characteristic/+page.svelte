@@ -16,6 +16,7 @@
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Figure from '$lib/components/prose/Figure.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import Scrub from '$lib/components/prose/Scrub.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
@@ -204,6 +205,19 @@
 	That should seem odd. Adding up angles is measuring; counting corners, edges and faces is not. Why should one know about the
 	other? Keep the question in mind: the last section of the chapter answers it in three lines.
 </p>
+
+<p>
+	Euler’s formula is one relation among the numbers of vertices, edges and faces. Finding all such relations, for polytopes of every
+	dimension, is still an active subject, and some of its simplest questions are open.
+</p>
+
+<Conjecture k="kalai-3d">
+	<p>
+		Count everything: a cube has \(8\) vertices, \(12\) edges, \(6\) faces and \(1\) solid, \(27 = 3^3\) in all, and the octahedron,
+		with \(6 + 12 + 8 + 1\), also has \(27\). Among solids that are symmetric about their centre, these seem to be the most
+		economical.
+	</p>
+</Conjecture>
 
 <h2 id="why-it-is-true">Why it is true</h2>
 

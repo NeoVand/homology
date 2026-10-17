@@ -8,6 +8,7 @@
 	import KeyIdea from '$lib/components/prose/KeyIdea.svelte';
 	import Warning from '$lib/components/prose/Warning.svelte';
 	import Remark from '$lib/components/prose/Remark.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import History from '$lib/components/prose/History.svelte';
 	import Question from '$lib/components/prose/Question.svelte';
 	import Notation from '$lib/components/prose/Notation.svelte';
@@ -674,14 +675,21 @@
 	triangulation.
 </p>
 
-<Remark title="Can everything be triangulated?">
+<p>
+	Can everything be triangulated? Every surface can, as Tibor Radó proved in 1925 <Cite k="rado1925" />, and so can every shape in
+	this book. Whether every manifold can was one of the long-standing questions of topology.
+</p>
+
+<Conjecture k="triangulation">
 	<p>
-		Every surface can, as Tibor Radó proved in 1925 <Cite k="rado1925" />, and so can every shape in this book. But not every
-		space: there are manifolds, in every dimension from four up, that admit no triangulation at all — the last dimensions were
-		settled only in 2016 <Cite k="manolescu2016" />. This is one reason later chapters develop homology for spaces that are not
-		given to us in pieces.
+		The answer took nearly a century and, in the end, a new kind of homology. Remarkably, the obstruction lives in dimension
+		three: whether high-dimensional manifolds can be cut into simplices was decided by a question about 3-manifolds.
 	</p>
-</Remark>
+</Conjecture>
+
+<p>
+	This is one reason later chapters develop homology for spaces that are not given to us in pieces.
+</p>
 
 <h2 id="orientation">Orientation: giving simplices a direction</h2>
 

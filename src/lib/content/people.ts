@@ -48,6 +48,7 @@ export const people: Record<string, Person> = Object.fromEntries(
 		P('riemann', 'Bernhard Riemann', '1826 – 1866', 'Riemann'),
 		P('smith', 'Henry John Stephen Smith', '1826 – 1883', 'Smith'),
 		P('dedekind', 'Richard Dedekind', '1831 – 1916', 'Dedekind'),
+		P('tait', 'Peter Guthrie Tait', '1831 – 1901', 'Tait'),
 		P('jordan', 'Camille Jordan', '1838 – 1922', 'Jordan'),
 		P('cantor', 'Georg Cantor', '1845 – 1918', 'Cantor'),
 		P('klein', 'Felix Klein', '1849 – 1925', 'Klein'),
@@ -65,10 +66,12 @@ export const people: Record<string, Person> = Object.fromEntries(
 		P('mayer', 'Walther Mayer', '1887 – 1948', undefined, { url: 'https://en.wikipedia.org/wiki/Walther_Mayer' }),
 		P('alexander', 'James Waddell Alexander', '1888 – 1971', 'Alexander'),
 		P('vietoris', 'Leopold Vietoris', '1891 – 2002', 'Vietoris'),
+		P('reidemeister', 'Kurt Reidemeister', '1893 – 1971', 'Reidemeister'),
 		P('cech', 'Eduard Čech', '1893 – 1960', 'Cech'),
 		P('hopf', 'Heinz Hopf', '1894 – 1971', 'Hopf'),
 		P('alexandrov', 'Pavel Alexandrov', '1896 – 1982', 'Aleksandrov'),
 		P('lionel-penrose', 'Lionel Penrose', '1898 – 1972', undefined, { url: 'https://en.wikipedia.org/wiki/Lionel_Penrose' }),
+		P('artin', 'Emil Artin', '1898 – 1962', 'Artin'),
 		P('escher', 'M. C. Escher', '1898 – 1972', undefined, { url: 'https://en.wikipedia.org/wiki/M._C._Escher' }),
 		P('dirac', 'Paul Dirac', '1902 – 1984', 'Dirac'),
 		P('kolmogorov', 'Andrey Kolmogorov', '1903 – 1987', 'Kolmogorov'),
@@ -77,6 +80,7 @@ export const people: Record<string, Person> = Object.fromEntries(
 		P('hurewicz', 'Witold Hurewicz', '1904 – 1956', 'Hurewicz'),
 		P('leray', 'Jean Leray', '1906 – 1998', 'Leray'),
 		P('whitney', 'Hassler Whitney', '1907 – 1989', 'Whitney'),
+		P('seifert', 'Herbert Seifert', '1907 – 1996', 'Seifert'),
 		P('mac-lane', 'Saunders Mac Lane', '1909 – 2005', 'MacLane'),
 		P('stiefel', 'Eduard Stiefel', '1909 – 1978', 'Stiefel'),
 		P('steenrod', 'Norman Steenrod', '1910 – 1971', 'Steenrod'),
@@ -85,6 +89,8 @@ export const people: Record<string, Person> = Object.fromEntries(
 		P('bott', 'Raoul Bott', '1923 – 2005', 'Bott'),
 		P('hirzebruch', 'Friedrich Hirzebruch', '1927 – 2012', 'Hirzebruch'),
 		P('grothendieck', 'Alexander Grothendieck', '1928 – 2014', 'Grothendieck'),
+		P('conway', 'John Horton Conway', '1937 – 2020', 'Conway'),
+		P('vaughan-jones', 'Vaughan Jones', '1952 – 2020', 'Jones_Vaughan'),
 		P('atiyah', 'Michael Atiyah', '1929 – 2019', 'Atiyah')
 	].map((p) => [p.key, p])
 );

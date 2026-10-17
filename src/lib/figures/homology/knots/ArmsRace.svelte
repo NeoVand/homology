@@ -7,7 +7,7 @@
 	import table from '$lib/knots/invariants.json';
 
 	type Row = { id: string; name: string; crossings: number; col3: number; det: number; alexander: string; jones: string; kh: Record<string, number> };
-	const knots = table as Row[];
+	const knots = table as unknown as Row[];
 	const byId = new Map(knots.map((k) => [k.id, k]));
 
 	const pairs: { a: string; b: string; label: string }[] = [

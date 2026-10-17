@@ -33,7 +33,7 @@
 		<h3><a href={chapterHref(p.chapter, `cj-${p.key}`)}>{p.name}</a></h3>
 		<p class="statement">{@html renderMathInText(p.statement)}</p>
 		<p class="meta ui">
-			Posed by {p.posed.by}, {p.posed.year}{#if p.settled}; settled by {p.settled.by}, {p.settled.year}{/if}
+			{#if p.posed.by}Posed by {p.posed.by}, {p.posed.year}{:else}Asked since {p.posed.year}{/if}{#if p.settled}; settled by {p.settled.by}, {p.settled.year}{/if}
 			{#if ch}<a class="where" href={chapterHref(p.chapter, `cj-${p.key}`)}>§{ch.num} {ch.title}</a>{/if}
 		</p>
 	</li>

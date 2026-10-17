@@ -15,6 +15,7 @@
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Figure from '$lib/components/prose/Figure.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import Cite from '$lib/components/prose/Cite.svelte';
@@ -355,6 +356,19 @@
 	<li><strong>Working mod a prime.</strong> Integer Smith normal forms can produce enormous intermediate numbers. Computing ranks modulo a few primes avoids this and still detects torsion: a prime \(p\) that divides an invariant factor makes the rank mod \(p\) drop.</li>
 	<li><strong>Good software.</strong> Libraries such as GUDHI and Ripser routinely compute homology and persistent homology of complexes with millions of simplices.</li>
 </ul>
+
+<p>
+	How fast can the linear algebra itself be? Row reduction, like the school method of multiplying matrices, takes about \(n^3\) steps
+	for an \(n\times n\) matrix. Both can be done faster: the rank of a matrix, and with it every Betti number, can be computed in about
+	\(n^\omega\) steps, where \(\omega\) is the exponent of matrix multiplication. Nobody knows what \(\omega\) is.
+</p>
+
+<Conjecture k="matrix-multiplication">
+	<p>
+		The question is about the shape of the growth, not about practical speed: a method whose running time grows like a smaller
+		power of \(n\) eventually wins, but “eventually” can mean matrices far larger than any computer will ever hold.
+	</p>
+</Conjecture>
 
 <h2 id="exercises">Exercises</h2>
 

@@ -29,7 +29,7 @@
 	<div class="cj-status ui" style="--s:{statusColor[p.status]}">
 		<span class="badge">{statusText(p)}</span>
 		<span class="who">
-			Posed by {p.posed.by}, {p.posed.year}{#if p.settled}; {settledVerb[p.status]} {p.settled.by}, {p.settled.year}{/if}
+			{#if p.posed.by}Posed by {p.posed.by}, {p.posed.year}{:else}Asked since {p.posed.year}{/if}{#if p.settled}; {settledVerb[p.status]} {p.settled.by}, {p.settled.year}{/if}
 		</span>
 	</div>
 	<p class="cj-statement">{@html renderMathInText(p.statement)}</p>

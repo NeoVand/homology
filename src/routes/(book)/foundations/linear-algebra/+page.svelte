@@ -15,6 +15,7 @@
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Figure from '$lib/components/prose/Figure.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import Cite from '$lib/components/prose/Cite.svelte';
@@ -525,6 +526,23 @@
 	when they are linearly dependent. (Determinants exist for square matrices of every size, where they measure volumes, but we will
 	need only the \(2 \times 2\) case.)
 </p>
+
+<p>
+	Volumes lead to one of the oldest open questions about matrices. Fill a square table with \(+1\)s and \(-1\)s: how large can its
+	determinant be? Think of the rows as the edges of a box. A box with edges of given lengths has the largest volume when its edges
+	are perpendicular, and two rows are perpendicular when their dot product is \(0\). For \(2\times2\) tables the best is
+	\(\begin{pmatrix} 1 & 1 \\ 1 & -1\end{pmatrix}\), whose rows have dot product \(1 - 1 = 0\) and whose determinant is \(-2\).
+	Jacques Hadamard proved in 1893 that an \(n\times n\) table of \(\pm1\)s has \(\abs{\det}\le n^{n/2}\), with equality exactly
+	when every two rows are perpendicular <Cite k="hadamard1893" />. Tables like that are now called <dfn>Hadamard matrices</dfn>, and
+	they are used to build error-correcting codes.
+</p>
+
+<Conjecture k="hadamard">
+	<p>
+		Two rows of \(\pm1\)s are perpendicular exactly when they agree in half of their places, since each agreement adds \(1\) to the
+		dot product and each disagreement subtracts \(1\). The puzzle is to make every pair of rows balanced at once.
+	</p>
+</Conjecture>
 
 <p>
 	Everything works the same way over \(\Z/2\): a matrix is a table of 0s and 1s, and the arithmetic uses \(1 + 1 = 0\). Lights Out is

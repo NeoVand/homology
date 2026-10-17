@@ -765,11 +765,14 @@
 		motion planner must use; a single continuous rule exists only when the configuration space is contractible <Cite k="farber2003" />.
 	</li>
 	<li>
-		<strong>Knots.</strong> Khovanov homology <Cite k="khovanov2000" /> assigns to each knot a family of homology groups whose graded Euler characteristic
-		is the Jones polynomial, a famous knot invariant — the polynomial is a “shadow” of the homology, as \(\chi\) is a shadow of the
-		Betti numbers. Promoting a number or polynomial to a homology theory in this way is called <dfn>categorification</dfn>, and the
-		extra information pays: Kronheimer and Mrowka showed in 2011 that Khovanov homology recognises the unknot, something not known for
-		the Jones polynomial itself <Cite k="kronheimer-mrowka2011" />.
+		<strong>Knots.</strong> Khovanov homology, built in <Ref to="homology/knots" hash="khovanov" />, has a graded Euler characteristic
+		equal to the Jones polynomial: the polynomial is a “shadow” of the homology, as \(\chi\) is a shadow of the Betti numbers
+		<Cite k="khovanov2000" />. Promoting a number or polynomial to a homology theory in this way is called <dfn>categorification</dfn>,
+		and the extra information pays: Khovanov homology recognises the unknot <Cite k="kronheimer-mrowka2011" />, and Jacob Rasmussen
+		extracted from it a lower bound for the genus of the surfaces a knot can bound in four-dimensional space, enough to compute the
+		unknotting numbers of all torus knots without gauge theory <Cite k="rasmussen2010" />. The Alexander polynomial
+		has its own categorification, knot Floer homology, built by Peter Ozsváth and Zoltán Szabó from holomorphic disks; it detects the
+		genus of a knot exactly <Cite k="ozsvath-szabo2004,ozsvath-szabo2004genus" />.
 	</li>
 </ul>
 

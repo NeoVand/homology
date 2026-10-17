@@ -1026,6 +1026,18 @@
 	</p>
 </Warning>
 
+<Remark title="Three rings that no pair can see">
+	<p>
+		Cup products also see links. In the space around a link of several components, each component \(K_i\) gives a degree-1
+		class \(\alpha_i\), the measurement “linking number with \(K_i\)” of <Ref to="homology/knots" hash="what-homology-sees" />, and
+		the product \(\alpha_i\smile\alpha_j\) is nonzero exactly when the two components have nonzero linking number. The Borromean rings defeat
+		this test: no two of them are linked, so every product vanishes, yet the three cannot be pulled apart. William Massey
+		invented a product of <em>three</em> classes, defined precisely when the products of pairs vanish, to catch such
+		configurations; for the Borromean rings, \(\alpha_1\), \(\alpha_2\) and \(\alpha_3\) have a nonzero Massey product
+		<Cite k="massey1998" />.
+	</p>
+</Remark>
+
 <h2 id="exercises">Exercises</h2>
 
 <Exercise level={1} title="Front and back">

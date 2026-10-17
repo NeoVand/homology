@@ -146,21 +146,5 @@ export const entries: GlossaryEntry[] = [
 		chapter,
 		anchor: 'alexander',
 		see: ['jordan-curve-theorem', 'linking-number']
-	},
-	{
-		key: 'linking-number',
-		term: 'Linking number',
-		def: 'How many times a closed curve \\(\\gamma\\) winds around a knot or another closed curve \\(K\\) in space: the multiple of the meridian class that \\(\\gamma\\) represents in \\(H_1(\\R^3 \\setminus K) \\cong \\Z\\). Gauss gave an integral formula for it in 1833; it is also the signed number of times \\(\\gamma\\) pierces a Seifert surface of \\(K\\).',
-		chapter,
-		anchor: 'alexander',
-		see: ['alexander-duality', 'seifert-surface', 'winding-number']
-	},
-	{
-		key: 'seifert-surface',
-		term: 'Seifert surface',
-		def: 'An oriented surface in space whose boundary is a given knot. It is the fence of the cohomology class “linking number with the knot”: the linking number of a loop is the signed number of times it pierces the surface. For the unknot it is a disk.',
-		chapter,
-		anchor: 'alexander',
-		see: ['linking-number', 'fence']
 	}
 ];

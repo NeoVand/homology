@@ -18,6 +18,7 @@
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Figure from '$lib/components/prose/Figure.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import Cite from '$lib/components/prose/Cite.svelte';
@@ -1069,6 +1070,20 @@
 	\oplus \Z/2\).</span> Knowing the two ends tells you the size of the middle, but not always its structure — a subtlety that
 	will matter when homology is assembled from pieces.
 </p>
+
+<p>
+	The second sequence is the simplest kind: the middle is just the two ends side by side, \(B\cong A\oplus C\), with the obvious
+	maps. Such a sequence is said to <dfn>split</dfn>. If \(C\) is free abelian, every short exact sequence ending in \(C\) splits:
+	pick, for each basis element of \(C\), one element of \(B\) that \(g\) sends to it, and those choices define a copy of \(C\)
+	inside \(B\) next to \(f(A)\). The first sequence shows that \(\Z/2\), which is not free, can fail. Is freeness the whole story?
+</p>
+
+<Conjecture k="whitehead-problem">
+	<p>
+		The question sounds like a routine exercise about the sequences on this page. Its answer is that the usual axioms of
+		mathematics cannot decide it.
+	</p>
+</Conjecture>
 
 <p>
 	Finally, what if a sequence is <em>not</em> exact? Suppose only that doing \(f\) and then \(g\) gives zero, so that

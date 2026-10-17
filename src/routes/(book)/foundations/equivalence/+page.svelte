@@ -18,6 +18,7 @@
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Figure from '$lib/components/prose/Figure.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import Cite from '$lib/components/prose/Cite.svelte';
@@ -992,6 +993,20 @@
 	When you get there, you will already know the moves: choose a representative, do the computation, and check that the answer
 	does not depend on the choice.
 </p>
+
+<p>
+	One thing the recipe never provides is a way to decide whether two given things lie in the same pile. For remainders it is easy:
+	divide and compare. For shapes it is the whole difficulty of topology, and the rest of the book builds tools for it. Even for
+	finite, completely explicit objects it can be surprisingly hard.
+</p>
+
+<Conjecture k="graph-isomorphism">
+	<p>
+		A network of dots and lines is the same as another “up to relabelling” if renaming the dots turns one into the other, and this
+		is an equivalence relation. Counting the lines, or how many neighbours each dot has, can prove that two networks are different,
+		but never that they are the same. That is exactly the position homology will be in for shapes.
+	</p>
+</Conjecture>
 
 <h2 id="exercises">Exercises</h2>
 

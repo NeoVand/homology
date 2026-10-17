@@ -311,7 +311,7 @@
 \[ \mathbf B = \frac{\mu_0 I}{2\pi}\,\frac{(-y,\ x,\ 0)}{x^2+y^2}, \]
 <p>where \(\mu_0\) is a physical constant. As a 1-form, this is \(\tfrac{\mu_0 I}{2\pi}\,d\theta\) on space with the wire removed. Outside the wire it has no curl, so it is closed. But around any loop it gives</p>
 \[ \oint_\gamma \mathbf B\cdot d\mathbf l = \mu_0 I \times (\text{number of times } \gamma \text{ winds around the wire}), \]
-<p>which is <Term t="amperes-law">Ampère’s law</Term>. So \(\mathbf B\) is closed but not exact: there is no “magnetic potential function” outside a wire, and the obstruction is a class in \(H^1_{\dR}(\R^3\setminus\text{wire})\cong\R\). For a current in a closed loop of wire, the number of times becomes the <em>linking number</em> of the two loops — a first taste of how cohomology detects knotting and linking.</p>
+<p>which is <Term t="amperes-law">Ampère’s law</Term>. So \(\mathbf B\) is closed but not exact: there is no “magnetic potential function” outside a wire, and the obstruction is a class in \(H^1_{\dR}(\R^3\setminus\text{wire})\cong\R\). For a current in a closed loop of wire, the number of times becomes the <Term t="linking-number">linking number</Term> of the two loops from <Ref to="homology/knots" hash="what-homology-sees" />: Ampère’s law measures it with a magnetic field.</p>
 
 <h3 id="aharonov-bohm">The Aharonov–Bohm effect</h3>
 

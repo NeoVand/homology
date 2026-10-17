@@ -17,6 +17,7 @@
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Figure from '$lib/components/prose/Figure.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import VennLab from '$lib/figures/foundations/sets-and-functions/VennLab.svelte';
@@ -907,6 +908,14 @@
 		mathematics to his conviction that Francis Bacon had written Shakespeare’s plays.
 	</p>
 </History>
+
+<Conjecture k="continuum-hypothesis">
+	<p>
+		Every infinite set in this chapter is either countable, like \(\N\), \(\Z\) and \(\Q\), or as large as \(\R\). Cantor
+		asked whether anything lies in between in the same paper on dimension that Kronecker held up. The answer turned out to be
+		stranger than yes or no.
+	</p>
+</Conjecture>
 
 <Remark title="Why this matters for homology">
 	<p>
