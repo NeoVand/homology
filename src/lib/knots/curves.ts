@@ -34,6 +34,14 @@ function gcd(a: number, b: number): number {
 	return b ? gcd(b, a % b) : Math.abs(a);
 }
 
+/**
+ * The k-th of `per` sample times through one crossing of a braid, τ ∈ [0, 1).
+ * The two strands cross at τ = ½; the samples lie symmetrically about it and
+ * never on it (a point there would be a corner of both polylines, which
+ * rounding can make diagramOf() count twice): half a step off when per is even.
+ */
+const sampleAt = (k: number, per: number) => (k + (per % 2 ? 0 : 0.5)) / per;
+
 /** the figure-eight knot: ((2 + cos 2t) cos 3t, (2 + cos 2t) sin 3t, sin 4t) */
 export function figureEight(scale = 0.62, n = 480): V3[][] {
 	return [
@@ -110,7 +118,7 @@ export function braidClosure(n: number, word: number[], opts: { R0?: number; gap
 		const a = pos.indexOf(i);
 		const b = pos.indexOf(i + 1);
 		for (let k = 0; k < per; k++) {
-			const tau = k / per;
+			const tau = sampleAt(k, per);
 			const th = (TAU * (m + tau)) / slots;
 			const e = tau * tau * (3 - 2 * tau);
 			for (let s = 0; s < n; s++) {
@@ -204,7 +212,7 @@ export function plat(word: number[], opts: { gap?: number; w?: number; lift?: nu
 		const a = pos.indexOf(i);
 		const b = pos.indexOf(i + 1);
 		for (let k = 0; k < per; k++) {
-			const tau = k / per;
+			const tau = sampleAt(k, per);
 			const x = w * (m + tau) - L / 2;
 			const e = tau * tau * (3 - 2 * tau);
 			for (let s = 0; s < n; s++) {

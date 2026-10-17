@@ -133,6 +133,26 @@ describe('the table of knots', () => {
 		}
 	});
 
+	it('a closed braid has one crossing per letter, however finely it is sampled', () => {
+		// the strands cross halfway through a letter; were a sample there (an even number per
+		// letter, sampled from the start), rounding could make diagramOf count the crossing twice
+		for (const k of knots) {
+			if (!k.braid) continue;
+			const V = L.tex(jones(diagramOf(braidClosure(...k.braid))));
+			for (const per of [11, 25, 28]) {
+				const D = diagramOf(braidClosure(...k.braid, { R0: 0.9, per }));
+				// (the braids of 5₂ and 6₁ have one letter more than the knots have crossings)
+				expect(D.pd.length, `${k.id}, ${per} per letter`).toBe(k.braid[1].length);
+				expect(L.tex(jones(D)), `${k.id}, ${per} per letter`).toBe(V);
+			}
+		}
+		// and the same for plats
+		for (const per of [4, 5, 6, 7, 20]) {
+			expect(diagramOf(plat([2, 2, -1, 2], { gap: 0.7, per })).pd.length, `4_1, ${per} per letter`).toBe(4);
+			expect(diagramOf(plat([2, 2, 2, 2, -1, 2], { gap: 0.7, per })).pd.length, `6_1, ${per} per letter`).toBe(6);
+		}
+	});
+
 	it('settling a knot into a rounder shape never lets a strand pass through another', { timeout: 60000 }, () => {
 		const before = jones(diagramOf(braidClosure(3, [1, 1, 1, 2, -1, 2])));
 		const after = jones(diagramOf(relax(braidClosure(3, [1, 1, 1, 2, -1, 2]), { steps: 300 })));
