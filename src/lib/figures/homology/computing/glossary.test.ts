@@ -3,6 +3,7 @@ import katex from 'katex';
 import { katexOptions } from '$lib/katex/macros.js';
 import { entries as groups } from '$lib/content/glossary/homology--homology-groups';
 import { entries as computing } from '$lib/content/glossary/homology--computing';
+import { glossaryByKey } from '$lib/content/glossary';
 
 describe('glossary entries of chapters 3.3 and 3.4', () => {
 	const all = [...groups, ...computing];
@@ -23,8 +24,7 @@ describe('glossary entries of chapters 3.3 and 3.4', () => {
 			}
 		}
 	});
-	it('see-also keys point to entries that exist in these chapters', () => {
-		const keys = new Set(all.map((e) => e.key));
-		for (const e of all) for (const s of e.see ?? []) expect(keys.has(s), `${e.key} → ${s}`).toBe(true);
+	it('see-also keys point to entries that exist', () => {
+		for (const e of all) for (const s of e.see ?? []) expect(glossaryByKey.has(s), `${e.key} → ${s}`).toBe(true);
 	});
 });
