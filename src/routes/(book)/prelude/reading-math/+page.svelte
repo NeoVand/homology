@@ -611,15 +611,18 @@
 
 <p>
 	Mathematicians run out of Latin letters quickly, so Greek ones are everywhere. Each tends to have a typical job, which gives you a
-	head start: a \(\gamma\) is probably a path, a \(\sigma\) probably a simplex, an \(\varepsilon\) probably small. Here are the ones
-	this book uses, with a common English pronunciation.
+	head start: a \(\gamma\) is probably a path, a \(\sigma\) probably a simplex, an \(\varepsilon\) probably small. Here is the
+	whole alphabet in order, with a common English pronunciation and the job each letter does in this book. The few letters this book
+	never needs are there too, with the work they do elsewhere.
 </p>
 
 <Figure title="Greek letters by role" num="0.2.7">
 	<SymbolAtlas mode="greek" />
 	{#snippet caption()}
-		Lowercase and (where used) capital forms. These are habits, not laws: a letter can be used for anything, but a writer who uses
-		\(\varepsilon\) for a large number is being unkind.
+		All twenty-four letters, small and capital, with the second shapes some of them have in print (\(\epsilon\) and
+		\(\varepsilon\) are the same letter). Thirteen of the capitals are faded: they are drawn exactly like Latin letters
+		(\(\Alpha\) is A, \(\Chi\) is X), so no one uses them as symbols. These are habits, not laws: a letter can be used for anything, but a writer
+		who uses \(\varepsilon\) for a large number is being unkind.
 	{/snippet}
 </Figure>
 

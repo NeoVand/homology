@@ -73,27 +73,43 @@ export const symbols: Sym[] = [
 
 export interface Greek {
 	lower: string;
-	upper?: string;
+	upper: string;
+	/** the capital is drawn exactly like a Latin letter, so nobody uses it as a symbol */
+	latin?: string;
+	/** other printed shapes of the same letter */
+	variants?: string[];
 	name: string;
 	say: string;
 	role: string;
+	/** false: the letter has no job in this book; `role` says where it does work */
+	used: boolean;
 }
 
+// The whole alphabet, in order. Roles are the ones the letters play in this
+// book; a letter the book never needs says what it is used for elsewhere.
 export const greek: Greek[] = [
-	{ lower: '\\alpha', name: 'alpha', say: 'AL-fuh', role: 'paths and loops; angles' },
-	{ lower: '\\beta', name: 'beta', say: 'BAY-tuh', role: 'loops; \\(\\beta_k\\) for Betti numbers in data science' },
-	{ lower: '\\gamma', upper: '\\Gamma', name: 'gamma', say: 'GAM-uh', role: 'paths and loops: \\(\\gamma\\colon[0,1]\\to X\\)' },
-	{ lower: '\\delta', upper: '\\Delta', name: 'delta', say: 'DEL-tuh', role: '\\(\\delta\\): coboundary, or a small distance; \\(\\Delta^n\\): the standard simplex' },
-	{ lower: '\\varepsilon', name: 'epsilon', say: 'EP-sih-lon', role: 'a small positive number' },
-	{ lower: '\\eta', name: 'eta', say: 'AY-tuh', role: 'differential forms; natural transformations' },
-	{ lower: '\\theta', name: 'theta', say: 'THAY-tuh', role: 'angles' },
-	{ lower: '\\iota', name: 'iota', say: 'eye-OH-tuh', role: 'inclusion maps \\(\\iota\\colon A\\hookrightarrow X\\)' },
-	{ lower: '\\lambda', name: 'lambda', say: 'LAM-duh', role: 'numbers that scale (scalars)' },
-	{ lower: '\\pi', upper: '\\Pi', name: 'pi', say: 'pie', role: '\\(3.14159\\ldots\\); projections; \\(\\pi_1\\), the fundamental group' },
-	{ lower: '\\sigma', upper: '\\Sigma', name: 'sigma', say: 'SIG-muh', role: '\\(\\sigma\\): a simplex; \\(\\Sigma\\): a sum, or the genus-\\(g\\) surface \\(\\Sigma_g\\)' },
-	{ lower: '\\tau', name: 'tau', say: 'tow (rhymes with cow)', role: 'another simplex, next to \\(\\sigma\\)' },
-	{ lower: '\\varphi', name: 'phi', say: 'fie (or fee)', role: 'maps, charts and cochains' },
-	{ lower: '\\psi', name: 'psi', say: 'sigh (or psy)', role: 'more maps' },
-	{ lower: '\\chi', name: 'chi', say: 'kye (rhymes with sky)', role: 'the Euler characteristic \\(\\chi(X)\\)' },
-	{ lower: '\\omega', upper: '\\Omega', name: 'omega', say: 'oh-MAY-guh', role: '\\(\\omega\\): a differential form; \\(\\Omega^k(M)\\): all \\(k\\)-forms on \\(M\\)' }
+	{ lower: '\\alpha', upper: '\\Alpha', latin: 'A', name: 'alpha', say: 'AL-fuh', role: 'paths and loops; with \\(\\beta\\), a pair of cohomology classes or forms', used: true },
+	{ lower: '\\beta', upper: '\\Beta', latin: 'B', name: 'beta', say: 'BAY-tuh', role: 'loops; \\(\\beta_k\\) for Betti numbers in data science', used: true },
+	{ lower: '\\gamma', upper: '\\Gamma', name: 'gamma', say: 'GAM-uh', role: '\\(\\gamma\\): a path or loop, \\(\\gamma\\colon[0,1]\\to X\\); \\(\\Gamma(X;F)\\): the global sections of a sheaf', used: true },
+	{ lower: '\\delta', upper: '\\Delta', name: 'delta', say: 'DEL-tuh', role: '\\(\\delta\\): the coboundary, or a small distance; \\(\\Delta^n\\): the standard simplex', used: true },
+	{ lower: '\\varepsilon', upper: '\\Epsilon', latin: 'E', variants: ['\\epsilon'], name: 'epsilon', say: 'EP-sih-lon', role: 'a small positive number', used: true },
+	{ lower: '\\zeta', upper: '\\Zeta', latin: 'Z', name: 'zeta', say: 'ZAY-tuh', role: 'not needed in this book; elsewhere, the Riemann zeta function \\(\\zeta(s)\\)', used: false },
+	{ lower: '\\eta', upper: '\\Eta', latin: 'H', name: 'eta', say: 'AY-tuh', role: 'a second form or loop, next to \\(\\omega\\) or \\(\\rho\\); natural transformations \\(\\eta\\colon F\\Rightarrow G\\)', used: true },
+	{ lower: '\\theta', upper: '\\Theta', variants: ['\\vartheta'], name: 'theta', say: 'THAY-tuh', role: 'angles, and the angle form \\(d\\theta\\)', used: true },
+	{ lower: '\\iota', upper: '\\Iota', latin: 'I', name: 'iota', say: 'eye-OH-tuh', role: 'inclusion maps \\(\\iota\\colon A\\hookrightarrow X\\)', used: true },
+	{ lower: '\\kappa', upper: '\\Kappa', latin: 'K', variants: ['\\varkappa'], name: 'kappa', say: 'KAP-uh', role: 'the curvature \\(\\kappa\\) of a curve', used: true },
+	{ lower: '\\lambda', upper: '\\Lambda', name: 'lambda', say: 'LAM-duh', role: '\\(\\lambda\\): numbers that scale (scalars); \\(\\Lambda\\): an exterior algebra, as in \\(\\Lambda[\\alpha,\\beta]\\)', used: true },
+	{ lower: '\\mu', upper: '\\Mu', latin: 'M', name: 'mu', say: 'myoo', role: 'the magnetic constant \\(\\mu_0\\); elsewhere, measures', used: true },
+	{ lower: '\\nu', upper: '\\Nu', latin: 'N', name: 'nu', say: 'nyoo', role: 'the whole number \\(\\nu\\) of the quantum Hall effect. Careful: \\(\\nu\\) looks like a v', used: true },
+	{ lower: '\\xi', upper: '\\Xi', name: 'xi', say: 'ksee (or zye)', role: 'not needed in this book; elsewhere, a vector bundle \\(\\xi\\), or a spare variable when \\(x\\) is taken', used: false },
+	{ lower: '\\omicron', upper: '\\Omicron', latin: 'O', name: 'omicron', say: 'OM-ih-kron', role: 'almost never used anywhere: both forms look exactly like o and O', used: false },
+	{ lower: '\\pi', upper: '\\Pi', variants: ['\\varpi'], name: 'pi', say: 'pie', role: '\\(\\pi\\): \\(3.14159\\ldots\\), projections, and \\(\\pi_1\\), the fundamental group; \\(\\Pi\\): a product of many factors', used: true },
+	{ lower: '\\rho', upper: '\\Rho', latin: 'P', variants: ['\\varrho'], name: 'rho', say: 'roh', role: 'a rotation, or a loop; elsewhere, densities. Careful: \\(\\rho\\) is not a p', used: true },
+	{ lower: '\\sigma', upper: '\\Sigma', variants: ['\\varsigma'], name: 'sigma', say: 'SIG-muh', role: '\\(\\sigma\\): a simplex; \\(\\Sigma\\): a sum, the surface \\(\\Sigma_g\\) of genus \\(g\\), or a suspension \\(\\Sigma X\\)', used: true },
+	{ lower: '\\tau', upper: '\\Tau', latin: 'T', name: 'tau', say: 'tow (rhymes with cow)', role: 'another simplex, next to \\(\\sigma\\); \\(\\tau(f)\\), the Lefschetz number of a map', used: true },
+	{ lower: '\\upsilon', upper: '\\Upsilon', name: 'upsilon', say: 'UP-sih-lon', role: 'rarely used anywhere: \\(\\upsilon\\) is too easily read as v', used: false },
+	{ lower: '\\varphi', upper: '\\Phi', variants: ['\\phi'], name: 'phi', say: 'fie (or fee)', role: '\\(\\varphi\\): maps, charts and cochains; \\(\\Phi\\): a map in the Mayer–Vietoris sequence', used: true },
+	{ lower: '\\chi', upper: '\\Chi', latin: 'X', name: 'chi', say: 'kye (rhymes with sky)', role: 'the Euler characteristic \\(\\chi(X)\\). Unlike an x, it dips below the line', used: true },
+	{ lower: '\\psi', upper: '\\Psi', name: 'psi', say: 'sigh (or psy)', role: '\\(\\psi\\): more maps; \\(\\Psi\\): the other Mayer–Vietoris map', used: true },
+	{ lower: '\\omega', upper: '\\Omega', name: 'omega', say: 'oh-MAY-guh', role: '\\(\\omega\\): a differential form; \\(\\Omega^k(M)\\): all \\(k\\)-forms on \\(M\\)', used: true }
 ];

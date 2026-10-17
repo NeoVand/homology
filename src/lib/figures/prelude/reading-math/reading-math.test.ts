@@ -58,10 +58,18 @@ describe('symbol dictionary data', () => {
 		}
 		for (const g of greek) {
 			expect(() => render(g.lower)).not.toThrow();
-			const upper = g.upper;
-			if (upper) expect(() => render(upper)).not.toThrow();
+			expect(() => render(g.upper)).not.toThrow();
+			for (const v of g.variants ?? []) expect(() => render(v)).not.toThrow();
 			for (const x of inlineMath(g.role)) expect(() => render(x)).not.toThrow();
 		}
+	});
+
+	it('has the whole Greek alphabet, in order, every letter with its capital', () => {
+		expect(greek.map((g) => g.name)).toEqual([
+			'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 'eta', 'theta', 'iota', 'kappa', 'lambda', 'mu',
+			'nu', 'xi', 'omicron', 'pi', 'rho', 'sigma', 'tau', 'upsilon', 'phi', 'chi', 'psi', 'omega'
+		]);
+		for (const g of greek) expect(g.upper.length, g.name).toBeGreaterThan(1);
 	});
 });
 

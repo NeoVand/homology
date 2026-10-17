@@ -32,8 +32,17 @@
 {:else}
 	<div class="grid greek">
 		{#each greek as g (g.name)}
-			<div class="cell">
-				<div class="glyph big">{@html tex(g.lower)}{#if g.upper}<span class="up">{@html tex(g.upper)}</span>{/if}</div>
+			<div class="cell" class:unused={!g.used}>
+				<div class="glyph big">
+					{@html tex(g.lower)}<span
+						class="up"
+						class:latin={g.latin}
+						title={g.latin ? `Capital ${g.name}: drawn exactly like the Latin ${g.latin}` : `Capital ${g.name}`}
+						>{@html tex(g.upper)}</span
+					>
+					{#if g.latin}<span class="tag ui" title="This capital is drawn exactly like a Latin letter">= {g.latin}</span>{/if}
+					{#if g.variants}<span class="var ui">also {@html g.variants.map((v) => tex(v)).join(' ')}</span>{/if}
+				</div>
 				<div class="say"><span class="nm">{g.name}</span> · {g.say}</div>
 				<div class="mean">{@html renderMathInText(g.role)}</div>
 			</div>
@@ -82,6 +91,35 @@
 	.up {
 		font-size: 0.8em;
 		color: var(--gold);
+	}
+	/* a capital identical to a Latin letter: shown, but faded, because nobody uses it */
+	.up.latin {
+		opacity: 0.38;
+	}
+	.var {
+		margin-left: auto;
+		align-self: flex-start;
+		font-size: 0.68rem;
+		color: var(--ink-faint);
+		white-space: nowrap;
+	}
+	.var :global(.katex) {
+		font-size: 1.35rem;
+		color: var(--gold-pale);
+	}
+	.tag {
+		margin-left: -0.35rem;
+		align-self: flex-end;
+		padding-bottom: 0.35rem;
+		font-size: 0.66rem;
+		letter-spacing: 0.04em;
+		color: var(--ink-faint);
+	}
+	.unused .glyph {
+		color: color-mix(in srgb, var(--gold-bright) 60%, var(--ink-faint));
+	}
+	.unused .mean {
+		font-style: italic;
 	}
 	.say {
 		font-family: var(--font-elegant);
