@@ -28,9 +28,19 @@ export function resample(pts: V3[], n: number): V3[] {
 	return out;
 }
 
-export function relax(comps: V3[][], opts: { per?: number; steps?: number; size?: number } = {}): V3[][] {
+export function relax(
+	comps: V3[][],
+	opts: { per?: number; steps?: number; size?: number; thickness?: number; repel?: number; straighten?: number } = {}
+): V3[][] {
 	const per = opts.per ?? 140;
 	const steps = opts.steps ?? 600;
+	// the rope's thickness, as a fraction of the knot's size (its largest distance from the centre): parts
+	// of the curve that are not neighbours along it are pushed apart hard whenever they come closer than
+	// this, so that a tube drawn round the curve never runs into itself
+	const thickness = opts.thickness ?? 0;
+	// how hard every bead pushes every other away, and how hard each bead is pulled into line with its neighbours
+	const repel = opts.repel ?? 1;
+	const straighten = opts.straighten ?? 0.6;
 	// beads, component by component
 	const lens = comps.map((c) => {
 		let L = 0;
@@ -67,20 +77,41 @@ export function relax(comps: V3[][], opts: { per?: number; steps?: number; size?
 	}
 	h /= N;
 	const F: V3[] = X.map(() => [0, 0, 0]);
+	// the closest two strands may ever come: a third of the spacing, or (for a shape handed in tighter than
+	// that) nearly as close as they were at the start
+	const floor = Math.min(0.33 * h, 0.9 * minGap());
 	for (let step = 0; step < steps; step++) {
 		for (const f of F) f[0] = f[1] = f[2] = 0;
+		// the thickness the rope should have now, and how far along it two beads must be to count as strangers
+		let D = 0;
+		let near = 3;
+		if (thickness > 0) {
+			const c: V3 = [0, 0, 0];
+			for (const x of X) for (let i = 0; i < 3; i++) c[i] += x[i] / N;
+			let R = 0;
+			for (const x of X) R = Math.max(R, Math.hypot(x[0] - c[0], x[1] - c[1], x[2] - c[2]));
+			D = thickness * R;
+			near = Math.max(3, Math.ceil((1.6 * D) / h));
+		}
 		// repulsion between beads that are not neighbours along the curve
 		for (let p = 0; p < N; p++)
 			for (let q = p + 1; q < N; q++) {
+				let stranger = true;
 				if (comp[p] === comp[q]) {
 					const d = Math.abs(idx[p] - idx[q]);
-					if (Math.min(d, counts[comp[p]] - d) < 3) continue;
+					const along = Math.min(d, counts[comp[p]] - d);
+					if (along < 3) continue;
+					stranger = along >= near;
 				}
 				const dx = X[p][0] - X[q][0];
 				const dy = X[p][1] - X[q][1];
 				const dz = X[p][2] - X[q][2];
 				const r2 = dx * dx + dy * dy + dz * dz + 1e-9;
-				const k = (h * h) / (r2 * Math.sqrt(r2));
+				let k = (repel * h * h) / (r2 * Math.sqrt(r2));
+				if (stranger && r2 < D * D) {
+					const r = Math.sqrt(r2);
+					k += (6 * (D - r)) / r;
+				}
 				F[p][0] += k * dx;
 				F[p][1] += k * dy;
 				F[p][2] += k * dz;
@@ -102,15 +133,18 @@ export function relax(comps: V3[][], opts: { per?: number; steps?: number; size?
 				F[p][1] += k * dy;
 				F[p][2] += k * dz;
 			}
-			F[p][0] += 0.6 * ((a[0] + b[0]) / 2 - X[p][0]);
-			F[p][1] += 0.6 * ((a[1] + b[1]) / 2 - X[p][1]);
-			F[p][2] += 0.6 * ((a[2] + b[2]) / 2 - X[p][2]);
+			F[p][0] += straighten * ((a[0] + b[0]) / 2 - X[p][0]);
+			F[p][1] += straighten * ((a[1] + b[1]) / 2 - X[p][1]);
+			F[p][2] += straighten * ((a[2] + b[2]) / 2 - X[p][2]);
 		}
-		// move, never more than a tenth of the spacing; then make sure no two
-		// strands came closer than a third of it (they started further apart,
-		// and moved at most a fifth of it relative to each other, so none passed
-		// through another on the way). If they did, take a smaller step.
-		const cap = 0.1 * h;
+		// move, no bead more than a tenth of the spacing, nor more than a fifth of the
+		// smallest gap g between two strands. Two beads then move less than 2g/5
+		// relative to each other, and a distance changes by no more than that, so
+		// every gap stays open during the step: no strand passes through another.
+		// No step may bring two strands closer than the floor; a step that would is
+		// taken smaller, and if even small steps would, the beads stay where they are.
+		const g0 = minGap();
+		const cap = Math.min(0.1 * h, 0.2 * g0);
 		const old = X.map((x) => [x[0], x[1], x[2]] as V3);
 		let scale = 1;
 		for (let tries = 0; tries < 6; tries++) {
@@ -121,7 +155,7 @@ export function relax(comps: V3[][], opts: { per?: number; steps?: number; size?
 				X[p][1] = old[p][1] + F[p][1] * 0.05 * s;
 				X[p][2] = old[p][2] + F[p][2] * 0.05 * s;
 			}
-			if (minGap() >= 0.33 * h) break;
+			if (minGap() >= floor) break;
 			scale /= 2;
 			if (tries === 5) for (let p = 0; p < N; p++) X[p] = old[p];
 		}

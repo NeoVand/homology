@@ -601,6 +601,32 @@ export function ghostCore(c: PaletteName | number | string, opacity: number) {
 	return m;
 }
 
+/**
+ * The dark rim drawn round a knot's tube, as in a knot diagram where the strand
+ * underneath stops short of the strand on top. Only the far side of a slightly
+ * fatter tube is drawn: the tube itself covers the rest, so what shows is a thin
+ * dark edge, and where one strand passes over another that edge hides the lower
+ * strand on either side of it. `uIntensity` fades it with the glow it surrounds
+ * (its colour is `uInk`, so recolouring the glow leaves it dark).
+ */
+export function outlineMaterial(opacity = 1) {
+	return new THREE.ShaderMaterial({
+		vertexShader: glowVertex,
+		fragmentShader: /* glsl */ `
+			uniform vec3 uInk;
+			uniform float uOpacity;
+			uniform float uIntensity;
+			void main() {
+				gl_FragColor = vec4(uInk, uOpacity * clamp(uIntensity, 0.0, 1.0));
+			}
+		`,
+		uniforms: { uInk: { value: shaderColor(0x070b15) }, uOpacity: { value: opacity }, uIntensity: { value: 1 } },
+		side: THREE.BackSide,
+		transparent: true,
+		depthWrite: true
+	});
+}
+
 /** A glowing tube along a curve: bright core + soft additive halo. */
 export function glowTube(
 	curve: THREE.Curve<THREE.Vector3>,
@@ -616,6 +642,9 @@ export function glowTube(
 		/** opacity of the parts hidden behind surfaces, drawn faintly as in a line
 		 *  drawing (default 0.28; 0 hides them) */
 		xray?: number;
+		/** for knots: a dark rim this many times the radius, so that at every crossing the lower strand
+		 *  visibly passes under the upper one (about 1.9; off by default) */
+		outline?: number;
 	} = {}
 ): THREE.Group {
 	const radius = o.radius ?? 0.025;
@@ -639,6 +668,11 @@ export function glowTube(
 		const ghost = new THREE.Mesh(coreGeo, ghostCore(o.color ?? 'gold', xray));
 		ghost.renderOrder = 9;
 		g.add(ghost);
+	}
+	if (o.outline) {
+		const rim = new THREE.Mesh(new THREE.TubeGeometry(curve, segs, radius * o.outline, rs, o.closed ?? false), outlineMaterial());
+		rim.renderOrder = 4;
+		g.add(rim);
 	}
 	return g;
 }
@@ -665,7 +699,7 @@ const gradientVertex = /* glsl */ `
 export function gradientTube(
 	curve: THREE.Curve<THREE.Vector3>,
 	colorAt: (u: number) => THREE.Color,
-	o: { radius?: number; segments?: number; closed?: boolean; haloScale?: number; intensity?: number; radialSegments?: number } = {}
+	o: { radius?: number; segments?: number; closed?: boolean; haloScale?: number; intensity?: number; radialSegments?: number; outline?: number } = {}
 ): THREE.Group {
 	const radius = o.radius ?? 0.05;
 	const segs = o.segments ?? 400;
@@ -703,6 +737,11 @@ export function gradientTube(
 	);
 	halo.renderOrder = 6;
 	g.add(core, halo);
+	if (o.outline) {
+		const rim = new THREE.Mesh(new THREE.TubeGeometry(curve, segs, radius * o.outline, rs, o.closed ?? true), outlineMaterial());
+		rim.renderOrder = 4;
+		g.add(rim);
+	}
 	return g;
 }
 

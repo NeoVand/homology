@@ -133,6 +133,40 @@ describe('the table of knots', () => {
 		}
 	});
 
+	it('leaves room for a tube round every knot: no strand runs into another in the gallery', () => {
+		// the gallery scales each knot to reach 1.75 from its centre and draws a tube of radius 0.085 with a
+		// dark rim of 1.9 radii; two parts of the curve that are not neighbours along it must stay at least
+		// three radii apart, or the tubes touch and a crossing reads as an intersection
+		for (const k of knots) {
+			if (k.id === 'borromean') continue; // drawn from ellipses in the gallery, checked by its own test
+			const comps = k.build();
+			let R = 0;
+			for (const c of comps) for (const p of c) R = Math.max(R, Math.hypot(...p));
+			const s = 1.75 / R;
+			const pts = comps.flatMap((c, ci) => {
+				let along = 0;
+				return c.map((p, i) => {
+					if (i) along += s * Math.hypot(p[0] - c[i - 1][0], p[1] - c[i - 1][1], p[2] - c[i - 1][2]);
+					return { p: p.map((x) => x * s), ci, along, n: c.length };
+				});
+			});
+			const length = new Map<number, number>();
+			for (const q of pts) length.set(q.ci, Math.max(length.get(q.ci) ?? 0, q.along));
+			let gap = Infinity;
+			for (let a = 0; a < pts.length; a++)
+				for (let b = a + 1; b < pts.length; b++) {
+					const A = pts[a];
+					const B = pts[b];
+					if (A.ci === B.ci) {
+						const d = Math.abs(A.along - B.along);
+						if (Math.min(d, length.get(A.ci)! - d) < 0.9) continue;
+					}
+					gap = Math.min(gap, Math.hypot(A.p[0] - B.p[0], A.p[1] - B.p[1], A.p[2] - B.p[2]));
+				}
+			expect(gap / 0.085, k.id).toBeGreaterThan(3);
+		}
+	});
+
 	it('settling a knot into a rounder shape never lets a strand pass through another', { timeout: 60000 }, () => {
 		const before = jones(diagramOf(braidClosure(3, [1, 1, 1, 2, -1, 2])));
 		const after = jones(diagramOf(relax(braidClosure(3, [1, 1, 1, 2, -1, 2]), { steps: 300 })));

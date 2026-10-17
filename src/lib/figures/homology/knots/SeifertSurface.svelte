@@ -14,7 +14,7 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import StepControls from '$lib/components/ui/StepControls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import { glassMesh, glowCore, glowHalo, ghostCore, setGlassFade, shaderColor, disposeTree } from '$lib/three/materials';
+	import { glassMesh, glowCore, glowHalo, outlineMaterial, setGlassFade, shaderColor, disposeTree } from '$lib/three/materials';
 	import { diagramOf } from '$lib/knots/diagram';
 	import { seifertCircles, seifertGenus } from '$lib/knots/invariants';
 	import { knotById } from '$lib/knots/table';
@@ -124,7 +124,8 @@
 			set(pts: Float32Array): void;
 			fade(x: number): void;
 		}
-		function tube(count: number, radius: number, color: string, o: { haloScale?: number; order?: number } = {}): Tube {
+		// (a knot also gets a dark rim, so that at each crossing the lower strand visibly passes under the upper)
+		function tube(count: number, radius: number, color: string, o: { haloScale?: number; order?: number; rim?: number } = {}): Tube {
 			const RAD = 10;
 			const make = () => {
 				const g = new THREE.BufferGeometry();
@@ -144,19 +145,23 @@
 			};
 			const core = make();
 			const halo = make();
+			const rim = o.rim ? make() : null;
 			const mCore = glowCore(color, 1, 1);
 			mCore.transparent = true;
 			const mHalo = glowHalo(color, 1);
-			const mGhost = ghostCore(color, 0.28);
+			const mRim = outlineMaterial();
 			const group = new THREE.Group();
 			const a = new THREE.Mesh(core, mCore);
 			const b = new THREE.Mesh(halo, mHalo);
-			const c = new THREE.Mesh(core, mGhost);
 			a.renderOrder = o.order ?? 5;
 			b.renderOrder = 6;
-			c.renderOrder = 9;
-			for (const m of [a, b, c]) m.frustumCulled = false;
-			group.add(a, b, c);
+			group.add(a, b);
+			if (rim) {
+				const c = new THREE.Mesh(rim, mRim);
+				c.renderOrder = 4;
+				group.add(c);
+			}
+			for (const m of group.children) m.frustumCulled = false;
 			// scratch frames, reused
 			const Tn = new Float32Array(count * 3);
 			const Nn = new Float32Array(count * 3);
@@ -244,11 +249,12 @@
 					}
 					fill(core, pts, radius);
 					fill(halo, pts, radius * (o.haloScale ?? 2.4));
+					if (rim) fill(rim, pts, radius * o.rim!);
 				},
 				fade(x) {
 					mCore.uniforms.uOpacity.value = x;
 					mHalo.uniforms.uIntensity.value = x;
-					mGhost.uniforms.uOpacity.value = 0.28 * x;
+					mRim.uniforms.uIntensity.value = x;
 					group.visible = x > 0.01;
 				}
 			};
@@ -337,7 +343,7 @@
 			// the knot: its point count never changes with λ
 			const first = knotAt(B, 0)[0];
 			knotPts = new Float32Array(first.length * 3);
-			knotTube = tube(first.length, 0.052, 'gold');
+			knotTube = tube(first.length, 0.052, 'gold', { rim: 1.9 });
 			root.add(knotTube.group);
 			// the Seifert circles, a touch thicker so that they sheathe the knot where they run along it
 			// (drawn after it, so that where they do the circles are teal, not teal over gold)

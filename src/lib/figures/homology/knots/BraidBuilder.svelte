@@ -298,7 +298,7 @@
 			const slots = Math.max(1, word.length);
 			comps.forEach((c, i) => {
 				const pts = c.map((p) => flat([p[0] * k, p[1] * k, p[2] * k] as V3));
-				root.add(glowTube(closedCurve(pts), { color: GL[i], closed: true, radius: 0.065, segments: Math.min(1600, pts.length * 2), haloScale: 2.3, xray: 0 }));
+				root.add(glowTube(closedCurve(pts), { color: GL[i], closed: true, radius: 0.065, segments: Math.min(1600, pts.length * 2), haloScale: 2.3, xray: 0, outline: 1.9 }));
 				// arrowheads where the strands are between crossings, twice round each strand: all turn the same way round the axis
 				const per = PER * slots;
 				const at = slots === 1 ? [0, Math.floor(PER / 2)] : [0, Math.floor(slots / 2) * PER];

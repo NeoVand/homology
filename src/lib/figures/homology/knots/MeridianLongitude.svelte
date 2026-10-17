@@ -49,7 +49,7 @@
 			root.clear();
 			for (const l of labels.splice(0)) l.remove();
 			const m = model;
-			root.add(glowTube(closedCurve(m.K), { color: 'gold', closed: true, radius: 0.045, segments: 700, haloScale: 2.4 }));
+			root.add(glowTube(closedCurve(m.K), { color: 'gold', closed: true, radius: 0.045, segments: 700, haloScale: 2.4, xray: 0, outline: 1.9 }));
 			const tg = new THREE.TubeGeometry(closedCurve(m.K), 700, R, 28, true);
 			tube = glassMesh(tg, { opacity: 0.5, grid: [180, 14], gridStrength: 0.14, hue: 0.62, brightness: 0.95 });
 			root.add(tube);

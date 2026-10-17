@@ -105,7 +105,7 @@
 			disposeTree(tubeR);
 			tubeR.clear();
 			shape = between(model.K, ring, s);
-			tubeR.add(gradientTube(closedCurve(shape), wheelColor, { radius: 0.06, segments: 360 }));
+			tubeR.add(gradientTube(closedCurve(shape), wheelColor, { radius: 0.06, segments: 360, outline: 1.9 }));
 			disposeTree(marks);
 			marks.clear();
 			const e = near;

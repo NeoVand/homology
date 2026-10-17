@@ -59,3 +59,5 @@ export const knotById = new Map(knots.map((k) => [k.id, k]));
 
 /** a loop that looks tangled but is an unknot: the closure of σ₁σ₂⁻¹σ₁⁻¹σ₂, settled */
 export const tangledUnknot = () => settled('unknot-tangled');
+/** the same loop drawn flat, as the closed braid it comes from: four crossings, and still the unknot */
+export const tangledUnknotFlat = () => braidClosure(3, [1, -2, -1, 2]);

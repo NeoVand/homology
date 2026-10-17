@@ -42,7 +42,7 @@
 			const comps = shape(id);
 			parts = comps.map((c, i) => {
 				const g = new THREE.Group();
-				g.add(glowTube(closedCurve(c), { color: colours[i % 3], closed: true, radius: 0.085, segments: 600, haloScale: 2.2, xray: 0 }));
+				g.add(glowTube(closedCurve(c), { color: colours[i % 3], closed: true, radius: 0.085, segments: 600, haloScale: 2.2, xray: 0, outline: 1.9 }));
 				root.add(g);
 				return g;
 			});

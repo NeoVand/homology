@@ -125,10 +125,10 @@
 	Why these three? Move a knot about in space and watch its shadow. Most of the time the shadow changes only by a deformation of the plane. It changes in an essential way only at isolated moments: when a little loop of the shadow pinches to a cusp and vanishes (move I), when two strands of the shadow touch and pass through each other (move II), or when a strand of the shadow passes across a crossing, so that three strands meet in one point (move III). Proving that these are the only events takes care, and we will trust it <Cite k="rolfsen1976" />.
 </p>
 
-<Figure num="3.7.2" title="Reidemeister’s three moves" hint="Choose a move · play it or scrub through it">
+<Figure num="3.7.2" title="Reidemeister’s three moves" hint="Play or scrub: all three moves at once">
 	<Reidemeister />
 	{#snippet caption()}
-		Each move takes place inside a small disk, and the rest of the diagram does not change. Move I adds or removes one crossing, move II two at once, and move III keeps all three crossings but moves the third strand across the crossing of the other two.
+		The three moves, played together. Each takes place inside a small disk (dashed); outside it the strands, which stand for the rest of the diagram, do not move. Move I adds or removes one crossing, move II two at once, and move III keeps all three crossings but moves the top strand across the crossing of the other two. The crossings are circled and counted under each disk.
 	{/snippet}
 </Figure>
 
