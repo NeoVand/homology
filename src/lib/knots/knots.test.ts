@@ -7,6 +7,8 @@ import { khovanov, eulerCharacteristic } from './khovanov';
 import { knots, knotById, tangledUnknot } from './table';
 import { untie } from './untie';
 import { draw } from './draw';
+import { bestView } from './view';
+import { colouringEquations, isColouring, nullspaceMod } from './colour';
 import { relax, resample } from './relax';
 
 const poly = L.from;
@@ -165,5 +167,33 @@ describe('drawing a diagram', () => {
 	});
 	it('draws an unknotted circle whole', () => {
 		expect(draw(unknot()).loops.length).toBe(1);
+	});
+});
+
+describe('views and colourings', () => {
+	it('finds a shadow with the fewest crossings for every knot and link in the table', () => {
+		for (const k of knots) expect(diagramOf(bestView(k.build().map((c) => resample(c, 160)))).pd.length, k.id).toBe(k.crossings);
+	});
+	it('counts colourings from the drawing the same way as from the PD code', () => {
+		for (const id of ['3_1', '4_1', '5_1', '5_2', '6_1']) {
+			const comps = bestView(knotById.get(id)!.build().map((c) => resample(c, 160)));
+			const d = draw(comps);
+			for (const p of [3, 5, 7]) {
+				const basis = nullspaceMod(colouringEquations(d, p), p);
+				expect(p ** basis.length, `${id} mod ${p}`).toBe(colourings(d.diagram, p));
+				for (const b of basis) expect(isColouring(d, p, b)).toBe(true);
+			}
+		}
+	});
+});
+
+describe('flat drawings', () => {
+	it('are the same knots as the shapes in space, with the same handedness and the fewest crossings', () => {
+		for (const k of knots) {
+			if (!k.flat) continue;
+			const D = diagramOf(k.flat());
+			expect(D.pd.length, k.id).toBe(k.crossings);
+			expect(L.tex(jones(D)), k.id).toBe(L.tex(jones(diagramOf(k.build()))));
+		}
 	});
 });

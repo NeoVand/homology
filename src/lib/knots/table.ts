@@ -2,7 +2,8 @@
 // Braid words follow KnotInfo (σᵢ written i, σᵢ⁻¹ written −i). The known
 // values are the ones the tests check our computations against.
 import type { V3 } from './diagram';
-import { borromean, braidClosure, figureEight, torusKnot, unknot } from './curves';
+import { borromean, braidClosure, figureEight, plat, sampleClosed, torusKnot, unknot } from './curves';
+import { mirror } from './diagram';
 import shapes from './shapes.json';
 
 /** a shape settled once from the braid by scripts/knot-shapes.ts */
@@ -22,17 +23,29 @@ export interface TableKnot {
 	braid?: [number, number[]];
 	/** draw it from the braid but let it settle into a rounder shape */
 	relaxed?: boolean;
+	/** a clean flat drawing for diagrams (seen from above), when there is one */
+	flat?: () => V3[][];
 }
+
+const TAU = Math.PI * 2;
+/** the classic three-lobed trefoil, right-handed */
+export const roundTrefoil = (s = 0.55): V3[][] =>
+	mirror([
+		sampleClosed((u) => {
+			const t = TAU * u;
+			return [s * (Math.sin(t) + 2 * Math.sin(2 * t)), s * (Math.cos(t) - 2 * Math.cos(2 * t)), -s * Math.sin(3 * t)];
+		}, 480)
+	]);
 
 export const knots: TableKnot[] = [
 	{ id: 'unknot', name: '0_1', common: 'the unknot', crossings: 0, components: 1, build: () => unknot() },
-	{ id: '3_1', name: '3_1', common: 'the trefoil', crossings: 3, components: 1, build: () => torusKnot(2, 3), braid: [2, [1, 1, 1]] },
-	{ id: '4_1', name: '4_1', common: 'the figure-eight knot', crossings: 4, components: 1, build: () => figureEight(), braid: [3, [1, -2, 1, -2]] },
+	{ id: '3_1', name: '3_1', common: 'the trefoil', crossings: 3, components: 1, build: () => torusKnot(2, 3), braid: [2, [1, 1, 1]], flat: () => roundTrefoil() },
+	{ id: '4_1', name: '4_1', common: 'the figure-eight knot', crossings: 4, components: 1, build: () => figureEight(), braid: [3, [1, -2, 1, -2]], flat: () => plat([2, 2, -1, 2]) },
 	{ id: '5_1', name: '5_1', common: 'the cinquefoil', crossings: 5, components: 1, build: () => torusKnot(2, 5), braid: [2, [1, 1, 1, 1, 1]] },
-	{ id: '5_2', name: '5_2', common: 'the three-twist knot', crossings: 5, components: 1, build: () => settled('5_2'), braid: [3, [1, 1, 1, 2, -1, 2]], relaxed: true },
-	{ id: '6_1', name: '6_1', common: 'the stevedore knot', crossings: 6, components: 1, build: () => settled('6_1'), braid: [4, [1, 1, 2, -1, -3, 2, -3]], relaxed: true },
-	{ id: '6_2', name: '6_2', crossings: 6, components: 1, build: () => settled('6_2'), braid: [3, [1, 1, 1, -2, 1, -2]], relaxed: true },
-	{ id: '6_3', name: '6_3', crossings: 6, components: 1, build: () => settled('6_3'), braid: [3, [1, 1, -2, 1, -2, -2]], relaxed: true },
+	{ id: '5_2', name: '5_2', common: 'the three-twist knot', crossings: 5, components: 1, build: () => settled('5_2'), braid: [3, [1, 1, 1, 2, -1, 2]], relaxed: true, flat: () => mirror(plat([2, 2, 2, -1, 2])) },
+	{ id: '6_1', name: '6_1', common: 'the stevedore knot', crossings: 6, components: 1, build: () => settled('6_1'), braid: [4, [1, 1, 2, -1, -3, 2, -3]], relaxed: true, flat: () => mirror(plat([2, 2, 2, 2, -1, 2])) },
+	{ id: '6_2', name: '6_2', crossings: 6, components: 1, build: () => settled('6_2'), braid: [3, [1, 1, 1, -2, 1, -2]], relaxed: true, flat: () => plat([2, 2, 2, -1, 2, 2]) },
+	{ id: '6_3', name: '6_3', crossings: 6, components: 1, build: () => settled('6_3'), braid: [3, [1, 1, -2, 1, -2, -2]], relaxed: true, flat: () => plat([2, 2, -1, 2, -1, 2]) },
 	{ id: '7_1', name: '7_1', common: 'the septafoil', crossings: 7, components: 1, build: () => torusKnot(2, 7), braid: [2, [1, 1, 1, 1, 1, 1, 1]] },
 	{ id: 'granny', name: '3_1\\#3_1', common: 'the granny knot', crossings: 6, components: 1, build: () => settled('granny'), braid: [3, [1, 1, 1, 2, 2, 2]], relaxed: true },
 	{ id: 'square', name: '3_1\\#\\overline{3_1}', common: 'the square knot', crossings: 6, components: 1, build: () => settled('square'), braid: [3, [1, 1, 1, -2, -2, -2]], relaxed: true },

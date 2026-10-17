@@ -182,3 +182,91 @@ function catmull(p0: V3, p1: V3, p2: V3, p3: V3, u: number): V3 {
 	const B2 = lerp(A2, A3, t1, t3);
 	return lerp(B1, B2, t1, t2);
 }
+
+/**
+ * A plat: four strands laid side by side along x, crossing as the word says
+ * (+i: σᵢ, strands i and i+1, −i: σᵢ⁻¹), and capped in pairs at both ends.
+ * Two-bridge knots — the trefoil, the figure-eight and the twist knots among
+ * them — are drawn this way in Conway's notation, and the drawings are clean.
+ */
+export function plat(word: number[], opts: { gap?: number; w?: number; lift?: number; per?: number } = {}): V3[][] {
+	const n = 4;
+	const gap = opts.gap ?? 0.62;
+	const w = opts.w ?? 0.62;
+	const lift = opts.lift ?? 0.22;
+	const per = opts.per ?? 20;
+	const yOf = (k: number) => (1.5 - k) * gap;
+	const L = w * word.length;
+	const paths: V3[][] = Array.from({ length: n }, () => []);
+	const pos = Array.from({ length: n }, (_, s) => s);
+	word.forEach((g, m) => {
+		const i = Math.abs(g) - 1;
+		const a = pos.indexOf(i);
+		const b = pos.indexOf(i + 1);
+		for (let k = 0; k < per; k++) {
+			const tau = k / per;
+			const x = w * (m + tau) - L / 2;
+			const e = tau * tau * (3 - 2 * tau);
+			for (let s = 0; s < n; s++) {
+				let y = yOf(pos[s]);
+				let z = 0;
+				if (s === a || s === b) {
+					const down = s === a; // a moves from slot i to slot i+1
+					y = down ? yOf(i) - gap * e : yOf(i + 1) + gap * e;
+					const onTop = g > 0 ? down : !down;
+					z = (onTop ? 1 : -1) * lift * Math.sin(Math.PI * tau);
+				}
+				paths[s].push([x, y, z]);
+			}
+		}
+		pos[a] = i + 1;
+		pos[b] = i;
+	});
+	for (let s = 0; s < n; s++) paths[s].push([L / 2, yOf(pos[s]), 0]);
+	const cap = (side: -1 | 1, k1: number, k2: number): V3[] => {
+		// a half circle from slot k1 to slot k2, bulging outwards
+		const y1 = yOf(k1);
+		const y2 = yOf(k2);
+		const cy = (y1 + y2) / 2;
+		const r = Math.abs(y1 - y2) / 2;
+		const out: V3[] = [];
+		for (let k = 1; k < 16; k++) {
+			const t = (Math.PI * k) / 16;
+			out.push([side * (L / 2 + r * Math.sin(t)), y1 + (y2 - y1) * (0.5 - 0.5 * Math.cos(t)) + 0 * cy, 0]);
+		}
+		return out;
+	};
+	// walk: strand from the left to the right, cap on the right, strand back, cap on the left …
+	const endSlot = (s: number) => pos[s];
+	const strandEndingAt = (slot: number) => pos.indexOf(slot);
+	const partner = (k: number) => (k % 2 === 0 ? k + 1 : k - 1);
+	const seen = new Set<number>();
+	const comps: V3[][] = [];
+	for (let s0 = 0; s0 < n; s0++) {
+		if (seen.has(s0)) continue;
+		const comp: V3[] = [];
+		let s = s0;
+		let forward = true;
+		while (true) {
+			if (forward) {
+				if (seen.has(s)) break;
+				seen.add(s);
+				comp.push(...paths[s]);
+				const k = endSlot(s);
+				comp.push(...cap(1, k, partner(k)));
+				s = strandEndingAt(partner(k));
+				forward = false;
+			} else {
+				if (seen.has(s)) break;
+				seen.add(s);
+				comp.push(...[...paths[s]].reverse());
+				const k = s; // it started in slot s
+				comp.push(...cap(-1, k, partner(k)));
+				s = partner(k);
+				forward = true;
+			}
+		}
+		comps.push(comp);
+	}
+	return comps;
+}
