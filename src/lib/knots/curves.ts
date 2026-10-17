@@ -50,8 +50,38 @@ export function unknot(r = 1.6, n = 240): V3[][] {
 	return [sampleClosed((t) => [r * Math.cos(TAU * t), r * Math.sin(TAU * t), 0], n)];
 }
 
-/** the Borromean rings: three ellipses in three perpendicular planes */
-export function borromean(a = 1.7, b = 0.85, n = 240): V3[][] {
+/**
+ * The Borromean rings as usually drawn: three overlapping circles, each passing
+ * over the next and under the one before (A over B, B over C, C over A), so
+ * that no two of them are linked and yet the three hold together.
+ */
+export function borromean(r = 1, d = 0.62, h = 0.3, n = 240): V3[][] {
+	const centre = (k: number): [number, number] => [d * Math.cos(Math.PI / 2 + (TAU * k) / 3), d * Math.sin(Math.PI / 2 + (TAU * k) / 3)];
+	const dir = (a: number, b: number) => {
+		const [ax, ay] = centre(a);
+		const [bx, by] = centre(b);
+		return Math.atan2(by - ay, bx - ax);
+	};
+	// two equal circles whose centres are D apart cross at ±γ from the line of centres
+	const gamma = Math.acos((d * Math.sqrt(3)) / (2 * r));
+	const wrap = (x: number) => Math.atan2(Math.sin(x), Math.cos(x));
+	return [0, 1, 2].map((k) => {
+		const [cx, cy] = centre(k);
+		const bumps: [number, number][] = [];
+		for (const g of [gamma, -gamma]) {
+			bumps.push([dir(k, (k + 1) % 3) + g, 1]); // over the next ring
+			bumps.push([dir(k, (k + 2) % 3) + g, -1]); // under the one before
+		}
+		return sampleClosed((t) => {
+			const a = TAU * t;
+			const z = bumps.reduce((acc, [at, s]) => acc + s * Math.exp(-(wrap(a - at) ** 2) / (2 * 0.32 ** 2)), 0);
+			return [cx + r * Math.cos(a), cy + r * Math.sin(a), h * z];
+		}, n);
+	});
+}
+
+/** the Borromean rings in space: three ellipses in three perpendicular planes */
+export function borromeanEllipses(a = 1.7, b = 0.85, n = 240): V3[][] {
 	return [
 		sampleClosed((t) => [a * Math.cos(TAU * t), b * Math.sin(TAU * t), 0], n),
 		sampleClosed((t) => [0, a * Math.cos(TAU * t), b * Math.sin(TAU * t)], n),

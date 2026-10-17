@@ -4,6 +4,8 @@ import { diagramOf, mirror } from './diagram';
 import { torusKnot, figureEight, unknot, borromean, braidClosure } from './curves';
 import { jones, alexander, determinant, colourings, linkingNumber, seifertGenus } from './invariants';
 import { khovanov, eulerCharacteristic } from './khovanov';
+import { knots, knotById } from './table';
+import { relax } from './relax';
 
 const poly = L.from;
 
@@ -90,5 +92,50 @@ describe('Khovanov homology', () => {
 			const D = diagramOf(c);
 			expect(L.tex(chi(D), 'q')).toBe(L.tex(jonesQ(D), 'q'));
 		}
+	});
+});
+
+describe('the table of knots', () => {
+	// symmetric Alexander polynomials, Δ(1) = 1 (Rolfsen's table)
+	const alex: Record<string, Record<number, number>> = {
+		'3_1': { 1: 1, 0: -1, [-1]: 1 },
+		'4_1': { 1: -1, 0: 3, [-1]: -1 },
+		'5_1': { 2: 1, 1: -1, 0: 1, [-1]: -1, [-2]: 1 },
+		'5_2': { 1: 2, 0: -3, [-1]: 2 },
+		'6_1': { 1: -2, 0: 5, [-1]: -2 },
+		'6_2': { 2: -1, 1: 3, 0: -3, [-1]: 3, [-2]: -1 },
+		'6_3': { 2: 1, 1: -3, 0: 5, [-1]: -3, [-2]: 1 },
+		'7_1': { 3: 1, 2: -1, 1: 1, 0: -1, [-1]: 1, [-2]: -1, [-3]: 1 }
+	};
+	const dets: Record<string, number> = { '3_1': 3, '4_1': 5, '5_1': 5, '5_2': 7, '6_1': 9, '6_2': 11, '6_3': 13, '7_1': 7, granny: 9, square: 9 };
+
+	it('every knot built in space has the right Alexander polynomial and determinant', () => {
+		for (const k of knots) {
+			if (k.components !== 1 || k.id === 'unknot') continue;
+			const D = diagramOf(k.build());
+			if (alex[k.id]) expect(L.tex(alexander(D)), k.id).toBe(L.tex(poly(alex[k.id])));
+			expect(determinant(D), k.id).toBe(dets[k.id]);
+		}
+	});
+
+	it('the braid and the curve agree, and so does the relaxed shape', () => {
+		for (const k of knots) {
+			if (!k.braid) continue;
+			const fromBraid = jones(diagramOf(braidClosure(...k.braid)));
+			expect(L.tex(jones(diagramOf(k.build()))), k.id).toBe(L.tex(fromBraid));
+		}
+	});
+
+	it('settling a knot into a rounder shape never lets a strand pass through another', { timeout: 60000 }, () => {
+		const before = jones(diagramOf(braidClosure(3, [1, 1, 1, 2, -1, 2])));
+		const after = jones(diagramOf(relax(braidClosure(3, [1, 1, 1, 2, -1, 2]), { steps: 300 })));
+		expect(L.tex(after)).toBe(L.tex(before));
+	});
+
+	it('the granny and square knots share an Alexander polynomial, but not a Jones polynomial', () => {
+		const g = diagramOf(knotById.get('granny')!.build());
+		const s = diagramOf(knotById.get('square')!.build());
+		expect(L.eq(alexander(g), alexander(s))).toBe(true);
+		expect(L.eq(jones(g), jones(s))).toBe(false);
 	});
 });
