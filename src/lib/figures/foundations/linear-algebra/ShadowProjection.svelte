@@ -36,7 +36,7 @@
 			grid: [12, 12],
 			gridStrength: 1.0,
 			gridColor: 'teal',
-			tint: 0x08110f,
+			tint: 0x0a201d,
 			tintMix: 0.72,
 			film: 0.12,
 			rim: 0.1,
@@ -133,7 +133,8 @@
 			[1.4, 0, -1.6],
 			[-1.3, 0, -1.4]
 		];
-		const fibreMat = new THREE.LineBasicMaterial({ color: color('goldPale'), transparent: true, opacity: 0.6 });
+		// a paler gold than the kernel (CSS --gold-bright), so the cosets read as the kernel's family
+		const fibreMat = new THREE.LineBasicMaterial({ color: color(0xf4d79c), transparent: true, opacity: 0.75 });
 		for (const f of feet) {
 			const g = new THREE.Group();
 			g.position.set(...f);
