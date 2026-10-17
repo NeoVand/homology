@@ -17,6 +17,7 @@
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Recap from '$lib/components/prose/Recap.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import Cite from '$lib/components/prose/Cite.svelte';
@@ -786,6 +787,18 @@
 	thesis and used it to prove that the homotopy groups of spheres are finitely generated <Cite k="serre1951" />; two years later he
 	showed that almost all of them are finite <Cite k="serre1953" />.
 </p>
+
+<p>
+	Spectral sequences are still the main tool for computing homotopy groups of spheres, and one of the oldest problems about them was
+	settled only recently, by a spectral sequence computed partly by machine.
+</p>
+
+<Conjecture k="kervaire">
+	<p>
+		The problem began as a question about manifolds and became one about a spectral sequence: whether certain entries on an early page
+		survive every differential and reach the last page. In dimension \(126\) the answer needed a computer to calculate a large part of the spectral sequence.
+	</p>
+</Conjecture>
 
 <Warning title="Over the integers, the last page is not quite the answer">
 	<p>

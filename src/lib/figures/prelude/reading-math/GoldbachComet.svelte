@@ -104,13 +104,13 @@
 	});
 
 	// the reader's own number
-	const mine = $derived.by(() => {
+	const mine = $derived.by((): { m: number | null; error: string } => {
 		const t = input.replace(/[\s,]/g, '');
-		if (!/^\d+$/.test(t)) return { error: 'Type a whole number.' };
+		if (!/^\d+$/.test(t)) return { m: null, error: 'Type a whole number.' };
 		const m = Number(t);
-		if (m < 4 || m % 2) return { error: 'Choose an even number from 4 on.' };
-		if (m > MAXINPUT) return { error: `This figure goes up to ${fmt(MAXINPUT)}.` };
-		return { m };
+		if (m < 4 || m % 2) return { m: null, error: 'Choose an even number from 4 on.' };
+		if (m > MAXINPUT) return { m: null, error: `This figure goes up to ${fmt(MAXINPUT)}.` };
+		return { m, error: '' };
 	});
 	function waysOf(m: number) {
 		const c = sieve(m);
@@ -123,10 +123,10 @@
 			}
 		return { count, pairs };
 	}
-	const focus = $derived(hover ?? ('m' in mine ? mine.m : null));
+	const focus: number | null = $derived(hover ?? mine.m);
 	const focusWays = $derived(focus === null ? null : focus <= limit ? { count: data.r[focus >> 1], pairs: waysOf(focus).pairs } : waysOf(focus));
 	const readout = $derived.by(() => {
-		if (focus === null || !focusWays) return 'error' in mine ? mine.error : '';
+		if (focus === null || !focusWays) return mine.error;
 		const { count, pairs } = focusWays;
 		const n = (v: number) => fmt(v).replace(/,/g, '{,}');
 		const shown = pairs.map(([p, q]) => `${n(p)} + ${n(q)}`).join(' = ');

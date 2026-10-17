@@ -16,6 +16,7 @@
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Figure from '$lib/components/prose/Figure.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import Cite from '$lib/components/prose/Cite.svelte';
@@ -209,6 +210,21 @@
 </div>
 
 <p>Four theorems, one shape: <em>a derivative integrated over the inside equals the original thing integrated over the boundary</em>. Four different kinds of derivative (slope, gradient, curl, divergence), four kinds of integral (along intervals, curves, surfaces, solids). It is hard to believe this is a coincidence, and it is not. To see the single theorem behind all four, we need the right things to integrate.</p>
+
+<p>
+	Curl and divergence are also the language of fluids. A fluid that cannot be compressed, like water, has a velocity field with
+	\(\operatorname{div}\mathbf u = 0\) everywhere, and \(\operatorname{curl}\mathbf u\) measures how it swirls. Newton’s law of motion
+	for such a fluid, with friction included, is the system of Navier–Stokes equations, and one of the most famous problems in
+	mathematics asks whether its solutions can break down.
+</p>
+
+<Conjecture k="navier-stokes">
+	<p>
+		“Break down” means that the velocity, or its rate of change, becomes infinite at some point after a finite time, though everything
+		started out smooth. Weather forecasts and aircraft design solve these equations numerically every day; the question is whether the
+		mathematics behind them can fail.
+	</p>
+</Conjecture>
 
 <History title="A postscript and an exam question" people="kelvin,stokes">
 	<p>The theorem we now call Stokes’ theorem first appeared in a postscript to a letter from William Thomson (later Lord Kelvin) to George Stokes, dated 2 July 1850; the two friends corresponded for more than fifty years. Thomson had entered Glasgow University at ten, and as a student there mastered Fourier’s book on heat in a fortnight <Cite k="oconnor-robertson-thomson" />. Stokes, a rector’s son from County Sligo, once told his wavering fiancée that without her he might “go to the grave a thinking machine” <Cite k="oconnor-robertson-stokes" />. He set Cambridge’s Smith’s Prize examination, and put Thomson’s theorem on the paper of February 1854 as question 8 <Cite k="stokes1854,spivak1965" loc="Preface" />. The 22-year-old James Clerk Maxwell, joint winner that year, stated it in his <em>Treatise</em> of 1873 with a footnote: “This theorem was given by Professor Stokes. Smith’s Prize Examination, 1854, question 8” <Cite k="maxwell1873" loc="art. 24" />. So the theorem carries the name of the examiner, not of its discoverer.</p>

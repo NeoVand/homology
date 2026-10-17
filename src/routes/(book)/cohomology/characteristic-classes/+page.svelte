@@ -16,6 +16,7 @@
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Figure from '$lib/components/prose/Figure.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import Cite from '$lib/components/prose/Cite.svelte';
@@ -790,6 +791,20 @@
 	/>.
 </p>
 
+<p>
+	In higher dimensions Chern’s Gauss–Bonnet formula integrates a more complicated expression in the curvature, and it is natural to
+	ask whether the <em>sign</em> of the curvature still decides the sign of \(\chi\), as it does for surfaces: a sphere curves
+	positively and has \(\chi = 2\), a surface of genus \(2\) can be curved negatively everywhere and has \(\chi = -2\).
+</p>
+
+<Conjecture k="hopf-sign">
+	<p>
+		In dimension \(2\), \(n = 1\) and the conjecture says \(-\chi\gt0\) for negatively curved surfaces, which Gauss–Bonnet proves in one
+		line: the integral of a negative function is negative. From dimension \(6\) on, the expression Chern integrates no longer has a sign
+		that curvature controls, and nobody has found another way.
+	</p>
+</Conjecture>
+
 <History title="A week through Africa and South America" people="chern">
 	<p>
 		Taught mathematics as a boy by his father, a lawyer with a classical Confucian education, he was one of a class of four mathematics
@@ -863,6 +878,21 @@
 	<Cite k="milnor-stasheff1974" loc="§4, §9, §14, §15" text /> is the classic guide. We look more closely
 	at the one that physics needs most, \(c_1\).
 </p>
+
+<p>
+	Characteristic classes also forbid structures. A manifold is <dfn>almost complex</dfn> if each of its tangent spaces can be made
+	into a complex vector space, smoothly from point to point; then its tangent bundle has Chern classes, and they must satisfy
+	conditions that many manifolds fail. Among the spheres, only \(S^2\) and \(S^6\) pass. The 2-sphere is even a genuine complex
+	manifold, the Riemann sphere, with complex coordinates that fit together. Whether \(S^6\) is one was a question for almost eighty
+	years.
+</p>
+
+<Conjecture k="s6-complex">
+	<p>
+		An almost complex structure lives in each tangent space separately; a complex structure needs coordinates. The gap between the two
+		is exactly what made the question hard.
+	</p>
+</Conjecture>
 
 <h3>Complex line bundles and the first Chern class</h3>
 

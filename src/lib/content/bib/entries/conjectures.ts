@@ -4,6 +4,167 @@ import type { Work } from '../index';
 // chapter cites otherwise.
 export const works: Work[] = [
 	{
+		key: 'leray1934',
+		authors: ['Jean Leray'],
+		year: 1934,
+		title: 'Sur le mouvement d’un liquide visqueux emplissant l’espace',
+		venue: 'Acta Mathematica 63 (1934), 193–248',
+		doi: '10.1007/BF02547354',
+		kind: 'paper'
+	},
+	{
+		key: 'hodge1950',
+		authors: ['W. V. D. Hodge'],
+		year: 1950,
+		title: 'The topological invariants of algebraic varieties',
+		venue: 'Proceedings of the International Congress of Mathematicians, Cambridge, Massachusetts, 1950, vol. 1, 182–192',
+		kind: 'paper'
+	},
+	{
+		key: 'borel-serre1953',
+		authors: ['Armand Borel', 'Jean-Pierre Serre'],
+		label: 'Borel & Serre',
+		year: 1953,
+		title: 'Groupes de Lie et puissances réduites de Steenrod',
+		venue: 'American Journal of Mathematics 75 (1953), 409–448',
+		doi: '10.2307/2372495',
+		kind: 'paper'
+	},
+	{
+		key: 'matsumoto1982',
+		authors: ['Yukio Matsumoto'],
+		year: 1982,
+		title: 'On the bounding genus of homology 3-spheres',
+		venue: 'Journal of the Faculty of Science, University of Tokyo, Section IA, Mathematics 29 (1982), 287–318',
+		kind: 'paper'
+	},
+	{
+		key: 'fefferman2000',
+		authors: ['Charles L. Fefferman'],
+		year: 2000,
+		title: 'Existence and smoothness of the Navier–Stokes equation',
+		venue: 'official problem description, Clay Mathematics Institute',
+		url: 'https://www.claymath.org/millennium/navier-stokes-equation/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'deligne2000',
+		authors: ['Pierre Deligne'],
+		year: 2000,
+		title: 'The Hodge conjecture',
+		venue: 'official problem description, Clay Mathematics Institute',
+		url: 'https://www.claymath.org/millennium/hodge-conjecture/',
+		free: true,
+		kind: 'web'
+	},
+	{
+		key: 'furuta2001',
+		authors: ['Mikio Furuta'],
+		year: 2001,
+		title: 'Monopole equation and the 11/8-conjecture',
+		venue: 'Mathematical Research Letters 8 (2001), 279–291',
+		doi: '10.4310/MRL.2001.v8.n3.a5',
+		kind: 'paper'
+	},
+	{
+		key: 'hill-hopkins-ravenel2016',
+		authors: ['Michael A. Hill', 'Michael J. Hopkins', 'Douglas C. Ravenel'],
+		label: 'Hill, Hopkins & Ravenel',
+		year: 2016,
+		title: 'On the nonexistence of elements of Kervaire invariant one',
+		venue: 'Annals of Mathematics 184 (2016), 1–262',
+		doi: '10.4007/annals.2016.184.1.1',
+		kind: 'paper'
+	},
+	{
+		key: 'hopkins-lin-shi-xu2022',
+		authors: ['Michael J. Hopkins', 'Jianfeng Lin', 'XiaoLin Danny Shi', 'Zhouli Xu'],
+		label: 'Hopkins, Lin, Shi & Xu',
+		year: 2022,
+		title: 'Intersection forms of spin 4-manifolds and the Pin(2)-equivariant Mahowald invariant',
+		venue: 'Communications of the American Mathematical Society 2 (2022), 22–132',
+		doi: '10.1090/cams/4',
+		free: true,
+		kind: 'paper'
+	},
+	{
+		key: 'lin-wang-xu2024',
+		authors: ['Weinan Lin', 'Guozhen Wang', 'Zhouli Xu'],
+		label: 'Lin, Wang & Xu',
+		year: 2024,
+		title: 'On the last Kervaire invariant problem',
+		venue: 'preprint',
+		arxiv: '2412.10879',
+		url: 'https://arxiv.org/abs/2412.10879',
+		free: true,
+		kind: 'paper'
+	},
+	{
+		key: 'markman2025',
+		authors: ['Eyal Markman'],
+		year: 2025,
+		title: 'Cycles on abelian 2n-folds of Weil type from secant sheaves on abelian n-folds',
+		venue: 'preprint',
+		arxiv: '2502.03415',
+		url: 'https://arxiv.org/abs/2502.03415',
+		free: true,
+		kind: 'paper'
+	},
+	{
+		key: 'alpoge2026s6',
+		authors: ['Levent Alpöge'],
+		year: 2026,
+		title: 'The (3, 4, ∞) modular family of 2-tori, completed at its three special points, is a complex structure on S⁶',
+		venue: 'manuscript, August 2026, written with the AI model Claude',
+		url: 'https://alpo.ge/s6.pdf',
+		free: true,
+		kind: 'notes'
+	},
+	{
+		key: 'brendle-hung2026',
+		authors: ['Simon Brendle', 'Pei-Ken Hung'],
+		label: 'Brendle & Hung',
+		year: 2026,
+		title: 'A metric on S² × S² with positive sectional curvature',
+		venue: 'preprint',
+		arxiv: '2608.19068',
+		url: 'https://arxiv.org/abs/2608.19068',
+		free: true,
+		kind: 'paper'
+	},
+	{
+		key: 'constantin-ignatova-vicol2026',
+		authors: ['Peter Constantin', 'Mihaela Ignatova', 'Vlad Vicol'],
+		label: 'Constantin, Ignatova & Vicol',
+		year: 2026,
+		title: 'Regularity of asymptotically axisymmetric solutions to the 3D Navier–Stokes equations with analytic forcing',
+		venue: 'preprint',
+		arxiv: '2609.20803',
+		url: 'https://arxiv.org/abs/2609.20803',
+		free: true,
+		kind: 'paper'
+	},
+	{
+		key: 'viaclovsky2026',
+		authors: ['Jeff Viaclovsky'],
+		year: 2026,
+		title: 'A two-parameter family of complex structures on S⁶',
+		venue: 'preprint',
+		arxiv: '2609.33785',
+		url: 'https://arxiv.org/abs/2609.33785',
+		free: true,
+		kind: 'paper'
+	},
+	{
+		key: 'polya1954',
+		authors: ['George Pólya'],
+		year: 1954,
+		title: 'Mathematics and Plausible Reasoning, Volume I: Induction and Analogy in Mathematics',
+		venue: 'Princeton University Press',
+		kind: 'book'
+	},
+	{
 		key: 'strassen1969',
 		authors: ['Volker Strassen'],
 		year: 1969,

@@ -7,7 +7,7 @@ import { mirror } from './diagram';
 import shapes from './shapes.json';
 
 /** a shape settled once from the braid by scripts/knot-shapes.ts */
-const settled = (id: string) => (shapes as Record<string, V3[][]>)[id];
+const settled = (id: string) => (shapes as unknown as Record<string, V3[][]>)[id];
 
 export interface TableKnot {
 	id: string;

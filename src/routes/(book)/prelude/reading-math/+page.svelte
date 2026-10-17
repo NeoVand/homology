@@ -187,7 +187,9 @@
 <p>
 	Every theorem was once a guess. A guess that has been stated precisely, tested and shared, but not yet proved, is a
 	<Term t="conjecture">conjecture</Term>, and conjectures are where much of mathematics happens: they tell a field what to try to
-	prove next. There is a saying among mathematicians, often repeated and never traced to a source, that ranks the work: a
+	prove next. George Pólya put it this way: “mathematics in the making resembles any other human knowledge in the making. You have
+	to guess a mathematical theorem before you prove it; you have to guess the idea of the proof before you carry through the
+	details” <Cite k="polya1954" loc="vol. I, p. vi" />. There is also a saying among mathematicians, often repeated and never traced to a source, that ranks the work: a
 	mathematician proves theorems, a good mathematician makes conjectures, and a great one creates definitions. It is unfair to
 	proofs, which are the only way a guess becomes knowledge. But it is right that knowing <em>what</em> to prove is much of the art,
 	and that the deepest contributions are often new ways of seeing, written down as definitions.
@@ -204,8 +206,8 @@
 <ul>
 	<li>
 		<strong>Proved.</strong> Pierre de Fermat wrote, around 1637, that \(x^n + y^n = z^n\) has no solutions in positive whole numbers
-		when \(n\ge3\). Andrew Wiles proved it in 1994, with a final step completed together with Richard Taylor
-		<Cite k="wiles1995,taylor-wiles1995" />.
+		when \(n\ge3\). Andrew Wiles announced a proof in 1993; a gap was found, and in 1994 he closed it, with a final step done
+		together with Richard Taylor <Cite k="wiles1995,taylor-wiles1995" />.
 	</li>
 	<li>
 		<strong>Disproved.</strong> In 1769 Leonhard Euler conjectured that a fifth power cannot be a sum of fewer than five fifth powers,
@@ -218,6 +220,14 @@
 	</li>
 	<li><strong>Still open.</strong> Like the Riemann hypothesis, and like the conjecture in the box below.</li>
 </ul>
+
+<p>
+	Lately a conjecture can also meet a new kind of fate: a claimed proof found by a computer. In 2026 AI systems produced proofs, or
+	claimed proofs, of several well-known open problems, some of which appear in boxes later in this book. A claim is not yet a
+	theorem. It becomes one when experts have checked it, or when it has been verified line by line by a proof assistant, a program
+	that accepts a proof only if every step follows from the rules; and even then mathematicians want to understand <em>why</em> it is
+	true. The boxes in this book say, for each problem, how far that checking has got.
+</p>
 
 <Warning title="Evidence is not proof">
 	<p>

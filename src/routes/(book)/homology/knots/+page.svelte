@@ -322,10 +322,10 @@
 	Join the bottom hooks of a braid back up to the top hooks, around the side, and you get a link: the braid’s <Term t="braid-closure">closure</Term>. The closure of \(\sigma_1^3\) in \(B_2\) is the trefoil, of \(\sigma_1^2\) the Hopf link, and of \((\sigma_1\sigma_2^{-1})^2\) in \(B_3\) the figure-eight knot.
 </p>
 
-<Figure num="3.7.5" title="Build a braid, close it up" hint="Add crossings · press a crossing to switch it · drag the closure to turn it">
+<Figure num="3.7.5" title="Build a braid, close it up" hint="Add crossings · tap a crossing to switch it · drag the closure to turn it">
 	<BraidBuilder />
 	{#snippet caption()}
-		Build a braid one crossing at a time, and press any crossing to switch which strand is on top. Beside it the braid is closed up in space, with one colour for each component: the permutation of the strands decides how many there are, one for each cycle. The examples give the trefoil \(\sigma_1^3\), the figure-eight knot \((\sigma_1\sigma_2^{-1})^2\) and the Borromean rings \((\sigma_1\sigma_2^{-1})^3\); the last two buttons build \(\sigma_1\sigma_2\sigma_1\) and \(\sigma_2\sigma_1\sigma_2\), which Artin’s relation says are the same braid.
+		Build a braid one crossing at a time, and press any crossing to switch which strand is on top. Beside it the braid is closed up in space, with one colour for each component: the permutation of the strands decides how many there are, one for each cycle. The readout names the closure when it is a knot or link from this chapter, judged by its Jones polynomial. The examples give the trefoil \(\sigma_1^3\), the figure-eight knot \((\sigma_1\sigma_2^{-1})^2\) and the Borromean rings \((\sigma_1\sigma_2^{-1})^3\); the last two buttons build \(\sigma_1\sigma_2\sigma_1\) and \(\sigma_2\sigma_1\sigma_2\), which Artin’s relation says are the same braid.
 	{/snippet}
 </Figure>
 
@@ -366,10 +366,10 @@
 	<p>The result is an oriented surface whose boundary is the knot.</p>
 </Theorem>
 
-<Figure num="3.7.6" title="Seifert’s algorithm" hint="Choose a knot · step through the algorithm · drag to turn the surface">
+<Figure num="3.7.6" title="Seifert’s algorithm" hint="Step through the algorithm · choose a knot · drag to turn it">
 	<SeifertSurface />
 	{#snippet caption()}
-		From diagram to surface. The crossings are smoothed along the arrows into Seifert circles, the circles are filled with disks, and a half-twisted band at each crossing joins them up. The two sides of the finished surface are coloured differently: the surface has two sides, and its boundary is the knot.
+		Each knot is drawn as a closed braid. The crossings are smoothed along the arrows into Seifert circles, one for each strand; the circles are filled with stacked disks, and a half-twisted band at each crossing joins neighbouring disks. The finished surface is teal on one side and violet on the other, and its edge is the knot. The readout counts \(c\), \(s\), \(\chi = s - c\) and the genus. For \(5_2\) this diagram gives genus \(2\), although the knot has genus \(1\): Seifert’s algorithm only gives an upper bound, and a different diagram does better.
 	{/snippet}
 </Figure>
 

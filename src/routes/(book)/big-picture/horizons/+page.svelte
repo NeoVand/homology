@@ -13,6 +13,7 @@
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Recap from '$lib/components/prose/Recap.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import Cite from '$lib/components/prose/Cite.svelte';
@@ -319,6 +320,20 @@
 	differential equations), and Warner’s textbook gives a complete proof <Cite k="warner1983" loc="ch. 6" /> — but its discrete
 	version is pure linear algebra, and you can prove it yourself.
 </p>
+
+<p>
+	On a complex manifold the harmonic forms split further, by how many complex directions they measure, into pieces of
+	<dfn>type</dfn> \((p,q)\). When the manifold is cut out by polynomial equations, its subvarieties, the smaller shapes cut out by more
+	equations, give classes of type \((p,p)\). Whether these are all of them is the most famous open question about cohomology.
+</p>
+
+<Conjecture k="hodge">
+	<p>
+		The conjecture predicts that a topological count, the classes of a certain type, is accounted for by geometry: every such class is
+		built, up to rational multiples, from honest algebraic shapes. It is a bridge between topology and algebra that nobody knows how to
+		build in general.
+	</p>
+</Conjecture>
 
 <h3 id="hodge-discrete">The discrete version is least squares</h3>
 

@@ -47,10 +47,19 @@
 		<Ornament width={200} />
 	</header>
 
+	<blockquote class="motto">
+		<p>
+			As long as a branch of science offers an abundance of problems, so long is it alive; a lack of problems foreshadows extinction
+			or the cessation of independent development.
+		</p>
+		<footer class="ui">— David Hilbert, Paris, 1900, translated by Mary Winston Newson</footer>
+	</blockquote>
+
 	<p class="lead">
 		Every exercise in this book has an answer that someone already knows. These questions do not. Each sits in the chapter that
-		gives you the ideas to understand it, usually with something small you can try. Some are centuries old, some only a few years;
-		several fall to a single clever idea, and nobody knows which.
+		gives you the ideas to understand it, usually with something small you can try. Some are centuries old, some only a few
+		decades. A few were settled in 2026, some of them by AI systems, and the claims are still being checked; each box says how far
+		the checking has got.
 	</p>
 
 	<nav class="jump ui" aria-label="Sections">
@@ -72,7 +81,7 @@
 			<h2>Settled</h2>
 			<p class="intro">
 				Conjectures that were proved, disproved, or shown to be beyond the reach of proof altogether: how each ended is part of the
-				story.
+				story. Claims still under review stay in the parts above.
 			</p>
 			<ul class="cards">
 				{#each settled as p (p.key)}{@render card(p)}{/each}
@@ -84,6 +93,25 @@
 </main>
 
 <style>
+	.motto {
+		margin: 0 auto 1.8rem;
+		max-width: 36rem;
+		text-align: center;
+		border: 0;
+		padding: 0;
+	}
+	.motto p {
+		margin: 0 0 0.5rem;
+		font-family: var(--font-elegant);
+		font-style: italic;
+		font-size: 1.12rem;
+		line-height: 1.5;
+		color: #e8dfc9;
+	}
+	.motto footer {
+		font-size: 0.78rem;
+		color: var(--ink-faint);
+	}
 	.wrap {
 		max-width: 50rem;
 		margin: 0 auto;

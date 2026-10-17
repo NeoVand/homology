@@ -86,6 +86,25 @@ export function diagramOf(comps: V3[][]): Diagram {
 			}
 		}
 
+	// A vertex lying exactly on a crossing can be reported twice, once by each of the
+	// segments meeting there, when rounding puts both parameters inside [0, 1). Keep one.
+	const near = (x: number, y: number, n: number) => {
+		const d = Math.abs(x - y) % n;
+		return Math.min(d, n - d) < 1e-6;
+	};
+	for (let n = hits.length - 1; n >= 0; n--) {
+		const h = hits[n];
+		const twin = hits.findIndex(
+			(g, m) =>
+				m < n &&
+				g.ca === h.ca &&
+				g.cb === h.cb &&
+				near(g.sa, h.sa, comps[h.ca].length) &&
+				near(g.sb, h.sb, comps[h.cb].length)
+		);
+		if (twin >= 0) hits.splice(n, 1);
+	}
+
 	const passes: Pass[][] = comps.map(() => []);
 	const crossComps: [number, number][] = [];
 	const dirs: { o: V2; u: V2 }[] = [];

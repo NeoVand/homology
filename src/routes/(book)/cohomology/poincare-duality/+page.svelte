@@ -16,6 +16,7 @@
 	import Exercise from '$lib/components/prose/Exercise.svelte';
 	import Figure from '$lib/components/prose/Figure.svelte';
 	import Term from '$lib/components/prose/Term.svelte';
+	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import Ref from '$lib/components/prose/Ref.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import Cite from '$lib/components/prose/Cite.svelte';
@@ -642,6 +643,19 @@
 		beyond this book.
 	</p>
 </Remark>
+
+<p>
+	Which forms <em>do</em> occur for smooth 4-manifolds? For forms that are not definite, the answer is still unknown, and the open case
+	concerns <em>even</em> forms, those with \(Q(x,x)\) even for every \(x\), like that of \(S^2\times S^2\).
+</p>
+
+<Conjecture k="eleven-eighths">
+	<p>
+		The two numbers in the conjecture are the ones just defined: \(b_2\) is the size of the matrix \(Q\), and \(\sigma\) its number of
+		positive eigenvalues minus its number of negative ones. A smooth manifold, the conjecture says, cannot have a large signature without
+		paying for it in extra homology.
+	</p>
+</Conjecture>
 
 <History>
 	<p>

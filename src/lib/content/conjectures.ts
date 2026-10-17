@@ -251,6 +251,92 @@ export const problems: Problem[] = [
 		cite: ['matschke2014', 'tao2017', 'greene-lobb2021']
 	},
 	{
+		key: 'navier-stokes',
+		name: 'Navier–Stokes existence and smoothness',
+		kind: 'problem',
+		posed: { by: 'Jean Leray', year: 1934 },
+		statement: 'Do the Navier–Stokes equations of an incompressible fluid in three dimensions always have smooth solutions that last for all time, starting from any smooth initial velocity? Or can the velocity become infinite at some point after a finite time?',
+		status: 'claimed',
+		settled: {
+			by: 'OpenAI, with an unreleased AI model',
+			year: 2026,
+			how: 'On 8 September 2026 OpenAI announced a proof, checked in the Lean proof assistant, that a fluid initially at rest and pushed by a suitable smooth force can develop a singularity in finite time. That is one of the four alternatives in the Clay Mathematics Institute’s official statement of the problem. Charles Fefferman, who wrote that statement, said he was thrilled that the problem was solved, and credited the method of Diego Córdoba and Luis Martínez-Zoroa on which the construction builds. Others point out that the force must have special properties (it cannot be analytic, by work of Constantin, Ignatova and Vicol), and the Clay Institute still lists the problem as open.'
+		},
+		known: 'The question has been one of the seven Millennium Prize Problems of the Clay Mathematics Institute since 2000. In two dimensions smooth solutions last forever. In three, Leray proved in 1934 that weaker solutions always exist, and Caffarelli, Kohn and Nirenberg showed in 1982 that their singularities, if there are any, are rare. Whether a smooth flow can blow up with no driving force at all is still open.',
+		wayIn: 'Write the velocity of the fluid as \\(\\mathbf u\\). Incompressibility says \\(\\operatorname{div}\\mathbf u = 0\\), which by the divergence theorem means that as much fluid flows into any ball as flows out. What can concentrate is the swirl, \\(\\operatorname{curl}\\mathbf u\\): in three dimensions a spinning tube of fluid can be stretched thinner and spin faster, which cannot happen in a flat, two-dimensional flow.',
+		chapter: 'cohomology/differential-forms',
+		cite: ['leray1934', 'fefferman2000', 'constantin-ignatova-vicol2026']
+	},
+	{
+		key: 'eleven-eighths',
+		name: 'The 11/8 conjecture',
+		kind: 'conjecture',
+		posed: { by: 'Yukio Matsumoto', year: 1982 },
+		statement: 'Every closed smooth spin 4-manifold satisfies \\(b_2\\ge\\tfrac{11}{8}\\,\\lvert\\sigma\\rvert\\), where \\(b_2\\) is the second Betti number and \\(\\sigma\\) the signature of the intersection form. (For a simply connected manifold, spin means that \\(Q(x,x)\\) is even for every \\(x\\).)',
+		status: 'open',
+		known: 'The bound would be sharp: the K3 surface, the complex surface \\(x^4 + y^4 + z^4 + w^4 = 0\\) in \\(\\CP^3\\), has \\(b_2 = 22\\) and \\(\\sigma = -16\\), and \\(22 = \\tfrac{11}{8}\\cdot16\\). Donaldson’s theorem rules out definite forms. In 2001 Mikio Furuta proved \\(b_2\\ge\\tfrac{10}{8}\\lvert\\sigma\\rvert + 2\\) when \\(\\sigma\\ne0\\), using the Seiberg–Witten equations, and in 2022 Hopkins, Lin, Shi and Xu reached \\(\\tfrac{10}{8}\\lvert\\sigma\\rvert + 4\\) for simply connected manifolds other than \\(S^4\\), \\(S^2\\times S^2\\) and K3, showing also that this is as far as that method can go.',
+		wayIn: 'Plot the pairs \\((\\lvert\\sigma\\rvert, b_2)\\) of the manifolds you know: \\(S^2\\times S^2\\) gives \\((0, 2)\\), K3 gives \\((16, 22)\\), and connected sums add both numbers. Which points can you reach from these two, and where do they lie relative to the line \\(b_2 = \\tfrac{11}{8}\\lvert\\sigma\\rvert\\)?',
+		chapter: 'cohomology/poincare-duality',
+		cite: ['matsumoto1982', 'furuta2001', 'hopkins-lin-shi-xu2022']
+	},
+	{
+		key: 's6-complex',
+		name: 'A complex structure on the 6-sphere',
+		kind: 'problem',
+		posed: { by: 'Heinz Hopf', year: 'the 1940s' },
+		statement: 'Can the 6-sphere be given complex coordinates: is \\(S^6\\) a complex manifold of complex dimension \\(3\\)?',
+		status: 'claimed',
+		settled: {
+			by: 'Levent Alpöge, working with the AI model Claude',
+			year: 2026,
+			how: 'On 23 August 2026 Alpöge, a mathematician at Anthropic, posted a 108-page manuscript, written with Claude, that builds a complex structure on \\(S^6\\) out of a family of complex 2-dimensional tori lying over a sphere, completed over three special points. Within weeks other geometers had used it to construct further complex structures on \\(S^6\\). As of October 2026 it has not been refereed.'
+		},
+		known: 'Using characteristic classes, Borel and Serre showed in 1953 that among all spheres only \\(S^2\\) and \\(S^6\\) admit even an almost complex structure, a rotation \\(J\\) of every tangent space with \\(J^2 = -1\\). The 2-sphere is a complex manifold, the Riemann sphere. The 6-sphere has an almost complex structure coming from the octonions, but it does not come from complex coordinates, and LeBrun showed in 1987 that no complex structure can fit the round shape of the sphere. Michael Atiyah announced a proof that none exists at all in 2016; it was not accepted, and the 2026 construction, if correct, shows the answer is yes.',
+		wayIn: 'Give the 2-sphere complex coordinates: use stereographic projection from the north pole and from the south pole, and check that the change of coordinates between the two charts is \\(z\\mapsto1/z\\), which is complex-differentiable where both charts apply. The question was whether anything like this can be done for \\(S^6\\).',
+		chapter: 'cohomology/characteristic-classes',
+		cite: ['borel-serre1953', 'alpoge2026s6', 'viaclovsky2026']
+	},
+	{
+		key: 'hopf-sign',
+		name: 'Hopf’s sign conjecture',
+		kind: 'conjecture',
+		posed: { by: 'Heinz Hopf', year: 'the 1930s' },
+		statement: 'If a closed manifold \\(M\\) of dimension \\(2n\\) has a metric whose curvature is negative in every direction (negative sectional curvature), then \\((-1)^n\\chi(M)\\gt0\\); if the curvature is only nonpositive, then \\((-1)^n\\chi(M)\\ge0\\).',
+		status: 'open',
+		known: 'For surfaces it follows at once from Gauss–Bonnet, and in dimension \\(4\\) from Chern’s version of it, whose integrand then has the right sign. It is known for several special classes, such as Kähler manifolds of negative curvature (Gromov, 1991), and open from dimension \\(6\\) on. Hopf also asked whether positive curvature forces \\(\\chi\\gt0\\), and whether \\(S^2\\times S^2\\) can be curved positively in every direction; in August 2026 Simon Brendle and Pei-Ken Hung posted a metric of positive curvature on \\(S^2\\times S^2\\), which experts are now checking.',
+		wayIn: 'Check the surfaces: a round sphere (positive curvature, \\(\\chi = 2\\)), a flat torus (\\(\\chi = 0\\)) and a surface of genus \\(2\\) with negative curvature (\\(\\chi = -2\\)). In dimension \\(4\\), the product of two surfaces of genus \\(2\\) has nonpositive curvature; compute its Euler characteristic with \\(\\chi(M\\times N) = \\chi(M)\\,\\chi(N)\\) and compare with the prediction.',
+		chapter: 'cohomology/characteristic-classes',
+		cite: ['chern1944', 'brendle-hung2026']
+	},
+	{
+		key: 'kervaire',
+		name: 'The Kervaire invariant one problem',
+		kind: 'problem',
+		posed: { by: 'Michel Kervaire and William Browder', year: '1960–69' },
+		statement: 'In which dimensions is there a closed framed manifold, a manifold with a consistent choice of directions at every point, whose Kervaire invariant is \\(1\\), so that it cannot be simplified by surgery into a sphere?',
+		status: 'proved',
+		settled: {
+			by: 'Michael Hill, Michael Hopkins and Douglas Ravenel (2009), and Weinan Lin, Guozhen Wang and Zhouli Xu',
+			year: 2024,
+			how: 'Browder showed in 1969 that only the dimensions \\(2^{j+1} - 2\\), that is \\(2, 6, 14, 30, 62, 126, 254, \\ldots\\), are possible, and examples were known in dimensions \\(2, 6, 14, 30\\) and \\(62\\). In 2009 Hill, Hopkins and Ravenel showed with equivariant homotopy theory that there are none beyond \\(126\\). In 2024 Lin, Wang and Xu showed, with a large computer calculation of the Adams spectral sequence, that dimension \\(126\\) has one. The answer: exactly the dimensions \\(2, 6, 14, 30, 62\\) and \\(126\\).'
+		},
+		known: 'Framed manifolds, up to cobordism, are the same thing as the stable homotopy groups of spheres, so the problem is about which classes survive a spectral sequence to its last page. As of October 2026 the Lin–Wang–Xu paper is a preprint, widely accepted by experts.',
+		chapter: 'big-picture/homological-algebra',
+		cite: ['hill-hopkins-ravenel2016', 'lin-wang-xu2024']
+	},
+	{
+		key: 'hodge',
+		name: 'The Hodge conjecture',
+		kind: 'conjecture',
+		posed: { by: 'W. V. D. Hodge', year: 1950 },
+		statement: 'On a smooth complex projective variety, every rational cohomology class of type \\((p,p)\\) is a rational combination of the classes of algebraic subvarieties.',
+		status: 'open',
+		known: 'It is one of the seven Millennium Prize Problems of the Clay Mathematics Institute. It holds for classes of degree \\(2\\), by the Lefschetz \\((1,1)\\) theorem of 1924, and hence for all varieties of dimension at most \\(3\\); with integer instead of rational coefficients it is false (Atiyah and Hirzebruch, 1962). In 2025 Eyal Markman proved it for abelian varieties of dimension \\(4\\), and in 2026 further cases were announced, some of them by AI systems, a few of which have since been withdrawn. The general conjecture is open.',
+		wayIn: 'On a complex curve, every class of degree \\(2\\) is a multiple of the class of a point, and a point is an algebraic subvariety, so there is nothing to prove. The first real case is degree \\(2\\) on a surface, where Lefschetz’s theorem follows from the long exact sequence of \\(0\\to\\Z\\to\\mathcal O\\to\\mathcal O^*\\to0\\), a sequence of sheaves like those of Chapter 4.7.',
+		chapter: 'big-picture/horizons',
+		cite: ['hodge1950', 'deligne2000', 'markman2025']
+	},
+	{
 		key: 'jones-unknot',
 		name: 'The Jones unknot problem',
 		kind: 'problem',
