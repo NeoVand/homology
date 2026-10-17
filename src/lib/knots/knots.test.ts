@@ -6,6 +6,7 @@ import { jones, alexander, determinant, colourings, linkingNumber, seifertGenus 
 import { khovanov, eulerCharacteristic } from './khovanov';
 import { knots, knotById, tangledUnknot } from './table';
 import { untie } from './untie';
+import { draw } from './draw';
 import { relax, resample } from './relax';
 
 const poly = L.from;
@@ -149,5 +150,20 @@ describe('untying by force', () => {
 		const u = untie(resample(tangledUnknot()[0], 200), C, 80);
 		expect(u.events.length).toBe(0);
 		expect(L.eq(jones(diagramOf(tangledUnknot())), L.one())).toBe(true);
+	});
+});
+
+describe('drawing a diagram', () => {
+	it('cuts the trefoil into three arcs, each crossing joining an over-arc and two under-arcs', () => {
+		const d = draw(torusKnot(2, 3));
+		expect(d.arcs.length).toBe(3);
+		expect(d.crossings.length).toBe(3);
+		for (const c of d.crossings) {
+			expect(c.over).toBeGreaterThanOrEqual(0);
+			expect(new Set([c.over, c.in, c.out]).size).toBe(3);
+		}
+	});
+	it('draws an unknotted circle whole', () => {
+		expect(draw(unknot()).loops.length).toBe(1);
 	});
 });
