@@ -472,6 +472,10 @@ export interface RepulseOptions {
 	/** how far to nudge the start, in edge lengths, to break its symmetry (default 0.02; 0 keeps a
 	 *  symmetric start symmetric, so that it settles to the best shape with that symmetry) */
 	nudge?: number;
+	/** stop when the energy falls by less than this fraction per step for 40 steps (default 1e-9; 0 never stops) */
+	tolerance?: number;
+	/** called at every trial step of the line search: step, trial length, decrease, required decrease, constraint error */
+	trace?: (step: number, tau: number, decrease: number, wanted: number, violation: number) => void;
 	/** called after every step with the step number, the energy and the step length */
 	log?: (step: number, E: number, tau: number) => void;
 }
@@ -559,6 +563,7 @@ export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 				for (let q = 0; q < 3 * N; q++) C.X[q] += corr[q];
 			}
 			E1 = energy(C, undefined, alpha, beta);
+			opts.trace?.(step, tau, E - E1, 0.01 * tau * dot, violation().worst);
 			if (E - E1 >= 0.01 * tau * dot && violation().worst < 1e-5) {
 				accepted = tau;
 				break;
@@ -572,7 +577,7 @@ export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 		opts.log?.(step, E1, accepted);
 		last = accepted;
 		// stop once the energy has hardly moved for a while (near a saddle it creeps before it runs)
-		still = (E - E1) / E < 1e-9 ? still + 1 : 0;
+		still = (E - E1) / E < (opts.tolerance ?? 1e-9) ? still + 1 : 0;
 		if (still > 40) break;
 	}
 	// centre, turn to the principal axes, scale to size
