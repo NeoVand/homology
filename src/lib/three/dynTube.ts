@@ -45,7 +45,8 @@ class TubeBuffer {
 				const b = i2 * radial + j;
 				const c = i2 * radial + j2;
 				const d = i * radial + j2;
-				idx.push(a, b, d, b, c, d);
+				// wound so that the faces look outwards (a → d runs round the ring, a → b along the tube)
+				idx.push(a, d, b, b, d, c);
 			}
 		}
 		this.geometry.setIndex(idx);

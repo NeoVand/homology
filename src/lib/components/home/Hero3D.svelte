@@ -159,7 +159,8 @@
 					const b = j1 * rs + i;
 					const c = j1 * rs + i1;
 					const d = j * rs + i1;
-					idx.push(a, b, d, b, c, d);
+					// wound so that the faces look outwards (a → d runs round the ring, a → b along the tube)
+					idx.push(a, d, b, b, d, c);
 				}
 			}
 			geo.setIndex(idx);
