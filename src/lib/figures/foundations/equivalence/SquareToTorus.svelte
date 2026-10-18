@@ -21,8 +21,8 @@
 	const torus = presets.torus;
 	const f = torus.f;
 	// where p sits on the b-sides and q on the a-sides
-	const PV = 0.6;
-	const QU = 0.6;
+	const PV = 0.78;
+	const QU = 0.78;
 
 	let t = $state(0);
 	let cw = $state(800);
@@ -123,7 +123,7 @@
 				holder.scale.setScalar(scale);
 				holder.position.set(-c.x * scale, -c.y * scale, -c.z * scale);
 				holder.updateMatrixWorld();
-				mesh.setUniform('uEdgeW', 0.095 / scale);
+				mesh.setUniform('uEdgeW', 0.03 / scale);
 				mesh.setOutward(sheet.outward);
 
 				// the points, and how many distinct points each class is

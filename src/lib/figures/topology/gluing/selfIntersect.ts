@@ -1,8 +1,8 @@
 // Where does a parametrised surface pass through itself? We triangulate the
 // (nu × nv) grid, bucket triangles in a spatial hash, and intersect every pair of
 // nearby triangles that do not touch. Each crossing contributes a little segment;
-// together they trace the double curve (drawn in rose on the Klein bottle and
-// Boy's surface).
+// together they show roughly where the double curve runs, which is where
+// doubleCurve.ts starts tracing it exactly.
 
 type Vec = [number, number, number];
 

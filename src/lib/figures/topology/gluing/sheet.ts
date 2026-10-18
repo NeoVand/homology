@@ -1,13 +1,10 @@
 // 3D helpers for the gluing figures: a parametric sheet whose vertices are
 // rewritten in place every frame (no allocation), an iridescent glass material
-// that also paints the four edges of the square (glued edges as glowing bands
-// with chevrons, free edges as faint ivory rims), and a glowing tube whose
-// centre line can be moved every frame.
+// that also paints the four edges of the square (glued edges as thin lines
+// with arrow barbs, free edges as faint ivory rims), a glowing tube whose
+// centre line can be moved every frame, and thin lines along curves.
 import * as THREE from 'three';
-import { LineSegments2 } from 'three/addons/lines/LineSegments2.js';
-import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js';
-import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
-import { color, glowCore, glowHalo, shaderColor, type PaletteName } from '$lib/three/materials';
+import { glowCore, glowHalo, shaderColor, type PaletteName } from '$lib/three/materials';
 
 export interface P3 {
 	x: number;
@@ -245,33 +242,36 @@ const frag = /* glsl */ `
 		float d = abs(fract(x - 0.5) - 0.5) / max(w, 1e-4);
 		return 1.0 - smoothstep(0.0, 1.2, d);
 	}
-	// A band along one edge, measured in model units however much the sheet has been
-	// stretched: a = distance from the edge (uv), s = position along it (uv),
-	// ka / ks = model units per unit of a / s at this point.
+	// A thin line along one edge, measured in model units however much the sheet has been stretched:
+	// a = distance from the edge (uv), s = position along it (uv), ka / ks = model units per unit of a / s
+	// at this point. A glued edge also carries the barbs of its arrow (one or two) in the middle: each is
+	// half an arrowhead, a stroke from the edge back into the sheet, so that when the edge meets its
+	// partner the two halves close into one whole arrowhead across the seam.
 	vec4 edgeBand(float a, float s, float ka, float ks, float on, float dir, float marks, vec3 col) {
 		if (on == 0.0) return vec4(0.0);
 		float am = a * ka;                                 // distance from the edge
-		float w = uEdgeW * (on < 0.0 ? 0.45 : 1.0);
+		float w = uEdgeW * (on < 0.0 ? 0.7 : 1.0);
 		float aw = max(fwidth(am), 1e-6);
 		float band = 1.0 - smoothstep(w - aw, w + aw, am);
-		if (band <= 0.0) return vec4(0.0);
 		if (on < 0.0) {
 			return vec4(vec3(0.95, 0.92, 0.84) * 0.8, band * 0.8);
 		}
-		// chevrons pointing along +dir in the middle of the edge
-		float sm = (s - 0.5) * ks * dir;
-		float across = abs(am - 0.5 * w);
-		float chev = 0.0;
-		for (int k = 0; k < 2; k++) {
-			if (float(k) >= marks) break;
-			float off = (float(k) - (marks - 1.0) * 0.5) * 1.7 * w;
-			float d = sm - off + across * 1.15;
-			float dw = max(fwidth(d), 1e-6);
-			chev = max(chev, 1.0 - smoothstep(0.16 * w - dw, 0.16 * w + dw, abs(d)));
+		float reach = 3.4 * w;                             // how far a barb reaches into the sheet
+		float barb = 0.0;
+		if (am < reach + aw) {
+			float sm = (s - 0.5) * ks * dir;
+			for (int k = 0; k < 2; k++) {
+				if (float(k) >= marks) break;
+				float off = (float(k) - (marks - 1.0) * 0.5) * 1.6 * reach + 0.5 * reach;
+				float d = (sm - off + 0.95 * am) * 0.725;       // 0 along the stroke (0.725: across it)
+				float dw = max(fwidth(d), 1e-6);
+				barb = max(barb, 1.0 - smoothstep(0.36 * w - dw, 0.36 * w + dw, abs(d)));
+			}
+			barb *= 1.0 - smoothstep(reach - aw, reach + aw, am);
 		}
-		chev *= 1.0 - smoothstep(0.4 * w, 0.5 * w, across);
-		vec3 c = col * (0.9 + 0.45 * chev) + vec3(1.0, 0.97, 0.9) * chev * 0.6;
-		return vec4(c * uEdgeGlow, band);
+		float m = max(band, barb);
+		if (m <= 0.0) return vec4(0.0);
+		return vec4((col * 0.95 + vec3(1.0, 0.97, 0.9) * 0.12) * uEdgeGlow, m);
 	}
 	void main() {
 		vec3 N = normalize(vNormal);
@@ -356,7 +356,7 @@ export function sheetMaterial(o: SheetMaterialOptions = {}, side: THREE.Side = T
 			uEdgeColB: { value: shaderColor('gold') },
 			uEdgeColT: { value: shaderColor('gold') },
 			uEdgeMarks: { value: new THREE.Vector4(1, 1, 1, 1) },
-			uEdgeW: { value: o.edgeWidth ?? 0.09 },
+			uEdgeW: { value: o.edgeWidth ?? 0.03 },
 			uEdgeGlow: { value: 1.15 },
 			uW4: { value: 0 }
 		},
@@ -436,7 +436,9 @@ export class DynamicTube {
 	private prevN = new THREE.Vector3();
 	private materials: THREE.ShaderMaterial[];
 
-	constructor(o: { segments?: number; radial?: number; radius?: number; color?: PaletteName | number | string; haloScale?: number; intensity?: number } = {}) {
+	constructor(
+		o: { segments?: number; radial?: number; radius?: number; color?: PaletteName | number | string; halo?: boolean; haloScale?: number; intensity?: number } = {}
+	) {
 		this.segments = o.segments ?? 128;
 		this.radial = o.radial ?? 10;
 		this.radius = o.radius ?? 0.03;
@@ -444,15 +446,19 @@ export class DynamicTube {
 		this.core = this.makeGeometry();
 		this.halo = this.makeGeometry();
 		const coreMat = glowCore(o.color ?? 'gold', o.intensity ?? 1);
-		const haloMat = glowHalo(o.color ?? 'gold', o.intensity ?? 1);
 		const mc = new THREE.Mesh(this.core, coreMat);
-		const mh = new THREE.Mesh(this.halo, haloMat);
 		mc.renderOrder = 5;
-		mh.renderOrder = 6;
 		mc.frustumCulled = false;
-		mh.frustumCulled = false;
-		this.group.add(mc, mh);
-		this.materials = [coreMat, haloMat];
+		this.group.add(mc);
+		this.materials = [coreMat];
+		if (o.halo !== false) {
+			const haloMat = glowHalo(o.color ?? 'gold', o.intensity ?? 1);
+			const mh = new THREE.Mesh(this.halo, haloMat);
+			mh.renderOrder = 6;
+			mh.frustumCulled = false;
+			this.group.add(mh);
+			this.materials.push(haloMat);
+		}
 	}
 
 	private makeGeometry() {
@@ -548,43 +554,67 @@ export class DynamicTube {
 	}
 }
 
-// ── fat glowing line segments (for double curves) ────────────────────────────
+// ── thin lines along curves (for double curves) ──────────────────────────────
 
 /**
- * A set of segments drawn as a crisp core line plus a soft additive glow, with
- * widths in CSS pixels. `segments` is a flat list of end points (6 numbers each).
+ * Thin lines along any number of curves, each given as a polyline (flat xyz) that is closed or not, and
+ * redrawn whenever `show` is called: slender lit tubes, kept from a pool so that nothing is allocated
+ * while a morph plays.
  */
-export function glowSegments(segments: ArrayLike<number>, o: { color?: PaletteName | number | string; width?: number; dpr?: number } = {}) {
-	const group = new THREE.Group();
-	const dpr = o.dpr ?? 1;
-	const geo = new LineSegmentsGeometry();
-	geo.setPositions(Array.from(segments));
-	// LineMaterial converts to the output colour space itself, so it takes a plain colour.
-	const c = color(o.color ?? 'rose');
-	const core = new LineMaterial({ color: c, linewidth: (o.width ?? 2.6) * dpr, transparent: true, depthWrite: false });
-	const glow = new LineMaterial({
-		color: c,
-		linewidth: (o.width ?? 2.6) * 3.4 * dpr,
-		transparent: true,
-		opacity: 0.32,
-		depthWrite: false,
-		blending: THREE.AdditiveBlending
-	});
-	const a = new LineSegments2(geo, glow);
-	const b = new LineSegments2(geo, core);
-	a.renderOrder = 9;
-	b.renderOrder = 10;
-	a.frustumCulled = false;
-	b.frustumCulled = false;
-	group.add(a, b);
-	return {
-		group,
-		setOpacity(x: number) {
-			group.visible = x > 0.01;
-			core.opacity = x;
-			glow.opacity = 0.32 * x;
+export class CurveLines {
+	readonly group = new THREE.Group();
+	private pool: DynamicTube[] = [];
+	private buf: Float32Array;
+	private o: { color: PaletteName | number | string; radius: number; segments: number };
+
+	constructor(o: { color?: PaletteName | number | string; radius?: number; segments?: number } = {}) {
+		this.o = { color: o.color ?? 'rose', radius: o.radius ?? 0.016, segments: o.segments ?? 360 };
+		this.buf = new Float32Array(3 * (this.o.segments + 1));
+	}
+
+	/** draw these curves (and hide the rest of the pool); radiusScale undoes a parent's scaling */
+	show(curves: { pts: ArrayLike<number>; closed: boolean }[], radiusScale = 1) {
+		curves = curves.filter((c) => c.pts.length >= 6);
+		while (this.pool.length < curves.length) {
+			const t = new DynamicTube({ segments: this.o.segments, radial: 8, radius: this.o.radius, color: this.o.color, halo: false });
+			// drawn after the glass (which writes no depth), so that a curve inside the surface shows through it
+			t.group.traverse((m) => {
+				if (m instanceof THREE.Mesh) (m.material as THREE.Material).transparent = true;
+			});
+			this.pool.push(t);
+			this.group.add(t.group);
 		}
-	};
+		this.pool.forEach((t, i) => {
+			t.group.visible = i < curves.length;
+			if (i < curves.length) {
+				resample(curves[i].pts, curves[i].closed, this.buf);
+				t.update(this.buf, radiusScale);
+			}
+		});
+	}
+
+	hide() {
+		for (const t of this.pool) t.group.visible = false;
+	}
+}
+
+/** n evenly spaced points (by arc length) along a polyline, into out (whose length sets n) */
+function resample(pts: ArrayLike<number>, closed: boolean, out: Float32Array) {
+	const m = pts.length / 3;
+	const k = closed ? m + 1 : m;
+	const P = (i: number, c: number) => pts[3 * (i % m) + c];
+	const cum = new Float64Array(k);
+	for (let i = 1; i < k; i++) cum[i] = cum[i - 1] + Math.hypot(P(i, 0) - P(i - 1, 0), P(i, 1) - P(i - 1, 1), P(i, 2) - P(i - 1, 2));
+	const total = cum[k - 1];
+	const n = out.length / 3;
+	let j = 1;
+	for (let s = 0; s < n; s++) {
+		const d = (s / (n - 1)) * total;
+		while (j < k - 1 && cum[j] < d) j++;
+		const span = cum[j] - cum[j - 1];
+		const f = span > 0 ? Math.min(1, Math.max(0, (d - cum[j - 1]) / span)) : 0;
+		for (let c = 0; c < 3; c++) out[3 * s + c] = P(j - 1, c) + f * (P(j, c) - P(j - 1, c));
+	}
 }
 
 /** Smoothstep easing on [0,1]. */

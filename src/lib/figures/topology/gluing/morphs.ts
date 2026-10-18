@@ -317,35 +317,25 @@ const boyFrame = (() => {
 	return { origin: { ..._b0 }, lam, n1, n2, n3 };
 })();
 
-/** Square → round disk → a disk growing into Boy's surface (rim points w, −w meet at the end). */
-function rp2(u: number, v: number, t: number, o: P3) {
+/** how far the projective plane's morph has got at time t: rounding (eA), growing (eB), and the radius ρ of
+ *  the part of Boy's surface on show */
+export function rp2Stages(t: number) {
 	const eA = seg(t, 0, 0.24);
 	const eB = seg(t, 0.3, 1.0);
-	const x = 2 * u - 1;
-	const y = 2 * v - 1;
-	const m = Math.max(Math.abs(x), Math.abs(y));
-	const n = Math.hypot(x, y);
-	const f = n > 1e-12 ? m / n : 0;
-	const Rd = 1.6;
-	// stage A: square → disk of radius Rd (a radial squash; opposite points stay opposite)
-	const dx = mix((x * L) / 2, x * f * Rd, eA);
-	const dy = mix((y * L) / 2, y * f * Rd, eA);
-	if (eB <= 0) {
-		o.x = dx;
-		o.y = dy;
-		o.z = 0;
-		return;
-	}
-	// stage B: show the part |w| ≤ ρ of Boy's surface, rescaled by 1/ρ
-	const rho = mix(0.004, 1, eB * eB * (0.6 + 0.4 * eB));
-	const wr = x * f * rho;
-	const wi = y * f * rho;
-	boyRaw(wr, wi, _b1);
+	return { eA, eB, rho: mix(0.004, 1, eB * eB * (0.6 + 0.4 * eB)) };
+}
+
+/**
+ * Where a point of Boy's surface (raw, as boyRaw gives it) is drawn while the part |w| ≤ ρ of it is on show:
+ * scaled by 1/ρ about the cap at w = 0, in that cap's frame, and turned. (A similarity, the same for every
+ * point at a given moment.)
+ */
+export function rp2Place(raw: P3, rho: number, eB: number, o: P3) {
 	const F = boyFrame;
-	const qx = _b1.x - F.origin.x,
-		qy = _b1.y - F.origin.y,
-		qz = _b1.z - F.origin.z;
-	const sc = Rd / (F.lam * rho);
+	const qx = raw.x - F.origin.x,
+		qy = raw.y - F.origin.y,
+		qz = raw.z - F.origin.z;
+	const sc = RD / (F.lam * rho);
 	// coordinates in the frame of the cap at w = 0 (the cap faces the camera)
 	const X = (qx * F.n1[0] + qy * F.n1[1] + qz * F.n1[2]) * sc;
 	const Y = (qx * F.n2[0] + qy * F.n2[1] + qz * F.n2[2]) * sc;
@@ -357,6 +347,29 @@ function rp2(u: number, v: number, t: number, o: P3) {
 	o.x = X;
 	o.y = Y * ca - Z * sa;
 	o.z = Y * sa + Z * ca;
+}
+const RD = 1.6;
+
+/** Square → round disk → a disk growing into Boy's surface (rim points w, −w meet at the end). */
+function rp2(u: number, v: number, t: number, o: P3) {
+	const { eA, eB, rho } = rp2Stages(t);
+	const x = 2 * u - 1;
+	const y = 2 * v - 1;
+	const m = Math.max(Math.abs(x), Math.abs(y));
+	const n = Math.hypot(x, y);
+	const f = n > 1e-12 ? m / n : 0;
+	// stage A: square → disk of radius RD (a radial squash; opposite points stay opposite)
+	const dx = mix((x * L) / 2, x * f * RD, eA);
+	const dy = mix((y * L) / 2, y * f * RD, eA);
+	if (eB <= 0) {
+		o.x = dx;
+		o.y = dy;
+		o.z = 0;
+		return;
+	}
+	// stage B: show the part |w| ≤ ρ of Boy's surface, rescaled by 1/ρ
+	boyRaw(x * f * rho, y * f * rho, _b1);
+	rp2Place(_b1, rho, eB, o);
 }
 const BOY_TILT = -1.2;
 

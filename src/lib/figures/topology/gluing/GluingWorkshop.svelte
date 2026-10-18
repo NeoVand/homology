@@ -9,9 +9,10 @@
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { glowPoint, setGlowColor } from '$lib/three/materials';
 	import { tex } from '$lib/katex/render';
-	import { presets, presetOrder, edgeSpecs, type PresetId } from './morphs';
-	import { ParamSheet, sheetMesh, glowSegments, type P3 } from './sheet';
-	import { selfIntersections } from './selfIntersect';
+	import { presets, presetOrder, edgeSpecs, rp2Stages, rp2Place, type PresetId } from './morphs';
+	import { ParamSheet, sheetMesh, CurveLines, type P3 } from './sheet';
+	import { doubleCurveOf, immersions } from './immersions';
+	import { traceFrom, type DoubleCurve } from './doubleCurve';
 
 	let preset = $state<PresetId>('torus');
 	let t = $state(0);
@@ -49,25 +50,87 @@
 		const tmp = new THREE.Vector3();
 		let current: PresetId | null = null;
 		let scale = 1;
-		const dpr = Math.min(window.devicePixelRatio || 1, 2);
-		// the double curve of each surface that must cross itself, computed once on demand
-		const crossings = new Map<PresetId, ReturnType<typeof glowSegments>>();
-		function crossingsFor(id: PresetId) {
-			let c = crossings.get(id);
-			if (!c) {
-				const n = 110;
-				const pts = new Float32Array((n + 1) * (n + 1) * 3);
-				for (let j = 0; j <= n; j++)
-					for (let i = 0; i <= n; i++) {
-						presets[id].f(i / n, (j + 0.37) / (n + 0.74), 1, p);
-						const k = 3 * (j * (n + 1) + i);
-						pts[k] = p.x;
-						pts[k + 1] = p.y;
-						pts[k + 2] = p.z;
-					}
-				c = glowSegments(selfIntersections(pts, n, n), { color: 'rose', width: 2.4, dpr });
-				holder.add(c.group);
-				crossings.set(id, c);
+		// where the sheet passes through itself, as it happens
+		const lines = new CurveLines({ color: 'rose', radius: 0.017 });
+		holder.add(lines.group);
+
+		// Boy's surface: while the part |w| ≤ ρ of it is on show, it crosses itself along the part of the
+		// whole double curve whose two preimages both lie within ρ
+		let boy: { raw: Float64Array; r: Float64Array } | null = null;
+		const q: P3 = { x: 0, y: 0, z: 0 };
+		function boyArcs(tt: number) {
+			const { eB, rho } = rp2Stages(tt);
+			if (eB <= 0) return [];
+			if (!boy) {
+				const [c] = doubleCurveOf('boy');
+				const n = c.pts.length / 3;
+				const r = new Float64Array(n);
+				const R = (u: number, v: number) => Math.hypot(2 * u - 1, 2 * v - 1);
+				for (let i = 0; i < n; i++) r[i] = Math.max(R(c.params[4 * i], c.params[4 * i + 1]), R(c.params[4 * i + 2], c.params[4 * i + 3]));
+				boy = { raw: c.pts, r };
+			}
+			const { raw, r } = boy;
+			const n = r.length;
+			const inside = (i: number) => r[i % n] <= rho + 1e-9;
+			const put = (out: number[], i: number, j: number, f: number) => {
+				q.x = raw[3 * i] + f * (raw[3 * j] - raw[3 * i]);
+				q.y = raw[3 * i + 1] + f * (raw[3 * j + 1] - raw[3 * i + 1]);
+				q.z = raw[3 * i + 2] + f * (raw[3 * j + 2] - raw[3 * i + 2]);
+				rp2Place(q, rho, eB, q);
+				out.push(q.x, q.y, q.z);
+			};
+			let s0 = -1;
+			for (let i = 0; i < n && s0 < 0; i++) if (!inside(i)) s0 = i;
+			if (s0 < 0) {
+				const all: number[] = [];
+				for (let i = 0; i < n; i++) put(all, i, i, 0);
+				return [{ pts: all, closed: true }];
+			}
+			// the runs of points within ρ, each cut off where r crosses ρ
+			const arcs: { pts: number[]; closed: boolean }[] = [];
+			let cur: number[] | null = null;
+			for (let k = 1; k <= n; k++) {
+				const i = (s0 + k) % n;
+				const h = (s0 + k - 1) % n;
+				if (inside(i) && !cur) {
+					cur = [];
+					put(cur, h, i, (rho - r[h]) / (r[i] - r[h]));
+				}
+				if (cur && inside(i)) put(cur, i, i, 0);
+				if (cur && !inside((i + 1) % n)) {
+					const j = (i + 1) % n;
+					put(cur, i, j, (rho - r[i]) / (r[j] - r[i]));
+					arcs.push({ pts: cur, closed: false });
+					cur = null;
+				}
+			}
+			return arcs;
+		}
+
+		// The Klein bottle: its end pushes through the wall from about t = 0.81 on. The curve where it crosses
+		// is followed in time: each frame starts from a point of the last one (stepping 0.01 at a time after a
+		// jump), and traces the whole curve from there.
+		let kSeed: Float64Array | null = null;
+		let kT = -1;
+		const bottleWrap = immersions.bottle.wrap!;
+		const uWrap = (P: Float64Array, k: number) => (P[k] -= Math.floor(P[k]));
+		const vIn = (P: Float64Array, k: number) => P[k + 1] >= 0 && P[k + 1] <= 1;
+		function kleinCurve(tt: number): DoubleCurve | null {
+			if (tt < 0.78) return null;
+			if (!kSeed || Math.abs(tt - kT) > 0.03) {
+				kSeed = doubleCurveOf('bottle')[0].params.slice(0, 4);
+				kT = 1;
+			}
+			const steps = Math.max(1, Math.ceil(Math.abs(tt - kT) / 0.01));
+			const size = 2 * sheet.radius;
+			let c: DoubleCurve | null = null;
+			for (let s = 1; s <= steps; s++) {
+				const ts = kT + ((tt - kT) * s) / steps;
+				c = traceFrom((u, v, o) => presets.klein.f(u, v, ts, o), kSeed, size, ts >= 1 ? { wrap: bottleWrap } : { wrap: uWrap, inside: vIn });
+				if (!c) return null;
+				const m = Math.floor(c.pts.length / 6);
+				kSeed = c.params.slice(4 * m, 4 * m + 4);
+				kT = ts;
 			}
 			return c;
 		}
@@ -109,12 +172,14 @@
 				scale = 1.62 / Math.max(half, 1e-3);
 				holder.scale.setScalar(scale);
 				holder.position.set(-c.x * scale, -c.y * scale, -c.z * scale);
-				mesh.setUniform('uEdgeW', 0.095 / scale);
+				mesh.setUniform('uEdgeW', 0.03 / scale);
 				mesh.setOutward(sheet.outward);
-				for (const [k, c] of crossings) if (k !== id) c.setOpacity(0);
-				const fade = Math.min(1, Math.max(0, (tt - 0.965) / 0.035));
-				if (!pr.embeds && tt > 0.9) crossingsFor(id).setOpacity(fade);
-				else crossings.get(id)?.setOpacity(0);
+				if (id === 'rp2') lines.show(boyArcs(tt), 1 / scale);
+				else if (id === 'klein') {
+					const k = kleinCurve(tt);
+					if (k) lines.show([k], 1 / scale);
+					else lines.hide();
+				} else lines.hide();
 				const cornerUV: [number, number][] = [
 					[0, 0],
 					[1, 0],

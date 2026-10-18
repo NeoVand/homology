@@ -3,6 +3,7 @@
 // "fourth coordinate" w that pulls the crossing sheets apart in 4D.
 import type { P3 } from './sheet';
 import { presets, boyRaw } from './morphs';
+import { traceDoubleCurves, type DoubleCurve } from './doubleCurve';
 
 const TAU = Math.PI * 2;
 
@@ -16,8 +17,10 @@ export interface Immersion {
 	w: ((u: number, v: number) => number) | null;
 	/** extra points to mark (triple point, pinch points), in the same coordinates as f */
 	marks: P3[];
-	/** a double curve known exactly (flat list of segment end points), instead of searching for it */
+	/** a double curve known exactly (flat list of segment end points), instead of tracing it */
 	doubleCurve?: number[];
+	/** takes a parameter point that has left the unit square back in, through the gluing (in place) */
+	wrap?: (p: Float64Array, k: number) => void;
 	/** grid lines along u and v for the material */
 	grid: [number, number];
 }
@@ -32,6 +35,13 @@ export const immersions: Record<ImmersionId, Immersion> = {
 		f: (u, v, o) => presets.klein.f(u, v, 1, o),
 		w: (_u, v) => Math.cos(TAU * v + 2.1),
 		marks: [],
+		wrap: (p, k) => {
+			p[k] -= Math.floor(p[k]);
+			if (p[k + 1] > 1 || p[k + 1] < 0) {
+				p[k + 1] -= Math.floor(p[k + 1]);
+				p[k] = 1 - p[k];
+			}
+		},
 		grid: [8, 12]
 	},
 	fig8: {
@@ -49,6 +59,14 @@ export const immersions: Record<ImmersionId, Immersion> = {
 		// w = cos V: the two sheets crossing along the core circle have V = 0 and V = π
 		w: (_u, v) => Math.cos(v * TAU),
 		marks: [],
+		// (1, y) ~ (0, 1 − y), and v goes round
+		wrap: (p, k) => {
+			p[k + 1] -= Math.floor(p[k + 1]);
+			if (p[k] > 1 || p[k] < 0) {
+				p[k] -= Math.floor(p[k]);
+				p[k + 1] = 1 - p[k + 1];
+			}
+		},
 		grid: [24, 12]
 	},
 	boy: {
@@ -87,6 +105,37 @@ export const immersions: Record<ImmersionId, Immersion> = {
 		grid: [24, 10]
 	}
 };
+
+/**
+ * Boy's surface over the square [0, 1]², as the disk's square around it: w = (2u − 1) + (2v − 1)i. The formula
+ * makes sense on the whole plane and gives the same point at w and at −1/w̄, so a point that leaves the
+ * disk can be taken back in there; unlike the polar picture, this one has no seam and no centre.
+ */
+const boySquare = (u: number, v: number, o: P3) => boyRaw(2 * u - 1, 2 * v - 1, o);
+const boyWrap = (p: Float64Array, k: number) => {
+	const a = 2 * p[k] - 1;
+	const b = 2 * p[k + 1] - 1;
+	const r2 = a * a + b * b;
+	if (r2 > 1) {
+		p[k] = (1 - a / r2) / 2;
+		p[k + 1] = (1 - b / r2) / 2;
+	}
+};
+
+const traced = new Map<ImmersionId, DoubleCurve[]>();
+/**
+ * The double curves of a surface that crosses itself, traced exactly (doubleCurve.ts). For Boy's surface
+ * the parameters are those of boySquare: the disk point w = (2u − 1) + (2v − 1)i.
+ */
+export function doubleCurveOf(id: Exclude<ImmersionId, 'crosscap'>): DoubleCurve[] {
+	let c = traced.get(id);
+	if (!c) {
+		const im = immersions[id];
+		c = id === 'boy' ? traceDoubleCurves(boySquare, { wrap: boyWrap, grid: 48 }) : traceDoubleCurves(im.f, { wrap: im.wrap, grid: 48 });
+		traced.set(id, c);
+	}
+	return c;
+}
 
 export const immersionOrder: ImmersionId[] = ['bottle', 'fig8', 'boy', 'crosscap'];
 

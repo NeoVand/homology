@@ -6,9 +6,8 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Toggle from '$lib/components/ui/Toggle.svelte';
 	import { glowPoint } from '$lib/three/materials';
-	import { ParamSheet, sheetMesh, glowSegments, type P3 } from './sheet';
-	import { selfIntersections } from './selfIntersect';
-	import { immersions, immersionOrder, sampleGrid, type ImmersionId } from './immersions';
+	import { ParamSheet, sheetMesh, CurveLines, type P3 } from './sheet';
+	import { immersions, immersionOrder, doubleCurveOf, type ImmersionId } from './immersions';
 
 	let which = $state<ImmersionId>('bottle');
 	let fourD = $state(false);
@@ -30,8 +29,8 @@
 		const holder = new THREE.Group();
 		holder.add(mesh.group);
 		scene.add(holder);
-		const dpr = Math.min(window.devicePixelRatio || 1, 2);
-		const curves = new Map<ImmersionId, ReturnType<typeof glowSegments>>();
+		const lines = new CurveLines({ color: 'rose', radius: 0.017 });
+		holder.add(lines.group);
 		const marks = [0, 1].map(() => {
 			const g = glowPoint([0, 0, 0], { color: 'rose', size: 0.05, halo: 9 });
 			holder.add(g);
@@ -60,15 +59,8 @@
 					const scale = 1.85 / Math.max(my, mx / Math.min(1.3, aspect));
 					holder.scale.setScalar(scale);
 					holder.position.set(-c.x * scale, -c.y * scale, -c.z * scale);
-					// the double curve, computed once
-					let dc = curves.get(id);
-					if (!dc) {
-						const segs = im.doubleCurve ?? selfIntersections(sampleGrid(im.f, 96), 96, 96);
-						dc = glowSegments(segs, { color: 'rose', width: 2.6, dpr });
-						holder.add(dc.group);
-						curves.set(id, dc);
-					}
-					for (const [k, v] of curves) v.setOpacity(k === id ? 1 : 0);
+					// the double curve (traced once, then kept)
+					lines.show(id === 'crosscap' ? [{ pts: im.doubleCurve!, closed: false }] : doubleCurveOf(id), 1 / scale);
 					marks.forEach((m, i) => {
 						const p: P3 | undefined = im.marks[i];
 						m.visible = !!p;
