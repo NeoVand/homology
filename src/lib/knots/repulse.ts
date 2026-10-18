@@ -27,7 +27,7 @@
 import type { V3 } from './diagram';
 import { resample, segGap } from './relax';
 
-interface Curve {
+export interface Curve {
 	/** positions, x0 y0 z0 x1 … */
 	X: Float64Array;
 	/** first vertex and vertex count of each component */
@@ -38,7 +38,7 @@ interface Curve {
 	prev: Int32Array;
 }
 
-function curveOf(comps: V3[][]): Curve {
+export function curveOf(comps: V3[][]): Curve {
 	const N = comps.reduce((a, c) => a + c.length, 0);
 	const X = new Float64Array(3 * N);
 	const next = new Int32Array(N);
@@ -59,7 +59,7 @@ function curveOf(comps: V3[][]): Curve {
 	return { X, starts, counts, next, prev };
 }
 
-function compsOf(C: Curve): V3[][] {
+export function compsOf(C: Curve): V3[][] {
 	return C.starts.map((s, k) => Array.from({ length: C.counts[k] }, (_, i) => [C.X[3 * (s + i)], C.X[3 * (s + i) + 1], C.X[3 * (s + i) + 2]] as V3));
 }
 
@@ -72,6 +72,8 @@ export function energy(C: Curve, G?: Float64Array, alpha = 3, beta = 6): number 
 	const N = next.length;
 	let E = 0;
 	const h = alpha / 2;
+	// the exponents used everywhere in the book, without Math.pow (several times faster)
+	const usual = alpha === 3 && beta === 6;
 	for (let I = 0; I < N; I++) {
 		const a = I;
 		const b = next[I];
@@ -89,7 +91,7 @@ export function energy(C: Curve, G?: Float64Array, alpha = 3, beta = 6): number 
 			const vz = X[3 * e + 2] - X[3 * c + 2];
 			const lJ = Math.sqrt(vx * vx + vy * vy + vz * vz);
 			// ℓ_I ℓ_J |T_I × d|^α = A |u × d|^α with A = ℓ_J ℓ_I^(1−α); the ¼ averages the endpoint pairs
-			const A = (lJ * Math.pow(lI, 1 - alpha)) / 4;
+			const A = usual ? lJ / (4 * uu) : (lJ * Math.pow(lI, 1 - alpha)) / 4;
 			let S = 0;
 			let gux = 0;
 			let guy = 0;
@@ -105,11 +107,22 @@ export function energy(C: Curve, G?: Float64Array, alpha = 3, beta = 6): number 
 					const ud = ux * dx + uy * dy + uz * dz;
 					// c2 = |u × d|², f = c2^(α/2) |d|^−β
 					const c2 = Math.max(0, uu * dd - ud * ud);
-					const pw = Math.pow(dd, -beta / 2);
-					const ch = Math.pow(c2, h);
+					let pw: number;
+					let ch: number;
+					let dch: number;
+					if (usual) {
+						const inv = 1 / dd;
+						const sc = Math.sqrt(c2);
+						pw = inv * inv * inv;
+						ch = c2 * sc;
+						dch = 1.5 * sc;
+					} else {
+						pw = Math.pow(dd, -beta / 2);
+						ch = Math.pow(c2, h);
+						dch = c2 > 0 ? h * Math.pow(c2, h - 1) : 0;
+					}
 					S += ch * pw;
 					if (G) {
-						const dch = c2 > 0 ? h * Math.pow(c2, h - 1) : 0;
 						// ∂f/∂d = (α/2) c2^(α/2 − 1) (2|u|² d − 2(u·d) u) |d|^−β − β c2^(α/2) |d|^(−β−2) d
 						const k1 = 2 * dch * uu * pw - (beta * ch * pw) / dd;
 						const k2 = -2 * dch * ud * pw;
@@ -159,13 +172,15 @@ export function energy(C: Curve, G?: Float64Array, alpha = 3, beta = 6): number 
  * The Gram matrix of the fractional Sobolev–Slobodeckij inner product on functions on the vertices
  * (one copy for each coordinate), as in SobolevCurves::SobolevGramMatrix of the authors' code.
  */
-function gram(C: Curve, alpha: number, beta: number): Float64Array {
+export function gram(C: Curve, alpha: number, beta: number): Float64Array {
 	const { X, next } = C;
 	const N = next.length;
 	const A = new Float64Array(N * N);
 	const s = (beta - 1) / alpha;
 	const sigma = 2 * (s - 1) + 1;
 	const lowB = 4 + sigma;
+	// for the usual exponents σ = 7/3 and 4 + σ = 19/3: powers of r from a cube root, not Math.pow
+	const usual = alpha === 3 && beta === 6;
 	// per edge: length, midpoint, unit tangent
 	const len = new Float64Array(N);
 	const mid = new Float64Array(3 * N);
@@ -196,11 +211,12 @@ function gram(C: Curve, alpha: number, beta: number): Float64Array {
 			const dd = dx * dx + dy * dy + dz * dz;
 			const r = Math.sqrt(dd);
 			const area = len[I] * len[J];
-			const high = area / Math.pow(r, sigma);
+			const cr = usual ? Math.cbrt(r) : 0;
+			const high = area / (usual ? dd * cr : Math.pow(r, sigma));
 			// symmetric tangent-point kernel with (a, b) = (2, 4 + σ): ½(|P⊥_I d|² + |P⊥_J d|²) / |d|^b
 			const tI = dx * tan[3 * I] + dy * tan[3 * I + 1] + dz * tan[3 * I + 2];
 			const tJ = dx * tan[3 * J] + dy * tan[3 * J + 1] + dz * tan[3 * J + 2];
-			const low = (area * 0.5 * (dd - tI * tI + dd - tJ * tJ)) / Math.pow(r, lowB);
+			const low = (area * 0.5 * (dd - tI * tI + dd - tJ * tJ)) / (usual ? dd * dd * dd * cr : Math.pow(r, lowB));
 			// the four vertices: start and end of I, start and end of J
 			ends[0] = I;
 			ends[1] = next[I];
@@ -235,7 +251,7 @@ function gram(C: Curve, alpha: number, beta: number): Float64Array {
 }
 
 /** LU factorisation with partial pivoting of a dense n × n matrix (in place); returns the pivots */
-function lu(M: Float64Array, n: number): Int32Array {
+export function lu(M: Float64Array, n: number): Int32Array {
 	const piv = new Int32Array(n);
 	for (let k = 0; k < n; k++) {
 		let p = k;
@@ -257,7 +273,9 @@ function lu(M: Float64Array, n: number): Int32Array {
 	return piv;
 }
 
-function luSolve(M: Float64Array, piv: Int32Array, n: number, b: Float64Array): void {
+export function luSolve(M: Float64Array, piv: Int32Array, n: number, b: Float64Array): void {
+	// lu swaps whole rows, multipliers and all, so P A = L U for the product P of all its swaps: apply them
+	// all first, then solve L y = P b and U x = y
 	for (let k = 0; k < n; k++) {
 		const p = piv[k];
 		if (p !== k) {
@@ -265,8 +283,8 @@ function luSolve(M: Float64Array, piv: Int32Array, n: number, b: Float64Array): 
 			b[k] = b[p];
 			b[p] = t;
 		}
-		for (let r = k + 1; r < n; r++) b[r] -= M[r * n + k] * b[k];
 	}
+	for (let k = 0; k < n; k++) for (let r = k + 1; r < n; r++) b[r] -= M[r * n + k] * b[k];
 	for (let k = n - 1; k >= 0; k--) {
 		let acc = b[k];
 		for (let j = k + 1; j < n; j++) acc -= M[k * n + j] * b[j];
@@ -278,7 +296,7 @@ function luSolve(M: Float64Array, piv: Int32Array, n: number, b: Float64Array): 
  * The saddle-point system [A₃ Cᵀ; C 0], with A₃ the Gram matrix for each coordinate and C the
  * derivative of the constraints (barycentre, every edge length), solved by its Schur complement.
  */
-class Saddle {
+export class Saddle {
 	private Z: Float64Array; // A₃⁻¹ Cᵀ, column by column (m columns of length 3N)
 	private K: Float64Array; // C A₃⁻¹ Cᵀ, factorised
 	private Kp: Int32Array;
@@ -386,7 +404,7 @@ function constraintValues(C: Curve): Float64Array {
 }
 
 /** for each vertex, the smallest distance from its two edges to an edge they share no point with */
-function vertexGaps(C: Curve): Float64Array {
+export function vertexGaps(C: Curve): Float64Array {
 	const { X, next } = C;
 	const N = next.length;
 	const P = (i: number): V3 => [X[3 * i], X[3 * i + 1], X[3 * i + 2]];

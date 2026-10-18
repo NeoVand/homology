@@ -3,7 +3,8 @@
 // Visually it matches `glowTube` from $lib/three/materials (bright core plus an
 // additive halo), so animated curves look like the book's static ones.
 import * as THREE from 'three';
-import { ghostCore, glowCore, glowHalo, type PaletteName } from '$lib/three/materials';
+import { cutGaps, ghostCore, glowCore, glowHalo, type PaletteName } from '$lib/three/materials';
+import type { Gaps } from '$lib/three/gaps';
 
 const _t = new THREE.Vector3();
 const _n = new THREE.Vector3();
@@ -26,15 +27,18 @@ class TubeBuffer {
 		public radius: number,
 		readonly closed: boolean
 	) {
-		const nv = samples * radial;
+		// a closed tube gets its first ring once more at the end, so that the distance along it (uv.x) runs
+		// from 0 to 1 without jumping back inside a face
+		const rings = closed ? samples + 1 : samples;
+		const nv = rings * radial;
 		this.pos = new Float32Array(nv * 3);
 		this.nor = new Float32Array(nv * 3);
 		this.N = new Float32Array(samples * 3);
 		this.T = new Float32Array(samples * 3);
-		const segs = closed ? samples : samples - 1;
+		const segs = rings - 1;
 		const idx: number[] = [];
 		for (let i = 0; i < segs; i++) {
-			const i2 = (i + 1) % samples;
+			const i2 = i + 1;
 			for (let j = 0; j < radial; j++) {
 				const j2 = (j + 1) % radial;
 				const a = i * radial + j;
@@ -47,6 +51,10 @@ class TubeBuffer {
 		this.geometry.setIndex(idx);
 		this.geometry.setAttribute('position', new THREE.BufferAttribute(this.pos, 3));
 		this.geometry.setAttribute('normal', new THREE.BufferAttribute(this.nor, 3));
+		// how far along the tube, for the gaps
+		const uv = new Float32Array(nv * 2);
+		for (let i = 0; i < rings; i++) for (let j = 0; j < radial; j++) uv[2 * (i * radial + j)] = i / samples;
+		this.geometry.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
 	}
 
 	/**
@@ -153,6 +161,12 @@ class TubeBuffer {
 				this.pos[k + 2] = cz + r * nz;
 			}
 		}
+		if (closed) {
+			// the closing ring is the first one again
+			const n = S * M * 3;
+			this.pos.copyWithin(n, 0, M * 3);
+			this.nor.copyWithin(n, 0, M * 3);
+		}
 		this.geometry.attributes.position.needsUpdate = true;
 		this.geometry.attributes.normal.needsUpdate = true;
 	}
@@ -168,6 +182,8 @@ export interface DynTubeOptions {
 	intensity?: number;
 	/** opacity where a surface hides the tube (default 0.28, as for glowTube) */
 	xray?: number;
+	/** for knots: the lower strand stops short of the upper one at every crossing (see gaps.ts) */
+	gaps?: Gaps;
 }
 
 /** A glowing tube (core + halo) with `samples` centre-line points, updatable in place. */
@@ -192,6 +208,10 @@ export class DynTube {
 		coreMesh.renderOrder = 5;
 		coreMesh.frustumCulled = false;
 		this.group.add(coreMesh);
+		if (o.gaps) {
+			cutGaps(coreMesh, o.gaps, radius, 1, closed);
+			this.gapLength = (coreMesh.material as THREE.ShaderMaterial).uniforms.uGapLength;
+		}
 		if (o.halo !== false) {
 			this.halo = new TubeBuffer(samples, rs, radius * (o.haloScale ?? 3.2), closed);
 			const haloMesh = new THREE.Mesh(this.halo.geometry, glowHalo(o.color ?? 'gold', o.intensity ?? 1));
@@ -208,8 +228,21 @@ export class DynTube {
 		}
 	}
 
+	private gapLength: { value: number } | null = null;
+
 	/** Rebuild from `this.points` (and `this.refs` if useRefs). */
 	update(useRefs = false) {
+		if (this.gapLength) {
+			// the gaps need the tube's length, which changes as it moves
+			const p = this.points;
+			const S = this.samples;
+			let L = 0;
+			for (let i = 0; i < S; i++) {
+				const j = (i + 1) % S;
+				L += Math.hypot(p[3 * j] - p[3 * i], p[3 * j + 1] - p[3 * i + 1], p[3 * j + 2] - p[3 * i + 2]);
+			}
+			this.gapLength.value = L;
+		}
 		this.core.update(this.points, useRefs ? this.refs : undefined);
 		this.halo?.update(this.points, useRefs ? this.refs : undefined);
 	}

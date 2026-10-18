@@ -650,11 +650,12 @@ export function cutGaps(core: THREE.Mesh, gaps: Gaps, radius: number, length: nu
 	m.defines = { ...m.defines, GAPS: '' };
 	Object.assign(m.uniforms, gaps.uniforms, {
 		// the gap is a little over half the tube's radius wide; a strand cuts one when it is nearer by more
-		// than the tube's own thickness, and is not the same tube a few diameters further along
+		// than the tube's own thickness, and is not the same tube less than nine diameters further along
+		// (a tight bend seen end on hides a little of itself, and that is no crossing)
 		uGapWidth: { value: 0.6 * radius },
 		uGapThick: { value: 1.25 * radius },
 		uGapLength: { value: length },
-		uGapArc: { value: 12 * radius },
+		uGapArc: { value: 18 * radius },
 		uGapClosed: { value: closed ? 1 : 0 }
 	});
 	m.transparent = true;

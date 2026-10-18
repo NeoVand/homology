@@ -10,7 +10,7 @@
 	import Controls from '$lib/components/ui/Controls.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { PauseIcon, PlayIcon, ResetIcon } from '$lib/icons';
-	import { DynTube } from './dynTube';
+	import { DynTube } from '$lib/three/dynTube';
 	import { glass } from './glass';
 
 	let s = $state(0);

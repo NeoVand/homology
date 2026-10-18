@@ -140,13 +140,17 @@ export const gapGLSL = /* glsl */ `
 		float z = vViewZ;
 		// the gap's width on screen, in pixels, and how near a tube must be to cut it
 		float w = max(1.5, uGapWidth * uGapFocal / z);
+		// a strand nearer by a little more than a tube's thickness starts to cut, and cuts fully once it is
+		// nearer by a fifth as much again: a soft threshold, so that strands passing at about that distance
+		// do not flicker in and out of gaps
 		float nearer = 1.0 / max(z - uGapThick, 1e-3);
 		vec2 here = gl_FragCoord.xy / uGapRes;
-		// the nearest ring that meets a nearer strand; the rings are closer together near the gap's edge,
+		// how much the strongest cut nearby takes away; the rings are closer together near the gap's edge,
 		// which is drawn soft over about a pixel
-		float hit = 1e4;
+		float cut = 0.0;
 		for (int ring = 0; ring < 6; ring++) {
 			float r = w * (ring < 3 ? 0.3 * float(ring + 1) : 0.9 + 0.15 * float(ring - 2));
+			float edge = 1.0 - smoothstep(w, w + 1.2, r);
 			for (int k = 0; k < 10; k++) {
 				float a = 0.6283185 * (float(k) + 0.5 * float(ring));
 				vec4 s = texture2D(uGapDepth, here + vec2(cos(a), sin(a)) * r / uGapRes);
@@ -154,9 +158,10 @@ export const gapGLSL = /* glsl */ `
 				float du = abs(s.g - vGapU);
 				if (uGapClosed > 0.5) du = min(du, 1.0 - du);
 				if (abs(s.b - vGapId) < 0.5 && du * uGapLength < uGapArc) continue;
-				hit = min(hit, r);
+				float depth = smoothstep(uGapThick, 1.2 * uGapThick, z - 1.0 / s.r);
+				cut = max(cut, depth * edge);
 			}
 		}
-		return smoothstep(w, w + 1.2, hit);
+		return 1.0 - cut;
 	}
 `;

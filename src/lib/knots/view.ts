@@ -99,11 +99,14 @@ export function legibility(view: V3[][]) {
 	return { crossings: D.pd.length, angle, clear: clear / size, bend: bend / size, round: Math.min(w, h) / size };
 }
 
-/** the knot turned so that its most legible shadow is the view down the z-axis */
-export function bestView(comps: V3[][], opts: { tries?: number; atLeast?: number } = {}): V3[][] {
+/**
+ * The turn (a rotation matrix, row by row) that brings the knot's most legible shadow round to the view
+ * down the z-axis: the fewest crossings first; among those, the shadow whose worst feature is least bad;
+ * then stood upright, its widest extent horizontal.
+ */
+export function bestTurn(comps: V3[][], opts: { tries?: number; atLeast?: number } = {}): number[] {
 	const tries = opts.tries ?? 400;
-	// first the fewest crossings; among those, the shadow whose worst feature is least bad
-	const views: { view: V3[][]; n: number }[] = [];
+	const views: { view: V3[][]; n: number; R: M3 }[] = [];
 	let fewest = Infinity;
 	for (let i = 0; i < tries; i++) {
 		// directions spread evenly over a hemisphere (Fibonacci), each with an upright roll
@@ -115,18 +118,18 @@ export function bestView(comps: V3[][], opts: { tries?: number; atLeast?: number
 		const n = diagramOf(view).pd.length;
 		if (opts.atLeast !== undefined && n < opts.atLeast) continue;
 		fewest = Math.min(fewest, n);
-		views.push({ view, n });
+		views.push({ view, n, R });
 	}
-	let best = comps;
+	let best: { view: V3[][]; R: M3 } = { view: comps, R: [1, 0, 0, 0, 1, 0, 0, 0, 1] };
 	let bestScore = -Infinity;
-	for (const { view, n } of views) {
-		if (n !== fewest) continue;
-		const m = legibility(view);
+	for (const v of views) {
+		if (v.n !== fewest) continue;
+		const m = legibility(v.view);
 		// a product, so that no one fault can be made up for by the others; past a point each is good enough
 		const score = Math.log(m.angle) + Math.log(Math.min(m.clear, 0.25)) + 0.7 * Math.log(Math.min(m.bend, 0.2)) + 0.5 * Math.log(m.round);
 		if (score > bestScore) {
 			bestScore = score;
-			best = view;
+			best = v;
 		}
 	}
 	// stand it upright: turn about z so the shadow's widest extent is horizontal
@@ -134,13 +137,21 @@ export function bestView(comps: V3[][], opts: { tries?: number; atLeast?: number
 	let bestW = -Infinity;
 	for (let k = 0; k < 36; k++) {
 		const a = (k * Math.PI) / 36;
-		const xs = best.flat().map((p) => p[0] * Math.cos(a) - p[1] * Math.sin(a));
+		const xs = best.view.flat().map((p) => p[0] * Math.cos(a) - p[1] * Math.sin(a));
 		const w = Math.max(...xs) - Math.min(...xs);
 		if (w > bestW) {
 			bestW = w;
 			bestRoll = a;
 		}
 	}
-	const R = rotTo([0, 0, 1], bestRoll);
-	return best.map((c) => c.map((p) => apply(R, p)));
+	const U = rotTo([0, 0, 1], bestRoll);
+	const R = best.R;
+	// U · R
+	return [0, 1, 2].flatMap((r) => [0, 1, 2].map((c) => U[3 * r] * R[c] + U[3 * r + 1] * R[3 + c] + U[3 * r + 2] * R[6 + c]));
+}
+
+/** the knot turned so that its most legible shadow is the view down the z-axis */
+export function bestView(comps: V3[][], opts: { tries?: number; atLeast?: number } = {}): V3[][] {
+	const R = bestTurn(comps, opts) as M3;
+	return comps.map((c) => c.map((p) => apply(R, p)));
 }

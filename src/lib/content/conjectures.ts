@@ -344,7 +344,7 @@ export const problems: Problem[] = [
 		statement: 'Is there a knot other than the unknot whose Jones polynomial is \\(1\\)?',
 		status: 'open',
 		known: 'The question arose soon after Jones found his polynomial in 1984, and he put it on his list of ten problems for the twenty-first century in 2000. A computer search found no such knot among all knots with up to \\(24\\) crossings (Tuzun and Sikora, 2021), and none can be alternating, since the Jones polynomial of an alternating knot reveals its crossing number. For links the answer is yes: Thistlethwaite found links of several components with the same Jones polynomial as separate circles (2001). Stephen Bigelow tied the question to an open problem about matrices representing the braids on four strands.',
-		wayIn: 'Compute brackets of small diagrams, by hand or with Figure 3.7.7; every knot you try will have a polynomial other than \\(1\\). Then think about categorification: Khovanov homology, whose Euler characteristic is the Jones polynomial, does detect the unknot, so a counterexample would have to hide its knottedness in cancellations between homology groups.',
+		wayIn: 'Compute brackets of small diagrams, by hand or with Figure 3.7.8; every knot you try will have a polynomial other than \\(1\\). Then think about categorification: Khovanov homology, whose Euler characteristic is the Jones polynomial, does detect the unknot, so a counterexample would have to hide its knottedness in cancellations between homology groups.',
 		chapter: 'homology/knots',
 		cite: ['jones2000', 'tuzun-sikora2021', 'thistlethwaite2001', 'kronheimer-mrowka2011']
 	},

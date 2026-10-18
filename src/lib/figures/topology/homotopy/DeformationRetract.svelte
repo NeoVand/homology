@@ -12,7 +12,7 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import GluingSquare from '$lib/components/svg/GluingSquare.svelte';
-	import { DynTube } from './dynTube';
+	import { DynTube } from '$lib/three/dynTube';
 	import { annulusModel, diskModel, mobiusModel, puncturedTorusModel } from './retract';
 
 	type Mode = 'disk' | 'annulus' | 'mobius' | 'torus';

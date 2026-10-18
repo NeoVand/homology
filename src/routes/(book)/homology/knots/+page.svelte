@@ -20,6 +20,7 @@
 	import Conjecture from '$lib/components/prose/Conjecture.svelte';
 	import FurtherReading from '$lib/components/prose/FurtherReading.svelte';
 	import KnotGallery from '$lib/figures/homology/knots/KnotGallery.svelte';
+	import LetItRelax from '$lib/figures/homology/knots/LetItRelax.svelte';
 	import Reidemeister from '$lib/figures/homology/knots/Reidemeister.svelte';
 	import ColourKnot from '$lib/figures/homology/knots/ColourKnot.svelte';
 	import MeridianLongitude from '$lib/figures/homology/knots/MeridianLongitude.svelte';
@@ -99,6 +100,23 @@
 	The <dfn>Borromean rings</dfn> are the strangest exhibit. No two of the three rings are linked, as the figure shows by removing one: the other two simply drift apart. Yet the three together cannot be separated. Whatever tells us they are linked is not a statement about pairs, and the tools of this chapter will mostly be unable to see it.
 </p>
 
+<h3 id="letting-go">Letting a knot relax</h3>
+
+<p>
+	Here is an experiment for telling which knot a tangle is. Think of the knot as a string whose strands push one another away, harder and harder the closer they come, and which resists being bent sharply. One number measures how far the string is from being at ease, its <dfn>energy</dfn>; the one used here, the tangent-point energy, grows without bound as two strands approach. Now let the knot move so as to lower its energy, a little at a time, never letting a strand pass through another. Tangles loosen and loops round out, until the knot comes to rest in a shape it cannot improve, and there it is easy to recognise.
+</p>
+
+<Figure num="3.7.2" title="Let it relax" hint="Choose a knot · let it go, tangle it again, or lay it flat">
+	<LetItRelax />
+	{#snippet caption()}
+		A knot from the table, tangled by a few random swirls of space (which carry the whole of space along, so they never change the knot), then let go. Its strands push one another apart and the energy falls, shown on a logarithmic scale, until the knot settles; then its Jones polynomial, computed from the settled shape, names it. “A surprise” keeps the name hidden until then. The flow is the one that shaped the knots of Figure 3.7.1 <Cite k="yu-schumacher-crane2021" />, running live in the browser; “Lay it flat” then presses the knot into a drawing.
+	{/snippet}
+</Figure>
+
+<p>
+	This is an experiment, not a proof. An energy can have more than one valley, and a flow can come to rest in one that is not the lowest. Deciding by computer whether a tangle is the unknot is a hard problem, and Section 9 returns to it.
+</p>
+
 <!-- ───────────────────────────────────────────────────────────────────── -->
 <h2 id="diagrams">Diagrams and Reidemeister’s theorem</h2>
 
@@ -125,7 +143,7 @@
 	Why these three? Move a knot about in space and watch its shadow. Most of the time the shadow changes only by a deformation of the plane. It changes in an essential way only at isolated moments: when a little loop of the shadow pinches to a cusp and vanishes (move I), when two strands of the shadow touch and pass through each other (move II), or when a strand of the shadow passes across a crossing, so that three strands meet in one point (move III). Proving that these are the only events takes care, and we will trust it <Cite k="rolfsen1976" />.
 </p>
 
-<Figure num="3.7.2" title="Reidemeister’s three moves" hint="Play or scrub: all three moves at once">
+<Figure num="3.7.3" title="Reidemeister’s three moves" hint="Play or scrub: all three moves at once">
 	<Reidemeister />
 	{#snippet caption()}
 		The three moves, played together. Each takes place inside a small disk (dashed); outside it the strands, which stand for the rest of the diagram, do not move. Move I adds or removes one crossing, move II two at once, and move III keeps all three crossings but moves the top strand across the crossing of the other two. The crossings are circled and counted under each disk.
@@ -210,7 +228,7 @@
 	The pioneers of the early twentieth century proved it with the fundamental group and considerable ingenuity. With colourings it takes a line. The idea is due to Ralph Fox, who seems to have developed it around 1956 while explaining knot theory to undergraduates at Haverford College <Cite k="przytycki1998" />.
 </p>
 
-<Figure num="3.7.3" title="Colour the knot" hint="Tap an arc to change its colour · choose the knot and the number of colours">
+<Figure num="3.7.4" title="Colour the knot" hint="Tap an arc to change its colour · choose the knot and the number of colours">
 	<ColourKnot />
 	{#snippet caption()}
 		Colour the arcs so that every crossing checks out: twice the over-arc equals the sum of the two under-arcs, mod \(p\). The trefoil has non-constant colourings with \(3\) colours, the figure-eight knot only with \(5\). The last diagram is a tangled drawing of the unknot: whatever you try, and however many colours, only the constant colourings survive.
@@ -232,7 +250,7 @@
 	Thicken the knot \(K\) into a thin solid tube \(N\) around it. The tube is a <dfn>solid torus</dfn>, a circle’s worth of disks, and its homology is that of its core circle, \(H_1(N)\cong\Z\). Let \(E\) be the rest of the sphere. Then \(E\) has the same homology as \(S^3\setminus K\), since the gap between \(E\) and the knot is a thin layer that can be pushed onto \(E\)’s edge. The two pieces \(N\) and \(E\) meet along the surface of the tube, a torus \(T\), with \(H_1(T)\cong\Z^2\) (<Ref to="homology/exact-sequences" hash="torus-and-klein" />). On that torus live two special loops: a <Term t="knot-meridian">meridian</Term> \(\mu\), which goes once around the tube, and a <dfn>longitude</dfn> \(\lambda\), which runs once along it. Together they generate \(H_1(T)\).
 </p>
 
-<Figure num="3.7.4" title="Two loops on a thickened knot" hint="Choose a knot and what to show · drag to turn it">
+<Figure num="3.7.5" title="Two loops on a thickened knot" hint="Choose a knot and what to show · drag to turn it">
 	<MeridianLongitude />
 	{#snippet caption()}
 		The knot \(K\) (gold), its tube, and two loops on the tube’s surface: the meridian \(\mu\) (rose) goes once around the tube and the longitude \(\lambda\) (teal) runs once along it. The longitude shown is the one that does not link the knot; to get there it must turn around the tube a few times on the way, and the readout says how many.
@@ -259,7 +277,7 @@
 </Proof>
 
 <p>
-	Look again at the longitude. In \(H_1(E)\) its class is some multiple \(n\,\mu_E\) of the meridian. Replace \(\lambda\) by a loop that turns \(n\) extra times around the tube on its way along it, in the opposite direction, and its class becomes \(0\). This preferred longitude, which bounds in the complement, is the teal loop of Figure 3.7.4.
+	Look again at the longitude. In \(H_1(E)\) its class is some multiple \(n\,\mu_E\) of the meridian. Replace \(\lambda\) by a loop that turns \(n\) extra times around the tube on its way along it, in the opposite direction, and its class becomes \(0\). This preferred longitude, which bounds in the complement, is the teal loop of Figure 3.7.5.
 </p>
 
 <p>
@@ -322,7 +340,7 @@
 	Join the bottom hooks of a braid back up to the top hooks, around the side, and you get a link: the braid’s <Term t="braid-closure">closure</Term>. The closure of \(\sigma_1^3\) in \(B_2\) is the trefoil, of \(\sigma_1^2\) the Hopf link, and of \((\sigma_1\sigma_2^{-1})^2\) in \(B_3\) the figure-eight knot.
 </p>
 
-<Figure num="3.7.5" title="Build a braid, close it up" hint="Add crossings · tap a crossing to switch it · drag the closure to turn it">
+<Figure num="3.7.6" title="Build a braid, close it up" hint="Add crossings · tap a crossing to switch it · drag the closure to turn it">
 	<BraidBuilder />
 	{#snippet caption()}
 		Build a braid one crossing at a time, and press any crossing to switch which strand is on top. Beside it the braid is closed up in space, with one colour for each component: the permutation of the strands decides how many there are, one for each cycle. The readout names the closure when it is a knot or link from this chapter, judged by its Jones polynomial. The examples give the trefoil \(\sigma_1^3\), the figure-eight knot \((\sigma_1\sigma_2^{-1})^2\) and the Borromean rings \((\sigma_1\sigma_2^{-1})^3\); the last two buttons build \(\sigma_1\sigma_2\sigma_1\) and \(\sigma_2\sigma_1\sigma_2\), which Artin’s relation says are the same braid.
@@ -366,7 +384,7 @@
 	<p>The result is an oriented surface whose boundary is the knot.</p>
 </Theorem>
 
-<Figure num="3.7.6" title="Seifert’s algorithm" hint="Step through the algorithm · choose a knot · drag to turn it">
+<Figure num="3.7.7" title="Seifert’s algorithm" hint="Step through the algorithm · choose a knot · drag to turn it">
 	<SeifertSurface />
 	{#snippet caption()}
 		Each knot is drawn as a closed braid, with light drifting along it the way it runs. The crossings are smoothed in that direction into Seifert circles, one for each strand; the circles are filled with stacked disks, and a half-twisted band at each crossing joins neighbouring disks. The finished surface is teal on one side and violet on the other, and its edge is the knot. The readout counts \(c\), \(s\), \(\chi = s - c\) and the genus. For \(5_2\) this diagram gives genus \(2\), although the knot has genus \(1\): Seifert’s algorithm only gives an upper bound, and a different diagram does better.
@@ -486,7 +504,7 @@
 	The mirror image has every crossing switched, which exchanges A- and B-smoothings and turns \(A\) into \(A^{-1}\) and \(t\) into \(t^{-1}\): \(V_{\overline{3_1}}(t) = t^{-1} + t^{-3} - t^{-4}\). The two polynomials differ, so <strong>the trefoil is not equivalent to its mirror image</strong>. Max Dehn first proved this in 1914, with a long argument about the knot group <Cite k="dehn1914" />; with the Jones polynomial it takes a few lines. The figure-eight knot has \(V(t) = t^{2} - t + 1 - t^{-1} + t^{-2}\), unchanged by \(t\mapsto t^{-1}\), as it must be for a knot equal to its own mirror image.
 </p>
 
-<Figure num="3.7.7" title="The bracket, state by state" hint="Choose a diagram · tap a state to see its smoothing · try the mirror image">
+<Figure num="3.7.8" title="The bracket, state by state" hint="Choose a diagram · tap a state to see its smoothing · try the mirror image">
 	<BracketStates />
 	{#snippet caption()}
 		Every state of the diagram, with its loops and its term \(A^{a-b}(-A^2-A^{-2})^{\ell-1}\); the bracket is their sum, and the writhe correction turns it into the Jones polynomial. Mirror the diagram and every \(A\) becomes \(A^{-1}\): the trefoil’s Jones polynomial changes, the figure-eight knot’s does not.
@@ -536,7 +554,7 @@
 	For the trefoil, the \(8\) states carry \(30\) basis vectors in all, and only four survive in homology, one each in bidegrees \((0,1)\), \((0,3)\), \((2,5)\) and \((3,9)\). The Euler characteristic is \(q + q^{3} + q^{5} - q^{9} = (q + q^{-1})(q^2 + q^6 - q^8)\), which is \(q + q^{-1}\) times \(V_{3_1}(q^2)\). This is the Euler–Poincaré theorem of <Ref to="homology/homology-groups" hash="euler-poincare" />, that the Euler characteristic of a chain complex equals that of its homology, now with a second grading.
 </p>
 
-<Figure num="3.7.8" title="The Khovanov cube" hint="Choose a diagram · switch between chain groups and homology">
+<Figure num="3.7.9" title="The Khovanov cube" hint="Choose a diagram · switch between chain groups and homology">
 	<KhovanovCube />
 	{#snippet caption()}
 		The states of the diagram in columns by their number of B-smoothings, joined by merges (gold) and splits (teal). The table shows the dimensions of the chain groups in each bidegree, or of the homology. Most of the chain groups cancel out, and what survives is the knot invariant. For the twisted unknot, a diagram with a crossing, everything cancels except exactly the homology of a round unknot.
@@ -560,7 +578,7 @@
 	Every invariant in this chapter has a blind spot, and for each one there are pairs of different knots that it cannot tell apart. Knot theory has advanced by finding such pairs and then finding invariants that see the difference. The figure lines up the invariants of this chapter against a few famous pairs.
 </p>
 
-<Figure num="3.7.9" title="The arms race of invariants" hint="Choose a famous pair, or any two knots">
+<Figure num="3.7.10" title="The arms race of invariants" hint="Choose a famous pair, or any two knots">
 	<ArmsRace />
 	{#snippet caption()}
 		For each pair, the invariants in order of discovery. Rows where the two knots agree are greyed out; the first row that differs proves the knots different. The trefoil and its mirror fool everything before the Jones polynomial, and the granny and square knots fool the Alexander polynomial; \(6_1\) and \(9_{46}\) have the same Alexander polynomial but different numbers of colourings; \(10_{132}\) and a mirror image of \(5_1\) have the same Jones polynomial, and only Khovanov homology tells them apart.
