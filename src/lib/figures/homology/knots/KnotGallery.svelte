@@ -31,8 +31,12 @@
 
 	function setup(ctx: SceneContext) {
 		const { scene, THREE } = ctx;
+		// the knot sits in `root`, tipped towards the viewer; `turn` carries it round the vertical
+		const turn = new THREE.Group();
 		const root = new THREE.Group();
-		scene.add(root);
+		turn.add(root);
+		scene.add(turn);
+		let flat = false;
 		let parts: InstanceType<typeof THREE.Group>[] = [];
 		let label: LabelHandle | null = null;
 		let part = 0; // 0 → 1 as the Borromean rings come apart
@@ -40,6 +44,9 @@
 			disposeTree(root);
 			root.clear();
 			const comps = shape(id);
+			// a knot lying flat, as a table draws it, would show only its edge if it turned right round: it rocks instead
+			const zs = comps.flat().map((p) => p[2]);
+			flat = Math.max(...zs) - Math.min(...zs) < 0.6;
 			parts = comps.map((c, i) => {
 				const g = new THREE.Group();
 				g.add(glowTube(closedCurve(c), { color: colours[i % 3], closed: true, radius: 0.085, segments: 600, haloScale: 2.2, xray: 0, outline: 1.9 }));
@@ -68,6 +75,13 @@
 			parts[1].position.set(2.2 * slide, 0, 0);
 			parts[0].position.set(-1.0 * slide, 0, 0);
 		}
+		const sway = ctx.onFrame((t, dt) => {
+			if (ctx.reducedMotion) return false;
+			if (flat) {
+				turn.rotation.y = 0.5 * Math.sin(0.3 * t);
+				root.rotation.x = -0.35 + 0.12 * Math.sin(0.19 * t);
+			} else turn.rotation.y += 0.058 * dt;
+		});
 		const off = ctx.onFrame((_t, dt) => {
 			const target = parted ? 1 : 0;
 			if (Math.abs(part - target) < 1e-3) return false;
@@ -80,6 +94,7 @@
 		return {
 			dispose() {
 				off();
+				sway();
 				api = null;
 				label?.remove();
 			}
@@ -107,7 +122,7 @@
 		height={420}
 		animate
 		camera={{ position: [0, 0.6, 6.4], fov: 40 }}
-		controls={{ autoRotate: true, autoRotateSpeed: 0.55 }}
+		controls={{}}
 		label="A knot or link drawn as a glowing tube in space, turning slowly; it can be chosen from a list of knots and links."
 	/>
 	<p class="about ui" aria-live="polite">

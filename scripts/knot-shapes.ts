@@ -54,6 +54,7 @@ for (const k of knots) {
 	// flat, the view is from above; in space, the most legible shadow
 	out[k.id] = round(bestView(comps, { tries: flat ? 1 : 2000 }));
 	console.log(k.id, comps.map((c) => c.length).join('+'), `${steps} steps`, `${((Date.now() - t) / 1000).toFixed(0)} s`);
+	writeFileSync(file, JSON.stringify(out));
 }
 // a loop that looks tangled but is an unknot (it comes undone without passing through itself): it must
 // stay tangled, so it only relaxes a little, as before
