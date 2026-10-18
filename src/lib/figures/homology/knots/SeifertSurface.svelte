@@ -14,7 +14,8 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import StepControls from '$lib/components/ui/StepControls.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import { glassMesh, glowCore, glowHalo, outlineMaterial, setGlassFade, shaderColor, disposeTree } from '$lib/three/materials';
+	import { cutGaps, glassMesh, glowCore, glowHalo, setGlassFade, showFlow, disposeTree } from '$lib/three/materials';
+	import { knotGaps } from '$lib/three/gaps';
 	import { diagramOf } from '$lib/knots/diagram';
 	import { seifertCircles, seifertGenus } from '$lib/knots/invariants';
 	import { knotById } from '$lib/knots/table';
@@ -124,14 +125,20 @@
 			set(pts: Float32Array): void;
 			fade(x: number): void;
 		}
-		// (a knot also gets a dark rim, so that at each crossing the lower strand visibly passes under the upper)
-		function tube(count: number, radius: number, color: string, o: { haloScale?: number; order?: number; rim?: number } = {}): Tube {
+		// (a knot also stops short on either side of each strand that passes over it)
+		const gaps = knotGaps(ctx);
+		// (and pulses of light drifting along a tube show which way it runs: `flow` of them)
+		function tube(count: number, radius: number, color: string, o: { haloScale?: number; order?: number; gaps?: boolean; flow?: number } = {}): Tube {
 			const RAD = 10;
 			const make = () => {
 				const g = new THREE.BufferGeometry();
 				const nv = (count + 1) * (RAD + 1);
 				g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(nv * 3), 3));
 				g.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(nv * 3), 3));
+				// how far along the tube (for the gaps)
+				const uv = new Float32Array(nv * 2);
+				for (let i = 0; i <= count; i++) for (let j = 0; j <= RAD; j++) uv[2 * (i * (RAD + 1) + j)] = i / count;
+				g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
 				const idx: number[] = [];
 				for (let i = 0; i < count; i++)
 					for (let j = 0; j < RAD; j++) {
@@ -145,22 +152,17 @@
 			};
 			const core = make();
 			const halo = make();
-			const rim = o.rim ? make() : null;
 			const mCore = glowCore(color, 1, 1);
 			mCore.transparent = true;
 			const mHalo = glowHalo(color, 1);
-			const mRim = outlineMaterial();
 			const group = new THREE.Group();
 			const a = new THREE.Mesh(core, mCore);
 			const b = new THREE.Mesh(halo, mHalo);
 			a.renderOrder = o.order ?? 5;
 			b.renderOrder = 6;
+			if (o.gaps) cutGaps(a, gaps, radius, 1, true);
+			if (o.flow) showFlow(mCore, o.flow);
 			group.add(a, b);
-			if (rim) {
-				const c = new THREE.Mesh(rim, mRim);
-				c.renderOrder = 4;
-				group.add(c);
-			}
 			for (const m of group.children) m.frustumCulled = false;
 			// scratch frames, reused
 			const Tn = new Float32Array(count * 3);
@@ -200,6 +202,15 @@
 			return {
 				group,
 				set(pts) {
+					if (o.gaps) {
+						let L = 0;
+						for (let i = 0; i < count; i++) {
+							const p = 3 * i;
+							const q = 3 * ((i + 1) % count);
+							L += Math.hypot(pts[q] - pts[p], pts[q + 1] - pts[p + 1], pts[q + 2] - pts[p + 2]);
+						}
+						mCore.uniforms.uGapLength.value = L;
+					}
 					// tangents, and a normal carried along the curve without twisting (the
 					// mismatch on coming home is spread evenly, so the closed tube has no seam)
 					for (let i = 0; i < count; i++) {
@@ -249,12 +260,10 @@
 					}
 					fill(core, pts, radius);
 					fill(halo, pts, radius * (o.haloScale ?? 2.4));
-					if (rim) fill(rim, pts, radius * o.rim!);
 				},
 				fade(x) {
 					mCore.uniforms.uOpacity.value = x;
 					mHalo.uniforms.uIntensity.value = x;
-					mRim.uniforms.uIntensity.value = x;
 					group.visible = x > 0.01;
 				}
 			};
@@ -267,12 +276,6 @@
 		let circleTubes: Tube[] = [];
 		let circlePts: Float32Array;
 		const CIRC = 160;
-		let arrows: InstanceType<typeof THREE.Mesh>[] = [];
-		let arrowSlots: { k: number; th: number }[] = [];
-		let arrowMat: ReturnType<typeof glowCore>;
-		const gold = shaderColor('gold');
-		const teal = shaderColor('teal');
-		const up = new THREE.Vector3(0, 1, 0);
 		let diskGeo: BufferGeometry;
 		let disks: InstanceType<typeof THREE.Group>;
 		let bandGeo: BufferGeometry;
@@ -343,35 +346,24 @@
 			// the knot: its point count never changes with λ
 			const first = knotAt(B, 0)[0];
 			knotPts = new Float32Array(first.length * 3);
-			knotTube = tube(first.length, 0.052, 'gold', { rim: 1.9 });
+			// pulses drifting along the knot and the circles show the orientation: every strand runs the same
+			// way (counterclockwise seen from above) round the axis
+			knotTube = tube(first.length, 0.052, 'gold', { gaps: true, flow: 3 * n });
 			root.add(knotTube.group);
 			// the Seifert circles, a touch thicker so that they sheathe the knot where they run along it
 			// (drawn after it, so that where they do the circles are teal, not teal over gold)
 			circlePts = new Float32Array(CIRC * 3);
 			circleTubes = Array.from({ length: n }, () => {
-				const t = tube(CIRC, 0.064, 'teal', { haloScale: 2.1, order: 5.5 });
+				const t = tube(CIRC, 0.064, 'teal', { haloScale: 2.1, order: 5.5, flow: 3 });
 				root.add(t.group);
 				return t;
-			});
-			// arrowheads between the crossings (every other gap when there are many)
-			const c = word.length;
-			arrowSlots = [];
-			for (let m = 0; m < c; m += c > 3 ? 2 : 1) for (let k = 0; k < n; k++) arrowSlots.push({ k, th: (TAU * m) / c });
-			// (made afresh with each knot: disposeTree takes the old ones with the rest)
-			arrowMat = glowCore('gold', 1.15);
-			const coneGeo = new THREE.ConeGeometry(0.09, 0.24, 18);
-			arrows = arrowSlots.map(() => {
-				const a = new THREE.Mesh(coneGeo, arrowMat);
-				a.renderOrder = 7;
-				root.add(a);
-				return a;
 			});
 			// disks: (radial, around), so that the front is up
 			diskGeo = grid(n, JR, IA, (i, j) => [j / IA, i / JR]);
 			disks = glass(diskGeo, [24, 3]);
 			root.add(disks);
 			// bands: (along, across), wound by (s, u), as the tests check against the disks
-			bandGeo = grid(c, S, U, (i, j) => [j / U, i / S]);
+			bandGeo = grid(word.length, S, U, (i, j) => [j / U, i / S]);
 			bands = glass(bandGeo, [4, 8]);
 			root.add(bands);
 			// the sign of each crossing, shown on the diagram and on the bands
@@ -379,7 +371,6 @@
 			pose();
 		}
 
-		const tmp = new THREE.Vector3();
 		const v3 = new Float32Array(3);
 		function pose() {
 			const st = stage(phi);
@@ -398,16 +389,6 @@
 				circleTubes[k].set(circlePts);
 				circleTubes[k].fade(st.circles);
 			}
-			// arrows: gold on the knot, teal while the circles are the story
-			arrowMat.uniforms.uColor.value.copy(gold).lerp(teal, ease((st.circles - 0.4) * 3));
-			arrowSlots.forEach(({ k, th }, i) => {
-				const [r, z] = slotAt(B, k, st.lambda);
-				put(v3, 0, r * Math.cos(th), r * Math.sin(th), z);
-				arrows[i].position.set(v3[0], v3[1], v3[2]);
-				// every strand runs counterclockwise round the axis (seen from above)
-				put(v3, 0, -Math.sin(th), Math.cos(th), 0);
-				arrows[i].quaternion.setFromUnitVectors(up, tmp.set(v3[0], v3[1], v3[2]));
-			});
 			// the disks fill in from their rims
 			const dp = diskGeo.attributes.position.array as Float32Array;
 			const dn = diskGeo.attributes.normal.array as Float32Array;
@@ -501,6 +482,7 @@
 			dispose() {
 				offFrame();
 				unfit();
+				gaps.dispose();
 				api = null;
 				for (const l of labels) l.remove();
 				controls?.removeEventListener('start', onStart);

@@ -48,12 +48,13 @@ export function closedBraid(
 		R: o.R ?? 1.5,
 		d: o.d ?? 0.7,
 		w: o.w ?? 0.26,
-		// wide enough to read, never reaching the next crossing
-		delta: o.delta ?? Math.min(0.45, (0.4 * Math.PI) / c)
+		// wide enough to read and to bend gently, never reaching the next crossing
+		delta: o.delta ?? Math.min(0.6, (0.55 * Math.PI) / c)
 	};
 }
 
-const smooth = (s: number) => s * s * (3 - 2 * s);
+// smooth to second order at both ends, so a strand leaves its circle for a band without an elbow
+const smooth = (s: number) => s * s * s * (10 + s * (6 * s - 15));
 /** how far the band reaches across its centre line: 0 at the disks, most at the waist */
 const reach = (s: number) => Math.sin(Math.PI * s) ** 2;
 

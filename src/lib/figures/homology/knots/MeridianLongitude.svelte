@@ -10,6 +10,7 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { glassMesh, glowTube, setGlassFade, tickMaterials, disposeTree } from '$lib/three/materials';
+	import { knotGaps } from '$lib/three/gaps';
 	import { tex } from '$lib/katex/render';
 	import { figureEight } from '$lib/knots/curves';
 	import { roundTrefoil } from '$lib/knots/table';
@@ -40,6 +41,7 @@
 		const { scene, THREE } = ctx;
 		const root = new THREE.Group();
 		scene.add(root);
+		const gaps = knotGaps(ctx);
 		let tube: InstanceType<typeof THREE.Group> | null = null;
 		let loops = new THREE.Group();
 		const labels: LabelHandle[] = [];
@@ -49,7 +51,7 @@
 			root.clear();
 			for (const l of labels.splice(0)) l.remove();
 			const m = model;
-			root.add(glowTube(closedCurve(m.K), { color: 'gold', closed: true, radius: 0.045, segments: 700, haloScale: 2.4, xray: 0, outline: 1.9 }));
+			root.add(glowTube(closedCurve(m.K), { color: 'gold', closed: true, radius: 0.045, segments: 700, haloScale: 2.4, xray: 0, gaps }));
 			const tg = new THREE.TubeGeometry(closedCurve(m.K), 700, R, 28, true);
 			tube = glassMesh(tg, { opacity: 0.5, grid: [180, 14], gridStrength: 0.14, hue: 0.62, brightness: 0.95 });
 			root.add(tube);
@@ -84,6 +86,7 @@
 		return {
 			dispose() {
 				off();
+				gaps.dispose();
 				api = null;
 				for (const l of labels) l.remove();
 			}

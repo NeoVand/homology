@@ -6,6 +6,7 @@
 	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { glowTube, disposeTree } from '$lib/three/materials';
+	import { knotGaps } from '$lib/three/gaps';
 	import { knots, knotById } from '$lib/knots/table';
 	import { borromeanEllipses } from '$lib/knots/curves';
 	import { tex } from '$lib/katex/render';
@@ -37,6 +38,7 @@
 		turn.add(root);
 		scene.add(turn);
 		let flat = false;
+		const gaps = knotGaps(ctx);
 		let parts: InstanceType<typeof THREE.Group>[] = [];
 		let label: LabelHandle | null = null;
 		let part = 0; // 0 → 1 as the Borromean rings come apart
@@ -49,7 +51,7 @@
 			flat = Math.max(...zs) - Math.min(...zs) < 0.6;
 			parts = comps.map((c, i) => {
 				const g = new THREE.Group();
-				g.add(glowTube(closedCurve(c), { color: colours[i % 3], closed: true, radius: 0.085, segments: 600, haloScale: 2.2, xray: 0, outline: 1.9 }));
+				g.add(glowTube(closedCurve(c), { color: colours[i % 3], closed: true, radius: 0.085, segments: 600, haloScale: 2.2, xray: 0, gaps }));
 				root.add(g);
 				return g;
 			});
@@ -95,6 +97,7 @@
 			dispose() {
 				off();
 				sway();
+				gaps.dispose();
 				api = null;
 				label?.remove();
 			}

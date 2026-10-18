@@ -11,7 +11,8 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import { glowCore, glowTube, disposeTree, type PaletteName } from '$lib/three/materials';
+	import { glowTube, disposeTree, type PaletteName } from '$lib/three/materials';
+	import { knotGaps } from '$lib/three/gaps';
 	import { braidClosure } from '$lib/knots/curves';
 	import { diagramOf, type V3 } from '$lib/knots/diagram';
 	import { jones, linkingNumber } from '$lib/knots/invariants';
@@ -273,6 +274,7 @@
 		const { scene, THREE } = ctx;
 		const root = new THREE.Group();
 		scene.add(root);
+		const gaps = knotGaps(ctx);
 		// the braid axis, faint: every strand winds round it the same way
 		scene.add(
 			glowTube(new THREE.LineCurve3(new THREE.Vector3(0, -1.15, 0), new THREE.Vector3(0, 1.15, 0)), {
@@ -286,8 +288,6 @@
 			})
 		);
 		const unfit = fitCamera(ctx, 1.2, 0.62);
-		const up = new THREE.Vector3(0, 1, 0);
-		const cone = new THREE.ConeGeometry(0.13, 0.32, 18);
 		function build() {
 			disposeTree(root);
 			root.clear();
@@ -295,24 +295,10 @@
 			let R = 0;
 			for (const c of comps) for (const p of c) R = Math.max(R, Math.hypot(p[0], p[1]));
 			const k = 1.7 / R;
-			const slots = Math.max(1, word.length);
 			comps.forEach((c, i) => {
 				const pts = c.map((p) => flat([p[0] * k, p[1] * k, p[2] * k] as V3));
-				root.add(glowTube(closedCurve(pts), { color: GL[i], closed: true, radius: 0.065, segments: Math.min(1600, pts.length * 2), haloScale: 2.3, xray: 0, outline: 1.9 }));
-				// arrowheads where the strands are between crossings, twice round each strand: all turn the same way round the axis
-				const per = PER * slots;
-				const at = slots === 1 ? [0, Math.floor(PER / 2)] : [0, Math.floor(slots / 2) * PER];
-				for (let q = 0; q < c.length / per; q++)
-					for (const o of at) {
-						const j = q * per + o;
-						const p = new THREE.Vector3(...pts[j]);
-						const dir = new THREE.Vector3(...pts[(j + 1) % pts.length]).sub(p).normalize();
-						const head = new THREE.Mesh(cone.clone(), glowCore(GL[i], 1.2));
-						head.position.copy(p);
-						head.quaternion.setFromUnitVectors(up, dir);
-						head.renderOrder = 7;
-						root.add(head);
-					}
+				// light chevrons drifting along each strand show the way it runs: all the same way round the axis
+				root.add(glowTube(closedCurve(pts), { color: GL[i], closed: true, radius: 0.065, segments: Math.min(1600, pts.length * 2), haloScale: 2.3, xray: 0, gaps, flow: 0.75 }));
 			});
 			ctx.invalidate();
 		}
@@ -322,7 +308,7 @@
 			dispose() {
 				api = null;
 				unfit();
-				cone.dispose();
+				gaps.dispose();
 			}
 		};
 	}

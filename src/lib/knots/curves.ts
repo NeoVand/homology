@@ -112,14 +112,15 @@ export function braidClosure(n: number, word: number[], opts: { R0?: number; gap
 		for (let k = 0; k < per; k++) {
 			const tau = k / per;
 			const th = (TAU * (m + tau)) / slots;
-			const e = tau * tau * (3 - 2 * tau);
+			// smooth to second order where a crossing begins and ends, so the curve has no corners there
+			const e = tau * tau * tau * (10 + tau * (6 * tau - 15));
 			for (let s = 0; s < n; s++) {
 				let rad = radius(pos[s]);
 				let z = 0;
 				if (g && (s === a || s === b)) {
 					const outward = s === a; // a moves from slot i to slot i+1
 					rad = outward ? radius(i) + gap * e : radius(i + 1) - gap * e;
-					const bump = lift * Math.sin(Math.PI * tau);
+					const bump = lift * Math.sin(Math.PI * tau) ** 2;
 					const onTop = g > 0 ? outward : !outward;
 					z = onTop ? bump : -bump;
 				}
@@ -206,7 +207,8 @@ export function plat(word: number[], opts: { gap?: number; w?: number; lift?: nu
 		for (let k = 0; k < per; k++) {
 			const tau = k / per;
 			const x = w * (m + tau) - L / 2;
-			const e = tau * tau * (3 - 2 * tau);
+			// smooth to second order where a crossing begins and ends, so the curve has no corners there
+			const e = tau * tau * tau * (10 + tau * (6 * tau - 15));
 			for (let s = 0; s < n; s++) {
 				let y = yOf(pos[s]);
 				let z = 0;

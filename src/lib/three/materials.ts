@@ -1,6 +1,7 @@
 // The book's 3D look: iridescent "thin-film" glass surfaces with fine
 // parametric grid lines, glowing gold curves, and soft luminous points.
 import * as THREE from 'three';
+import { GAP_LAYER, gapGLSL, gapVertexGLSL, type Gaps } from './gaps';
 
 /** The semantic palette, mirrored from app.css. */
 export const palette = {
@@ -524,11 +525,26 @@ export function tickMaterials(root: THREE.Object3D, t: number) {
 const glowVertex = /* glsl */ `
 	varying vec3 vNormal;
 	varying vec3 vWorldPos;
+	varying float vViewZ;
+	#ifdef GAPS
+	${gapVertexGLSL}
+	#endif
+	#ifdef FLOW
+	varying float vAlong;
+	#endif
 	void main() {
+		#ifdef GAPS
+		gapVertex();
+		#endif
+		#ifdef FLOW
+		vAlong = uv.x;
+		#endif
 		vec4 wp = modelMatrix * vec4(position, 1.0);
 		vWorldPos = wp.xyz;
 		vNormal = normalize(mat3(modelMatrix) * normal);
-		gl_Position = projectionMatrix * viewMatrix * wp;
+		vec4 vp = viewMatrix * wp;
+		vViewZ = -vp.z;
+		gl_Position = projectionMatrix * vp;
 	}
 `;
 
@@ -538,6 +554,14 @@ const glowCoreFragment = /* glsl */ `
 	uniform float uOpacity;
 	varying vec3 vNormal;
 	varying vec3 vWorldPos;
+	#ifdef GAPS
+	${gapGLSL}
+	#endif
+	#ifdef FLOW
+	uniform float uTime;
+	uniform float uFlowCount;
+	varying float vAlong;
+	#endif
 	void main() {
 		vec3 N = normalize(vNormal);
 		vec3 V = normalize(cameraPosition - vWorldPos);
@@ -547,7 +571,19 @@ const glowCoreFragment = /* glsl */ `
 		// bleaching to white; a faint sheen along the centre line suggests a glossy tube
 		vec3 col = uColor * (0.6 + 0.45 * core) * uIntensity;
 		col += mix(uColor, vec3(1.0), 0.35) * pow(ndv, 12.0) * 0.12 * uIntensity;
-		gl_FragColor = vec4(col, uOpacity);
+		#ifdef FLOW
+		// the way the curve runs: pulses of light drifting along it, each brightening slowly towards a
+		// sharp head that points forward (its middle a little ahead of its edges)
+		float x = fract(vAlong * uFlowCount - 0.3 * uTime + 0.25 * (1.0 - ndv));
+		float pulse = pow(x, 3.0) * (1.0 - smoothstep(0.8, 1.0, x));
+		col = mix(col, mix(uColor, vec3(1.0), 0.5) * 1.12 * uIntensity, 0.6 * pulse);
+		#endif
+		float a = uOpacity;
+		#ifdef GAPS
+		a *= gapAlpha();
+		if (a < 0.01) discard;
+		#endif
+		gl_FragColor = vec4(col, a);
 	}
 `;
 
@@ -602,29 +638,28 @@ export function ghostCore(c: PaletteName | number | string, opacity: number) {
 }
 
 /**
- * The dark rim drawn round a knot's tube, as in a knot diagram where the strand
- * underneath stops short of the strand on top. Only the far side of a slightly
- * fatter tube is drawn: the tube itself covers the rest, so what shows is a thin
- * dark edge, and where one strand passes over another that edge hides the lower
- * strand on either side of it. `uIntensity` fades it with the glow it surrounds
- * (its colour is `uInk`, so recolouring the glow leaves it dark).
+ * Make a tube's core leave gaps where other strands pass over it (see gaps.ts). The tube's geometry must
+ * run along it with uv.x from 0 to 1 (as THREE.TubeGeometry does); `radius` is the tube's and `length`
+ * the length of its curve, in world units.
  */
-export function outlineMaterial(opacity = 1) {
-	return new THREE.ShaderMaterial({
-		vertexShader: glowVertex,
-		fragmentShader: /* glsl */ `
-			uniform vec3 uInk;
-			uniform float uOpacity;
-			uniform float uIntensity;
-			void main() {
-				gl_FragColor = vec4(uInk, uOpacity * clamp(uIntensity, 0.0, 1.0));
-			}
-		`,
-		uniforms: { uInk: { value: shaderColor(0x070b15) }, uOpacity: { value: opacity }, uIntensity: { value: 1 } },
-		side: THREE.BackSide,
-		transparent: true,
-		depthWrite: true
+export function cutGaps(core: THREE.Mesh, gaps: Gaps, radius: number, length: number, closed: boolean) {
+	const geo = core.geometry;
+	const n = geo.getAttribute('position').count;
+	geo.setAttribute('gapId', new THREE.BufferAttribute(new Float32Array(n).fill(gaps.id()), 1));
+	const m = core.material as THREE.ShaderMaterial;
+	m.defines = { ...m.defines, GAPS: '' };
+	Object.assign(m.uniforms, gaps.uniforms, {
+		// the gap is a little over half the tube's radius wide; a strand cuts one when it is nearer by more
+		// than the tube's own thickness, and is not the same tube a few diameters further along
+		uGapWidth: { value: 0.6 * radius },
+		uGapThick: { value: 1.25 * radius },
+		uGapLength: { value: length },
+		uGapArc: { value: 12 * radius },
+		uGapClosed: { value: closed ? 1 : 0 }
 	});
+	m.transparent = true;
+	m.needsUpdate = true;
+	core.layers.enable(GAP_LAYER);
 }
 
 /** A glowing tube along a curve: bright core + soft additive halo. */
@@ -642,9 +677,11 @@ export function glowTube(
 		/** opacity of the parts hidden behind surfaces, drawn faintly as in a line
 		 *  drawing (default 0.28; 0 hides them) */
 		xray?: number;
-		/** for knots: a dark rim this many times the radius, so that at every crossing the lower strand
-		 *  visibly passes under the upper one (about 1.9; off by default) */
-		outline?: number;
+		/** for knots: the lower strand stops short of the upper one at every crossing (see gaps.ts) */
+		gaps?: Gaps;
+		/** show which way the curve runs: light chevrons about this far apart, drifting along it (they move
+		 *  with uTime, which Scene3D advances when it animates) */
+		flow?: number;
 	} = {}
 ): THREE.Group {
 	const radius = o.radius ?? 0.025;
@@ -669,12 +706,19 @@ export function glowTube(
 		ghost.renderOrder = 9;
 		g.add(ghost);
 	}
-	if (o.outline) {
-		const rim = new THREE.Mesh(new THREE.TubeGeometry(curve, segs, radius * o.outline, rs, o.closed ?? false), outlineMaterial());
-		rim.renderOrder = 4;
-		g.add(rim);
-	}
+	if (o.gaps) cutGaps(core, o.gaps, radius, curve.getLength(), o.closed ?? false);
+	if (o.flow) showFlow(core.material as THREE.ShaderMaterial, Math.round(curve.getLength() / o.flow));
 	return g;
+}
+
+/**
+ * Show which way a tube runs: `count` pulses of light along it (its geometry must run along it with uv.x
+ * from 0 to 1), drifting forward as uTime advances (Scene3D advances it when the scene animates).
+ */
+export function showFlow(m: THREE.ShaderMaterial, count: number) {
+	m.defines = { ...m.defines, FLOW: '' };
+	Object.assign(m.uniforms, { uTime: { value: 0 }, uFlowCount: { value: Math.max(1, count) } });
+	m.needsUpdate = true;
 }
 
 const gradientVertex = /* glsl */ `
@@ -682,12 +726,21 @@ const gradientVertex = /* glsl */ `
 	varying vec3 vNormal;
 	varying vec3 vWorldPos;
 	varying vec3 vColor;
+	varying float vViewZ;
+	#ifdef GAPS
+	${gapVertexGLSL}
+	#endif
 	void main() {
+		#ifdef GAPS
+		gapVertex();
+		#endif
 		vec4 wp = modelMatrix * vec4(position, 1.0);
 		vWorldPos = wp.xyz;
 		vNormal = normalize(mat3(modelMatrix) * normal);
 		vColor = color;
-		gl_Position = projectionMatrix * viewMatrix * wp;
+		vec4 vp = viewMatrix * wp;
+		vViewZ = -vp.z;
+		gl_Position = projectionMatrix * vp;
 	}
 `;
 
@@ -699,7 +752,7 @@ const gradientVertex = /* glsl */ `
 export function gradientTube(
 	curve: THREE.Curve<THREE.Vector3>,
 	colorAt: (u: number) => THREE.Color,
-	o: { radius?: number; segments?: number; closed?: boolean; haloScale?: number; intensity?: number; radialSegments?: number; outline?: number } = {}
+	o: { radius?: number; segments?: number; closed?: boolean; haloScale?: number; intensity?: number; radialSegments?: number; gaps?: Gaps } = {}
 ): THREE.Group {
 	const radius = o.radius ?? 0.05;
 	const segs = o.segments ?? 400;
@@ -724,6 +777,7 @@ export function gradientTube(
 		})
 	);
 	core.renderOrder = 5;
+	if (o.gaps) cutGaps(core, o.gaps, radius, curve.getLength(), o.closed ?? true);
 	const halo = new THREE.Mesh(
 		paint(new THREE.TubeGeometry(curve, segs, radius * (o.haloScale ?? 2.6), rs, o.closed ?? true)),
 		new THREE.ShaderMaterial({
@@ -737,11 +791,6 @@ export function gradientTube(
 	);
 	halo.renderOrder = 6;
 	g.add(core, halo);
-	if (o.outline) {
-		const rim = new THREE.Mesh(new THREE.TubeGeometry(curve, segs, radius * o.outline, rs, o.closed ?? true), outlineMaterial());
-		rim.renderOrder = 4;
-		g.add(rim);
-	}
 	return g;
 }
 

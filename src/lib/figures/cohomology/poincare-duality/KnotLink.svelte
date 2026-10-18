@@ -8,6 +8,7 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { glassMesh, glowPoint, glowTube, disposeTree } from '$lib/three/materials';
+	import { knotGaps } from '$lib/three/gaps';
 	import { disk, surfaceGeometry } from '$lib/three/surfaces';
 	import { tex } from '$lib/katex/render';
 	import { fovFitter } from '../cup-product/bands3d';
@@ -40,6 +41,7 @@
 		const { scene, THREE, canvas, controls } = ctx;
 		const fixed = new THREE.Group();
 		const dyn = new THREE.Group();
+		const gaps = knotGaps(ctx);
 		scene.add(fixed, dyn);
 		let knotLabel: LabelHandle | null = null;
 		let labels: LabelHandle[] = [];
@@ -54,7 +56,7 @@
 			knotLabel?.remove();
 			const s = sim;
 			const kc = new THREE.CatmullRomCurve3(s.pts.map(v3), true, 'centripetal');
-			fixed.add(glowTube(kc, { color: 'gold', closed: true, radius: 0.075, segments: 500, haloScale: 2.4, xray: 0, outline: 1.9 }));
+			fixed.add(glowTube(kc, { color: 'gold', closed: true, radius: 0.075, segments: 500, haloScale: 2.4, xray: 0, gaps }));
 			if (knot === 'unknot') {
 				fixed.add(glassMesh(surfaceGeometry(disk(1.35), 96, 24), { opacity: 0.42, grid: [36, 6], gridStrength: 0.16, hue: 0.55, brightness: 0.9 }));
 			}
@@ -70,7 +72,7 @@
 			beads = [];
 			const s = sim;
 			const lc = new THREE.CatmullRomCurve3(s.lp.map(v3), true, 'centripetal');
-			dyn.add(glowTube(lc, { color: 'teal', closed: true, radius: 0.028, segments: 300, xray: 0, outline: 2.2 }));
+			dyn.add(glowTube(lc, { color: 'teal', closed: true, radius: 0.028, segments: 300, xray: 0, gaps }));
 			for (let k = 0; k < 3; k++) {
 				const b = glowPoint([0, 0, 0], { color: 'teal', size: 0.028, halo: 7 });
 				dyn.add(b);
@@ -171,6 +173,7 @@
 		return {
 			dispose() {
 				off();
+				gaps.dispose();
 				api = null;
 				knotLabel?.remove();
 				for (const l of labels) l.remove();

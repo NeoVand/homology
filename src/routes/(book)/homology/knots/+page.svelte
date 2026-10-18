@@ -369,7 +369,7 @@
 <Figure num="3.7.6" title="Seifert’s algorithm" hint="Step through the algorithm · choose a knot · drag to turn it">
 	<SeifertSurface />
 	{#snippet caption()}
-		Each knot is drawn as a closed braid. The crossings are smoothed along the arrows into Seifert circles, one for each strand; the circles are filled with stacked disks, and a half-twisted band at each crossing joins neighbouring disks. The finished surface is teal on one side and violet on the other, and its edge is the knot. The readout counts \(c\), \(s\), \(\chi = s - c\) and the genus. For \(5_2\) this diagram gives genus \(2\), although the knot has genus \(1\): Seifert’s algorithm only gives an upper bound, and a different diagram does better.
+		Each knot is drawn as a closed braid, with light drifting along it the way it runs. The crossings are smoothed in that direction into Seifert circles, one for each strand; the circles are filled with stacked disks, and a half-twisted band at each crossing joins neighbouring disks. The finished surface is teal on one side and violet on the other, and its edge is the knot. The readout counts \(c\), \(s\), \(\chi = s - c\) and the genus. For \(5_2\) this diagram gives genus \(2\), although the knot has genus \(1\): Seifert’s algorithm only gives an upper bound, and a different diagram does better.
 	{/snippet}
 </Figure>
 

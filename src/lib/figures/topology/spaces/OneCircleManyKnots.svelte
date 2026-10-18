@@ -12,6 +12,7 @@
 	import Segmented from '$lib/components/ui/Segmented.svelte';
 	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import { glowPoint, gradientTube, disposeTree } from '$lib/three/materials';
+	import { knotGaps } from '$lib/three/gaps';
 	import { tex } from '$lib/katex/render';
 	import { fovFitter } from '$lib/figures/cohomology/cup-product/bands3d';
 	import { figureEight, sampleClosed } from '$lib/knots/curves';
@@ -59,6 +60,7 @@
 		const { scene, THREE } = ctx;
 		const left = new THREE.Group();
 		const right = new THREE.Group();
+		const gaps = knotGaps(ctx);
 		left.position.set(-2.55, 0, 0);
 		right.position.set(1.35, 0, 0);
 		scene.add(left, right);
@@ -105,7 +107,7 @@
 			disposeTree(tubeR);
 			tubeR.clear();
 			shape = between(model.K, ring, s);
-			tubeR.add(gradientTube(closedCurve(shape), wheelColor, { radius: 0.06, segments: 360, outline: 1.9 }));
+			tubeR.add(gradientTube(closedCurve(shape), wheelColor, { radius: 0.06, segments: 360, gaps }));
 			disposeTree(marks);
 			marks.clear();
 			const e = near;
@@ -156,6 +158,7 @@
 		return {
 			dispose() {
 				off();
+				gaps.dispose();
 				api = null;
 				for (const l of labels) l.remove();
 				knotLabel?.remove();

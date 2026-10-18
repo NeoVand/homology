@@ -28,6 +28,8 @@
 		 *  not. Returning nothing counts as ambient motion: drawn while the reader
 		 *  is engaged, paused once the figure has been left alone for a while. */
 		onFrame(cb: (t: number, dt: number) => boolean | void): () => void;
+		/** run just before each render of the scene (e.g. a pre-pass into a render target); returns an unsubscribe */
+		beforeRender(cb: () => void): () => void;
 		/** an HTML label (may contain KaTeX HTML) pinned to a 3D point */
 		label(
 			pos: THREE_NS.Vector3 | [number, number, number],
@@ -198,6 +200,7 @@
 			canvas.addEventListener('wheel', stir, { passive: true });
 			canvas.addEventListener('pointermove', stir, { passive: true });
 			const frameCbs = new Set<(t: number, dt: number) => boolean | void>();
+			const preCbs = new Set<() => void>();
 			const labels = new Set<LabelHandle>();
 			const raycaster = new THREE.Raycaster();
 			const ndc = new THREE.Vector2();
@@ -229,6 +232,10 @@
 					frameCbs.add(cb);
 					wake();
 					return () => frameCbs.delete(cb);
+				},
+				beforeRender(cb) {
+					preCbs.add(cb);
+					return () => preCbs.delete(cb);
 				},
 				label(pos, html, opts = {}) {
 					const el = document.createElement('div');
@@ -340,6 +347,7 @@
 					if (!draw) return;
 					needs = false;
 					if (ambient) tickMaterials(scene, (ambientT += dt));
+					for (const cb of preCbs) cb();
 					renderer.render(scene, cam);
 					if (!shown) shown = true;
 					placeLabels();
