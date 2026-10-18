@@ -1,26 +1,28 @@
 <script lang="ts">
 	// Teaser for §2.2: identify opposite sides of a square and you get a torus.
-	// The square is a flexible sheet. Pairs of points the relation identifies are
-	// joined by dotted arcs (stitches.ts); as the sheet rolls and bends, each arc
-	// shrinks to nothing and its pair becomes a single point. Rolling stitches the
-	// b-sides together (the two p's meet, and the corners pair up: 4 → 2), bending
-	// stitches the a-sides (the two q's meet, and the corner pairs meet: 2 → 1).
-	// Everything on screen is a continuous function of the slider's value. The
-	// geometry is the gluing workshop's torus morph (topology/gluing/morphs.ts),
-	// whose tests check that glued points really do coincide.
+	// The square is a flexible sheet with a few marked points: its four corners,
+	// a point p on each b-side and a point q on each a-side. Rolling glues the
+	// b-sides together (the two p's meet, and the corners pair up: 4 → 2),
+	// bending glues the a-sides (the two q's meet, and the corner pairs meet:
+	// 2 → 1); the counts underneath are measured in 3D as it happens. Everything
+	// on screen is a continuous function of the slider's value. The geometry is
+	// the gluing workshop's torus morph (topology/gluing/morphs.ts), whose tests
+	// check that glued points really do coincide.
 	import Scene3D, { type SceneContext, type LabelHandle } from '$lib/components/three/Scene3D.svelte';
 	import Timeline from '$lib/components/ui/Timeline.svelte';
 	import TeX from '$lib/components/prose/TeX.svelte';
-	import { color, dotTexture, glowPoint } from '$lib/three/materials';
+	import { glowPoint } from '$lib/three/materials';
 	import { tex } from '$lib/katex/render';
 	import { presets, edgeSpecs } from '$lib/figures/topology/gluing/morphs';
 	import { ParamSheet, sheetMesh, type P3 } from '$lib/figures/topology/gluing/sheet';
-	import { threads, threadStates, DOTS, PV, QU } from './stitches';
 	import { fade } from 'svelte/transition';
 	import type * as THREE_NS from 'three';
 
 	const torus = presets.torus;
 	const f = torus.f;
+	// where p sits on the b-sides and q on the a-sides
+	const PV = 0.6;
+	const QU = 0.6;
 
 	let t = $state(0);
 	let cw = $state(800);
@@ -31,11 +33,11 @@
 
 	const stage = $derived(
 		t < 0.015
-			? 'The square. Each dotted arc joins two points that will become one.'
+			? 'The square. Points of the same colour will become one point.'
 			: t < 0.42
 				? 'Roll: each point of the left side closes in on its partner on the right.'
 				: t < 0.5
-					? 'The b-sides are stitched: a tube. The two p’s are one point, and the corners have paired up.'
+					? 'The b-sides are glued: a tube. The two p’s are one point, and the corners have paired up.'
 					: t < 0.985
 						? 'Bend: the two end circles (the a-sides) close in on each other.'
 						: 'Glued: a torus. The two q’s are one point, and all four corners are the single point v.'
@@ -45,7 +47,6 @@
 
 	function setup(ctx: SceneContext) {
 		const { THREE, scene, camera, invalidate } = ctx;
-		const dpr = Math.min(window.devicePixelRatio || 1, 2);
 		const sheet = new ParamSheet(96, 96);
 		const mesh = sheetMesh(sheet.geometry, { opacity: 0.8, grid: [8, 8], gridStrength: 0.3 });
 		const e = edgeSpecs(torus);
@@ -53,63 +54,6 @@
 		const holder = new THREE.Group();
 		holder.add(mesh.group);
 		scene.add(holder);
-
-		// ── the threads: dotted circular arcs, one round dot of fixed screen size per point ──
-		// corner-to-corner threads are ivory like the corners (together they are a
-		// closed chain round the square: transitivity, drawn)
-		const isCorner = (k: number) => {
-			const th = threads[k];
-			return (th.kind === 'b' && (th.a[1] === 0 || th.a[1] === 1)) || (th.kind === 'a' && (th.a[0] === 0 || th.a[0] === 1));
-		};
-		const threadColor = threads.map((th, k) =>
-			color(isCorner(k) ? 'ivory' : th.kind === 'b' ? 'teal' : th.kind === 'a' ? 'gold' : th.kind === 'p' ? 'rose' : 'violet')
-		);
-		const big = threads.map((th) => th.kind === 'p' || th.kind === 'q');
-		function dots(which: boolean, px: number) {
-			const ks = threads.map((_, k) => k).filter((k) => big[k] === which);
-			const geo = new THREE.BufferGeometry();
-			geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(ks.length * DOTS * 3), 3));
-			geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(ks.length * DOTS * 3), 3));
-			const pts = new THREE.Points(
-				geo,
-				new THREE.PointsMaterial({
-					size: px * dpr,
-					sizeAttenuation: false,
-					map: dotTexture(),
-					vertexColors: true,
-					transparent: true,
-					depthWrite: false,
-					blending: THREE.AdditiveBlending
-				})
-			);
-			pts.renderOrder = 9;
-			pts.frustumCulled = false;
-			holder.add(pts);
-			return { ks, geo };
-		}
-		const fine = dots(false, 6.5);
-		const bold = dots(true, 8.5);
-		let states = threadStates(0);
-		function setDots(d: { ks: number[]; geo: THREE_NS.BufferGeometry }) {
-			const pos = d.geo.attributes.position.array as Float32Array;
-			const col = d.geo.attributes.color.array as Float32Array;
-			d.ks.forEach((k, j) => {
-				pos.set(states[k].dots, j * DOTS * 3);
-				const c = threadColor[k];
-				const a = states[k].alpha;
-				for (let i = 0; i < DOTS; i++) {
-					// the dots near the ends dimmer, so each arc tapers into its two points
-					const end = Math.sin((Math.PI * (i + 0.5)) / DOTS);
-					const w = a * (0.75 + 0.45 * end);
-					const o = (j * DOTS + i) * 3;
-					col[o] = c.r * w;
-					col[o + 1] = c.g * w;
-					col[o + 2] = c.b * w;
-				}
-			});
-			d.geo.attributes.position.needsUpdate = true;
-			d.geo.attributes.color.needsUpdate = true;
-		}
 
 		// ── the marked points ─────────────────────────────────────────────────
 		const corners = [0, 1, 2, 3].map(() => {
@@ -182,10 +126,6 @@
 				mesh.setUniform('uEdgeW', 0.095 / scale);
 				mesh.setOutward(sheet.outward);
 
-				states = threadStates(tt, states);
-				setDots(fine);
-				setDots(bold);
-
 				// the points, and how many distinct points each class is
 				const cp = (
 					[
@@ -237,7 +177,7 @@
 		height={narrow ? 400 : 460}
 		camera={{ position: [0, 1.1, 7.6], fov: 38 }}
 		controls={{ autoRotate: false }}
-		label="A flexible square sheet with its sides marked a and b. Threads join the points to be glued; the sheet rolls into a tube, stitching the b-sides, then bends into a torus, stitching the a-sides"
+		label="A flexible square sheet with its sides marked a and b and a few marked points; the sheet rolls into a tube, gluing the b-sides, then bends into a torus, gluing the a-sides, and the marked points meet"
 	/>
 	{#if !narrow}
 		<div class="stage ui" aria-live="polite">

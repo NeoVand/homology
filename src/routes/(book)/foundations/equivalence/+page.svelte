@@ -947,18 +947,17 @@
 	also glued to the top-left corner (bottom to top, at the left). And the top-left corner is glued to the top-right corner. By
 	transitivity, <em>all four corners become a single point</em>. A common mistake is to say the corners give two points, or
 	four; the chain of gluings says one. Play Figure 1.2.7 and watch the corner count: four, then two once the sides \(b\) are
-	stitched, then one.
+	glued, then one.
 </p>
 
 <Figure title="A square becomes a torus" hint="Press play or drag the slider · drag the picture to turn it" num="1.2.7">
 	<SquareToTorus />
 	{#snippet caption()}
-		Gluing the sides marked \(a\) to each other and the sides marked \(b\) to each other, matching the arrows. Each dotted arc
-		joins two points the relation identifies. Rolling the sheet stitches the \(b\)-sides together and bending it stitches the
-		\(a\)-sides; as the arcs shrink to nothing, each pair becomes one point. The arcs joining corner to corner (ivory) form a
-		closed chain, which is why all four corners end up as one point. The counts underneath are the classes: the two
-		\(p\text{’s}\) become one point, the two \(q\text{’s}\) become one point, and the four corners become two points and then one, the
-		point \(v\) of the torus where the loops \(a\) and \(b\) cross. (A preview of <Ref to="topology/gluing" />.)
+		Gluing the sides marked \(a\) to each other and the sides marked \(b\) to each other, matching the arrows. Rolling the sheet
+		glues the \(b\)-sides together and bending it glues the \(a\)-sides; points of the same colour close in on each other and meet.
+		The counts underneath are the classes, measured as the sheet moves: the two \(p\text{’s}\) become one point, the two
+		\(q\text{’s}\) become one point, and the four corners become two points and then one, the point \(v\) of the torus where the
+		loops \(a\) and \(b\) cross. (A preview of <Ref to="topology/gluing" />.)
 	{/snippet}
 </Figure>
 
