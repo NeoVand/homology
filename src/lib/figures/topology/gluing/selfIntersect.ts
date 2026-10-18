@@ -4,7 +4,7 @@
 // together they show roughly where the double curve runs, which is where
 // doubleCurve.ts starts tracing it exactly.
 
-type Vec = [number, number, number];
+export type Vec = [number, number, number];
 
 const sub = (a: Vec, b: Vec): Vec => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
 const dot = (a: Vec, b: Vec) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
@@ -77,11 +77,15 @@ export function triTri(A: Vec[], B: Vec[]): [Vec, Vec] | null {
  * (triangle 2k and 2k+1 lie in grid cell k = j·nu + i).
  */
 export function selfIntersections(pos: ArrayLike<number>, nu: number, nv: number, pairs?: number[]): number[] {
+	return crossings(gridTriangles(pos, nu, nv), pairs);
+}
+
+/** the triangles of a grid surface (two per cell, cell k = j·nu + i) */
+export function gridTriangles(pos: ArrayLike<number>, nu: number, nv: number): Vec[][] {
 	const P = (i: number, j: number): Vec => {
 		const k = 3 * (j * (nu + 1) + i);
 		return [pos[k], pos[k + 1], pos[k + 2]];
 	};
-	// triangles
 	const tris: Vec[][] = [];
 	for (let j = 0; j < nv; j++)
 		for (let i = 0; i < nu; i++) {
@@ -91,6 +95,14 @@ export function selfIntersections(pos: ArrayLike<number>, nu: number, nv: number
 				d = P(i + 1, j + 1);
 			tris.push([a, b, d], [a, d, c]);
 		}
+	return tris;
+}
+
+/**
+ * Where any of these triangles cross, as segments (6 numbers each). Triangles that share a vertex
+ * position are never compared. Degenerate triangles (with no area) are skipped.
+ */
+export function crossings(tris: Vec[][], pairs?: number[]): number[] {
 	// spatial hash on a grid of cells about twice the typical triangle size
 	let minx = Infinity,
 		miny = Infinity,

@@ -19,27 +19,27 @@ const L = 3; // side of the flat square
 function clamp01(x: number) {
 	return x < 0 ? 0 : x > 1 ? 1 : x;
 }
-function ease(x: number) {
+export function ease(x: number) {
 	const t = clamp01(x);
 	return t * t * (3 - 2 * t);
 }
-function seg(t: number, a: number, b: number) {
+export function seg(t: number, a: number, b: number) {
 	return ease((t - a) / (b - a));
 }
-function mix(a: number, b: number, t: number) {
+export function mix(a: number, b: number, t: number) {
 	return a + (b - a) * t;
 }
 /** x-coordinate of a strip of arc length s bent with curvature k (→ s as k → 0). */
-function bendS(k: number, s: number) {
+export function bendS(k: number, s: number) {
 	return Math.abs(k) < 1e-7 ? s : Math.sin(k * s) / k;
 }
 /** how far a bent strip has curled away from its tangent line (→ 0 as k → 0). */
-function bendC(k: number, s: number) {
+export function bendC(k: number, s: number) {
 	if (Math.abs(k * s) < 1e-4) return (k * s * s) / 2;
 	return (1 - Math.cos(k * s)) / k;
 }
 /** mean of bendC over s ∈ [−len/2, len/2]: used to keep a curling strip centred. */
-function arcMean(k: number, len: number) {
+export function arcMean(k: number, len: number) {
 	const h = (k * len) / 2;
 	if (Math.abs(h) < 1e-3) return (k * len * len) / 24;
 	return (1 - Math.sin(h) / h) / k;

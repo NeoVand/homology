@@ -621,13 +621,16 @@
 	cut, and you have a surface with two handles: the genus-two surface \(\Sigma_2\).
 </p>
 
-<Figure num="2.2.8" title="From an octagon to a two-holed doughnut" hint="Step through with the arrows, or press play">
+<Figure num="2.2.8" title="From an octagon to a two-holed doughnut" hint="Press play or drag the slider · drag the picture to turn it">
 	<OctagonGenus2 />
 	{#snippet caption()}
-		The octagon \(a_1b_1a_1^{-1}b_1^{-1}a_2b_2a_2^{-1}b_2^{-1}\) is cut along the diagonal \(c\), each half is glued into a torus
-		with a hole, and the two holes are sewn back together. Each pair of edges becomes a loop on the finished surface: \(a_i\)
-		around a tube, \(b_i\) around a hole, as for the torus in Figure 2.2.4. All eight corners of the octagon become a single point
-		of the surface, where all four loops meet; the picture slides the loops apart to keep them readable.
+		The octagon \(a_1b_1a_1^{-1}b_1^{-1}a_2b_2a_2^{-1}b_2^{-1}\) is cut along its diagonal \(c\). Each half bends round
+		until its copy of \(c\) closes up into a circle, which opens out into a hole; then it rolls and bends, as the square does in
+		Figure 2.2.4, into a torus with that hole. Last, the two holes are drawn out into a neck and glued along \(c\), its waist. Each
+		edge carries half of its arrowhead, so the arrowheads close up as the edges meet. On the finished surface \(a_i\) runs round a
+		tube and \(b_i\) round a hole. In the quotient all eight corners of the octagon are a single point, through which all five
+		loops pass; the picture draws that point stretched out, so that \(c\) is a separate circle and each torus has its own
+		crossing of \(a_i\) with \(b_i\).
 	{/snippet}
 </Figure>
 

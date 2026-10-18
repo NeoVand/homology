@@ -92,7 +92,22 @@ export class ParamSheet {
 		return out;
 	}
 
-	update(fn: SheetFn) {
+	/** replace the uv coordinates (which the material draws its grid lines along) */
+	setUV(fn: (u: number, v: number) => [number, number]) {
+		const uv = this.geometry.attributes.uv.array as Float32Array;
+		const { nu, nv } = this;
+		for (let j = 0; j <= nv; j++)
+			for (let i = 0; i <= nu; i++) {
+				const [a, b] = fn(i / nu, j / nv);
+				const k = 2 * (j * (nu + 1) + i);
+				uv[k] = a;
+				uv[k + 1] = b;
+			}
+		this.geometry.attributes.uv.needsUpdate = true;
+	}
+
+	/** wrapU: the columns u = 0 and u = 1 lie on each other (a closed seam), so normals there look across it */
+	update(fn: SheetFn, wrapU = false) {
 		const { nu, nv, pos, nor, str, p } = this;
 		let minx = Infinity,
 			miny = Infinity,
@@ -121,8 +136,8 @@ export class ParamSheet {
 			const j0 = Math.max(0, j - 1);
 			const j1 = Math.min(nv, j + 1);
 			for (let i = 0; i <= nu; i++) {
-				const i0 = Math.max(0, i - 1);
-				const i1 = Math.min(nu, i + 1);
+				const i0 = wrapU && i === 0 ? nu - 1 : Math.max(0, i - 1);
+				const i1 = wrapU && i === nu ? 1 : Math.min(nu, i + 1);
 				const a = 3 * (j * (nu + 1) + i1);
 				const b = 3 * (j * (nu + 1) + i0);
 				const c = 3 * (j1 * (nu + 1) + i);
@@ -140,7 +155,7 @@ export class ParamSheet {
 				const k = 3 * (j * (nu + 1) + i);
 				// how many model units one unit of u (resp. v) covers here
 				const k2 = 2 * (j * (nu + 1) + i);
-				str[k2] = Math.hypot(ux, uy, uz) / ((i1 - i0) / nu);
+				str[k2] = Math.hypot(ux, uy, uz) / ((wrapU && (i === 0 || i === nu) ? 2 : i1 - i0) / nu);
 				str[k2 + 1] = Math.hypot(vx, vy, vz) / ((j1 - j0) / nv);
 				if (len > 1e-12) {
 					nx /= len;
