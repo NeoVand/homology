@@ -474,6 +474,10 @@ export interface RepulseOptions {
 	nudge?: number;
 	/** stop when the energy falls by less than this fraction per step for 40 steps (default 1e-9; 0 never stops) */
 	tolerance?: number;
+	/** keep the curve in a slab |z| ≤ h about its middle plane, h this fraction of the start's reach, so
+	 *  that it settles flat with its crossings stacked, as a table of knots draws it (a soft wall: a
+	 *  penalty growing with the square of the overshoot) */
+	slab?: number;
 	/** called at every trial step of the line search: step, trial length, decrease, required decrease, constraint error */
 	trace?: (step: number, tau: number, decrease: number, wanted: number, violation: number) => void;
 	/** called after every step with the step number, the energy and the step length */
@@ -484,6 +488,9 @@ export interface RepulseOptions {
  * Let a knot or link settle into a low-energy shape for the tangent-point energy. The result is
  * centred, turned to its principal axes (flattest along z) and scaled to the given size.
  */
+/** how stiff the slab's wall is */
+const SLAB = 5;
+
 export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 	const alpha = opts.alpha ?? 3;
 	const beta = opts.beta ?? 6;
@@ -505,6 +512,34 @@ export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 		const nudge = opts.nudge ?? 0.02;
 		for (let q = 0; q < 3 * N; q++) C.X[q] += nudge * rnd();
 	}
+	// in a slab: squash the start into it, centred on the barycentre's height
+	let wall = Infinity;
+	let mid = 0;
+	if (opts.slab) {
+		const c = [0, 0, 0];
+		for (let i = 0; i < N; i++) for (let k = 0; k < 3; k++) c[k] += C.X[3 * i + k] / N;
+		let reach = 0;
+		let high = 0;
+		for (let i = 0; i < N; i++) {
+			reach = Math.max(reach, Math.hypot(C.X[3 * i] - c[0], C.X[3 * i + 1] - c[1], C.X[3 * i + 2] - c[2]));
+			high = Math.max(high, Math.abs(C.X[3 * i + 2] - c[2]));
+		}
+		wall = opts.slab * reach;
+		mid = c[2];
+		if (high > 0.8 * wall) for (let i = 0; i < N; i++) C.X[3 * i + 2] = mid + ((C.X[3 * i + 2] - mid) * 0.8 * wall) / high;
+	}
+	const penalty = (G?: Float64Array) => {
+		if (wall === Infinity) return 0;
+		let P = 0;
+		for (let i = 0; i < N; i++) {
+			const z = C.X[3 * i + 2] - mid;
+			const over = Math.abs(z) - wall;
+			if (over <= 0) continue;
+			P += SLAB * over * over;
+			if (G) G[3 * i + 2] += 2 * SLAB * over * Math.sign(z);
+		}
+		return P;
+	};
 	// the constraints' targets: the barycentre where it is, and every edge the mean length
 	const target = constraintValues(C);
 	{
@@ -523,11 +558,19 @@ export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 		return { h, worst };
 	};
 	const zero = new Float64Array(3 * N);
+	// a start far off the constraints (squashed into the slab, say) is put right first
+	for (let it = 0; it < 30; it++) {
+		const { h, worst } = violation();
+		if (worst < 1e-9) break;
+		const A = gram(C, alpha, beta);
+		const corr = new Saddle(N, A, lu(A, N), constraintRows(C)).solve(zero, h);
+		for (let q = 0; q < 3 * N; q++) C.X[q] += corr[q];
+	}
 	let last = 0;
 	let still = 0;
 	for (let step = 0; step < (opts.steps ?? 600); step++) {
 		const G = new Float64Array(3 * N);
-		const E = energy(C, G, alpha, beta);
+		const E = energy(C, G, alpha, beta) + penalty(G);
 		const A = gram(C, alpha, beta);
 		const Ap = lu(A, N);
 		const sys = new Saddle(N, A, Ap, constraintRows(C));
@@ -562,7 +605,7 @@ export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 				const corr = sys.solve(zero, h);
 				for (let q = 0; q < 3 * N; q++) C.X[q] += corr[q];
 			}
-			E1 = energy(C, undefined, alpha, beta);
+			E1 = energy(C, undefined, alpha, beta) + penalty();
 			opts.trace?.(step, tau, E - E1, 0.01 * tau * dot, violation().worst);
 			if (E - E1 >= 0.01 * tau * dot && violation().worst < 1e-5) {
 				accepted = tau;
