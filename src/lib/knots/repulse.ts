@@ -469,6 +469,9 @@ export interface RepulseOptions {
 	beta?: number;
 	/** largest distance from the centre in the result (default 1.8) */
 	size?: number;
+	/** how far to nudge the start, in edge lengths, to break its symmetry (default 0.02; 0 keeps a
+	 *  symmetric start symmetric, so that it settles to the best shape with that symmetry) */
+	nudge?: number;
 	/** called after every step with the step number, the energy and the step length */
 	log?: (step: number, E: number, tau: number) => void;
 }
@@ -491,6 +494,12 @@ export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 		let mean = 0;
 		for (let I = 0; I < N; I++) mean += edgeLength(C, I) / N;
 		for (let q = 0; q < 3 * N; q++) C.X[q] /= mean;
+		// a nudge of a hundredth of an edge (the same every time): a perfectly symmetric start, such as a
+		// closed braid, would otherwise keep its symmetry and can come to rest at a symmetric saddle
+		let seed = 12345;
+		const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648) - 0.5;
+		const nudge = opts.nudge ?? 0.02;
+		for (let q = 0; q < 3 * N; q++) C.X[q] += nudge * rnd();
 	}
 	// the constraints' targets: the barycentre where it is, and every edge the mean length
 	const target = constraintValues(C);
@@ -511,6 +520,7 @@ export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 	};
 	const zero = new Float64Array(3 * N);
 	let last = 0;
+	let still = 0;
 	for (let step = 0; step < (opts.steps ?? 600); step++) {
 		const G = new Float64Array(3 * N);
 		const E = energy(C, G, alpha, beta);
@@ -561,7 +571,9 @@ export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 		}
 		opts.log?.(step, E1, accepted);
 		last = accepted;
-		if ((E - E1) / E < 1e-8) break;
+		// stop once the energy has hardly moved for a while (near a saddle it creeps before it runs)
+		still = (E - E1) / E < 1e-9 ? still + 1 : 0;
+		if (still > 40) break;
 	}
 	// centre, turn to the principal axes, scale to size
 	const out = principalAxes(compsOf(C));

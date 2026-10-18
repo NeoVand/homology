@@ -2,32 +2,40 @@
 // (src/lib/knots/shapes.json); knots.test.ts checks that each saved shape is still the knot it claims
 // to be, and that tubes drawn round it never touch. Run: npx vite-node scripts/knot-shapes.ts
 //
-// Each starts as the closure of its braid and flows down the tangent-point energy with the fractional
+// Each starts as the closure of its braid (a (2, q) torus knot or link, as the curve on a torus, which is
+// already round and starts it nearer its best shape) and flows down the tangent-point energy with the fractional
 // Sobolev gradient of Yu, Schumacher and Crane (src/lib/knots/repulse.ts) until it settles; then it is
 // turned so that the view down the z-axis is its most legible shadow, the one a table of knots would show.
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { knots } from '../src/lib/knots/table';
-import { braidClosure } from '../src/lib/knots/curves';
+import { braidClosure, torusKnot } from '../src/lib/knots/curves';
 import { relax } from '../src/lib/knots/relax';
 import { repulse } from '../src/lib/knots/repulse';
 import { bestView } from '../src/lib/knots/view';
 import type { V3 } from '../src/lib/knots/diagram';
 
 const round = (comps: V3[][]) => comps.map((c) => c.map((p) => p.map((x) => Math.round(x * 1e4) / 1e4)));
-const out: Record<string, number[][][]> = {};
+// with a list of ids (npx vite-node scripts/knot-shapes.ts 5_1,7_1) only those are settled again
 const only = process.argv[2]?.split(',');
+const file = new URL('../src/lib/knots/shapes.json', import.meta.url);
+const out: Record<string, number[][][]> = only ? JSON.parse(readFileSync(file, 'utf8')) : {};
 for (const k of knots) {
 	if (!k.braid || k.id === 'borromean' || (only && !only.includes(k.id))) continue;
 	const t = Date.now();
 	let steps = 0;
-	const comps = repulse(braidClosure(...k.braid), { points: 40 + 24 * k.crossings, steps: 600, log: (s) => (steps = s + 1) });
+	const [n, word] = k.braid;
+	const torus = n === 2 && word.every((g) => g === 1);
+	const start = torus ? torusKnot(2, word.length) : braidClosure(n, word);
+	// a torus knot keeps the symmetry of its torus curve: the best shape with q-fold symmetry is the star a
+	// table of knots draws (for 7₁ the unrestricted flow folds the knot over on itself instead)
+	const comps = repulse(start, { points: 40 + 24 * k.crossings, steps: 2500, nudge: torus ? 0 : 0.02, log: (s) => (steps = s + 1) });
 	out[k.id] = round(bestView(comps, { tries: 2000 }));
 	console.log(k.id, comps.map((c) => c.length).join('+'), `${steps} steps`, `${((Date.now() - t) / 1000).toFixed(0)} s`);
 }
 // a loop that looks tangled but is an unknot (it comes undone without passing through itself): it must
 // stay tangled, so it only relaxes a little, as before
-{
+if (!only) {
 	const comps = relax(relax(braidClosure(3, [1, -2, -1, 2]), { per: 150, steps: 900, size: 1.8 }), { per: 150, steps: 600, size: 1.8, thickness: 0.2 });
 	out['unknot-tangled'] = round(comps);
 }
-writeFileSync(new URL('../src/lib/knots/shapes.json', import.meta.url), JSON.stringify(out));
+writeFileSync(file, JSON.stringify(out));
