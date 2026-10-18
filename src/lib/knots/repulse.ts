@@ -478,6 +478,10 @@ export interface RepulseOptions {
 	 *  that it settles flat with its crossings stacked, as a table of knots draws it (a soft wall: a
 	 *  penalty growing with the square of the overshoot) */
 	slab?: number;
+	/** keep the q-fold symmetry of a one-component start about the z-axis (a turn by a qth of a
+	 *  revolution carrying each point to the one a qth of the way round), which roundoff would
+	 *  otherwise break where the symmetric shape is a saddle; the point count must be a multiple of q */
+	turns?: number;
 	/** called at every trial step of the line search: step, trial length, decrease, required decrease, constraint error */
 	trace?: (step: number, tau: number, decrease: number, wanted: number, violation: number) => void;
 	/** called after every step with the step number, the energy and the step length */
@@ -566,6 +570,35 @@ export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 		const corr = new Saddle(N, A, lu(A, N), constraintRows(C)).solve(zero, h);
 		for (let q = 0; q < 3 * N; q++) C.X[q] += corr[q];
 	}
+	// the symmetry: point i + s is point i turned by theta about the vertical through the barycentre
+	const q = opts.turns ?? 1;
+	const symmetrise =
+		q > 1 && C.counts.length === 1 && N % q === 0
+			? (() => {
+					const s = N / q;
+					const cx = target[0];
+					const cy = target[1];
+					const a0 = Math.atan2(C.X[1] - cy, C.X[0] - cx);
+					const a1 = Math.atan2(C.X[3 * s + 1] - cy, C.X[3 * s] - cx);
+					const theta = (2 * Math.PI * Math.round(((a1 - a0) * q) / (2 * Math.PI))) / q;
+					return () => {
+						const Y = new Float64Array(3 * N);
+						for (let i = 0; i < N; i++)
+							for (let k = 0; k < q; k++) {
+								const j = (i + k * s) % N;
+								const c = Math.cos(-k * theta);
+								const sn = Math.sin(-k * theta);
+								const x = C.X[3 * j] - cx;
+								const y = C.X[3 * j + 1] - cy;
+								Y[3 * i] += (cx + c * x - sn * y) / q;
+								Y[3 * i + 1] += (cy + sn * x + c * y) / q;
+								Y[3 * i + 2] += C.X[3 * j + 2] / q;
+							}
+						C.X.set(Y);
+					};
+				})()
+			: () => {};
+	symmetrise();
 	let last = 0;
 	let still = 0;
 	for (let step = 0; step < (opts.steps ?? 600); step++) {
@@ -617,6 +650,7 @@ export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 			C.X.set(X0);
 			break;
 		}
+		symmetrise();
 		opts.log?.(step, E1, accepted);
 		last = accepted;
 		// stop once the energy has hardly moved for a while (near a saddle it creeps before it runs)
