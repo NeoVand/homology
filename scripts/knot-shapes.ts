@@ -15,9 +15,11 @@ import { bestView } from '../src/lib/knots/view';
 import type { V3 } from '../src/lib/knots/diagram';
 
 const round = (comps: V3[][]) => comps.map((c) => c.map((p) => p.map((x) => Math.round(x * 1e4) / 1e4)));
-// with a list of ids (npx vite-node scripts/knot-shapes.ts 5_1,7_1) only those are settled again
+// with a list of ids (npx vite-node scripts/knot-shapes.ts 5_1,7_1) only those are settled again; the
+// environment can set the energy (ALPHA, BETA), the most steps (STEPS) and another output file (OUT)
 const only = process.argv[2]?.split(',');
-const file = new URL('../src/lib/knots/shapes.json', import.meta.url);
+const env = (k: string, d: number) => (process.env[k] ? Number(process.env[k]) : d);
+const file = process.env.OUT ? new URL(`file://${process.env.OUT}`) : new URL('../src/lib/knots/shapes.json', import.meta.url);
 const out: Record<string, number[][][]> = only ? JSON.parse(readFileSync(file, 'utf8')) : {};
 for (const k of knots) {
 	if (!k.braid || k.id === 'borromean' || (only && !only.includes(k.id))) continue;
@@ -28,7 +30,16 @@ for (const k of knots) {
 	const start = torus ? torusKnot(2, word.length) : braidClosure(n, word);
 	// a torus knot keeps the symmetry of its torus curve: the best shape with q-fold symmetry is the star a
 	// table of knots draws (for 7₁ the unrestricted flow folds the knot over on itself instead)
-	const comps = repulse(start, { points: 40 + 24 * k.crossings, steps: 2500, nudge: torus ? 0 : 0.02, log: (s) => (steps = s + 1) });
+	// run until no step lowers the energy any further (tolerance 0), or STEPS steps
+	const comps = repulse(start, {
+		points: 40 + 24 * k.crossings,
+		steps: env('STEPS', 6000),
+		alpha: env('ALPHA', 3),
+		beta: env('BETA', 6),
+		tolerance: 0,
+		nudge: torus ? 0 : 0.02,
+		log: (s) => (steps = s + 1)
+	});
 	out[k.id] = round(bestView(comps, { tries: 2000 }));
 	console.log(k.id, comps.map((c) => c.length).join('+'), `${steps} steps`, `${((Date.now() - t) / 1000).toFixed(0)} s`);
 }
