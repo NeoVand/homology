@@ -286,7 +286,9 @@ class Saddle {
 		private N: number,
 		private A: Float64Array,
 		private Ap: Int32Array,
-		private rows: Float64Array[]
+		private rows: Float64Array[],
+		/** another factorised matrix for the z-coordinate, if it differs */
+		private Az?: { A: Float64Array; p: Int32Array }
 	) {
 		const m = rows.length;
 		this.Z = new Float64Array(m * 3 * N);
@@ -309,7 +311,8 @@ class Saddle {
 		const b = new Float64Array(N);
 		for (let ax = 0; ax < 3; ax++) {
 			for (let i = 0; i < N; i++) b[i] = g[3 * i + ax];
-			luSolve(this.A, this.Ap, N, b);
+			if (ax === 2 && this.Az) luSolve(this.Az.A, this.Az.p, N, b);
+			else luSolve(this.A, this.Ap, N, b);
 			for (let i = 0; i < N; i++) out[3 * i + ax] = b[i];
 		}
 		return out;
@@ -474,9 +477,9 @@ export interface RepulseOptions {
 	nudge?: number;
 	/** stop when the energy falls by less than this fraction per step for 40 steps (default 1e-9; 0 never stops) */
 	tolerance?: number;
-	/** keep the curve in a slab |z| ≤ h about its middle plane, h this fraction of the start's reach, so
-	 *  that it settles flat with its crossings stacked, as a table of knots draws it (a soft wall: a
-	 *  penalty growing with the square of the overshoot) */
+	/** keep the curve in a slab |z| ≤ h about its middle plane, h this fraction of the radius of a circle
+	 *  as long as the curve (so the same whatever the start), so that it settles flat with its crossings
+	 *  stacked, as a table of knots draws it */
 	slab?: number;
 	/** keep the q-fold symmetry of a one-component start about the z-axis (a turn by a qth of a
 	 *  revolution carrying each point to the one a qth of the way round), which roundoff would
@@ -488,13 +491,13 @@ export interface RepulseOptions {
 	log?: (step: number, E: number, tau: number) => void;
 }
 
+/** how stiff a slab's walls are */
+const STIFF = 50;
+
 /**
  * Let a knot or link settle into a low-energy shape for the tangent-point energy. The result is
  * centred, turned to its principal axes (flattest along z) and scaled to the given size.
  */
-/** how stiff the slab's wall is */
-const SLAB = 5;
-
 export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 	const alpha = opts.alpha ?? 3;
 	const beta = opts.beta ?? 6;
@@ -522,27 +525,34 @@ export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 	if (opts.slab) {
 		const c = [0, 0, 0];
 		for (let i = 0; i < N; i++) for (let k = 0; k < 3; k++) c[k] += C.X[3 * i + k] / N;
-		let reach = 0;
 		let high = 0;
-		for (let i = 0; i < N; i++) {
-			reach = Math.max(reach, Math.hypot(C.X[3 * i] - c[0], C.X[3 * i + 1] - c[1], C.X[3 * i + 2] - c[2]));
-			high = Math.max(high, Math.abs(C.X[3 * i + 2] - c[2]));
-		}
-		wall = opts.slab * reach;
+		for (let i = 0; i < N; i++) high = Math.max(high, Math.abs(C.X[3 * i + 2] - c[2]));
+		// the edges are about 1 long, so the curve is about N long
+		wall = (opts.slab * N) / (2 * Math.PI);
 		mid = c[2];
 		if (high > 0.8 * wall) for (let i = 0; i < N; i++) C.X[3 * i + 2] = mid + ((C.X[3 * i + 2] - mid) * 0.8 * wall) / high;
 	}
+	// The walls push back on a point that strays past them with a force growing with the overshoot. They
+	// are stiff, and the inner product knows it: up and down, the Gram matrix gets the wall's stiffness
+	// on the diagonal at each point past a wall, so that a step takes such a point straight back
+	const inSlab = wall < Infinity;
 	const penalty = (G?: Float64Array) => {
-		if (wall === Infinity) return 0;
+		if (!inSlab) return 0;
 		let P = 0;
 		for (let i = 0; i < N; i++) {
 			const z = C.X[3 * i + 2] - mid;
 			const over = Math.abs(z) - wall;
 			if (over <= 0) continue;
-			P += SLAB * over * over;
-			if (G) G[3 * i + 2] += 2 * SLAB * over * Math.sign(z);
+			P += STIFF * over * over;
+			if (G) G[3 * i + 2] += 2 * STIFF * over * Math.sign(z);
 		}
 		return P;
+	};
+	const upright = (A: Float64Array) => {
+		if (!inSlab) return undefined;
+		const out = A.slice();
+		for (let i = 0; i < N; i++) if (Math.abs(C.X[3 * i + 2] - mid) > wall) out[i * N + i] += 2 * STIFF;
+		return { A: out, p: lu(out, N) };
 	};
 	// the constraints' targets: the barycentre where it is, and every edge the mean length
 	const target = constraintValues(C);
@@ -567,7 +577,8 @@ export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 		const { h, worst } = violation();
 		if (worst < 1e-9) break;
 		const A = gram(C, alpha, beta);
-		const corr = new Saddle(N, A, lu(A, N), constraintRows(C)).solve(zero, h);
+		const Az = upright(A);
+		const corr = new Saddle(N, A, lu(A, N), constraintRows(C), Az).solve(zero, h);
 		for (let q = 0; q < 3 * N; q++) C.X[q] += corr[q];
 	}
 	// the symmetry: point i + s is point i turned by theta about the vertical through the barycentre
@@ -605,10 +616,12 @@ export function repulse(comps: V3[][], opts: RepulseOptions = {}): V3[][] {
 		const G = new Float64Array(3 * N);
 		const E = energy(C, G, alpha, beta) + penalty(G);
 		const A = gram(C, alpha, beta);
+		const Az = upright(A);
 		const Ap = lu(A, N);
-		const sys = new Saddle(N, A, Ap, constraintRows(C));
+		const rows = constraintRows(C);
+		const sys = new Saddle(N, A, Ap, rows, Az);
 		// the Sobolev gradient, tangent to the constraints
-		const D = sys.solve(G, new Float64Array(3 + N));
+		const D = sys.solve(G, new Float64Array(rows.length));
 		let dot = 0;
 		let dn = 0;
 		for (let q = 0; q < 3 * N; q++) {

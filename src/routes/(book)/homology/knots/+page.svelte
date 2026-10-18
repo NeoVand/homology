@@ -83,7 +83,7 @@
 <Figure num="3.7.1" title="A gallery of knots and links" hint="Choose a knot or link · drag to turn it">
 	<KnotGallery />
 	{#snippet caption()}
-		Knots are named as in the standard tables: \(5_2\) is the second knot with five crossings in its simplest drawing. The granny and square knots are each made of two trefoils; the last four entries are links. Choose the Borromean rings and take one ring away: the other two fall apart, although the three together cannot be separated.
+		Knots are named as in the standard tables: \(5_2\) is the second knot with five crossings in its simplest drawing. The granny and square knots are each made of two trefoils; the last four entries are links. Each shape was found by letting the knot relax as it lies flat, its strands repelling one another <Cite k="yu-schumacher-crane2021" />, until it spreads out evenly with its crossings stacked, as the tables draw it. Choose the Borromean rings and take one ring away: the other two fall apart, although the three together cannot be separated.
 	{/snippet}
 </Figure>
 

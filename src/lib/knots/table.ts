@@ -6,7 +6,7 @@ import { borromean, braidClosure, plat, sampleClosed, unknot } from './curves';
 import { mirror } from './diagram';
 import shapes from './shapes.json';
 
-/** a shape settled once from the braid by scripts/knot-shapes.ts: a low-energy shape for the tangent-point energy */
+/** a shape settled once by scripts/knot-shapes.ts: lying flat, as a table of knots draws it, at low tangent-point energy */
 const settled = (id: string) => (shapes as unknown as Record<string, V3[][]>)[id];
 
 export interface TableKnot {

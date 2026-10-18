@@ -480,6 +480,17 @@ export const works: Work[] = [
 		arxiv: '2506.24088',
 		kind: 'paper'
 	},
+	{
+		key: 'yu-schumacher-crane2021',
+		authors: ['Chris Yu', 'Henrik Schumacher', 'Keenan Crane'],
+		label: 'Yu, Schumacher & Crane',
+		year: 2021,
+		title: 'Repulsive curves',
+		venue: 'ACM Transactions on Graphics 40:2 (2021), 1–21',
+		doi: '10.1145/3439429',
+		arxiv: '2006.07859',
+		kind: 'paper'
+	},
 	mactutor('oconnor-robertson-reidemeister', 'Kurt Werner Friedrich Reidemeister', 'Reidemeister', 2014),
 	mactutor('oconnor-robertson-artin', 'Emil Artin', 'Artin', 2000),
 	mactutor('oconnor-robertson-seifert', 'Herbert Seifert', 'Seifert', 2000),
