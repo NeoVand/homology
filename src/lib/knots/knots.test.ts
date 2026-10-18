@@ -230,6 +230,10 @@ describe('views and colourings', () => {
 		const oneMore = new Set(['6_3']);
 		for (const k of knots) expect(diagramOf(bestView(k.build().map((c) => resample(c, 160)))).pd.length, k.id).toBe(k.crossings + (oneMore.has(k.id) ? 1 : 0));
 	});
+	it('stores every settled shape turned to that shadow, so figures can draw it from above as it is', () => {
+		const oneMore = new Set(['6_3']);
+		for (const k of knots) if (k.id !== 'borromean') expect(diagramOf(k.build().map((c) => resample(c, 160))).pd.length, k.id).toBe(k.crossings + (oneMore.has(k.id) ? 1 : 0));
+	});
 	it('counts colourings from the drawing the same way as from the PD code', () => {
 		for (const id of ['3_1', '4_1', '5_1', '5_2', '6_1']) {
 			const comps = bestView(knotById.get(id)!.build().map((c) => resample(c, 160)));

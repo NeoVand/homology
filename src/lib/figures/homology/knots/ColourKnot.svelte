@@ -11,7 +11,6 @@
 	import TeX from '$lib/components/prose/TeX.svelte';
 	import { knotById, tangledUnknotFlat } from '$lib/knots/table';
 	import { draw, pathOf } from '$lib/knots/draw';
-	import { bestView } from '$lib/knots/view';
 	import { resample } from '$lib/knots/relax';
 	import { colouringEquations, isColouring, nullspaceMod } from '$lib/knots/colour';
 	import type { V3 } from '$lib/knots/diagram';
@@ -27,8 +26,9 @@
 	function drawingOf(c: Choice) {
 		if (!cache.has(c)) {
 			const k = c === 'tangle' ? undefined : knotById.get(c)!;
-			// a clean flat drawing where there is one (the tangled unknot as a closed braid with four crossings); else the best shadow
-			const comps: V3[][] = !k ? tangledUnknotFlat() : k.flat ? k.flat() : bestView(k.build().map((x) => resample(x, 160)));
+			// a clean flat drawing where there is one (the tangled unknot as a closed braid with four crossings); else the
+			// settled shape, which is stored turned so that its shadow from above is the most legible one
+			const comps: V3[][] = !k ? tangledUnknotFlat() : k.flat ? k.flat() : k.build().map((x) => resample(x, 160));
 			cache.set(c, draw(comps, 0.13));
 		}
 		return cache.get(c)!;
