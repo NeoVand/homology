@@ -38,8 +38,8 @@
 	const MACRO = ['\\cyc', '\\bdy', '\\chn', '\\hole'];
 
 	// ── the closure and what it is ───────────────────────────────────────────
-	// an odd number of points per letter, so that no point of the polyline sits
-	// exactly on a crossing (the projection stays generic); fewer for computing than for drawing
+	// points per letter: fewer for computing than for drawing (braidClosure keeps
+	// every point of the polyline off the crossings, so the projection stays generic)
 	const PER = 25;
 	const closureOf = (n: number, w: number[], per = 11) => braidClosure(n, w, { R0: 0.9, gap: 0.42, lift: 0.3, per });
 	/** σᵢσᵢ⁻¹ and σᵢ⁻¹σᵢ cancel: the same braid, so the same closure, with fewer crossings to sum over */
